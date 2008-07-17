@@ -1,0 +1,3 @@
+module Mine::RecipesHelper
+	
+end

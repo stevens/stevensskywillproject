@@ -1,0 +1,293 @@
+class PhotosController < ApplicationController
+	
+	before_filter :protect, :except => [:index, :show]
+	before_filter :store_location, :only => [:index, :show, :mine]
+	before_filter :load_user
+  before_filter :load_parent
+  before_filter :load_self
+  before_filter :load_self_urls
+  
+  # GET /photos
+  # GET /photos.xml
+  def index
+  	@photo_style = 'mcube'
+  	
+  	if @parent_obj
+  		load_photos_all			
+  	end
+  	
+	 	info = "#{@parent_name}#{@parent_title}的#{@self_name}(#{@photos_set_count})"
+	 	
+	 	photos_paginate
+	 	
+	 	get_photo_lines_count
+ 		
+		set_page_title(info)
+		set_block_title(info)
+ 		
+    respond_to do |format|
+	   	format.html # index.html.erb
+      format.xml  { render :xml => @photos }
+    end
+  end 
+
+  # GET /photos/1
+  # GET /photos/1.xml
+  def show
+		load_photo
+		
+		if @parent_obj
+			load_photos_all	
+		end														
+		
+		info = "#{@parent_name}#{@parent_title}的#{@self_name}"
+		
+		set_page_title(info)
+		set_block_title(info)
+
+    get_prev_next
+
+    respond_to do |format|
+      format.html do # show.html.erb
+      	@photo_style = 'full'
+      	@photo_file_url = photo_file_url(@photo, @parent_type, @photo_style)
+      	@photo_url = @next_photo_url
+      end
+      format.xml  { render :xml => @photo }
+      
+      format.js do
+      	@photo_style = 'detail'
+      	@photo_file_url = photo_file_url(@photo, @parent_type, @photo_style)
+      	@photo_url = @self_url	
+				render :update do |page|
+					page.replace_html "current_photo",
+														:partial => "current_photo"
+				end
+			end
+    end
+  end  
+  
+  # GET /photos/new
+  # GET /photos/new.xml
+  def new
+    @photo = @current_user.photos.build
+    
+  	if @parent_obj
+  		load_photos_all			
+  	end
+  	
+    info = "#{ADD_CN}#{@parent_name}#{@parent_title}的新#{@self_name}"
+    
+		set_page_title(info)
+		set_block_title(info)
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @photo }
+    end
+  end
+
+  # GET /photos/1/edit
+  def edit
+  	load_photo
+    
+  	if @parent_obj
+  		load_photos_all			
+  	end
+    
+  	@photo_style = 'list'
+  	@photo_file_url = photo_file_url(@photo, @parent_type, @photo_style)
+  	@photo_url = @self_url
+   
+ 		info = "#{EDIT_CN}#{@parent_name}#{@parent_title}的#{@self_name}"
+		
+		set_page_title(info)
+		set_block_title(info)
+  end
+  
+  # POST /photos
+  # POST /photos.xml
+  def create
+    @photo = @current_user.photos.build(params[:photo])
+		@photo.photo_type = @parent_type
+		@photo.belong_to_id = @parent_id
+		
+		if @parent_obj
+  		load_photos_all			
+  	end
+		
+		if @photos_set_count > 0
+	      if @photo.save
+					after_create_ok
+	      else
+					after_create_error
+	      end
+		else
+      if @photo.save
+      	@parent_obj.cover_photo_id = @photo.id
+				if @parent_obj.save
+					after_create_ok
+				else
+					@photo.destroy
+					
+					after_create_error
+      	end        
+      else
+				after_create_error
+      end
+		end
+  end
+
+  # PUT /photos/1
+  # PUT /photos/1.xml
+  def update
+    load_photo
+
+	  if @photo.update_attributes(params[:photo])
+	    if params[:is_cover]
+	    	@parent_obj.cover_photo_id = @photo.id
+				if @parent_obj.save
+					after_update_ok
+				else
+					after_update_error
+	      end
+			else
+				after_update_ok
+   		end
+	  else
+			after_update_error
+	  end
+  end
+
+  # DELETE /photos/1
+  # DELETE /photos/1.xml
+  def destroy
+    load_photo
+    
+  	if @parent_obj
+  		load_photos_all			
+  	end
+  	
+    if @photo.is_cover?(@parent_obj)
+    	if @photos_set_count == 1
+    		@parent_obj.cover_photo_id = nil
+    	elsif @photos_set_count > 1
+    		if @photo == @photos_set[0]
+    			@parent_obj.cover_photo_id = @photos_set[1].id
+    		else
+    			@parent_obj.cover_photo_id = @photos_set[0].id
+				end
+    	end
+    	if @parent_obj.save
+    		@photo.destroy
+	   
+				after_destroy_ok 
+    	end
+		else
+	    @photo.destroy
+	
+			after_destroy_ok
+    end
+  end
+  
+	private
+	
+	def get_prev_next
+    1.upto(@photos_set_count) do |i|
+    	if @photos_set[i-1] == @photo
+    		@photo_index = i
+    		if i == 1
+    			@next_photo = @photos_set[1]
+    			@prev_photo = @photos_set[@photos_set_count-1]
+    		elsif i == @photos_set_count
+    			@next_photo = @photos_set[0]
+    			@prev_photo = @photos_set[@photos_set_count-2]
+    		else
+    			@next_photo = @photos_set[i]
+    			@prev_photo = @photos_set[i-2]
+    		end
+    		break
+    	end
+    end
+    @next_photo_url =	restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @next_photo.id}, nil)
+    @prev_photo_url = restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @prev_photo.id}, nil)
+	end
+	
+  def load_photo
+ 		@photo = Photo.find(@self_id)
+  	if @photo
+  		@photo_alt = @photo.caption
+  		@photo_user = @photo.user
+  		@photo_user_title = @photo_user.login if @photo_user
+  	end
+  end
+  
+  def load_photos_all
+ 		@photos_set = photos_for(@parent_type, @parent_id, nil)
+  	@photos_set_count = @photos_set.size
+  end
+
+  def photos_paginate
+	 	@photos = @photos_set.paginate :page => params[:page], 
+ 															 		 :per_page => PHOTOS_COUNT_PER_PAGE															 
+  end
+  
+  def get_photo_lines_count
+  	@photo_lines_count = groups_count(@photos, PHOTOS_COUNT_PER_LINE)
+  end
+	
+	def after_create_ok
+		respond_to do |format|
+			flash[:notice] = "你已经成功#{ADD_CN}了1#{@self_unit}新#{@self_name}!"
+			format.html { redirect_to @selfs_url }
+			format.xml  { render :xml => @photo, :status => :created, :location => @photo }
+		end
+	end
+	
+	def after_create_error
+		respond_to do |format|
+			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			format.html { render :action => "new" }
+			format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
+		
+			load_photos_all
+			
+			info = "#{ADD_CN}#{@parent_name}#{@parent_title}的新#{@self_name}"
+			set_page_title(info)
+			set_block_title(info)
+		end
+		clear_notice
+	end
+	
+	def after_update_ok
+		respond_to do |format|
+			flash[:notice] = "你已经成功#{UPDATE_CN}了1#{@self_unit}#{@self_name}!"
+			format.html { redirect_to @self_url }
+			format.xml  { head :ok }
+		end
+	end
+
+	def after_update_error
+		respond_to do |format|
+			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			format.html { render :action => "edit" }
+			format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
+		
+			load_photos_all
+			
+			info = "#{EDIT_CN}#{@parent_name}#{@parent_title}的#{@self_name}"
+			set_page_title(info)
+			set_block_title(info)
+		end
+		clear_notice
+	end
+	
+	def after_destroy_ok
+		respond_to do |format|
+			flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"
+			format.html { redirect_to @selfs_url }
+			format.xml  { head :ok }
+		end
+	end
+	
+end

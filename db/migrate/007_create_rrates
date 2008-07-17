@@ -1,0 +1,15 @@
+class CreateRrates < ActiveRecord::Migration
+  def self.up
+    create_table :rrates do |t|
+      t.references :user
+      t.references :recipe
+      t.integer :rate
+
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :rrates
+  end
+end

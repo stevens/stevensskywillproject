@@ -1,0 +1,25 @@
+class CreateRecipePhotos < ActiveRecord::Migration
+  def self.up
+    create_table :recipe_photos do |t|
+			t.references :user
+			t.references :recipe
+			t.text :caption
+
+			t.timestamps
+			
+			# the following columns are required for attachment_fu
+			t.column :content_type, :string, :limit => 100
+			t.column :filename, :string, :limit => 255
+			t.column :path, :string, :limit => 255
+			t.column :parent_id, :integer
+			t.column :thumbnail, :string, :limit => 255
+			t.column :size, :integer
+			t.column :width, :integer
+			t.column :height, :integer
+    end
+  end
+
+  def self.down
+    drop_table :recipe_photos
+  end
+end

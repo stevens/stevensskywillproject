@@ -1,0 +1,2 @@
+module Mine::PhotosHelper
+end

@@ -1,0 +1,55 @@
+<div class="content_block">
+	
+	<div class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@photos_set_count})", @selfs_url %> |
+			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
+		</div>
+		<h1><%= @block_title %></h1>
+	</div>
+
+	<div class="block_main">
+		<table class="content">
+		  <tr>  	
+		    
+		    <td class="left_colomn">
+		    	<div class="sub_block">
+		    		<div class="list_image">
+							<%= render :partial => "current_photo" %>
+		    		</div>
+	    		</div>
+	    	</td>
+	    	
+	    	<td class="right_colomn">
+					<% form_for(:photo, :url => @self_url, :html => { :method => :put }) do |f| %>
+						<div class="sub_block">
+							<div class="label">
+								<label class="left" for="caption"><%= "#{CAPTION_CN}:" %></label>
+							</div>
+							<div class="input">
+								<%= f.text_area :caption %>
+							</div>
+							<div class="error">
+								<%= error_message_on "photo", "caption" %>
+							</div>
+							<div class="input">
+								<% if @photo.is_cover?(@parent_obj) %>
+									<%= "这是#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的封面图片" %>
+								<% else %>
+									<%= check_box_tag "is_cover" %><%= "用这#{@self_unit}#{@self_name}作为#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的封面图片" %>
+								<% end %>
+							</div>
+							<div class="submit">
+								<%= f.submit SAVE_CHANGES_CN, :class => "submit" %>
+								&nbsp;&nbsp;
+								<%= link_to "&raquo;#{CANCLE_CN}", @self_url %>
+							</div>
+						</div>
+					<% end %>
+	    	</td>
+	    	
+	    </tr>	
+		</table>	
+	</div>
+	
+</div>

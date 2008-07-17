@@ -1,0 +1,59 @@
+<table class="content">
+	<% for review in @reviews %>
+	  <tr>
+	  	<td>
+	  		
+	  		<table>
+	  			<tr>
+				    
+				    <td class="left_colomn">
+				    	<div class="sub_block">
+								<div id="profile_photo" class="sign_list_image">					
+									<%= image_tag default_photo_file_url('cook', 'sign_list') %>
+								</div>
+							</div>
+				    </td>
+				    
+				    <td class="right_colomn">
+				    	<div class="sub_block">
+					    	<div class="title"><h2><%= link_to h(review.title), restfu_url_for(nil, {:type => @self_type, :id => @self_id}, {:type => 'review', :id => review.id}, nil) %></h2></div>
+					    	<div class="basic">
+					    		<ul>
+					    			<li class="basic">
+					    				<% if review.user == @current_user %>
+								    		<%= "来自 " %><%= link_to "我", user_url(review.user) %>
+								    	<% else %>
+								    		<%= "来自 " %><%= link_to "#{review.user.login}", user_url(review.user) %>
+								    	<% end %>
+							    		&nbsp;&nbsp;
+							    		<% if review.created_at == review.updated_at %>
+							    			<%= "#{review.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
+							    		<% else %>
+							    			<%= "#{review.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
+							    		<% end %>
+					    			</li>
+					    		</ul>
+					    	</div>
+				    	</div>			    	
+				    </td>
+				    
+	  			</tr>
+	  		</table>
+	
+	    	<div class="main">
+	    		<%= sanitize review.review_summary %>
+	    	</div>
+	    	<div class="todo">
+	    		<% if review.user == @current_user %>
+		    		<%= link_to "#{EDIT_CN}这#{@review_unit}#{@review_name}", restfu_url_for(nil, {:type => @self_type, :id => @self_id}, {:type => 'review', :id => review.id}, 'edit') %> |
+		    		<%= link_to "#{DELETE_CN}这#{@review_unit}#{@review_name}", restfu_url_for(nil, {:type => @self_type, :id => @self_id}, {:type => 'review', :id => review.id}, nil), :confirm => "确定要#{DELETE_CN}这#{@review_unit}#{@review_name}吗?", :method => :delete %>
+		    	<% elsif parent_user && parent_user == @current_user %>
+		    		<%= link_to "#{DELETE_CN}这#{@review_unit}#{@review_name}", restfu_url_for(nil, {:type => @self_type, :id => @self_id}, {:type => 'review', :id => review.id}, nil), :confirm => "确定要#{DELETE_CN}这#{@review_unit}#{@review_name}吗?", :method => :delete %>
+	    		<% end %>
+	    	</div>
+	    	<div class="line"></div>
+	    	
+	    </td>
+	  </tr>
+	<% end %>
+</table>

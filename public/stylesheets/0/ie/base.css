@@ -1,0 +1,36 @@
+div#screen_body,
+div.Left,
+div.col,
+body.message div.Comments,
+body.overview span.event_type span,
+div#LockBar,
+div#CategoryList div.category {
+  zoom: 100%;
+}
+
+div.Right {
+  width: 29%;
+}
+
+div.button_to_add_new a {
+  display: block;
+}
+
+div.button_to_add_new div.other_ways_to_add a {
+  display: inline;
+}
+
+body.overview span.event_type span.completed {
+  background-image: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/events/check.png',sizingMethod='crop');
+}
+
+/* Legacy elements needing layout */
+
+div.showhide,
+div.popup_add_dialog,
+div#new_time_report,
+div#new_list,
+div#choose_company {
+  height: 1%;
+}

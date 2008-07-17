@@ -1,0 +1,11 @@
+class DelPhotosCount < ActiveRecord::Migration
+  def self.up
+  	remove_column :recipes, :photos_count
+  	remove_column :users, :photos_count
+  end
+
+  def self.down
+  	add_column :recipes, :photos_count, :integer
+  	add_column :users, :photos_count, :integer
+  end
+end

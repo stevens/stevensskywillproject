@@ -1,0 +1,28 @@
+<p>
+  <b>Code:</b>
+  <%=h @info.code %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @info.name %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%=h @info.category %>
+</p>
+
+<p>
+  <b>Language:</b>
+  <%=h @info.language %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%=h @info.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_info_path(@info) %> |
+<%= link_to 'Back', infos_path %>

@@ -1,0 +1,61 @@
+<div class="content_block">
+	
+	<div class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@photos_set_count})", @selfs_url %> |
+			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
+		</div>
+		<h1><%= @block_title %></h1>
+	</div>
+	
+	<div class="block_main">
+		<div class="prev_next">
+			<%= " (#{@photo_index} / #@photos_set_count)" %>
+			&nbsp;
+			<%= link_to "#{PREV_ONE_CN}#{@self_unit}", @prev_photo_url %>
+			&nbsp;
+			<%= link_to "#{NEXT_ONE_CN}#{@self_unit}", @next_photo_url %>
+		</div>
+		
+		<div id="current_full_photo" class="full_image">
+			<%= render :partial => "current_photo" %>
+		</div>
+		
+		<div class="sub_block_s">
+			<div class="basic">
+				<ul>
+    			<li class="basic">
+    				<%= "来自 " %>
+    				<% if @photo_user == @current_user %>
+			    		<%= link_to "我", user_url(@photo_user) %>
+			    	<% else %>
+			    		<%= link_to "#{@photo_user_title}", user_url(@photo_user) %>
+			    	<% end %>			    			
+    			</li>
+					<li class="basic"><%= "#{@photo.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %></li>
+					<% if @photo.created_at != @photo.updated_at %>
+						<li class="basic"><%= "#{@photo.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
+					<% end %>
+					<li class="basic">
+						<% if @photo.is_cover?(@parent_obj) %>
+							<%= "这是#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的封面#{@self_name}" %>
+						<% else %>
+							<%= "这是#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的#{@self_name}" %>
+						<% end %>
+					</li>
+				</ul>
+			</div>
+			<div class="main">
+				<%= sanitize @photo_alt %>
+			</div>
+			<div class="todo">
+    		<% if @photo_user == @current_user %>
+	    		<%= link_to "#{EDIT_CN}这#{@self_unit}#{@self_name}", @edit_self_url %> |
+	    		<%= link_to "#{DELETE_CN}这#{@self_unit}#{@self_name}", @self_url, :confirm => "确定要#{DELETE_CN}这#{@self_unit}#{@self_name}吗?", :method => :delete %>
+    		<% end %>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>

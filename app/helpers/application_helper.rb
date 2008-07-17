@@ -1,0 +1,272 @@
+# Methods added to this helper will be available to all templates in the application.
+module ApplicationHelper
+	
+	def tab_css_class(tab_type)
+		if params[:controller] == tab_type
+			'active'
+		else
+			''
+		end
+	end
+	
+	def page_title(info1, info2)
+		if info1 == '' && info2 == ''
+			SITE_NAME_CN
+		elsif info1 !='' && info2 == ''
+			"#{SITE_NAME_CN} | #{info1}"
+		elsif info1 !='' && info2 != ''
+			"#{SITE_NAME_CN} | #{info1} #{TITLE_LINKER} #{info2}"
+		end
+	end
+	
+	def model_for(object_type)
+		case object_type
+		when 'user'
+			User
+		when 'recipe'
+			Recipe
+		when 'photo'
+			Photo
+		when 'review'
+			Review
+		end
+	end
+	
+	def name_for(object_type)
+		case object_type
+		when 'user'
+			USER_CN
+		when 'recipe'
+			RECIPE_CN
+		when 'photo'
+			PHOTO_CN
+		when 'review'
+			REVIEW_CN
+		end	
+	end
+	
+	def unit_for(object_type)
+		case object_type
+		when 'user'
+			UNIT_USER_CN
+		when 'recipe'
+			UNIT_RECIPE_CN
+		when 'photo'
+			UNIT_PHOTO_CN
+		when 'review'
+			UNIT_REVIEW_CN
+		end
+	end
+
+	def second_to_hms(second)
+		h = second/3600
+		m = second%3600/60
+		s = second%60
+		{:h => h, :m => m, :s => s}
+	end
+	
+	def time_display(second, time_style, h_text, m_text, s_text)
+		h = second_to_hms(second)[:h]
+ 		m = second_to_hms(second)[:m]
+ 		s = second_to_hms(second)[:s]
+		t = ''
+		case time_style
+		when 'h'
+			t += "#{h}#{h_text}" if h>0
+		when 'hm'
+			if h>0
+				t += "#{h}#{h_text}"
+				if m>0
+					t += " #{m}#{m_text}"
+				end
+			else
+				if m>0
+					t += "#{m}#{m_text}"
+				end
+			end
+		when 'hms'
+			if h>0
+				t += "#{h}#{h_text}"
+				if s>0
+					t += " #{m}#{m_text} #{s}#{s_text}"					
+				elsif m>0
+					t += " #{m}#{m_text}"
+				end
+			else
+				if m>0
+					t += "#{m}#{m_text}"
+					if s>0
+						t += " #{s}#{s_text}"
+					end
+				else
+					if s>0
+						t += "#{s}#{s_text}"
+					end
+				end
+			end
+		end
+	end
+	
+	def groups_count(objects, count_per_group)
+		groups_count = objects.size/count_per_group
+		groups_count = objects.size%count_per_group == 0 ? groups_count : groups_count+1		
+	end
+	
+	def group(objects, offset, count_per_group)
+		objects.find(:all, :offset => offset, :limit => count_per_group)
+	end
+	
+	def select_number_options(max, selected) # min <= selected <= max
+		options = ''
+		1.upto(max+1) do |i|
+			n = i-1
+			if n == selected
+				options += "<option selected='selected'>#{n}</option> "
+			else
+				options += "<option>#{n}</option> "
+			end
+		end
+		options
+	end
+	
+	def text_summary(text, summary_length)
+		text.length > summary_length ? text.to(summary_length-1) + '......' : text
+	end
+
+	def text_dry(text)
+		if text!=''
+			t = text
+			t = t.gsub(' ', '&nbsp;')
+  		t = t.gsub('　', '&nbsp;&nbsp;')
+  	end
+	end
+	
+	def text_display(text)
+		if text!=''
+			t = text_dry(text)
+			# t = t.gsub(/\n/, "<br />")
+			t = t.gsub(/\n/, "&nbsp;</li> <li class='text'>")
+			t = "<ul><li class='text'>#{t}</li></ul>"
+		end
+	end
+	
+	def list_display(text)
+		if text!=''
+			t = text_dry(text)
+			t = t.gsub(/\n/, "&nbsp;</li> <li class='list'>")
+			t = "<ol><li class='list'>#{t}</li></ol>"
+		end
+	end
+	
+	def path(path_type, belong_to_type, object_type, belong_to, object)
+		case path_type
+		when 'index'
+		when 'show'
+			#{belong_to}_#{object}_path(belong_to_o, object_o)"
+		when 'new'
+		when 'edit'
+		end
+	end
+	
+	def restfu_url_for(namespace, parent_obj, self_obj, action)
+		ns = "#{namespace}/" if namespace
+		po = "#{parent_obj[:type].pluralize}/#{parent_obj[:id]}/" if parent_obj && parent_obj[:type] && parent_obj[:id]
+		if self_obj
+			if self_obj[:type]
+				if self_obj[:id]
+					so = "#{self_obj[:type].pluralize}/#{self_obj[:id]}"
+				else
+					so = "#{self_obj[:type].pluralize}"
+				end
+			end
+		end
+		ac = "/#{action}" if action
+		"#{root_url}#{ns}#{po}#{so}#{ac}"
+	end
+	
+	def objects_path(object)
+		url_for :controller => object.pluralize, :only_path => true
+	end
+	
+	def object_path(object, id)
+		# url_for(:controller => object.pluralize, :id => id, :only_path => true).gsub('/index', '')
+		url_for "controller" => object.pluralize, :id => id, :only_path => true
+	end
+
+	def new_object_path(object)
+		url_for :controller => object.pluralize, :action => 'new', :only_path => true
+	end
+	
+	def edit_object_path(object, id)
+		url_for :controller => object.pluralize, :action => 'edit', :id => id, :only_path => true
+	end
+	
+	def sysinfo(code, todo, belong_to, option, object)
+		case code
+		
+		# Notice 1xxxxx
+		when '100001'  # e.g 你已经成功创建了1个新食谱!
+			"#{YOU_CN}已经成功#{todo}了#{object[:count]}#{object[:unit]}#{option}#{object[:type]}!"
+		when '100002'  # e.g 你输入的食谱信息有错误，请重新输入!
+			"#{YOU_CN}#{todo}的#{object[:type]}#{INFO_CN}有#{ERROR_CN}, 请#{REDO_CN}#{todo}!"
+		when '100003'  # e.g 你确定要删除这个食谱吗？
+			if object[:count] == 1
+				"#{YOU_CN}确定要#{todo}这#{object[:unit]}#{object[:type]}吗?"
+			else
+				"#{YOU_CN}确定要#{todo}这#{object[:count]}#{object[:unit]}#{object[:type]}吗?"
+			end
+		when '100004'  # e.g 请你先登录厨猫！
+			"请#{YOU_CN}先#{todo}#{object[:type]}!"
+		when '100005'
+			"#{YOU_CN}#{HAS_NO_CN}#{object[:type]}, 现在就来#{todo}#{YOUR_CN}第一#{object[:unit]}#{object[:type]}吧!"
+		
+		# Error 2xxxxx
+		when '200001'
+		
+		# Guide 3xxxxx
+		when '300001'
+			"#{todo}#{option}#{object[:type]}"
+		when '300002'
+			"#{todo}#{belong_to[:type]}#{belong_to[:title]}的#{option}#{object[:type]}"
+		when '300003'
+			if object[:count] == 1
+				"#{todo}这#{object[:unit]}#{option}#{object[:type]}"
+			else
+				"#{todo}这#{object[:count]}#{object[:unit]}#{option}#{object[:type]}"
+			end
+		when '300004'
+			if object[:count] == 1
+				"#{todo}#{belong_to[:type]}#{belong_to[:title]}的这#{object[:unit]}#{option}#{object[:type]}"		
+			else
+				"#{todo}#{belong_to[:type]}#{belong_to[:title]}的这#{object[:count]}#{object[:unit]}#{option}#{object[:type]}"		
+			end
+		when '300005'
+			if object[:title]
+				"#{todo}#{option}#{object[:type]}: #{object[:title]}"
+			elsif object[:count] >= 0
+				"#{todo}#{option}#{object[:type]}(#{object[:count]})"
+			end
+		when '300006'
+			if object[:title]
+				"#{todo}#{belong_to[:type]}#{belong_to[:title]}的#{option}#{object[:type]}: #{object[:title]}"
+			elsif object[:count] >= 0
+				"#{todo}#{belong_to[:type]}#{belong_to[:title]}的#{option}#{object[:type]}(#{object[:count]})"
+			end
+		when '300007'
+			"#{I_CN}先#{todo}#{belong_to[:type]}#{belong_to[:title]}的#{option}#{object[:type]}"
+		when '300008'
+			if object[:count] == 1
+				"这#{object[:unit]}#{object[:type]}是#{belong_to[:type]}#{belong_to[:title]}的#{option}"
+			else
+				"这#{object[:count]}#{object[:unit]}#{object[:type]}是#{belong_to[:type]}#{belong_to[:title]}的#{option}"
+			end
+		when '300009'
+			if object[:count] == 1
+				"用这#{object[:unit]}#{object[:type]}#{todo}#{belong_to[:type]}#{belong_to[:title]}的#{option}"
+			else
+				"用这#{object[:count]}#{object[:unit]}#{object[:type]}#{todo}#{belong_to[:type]}#{belong_to[:title]}的#{option}"
+			end
+		end
+	end
+	
+end

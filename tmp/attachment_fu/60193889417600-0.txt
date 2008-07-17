@@ -1,0 +1,73 @@
+橙#ff8159 #ffcc99
+蓝#428cbb #99ccff
+绿#78b36d #ccffcc
+褐#695245 #ffffcc
+红#ff0000
+粉#e6cac6
+#ffffff #eeeeee #cccccc #999999 #666666 #333333 #000000
+
+
+网络客服5118
+
+http://www.mezzoblue.com/zengarden/alldesigns/
+
+1ZY9R3620464425597
+
+http://www.akitaonrails.com/2007/12/12/rolling-with-rails-2-0-the-first-full-tutorial
+
+4392 2670 0084 3170
+06/10 557
+
+			<div id="content">
+				<% if flash[:notice] -%>
+					<div id="notice"><%= flash[:notice] %></div>
+				<% end -%>
+			</div>
+
+<%= yield %>
+
+			<div id="sign">
+				<span style = "float: right">
+					<%= nav_link "注册", "users", "new" %> -
+					<%= nav_link "登录", "sessions", "new" %> -
+					<%= nav_link "退出", "sessions", "destroy" %> |
+					<%= nav_link "帮助", "site", "about" %>
+				</span>
+			</div>
+
+http://technologyvoodoo.com/articles/user-registration-with-email-confirmation-in-ruby-on-rails
+
+南方人才
+李彦青（女）：小灵通-02083698099；座机：020-85591650
+
+
+Thank you for completing our survey! 
+
+To say thanks, here's a $10 off coupon you can use when upgrading your Basecamp account. Click the Account tab, click upgrade, and enter coupon code BCCDSURVEY in the coupon code box to save $10 on your next bill. 
+
+Thanks again for your feedback and continued support. 
+
+
+www.webasyst.net
+www.sidejobtrack.com
+www.contactoffice.com
+
+墙角见: 想买迈克尔.杨PXR-5 EL手表 
+
+http://www.yeepay.com/mlove/DonateHomeAction.action
+
+0133 5257 0740 1521 95
+
+(2008-02-26 10:47:29)   泣合
+成都市青羊大道98号光华馨地10栋2单元号
+邮编：610071
+联系人：刘志云
+13808175681 
+
+jcbmoney上海地铁卡
+
+1624.2 $75 
+
+http://auction1.taobao.com/auction/item_detail-db1-804f2c962a0be655f8a22332eeb146af.jhtml
+
+http://auction1.taobao.com/auction/item_detail-0db1-2755acf65896aac6236efd54ef7c90d8.jhtml

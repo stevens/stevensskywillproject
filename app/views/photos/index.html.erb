@@ -1,0 +1,41 @@
+<div class="content_block">
+	
+	<div class="block_header">
+		<div class="block_header_link">
+			<% if @parent_user && @parent_user == @current_user %>
+				<%= link_to "#{ADD_CN}新#{@self_name}", @new_self_url %> |	
+			<% end %>
+			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
+		</div>
+		<h1><%= @block_title %></h1>
+	</div>
+	
+	<%= will_paginate @photos, :prev_label => "&laquo; #{PREV_PAGE_CN}",
+	 													 :next_label => "#{NEXT_PAGE_CN} &raquo;" %>
+	
+	<div class="block_main"> 													 			
+		<table class="content">		
+			<% 1.upto(@photo_lines_count) do |l| %>
+				<tr>
+					<% 1.upto(PHOTOS_COUNT_PER_LINE) do |c| %>
+						<% if (i=c+(l-1)*PHOTOS_COUNT_PER_LINE) <= @photos.size %>
+							<td class="image_cell">
+								<div class="cube_image">
+									<% if @photos[i-1].is_cover?(@parent_obj) %>
+											<%= link_to image_tag(@photos[i-1].public_filename(@photo_style), :alt => h(@photos[i-1].caption), :class => "cover"), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
+									<% else %>
+											<%= link_to image_tag(@photos[i-1].public_filename(@photo_style), :alt => h(@photos[i-1].caption)), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
+									<% end %>
+								</div>
+							</td>
+						<% end %>
+					<% end %>
+				</tr>	
+			<% end %>
+		</table>
+	<div>
+	
+	<%= will_paginate @photos, :prev_label => "&laquo; #{PREV_PAGE_CN}",
+	 													 :next_label => "#{NEXT_PAGE_CN} &raquo;" %>
+
+</div>

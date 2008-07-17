@@ -1,0 +1,18 @@
+<div class="content_block">
+	
+	<div class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@photos_set_count})", @selfs_url %> |
+			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
+		</div>
+		<h1><%= @block_title %></h1>
+	</div>
+	
+	<div class="block_main" >
+		<%= render :partial => "photo", 
+							 :locals => {:do_url => @selfs_url,
+							 						 :html_method => '',
+							 						 :button_name => "#{ADD_CN}新#{@self_name}"} %>
+	</div>
+	
+</div>

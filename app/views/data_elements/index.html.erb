@@ -1,0 +1,26 @@
+<h1>Listing data_elements</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Language</th>
+    <th>Remark</th>
+  </tr>
+
+<% for data_element in @data_elements %>
+  <tr>
+    <td><%=h data_element.code %></td>
+    <td><%=h data_element.name %></td>
+    <td><%=h data_element.language %></td>
+    <td><%=h data_element.remark %></td>
+    <td><%= link_to 'Show', data_element %></td>
+    <td><%= link_to 'Edit', edit_data_element_path(data_element) %></td>
+    <td><%= link_to 'Destroy', data_element, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New data_element', new_data_element_path %>

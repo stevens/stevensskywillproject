@@ -1,0 +1,868 @@
+/*-------------------------------------------------
+GLOBAL
+-------------------------------------------------*/
+
+body {
+	font-family: georgia, serif;
+	background: white;
+	font-size: 11pt;
+	margin: 0 5%;
+}
+
+td, th, h1, h2, h3, h4, h5, h6 {
+	font-family: helvetica, sans-serif;
+}
+
+li {
+	font-family: georgia, serif;
+}
+
+p {
+	font-size: 10pt;
+	font-family: georgia, serif;
+	line-height: 1.2em;
+}
+
+div#Header #floatright, div#Header .P2P_selector, div#Header .P2P_link, div#Header #Tabs, div#Header h3, div#your_comment div.Post, body.todos div.page_header h1, div#open_bar {
+	display: none;
+}
+
+div#Header {
+	border-bottom: 5px solid #000;
+	margin-bottom: 30px;
+	padding: 0;
+}
+
+div#Header h1, div#Header h1 span {
+	font-size: 10pt;
+	color: #000;
+	line-height: 0.9em;
+	font-family: helvetica, sans-serif;
+}
+
+div#Header a:link, div#Header a:visited {
+	text-decoration: none;
+	color: #000;
+} 
+
+div#Header h1 a {
+	padding-right: 4px;
+	border-right: 2px solid #999;
+}
+
+div.Footer {
+	display: none;
+}
+
+div.Right {
+	display: none;
+}
+
+div.ContextHeader, div.SectionHeader {
+	display: none;
+}
+
+a.admin {
+	display: none;
+}
+
+h1, body.todos h2 {
+	text-decoration: none;
+	color: #000;
+	font-size: 110%;
+}
+
+img {
+	border: 0;
+}
+
+.hideprint {
+	display: none;
+}
+
+
+/*-------------------------------------------------
+TYPE EXCEPTIONS
+-------------------------------------------------*/
+
+body.todos h2, div.Post h1 a, div.Post h1, body.comments h1 {
+	font-family: helvetica, sans-serif;
+	font-size: 14pt;
+}
+
+/*-------------------------------------------------
+DASHBOARD
+-------------------------------------------------*/
+
+body.dashboard {
+	margin: 0;
+}
+
+body.dashboard div.Left {
+	display: block;
+	padding-right: 15px;
+}
+
+body.dashboard div.Right {
+	display: block;
+	border-left: 1px solid #ccc;
+	padding-left: 15px;
+	width: 200px;
+}
+
+body.dashboard div.SectionHeader {
+	display: block;
+}
+
+body.dashboard div.Client h1 {
+	font-size: 10pt;
+}
+
+body.dashboard div.Client a {
+	text-decoration: none;
+	display: block;
+	margin-left: 15px;
+	font-size: 11pt;
+}
+
+body.dashboard small {
+	display: none;
+}
+
+body.dashboard table td {
+	vertical-align: top;
+}
+
+body.dashboard div.SectionHeader h1, body.dashboard div.latemilestones h1, body.dashboard h2.dashheader {
+	border-bottom: 2px solid #000;
+	padding: 5px  0 2px 0;
+	font-size: 11pt;
+}
+
+body.dashboard div.latemilestones li {
+	font-size: 10pt;
+}
+
+body.dashboard div.latemilestones a {
+	text-decoration: none;
+	color: #000;
+}
+
+body.dashboard div.rssbox {
+	display: none;
+}
+
+body.dashboard table.ProjectSummary td {
+	font-size: 11pt;
+	vertical-align: top;
+	white-space: nowrap;
+	padding: 2px;
+}
+
+body.dashboard table.ProjectSummary td.title a, body.dashboard table.ProjectSummary td.date {
+	text-decoration: none;
+	font-family: georgia, serif;
+	font-size: 10pt;
+	color: #000;
+}
+
+body.dashboard table.ProjectSummary td img {
+	text-align: right;
+	margin-right: 5px;
+	padding-top: 6px;
+}
+
+body.dashboard table.ProjectSummary td.action, body.dashboard table.ProjectSummary td.author {
+	font-family: georgia, serif;
+	font-size: 8pt;
+}
+
+
+body.dashboard table.ProjectSummary th {
+	text-align: left;
+	font-size: 10pt;
+	color: #000;
+	padding-bottom: 3px;
+	border-bottom: 1px dashed #ccc;
+}
+
+body.dashboard table.ProjectSummary th a {
+	text-decoration: none;
+	color: #000;
+}
+
+body.dashboard div.InactiveClients {
+	display: none;
+}
+
+body.dashboard h2.dashstatus {
+	display: none;
+}
+
+body.dashboard div.Project a {
+	font-size: 9pt;
+	font-family: georgia, serif;
+}
+
+/*-------------------------------------------------
+TODOS
+-------------------------------------------------*/
+
+/*
+body.todos li {
+	font-family: georgia, serif;
+	list-style: none;
+	font-size: 10pt;
+	padding-bottom: 4px;
+}
+
+body.todos div.check_box_for_item, body.todos div.content_for_item {
+	display: inline;
+}
+
+body.todos div.content_for_item {
+	line-height: 1.1em;
+}
+
+body.todos h2 span, body.todos h3 {
+	display: none;
+}
+
+body.todos div.Left img {
+	display: none;
+}
+
+body.todos div.complete {
+	font-size: 9pt;
+	color: #444;
+}
+
+body.todos a.permalink {
+	text-decoration: none;
+	color: #000;
+}
+
+body.todos div.list {
+	margin-bottom: 20px;
+}
+
+body.todos div.viewallcomplete {
+	display: none;
+}
+
+body.todos p {
+	font-size: 10pt;
+	font-style: italic;
+	margin: 0;
+	padding: 0;
+}
+
+body.todos p.listdesc {
+	margin-top: -10px;
+}
+*/
+
+body.todos div.list_drag_handle, body.todos div.nubbin, body.todos div.controls img, body.todos div.viewallcomplete {
+	display: none;
+}
+
+body.todos div.private_list h2, body.todos div.list h2 {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+
+body.todos div.list_title h2 a {
+	display: normal;
+	font-size: 18pt;
+	text-decoration: none;
+	color: #000;
+}
+
+body.todos div.controls {
+	clear: both;
+	float: left;
+	padding-right: 3px;
+	display: inline;
+}
+
+body.todos div.content {
+	font-size: 10pt;
+	font-family: georgia, serif;
+	line-height: 1.2em;
+	margin: 0 0 10px 10px;
+	width: 100%;
+}
+
+body.todos div.list_wrapper {
+	margin-bottom: 25px;
+}
+
+body.todos div.done div.item div.content {
+	font-size: 9pt;
+	font-family: georgia, serif;
+	line-height: 1.2em;
+	color: #999;
+}
+
+body.todos div.done div.item div.content strong.date {
+	padding-right: 5px;
+}
+
+body.todos div.list p.listdesc {
+	font-style: italic;
+	margin: 0 0 5px 0;
+}
+
+/*-------------------------------------------------
+TODOS GLOBAL
+-------------------------------------------------*/
+
+body.todoglobal h2.todo {
+	font-size: 13pt;
+	margin: 25px 0 5px 0;
+	padding: 0;
+}
+
+body.todoglobal a:link, body.todoglobal h2.todo a:link, body.todoglobal h2.todo a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+body.todoglobal td {
+	font-size: 11pt;
+	vertical-align: top;
+	padding: 3px;
+	font-family: georgia, serif;
+}
+
+body.todoglobal table.todolist td.todolisttitle {
+	font-size: 10pt;
+	border-right: 1px solid #ccc;
+	text-align: right;
+	padding: 5px;
+}
+
+body.todoglobal table.todolist td.todolisttitle a:link, body.todoglobal table.todolist td.todolisttitle a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+body.todoglobal table.todolist tr.firstofgroup td {
+	border-top: 1px solid #ccc;
+}
+
+body.todoglobal table.todolist {
+	margin-bottom: 50px;
+}
+
+body.todoglobal div.Full div.col div.SectionHeader {
+	display: block;
+}
+
+body.todoglobal div.Full div.col div.SectionHeader p {
+	display: none;
+}
+
+/*-------------------------------------------------
+MESSAGES/COMMENTS
+-------------------------------------------------*/
+
+body.comments div.Left div.col div.SectionHeader {
+	display: block;
+	margin: 0;
+	padding: 0;
+	line-height: 0.8em;
+}
+
+body.comments div.SectionHeader h3 {
+	display: none;
+}
+
+body.comments div.Comments h2 {
+	margin: 20px 0;
+	padding: 5px 0;
+	border-bottom: 2px solid #000;
+	border-top: 2px solid #000;
+	font-size: 9pt;
+}
+
+body.comments h3 {
+	font-size: 8pt;
+	font-family: helvetica, sans-serif;
+}
+
+body.comments h3 img {
+	display: none;
+}
+
+body.comments div.Post span img {
+	display: none;
+}
+
+body.comments div.Post p {
+	margin-left: 25px;
+}
+
+body.comments div#OriginalPost p {
+	margin-left: 0;
+}
+
+body.comments div.Post {
+	margin-bottom: 25px;
+}
+
+body.messages div.Post li, body.comments div.Post li, body.comments div#OriginalPost li  {
+	font-size: 10pt;
+	margin-bottom: 3px;
+	font-family: georgia, serif;
+}
+
+body.comments textarea, body.comments input, body.comments div.formattingtips, body.comments div.extra, body.comments span#buttons {
+	display: none;
+}
+
+body.messages h2.date, body.files h2.date {
+	font-size: 7pt;
+	padding: 0;
+	margin-bottom: 10px;
+	font-weight: normal;
+	text-transform: uppercase;
+	text-decoration: underline;
+}
+
+body.messages h1 a {
+	text-decoration: none;
+	color: #000;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	line-height: 0.9em;
+}
+
+body.messages div.Post h3 {
+	font-size: 8pt;
+	margin-bottom: 30px;
+	padding-bottom: 5px;
+	font-family: helvetica, sans-serif;
+}
+
+body.messages div.Post h3 a {
+	text-decoration: none;
+}
+
+body.messages .commentlink {
+	display: none;
+}
+
+body.messages div.Post {
+	margin-left: 25px;
+}
+
+body.messages ul.LinkList, body.comments ul.LinkList {
+	list-style: none;
+}
+
+body.messages ul.LinkList img, body.comments ul.LinkList img {
+	margin-right: 5px;
+}
+
+body.messages div.post_comment_stats h2 a, body.messages div.post_comment_stats h2 {
+	display: inline;
+	font-size: 10pt;
+	text-decoration: none;
+	margin-top: -10px;
+	color: #000;
+}
+
+/*-------------------------------------------------
+MILESTONES
+-------------------------------------------------*/
+
+body.milestones .LateBlock h1, body.milestones .UpcomingBlock h1, body.milestones .CompletedBlock h1 {
+	border-bottom: 2px solid #000;
+	padding: 5px 0 2px 0px;
+	font-size: 11pt;
+	width: 700px;
+}
+
+body.milestones div.Milestone h2, body.milestones div.Milestone h3 {
+	font-size: 9pt;
+	margin: 0;
+	padding: 0;
+}
+
+body.milestones div.Milestone h2 {
+	font-weight: normal;
+}
+
+body.milestones h2.subheader {
+	display: none;
+}
+
+body.milestones div.Milestone h2.upcoming, body.milestones div.Milestone h2.complete, body.milestones div.LateBlock div.Milestone h2 {
+	font-size: 8pt;
+	margin-bottom: 1px;
+}
+
+body.milestones div.Milestone h3 {
+	font-size: 12pt;
+}
+
+body.milestones div.Milestone {
+	margin-bottom: 15px;
+	margin-left: 25px;
+}
+
+body.milestones p.todayis {
+	display: none;
+}
+
+body.milestones ul li {
+	font-size: 10pt;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+table.Dashcal {
+	width: 600px;
+	margin-bottom: 15px;
+	margin-left: 20px;
+}
+
+table.Dashcal td {
+	border: 1px solid #ccc;
+	font-size: 9px;
+	padding: 3px;
+}
+
+table.Dashcal th {
+	font-size: 10px;
+	text-align: left;
+}
+
+table.Dashcal ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+table.Dashcal li {
+	margin: 0 0 3px 0;
+	padding: 0;
+	font-weight: bold;
+}
+
+/*-------------------------------------------------
+OVERVIEW
+-------------------------------------------------*/
+
+body.overview .latemilestones li {
+	font-size: 10pt;
+}
+
+body.overview .latemilestones li a:link, body.overview .latemilestones li a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+body.overview h2.subheader {
+	display: none;
+}
+
+body.overview h2, body.overview div.latemilestones h1 {
+	border-bottom: 2px solid #000;
+	padding: 5px 0;
+	font-size: 11pt;
+	width: 100%;
+}
+
+body.overview table.dashcal td li a:link {
+	text-decoration: none;
+	color: #000;
+}
+
+body.overview table.latest td {
+	border-bottom: 1px dashed #ccc;
+	text-align: top;
+	vertical-align: top;
+	font-size: 10pt;
+	font-family: georgia, serif;
+	padding: 5px 5px 5px 0;
+	margin-bottom: 5px;
+}
+
+body.overview table.latest td.icon {
+	margin-right: 7px;
+	text-align: right;
+	padding-top: 10px;
+}
+
+body.overview table.latest td.title {
+	width: 680px
+}
+
+body.overview table.latest p.responsible, body.overview span.late, body.overview table.latest td p.excerpt {
+	margin: 0;
+	padding: 0;
+	font-size: 8pt;
+	color: #666;
+}
+
+body.overview table.latest td p, body.overview blockquote {
+	margin: 0;
+	padding: 0;
+	text-indent: 0;
+}
+
+body.overview table.latest td a:link {
+	text-decoration: none;
+	color: #000;
+}
+
+body.overview span.late {
+	margin-left: 10px;
+}
+
+body.overview h2 {
+	border-bottom: 2px solid #000;
+	padding: 5px 0 2px 0;
+	font-size: 11pt;
+}
+
+
+/*-------------------------------------------------
+FILES
+-------------------------------------------------*/
+
+body.files div.Post {
+	margin-left: 25px;
+	clear: both;
+}
+
+body.files div.Post p {
+	font-size: 10pt;
+	margin: 0;
+	padding: 0;
+}
+
+body.files div.Post h3 {
+	font-size: 8pt;
+	margin: 0 0 15px 0;
+	padding: 0;
+	color: #666;
+	font-weight: normal;
+	font-family: georgia, serif;
+}
+
+body.files div.Post h3 img {
+	display: none;
+}
+
+body.files h2.date {
+	clear: both;
+}
+
+body.files div.Post h1 {
+	margin: 0;
+	padding: 0;
+}
+
+body.files div.Post div.file_info h1 a {
+	font-size: 12pt;
+	text-decoration: none;
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
+
+body.files div.Post div.file_info a {
+	text-decoration: none;
+	color: #000;
+}
+
+body.files h3 a {
+	display: none;
+}
+
+body.files div.Post div.file_icon {
+	float: left;
+}
+
+body.files div.Post div.file_icon img {
+	margin: 0 10px 25px 0;
+}
+
+/*-------------------------------------------------
+PEOPLE
+-------------------------------------------------*/
+
+body.people a:link, body.people a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+body.people table.Contacts {
+	margin-bottom: 40px;
+}
+
+body.people table.Contacts td {
+	width: 220px;
+	vertical-align: top;
+	padding: 5px;
+	border-bottom: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
+body.people table.Contacts tr.top td {
+	border-top: 1px solid #ddd;
+}
+
+body.people table.Contacts td.person a:link {
+	text-decoration: none;
+	color: #000;
+}
+
+body.people table.Contacts td.nopeople {
+	display: none;
+}
+
+body.people p.admin {
+	display: none;
+}
+
+body.people table.Contacts td.person p {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+}
+
+body.people table.Contacts td.person h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+}
+
+body.people table.Contacts td.company p, body.people table.Contacts td.company h2, body.people table.Contacts td.company h1, body.people table.Contacts td.person h3 {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+}
+
+body.people table.Contacts td.person h3 {
+	font-weight: normal;
+	margin-bottom: 5px;
+}
+
+body.people table.Contacts td.company h1 {
+	color: #000;
+	font-size: 18px;
+}
+
+body.people table.Contacts td.company {
+	border-top: 2px solid #ccc;
+}
+
+/*-------------------------------------------------
+WRITEBOARDS
+-------------------------------------------------*/
+
+body.writeboards ul, body.writeboards li, body.writeboards ol, body.writeboards div.writeboards ol, body.writeboards div.writeboards ul li div {
+	list-style: none;
+}
+
+body.writeboards ul li {
+	margin-bottom: 20px;
+}
+
+body.writeboards ul a:link, body.writeboards ul a:visited {
+	font-size: 14pt;
+	font-weight: bold;
+	text-decoration: none;
+	color: #000;
+	font-family: helvetica, sans-serif;
+}
+
+body.writeboards img {
+	display: none;
+}
+
+body.writeboards .detail {
+	font-size: 8pt;
+	color: #666;
+}
+
+/*-------------------------------------------------
+DASHCAL
+-------------------------------------------------*/
+
+table.Dashcal li, table.Dashcal li a {
+	font-size: 8pt;
+	text-decoration: none;
+	color: #000;
+}
+
+table.Dashcal td {
+	font-size: 7pt;
+	color: #666;
+}
+
+body.overview table.Dashcal, body.dashboard table.Dashcal {
+	width: 100%;
+	margin-left: 0;
+}
+
+/*-------------------------------------------------
+TIME
+-------------------------------------------------*/
+
+body.time table.TimeTrack {
+}
+
+body.time table.TimeTrack td, body.time table.TimeTrack tr {
+	text-align: left;
+	border-bottom: 1px solid #efefef;
+	margin-left: 0;
+	padding-left: 0;
+	white-space: none;
+}
+
+body.time table.TimeTrack td {
+	padding: 3px 20px 3px 0;
+	font-family: georgia, serif;
+	font-size: 10pt;
+}
+
+body.time table.TimeTrack tr.AddTimeTrack td, body.time table.TimeTrack td img, body.time table.TimeTrack td.export {
+	display: none;
+}
+
+body.time table.TimeTrack tr.total td {
+	padding-top: 10px;
+	border-top: 2px solid #000;
+	font-weight: bold;
+}
+
+body.time table.TimeTrack td a {
+	text-decoration: none;
+	color: #000;
+}
+
+body.time div.col h1 span {
+	display: none;
+}
+
+body.time table.TimeTrack tr th.project a {
+	text-decoration: none;
+	color: #000;
+}
+
+body.time table.TimeTrack tr th.project {
+	background-color: #ccc;
+	border-bottom: 3px solid #000;
+	padding-top: 15px;
+	font-size: 10pt;
+}
+
+body.time table.TimeTrack tr#header_row th {
+	display: none;
+}

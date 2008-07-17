@@ -1,0 +1,108 @@
+<div class="content_block">
+	<div class="block_header">
+		<div class="block_header_link">	
+			<%= link_to sysinfo('300006', '', {:title => I_CN}, MORE_CN, {:type => RECIPE_CN, :count =>@recipe_submitter.recipes.size}), mine_recipes_path %>
+		</div>
+		<h1><%= @block_title %></h1>
+	</div>
+
+	<div class="block_main">
+		<table class="content">
+		  <tr>  	
+		    <td class="image">
+	    		<div id="current_photo" class="detail_image">
+	    			<% if has_photos?('recipe', @recipe, @user) %>
+	    				<%= render :partial => "/mine/photos/current_photo" %>
+	    			<% else %>
+							<%= link_to image_tag(photo_url(@photo, @photo_type, 'detail'), :alt => sysinfo('300001', '', nil, HAS_NO_CN, {:type => PHOTO_CN})),  
+													new_mine_recipe_photo_path(@recipe) %>
+						<% end %>
+	    		</div>
+					<% if @photos_all.size == 0 %>
+						<div class="below_image">
+							<%= sysinfo('300001', '', nil, HAS_NO_CN, {:type => PHOTO_CN}) %>
+						</div>
+					<% else %>
+						<%= will_paginate @photos_paginate, :prev_label => '&laquo;',
+			 																					:next_label => '&raquo;' %>
+						<div class="image_navigation">
+		    			<ul>
+			    			<% for photo in @photos_paginate %>
+			    				<li class="navigation_image">
+					    				<%= link_to_remote image_tag(photo_url(photo, @photo_type, 'navigation'), :alt => h(photo.caption)),
+					    																		 :url => mine_recipe_photo_path(@recipe, photo), 
+					    																		 :method => :get %>
+				    			</li>
+			    			<% end %>
+		    			</ul>	
+		    		</div>
+			 			<div class="below_image">
+							<%= link_to sysinfo('300005', '', nil, MORE_CN, {:type => PHOTO_CN, :count => @photos_all.size}), mine_recipe_photos_path(@recipe) %>
+						</div>
+					<% end %>
+					<div class="below_image">
+						<%= link_to sysinfo('300001', ADD_CN, nil, NEW_CN, {:type => PHOTO_CN}), new_mine_recipe_photo_path(@recipe) %>
+					</div>
+		    </td>
+		    <td class="detail">
+		    	<div class="title"><h2><%= link_to h(@recipe.title), mine_recipe_path(@recipe) %></h2></div>
+		    	<div class="basic">
+		    		<ul>
+		    			<li class="basic"><%= "#{COME_FROM_CN} " %><%= link_to "#{@recipe_submitter.login}", user_path(@recipe_submitter) %></li>
+		    			<li class="basic"><%= "#{@recipe.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %></li>
+		    			<% if @recipe.created_at != @recipe.updated_at %>
+			    			<li class="basic"><%= "#{@recipe.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
+		    			<% end %>
+		    			<li class="basic">
+			    			<% if @recipe.tag_list.size > 0 %>
+				    			<%= "#{TAG_CN}: " %>					    			
+				    			<% 1.upto(@recipe.tag_list.size) do |i| %>
+					    			<%= link_to sanitize @recipe.tag_list[i-1], '' %>
+					    		<% end %>
+				    		<% else %>
+					    			<%= "#{TAG_CN}: 还没有标签" %>
+				    		<% end %>
+		    			</li>
+		    		</ul>
+		    	</div>
+		    	<div class="main">
+		    		<ul>
+		    			<li class="text"><%= "#{PREP_TIME_CN}: #{time_display(@recipe.prep_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
+		    			<li class="text"><%= "#{COOK_TIME_CN}: #{time_display(@recipe.cook_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
+		    			<li class="text"><%= "#{DIFFICULTY_CN}: #{@recipe.difficulty}" %></li>
+		    			<li class="text"><%= "#{YIELD_CN}: #{sanitize @recipe.yield}" %></li>
+		    		</ul>
+		    	</div>
+		    	<div class="todo">
+			    		<%= link_to sysinfo('300003', EDIT_CN, nil, '', {:type => RECIPE_CN, :count => 1, :unit => UNIT_1_CN}), edit_mine_recipe_path(@recipe) %> |
+			    		<%= link_to sysinfo('300003', DELETE_CN, nil, '', {:type => RECIPE_CN, :count => 1, :unit => UNIT_1_CN}), [:mine, @recipe], :confirm => sysinfo('100003', DELETE_CN, nil, '', {:type => RECIPE_CN, :count => 1, :unit => UNIT_1_CN}), :method => :delete %>
+		    	</div>
+		    	<div class="main">
+		    		<ul>
+							<li class="label"><%= "#{DESCRIPTION_CN}:" %></li>
+		    		</ul>
+	    			<%= sanitize text_display(@recipe.description) %>
+		    	</div>
+		    	<div class="main">
+		    		<ul>
+		    			<li class="label"><%= "#{INGREDIENT_CN}:" %></li>
+		    		</ul>
+	    			<%= sanitize text_display(@recipe.ingredients) %>
+		    	</div>
+		    	<div class="main">
+		    		<ul>
+		    			<li class="label"><%= "#{DIRECTION_CN}:" %></li>
+		    		</ul>
+	    			<%= sanitize list_display(@recipe.directions) %>
+		    	</div>
+		    	<div class="main">
+		    		<ul>
+		    			<li class="label"><%= "#{TIP_CN}:" %></li>
+		    		</ul>
+		    		<%= sanitize list_display(@recipe.tips) %>
+		    	</div>
+		    </td>
+		  </tr>
+		</table>
+	</div>
+</div>

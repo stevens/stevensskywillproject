@@ -1,0 +1,74 @@
+<div class="content_block">
+	<div class="block_header">
+		<h1><%= @block_title %></h1>
+	</div>
+	
+	<div class="block_main">
+		<% form_for :user, :url => users_path do |f| %>
+			<table class="content">
+				<tr>
+					<td class="label"><label for="login"><%= "#{ACCOUNT_ID_CN}:" %></label></td>
+					<td class="input">
+						<%= f.text_field :login, :class => "text_s" %>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<%= error_message_on "user", "login" %>
+					</td>
+				</tr>
+				<tr>
+					<td class="label"><label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label></td>
+					<td class="input">
+						<%= f.text_field :email, :class => "text_s" %>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<%= error_message_on "user", "email" %>
+					</td>
+				</tr>
+				<tr>
+					<td class="label"><label for="password"><%= "#{PASSWORD_CN}:" %></label></td>
+					<td class="input">
+						<%= f.password_field :password, :class => "text_s" %>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<%= error_message_on "user", "password" %>
+					</td>
+				</tr>
+				<tr>
+					<td class="label"><label for="password_confirmation"><%= "#{PASSWORD_CN}确认:" %></label></td>
+					<td class="input">
+						<%= f.password_field :password_confirmation, :class => "text_s" %>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<%= error_message_on "user", "password_confirmation" %>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="input">
+						点击下面的"注册", 表示我已经阅读并同意<%= SITE_NAME_CN %>的"<%= link_to TERMS_OF_SERVICE_CN, '' %>"和"<%= link_to PRIVACY_POLICY_CN, '' %>"
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="submit">
+						<%= submit_tag SIGN_UP_CN, :class => "submit", :disabled => false %>
+						&nbsp;&nbsp;
+						<%= link_to "&raquo;我已经有#{SITE_NAME_CN}#{ACCOUNT_CN}", new_session_path %>
+					</td>
+				</tr>
+			</table>
+		<% end %>
+	</div>
+</div>

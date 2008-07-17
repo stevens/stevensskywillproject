@@ -1,0 +1,19 @@
+defaults: &defaults
+  adapter: mysql
+  # encoding: utf8
+  username: root
+  password: 
+  host: localhost
+  socket: /opt/local/var/run/mysql5/mysqld.sock
+
+development:
+  database: cookcat_development
+  <<: *defaults
+
+test:
+  database: cookcat_test 
+  <<: *defaults
+
+production:
+  database: cookcat_production
+  <<: *defaults

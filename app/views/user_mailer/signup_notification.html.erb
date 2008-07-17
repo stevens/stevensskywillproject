@@ -1,0 +1,14 @@
+<%= "亲爱的#{@user.login}, #{HELLO_CN}!" %>
+
+<%= "你已经#{SIGN_UP_CN}了一个#{SITE_NAME_CN}#{ACCOUNT_CN}, 请确认下面的#{SIGN_UP_CN}信息：" %>
+
+<%= "#{ACCOUNT_ID_CN}: #{@user.login}" %>
+<%= "#{PASSWORD_CN}: #{@user.password}" %>
+
+<%= "请访问下面的#{URL_CN}激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}:" %>
+
+<%= @url %>
+  
+<%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %>
+
+<%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{TEAM_NAME_EN}" %> 

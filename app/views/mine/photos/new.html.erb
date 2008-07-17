@@ -1,0 +1,15 @@
+<div class="content_block">
+	<div class="block_header">
+		<div class="block_header_link">
+			<%= link_to sysinfo('300006', '', {:type => @belong_to_type}, MORE_CN, {:type => PHOTO_CN, :count =>@belong_to_photos_count}), @photos_path %> |
+			<%= link_to sysinfo('300005', BACK_CN, nil, '', {:type => @belong_to_type, :title => @belong_to_title}), @belong_to_path %>	
+		</div>
+		<h1><%= @block_title %></h1>
+	</div>
+	
+	<!-- <%= error_messages_for :photo %> -->
+	<div class="block_main" >
+		<%= render :partial => "photo", 
+							 :locals => { :button_name => sysinfo('300001', ADD_CN, nil, NEW_CN, {:type => PHOTO_CN})} %>
+	</div>
+</div>
