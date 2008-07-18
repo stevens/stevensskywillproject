@@ -3,10 +3,10 @@
 <html>
 	<head>
 		<title><%= @page_title %></title>
-		<%= stylesheet_link_tag "2/application.css" %>
-		<%= stylesheet_link_tag "2/style.css" %>
+		<%= stylesheet_link_tag "alpha/application.css" %>
+		<%= stylesheet_link_tag "alpha/style.css" %>
 		<%= javascript_include_tag :defaults %>
-		<link href="http://media.dwell.com/designimages/favicon.ico" rel="shortcut icon"/>	
+		<link href="" rel="shortcut icon"/>	
 	</head>
 	<body>
 	
@@ -26,9 +26,6 @@
 					<li class=<%= tab_css_class('cooks') %>>
 						<%= link_to COOK_CN, root_path %>
 					</li>
-					<li class=<%= tab_css_class('photos') %>>
-						<%= link_to PHOTO_CN, photos_path %>
-					</li>
 					<li class=<%= tab_css_class('groups') %>>
 						<%= link_to GROUP_CN, root_path %>
 					</li>
@@ -38,7 +35,7 @@
 			<div id="right_navigation">
 				<ul class="navigation">
 					<li class=<%= tab_css_class('mine') %>>
-						<%= link_to "#{MY_CN}厨房", "#{root_path}mine" %>
+						<%= link_to "#{MY_CN}#{KITCHEN_CN}", "#{root_path}mine" %>
 					</li>
 					<% if logged_in? %>
 						<li class=<%= tab_css_class('profiles') %>>
@@ -72,7 +69,7 @@
 				<!-- current user -->
 				<div id="current_user">
 					<% if logged_in? %> 
-						<%= "#{HELLO_CN}, " %><%= link_to @current_user.login, user_path(@current_user) %>
+						<%= "#{HELLO_CN}, " %><%= link_to @current_user.login, user_url(@current_user) %>
 						<%= link_to LOGOUT_CN, "#{root_path}logout" %>
 					<% else %>
 						<%= link_to SIGN_UP_CN, "#{root_path}signup" %>

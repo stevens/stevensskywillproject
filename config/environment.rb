@@ -188,6 +188,7 @@ Rails::Initializer.run do |config|
 	RECIPE_CN = '食谱'
 	MENU_CN = '餐单'
 	COOK_CN = '厨师'
+	KITCHEN_CN = '厨房'
 	PHOTO_EN = 'photo'
 	PHOTO_CN = '图片'
 	GROUP_CN = '厨圈'
