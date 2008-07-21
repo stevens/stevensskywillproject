@@ -1,0 +1,118 @@
+<table class="content">
+	<tr>
+	
+		<td class="left_colomn">
+			<div class="left_content_block">
+	    	<div class="block_header">
+					<h1><%= "#{RECIPE_CN}#{CATEGORY_CN}" %></h1>
+	    	</div>
+	    	<div class="left_block_main">
+	    		<div class="sub_block">
+	    		</div>
+	    	</div>
+			</div>
+			<div class="left_content_block">
+	    	<div class="block_header">
+					<h1><%= "常用#{RECIPE_CN}#{TAG_CN}" %></h1>
+	    	</div>
+	    	<div class="left_block_main">
+	    		<div class="sub_block">
+					  <% tag_cloud @tags, %w(css1 css2 css3 css4) do |tag, css_class| %>
+					    <%= link_to "#{tag.name}(#{tag.count})", { :action => :tag, :id => tag.name }, :class => css_class %>
+					  <% end %>
+	    		</div>
+	    	</div>
+			</div>
+		</td>
+		
+		<td class="right_colomn">
+			<div class="right_content_block">
+	    	<div class="block_header">
+					<h1><%= "本周精选#{RECIPE_CN}" %></h1>
+	    	</div>
+	    	<div class="right_block_main">
+	    		<div class="sub_block">
+		    		<div class="image">
+							<% if @recipe_cover_photo %>
+								<%= link_to image_tag( @recipe_cover_photo.public_filename(photo_size('detail')), :alt => h(@recipe_cover_photo.caption) ), 
+														recipe_url(@recipe) %>
+							<% end %>							
+						</div>
+			    	<div class="title"><h2><%= link_to h(@recipe_title), recipe_url(@recipe) %></h2></div>
+			    	<div class="basic">
+			    		<ul>
+			    			<li class="basic">
+			    				<% if @recipe_user == @current_user %>
+						    		<%= "来自 " %><%= link_to "我", user_url(@recipe_user) %>
+						    	<% else %>
+						    		<%= "来自 " %><%= link_to "#{@recipe_user_title}", user_url(@recipe_user) %>
+						    	<% end %>
+					    		&nbsp;&nbsp;
+					    		<% if @recipe.created_at == @recipe.updated_at %>
+					    			<%= "#{@recipe.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
+					    		<% else %>
+					    			<%= "#{@recipe.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
+					    		<% end %>
+			    			</li>
+				    		<li class="basic">
+				    			<% if @recipe.tag_list.size > 0 %>
+					    			<%= "#{TAG_CN}: " %>					    			
+					    			<% 1.upto(@recipe.tag_list.size) do |i| %>
+						    			<%= link_to sanitize(@recipe.tag_list[i-1]), { :action => :tag, :id => @recipe.tag_list[i-1] } %>
+						    		<% end %>
+					    		<% else %>
+						    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
+					    		<% end %>
+				    		</li>
+			    		</ul>
+			    	</div>
+					</div>
+	    	</div>
+			</div>
+			<div class="right_content_block">
+	    	<div class="block_header">
+					<h1><%= "最新的#{RECIPE_CN}" %></h1>
+	    	</div>
+	    	<div class="right_block_main">
+					<table class="content">		
+						<% 1.upto(@latest_recipe_lines_count) do |l| %>
+							<tr>
+								<% 1.upto(PHOTO_ITEMS_COUNT_PER_LINE) do |c| %>
+									<% if (i=c+(l-1)*PHOTO_ITEMS_COUNT_PER_LINE) <= @recipes_set_count %>
+										<td class="image_item_cell">
+											<% if @recipes[i-1].cover_photo_id %>
+												<div class="sub_block">
+													<div class="cube_image">
+														<% if photo = Photo.find(@recipes[i-1].cover_photo_id) %>
+															<%= link_to image_tag( photo.public_filename('mcube'), :alt => h(photo.caption) ), 
+																					recipe_url(@recipes[i-1]) %>
+														<% end %>
+													</div>
+													<div class="below_image">
+														<%= link_to @recipes[i-1].title, recipe_url(@recipes[i-1]) %>
+													</div>
+												</div>
+											<% end %>
+										</td>
+									<% end %>
+								<% end %>
+							</tr>	
+						<% end %>
+					</table>
+	    	</div>
+			</div>
+			<div class="right_content_block">
+	    	<div class="block_header">
+					<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
+	    	</div>
+	    	<div class="right_block_main">
+    			<%= render :partial => "/reviews/list",
+    								 :locals => { :reviews => @reviews,
+    								 							:show_parent => true, 
+    								 							:show_todo => false } %>
+	    	</div>
+			</div>
+		</td>
+	
+	</tr>
+</table>

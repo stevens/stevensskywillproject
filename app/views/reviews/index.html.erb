@@ -27,7 +27,7 @@
 						</div>
 			    </td>
 			    
-			    <td class="right_colomn">
+			    <td class="right_colomn_lined">
 			    	<div class="sub_block">
 				    	<div class="title"><h2><%= link_to h(review.title), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => review.id}, nil) %></h2></div>
 				    	<div class="basic">
@@ -59,7 +59,6 @@
 				    		<% end %>
 				    	</div>
 			    	</div>
-			    	<div class="line"></div>
 			    </td>
 			    
 			  </tr>

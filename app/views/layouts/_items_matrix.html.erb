@@ -1,0 +1,27 @@
+<table class="content">		
+	<% 1.upto(items_rows_count(items.size, items_count_per_row)) do |r| %>
+		<tr>
+			<% 1.upto(items_count_per_row) do |c| %>
+				<% if (i=c+(r-1)*items_count_per_row) <= items.size %>
+					<td class="photo_item_cell">
+						<div class="sub_block">
+							<% if show_photo %>
+								<div class="cell_photo">
+									<%= link_to image_tag(photo_file_url(items[i-1]), :alt => h photo_alt(items[i-1])), 
+															url_for(items[i-1]) %>
+								</div>
+							<% end %>
+							<% if show_title %>
+								<div class="cell_title">
+									<%= link_to title_for(items[i-1]), url_for(items[i-1]) %>
+								</div>
+							<% end %>
+						</div>
+					</td>
+				<% else %>
+					<% break %>
+				<% end %>
+			<% end %>
+		</tr>	
+	<% end %>
+</table>

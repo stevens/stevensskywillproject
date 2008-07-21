@@ -14,6 +14,11 @@ img {
 	background-color: #fefefe;
 }
 
+.css1 { font-size: 1.0em; }
+.css2 { font-size: 1.2em; }
+.css3 { font-size: 1.4em; }
+.css4 { font-size: 1.6em; }
+
 /* Header */
 #header {
 	width: auto;
@@ -307,22 +312,32 @@ ul.navigation li.active a {
 
 /* Content Block */
 .content_block {
-	width: 100%;
+	margin-left: 2px;
+	margin-right: 2px;
 	border-top: #428cbb 4px solid;
 	border-bottom: #428cbb 4px solid;
+}
+.left_content_block {
+	width: 160px;
+	border-top: #428cbb 4px solid;
+}
+.right_content_block {
+	width: 100%;
+	margin-right: -10px !important;
+	border-top: #428cbb 4px solid;
 }
 
 /* Block Header */
 .block_header {
 	width: auto;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	padding-left: 30px;
-	padding-right: 30px;
+	padding-right: 10px;
 	background-color: #99ccff;
 }
 .block_header h1 {
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	color: #695245;
 }
@@ -403,10 +418,15 @@ table.content td {
 	vertical-align: top;
 }
 td.left_colomn {
-	
+	padding-right: 5px;
 }
 td.right_colomn {
 	width: 100%;
+	padding-left: 5px;
+}
+td.right_colomn_lined {
+	width: 100%;
+	border-bottom: 4px solid #eeeeee;
 }
 td.label {
 	width: 150px;
@@ -442,7 +462,20 @@ td.image_cell {
 	text-align: center;
 	vertical-align: middle;
 }
-
+td.image_item_cell {
+	width: 189px;
+	text-align: center;
+	vertical-align: middle;
+}
+div.left_block_main {
+	width: 160px;
+}
+div.right_block_main {
+	width: 100%;
+}
+.right_block_main table {
+	width: 100%;
+}
 div.block_main label {
 	float: right;
 	text-align: right;
@@ -471,6 +504,11 @@ div.sub_block_s {
 div.cube_image {
 	
 }
+div.image {
+	width: 100%;
+	margin-bottom: 5px;
+	text-align: center;
+}
 div.list_image {
 	width: 160px;
 	margin-bottom: 5px;
@@ -494,7 +532,7 @@ div.sign_detail_image {
 	width: 80px;
 	text-align: center;
 }
-div.detail_image img, div.full_image img, div.cube_image img, div.image_navigation img {
+div.image img, div.detail_image img, div.full_image img, div.cube_image img, div.image_navigation img {
 	border: 4px #eeeeee solid;
 }
 div.cube_image img.cover {
@@ -534,7 +572,8 @@ div.todo {
 	text-align: left;
 }
 div.todo_right {
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	color: #cccccc;
 	text-align: right;
 }
@@ -577,6 +616,10 @@ div.line {
 	margin-bottom: 10px;
 }
 .block_main li {
+	list-style: none;
+	display: block;
+}
+.sub_block li {
 	list-style: none;
 	display: block;
 }

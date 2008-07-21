@@ -1,8 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-	
-	def tab_css_class(tab_type)
-		if params[:controller] == tab_type
+	include TagsHelper
+
+	def tab_css_class(current_tab_type, tab_type)
+		if current_tab_type == tab_type
 			'active'
 		else
 			''
@@ -42,6 +43,8 @@ module ApplicationHelper
 			PHOTO_CN
 		when 'review'
 			REVIEW_CN
+		when 'tag'
+			TAG_CN
 		end	
 	end
 	
@@ -182,23 +185,6 @@ module ApplicationHelper
 		end
 		ac = "/#{action}" if action
 		"#{root_url}#{ns}#{po}#{so}#{ac}"
-	end
-	
-	def objects_path(object)
-		url_for :controller => object.pluralize, :only_path => true
-	end
-	
-	def object_path(object, id)
-		# url_for(:controller => object.pluralize, :id => id, :only_path => true).gsub('/index', '')
-		url_for "controller" => object.pluralize, :id => id, :only_path => true
-	end
-
-	def new_object_path(object)
-		url_for :controller => object.pluralize, :action => 'new', :only_path => true
-	end
-	
-	def edit_object_path(object, id)
-		url_for :controller => object.pluralize, :action => 'edit', :id => id, :only_path => true
 	end
 	
 	def sysinfo(code, todo, belong_to, option, object)

@@ -26,20 +26,18 @@
 			    	<div class="basic">
 			    		<ul>		    		
 			    			<li class="basic">
-			    				<%= "来自 " %>
 			    				<% if @review_user == @current_user %>
 						    		<%= link_to "我", user_url(@review_user) %>
 						    	<% else %>
 						    		<%= link_to "#{@review_user_title}", user_url(@review_user) %>
-						    	<% end %>			    			
+						    	<% end %>
+							    	&nbsp;
+						    		<%= "关于#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的#{@self_name}" %>
 			    			</li>
 			    			<li class="basic"><%= "#{@review.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %></li>
 			    			<% if @review.created_at != @review.updated_at %>
 				    			<li class="basic"><%= "#{@review.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
 			    			<% end %>
-				    		<li class="basic">
-									<%= "这是关于#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的#{@self_name}" %>
-				    		</li>
 			    		</ul>
 			    	</div>
 			    	<div class="todo">

@@ -1,8 +1,8 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  has_many :recipes, :order => "updated_at DESC"
+  has_many :recipes, :order => "created_at DESC"
   has_many :photos, :order => "created_at"
-  has_many :reviews, :order => "updated_at DESC"
+  has_many :reviews, :order => "created_at DESC"
   
   # Virtual attribute for the unencrypted password
   attr_accessor :password

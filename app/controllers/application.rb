@@ -7,10 +7,16 @@ class ApplicationController < ActionController::Base
   include RecipesHelper
   include PhotosHelper
   include ReviewsHelper
+  include TagsHelper
   
   helper :all # include all helpers, all the time
 	
 	before_filter :load_current_user
+	before_filter :load_user
+  before_filter :load_parent
+  before_filter :load_self
+  before_filter :load_self_urls
+	before_filter :set_current_tab
 	
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -21,6 +27,23 @@ class ApplicationController < ActionController::Base
 		unless logged_in?
 			flash[:notice] = "请你先#{LOGIN_CN}#{SITE_NAME_CN}"
 			access_denied
+		end
+	end
+
+	def set_current_tab
+		c = params[:controller]
+		a = params[:action]
+		if c == 'site'
+			@current_tab_type = 'site'
+		elsif @self_type == 'user' || (@user_id && @self_type == 'photo') || (@user_id && @self_type == 'review')
+			@current_tab_type = 'user'
+		elsif c == 'mine' || (a == 'mine' && @self_type == 'photo') || (a == 'mine' && @self_type == 'review')
+			@current_tab_type = 'mine'
+		elsif @self_type == 'recipe' || (@parent_type == 'recipe' && @self_type == 'photo') || (@parent_type == 'recipe' && @self_type == 'review')
+			@current_tab_type = 'recipe'
+		end
+		if @current_tab_type
+			@current_tab_name = name_for(@current_tab_type)
 		end
 	end
 	
@@ -41,7 +64,11 @@ class ApplicationController < ActionController::Base
   end
   
   def load_user
-  	@user_id = params[:user_id]
+  	if params[:controller] == 'users'
+  		@user_id = params[:id]
+  	elsif params[:user_id]
+	  	@user_id = params[:user_id]
+	  end
   	if @user_id
 	  	@user = User.find(@user_id)
 	  	if @user
@@ -100,5 +127,36 @@ class ApplicationController < ActionController::Base
   def clear_notice
 		flash[:notice] = nil
 	end
+	
+  def load_latest_recipes
+  	@recipes_set = Recipe.find(:all, :order => 'created_at DESC', :limit => PHOTO_ITEMS_COUNT_PER_PAGE,
+  														 :conditions => [ "title IS NOT NULL AND
+  														 									title <> '' AND
+  														 									description IS NOT NULL AND
+  														 									description <> '' AND 
+  														 									ingredients IS NOT NULL AND
+  														 									# ingredients <> '' AND
+  														 									directions IS NOT NULL AND
+  														 									# directions <> '' AND
+  														 									cover_photo_id IS NOT NULL AND
+  														 				 					# difficulty IS NOT NULL AND
+  														 									# prep_time > 0 AND									 									
+  														 									# cook_time > 0 AND
+  														 									yield IS NOT NULL AND
+  														 									# yield <> '' AND
+  														 									created_at >= ?", Time.today - 100.days ] )
+  	@recipes_set_count = @recipes_set.size
+  end
+  
+  def load_latest_reviews
+  	@reviews_set = Review.find(:all, :order => 'created_at DESC', :limit => ITEMS_COUNT_PER_PAGE,
+  														 :conditions => [ "title IS NOT NULL AND
+  														 									title <> '' AND
+  														 									review IS NOT NULL AND
+  														 									review <> '' AND 
+  														 									reviewable_type = 'recipe' AND
+  														 									created_at >= ?", Time.today - 7.days ] )
+  	@reviews_set_count = @reviews_set.size
+  end
 	
 end

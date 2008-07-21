@@ -2,10 +2,6 @@ class RecipesController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location, :only => [:index, :show, :mine]
-	before_filter :load_user
-  before_filter :load_parent
-  before_filter :load_self
-  before_filter :load_self_urls
 
   # GET /recipes
   # GET /recipes.xml
@@ -43,7 +39,7 @@ class RecipesController < ApplicationController
   def show 
 		load_recipe(nil)
 		
-    @photo_style = 'detail'
+    @photo_style = 'list'
     @photo = cover_photo(@recipe)
     @photo_file_url = photo_file_url(@photo, @self_type, @photo_style)
     @photo_alt = photo_alt(@photo, "还没有#{PHOTO_CN}")
@@ -175,6 +171,39 @@ class RecipesController < ApplicationController
     end
   end
   
+  def overview
+  	load_highlighted_recipes
+  	load_latest_recipes
+  	load_latest_reviews
+  	load_tag_cloud
+  	
+  	@recipes = @recipes_set
+  	
+  	@reviews = @reviews_set
+  	
+	  @latest_recipe_lines_count = groups_count(@recipes, PHOTO_ITEMS_COUNT_PER_LINE)
+	  
+	  info = "#{@self_name}"
+	  
+		set_page_title(info)
+  end
+  
+  def tag
+  	load_tagged_recipes(params[:id])
+	 	
+	 	info = "包含#{name_for('tag')}\"#{params[:id]}\"的#{@self_name}(#{@recipes_set_count})"
+	 	
+		recipes_paginate
+	 	
+		set_page_title(info)
+		set_block_title(info)
+ 		
+    respond_to do |format|
+     	format.html { render :action => 'index' }
+      format.xml  { render :xml => @recipes }
+    end
+  end
+  
   private
   
   def load_recipe(user)
@@ -204,10 +233,27 @@ class RecipesController < ApplicationController
 		load_recipes_user(@current_user)
   end
   
+  def load_highlighted_recipes
+  	@recipe = Recipe.find(:first, :conditions => [ "cover_photo_id IS NOT NULL" ])
+		@recipe_title = @recipe.title
+		@recipe_user = @recipe.user
+		@recipe_user_title = @recipe_user.login if @recipe_user
+		@recipe_cover_photo = Photo.find(@recipe.cover_photo_id)
+  end
+
+	def load_tagged_recipes(tag)
+		@recipes_set = Recipe.find_tagged_with(tag)
+		@recipes_set_count = @recipes_set.size
+	end
+
   def recipes_paginate
 	 	@recipes = @recipes_set.paginate :page => params[:page], 
  															 			 :per_page => ITEMS_COUNT_PER_PAGE
   end
+  
+	def load_tag_cloud
+	  @tags = Recipe.tag_counts
+	end
   
   def after_create_ok
   	respond_to do |format|

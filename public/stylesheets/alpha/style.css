@@ -756,6 +756,8 @@ div.p * {
 /* FLASH ============================================= */
 #flash {
 	margin-bottom: 10px;
+	margin-left: 2px;
+	margin-right: 2px;
 	padding: 10px;
 	padding-left: 30px;
 	/*background-color: #D5F7D4;

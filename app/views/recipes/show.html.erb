@@ -17,52 +17,39 @@
 		    
 		    <td class="left_colomn">
 		    	<div class="sub_block">
-					<% if @photos_set_count == 0 %>
-	    			<div id="current_photo" class="detail_image">
-							<%= image_tag photo_file_url(@photo, @self_type, 'detail'), :alt => "还没有#{PHOTO_CN}" %>	    				
-	    			</div>				
-						<div class="below_image">
-							<ul>
-								<li class="basic">
-									<%= "还没有#{PHOTO_CN}" %>
-								</li>
-								<% if @recipe_user == @current_user %>
+						<% if @photos_set_count == 0 %>
+		    			<div id="current_photo" class="detail_image">
+								<%= image_tag photo_file_url(@photo, @self_type, 'detail'), :alt => "还没有#{PHOTO_CN}" %>	    				
+		    			</div>				
+							<div class="below_image">
+								<ul>
 									<li class="basic">
-										<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(@recipe) %>
+										<%= "还没有#{PHOTO_CN}" %>
 									</li>
-								<% end %>
-							</ul>
-						</div>												
-					<% else %>
-	    			<div id="current_photo" class="detail_image">					
-		    			<%= render :partial => "/photos/current_photo" %>					
-	    			</div>
-						<div class="image_navigation">
-		    			<ul>
-			    			<% for photo in @photos %>
-			    				<li class="navigation_image">
-					    				<%= link_to_remote image_tag(photo_file_url(photo, @self_type, 'navigation'), :alt => h(photo.caption)),
-					    																		:url => recipe_photo_url(@recipe, photo), 
-					    																		:method => :get %>
-				    			</li>
-				    		<% end %>
-		    			</ul>	
-		    		</div>
-						<%= will_paginate @photos, :prev_label => '&laquo;',
-			 																 :next_label => '&raquo;' %>
-						<div class="below_image">
-							<ul>
-								<li class="basic">
-									<%= link_to "更多#{PHOTO_CN}(#{@photos_set_count})", recipe_photos_url(@recipe) %>
-								</li>
-								<% if @recipe_user == @current_user %>
+									<% if @recipe_user == @current_user %>
+										<li class="basic">
+											<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(@recipe) %>
+										</li>
+									<% end %>
+								</ul>
+							</div>												
+						<% else %>
+		    			<div id="current_photo" class="list_image">					
+			    			<%= render :partial => "/photos/current_photo" %>					
+		    			</div>
+							<div class="below_image">
+								<ul>
 									<li class="basic">
-										<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(@recipe) %>
+										<%= link_to "更多#{PHOTO_CN}(#{@photos_set_count})", recipe_photos_url(@recipe) %>
 									</li>
-								<% end %>
-							</ul>
-						</div>			    		
-					<% end %>
+									<% if @recipe_user == @current_user %>
+										<li class="basic">
+											<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(@recipe) %>
+										</li>
+									<% end %>
+								</ul>
+							</div>			    		
+						<% end %>
 					</div>
 		    </td>
 		    
@@ -149,7 +136,9 @@
 			    	</div>
 	    			
 	    			<%= render :partial => "/reviews/list",
-	    								 :locals => { :parent_user => @recipe_user } %>
+	    								 :locals => { :reviews => @reviews,
+	    								 							:show_parent => false,
+	    								 							:show_todo => true } %>
 			    	
 			    	<div class="todo_right">
 			    		<ul>

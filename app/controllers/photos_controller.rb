@@ -2,15 +2,11 @@ class PhotosController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location, :only => [:index, :show, :mine]
-	before_filter :load_user
-  before_filter :load_parent
-  before_filter :load_self
-  before_filter :load_self_urls
   
   # GET /photos
   # GET /photos.xml
   def index
-  	@photo_style = 'mcube'
+  	@photo_style = 'thumbnail'
   	
   	if @parent_obj
   		load_photos_all			

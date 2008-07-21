@@ -22,9 +22,9 @@
 							<td class="image_cell">
 								<div class="cube_image">
 									<% if @photos[i-1].is_cover?(@parent_obj) %>
-											<%= link_to image_tag(@photos[i-1].public_filename(@photo_style), :alt => h(@photos[i-1].caption), :class => "cover"), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
+											<%= link_to image_tag(@photos[i-1].public_filename(photo_size(@photo_style)), :alt => h(@photos[i-1].caption), :class => "cover"), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
 									<% else %>
-											<%= link_to image_tag(@photos[i-1].public_filename(@photo_style), :alt => h(@photos[i-1].caption)), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
+											<%= link_to image_tag(@photos[i-1].public_filename(photo_size(@photo_style)), :alt => h(@photos[i-1].caption)), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
 									<% end %>
 								</div>
 							</td>
@@ -33,7 +33,7 @@
 				</tr>	
 			<% end %>
 		</table>
-	<div>
+	</div>
 	
 	<%= will_paginate @photos, :prev_label => "&laquo; #{PREV_PAGE_CN}",
 	 													 :next_label => "#{NEXT_PAGE_CN} &raquo;" %>

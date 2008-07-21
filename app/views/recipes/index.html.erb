@@ -43,7 +43,7 @@
 						</div>
 			    </td>
 			    
-			    <td class="right_colomn">
+			    <td class="right_colomn_lined">
 			    	<div class="sub_block">
 				    	<div class="title"><h2><%= link_to h(recipe.title), recipe_url(recipe) %></h2></div>
 				    	<div class="basic">
@@ -65,7 +65,7 @@
 					    			<% if recipe.tag_list.size > 0 %>
 						    			<%= "#{TAG_CN}: " %>					    			
 						    			<% 1.upto(recipe.tag_list.size) do |i| %>
-							    			<%= link_to sanitize recipe.tag_list[i-1], '' %>
+							    			<%= link_to sanitize(recipe.tag_list[i-1]), { :action => :tag, :id => recipe.tag_list[i-1] } %>
 							    		<% end %>
 						    		<% else %>
 							    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
@@ -87,7 +87,6 @@
 				    		<% end %>
 				    	</div>
 			    	</div>
-			    	<div class="line"></div>
 			    </td>
 			    
 			  </tr>

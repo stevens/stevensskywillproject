@@ -189,7 +189,9 @@ Rails::Initializer.run do |config|
 	MENU_CN = '餐单'
 	COOK_CN = '厨师'
 	KITCHEN_CN = '厨房'
+	RANKING_CN = '榜单'
 	PHOTO_EN = 'photo'
+	CATEGORY_CN = '分类'
 	PHOTO_CN = '图片'
 	GROUP_CN = '厨圈'
 	FRIEND_CN = '厨友'
@@ -255,7 +257,9 @@ Rails::Initializer.run do |config|
 	PHOTOS_COUNT_PER_PAGE = 24
 	PHOTOS_COUNT_PER_LINE = 6
 	PHOTOS_COUNT_PER_NAV = 5
-	ITEMS_COUNT_PER_PAGE = 3
+	PHOTO_ITEMS_COUNT_PER_PAGE = 8
+	PHOTO_ITEMS_COUNT_PER_LINE = 4
+	ITEMS_COUNT_PER_PAGE = 6
 	
 	SUBITEMS_COUNT_OF_PARENT = 5
 	

@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/:controller', :action => 'mine'
-	# map.connect ':controller/:type', :action => 'find_by'
+	map.connect ':controller/overview', :action => 'overview'
   # map.resources :infos
 
   # map.resources :codes
