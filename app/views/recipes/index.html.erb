@@ -9,93 +9,20 @@
 		<h1><%= @block_title %></h1>
 	</div>
 	
-	<%= will_paginate @recipes, :prev_label => "&laquo; #{PREV_PAGE_CN}",
-	 														:next_label => "#{NEXT_PAGE_CN} &raquo;" %>
+	<%= render :partial => "layouts/items_paginate",
+						 :locals => {:items => @recipes} %>
 
 	<div class="block_main">
-		<table class="content">
-			
-			<% for recipe in @recipes %>
-			  <tr>  	
-			    
-			    <td class="left_colomn">
-			    	<div class="sub_block">
-			    		<div class="list_image">
-			    			<%= link_to image_tag(photo_file_url(cover_photo(recipe), @self_type, 'list'), :alt => h(photo_alt(cover_photo(recipe), "还没有#{PHOTO_CN}"))),  
-			    														recipe_url(recipe) %>
-			    		</div>
-							<div class="below_image">
-								<ul>
-									<li class="basic">
-										<% if photos_for(@self_type, recipe.id, nil).size > 0 %>
-											<%= link_to "更多#{PHOTO_CN}(#{photos_for(@self_type, recipe.id, nil).size})", recipe_photos_url(recipe) %>
-										<% else %>
-											<%= "还没有#{PHOTO_CN}" %>
-										<% end %>
-									</li>
-									<% if recipe.user == @current_user %>
-										<li class="basic">
-											<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(recipe) %>
-										</li>
-									<% end %>
-								</ul>
-							</div>
-						</div>
-			    </td>
-			    
-			    <td class="right_colomn_lined">
-			    	<div class="sub_block">
-				    	<div class="title"><h2><%= link_to h(recipe.title), recipe_url(recipe) %></h2></div>
-				    	<div class="basic">
-				    		<ul>
-				    			<li class="basic">
-				    				<% if recipe.user == @current_user %>
-							    		<%= "来自 " %><%= link_to "我", user_url(recipe.user) %>
-							    	<% else %>
-							    		<%= "来自 " %><%= link_to "#{recipe.user.login}", user_url(recipe.user) %>
-							    	<% end %>
-						    		&nbsp;&nbsp;
-						    		<% if recipe.created_at == recipe.updated_at %>
-						    			<%= "#{recipe.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
-						    		<% else %>
-						    			<%= "#{recipe.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
-						    		<% end %>
-				    			</li>
-					    		<li class="basic">
-					    			<% if recipe.tag_list.size > 0 %>
-						    			<%= "#{TAG_CN}: " %>					    			
-						    			<% 1.upto(recipe.tag_list.size) do |i| %>
-							    			<%= link_to sanitize(recipe.tag_list[i-1]), { :action => :tag, :id => recipe.tag_list[i-1] } %>
-							    		<% end %>
-						    		<% else %>
-							    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
-						    		<% end %>
-					    		</li>
-				    		</ul>
-				    	</div>
-				    	<div class="main">
-				    		<%= sanitize recipe.description_summary %>
-				    		<% if reviews_for(@self_type, recipe.id, nil).size > 0 %>
-				    			<%= link_to "(#{reviews_for(@self_type, recipe.id, nil).size}#{unit_for('review')}#{REVIEW_CN})",
-				    									restfu_url_for(nil, {:type => @self_type, :id => recipe.id}, {:type => 'review'}, nil) %>
-				    		<% end %>
-				    	</div>
-				    	<div class="todo">
-				    		<% if recipe.user == @current_user %>
-					    		<%= link_to "#{EDIT_CN}这#{@self_unit}#{@self_name}", edit_recipe_url(recipe) %> |
-					    		<%= link_to "#{DELETE_CN}这#{@self_unit}#{@self_name}", recipe_url(recipe), :confirm => "确定要#{DELETE_CN}这#{@self_unit}#{@self_name}吗?", :method => :delete %>
-				    		<% end %>
-				    	</div>
-			    	</div>
-			    </td>
-			    
-			  </tr>
-			<% end %>
-			
-		</table>
+		<%= render :partial => "/layouts/items_list",
+							 :locals => {:item_type => 'recipe', 
+							 						 :items => @recipes,
+							 						 :show_photo => true, 
+							 						 :show_title => false, 
+							 						 :show_photo_todo => true, 
+							 						 :show_todo => true} %>
 	</div>
 	
-	<%= will_paginate @recipes, :prev_label => "&laquo; #{PREV_PAGE_CN}",
-	 														:next_label => "#{NEXT_PAGE_CN} &raquo;" %>
+	<%= render :partial => "layouts/items_paginate",
+						 :locals => {:items => @recipes} %>
 
 </div>

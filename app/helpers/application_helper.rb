@@ -60,6 +60,19 @@ module ApplicationHelper
 			UNIT_REVIEW_CN
 		end
 	end
+	
+	def item_title(item_type, item)
+		case item_type
+		when 'user'
+			item.login
+		else
+			item.title
+		end
+	end
+	
+	def item_url(item_type, item_id)
+		"#{root_url}#{item_type.pluralize}/#{item_id}"
+	end
 
 	def second_to_hms(second)
 		h = second/3600
@@ -108,6 +121,11 @@ module ApplicationHelper
 				end
 			end
 		end
+	end
+	
+	def items_rows_count(items_count, items_count_per_row)
+		rc = items_count/items_count_per_row
+		rc = items_count%items_count_per_row == 0 ? rc : rc+1
 	end
 	
 	def groups_count(objects, count_per_group)

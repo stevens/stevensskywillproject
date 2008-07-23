@@ -1,0 +1,20 @@
+<% if show_title %>
+	<%= link_to item_title(item_type, item), item_url(item_type, item.id) %>
+<% end %>
+
+<% if show_photo_todo %>
+	<ul>
+		<li class="basic">
+			<% if (photos_count = photos_for(nil, item_type, item.id, 'created_at').size) > 0 %>
+				<%= link_to "更多#{PHOTO_CN}(#{photos_count})", restfu_url_for(nil, {:type => item_type, :id => item.id}, {:type => 'photo'}, nil) %>
+			<% else %>
+				<%= "还没有#{PHOTO_CN}" %>
+			<% end %>
+		</li>
+		<% if item.user == @current_user %>
+			<li class="basic">
+				<%= link_to "#{ADD_CN}新#{PHOTO_CN}", restfu_url_for(nil, {:type => item_type, :id => item.id}, {:type => 'photo'}, 'new') %>
+			</li>
+		<% end %>
+	</ul>
+<% end %>

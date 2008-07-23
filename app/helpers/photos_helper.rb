@@ -16,6 +16,12 @@ module PhotosHelper
 			'scube'
 		when 'sign_detail'
 			'tiny'
+		when 'matrix'
+			'mcube'
+		when 'list'
+			'small'
+		when 'portrait'
+			'small'
 		end
 	end
 	
@@ -43,15 +49,27 @@ module PhotosHelper
 		end
 	end
 	
-	def photos_for(photoable_type, photoable_id, user)
+	def photos_for(user, photoable_type, photoable_id, order)
 		if user
-			user.photos.find(:all, 
-											 :conditions => { :thumbnail => nil, :photo_type => photoable_type, :belong_to_id => photoable_id},
-											 :order => "created_at")
+			if photoable_type && photoable_id
+				user.photos.find(:all, :order => order, 
+												 :conditions => ["photo_type = ? AND 
+																			 	 belong_to_id = ?", 
+																			 	 photoable_type, 
+																			 	 photoable_id])
+			else
+				user.photos.find(:all, :order => order)
+			end
 		else
-			Photo.find(:all, 
-								 :conditions => { :thumbnail => nil, :photo_type => photoable_type, :belong_to_id => photoable_id},
-								 :order => "created_at")
+			if photoable_type && photoable_id
+				Photo.find(:all, :order => order, 
+									 :conditions => ["photo_type = ? AND 
+																	 belong_to_id = ?", 
+																	 photoable_type, 
+																	 photoable_id])
+			else
+				Photo.find(:all, :order => order)
+			end
 		end
 	end
 	

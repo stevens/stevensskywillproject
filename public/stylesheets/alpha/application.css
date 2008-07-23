@@ -467,6 +467,10 @@ td.image_item_cell {
 	text-align: center;
 	vertical-align: middle;
 }
+td.photo_item_cell {
+	/*width: 189px;*/
+	text-align: center;
+}
 div.left_block_main {
 	width: 160px;
 }
@@ -509,6 +513,30 @@ div.image {
 	margin-bottom: 5px;
 	text-align: center;
 }
+div.matrix_photo {
+	margin-bottom: 5px;
+	text-align: center;
+}
+div.list_photo {
+	margin-bottom: 5px;
+	text-align: center;	
+}
+div.portrait_photo {
+	width: 160px;
+	margin-bottom: 5px;
+	text-align: center;	
+}
+.matrix_photo img {
+	border: 4px #eeeeee solid;
+}
+.matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover {
+	background-color: transparent !important;	
+}
+div.below_photo {
+	text-align: center;
+	color: #999999;
+}
+
 div.list_image {
 	width: 160px;
 	margin-bottom: 5px;

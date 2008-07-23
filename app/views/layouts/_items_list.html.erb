@@ -1,0 +1,40 @@
+<table class="content">
+	
+	<% for item in items %>
+	  <tr>  	
+	    
+	    <td class="left_colomn">
+	    	<div class="sub_block">
+					<% if show_photo %>
+						<div class="list_photo">
+		    			<%= render :partial => "/layouts/item_photo",
+		    								 :locals => {:item_type => item_type, 
+		    								 						 :item => item, 
+		    								 						 :photo_style => 'list'} %>
+						</div>
+					<% end %>
+					
+					<div class="below_photo">
+						<%= render :partial => "/layouts/item_below_photo", 
+											 :locals => {:item_type => item_type, 
+											 						 :item => item, 
+											 						 :show_title => show_title, 
+											 						 :show_photo_todo => show_photo_todo} %>
+					</div>
+
+				</div>
+	    </td>
+	    
+	    <td class="right_colomn_lined">
+	    	<div class="sub_block">
+    			<%= render :partial => "/#{item_type.pluralize}/#{item_type}_s", 
+    								 :locals => {:item => item, 
+    								 						 :show_parent => show_parent, 
+    								 						 :show_todo => show_todo} %>
+	    	</div>
+	    </td>
+	    
+	  </tr>
+	<% end %>
+	
+</table>

@@ -3,9 +3,9 @@
 	<div class="block_header">
 		<div class="block_header_link">	
 			<% if @recipe_user == @current_user %>
-				<%= link_to "我的更多#{@self_name}(#{@recipes_set_count})", :action => 'mine' %>
+				<%= link_to "我的更多#{RECIPE_CN}(#{@recipes_set_count})", :action => 'mine' %>
 			<% else %>
-				<%= link_to "#{@recipe_user_title}的更多#{@self_name}(#{@recipes_set_count})", user_recipes_url(@recipe_user) %>
+				<%= link_to "#{@recipe_user_title}的更多#{RECIPE_CN}(#{@recipes_set_count})", user_recipes_url(@recipe_user) %>
 			<% end %>
 		</div>
 		<h1><%= @block_title %></h1>
@@ -13,113 +13,33 @@
 
 	<div class="block_main">
 		<table class="content">
-		  <tr>  	
+		  <tr>
 		    
 		    <td class="left_colomn">
 		    	<div class="sub_block">
-						<% if @photos_set_count == 0 %>
-		    			<div id="current_photo" class="detail_image">
-								<%= image_tag photo_file_url(@photo, @self_type, 'detail'), :alt => "还没有#{PHOTO_CN}" %>	    				
-		    			</div>				
-							<div class="below_image">
-								<ul>
-									<li class="basic">
-										<%= "还没有#{PHOTO_CN}" %>
-									</li>
-									<% if @recipe_user == @current_user %>
-										<li class="basic">
-											<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(@recipe) %>
-										</li>
-									<% end %>
-								</ul>
-							</div>												
-						<% else %>
-		    			<div id="current_photo" class="list_image">					
-			    			<%= render :partial => "/photos/current_photo" %>					
-		    			</div>
-							<div class="below_image">
-								<ul>
-									<li class="basic">
-										<%= link_to "更多#{PHOTO_CN}(#{@photos_set_count})", recipe_photos_url(@recipe) %>
-									</li>
-									<% if @recipe_user == @current_user %>
-										<li class="basic">
-											<%= link_to "#{ADD_CN}新#{PHOTO_CN}", new_recipe_photo_url(@recipe) %>
-										</li>
-									<% end %>
-								</ul>
-							</div>			    		
-						<% end %>
+	    			<div class="portrait_photo">
+		    			<%= render :partial => "/layouts/item_photo",
+		    								 :locals => {:item_type => 'recipe', 
+		    								 						 :item => @recipe, 
+		    								 						 :photo_style => 'portrait'} %>
+	    			</div>
+	    			
+						<div class="below_photo">
+							<%= render :partial => "/layouts/item_below_photo", 
+												 :locals => {:item_type => 'recipe', 
+												 						 :item => @recipe, 
+												 						 :show_title => false, 
+												 						 :show_photo_todo => true} %>
+						</div>
 					</div>
 		    </td>
 		    
 		    <td class="right_colomn">
 		    	<div class="sub_block">
-			    	<div class="title"><h2><%= link_to h(@recipe.title), recipe_url(@recipe) %></h2></div>
-			    	<div class="basic">
-			    		<ul>		    		
-			    			<li class="basic">
-			    				<%= "来自 " %>
-			    				<% if @recipe_user == @current_user %>
-						    		<%= link_to "我", user_url(@recipe_user) %>
-						    	<% else %>
-						    		<%= link_to "#{@recipe_user_title}", user_url(@recipe_user) %>
-						    	<% end %>			    			
-			    			</li>
-			    			<li class="basic"><%= "#{@recipe.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %></li>
-			    			<% if @recipe.created_at != @recipe.updated_at %>
-				    			<li class="basic"><%= "#{@recipe.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
-			    			<% end %>
-				    		<li class="basic">
-				    			<% if @recipe.tag_list.size > 0 %>
-					    			<%= "#{TAG_CN}: " %>					    			
-					    			<% 1.upto(@recipe.tag_list.size) do |i| %>
-						    			<%= link_to sanitize @recipe.tag_list[i-1], '' %>
-						    		<% end %>
-					    		<% else %>
-						    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
-					    		<% end %>
-				    		</li>
-			    		</ul>
-			    	</div>
-			    	<div class="main">
-			    		<ul>
-			    			<li class="text"><%= "#{PREP_TIME_CN}: #{time_display(@recipe.prep_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
-			    			<li class="text"><%= "#{COOK_TIME_CN}: #{time_display(@recipe.cook_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
-			    			<li class="text"><%= "#{DIFFICULTY_CN}: #{@recipe.difficulty}" %></li>
-			    			<li class="text"><%= "#{YIELD_CN}: #{sanitize @recipe.yield}" %></li>
-			    		</ul>
-			    	</div>
-			    	<div class="todo">
-			    		<% if @recipe_user == @current_user %>
-				    		<%= link_to "#{EDIT_CN}这#{@self_unit}#{@self_name}", edit_recipe_url(@recipe) %> |
-				    		<%= link_to "#{DELETE_CN}这#{@self_unit}#{@self_name}", recipe_url(@recipe), :confirm => "确定要#{DELETE_CN}这#{@self_unit}#{@self_name}吗?", :method => :delete %>
-			    		<% end %>
-			    	</div>
-			    	<div class="main">
-			    		<ul>
-								<li class="label"><%= "#{DESCRIPTION_CN}:" %></li>
-			    		</ul>
-		    			<%= sanitize text_display(@recipe.description) %>
-			    	</div>
-			    	<div class="main">
-			    		<ul>
-			    			<li class="label"><%= "#{INGREDIENT_CN}:" %></li>
-			    		</ul>
-		    			<%= sanitize text_display(@recipe.ingredients) %>
-			    	</div>
-			    	<div class="main">
-			    		<ul>
-			    			<li class="label"><%= "#{DIRECTION_CN}:" %></li>
-			    		</ul>
-		    			<%= sanitize list_display(@recipe.directions) %>
-			    	</div>
-			    	<div class="main">
-			    		<ul>
-			    			<li class="label"><%= "#{TIP_CN}:" %></li>
-			    		</ul>
-			    		<%= sanitize list_display(@recipe.tips) %>
-			    	</div>
+						<%= render :partial => "recipe",
+											 :locals => {:item_type => 'recipe', 
+											 						 :item => @recipe,
+											 						 :show_todo => true} %>
 		    	</div>
 		    	
 		    	<div class="sub_block">	    
@@ -129,21 +49,24 @@
 			    	<div class="todo_right">
 			    		<ul>
 			    			<li class="text">
-			    				<%= link_to "#{REVIEW_CN}这个#{@self_name}", new_recipe_review_url(@recipe) %> |
+			    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
 			    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
 			    			</li>
 			    		</ul>
 			    	</div>
-	    			
-	    			<%= render :partial => "/reviews/list",
-	    								 :locals => { :reviews => @reviews,
-	    								 							:show_parent => false,
-	    								 							:show_todo => true } %>
+
+	    			<%= render :partial => "/layouts/items_list",
+	    								 :locals => {:item_type => 'review', 
+	    								 						 :items => @reviews,
+	    								 						 :show_photo => true, 
+	    								 						 :show_below_photo => false, 
+	    								 						 :show_parent => false, 
+	    								 						 :show_todo => true} %>
 			    	
 			    	<div class="todo_right">
 			    		<ul>
 			    			<li class="text">
-			    				<%= link_to "#{REVIEW_CN}这个#{@self_name}", new_recipe_review_url(@recipe) %> |
+			    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
 			    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
 			    			</li>
 			    		</ul>

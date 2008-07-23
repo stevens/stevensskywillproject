@@ -1,0 +1,46 @@
+<div class="title"><h2><%= link_to h(item.title), recipe_url(item) %></h2></div>
+
+<div class="basic">
+	<ul>
+		<li class="basic">
+			<% if item.user == @current_user %>
+	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
+	    	<% else %>
+	    		<%= "来自 " %><%= link_to "#{item.user.login}", user_url(item.user) %>
+	    	<% end %>
+    		&nbsp;&nbsp;
+    		<% if item.created_at == item.updated_at %>
+    			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
+    		<% else %>
+    			<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
+    		<% end %>
+		</li>
+		<li class="basic">
+			<% if item.tag_list.size > 0 %>
+    			<%= "#{TAG_CN}: " %>					    			
+    			<% 1.upto(item.tag_list.size) do |i| %>
+	    			<%= link_to sanitize(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
+	    		<% end %>
+    		<% else %>
+	    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
+    		<% end %>
+		</li>
+	</ul>
+</div>
+
+<div class="main">
+	<%= sanitize item.description_summary %>
+	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, 'created_at DESC').size) > 0 %>
+		<%= link_to "(#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN})", 
+								restfu_url_for(nil, {:type => 'recipe', :id => item.id}, {:type => 'review'}, nil) %>
+	<% end %>
+</div>
+
+<% if show_todo %>
+	<div class="todo">
+		<% if item.user == @current_user %>
+			<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", edit_recipe_url(item) %> |
+			<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", recipe_url(item), :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
+		<% end %>
+	</div>
+<% end %>

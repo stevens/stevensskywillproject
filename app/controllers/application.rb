@@ -128,35 +128,4 @@ class ApplicationController < ActionController::Base
 		flash[:notice] = nil
 	end
 	
-  def load_latest_recipes
-  	@recipes_set = Recipe.find(:all, :order => 'created_at DESC', :limit => PHOTO_ITEMS_COUNT_PER_PAGE,
-  														 :conditions => [ "title IS NOT NULL AND
-  														 									title <> '' AND
-  														 									description IS NOT NULL AND
-  														 									description <> '' AND 
-  														 									ingredients IS NOT NULL AND
-  														 									# ingredients <> '' AND
-  														 									directions IS NOT NULL AND
-  														 									# directions <> '' AND
-  														 									cover_photo_id IS NOT NULL AND
-  														 				 					# difficulty IS NOT NULL AND
-  														 									# prep_time > 0 AND									 									
-  														 									# cook_time > 0 AND
-  														 									yield IS NOT NULL AND
-  														 									# yield <> '' AND
-  														 									created_at >= ?", Time.today - 100.days ] )
-  	@recipes_set_count = @recipes_set.size
-  end
-  
-  def load_latest_reviews
-  	@reviews_set = Review.find(:all, :order => 'created_at DESC', :limit => ITEMS_COUNT_PER_PAGE,
-  														 :conditions => [ "title IS NOT NULL AND
-  														 									title <> '' AND
-  														 									review IS NOT NULL AND
-  														 									review <> '' AND 
-  														 									reviewable_type = 'recipe' AND
-  														 									created_at >= ?", Time.today - 7.days ] )
-  	@reviews_set_count = @reviews_set.size
-  end
-	
 end

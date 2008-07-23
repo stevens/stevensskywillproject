@@ -2,6 +2,7 @@
 	<tr>
 	
 		<td class="left_colomn">
+			
 			<div class="left_content_block">
 	    	<div class="block_header">
 					<h1><%= "#{RECIPE_CN}#{CATEGORY_CN}" %></h1>
@@ -11,21 +12,23 @@
 	    		</div>
 	    	</div>
 			</div>
+			
 			<div class="left_content_block">
 	    	<div class="block_header">
 					<h1><%= "常用#{RECIPE_CN}#{TAG_CN}" %></h1>
 	    	</div>
 	    	<div class="left_block_main">
 	    		<div class="sub_block">
-					  <% tag_cloud @tags, %w(css1 css2 css3 css4) do |tag, css_class| %>
-					    <%= link_to "#{tag.name}(#{tag.count})", { :action => :tag, :id => tag.name }, :class => css_class %>
-					  <% end %>
+	    			<%= render :partial => "/layouts/tag_cloud",
+	    								 :locals => {:tags => @tags} %>
 	    		</div>
 	    	</div>
 			</div>
+			
 		</td>
 		
 		<td class="right_colomn">
+			
 			<div class="right_content_block">
 	    	<div class="block_header">
 					<h1><%= "本周精选#{RECIPE_CN}" %></h1>
@@ -69,49 +72,44 @@
 					</div>
 	    	</div>
 			</div>
+			
 			<div class="right_content_block">
 	    	<div class="block_header">
+					<div class="block_header_link">	
+						<%= link_to "更多最新的#{RECIPE_CN}(#{@latest_recipes_set.size})", new_recipe_url %>	
+					</div>
 					<h1><%= "最新的#{RECIPE_CN}" %></h1>
 	    	</div>
 	    	<div class="right_block_main">
-					<table class="content">		
-						<% 1.upto(@latest_recipe_lines_count) do |l| %>
-							<tr>
-								<% 1.upto(PHOTO_ITEMS_COUNT_PER_LINE) do |c| %>
-									<% if (i=c+(l-1)*PHOTO_ITEMS_COUNT_PER_LINE) <= @recipes_set_count %>
-										<td class="image_item_cell">
-											<% if @recipes[i-1].cover_photo_id %>
-												<div class="sub_block">
-													<div class="cube_image">
-														<% if photo = Photo.find(@recipes[i-1].cover_photo_id) %>
-															<%= link_to image_tag( photo.public_filename('mcube'), :alt => h(photo.caption) ), 
-																					recipe_url(@recipes[i-1]) %>
-														<% end %>
-													</div>
-													<div class="below_image">
-														<%= link_to @recipes[i-1].title, recipe_url(@recipes[i-1]) %>
-													</div>
-												</div>
-											<% end %>
-										</td>
-									<% end %>
-								<% end %>
-							</tr>	
-						<% end %>
-					</table>
-	    	</div>
+    			<%= render :partial => "/layouts/items_matrix",
+    								 :locals => {:item_type => 'recipe', 
+    								 						 :items => @latest_recipes, 
+    								 						 :items_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_S, 
+    								 						 :show_photo => true, 
+    								 						 :show_title => false, 
+    								 						 :show_photo_todo => false} %>
+    		</div>
 			</div>
+			
 			<div class="right_content_block">
 	    	<div class="block_header">
+					<div class="block_header_link">	
+						<%= link_to "更多最新的#{RECIPE_CN}#{REVIEW_CN}(#{@latest_reviews_set.size})", new_recipe_url %>	
+					</div>
 					<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	    	</div>
 	    	<div class="right_block_main">
-    			<%= render :partial => "/reviews/list",
-    								 :locals => { :reviews => @reviews,
-    								 							:show_parent => true, 
-    								 							:show_todo => false } %>
+    			<%= render :partial => "/layouts/items_list",
+    								 :locals => {:item_type => 'review', 
+    								 						 :items => @latest_reviews,
+    								 						 :show_photo => true, 
+    								 						 :show_title => false,
+    								 						 :show_photo_todo => false,
+    								 						 :show_parent => true, 
+    								 						 :show_todo => false} %>
 	    	</div>
 			</div>
+			
 		</td>
 	
 	</tr>

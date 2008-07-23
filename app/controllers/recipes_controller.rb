@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 	
-	before_filter :protect, :except => [:index, :show]
+	before_filter :protect, :except => [:index, :show, :overview]
 	before_filter :store_location, :only => [:index, :show, :mine]
 
   # GET /recipes
@@ -44,16 +44,16 @@ class RecipesController < ApplicationController
     @photo_file_url = photo_file_url(@photo, @self_type, @photo_style)
     @photo_alt = photo_alt(@photo, "还没有#{PHOTO_CN}")
     @photo_url = recipe_photo_url(@recipe, @photo)
-    @photos_set = photos_for(@self_type, @self_id, nil)
+    @photos_set = photos_for(nil, @self_type, @self_id, 'created_at')
     @photos_set_count = @photos_set.size
 		@photos = @photos_set.paginate :page => params[:page],
 																	 :per_page => PHOTOS_COUNT_PER_NAV	
 		
 		@review_name = name_for('review')
 		@review_unit = unit_for('review')
-    @reviews_set = reviews_for(@self_type, @self_id, nil)
+    @reviews_set = reviews_for(nil, @self_type, @self_id, 'created_at DESC')
     @reviews_set_count = @reviews_set.size
-    @reviews = @reviews_set[0..SUBITEMS_COUNT_OF_PARENT-1]
+    @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 			
 		if @recipe_user == @current_user
 			load_recipes_mine
@@ -155,6 +155,7 @@ class RecipesController < ApplicationController
 		after_destroy_ok
   end
   
+  # /mine/recipes
   def mine
 	 	load_recipes_mine
 	 	
@@ -171,20 +172,17 @@ class RecipesController < ApplicationController
     end
   end
   
+  # /recipes/overview
   def overview
   	load_highlighted_recipes
-  	load_latest_recipes
-  	load_latest_reviews
   	load_tag_cloud
   	
-  	@recipes = @recipes_set
-  	
-  	@reviews = @reviews_set
-  	
-	  @latest_recipe_lines_count = groups_count(@recipes, PHOTO_ITEMS_COUNT_PER_LINE)
+  	@latest_recipes_set = latest_recipes(nil, 'created_at DESC', Time.today - 100.days, nil, true)
+  	@latest_recipes = @latest_recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
+  	@latest_reviews_set = latest_reviews(nil, 'recipe', nil, 'created_at DESC', Time.today - 100.days)
+  	@latest_reviews = @latest_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 	  
 	  info = "#{@self_name}"
-	  
 		set_page_title(info)
   end
   
@@ -248,7 +246,7 @@ class RecipesController < ApplicationController
 
   def recipes_paginate
 	 	@recipes = @recipes_set.paginate :page => params[:page], 
- 															 			 :per_page => ITEMS_COUNT_PER_PAGE
+ 															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
   end
   
 	def load_tag_cloud

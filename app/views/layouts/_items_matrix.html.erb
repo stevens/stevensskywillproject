@@ -5,17 +5,24 @@
 				<% if (i=c+(r-1)*items_count_per_row) <= items.size %>
 					<td class="photo_item_cell">
 						<div class="sub_block">
+							
 							<% if show_photo %>
-								<div class="cell_photo">
-									<%= link_to image_tag(photo_file_url(items[i-1]), :alt => h photo_alt(items[i-1])), 
-															url_for(items[i-1]) %>
+								<div class="matrix_photo">
+				    			<%= render :partial => "/layouts/item_photo",
+				    								 :locals => {:item_type => item_type, 
+				    								 						 :item => items[i-1], 
+				    								 						 :photo_style => 'matrix'} %>
 								</div>
 							<% end %>
-							<% if show_title %>
-								<div class="cell_title">
-									<%= link_to title_for(items[i-1]), url_for(items[i-1]) %>
-								</div>
-							<% end %>
+							
+							<div class="below_photo">
+								<%= render :partial => "/layouts/item_below_photo", 
+													 :locals => {:item_type => item_type, 
+													 						 :item => items[i-1], 
+													 						 :show_title => show_title, 
+													 						 :show_photo_todo => show_photo_todo} %>
+							</div>
+							
 						</div>
 					</td>
 				<% else %>
