@@ -1,0 +1,54 @@
+<% form_for(:photo, :url => do_url, :html => { :multipart => true, :method => html_method }) do |f| %>
+	<table class="content">
+		<tr>
+			<td class="label"><label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label></td>
+			<td class="input">
+				<% if photo.errors_on_filename || photo.errors_on_file_type || photo.errors_on_file_size %>
+					<div class="fieldWithErrors">
+						<%= f.file_field :uploaded_data, :class => "text" %>
+					</div>
+				<% else %>
+					<%= f.file_field :uploaded_data, :class => "text" %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<% if photo.errors_on_filename %>
+					<div class="formError">
+						<%= photo.errors_on_filename %>
+					</div>
+				<% elsif photo.errors_on_file_type %>
+					<div class="formError">	
+						<%= photo.errors_on_file_type %>
+					</div>
+				<% elsif photo.errors_on_file_size %>
+					<div class="formError">
+						<%= photo.errors_on_file_size %>
+					</div>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label"><label for="caption"><%= "#{CAPTION_CN}:" %></label></td>
+			<td class="input">
+				<%= f.text_area :caption, :class => 's' %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<%= error_message_on "photo", "caption" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="submit">
+				<%= f.submit button_name, :class => "submit" %>
+				&nbsp;&nbsp;
+				<%= link_to "&raquo;#{CANCLE_CN}", do_url %>
+			</td>
+		</tr>
+	</table>
+<% end %>

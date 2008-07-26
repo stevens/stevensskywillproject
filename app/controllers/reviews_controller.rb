@@ -1,7 +1,6 @@
 class ReviewsController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show]
-	before_filter :store_location, :only => [:index, :show, :mine]
   
   # GET /reviews
   # GET /reviews.xml
@@ -11,7 +10,7 @@ class ReviewsController < ApplicationController
   		load_reviews_all			
   	end
   	
-	 	info = "#{@parent_name}#{@parent_title}的#{@self_name}(#{@reviews_set_count})"
+	 	info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}(#{@reviews_set_count})"
 	 	
 	 	reviews_paginate
  		
@@ -33,7 +32,7 @@ class ReviewsController < ApplicationController
 			load_reviews_all	
 		end										
 		
-		info = "#{@parent_name}#{@parent_title}的#{@self_name}: #{@review_title}"
+		info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -53,7 +52,7 @@ class ReviewsController < ApplicationController
   		load_reviews_all			
   	end
   	
-    info = "#{ADD_CN}#{@parent_name}#{@parent_title}的新#{@self_name}"
+    info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
     
 		set_page_title(info)
 		set_block_title(info)
@@ -72,7 +71,7 @@ class ReviewsController < ApplicationController
   		load_reviews_all			
   	end
    
- 		info = "#{EDIT_CN}#{@parent_name}#{@parent_title}的#{@self_name}: #{@review_title}"
+ 		info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -162,7 +161,7 @@ class ReviewsController < ApplicationController
 		
 			load_reviews_all
 			
-			info = "#{ADD_CN}#{@parent_name}#{@parent_title}的新#{@self_name}"
+			info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
 			set_page_title(info)
 			set_block_title(info)
 		end
@@ -185,7 +184,7 @@ class ReviewsController < ApplicationController
 		
 			load_reviews_all
 			
-			info = "#{EDIT_CN}#{@parent_name}#{@parent_title}的#{@self_name}: #{@review_title}"
+			info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
 			set_page_title(info)
 			set_block_title(info)
 		end

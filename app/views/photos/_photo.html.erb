@@ -1,54 +1,38 @@
-<% form_for(:photo, :url => do_url, :html => { :multipart => true, :method => html_method }) do |f| %>
-	<table class="content">
-		<tr>
-			<td class="label"><label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label></td>
-			<td class="input">
-				<% if @photo.errors_on_filename || @photo.errors_on_file_type || @photo.errors_on_file_size %>
-					<div class="fieldWithErrors">
-						<%= f.file_field :uploaded_data, :class => "text" %>
-					</div>
+<div class="basic">
+	<ul>
+		<li>
+			<%= "来自 " %>
+			<% if photo.user == @current_user %>
+    		<%= link_to "我", user_url(photo.user) %>
+    	<% else %>
+    		<%= link_to "#{photo.user.login}", user_url(photo.user) %>
+    	<% end %>			    			
+		</li>
+		<li><%= "#{photo.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %></li>
+		<% if photo.created_at != photo.updated_at %>
+			<li><%= "#{photo.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
+		<% end %>
+		<% if show_parent %>
+			<li>
+				<% if photo.is_cover?(photoable) %>
+					<%= "这是#{name_for(photo.photo_type)}" %><%= link_to "\"#{item_title(photo.photo_type, photoable)}\"", restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
 				<% else %>
-					<%= f.file_field :uploaded_data, :class => "text" %>
+					<%= "这是#{name_for(photo.photo_type)}" %><%= link_to "\"#{item_title(photo.photo_type, photoable)}\"", restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的#{PHOTO_CN}" %>
 				<% end %>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<% if @photo.errors_on_filename %>
-					<div class="formError">
-						<%= @photo.errors_on_filename %>
-					</div>
-				<% elsif @photo.errors_on_file_type %>
-					<div class="formError">	
-						<%= @photo.errors_on_file_type %>
-					</div>
-				<% elsif @photo.errors_on_file_size %>
-					<div class="formError">
-						<%= @photo.errors_on_file_size %>
-					</div>
-				<% end %>
-			</td>
-		</tr>
-		<tr>
-			<td class="label"><label for="caption"><%= "#{CAPTION_CN}:" %></label></td>
-			<td class="input">
-				<%= f.text_area :caption, :rows => HTML_TEXT_AREA_ROWS_SIZE_M %>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<%= error_message_on "photo", "caption" %>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td class="submit">
-				<%= f.submit button_name, :class => "submit" %>
-				&nbsp;&nbsp;
-				<%= link_to "&raquo;#{CANCLE_CN}", @selfs_url %>
-			</td>
-		</tr>
-	</table>
+			</li>
+		<% end %>
+	</ul>
+</div>
+
+<% if show_todo %>
+	<div class="todo">
+		<% if photo.user == @current_user %>
+			<%= link_to "#{EDIT_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", restfu_url_for(nil, {:type => photo.photo_type, :id => photo.belong_to_id}, {:type => 'photo', :id => photo.id}, 'edit') %> |
+			<%= link_to "#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", restfu_url_for(nil, {:type => photo.photo_type, :id => photo.belong_to_id}, {:type => 'photo', :id => photo.id}, nil), :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
+		<% end %>
+	</div>
 <% end %>
+
+<div class="main">
+	<%= sanitize photo.caption %>
+</div>

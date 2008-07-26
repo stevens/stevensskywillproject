@@ -1,8 +1,7 @@
-<div class="title"><h2><%= link_to h(item.title), recipe_url(item) %></h2></div>
-
 <div class="basic">
+	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
 	<ul>
-		<li class="basic">
+		<li>
 			<% if item.user == @current_user %>
 	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
 	    	<% else %>
@@ -15,7 +14,7 @@
     			<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
     		<% end %>
 		</li>
-		<li class="basic">
+		<li>
 			<% if item.tag_list.size > 0 %>
     			<%= "#{TAG_CN}: " %>					    			
     			<% 1.upto(item.tag_list.size) do |i| %>

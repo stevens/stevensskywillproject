@@ -128,15 +128,6 @@ module ApplicationHelper
 		rc = items_count%items_count_per_row == 0 ? rc : rc+1
 	end
 	
-	def groups_count(objects, count_per_group)
-		groups_count = objects.size/count_per_group
-		groups_count = objects.size%count_per_group == 0 ? groups_count : groups_count+1		
-	end
-	
-	def group(objects, offset, count_per_group)
-		objects.find(:all, :offset => offset, :limit => count_per_group)
-	end
-	
 	def select_number_options(max, selected) # min <= selected <= max
 		options = ''
 		1.upto(max+1) do |i|
@@ -176,16 +167,6 @@ module ApplicationHelper
 			t = text_dry(text)
 			t = t.gsub(/\n/, "&nbsp;</li> <li class='list'>")
 			t = "<ol><li class='list'>#{t}</li></ol>"
-		end
-	end
-	
-	def path(path_type, belong_to_type, object_type, belong_to, object)
-		case path_type
-		when 'index'
-		when 'show'
-			#{belong_to}_#{object}_path(belong_to_o, object_o)"
-		when 'new'
-		when 'edit'
 		end
 	end
 	

@@ -108,19 +108,12 @@
 				  <div id="sidebar_column">
 
 				  </div>
-				  <!-- <div id="sidebar_column">
-						<div id="sidebar_panel">
-							<%= render :partial => 'mine/sidebar/panel' %>
-						</div>
-						<div class="sidebar_block">
-						</div>
-					</div> -->
 					
 					<!-- content column -->
 					<div id="content_column">
 
 						<% if @system_notice %>
-							<div class="system_notice"><%= @system_notice %></div>
+							<div id="system_notice"><%= @system_notice %></div>
 						<% end %>
 						
 						<% if flash[:notice] %>

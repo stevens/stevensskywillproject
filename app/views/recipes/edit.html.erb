@@ -9,7 +9,8 @@
 	
 	<div class="block_main">
 		<%= render :partial => "recipe_input", 
-							 :locals => {:button_name => SAVE_CHANGES_CN } %>
+							 :locals => {:recipe => @recipe, 
+							 						 :button_name => SAVE_CHANGES_CN } %>
 	</div>
 
 </div>

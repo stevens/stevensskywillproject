@@ -14,38 +14,22 @@
 		    
 		    <td class="left_colomn">
 		    	<div class="sub_block">
-		    		<div class="list_image">
-							<%= render :partial => "current_photo" %>
-		    		</div>
+						<div class="portrait_photo">
+		    			<%= render :partial => "photo_photo",
+		    								 :locals => {:photo => @photo, 
+		    								 						 :photoable => @parent_obj, 
+		    								 						 :photo_style => 'portrait'} %>
+						</div>
 	    		</div>
 	    	</td>
 	    	
 	    	<td class="right_colomn">
-					<% form_for(:photo, :url => @self_url, :html => { :method => :put }) do |f| %>
-						<div class="sub_block">
-							<div class="label">
-								<label class="left" for="caption"><%= "#{CAPTION_CN}:" %></label>
-							</div>
-							<div class="input">
-								<%= f.text_area :caption, :rows => HTML_TEXT_AREA_ROWS_SIZE_M %>
-							</div>
-							<div class="error">
-								<%= error_message_on "photo", "caption" %>
-							</div>
-							<div class="input">
-								<% if @photo.is_cover?(@parent_obj) %>
-									<%= "这是#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的封面图片" %>
-								<% else %>
-									<%= check_box_tag "is_cover" %><%= "用这#{@self_unit}#{@self_name}作为#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的封面图片" %>
-								<% end %>
-							</div>
-							<div class="submit">
-								<%= f.submit SAVE_CHANGES_CN, :class => "submit" %>
-								&nbsp;&nbsp;
-								<%= link_to "&raquo;#{CANCLE_CN}", @self_url %>
-							</div>
-						</div>
-					<% end %>
+					<%= render :partial => "photo_edit", 
+										 :locals => {:photo => @photo, 
+										 						 :photoable => @parent_obj, 
+										 						 :do_url => @self_url,
+										 						 :html_method => 'put',
+										 						 :button_name => "#{SAVE_CHANGES_CN}"} %>
 	    	</td>
 	    	
 	    </tr>	

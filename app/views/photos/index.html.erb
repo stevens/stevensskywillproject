@@ -10,32 +10,20 @@
 		<h1><%= @block_title %></h1>
 	</div>
 	
-	<%= will_paginate @photos, :prev_label => "&laquo; #{PREV_PAGE_CN}",
-	 													 :next_label => "#{NEXT_PAGE_CN} &raquo;" %>
-	
-	<div class="block_main"> 													 			
-		<table class="content">		
-			<% 1.upto(@photo_lines_count) do |l| %>
-				<tr>
-					<% 1.upto(PHOTOS_COUNT_PER_LINE) do |c| %>
-						<% if (i=c+(l-1)*PHOTOS_COUNT_PER_LINE) <= @photos.size %>
-							<td class="image_cell">
-								<div class="cube_image">
-									<% if @photos[i-1].is_cover?(@parent_obj) %>
-											<%= link_to image_tag(@photos[i-1].public_filename(photo_size(@photo_style)), :alt => h(@photos[i-1].caption), :class => "cover"), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
-									<% else %>
-											<%= link_to image_tag(@photos[i-1].public_filename(photo_size(@photo_style)), :alt => h(@photos[i-1].caption)), restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @photos[i-1].id}, nil) %>
-									<% end %>
-								</div>
-							</td>
-						<% end %>
-					<% end %>
-				</tr>	
-			<% end %>
-		</table>
+	<%= render :partial => "layouts/items_paginate",
+						 :locals => {:items => @photos} %>
+
+	<div class="block_main">
+		<%= render :partial => "photos_matrix",
+							 :locals => {:photos => @photos, 
+							 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
+							 						 :photoable => @parent_obj, 
+							 						 :photo_link_url => false, 
+							 						 :show_photo => true, 
+							 						 :show_photo_todo => true} %>
 	</div>
 	
-	<%= will_paginate @photos, :prev_label => "&laquo; #{PREV_PAGE_CN}",
-	 													 :next_label => "#{NEXT_PAGE_CN} &raquo;" %>
+	<%= render :partial => "layouts/items_paginate",
+						 :locals => {:items => @photos} %>
 
 </div>

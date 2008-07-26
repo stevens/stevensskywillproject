@@ -1,8 +1,7 @@
-<div class="title"><h2><%= link_to h(item.title), recipe_url(item) %></h2></div>
-
 <div class="basic">
+	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
 	<ul>
-		<li class="basic">
+		<li>
 			<% if item.user == @current_user %>
 	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
 	    	<% else %>
@@ -15,7 +14,7 @@
     			<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
     		<% end %>
 		</li>
-		<li class="basic">
+		<li>
 			<% if item.tag_list.size > 0 %>
     			<%= "#{TAG_CN}: " %>					    			
     			<% 1.upto(item.tag_list.size) do |i| %>
@@ -30,10 +29,10 @@
 
 <div class="main">
 	<ul>
-		<li class="text"><%= "#{PREP_TIME_CN}: #{time_display(item.prep_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
-		<li class="text"><%= "#{COOK_TIME_CN}: #{time_display(item.cook_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
-		<li class="text"><%= "#{DIFFICULTY_CN}: #{item.difficulty}" %></li>
-		<li class="text"><%= "#{YIELD_CN}: #{sanitize item.yield}" %></li>
+		<li><%= "#{PREP_TIME_CN}: #{time_display(item.prep_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
+		<li><%= "#{COOK_TIME_CN}: #{time_display(item.cook_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
+		<li><%= "#{DIFFICULTY_CN}: #{item.difficulty}" %></li>
+		<li><%= "#{YIELD_CN}: #{sanitize item.yield}" %></li>
 	</ul>
 </div>
 
@@ -47,29 +46,21 @@
 <% end %>
 
 <div class="main">
-	<ul>
-			<li class="label"><%= "#{DESCRIPTION_CN}:" %></li>
-	</ul>
+	<h3><%= "#{DESCRIPTION_CN}:" %></h3>
 	<%= sanitize text_display(item.description) %>
 </div>
 
 <div class="main">
-	<ul>
-		<li class="label"><%= "#{INGREDIENT_CN}:" %></li>
-	</ul>
+	<h3><%= "#{INGREDIENT_CN}:" %></h3>
 	<%= sanitize text_display(item.ingredients) %>
 </div>
 
 <div class="main">
-	<ul>
-		<li class="label"><%= "#{DIRECTION_CN}:" %></li>
-	</ul>
+	<h3><%= "#{DIRECTION_CN}:" %></h3>
 	<%= sanitize list_display(item.directions) %>
 </div>
 
 <div class="main">
-	<ul>
-		<li class="label"><%= "#{TIP_CN}:" %></li>
-	</ul>
+	<h3><%= "#{TIP_CN}:" %></h3>
 	<%= sanitize list_display(item.tips) %>
 </div>

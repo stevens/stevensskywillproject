@@ -17,43 +17,20 @@
 			<%= link_to "#{NEXT_ONE_CN}#{@self_unit}", @next_photo_url %>
 		</div>
 		
-		<div id="current_full_photo" class="full_image">
-			<%= render :partial => "current_photo" %>
+		<div class="full_photo">
+			<%= render :partial => "photo_photo",
+								 :locals => {:photo => @photo, 
+								 						 :photoable => @parent_obj, 
+								 						 :photo_style => 'full', 
+								 						 :photo_link_url => @next_photo_url} %>
 		</div>
 		
 		<div class="sub_block_s">
-			<div class="basic">
-				<ul>
-    			<li class="basic">
-    				<%= "来自 " %>
-    				<% if @photo_user == @current_user %>
-			    		<%= link_to "我", user_url(@photo_user) %>
-			    	<% else %>
-			    		<%= link_to "#{@photo_user_title}", user_url(@photo_user) %>
-			    	<% end %>			    			
-    			</li>
-					<li class="basic"><%= "#{@photo.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %></li>
-					<% if @photo.created_at != @photo.updated_at %>
-						<li class="basic"><%= "#{@photo.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
-					<% end %>
-					<li class="basic">
-						<% if @photo.is_cover?(@parent_obj) %>
-							<%= "这是#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的封面#{@self_name}" %>
-						<% else %>
-							<%= "这是#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的#{@self_name}" %>
-						<% end %>
-					</li>
-				</ul>
-			</div>
-			<div class="main">
-				<%= sanitize @photo_alt %>
-			</div>
-			<div class="todo">
-    		<% if @photo_user == @current_user %>
-	    		<%= link_to "#{EDIT_CN}这#{@self_unit}#{@self_name}", @edit_self_url %> |
-	    		<%= link_to "#{DELETE_CN}这#{@self_unit}#{@self_name}", @self_url, :confirm => "确定要#{DELETE_CN}这#{@self_unit}#{@self_name}吗?", :method => :delete %>
-    		<% end %>
-			</div>
+			<%= render :partial => "photo",
+								 :locals => {:item => @photo,
+								 						 :photoable => @parent_obj, 
+								 						 :show_parent => true, 
+								 						 :show_todo => true} %>
 		</div>
 		
 	</div>

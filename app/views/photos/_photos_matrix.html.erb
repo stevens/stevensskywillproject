@@ -1,0 +1,33 @@
+<table class="content">		
+	<% 1.upto(photos_rows_count(photos.size, photos_count_per_row)) do |r| %>
+		<tr>
+			<% 1.upto(photos_count_per_row) do |c| %>
+				<% if (i=c+(r-1)*photos_count_per_row) <= photos.size %>
+					<td class="photo_item_cell">
+						<div class="matrix_block">
+							
+							<% if show_photo %>
+								<div class="matrix_photo">
+				    			<%= render :partial => "photo_photo",
+				    								 :locals => {:photo => photos[i-1], 
+				    								 						 :photoable => photoable, 
+				    								 						 :photo_link_url => photo_link_url, 
+				    								 						 :photo_style => 'matrix'} %>
+								</div>
+							<% end %>
+							
+							<div class="below_photo">
+								<%= render :partial => "photo_below_photo", 
+													 :locals => {:photo => photos[i-1], 
+													 						 :show_photo_todo => show_photo_todo} %>
+							</div>
+							
+						</div>
+					</td>
+				<% else %>
+					<% break %>
+				<% end %>
+			<% end %>
+		</tr>	
+	<% end %>
+</table>

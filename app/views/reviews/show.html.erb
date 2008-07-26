@@ -14,60 +14,26 @@
 		    
 		    <td class="left_colomn">										
     			<div class="sub_block">
-	    			<div id="profile_photo" class="sign_detail_image">					
-							<%= image_tag default_photo_file_url('cook', 'sign_detail') %>
+	    			<div class="portrait_photo">
+		    			<%= render :partial => "/layouts/item_photo",
+		    								 :locals => {:item_type => 'review', 
+		    								 						 :item => @review, 
+		    								 						 :photo_style => 'portrait'} %>
 	    			</div>
     			</div>
 		    </td>
 		    
 		    <td class="right_colomn">
 		    	<div class="sub_block">
-			    	<div class="title"><h2><%= link_to h(@review_title), @self_url %></h2></div>
-			    	<div class="basic">
-			    		<ul>		    		
-			    			<li class="basic">
-			    				<% if @review_user == @current_user %>
-						    		<%= link_to "我", user_url(@review_user) %>
-						    	<% else %>
-						    		<%= link_to "#{@review_user_title}", user_url(@review_user) %>
-						    	<% end %>
-							    	&nbsp;
-						    		<%= "关于#{@parent_name}" %><%= link_to @parent_title, @parent_url %><%= "的#{@self_name}" %>
-			    			</li>
-			    			<li class="basic"><%= "#{@review.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %></li>
-			    			<% if @review.created_at != @review.updated_at %>
-				    			<li class="basic"><%= "#{@review.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
-			    			<% end %>
-			    		</ul>
-			    	</div>
-			    	<div class="todo">
-			    		<% if @review_user == @current_user %>
-				    		<%= link_to "#{EDIT_CN}这#{@self_unit}#{@self_name}", @edit_self_url %> |
-				    		<%= link_to "#{DELETE_CN}这#{@self_unit}#{@self_name}", @self_url, :confirm => "确定要#{DELETE_CN}这#{@self_unit}#{@self_name}吗?", :method => :delete %>
-				    	<% elsif @parent_user == @current_user %>
-				    		<%= link_to "#{DELETE_CN}这#{@self_unit}#{@self_name}", restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @self_id}, nil), :confirm => "确定要#{DELETE_CN}这#{@self_unit}#{@self_name}吗?", :method => :delete %>
-			    		<% end %>
-			    	</div>
-			    	<div class="main">
-			    		<!--
-			    		<ul>
-								<li class="label"><%= "#{DESCRIPTION_CN}:" %></li>
-			    		</ul>
-			    		-->
-		    			<%= sanitize text_display(@review.review) %>
-			    	</div>
+						<%= render :partial => "review",
+											 :locals => {:item => @review,
+											 						 :show_parent => true, 
+											 						 :show_todo => true} %>
 		    	</div>
 		    	
 		    	<div class="sub_block">	    
 			    	<div class="sub_block_header">
 							<%= "#{RESPOND_CN}:" %>
-			    	</div>		  
-			    	<div class="todo_right">
-			    		<ul>
-			    			<li class="text">
-
-			    			</li>
-			    		</ul>
 			    	</div>
 		    	</div>
 		    	

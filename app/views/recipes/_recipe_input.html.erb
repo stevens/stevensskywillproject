@@ -1,4 +1,4 @@
-<% form_for @recipe do |f| %>
+<% form_for recipe do |f| %>
 	<table class="content">
 		<tr>
 			<td class="label"><label class="required" for="title"><%= "#{RECIPE_CN}#{TITLE_CN}:" %></label></td>
@@ -21,8 +21,8 @@
 		<tr>
 			<td class="label"><label for="prep_time"><%= "#{PREP_TIME_CN}:" %></label></td>
 			<td class="input">
-				<%= select_tag 'prep_time_hour', "#{select_number_options(99, @prep_time_hour)}" %><%= " #{HOUR_CN}" %>
-				<%= select_tag 'prep_time_minute', "#{select_number_options(59, @prep_time_minute)}" %><%= " #{MINUTE_CN}" %>
+				<%= select_tag 'prep_time_hour', "#{select_number_options(99, recipe.prep_time_display[:h])}" %><%= " #{HOUR_CN}" %>
+				<%= select_tag 'prep_time_minute', "#{select_number_options(59, recipe.prep_time_display[:m])}" %><%= " #{MINUTE_CN}" %>
 			</td>
 		</tr>
 		<tr>
@@ -34,8 +34,8 @@
 		<tr>
 			<td class="label"><label for="cook_time"><%= "#{COOK_TIME_CN}:" %></label></td>
 			<td class="input">
-				<%= select_tag 'cook_time_hour', "#{select_number_options(99, @cook_time_hour)}" %><%= " #{HOUR_CN}" %>
-				<%= select_tag 'cook_time_minute', "#{select_number_options(59, @cook_time_minute)}" %><%= " #{MINUTE_CN}" %>
+				<%= select_tag 'cook_time_hour', "#{select_number_options(99, recipe.cook_time_display[:h])}" %><%= " #{HOUR_CN}" %>
+				<%= select_tag 'cook_time_minute', "#{select_number_options(59, recipe.cook_time_display[:m])}" %><%= " #{MINUTE_CN}" %>
 			</td>
 		</tr>
 		<tr>

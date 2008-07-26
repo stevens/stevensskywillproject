@@ -37,8 +37,7 @@
 		    <td class="right_colomn">
 		    	<div class="sub_block">
 						<%= render :partial => "recipe",
-											 :locals => {:item_type => 'recipe', 
-											 						 :item => @recipe,
+											 :locals => {:item => @recipe,
 											 						 :show_todo => true} %>
 		    	</div>
 		    	
@@ -47,12 +46,8 @@
 							<%= "#{REVIEW_CN}:" %>
 			    	</div>		  
 			    	<div class="todo_right">
-			    		<ul>
-			    			<li class="text">
-			    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
-			    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
-			    			</li>
-			    		</ul>
+	    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
+	    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
 			    	</div>
 
 	    			<%= render :partial => "/layouts/items_list",
@@ -64,12 +59,8 @@
 	    								 						 :show_todo => true} %>
 			    	
 			    	<div class="todo_right">
-			    		<ul>
-			    			<li class="text">
-			    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
-			    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
-			    			</li>
-			    		</ul>
+	    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
+	    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
 			    	</div>
 		    	</div>
 		    		    	

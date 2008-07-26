@@ -4,25 +4,21 @@ module PhotosHelper
 		case photo_style
 		when 'full'
 			''
-		when 'list'
-			'small'
-		when 'detail'
-			'medium'
 		when 'navigation'
-			'scube'
-		when 'thumbnail'
-			'mcube'
-		when 'sign_list'
-			'scube'
-		when 'sign_detail'
-			'tiny'
+			'scube'		
 		when 'matrix'
 			'mcube'
 		when 'list'
 			'small'
 		when 'portrait'
 			'small'
+		when 'sign'
+			'tiny'
 		end
+	end
+	
+	def photos_rows_count(photos_count, photos_count_per_row)
+		items_rows_count(photos_count, photos_count_per_row)
 	end
 	
 	def default_photo_file_url(photoable_type, photo_style)

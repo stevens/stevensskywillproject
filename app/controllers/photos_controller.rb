@@ -5,18 +5,14 @@ class PhotosController < ApplicationController
   
   # GET /photos
   # GET /photos.xml
-  def index
-  	@photo_style = 'thumbnail'
-  	
+  def index	
   	if @parent_obj
   		load_photos_all			
   	end
   	
-	 	info = "#{@parent_name}#{@parent_title}的#{@self_name}(#{@photos_set_count})"
+	 	info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}(#{@photos_set_count})"
 	 	
 	 	photos_paginate
-	 	
-	 	get_photo_lines_count
  		
 		set_page_title(info)
 		set_block_title(info)
@@ -36,7 +32,7 @@ class PhotosController < ApplicationController
 			load_photos_all	
 		end														
 		
-		info = "#{@parent_name}#{@parent_title}的#{@self_name}"
+		info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -72,7 +68,7 @@ class PhotosController < ApplicationController
   		load_photos_all			
   	end
   	
-    info = "#{ADD_CN}#{@parent_name}#{@parent_title}的新#{@self_name}"
+    info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
     
 		set_page_title(info)
 		set_block_title(info)
@@ -95,7 +91,7 @@ class PhotosController < ApplicationController
   	@photo_file_url = photo_file_url(@photo, @parent_type, @photo_style)
   	@photo_url = @self_url
    
- 		info = "#{EDIT_CN}#{@parent_name}#{@parent_title}的#{@self_name}"
+ 		info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -219,17 +215,13 @@ class PhotosController < ApplicationController
   end
   
   def load_photos_all
- 		@photos_set = photos_for(@parent_type, @parent_id, nil)
+ 		@photos_set = photos_for(nil, @parent_type, @parent_id, 'created_at')
   	@photos_set_count = @photos_set.size
   end
 
   def photos_paginate
 	 	@photos = @photos_set.paginate :page => params[:page], 
- 															 		 :per_page => PHOTOS_COUNT_PER_PAGE															 
-  end
-  
-  def get_photo_lines_count
-  	@photo_lines_count = groups_count(@photos, PHOTOS_COUNT_PER_LINE)
+ 															 		 :per_page => MATRIX_ITEMS_COUNT_PER_PAGE_M															 
   end
 	
 	def after_create_ok
@@ -248,7 +240,7 @@ class PhotosController < ApplicationController
 		
 			load_photos_all
 			
-			info = "#{ADD_CN}#{@parent_name}#{@parent_title}的新#{@self_name}"
+			info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
 			set_page_title(info)
 			set_block_title(info)
 		end
@@ -271,7 +263,7 @@ class PhotosController < ApplicationController
 		
 			load_photos_all
 			
-			info = "#{EDIT_CN}#{@parent_name}#{@parent_title}的#{@self_name}"
+			info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}"
 			set_page_title(info)
 			set_block_title(info)
 		end

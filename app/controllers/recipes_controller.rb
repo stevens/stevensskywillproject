@@ -1,7 +1,6 @@
 class RecipesController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show, :overview]
-	before_filter :store_location, :only => [:index, :show, :mine]
 
   # GET /recipes
   # GET /recipes.xml
@@ -23,6 +22,7 @@ class RecipesController < ApplicationController
  		
 		set_page_title(info)
 		set_block_title(info)
+		@show_header_link = false
  		
     respond_to do |format|
       if @user && @user == @current_user
@@ -45,9 +45,7 @@ class RecipesController < ApplicationController
     @photo_alt = photo_alt(@photo, "还没有#{PHOTO_CN}")
     @photo_url = recipe_photo_url(@recipe, @photo)
     @photos_set = photos_for(nil, @self_type, @self_id, 'created_at')
-    @photos_set_count = @photos_set.size
-		@photos = @photos_set.paginate :page => params[:page],
-																	 :per_page => PHOTOS_COUNT_PER_NAV	
+    @photos_set_count = @photos_set.size	
 		
 		@review_name = name_for('review')
 		@review_unit = unit_for('review')
@@ -77,11 +75,6 @@ class RecipesController < ApplicationController
   def new
     @recipe = @current_user.recipes.build
 
-    @prep_time_hour = 0
-    @prep_time_minute = 0
-    @cook_time_hour = 0
-    @cook_time_minute = 0
-
 		load_recipes_mine
     
     info = "#{CREATE_CN}新#{@self_name}"
@@ -99,11 +92,6 @@ class RecipesController < ApplicationController
   # GET /recipes/1/edit
   def edit
     load_recipe(@current_user)
-    
-    @prep_time_hour = @recipe.prep_time_display[:h]
-    @prep_time_minute = @recipe.prep_time_display[:m]
-    @cook_time_hour = @recipe.cook_time_display[:h]
-    @cook_time_minute = @recipe.cook_time_display[:m]
     
     load_recipes_mine
     
@@ -165,6 +153,7 @@ class RecipesController < ApplicationController
 	 	
 		set_page_title(info)
 		set_block_title(info)
+ 		@show_header_link = true
  		
     respond_to do |format|
      	format.html { render :action => 'index' }
@@ -189,17 +178,20 @@ class RecipesController < ApplicationController
   def tag
   	load_tagged_recipes(params[:id])
 	 	
-	 	info = "包含#{name_for('tag')}\"#{params[:id]}\"的#{@self_name}(#{@recipes_set_count})"
+	 	info = "#{@self_name}的#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
 	 	
 		recipes_paginate
 	 	
 		set_page_title(info)
 		set_block_title(info)
+ 		@show_header_link = false
  		
     respond_to do |format|
+     	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}包含这个#{TAG_CN}......"
      	format.html { render :action => 'index' }
       format.xml  { render :xml => @recipes }
     end
+    clear_notice
   end
   
   private

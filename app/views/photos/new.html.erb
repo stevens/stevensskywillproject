@@ -9,8 +9,9 @@
 	</div>
 	
 	<div class="block_main" >
-		<%= render :partial => "photo", 
-							 :locals => {:do_url => @selfs_url,
+		<%= render :partial => "photo_input", 
+							 :locals => {:photo => @photo, 
+							 						 :do_url => @selfs_url,
 							 						 :html_method => '',
 							 						 :button_name => "#{ADD_CN}新#{@self_name}"} %>
 	</div>
