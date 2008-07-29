@@ -1,0 +1,213 @@
+# Logfile created on Mon Jul 28 13:46:23 +0800 2008 by /
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+rebuild index: [Recipe(id: integer, user_id: integer, title: string, description: text, ingredients: text, directions: text, tips: text, created_at: datetime, updated_at: datetime, cover_photo_id: integer, difficulty: string, prep_time: integer, cook_time: integer, yield: string)]
+reindexing model Recipe
+reindex model Recipe : 585.71% complete : 1.11 secs to finish
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"å å"~1 updated_at:"å å"~1 title:"å å"~1 ingredients:"å å"~1 cook_time:"å å"~1 user_id:"å å"~1 description:"å å"~1 cover_photo_id:"å å"~1 directions:"å å"~1 tips:"å å"~1 created_at:"å å"~1 yield:"å å"~1 prep_time:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"å å"~1 updated_at:"å å"~1 title:"å å"~1 ingredients:"å å"~1 cook_time:"å å"~1 user_id:"å å"~1 description:"å å"~1 cover_photo_id:"å å"~1 directions:"å å"~1 tips:"å å"~1 created_at:"å å"~1 yield:"å å"~1 prep_time:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"å å"~1 updated_at:"å å"~1 title:"å å"~1 ingredients:"å å"~1 cook_time:"å å"~1 user_id:"å å"~1 description:"å å"~1 cover_photo_id:"å å"~1 directions:"å å"~1 tips:"å å"~1 created_at:"å å"~1 yield:"å å"~1 prep_time:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"å å"~1 updated_at:"å å"~1 title:"å å"~1 ingredients:"å å"~1 cook_time:"å å"~1 user_id:"å å"~1 description:"å å"~1 cover_photo_id:"å å"~1 directions:"å å"~1 tips:"å å"~1 created_at:"å å"~1 yield:"å å"~1 prep_time:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:dd updated_at:dd title:dd ingredients:dd cook_time:dd user_id:dd description:dd cover_photo_id:dd directions:dd tips:dd created_at:dd yield:dd prep_time:dd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:dd updated_at:dd title:dd ingredients:dd cook_time:dd user_id:dd description:dd cover_photo_id:dd directions:dd tips:dd created_at:dd yield:dd prep_time:dd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"ç è"~1 updated_at:"ç è"~1 title:"ç è"~1 ingredients:"ç è"~1 cook_time:"ç è"~1 user_id:"ç è"~1 description:"ç è"~1 cover_photo_id:"ç è"~1 directions:"ç è"~1 tips:"ç è"~1 created_at:"ç è"~1 yield:"ç è"~1 prep_time:"ç è"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:"æ æ"~1 updated_at:"æ æ"~1 title:"æ æ"~1 ingredients:"æ æ"~1 cook_time:"æ æ"~1 user_id:"æ æ"~1 description:"æ æ"~1 cover_photo_id:"æ æ"~1 directions:"æ æ"~1 tips:"æ æ"~1 created_at:"æ æ"~1 yield:"æ æ"~1 prep_time:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:d updated_at:d title:d ingredients:d cook_time:d user_id:d description:d cover_photo_id:d directions:d tips:d created_at:d yield:d prep_time:d
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: difficulty:d updated_at:d title:d ingredients:d cook_time:d user_id:d description:d cover_photo_id:d directions:d tips:d created_at:d yield:d prep_time:d
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: 
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: 
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:dd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:dd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:dd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:dddd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"Ã â â Ã â Â Ã â â Ã â â"~11
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"æ é"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"æ é"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"æ é"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:å
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"ä ç"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"é å ç æ"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"é å ç æ"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"é å ç æ"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å ç è"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å ç è"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å ç è"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å ç è"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å ç è å"~4
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"æ æ"~1
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:dddd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:dsfdsffd
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:ç
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:ac
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+query: title:"å å ç è"~3
+stored_fields: 
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe

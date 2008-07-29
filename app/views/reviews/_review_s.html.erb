@@ -6,38 +6,30 @@
 				<% if item.user == @current_user %>
 					<%= link_to "我", user_url(item.user) %>
 				<% else %>
-					<%= link_to "#{item.user.login}", user_url(item.user) %>
+					<%= link_to h(item.user.login), user_url(item.user) %>
 				<% end %>
-				&nbsp;
-				<%= "#{name_for(item.reviewable_type)}" %><%= link_to "\"#{model_for(item.reviewable_type).find(item.reviewable_id).title}\"", restfu_url_for(nil, nil, {:type => item.reviewable_type, :id => item.reviewable_id}, nil) %><%= "的#{REVIEW_CN}" %>
+				&nbsp;&nbsp;
+				<%= "#{name_for(item.reviewable_type)}" %><%= link_to h("\"#{model_for(item.reviewable_type).find(item.reviewable_id).title}\""), restfu_url_for(nil, nil, {:type => item.reviewable_type, :id => item.reviewable_id}, nil) %><%= "的#{REVIEW_CN}" %>
 			</li>
 			<li>
-				<% if item.created_at == item.updated_at %>
-					<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
-				<% else %>
-					<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
-				<% end %>
+				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
 			</li>
 		<% else %>
 			<li>
 				<% if item.user == @current_user %>
 					<%= link_to "我", user_url(item.user) %>
 				<% else %>
-					<%= link_to "#{item.user.login}", user_url(item.user) %>
+					<%= link_to h(item.user.login), user_url(item.user) %>
 				<% end %>
-				&nbsp;
-				<% if item.created_at == item.updated_at %>
-					<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
-				<% else %>
-					<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
-				<% end %>
+				&nbsp;&nbsp;
+				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
 			</li>	
 		<% end %>
 	</ul>
 </div>
 
 <div class="main">
-	<%= sanitize item.review_summary %>
+	<ul><%= paragraphs(item.review_summary) %></ul>
 </div>
 
 <% if show_todo %>

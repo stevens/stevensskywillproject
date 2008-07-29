@@ -11,9 +11,9 @@
 		</div>
 		<div class="input">
 			<% if photo.is_cover?(photoable) %>
-				<%= " 这是#{name_for(photo.photo_type)}" %><%= link_to "\"#{item_title(photo.photo_type, photoable)}\"", restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
+				<%= " 这是#{name_for(photo.photo_type)}" %><%= link_to h("\"#{item_title(photo.photo_type, photoable)}\""), restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
 			<% else %>
-				<%= check_box_tag "is_cover" %><%= " 用这#{UNIT_PHOTO_CN}#{PHOTO_CN}作为#{name_for(photo.photo_type)}" %><%= link_to "\"#{item_title(photo.photo_type, photoable)}\"", restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
+				<%= check_box_tag "is_cover" %><%= " 用这#{UNIT_PHOTO_CN}#{PHOTO_CN}作为#{name_for(photo.photo_type)}" %><%= link_to h("\"#{item_title(photo.photo_type, photoable)}\""), restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
 			<% end %>
 		</div>
 		<div class="submit">

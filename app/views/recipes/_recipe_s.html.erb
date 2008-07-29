@@ -5,30 +5,26 @@
 			<% if item.user == @current_user %>
 	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
 	    	<% else %>
-	    		<%= "来自 " %><%= link_to "#{item.user.login}", user_url(item.user) %>
+	    		<%= "来自 " %><%= link_to h(item.user.login), user_url(item.user) %>
 	    	<% end %>
     		&nbsp;&nbsp;
-    		<% if item.created_at == item.updated_at %>
-    			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
-    		<% else %>
-    			<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
-    		<% end %>
+    		<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
 		</li>
 		<li>
 			<% if item.tag_list.size > 0 %>
-    			<%= "#{TAG_CN}: " %>					    			
-    			<% 1.upto(item.tag_list.size) do |i| %>
-	    			<%= link_to sanitize(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
-	    		<% end %>
-    		<% else %>
-	    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
-    		<% end %>
+    		<%= "#{TAG_CN}: " %>					    			
+    		<% 1.upto(item.tag_list.size) do |i| %>
+	    		<%= link_to h(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
+	    	<% end %>
+			<% else %>
+	    	<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
+			<% end %>
 		</li>
 	</ul>
 </div>
 
 <div class="main">
-	<%= sanitize item.description_summary %>
+	<ul><%= paragraphs(item.description_summary) %></ul>
 	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, 'created_at DESC').size) > 0 %>
 		<%= link_to "(#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN})", 
 								restfu_url_for(nil, {:type => 'recipe', :id => item.id}, {:type => 'review'}, nil) %>

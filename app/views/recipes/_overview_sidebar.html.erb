@@ -1,0 +1,21 @@
+<div class="sidebar_block">
+	<div class="sidebar_block_header">
+		<h1><%= "#{RECIPE_CN}#{CATEGORY_CN}" %></h1>
+	</div>
+	<div class="">
+		<div class="sub_block">
+		</div>
+	</div>
+</div>
+
+<div class="sidebar_block">
+	<div class="sidebar_block_header">
+		<h1><%= "常用#{RECIPE_CN}#{TAG_CN}(#{@tags.size})" %></h1>
+	</div>
+	<div class="">
+		<div class="sub_block">
+			<%= render :partial => "/layouts/tag_cloud",
+								 :locals => {:tags => @tags} %>
+		</div>
+	</div>
+</div>

@@ -1,7 +1,9 @@
 class Recipe < ActiveRecord::Base
 	include ApplicationHelper
 	
+	acts_as_ferret :fields => [:title, :description]
 	acts_as_taggable
+	acts_as_rateable
 	
 	belongs_to :user
 	has_many :photos, :order => "created_at"
@@ -22,7 +24,7 @@ class Recipe < ActiveRecord::Base
   													:too_long => "字数太长，应不多于#{TEXT_MAX_LENGTH_L}位"
   
   def description_summary
-  	text_display(text_summary(description, TEXT_SUMMARY_LENGTH_M))
+  	text_summary(description, TEXT_SUMMARY_LENGTH_M)
   end
 	
 	def prep_time_display

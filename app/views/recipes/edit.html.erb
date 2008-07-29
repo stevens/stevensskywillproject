@@ -4,7 +4,7 @@
 		<div class="block_header_link">
 			<%= link_to "我的更多#{@self_name}(#{@recipes_set_count})", :action => 'mine' %>
 		</div>
-		<h1><%= @block_title %></h1>
+		<h1><%= h @block_title %></h1>
 	</div>
 	
 	<div class="block_main">

@@ -1,0 +1,11 @@
+<div class="sidebar_block">
+	<div class="search_block_header">
+		<h1><%= SEARCH_CN %></h1>
+	</div>
+	<div class="search_block_main">
+		<% form_tag :controller => params[:controller], :action => 'search_prep' do %>
+			<%= text_field_tag 'search', @conditions, :class => "search" %>
+			<%= submit_tag SEARCH_CN, :class => "search_button" %>
+		<% end %>
+	</div>
+</div>

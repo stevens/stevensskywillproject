@@ -7,7 +7,7 @@
 			<% end %>
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
-		<h1><%= @block_title %></h1>
+		<h1><%= h @block_title %></h1>
 	</div>
 	
 	<%= render :partial => "layouts/items_paginate",
@@ -19,6 +19,7 @@
 							 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
 							 						 :photoable => @parent_obj, 
 							 						 :photo_link_url => false, 
+							 						 :photo_style => 'matrix', 
 							 						 :show_photo => true, 
 							 						 :show_photo_todo => true} %>
 	</div>

@@ -17,7 +17,7 @@ class RecipesController < ApplicationController
   		load_recipes_all
   		info = "#{@self_name}(#{@recipes_set_count})"
   	end
-  	
+  
 	 	recipes_paginate
  		
 		set_page_title(info)
@@ -147,9 +147,9 @@ class RecipesController < ApplicationController
   def mine
 	 	load_recipes_mine
 	 	
-	 	info = "我的#{@self_name}(#{@recipes_set_count})"
-	 	
 		recipes_paginate
+	 	
+	 	info = "我的#{@self_name}(#{@recipes_set_count})"
 	 	
 		set_page_title(info)
 		set_block_title(info)
@@ -163,24 +163,28 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	load_highlighted_recipes
-  	load_tag_cloud
+  	@highlighted_recipes_set = highlighted_recipes
+  	@highlighted_recipe = @highlighted_recipes_set.rand
   	
   	@latest_recipes_set = latest_recipes(nil, 'created_at DESC', Time.today - 100.days, nil, true)
   	@latest_recipes = @latest_recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
   	@latest_reviews_set = latest_reviews(nil, 'recipe', nil, 'created_at DESC', Time.today - 100.days)
   	@latest_reviews = @latest_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 	  
+	  @tags = recipe_tags_cloud(nil)
+	  
 	  info = "#{@self_name}"
 		set_page_title(info)
+		
+		show_sidebar
   end
   
   def tag
-  	load_tagged_recipes(params[:id])
-	 	
-	 	info = "#{@self_name}的#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
+  	load_tagged_recipes(nil, params[:id])
 	 	
 		recipes_paginate
+	 	
+	 	info = "#{@self_name}的#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
 	 	
 		set_page_title(info)
 		set_block_title(info)
@@ -188,6 +192,41 @@ class RecipesController < ApplicationController
  		
     respond_to do |format|
      	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}包含这个#{TAG_CN}......"
+     	format.html { render :action => 'index' }
+      format.xml  { render :xml => @recipes }
+    end
+    clear_notice
+  end
+  
+  def search_prep
+  	redirect_to :action => 'search', :id => conditions_id(text_squish(params[:search]))
+  end
+  
+  def search
+  	keywords = keywords(params[:id])
+  	if keywords != []
+  		load_search_result(nil, keywords)
+  		@conditions = conditions(params[:id])
+  	else
+  		@recipes_set = []
+  		@recipes_set_count = 0
+  		@conditions = ''
+  	end
+  	
+  	recipes_paginate
+  	
+	 	info = "#{@self_name}#{SEARCH_CN}: #{@conditions}(#{@recipes_set_count})"
+	 	
+		set_page_title(info)
+		set_block_title(info)
+ 		@show_header_link = false
+ 		
+    respond_to do |format|
+    	if @conditions != ''
+	    	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}符合#{SEARCH_CN}条件......"
+	    else
+	    	flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{SEARCH_CN}条件!"
+	    end
      	format.html { render :action => 'index' }
       format.xml  { render :xml => @recipes }
     end
@@ -210,29 +249,26 @@ class RecipesController < ApplicationController
   end
   
   def load_recipes_all
-  	@recipes_set = Recipe.find(:all, :order => 'updated_at DESC')
+  	@recipes_set = Recipe.find(:all, :order => 'created_at DESC')
   	@recipes_set_count = @recipes_set.size
   end
   
   def load_recipes_user(user)
-  	@recipes_set = user.recipes.find(:all, :order => 'updated_at DESC')
+  	@recipes_set = user.recipes.find(:all, :order => 'created_at DESC')
   	@recipes_set_count = @recipes_set.size
   end
   
   def load_recipes_mine
 		load_recipes_user(@current_user)
   end
-  
-  def load_highlighted_recipes
-  	@recipe = Recipe.find(:first, :conditions => [ "cover_photo_id IS NOT NULL" ])
-		@recipe_title = @recipe.title
-		@recipe_user = @recipe.user
-		@recipe_user_title = @recipe_user.login if @recipe_user
-		@recipe_cover_photo = Photo.find(@recipe.cover_photo_id)
-  end
 
-	def load_tagged_recipes(tag)
-		@recipes_set = Recipe.find_tagged_with(tag)
+	def load_tagged_recipes(user, tag)
+		@recipes_set = tagged_items(user, 'recipe', tag, 'created_at DESC')
+		@recipes_set_count = @recipes_set.size
+	end
+	
+	def load_search_result(user, keywords)
+		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC')
 		@recipes_set_count = @recipes_set.size
 	end
 
@@ -240,10 +276,6 @@ class RecipesController < ApplicationController
 	 	@recipes = @recipes_set.paginate :page => params[:page], 
  															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
   end
-  
-	def load_tag_cloud
-	  @tags = Recipe.tag_counts
-	end
   
   def after_create_ok
   	respond_to do |format|

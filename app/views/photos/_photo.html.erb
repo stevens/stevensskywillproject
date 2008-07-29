@@ -5,19 +5,23 @@
 			<% if photo.user == @current_user %>
     		<%= link_to "我", user_url(photo.user) %>
     	<% else %>
-    		<%= link_to "#{photo.user.login}", user_url(photo.user) %>
+    		<%= link_to h(photo.user.login), user_url(photo.user) %>
     	<% end %>			    			
 		</li>
-		<li><%= "#{photo.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %></li>
+		<li>
+			<%= "#{photo.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
+		</li>
 		<% if photo.created_at != photo.updated_at %>
-			<li><%= "#{photo.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %></li>
+			<li>
+				<%= "#{photo.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
+			</li>
 		<% end %>
 		<% if show_parent %>
 			<li>
 				<% if photo.is_cover?(photoable) %>
-					<%= "这是#{name_for(photo.photo_type)}" %><%= link_to "\"#{item_title(photo.photo_type, photoable)}\"", restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
+					<%= "这是#{name_for(photo.photo_type)}" %><%= link_to h("\"#{item_title(photo.photo_type, photoable)}\""), restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
 				<% else %>
-					<%= "这是#{name_for(photo.photo_type)}" %><%= link_to "\"#{item_title(photo.photo_type, photoable)}\"", restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的#{PHOTO_CN}" %>
+					<%= "这是#{name_for(photo.photo_type)}" %><%= link_to h("\"#{item_title(photo.photo_type, photoable)}\""), restfu_url_for(nil, nil, {:type => photo.photo_type, :id => photo.belong_to_id}, nil) %><%= "的#{PHOTO_CN}" %>
 				<% end %>
 			</li>
 		<% end %>
@@ -34,5 +38,5 @@
 <% end %>
 
 <div class="main">
-	<%= sanitize photo.caption %>
+	<%= h photo.caption %>
 </div>

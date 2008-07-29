@@ -128,4 +128,12 @@ class ApplicationController < ActionController::Base
 		flash[:notice] = nil
 	end
 	
+	def show_sidebar
+		@show_sidebar = true
+	end
+	
+	def clear_sidebar
+		@show_sidebar = false
+	end
+	
 end

@@ -1,81 +1,36 @@
 <div class="content_block">
 	<div class="block_header">
-			<h1><%= "#{RECIPE_CN}#{CATEGORY_CN}" %></h1>
+		<h1><%= "本周精选#{RECIPE_CN}" %></h1>
 	</div>
 	<div class="block_main">
-		<div class="sub_block">
+		<div class="full_photo">
+			<%= render :partial => "/layouts/item_photo",
+								 :locals => {:item_type => 'recipe', 
+								 						 :item => @highlighted_recipe, 
+								 						 :photo_style => 'full'} %>
 		</div>
-	</div>
-</div>
-
-<div class="content_block">
-	<div class="block_header">
-			<h1><%= "常用#{RECIPE_CN}#{TAG_CN}" %></h1>
-	</div>
-	<div class="block_main">
-		<div class="sub_block">
-			<%= render :partial => "/layouts/tag_cloud",
-								 :locals => {:tags => @tags} %>
-		</div>
-	</div>
-</div>
-
-<div class="content_block">
-	<div class="block_header">
-			<h1><%= "本周精选#{RECIPE_CN}" %></h1>
-	</div>
-	<div class="block_main">
 		<div class="sub_block_s">
-			<div class="image">
-					<% if @recipe_cover_photo %>
-						<%= link_to image_tag( @recipe_cover_photo.public_filename(photo_size('full')), :alt => h(@recipe_cover_photo.caption) ), 
-												recipe_url(@recipe) %>
-					<% end %>							
-				</div>
-	    	<div class="title"><h2><%= link_to h(@recipe_title), recipe_url(@recipe) %></h2></div>
-	    	<div class="basic">
-	    		<ul>
-	    			<li class="basic">
-	    				<% if @recipe_user == @current_user %>
-				    		<%= "来自 " %><%= link_to "我", user_url(@recipe_user) %>
-				    	<% else %>
-				    		<%= "来自 " %><%= link_to "#{@recipe_user_title}", user_url(@recipe_user) %>
-				    	<% end %>
-			    		&nbsp;&nbsp;
-			    		<% if @recipe.created_at == @recipe.updated_at %>
-			    			<%= "#{@recipe.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
-			    		<% else %>
-			    			<%= "#{@recipe.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
-			    		<% end %>
-	    			</li>
-		    		<li class="basic">
-		    			<% if @recipe.tag_list.size > 0 %>
-			    			<%= "#{TAG_CN}: " %>					    			
-			    			<% 1.upto(@recipe.tag_list.size) do |i| %>
-				    			<%= link_to sanitize(@recipe.tag_list[i-1]), { :action => :tag, :id => @recipe.tag_list[i-1] } %>
-				    		<% end %>
-			    		<% else %>
-				    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
-			    		<% end %>
-		    		</li>
-	    		</ul>
-	    	</div>
-			</div>
+			<%= render :partial => "recipe_s", 
+								 :locals => {:item => @highlighted_recipe, 
+								 						 :show_parent => false, 
+								 						 :show_todo => false} %>
+		</div>
 	</div>
 </div>
 
 <div class="content_block">
 	<div class="block_header">
-			<div class="block_header_link">	
-				<%= link_to "更多最新的#{RECIPE_CN}(#{@latest_recipes_set.size})", '' %>	
-			</div>
-			<h1><%= "最新的#{RECIPE_CN}" %></h1>
+		<div class="block_header_link">	
+			<%= link_to "更多最新的#{RECIPE_CN}(#{@latest_recipes_set.size})", '' %>	
+		</div>
+		<h1><%= "最新的#{RECIPE_CN}" %></h1>
 	</div>
 	<div class="block_main">
 		<%= render :partial => "/layouts/items_matrix",
 							 :locals => {:item_type => 'recipe', 
 							 						 :items => @latest_recipes, 
-							 						 :items_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
+							 						 :items_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M,
+							 						 :photo_style => 'matrix',  
 							 						 :show_photo => true, 
 							 						 :show_title => false, 
 							 						 :show_photo_todo => false} %>
@@ -84,10 +39,10 @@
 
 <div class="content_block">
 	<div class="block_header">
-			<div class="block_header_link">	
-				<%= link_to "更多最新的#{RECIPE_CN}#{REVIEW_CN}(#{@latest_reviews_set.size})", '' %>	
-			</div>
-			<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
+		<div class="block_header_link">	
+			<%= link_to "更多最新的#{RECIPE_CN}#{REVIEW_CN}(#{@latest_reviews_set.size})", '' %>	
+		</div>
+		<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	</div>
 	<div class="block_main">
 		<%= render :partial => "/layouts/items_list",

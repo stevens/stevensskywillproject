@@ -182,6 +182,7 @@ Rails::Initializer.run do |config|
 	SIGN_UP_CN = '注册'
 	SIGN_OFF_CN = '注销'
 	BECOME_CN = '作为'
+	SORRY_CN = '对不起'
 	
 	# KEY constants
 	RECIPE_EN = 'recipe'
@@ -344,3 +345,4 @@ end
 	}
 	
 	require 'will_paginate'
+	# require 'acts_as_ferret'

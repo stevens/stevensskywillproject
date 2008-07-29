@@ -5,24 +5,26 @@
 			<% if item.user == @current_user %>
 	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
 	    	<% else %>
-	    		<%= "来自 " %><%= link_to "#{item.user.login}", user_url(item.user) %>
+	    		<%= "来自 " %><%= link_to h(item.user.login), user_url(item.user) %>
 	    	<% end %>
-    		&nbsp;&nbsp;
-    		<% if item.created_at == item.updated_at %>
-    			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
-    		<% else %>
-    			<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
-    		<% end %>
 		</li>
 		<li>
+			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
+		</li>
+		<% if item.created_at != item.updated_at %>
+			<li>
+				<%= "#{item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} #{UPDATE_CN}" %>
+			</li>
+		<% end %>
+		<li>
 			<% if item.tag_list.size > 0 %>
-    			<%= "#{TAG_CN}: " %>					    			
-    			<% 1.upto(item.tag_list.size) do |i| %>
-	    			<%= link_to sanitize(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
-	    		<% end %>
-    		<% else %>
-	    			<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
-    		<% end %>
+				<%= "#{TAG_CN}: " %>					    			
+				<% 1.upto(item.tag_list.size) do |i| %>
+					<%= link_to h(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
+				<% end %>
+			<% else %>
+				<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
+			<% end %>
 		</li>
 	</ul>
 </div>
@@ -32,7 +34,7 @@
 		<li><%= "#{PREP_TIME_CN}: #{time_display(item.prep_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
 		<li><%= "#{COOK_TIME_CN}: #{time_display(item.cook_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
 		<li><%= "#{DIFFICULTY_CN}: #{item.difficulty}" %></li>
-		<li><%= "#{YIELD_CN}: #{sanitize item.yield}" %></li>
+		<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
 	</ul>
 </div>
 
@@ -47,20 +49,20 @@
 
 <div class="main">
 	<h3><%= "#{DESCRIPTION_CN}:" %></h3>
-	<%= sanitize text_display(item.description) %>
+	<ul><%= paragraphs(item.description) %></ul>
 </div>
 
 <div class="main">
 	<h3><%= "#{INGREDIENT_CN}:" %></h3>
-	<%= sanitize text_display(item.ingredients) %>
+	<ul><%= paragraphs(item.ingredients) %></ul>
 </div>
 
 <div class="main">
 	<h3><%= "#{DIRECTION_CN}:" %></h3>
-	<%= sanitize list_display(item.directions) %>
+	<ol><%= paragraphs(item.directions) %></ol>
 </div>
 
 <div class="main">
 	<h3><%= "#{TIP_CN}:" %></h3>
-	<%= sanitize list_display(item.tips) %>
+	<ol><%= paragraphs(item.tips) %></ol>
 </div>

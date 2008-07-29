@@ -4,6 +4,8 @@ module PhotosHelper
 		case photo_style
 		when 'full'
 			''
+		when 'detail'
+			'medium'
 		when 'navigation'
 			'scube'		
 		when 'matrix'

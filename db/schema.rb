@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 14) do
+ActiveRecord::Schema.define(:version => 15) do
 
   create_table "codes", :force => true do |t|
     t.integer  "data_element_id"
@@ -92,6 +92,17 @@ ActiveRecord::Schema.define(:version => 14) do
     t.integer  "height"
   end
 
+  create_table "ratings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "rating"
+    t.string   "rateable_type"
+    t.integer  "rateable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ratings", ["user_id"], :name => "fk_ratings_user"
+
   create_table "recipes", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -113,7 +124,7 @@ ActiveRecord::Schema.define(:version => 14) do
   create_table "reviews", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.string   "review"
+    t.text     "review"
     t.string   "reviewable_type"
     t.integer  "reviewable_id"
     t.datetime "created_at"

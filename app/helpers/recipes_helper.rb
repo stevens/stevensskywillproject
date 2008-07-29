@@ -1,4 +1,32 @@
 module RecipesHelper
+
+	def recipe_tags_cloud(user)
+		if user
+			user.recipes.tag_counts
+		else
+			Recipe.tag_counts
+		end
+	end
+	
+	def search_result_recipes(user, keywords, order)
+		if keywords && keywords != []
+			conditions = "title LIKE '%#{keywords[0]}%'"
+			2.upto(keywords.size) do |i|
+				conditions += " AND title LIKE '%#{keywords[i-1]}%'"
+			end
+		else
+			conditions = nil
+		end
+		if user
+			user.recipes.find(:all, :order => order, :conditions => conditions)
+		else
+			Recipe.find(:all, :order => order, :conditions => conditions)
+		end
+	end
+	
+	def highlighted_recipes
+		Recipe.find(:all, :conditions => ["cover_photo_id IS NOT NULL"])
+	end
   
   def latest_recipes(user, order, base_time, only_has_photo, only_full_info)
 		if user

@@ -5,7 +5,7 @@
 			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@photos_set_count})", @selfs_url %> |
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
-		<h1><%= @block_title %></h1>
+		<h1><%= h @block_title %></h1>
 	</div>
 	
 	<div class="block_main" >

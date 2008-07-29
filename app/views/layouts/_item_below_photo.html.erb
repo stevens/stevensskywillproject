@@ -1,5 +1,5 @@
 <% if show_title %>
-	<%= link_to item_title(item_type, item), item_url(item_type, item.id) %>
+	<%= link_to h(item_title(item_type, item)), item_url(item_type, item.id) %>
 <% end %>
 
 <% if show_photo_todo %>

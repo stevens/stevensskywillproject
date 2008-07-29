@@ -145,28 +145,47 @@ module ApplicationHelper
 		text.length > summary_length ? text.to(summary_length-1) + '......' : text
 	end
 
-	def text_dry(text)
-		if text!=''
-			t = text
-			t = t.gsub(' ', '&nbsp;')
-  		t = t.gsub('　', '&nbsp;&nbsp;')
-  	end
-	end
-	
-	def text_display(text)
-		if text!=''
-			t = text_dry(text)
-			# t = t.gsub(/\n/, "<br />")
-			t = t.gsub(/\n/, "&nbsp;</li> <li class='text'>")
-			t = "<ul><li class='text'>#{t}</li></ul>"
+	def text_squish(text)
+		if text && text != ''
+			text.strip.gsub(/\s+/, ' ')
+		else
+			nil
 		end
 	end
 	
-	def list_display(text)
-		if text!=''
-			t = text_dry(text)
-			t = t.gsub(/\n/, "&nbsp;</li> <li class='list'>")
-			t = "<ol><li class='list'>#{t}</li></ol>"
+	def conditions_id(text)
+		if text && text != ''
+			text.gsub(' ', '+')
+		else
+			nil
+		end
+	end
+	
+	def conditions(text)
+		if text && text != ''
+			text.gsub('+', ' ')
+		else
+			nil
+		end
+	end
+	
+	def keywords(text)
+		if text && text != ''
+			text.split('+')
+		else
+			[]
+		end
+	end	
+	
+	def paragraphs(text)
+		if text && text != ''
+			ps = text.split(/\n/)
+			1.upto(ps.size) do |i|
+				ps[i-1] = "<li>#{h text_squish(ps[i-1])}</li>"
+			end
+			ps
+		else
+			[]
 		end
 	end
 	
@@ -186,6 +205,15 @@ module ApplicationHelper
 		"#{root_url}#{ns}#{po}#{so}#{ac}"
 	end
 	
+	def tagged_items(user, item_type, tag, order)
+		if user
+			model_for(item_type).find_tagged_with(tag, :order => order, :conditions => {:user_id => user.id})
+		else
+			model_for(item_type).find_tagged_with(tag, :order => order)
+		end
+	end
+	
+	#---------------------------------------------------------------------------------------
 	def sysinfo(code, todo, belong_to, option, object)
 		case code
 		

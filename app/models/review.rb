@@ -15,7 +15,7 @@ class Review < ActiveRecord::Base
   													:too_long => "字数太长，应为#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_XL}位"
 
   def review_summary
-  	text_display(text_summary(review, TEXT_SUMMARY_LENGTH_M))
+  	text_summary(review, TEXT_SUMMARY_LENGTH_M)
   end
   									
 end
