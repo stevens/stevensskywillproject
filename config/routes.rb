@@ -70,4 +70,5 @@ ActionController::Routing::Routes.draw do |map|
 	map.activate '/activate/:id', :controller => 'users', :action => 'activate'
 	map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
 	map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
+	map.search '/search', :controller => 'site', :action => 'search'
 end

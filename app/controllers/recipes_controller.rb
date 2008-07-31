@@ -198,15 +198,12 @@ class RecipesController < ApplicationController
     clear_notice
   end
   
-  def search_prep
-  	redirect_to :action => 'search', :id => conditions_id(text_squish(params[:search]))
-  end
-  
   def search
-  	keywords = keywords(params[:id])
+  	id = params[:id]
+  	keywords = keywords(id)
   	if keywords != []
   		load_search_result(nil, keywords)
-  		@conditions = conditions(params[:id])
+  		@conditions = conditions(id)
   	else
   		@recipes_set = []
   		@recipes_set_count = 0
@@ -223,7 +220,11 @@ class RecipesController < ApplicationController
  		
     respond_to do |format|
     	if @conditions != ''
-	    	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}符合#{SEARCH_CN}条件......"
+    		if @recipes_set_count > 0
+		    	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}符合#{SEARCH_CN}条件......"
+		    else
+		    	flash[:notice] = "#{SORRY_CN}, 没有符合#{SEARCH_CN}条件的#{RECIPE_CN}!"
+		    end
 	    else
 	    	flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{SEARCH_CN}条件!"
 	    end

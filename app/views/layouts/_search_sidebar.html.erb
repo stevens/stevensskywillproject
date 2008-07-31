@@ -3,9 +3,17 @@
 		<h1><%= SEARCH_CN %></h1>
 	</div>
 	<div class="search_block_main">
-		<% form_tag :controller => params[:controller], :action => 'search_prep' do %>
-			<%= text_field_tag 'search', @conditions, :class => "search" %>
-			<%= submit_tag SEARCH_CN, :class => "search_button" %>
+		<% form_tag "#{root_url}search" do %>
+			<ul>
+				<li>
+					<%= radio_button_tag 'search_type', 'recipe', true %><%= " #{RECIPE_CN}&nbsp;" %>
+					<%= radio_button_tag 'search_type', 'menu' %><%= " #{MENU_CN}&nbsp;" %>
+				</li>
+				<li>
+					<%= text_field_tag 'search', @conditions, :class => "search" %>
+					<%= submit_tag SEARCH_CN, :class => "search_button" %>
+				</li>
+			</ul>
 		<% end %>
 	</div>
 </div>

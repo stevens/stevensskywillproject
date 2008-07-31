@@ -66,7 +66,7 @@ ol {
 
 /* Header */
 #header {
-	height: 99px;
+	height: 70px;
 	background-color: #428cbb;
 	color: #ffffff;
 }
@@ -74,7 +74,7 @@ ol {
 /* Logo */
 #logo {
 	position: absolute;
-	top: 15px;
+	top: 10px;
 	left: 30px;
 }
 #logo img {
@@ -87,7 +87,7 @@ ol {
 /* Help */
 #help {
 	position: absolute;
-	top: 15px;
+	top: 10px;
 	right: 30px;
 	padding-top: 1px;
 	padding-bottom: 1px;
@@ -108,14 +108,14 @@ ol {
 /* Current User */
 #current_user {
 	position: absolute;
-	top: 15px;
+	top: 10px;
 	right: 90px;
 	z-index: 200;
-	color: #ffffff;
+	color: #f1f1f1;
 }
 #current_user a, #current_user a:link, #current_user a:visited {
 	margin-right: 10px;
-	color: #ffffff;
+	color: #f1f1f1;
 }
 #current_user a:hover {
 	background-color: #ffffff;
@@ -129,12 +129,12 @@ ol {
 	padding-bottom: 20px;
 	padding-left: 40px;
 	padding-right: 10px;
-	color: #ffffff;
+	color: #b8b9a7;
 	z-index: 300;
 }
 #footer a, #footer a:link, #footer a:visited {
 	margin-right: 10px;
-	color: #ffffff;	
+	color: #b8b9a7;	
 }
 #footer a:hover {
 	background-color: #ffffff;
@@ -147,7 +147,7 @@ ol {
 /* Main Navigation */
 #navigation {
 	position: absolute;
-	top: 72px;
+	top: 43px;
 	width: 100%;
 	min-width: 1000px;
 	white-space: nowrap;
@@ -156,11 +156,11 @@ ol {
 }
 /* For IE6 */
 * html #navigation {
-	top: 73px;
+	top: 44px;
 }
 /* For IE7 */
 * +html #navigation {
-	top: 73px;
+	top: 44px;
 }
 #left_navigation {
 	position: absolute;
@@ -224,6 +224,7 @@ ol {
 
 /* Sub Navigation */
 #sub_navigation {
+	height: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 40px;
@@ -288,7 +289,7 @@ td.photo_item_cell {
 .content_block {
 	margin-bottom: 10px;
 	border-top: #428cbb 4px solid;
-	border-bottom: #428cbb 4px solid;
+	/*border-bottom: #428cbb 4px solid;*/
 }
 
 /* Block Header */
@@ -297,7 +298,7 @@ td.photo_item_cell {
 	padding-bottom: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
-	background-color: #b8e1ff;
+	background-color: #99ccff;
 }
 .block_header h1 {
 	font-size: 14px;
@@ -339,11 +340,11 @@ td.photo_item_cell {
 #sidebar_column {
 	position: absolute;
 	right: 0px;
-	top: 37px;
+	top: 35px;
 	width: 290px;
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-bottom: 1px;
+	padding-bottom: 0px;
 }
 #sidebar_column a, #sidebar_column a:link, #sidebar_column a:visited {
 	color: #695245;
@@ -452,7 +453,7 @@ div.below_photo li {
 
 /* Other Div */
 div.basic {
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	color: #b8b9a7;
 	text-align: left;
 }
@@ -473,7 +474,7 @@ div.basic li {
 	margin-bottom: 3px;
 }
 div.main {
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	text-align: left;
 }
 div.main li {
@@ -493,7 +494,7 @@ div.main h3 {
 }
 div.todo {
 	margin-top: 5px;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	color: #b8b9a7;
 	text-align: left;
 }
@@ -513,7 +514,7 @@ div.error {
 	margin-bottom: 5px;
 }
 div.submit {
-	margin-top: 20px;
+	margin-top: 15px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
@@ -582,3 +583,58 @@ div.pagination a, div.pagination span {
 	border-bottom: 4px solid #78b36d;
 	color: #373737;
 }
+
+/* Rating */
+ul#rating {
+width: 170px;
+height: 50px;
+list-style: none;
+position: relative;
+overflow:visible;
+background:url('/images/rating/rate.gif') 0px 0px no-repeat;
+}
+
+ul#rating li {
+position: absolute;
+display: block;
+height: 50px;
+line-height: 12px;
+font-size: 115%;
+font-weight:bold;
+}
+
+ul#rating li a {
+display: block;
+height: 50px;
+width: 100%;
+text-decoration:none;
+padding: 0;
+}
+
+ul#rating li#r1{ width: 17px;z-index: 200;}
+ul#rating li#r2{ width: 34px;z-index: 190;}
+ul#rating li#r3 { width: 51px;z-index: 180;}
+ul#rating li#r4 { width: 68px;z-index: 170;}
+ul#rating li#r5 { width: 85px;z-index: 160;}
+ul#rating li#r6 { width: 102px;z-index: 150;}
+ul#rating li#r7 { width: 119px;z-index: 140;}
+ul#rating li#r8 { width: 136px;z-index: 130;}
+ul#rating li#r9 { width: 153px;z-index: 120;}
+ul#rating li#r10 { width: 170px;z-index: 110;}
+
+ul#rating li a:hover{background:url('/images/rating/rate.gif') 0px -50px;}
+
+ul#rating li a span{ display: none; }
+
+ul#rating li a:hover span{
+display: block;
+text-indent: 0;
+color: #000;
+font-weight: bold;
+position: absolute;
+top: 55px;
+margin: 0;
+padding: 4px;
+width: 170px;
+text-align:center;
+} 

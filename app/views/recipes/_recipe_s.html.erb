@@ -13,8 +13,8 @@
 		<li>
 			<% if item.tag_list.size > 0 %>
     		<%= "#{TAG_CN}: " %>					    			
-    		<% 1.upto(item.tag_list.size) do |i| %>
-	    		<%= link_to h(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
+    		<% for tag in item.tag_list %>
+	    		<%= link_to h(tag), {:action => :tag, :id => tag} %>
 	    	<% end %>
 			<% else %>
 	    	<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>

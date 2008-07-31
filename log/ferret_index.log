@@ -211,3 +211,9 @@ query: title:"å å ç è"~3
 stored_fields: 
 LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
 LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+rebuild index: [Recipe(id: integer, user_id: integer, title: string, description: text, ingredients: text, directions: text, tips: text, created_at: datetime, updated_at: datetime, cover_photo_id: integer, difficulty: string, prep_time: integer, cook_time: integer, yield: string)]
+reindexing model Recipe
+reindex model Recipe : 585.71% complete : 0.47 secs to finish
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe
+LocalIndex: ensure_index_exists at C:/svnwork/cookcat/index/development/recipe

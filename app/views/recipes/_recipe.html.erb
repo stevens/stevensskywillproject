@@ -19,8 +19,8 @@
 		<li>
 			<% if item.tag_list.size > 0 %>
 				<%= "#{TAG_CN}: " %>					    			
-				<% 1.upto(item.tag_list.size) do |i| %>
-					<%= link_to h(item.tag_list[i-1]), { :action => :tag, :id => item.tag_list[i-1] } %>
+				<% for tag in item.tag_list %>
+					<%= link_to h(tag), {:action => :tag, :id => tag} %>
 				<% end %>
 			<% else %>
 				<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
@@ -46,6 +46,21 @@
 		<% end %>
 	</div>
 <% end %>
+
+<div>
+	<ul id="rating">
+	<li id="r1"><a href="#1" title="give this site a 1"><span>Abysmal</span></a></li>
+	<li id="r2"><a href="#2" title="give this site a 2"><span>Terrible</span></a></li>
+	<li id="r3"><a href="#3" title="give this site a 3"><span>Bad</span></a></li>
+	<li id="r4"><a href="#4" title="give this site a 4"><span>Poor</span></a></li>
+	<li id="r5"><a href="#5" title="give this site a 5"><span>Mediocre</span></a></li>
+	<li id="r6"><a href="#6" title="give this site a 6"><span>Fair</span></a></li>
+	<li id="r7"><a href="#7" title="give this site a 7"><span>Good</span></a></li>
+	<li id="r8"><a href="#8" title="give this site a 8"><span>Great</span></a></li>
+	<li id="r9"><a href="#9" title="give this site a 9"><span>Suberb</span></a></li>
+	<li id="r10"><a href="#10" title="give this site a 10"><span>Perfect</span></a></li>
+	</ul> 
+</div>
 
 <div class="main">
 	<h3><%= "#{DESCRIPTION_CN}:" %></h3>

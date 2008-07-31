@@ -11,17 +11,23 @@ module RecipesHelper
 	def search_result_recipes(user, keywords, order)
 		if keywords && keywords != []
 			conditions = "title LIKE '%#{keywords[0]}%'"
+			tags = keywords[0]
 			2.upto(keywords.size) do |i|
 				conditions += " AND title LIKE '%#{keywords[i-1]}%'"
+				tags += " #{keywords[i-1]}"
 			end
 		else
 			conditions = nil
+			tags = nil
 		end
 		if user
-			user.recipes.find(:all, :order => order, :conditions => conditions)
+			conditions_result_recipes = user.recipes.find(:all, :order => order, :conditions => conditions)
+			tags_result_recipes = user.recipes.find_tagged_with(tags, :match_all => true)
 		else
-			Recipe.find(:all, :order => order, :conditions => conditions)
+			conditions_result_recipes = Recipe.find(:all, :order => order, :conditions => conditions)
+			tags_result_recipes = Recipe.find_tagged_with(tags, :match_all => true)
 		end
+		conditions_result_recipes | tags_result_recipes
 	end
 	
 	def highlighted_recipes

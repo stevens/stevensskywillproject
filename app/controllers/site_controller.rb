@@ -8,4 +8,12 @@ class SiteController < ApplicationController
 		@page_title = page_title(info, '')
 	end
 	
+	def search
+  	if params[:search_type] && params[:search]
+  		controller = params[:search_type].pluralize
+	  	id = conditions_id(text_squish(params[:search]))
+  		redirect_to :controller => controller, :action => 'search', :id => id
+  	end
+	end
+	
 end
