@@ -1,0 +1,39 @@
+<% rank = %w[Abysmal Terrible Bad Poor Mediocre Fair Good Great Suberb Perfect] %>
+<div id="total_rating">
+	<div class="">	
+		<% if total_rating > 0 %>
+			<%= "综合#{RATE_CN}: #{total_rating}/10 (#{ratings_count}票)" %>
+		<% else %>
+			<%= "综合#{RATE_CN}:" %>
+		<% end %>
+	</div>
+	<ul id="rating">
+		<li class="current_rating" style="width: <%= total_rating*17 %>px;">
+			<span><%= "#{rank[current_rating-1]}(#{current_rating})" %></span>
+		</li>
+	</ul>
+</div>
+<% if @current_user %>
+	<div id="my_rating">
+		<div class="">
+			<% if current_rating > 0 %>
+				<%= "我的#{RATE_CN}: #{current_rating}/10 (#{rank[current_rating-1]})" %>
+			<% else %>
+				<%= "我的#{RATE_CN}:" %>
+			<% end %>
+		</div>
+		<ul id="rating">
+			<li class="current_rating" style="width: <%= current_rating*17 %>px;">
+				<span><%= "#{rank[current_rating-1]}(#{current_rating})" %></span>
+			</li>
+			<% 1.upto(rank.size) do |i| %>
+				<li id="r<%= i %>">
+					<% name = "#{rank[i-1]}" %>
+					<%= link_to_remote ("<span>#{name}</span>"), 
+														 :url => {:controller => "ratings", :action => "rate", :id => i, :rateable_type => rateable_type, :rateable_id => rateable_id}, 
+														 :html => {:title => "#{i}分"} %>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>

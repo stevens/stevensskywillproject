@@ -1,13 +1,13 @@
 <div class="sidebar_block">
-	<div class="search_block_header">
+	<div class="panel_block_header">
 		<h1><%= SEARCH_CN %></h1>
 	</div>
-	<div class="search_block_main">
+	<div class="panel_block_main">
 		<% form_tag "#{root_url}search" do %>
 			<ul>
 				<li>
-					<%= radio_button_tag 'search_type', 'recipe', true %><%= " #{RECIPE_CN}&nbsp;" %>
-					<%= radio_button_tag 'search_type', 'menu' %><%= " #{MENU_CN}&nbsp;" %>
+					<%= radio_button_tag 'search_type', 'recipe', true, :class => "radio_button" %><%= "#{RECIPE_CN}&nbsp;&nbsp;" %>
+					<%= radio_button_tag 'search_type', 'menu', false, :class => "radio_button" %><%= "#{MENU_CN}&nbsp;&nbsp;" %>
 				</li>
 				<li>
 					<%= text_field_tag 'search', @conditions, :class => "search" %>

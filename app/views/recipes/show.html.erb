@@ -35,6 +35,15 @@
 		    </td>
 		    
 		    <td class="right_colomn">
+					<div id="recipe_rating" class="rating">
+						<%= render :partial => "/ratings/rate",
+											 :locals => {:total_rating => @total_rating, 
+											 						 :ratings_count => @ratings_count, 
+											 						 :current_rating => @current_rating, 
+											 						 :rateable_type => 'recipe',
+											 						 :rateable_id => @recipe.id} %>
+					</div>
+					
 		    	<div class="sub_block">
 						<%= render :partial => "recipe",
 											 :locals => {:item => @recipe,
@@ -49,19 +58,21 @@
 	    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
 	    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
 			    	</div>
-
-	    			<%= render :partial => "/layouts/items_list",
-	    								 :locals => {:item_type => 'review', 
-	    								 						 :items => @reviews,
-	    								 						 :show_photo => true, 
-	    								 						 :show_below_photo => false, 
-	    								 						 :show_parent => false, 
-	    								 						 :show_todo => true} %>
-			    	
-			    	<div class="todo_right">
-	    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
-	    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
-			    	</div>
+						
+						<% if @reviews_set_count > 0 %>
+		    			<%= render :partial => "/layouts/items_list",
+		    								 :locals => {:item_type => 'review', 
+		    								 						 :items => @reviews,
+		    								 						 :show_photo => true, 
+		    								 						 :show_below_photo => false, 
+		    								 						 :show_parent => false, 
+		    								 						 :show_todo => true} %>
+				    	
+				    	<div class="todo_right">
+		    				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
+		    				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
+				    	</div>
+			    	<% end %>
 		    	</div>
 		    		    	
 		    </td>

@@ -21,44 +21,21 @@ module ApplicationHelper
 	end
 	
 	def model_for(object_type)
-		case object_type
-		when 'user'
-			User
-		when 'recipe'
-			Recipe
-		when 'photo'
-			Photo
-		when 'review'
-			Review
-		end
+		object_type.camelize.constantize
+		rescue NameError
+			nil
 	end
 	
 	def name_for(object_type)
-		case object_type
-		when 'user'
-			USER_CN
-		when 'recipe'
-			RECIPE_CN
-		when 'photo'
-			PHOTO_CN
-		when 'review'
-			REVIEW_CN
-		when 'tag'
-			TAG_CN
-		end	
+		"#{object_type.upcase}_CN".constantize
+		rescue NameError
+			nil
 	end
 	
 	def unit_for(object_type)
-		case object_type
-		when 'user'
-			UNIT_USER_CN
-		when 'recipe'
-			UNIT_RECIPE_CN
-		when 'photo'
-			UNIT_PHOTO_CN
-		when 'review'
-			UNIT_REVIEW_CN
-		end
+		"UNIT_#{object_type.upcase}_CN".constantize
+		rescue NameError
+			nil
 	end
 	
 	def item_title(item_type, item)

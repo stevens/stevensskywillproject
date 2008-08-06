@@ -15,15 +15,15 @@ class Photo < ActiveRecord::Base
   validates_as_attachment
 	
 	def errors_on_filename
-		"文件名称有错误" if errors.invalid?('filename')
+		"#{FILE_CN}名称有#{ERROR_CN}" if errors.invalid?('filename')
 	end
 	
 	def errors_on_file_type
-		"文件类型有错误" if errors.invalid?('content_type')
+		"#{FILE_CN}类型有#{ERROR_CN}" if errors.invalid?('content_type')
 	end
 	
 	def errors_on_file_size
-		"文件大小有错误" if errors.invalid?('size')
+		"#{FILE_CN}大小有#{ERROR_CN}" if errors.invalid?('size')
 	end
 	
 	def is_cover?(photoable)

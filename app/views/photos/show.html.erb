@@ -12,9 +12,15 @@
 		<div class="prev_next">
 			<%= " (#{@photo_index} / #@photos_set_count)" %>
 			&nbsp;
-			<%= link_to "#{PREV_ONE_CN}#{@self_unit}", @prev_photo_url %>
-			&nbsp;
-			<%= link_to "#{NEXT_ONE_CN}#{@self_unit}", @next_photo_url %>
+			<% if @photos_set_count > 1 %>
+				<%= link_to "#{PREV_ONE_CN}#{@self_unit}", @prev_photo_url %>
+				&nbsp;
+				<%= link_to "#{NEXT_ONE_CN}#{@self_unit}", @next_photo_url %>
+			<% else %>
+				<%= "#{PREV_ONE_CN}#{@self_unit}" %>
+				&nbsp;
+				<%= "#{NEXT_ONE_CN}#{@self_unit}" %>
+			<% end %>
 		</div>
 		
 		<div class="full_photo">

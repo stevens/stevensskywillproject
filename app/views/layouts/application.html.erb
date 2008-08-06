@@ -23,8 +23,8 @@
 					<li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
 						<%= link_to MENU_CN, root_path %>
 					</li>
-					<li class=<%= tab_css_class(@current_tab_type, 'user') %>>
-						<%= link_to COOK_CN, root_path %>
+					<li class=<%= tab_css_class(@current_tab_type, 'friend') %>>
+						<%= link_to FRIEND_CN, root_path %>
 					</li>
 					<li class=<%= tab_css_class(@current_tab_type, 'group') %>>
 						<%= link_to GROUP_CN, root_path %>
@@ -35,7 +35,7 @@
 			<div id="right_navigation">
 				<ul class="navigation">
 					<li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
-						<%= link_to "#{MY_CN}#{KITCHEN_CN}", "#{root_url}mine" %>
+						<%= link_to "我的#{SITE_NAME_CN}", "#{root_url}mine" %>
 					</li>
 					<% if logged_in? %>
 						<li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
@@ -87,9 +87,9 @@
 						<% if @current_tab_type == 'site' %>
 							<%= "Welcome to #{SITE_NAME_EN}!" %>
 						<% elsif @current_tab_type == 'mine' %>
-							<%= link_to "#{MY_CN}#{REVIEW_CN}", root_path %>
-							<%= link_to "#{MY_CN}#{PHOTO_CN}", root_path %>
-							<%= link_to "#{MY_CN}#{TAG_CN}", root_path %>
+							<%= link_to "我的#{REVIEW_CN}", root_path %>
+							<%= link_to "我的#{PHOTO_CN}", root_path %>
+							<%= link_to "我的#{TAG_CN}", root_path %>
 						<% elsif @current_tab_type %>
 							<% if @current_user %>
 								<%= link_to "我的#{@current_tab_name}", :controller => @current_tab_type.pluralize, :action => 'mine' %>
@@ -106,6 +106,9 @@
 					
 					<!-- sidebar colmun  -->
 				  <div id="sidebar_column">
+				  	<% if !@current_user && (params[:controller] != 'sessions') && (params[:controller] != 'users') %>
+					  	<%= render :partial => "layouts/login_sidebar" %>
+					  <% end %>
 						<%= render :partial => "layouts/search_sidebar" %>
 						
 						<% if @show_sidebar %>
@@ -138,7 +141,7 @@
 				<%= link_to PRIVACY_POLICY_CN, root_path %> 
 				<%= link_to TERMS_OF_SERVICE_CN, root_path %> 
 				<%= link_to HELP_CN, root_path %> 
-				<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{TEAM_NAME_EN}" %></span>
+				<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{STUDIO_NAME_EN}" %></span>
 			</div>
 			<!-- END FOOTER -->
 			

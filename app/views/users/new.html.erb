@@ -57,7 +57,7 @@
 				<tr>
 					<td></td>
 					<td class="input">
-						点击下面的"注册", 表示我已经阅读并同意<%= SITE_NAME_CN %>的"<%= link_to TERMS_OF_SERVICE_CN, '' %>"和"<%= link_to PRIVACY_POLICY_CN, '' %>"
+						<%= "点击下面的\"#{SIGN_UP_CN}\", 表示我已经阅读并同意#{SITE_NAME_CN}的" %><%= link_to "\"#{TERMS_OF_SERVICE_CN}\"", '' %>和<%= link_to "\"#{PRIVACY_POLICY_CN}\"", '' %>
 					</td>
 				</tr>
 				<tr>
@@ -65,7 +65,7 @@
 					<td class="submit">
 						<%= submit_tag SIGN_UP_CN, :class => "submit", :disabled => false %>
 						&nbsp;&nbsp;
-						<%= link_to "&raquo;我已经有#{SITE_NAME_CN}#{ACCOUNT_CN}", "#{root_path}login" %>
+						<%= link_to "&raquo;我已经有#{SITE_NAME_CN}#{ACCOUNT_CN}", "#{root_url}login" %>
 					</td>
 				</tr>
 			</table>

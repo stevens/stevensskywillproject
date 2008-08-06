@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :recipes, :order => "created_at DESC"
   has_many :photos, :order => "created_at"
   has_many :reviews, :order => "created_at DESC"
+  has_many :ratings, :order => "updated_at DESC"
   
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -10,21 +11,21 @@ class User < ActiveRecord::Base
   validates_presence_of     :login, :email,
   													:message => "这一项是#{REQUIRED_CN}"
   validates_presence_of     :password,                   :if => :password_required?,
-  													:message => "请输入#{PASSWORD_CN}"
+  													:message => "请#{INPUT_CN}#{PASSWORD_CN}"
   validates_presence_of     :password_confirmation,      :if => :password_required?,
-  													:message => "请再次输入#{PASSWORD_CN}"
+  													:message => "请再次#{INPUT_CN}#{PASSWORD_CN}"
   validates_length_of       :login,    
   													:within => STRING_MIN_LENGTH_S..STRING_MAX_LENGTH_S,
-  													:too_short => "字数太短，应为#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位",
-  													:too_long => "字数太长，应为#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位"
+  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位",
+  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位"
   validates_length_of       :email,    
   													:within => STRING_MIN_LENGTH_M..STRING_MAX_LENGTH_L,
-  													:too_short => "字数太短，应为#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位",
-  													:too_long => "字数太长，应为#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位位"
+  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位",
+  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位"
 	validates_length_of       :password, :password_confirmation,
 														:within => STRING_MIN_LENGTH_M..STRING_MAX_LENGTH_M, 					 :if => :password_required?,
-  													:too_short => "字数太短，应为#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位",
-  													:too_long => "字数太长，应为#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位"
+  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位",
+  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位"
 	validates_format_of 			:email,
 														:with => /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i,
 														:message => "#{EMAIL_ADDRESS_CN}格式不正确"
@@ -32,7 +33,7 @@ class User < ActiveRecord::Base
 														:with => /^[A-Za-z0-9._%+-]+$/,
 														:message => "#{PASSWORD_CN}只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）"
   validates_confirmation_of :password,                   :if => :password_required?,
-  													:message => "两次#{PASSWORD_CN}不匹配"
+  													:message => "两次#{INPUT_CN}的#{PASSWORD_CN}不匹配"
   validates_uniqueness_of   :login, :case_sensitive => false,
   													:message => "#{ACCOUNT_ID_CN}已经存在"
   validates_uniqueness_of   :email, :case_sensitive => false,

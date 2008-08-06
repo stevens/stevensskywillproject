@@ -4,10 +4,6 @@ class SiteController < ApplicationController
 		set_page_title(HOME_CN)
 	end
 	
-	def set_page_title(info)
-		@page_title = page_title(info, '')
-	end
-	
 	def search
   	if params[:search_type] && params[:search]
   		controller = params[:search_type].pluralize

@@ -16,10 +16,10 @@ class SessionsController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token, :expires => self.current_user.remember_token_expires_at }
       end
-      flash[:notice] = "#{@current_user.login}, 你已经成功#{LOGIN_CN}#{SITE_NAME_CN}!"
+      flash[:notice] = "#{@current_user.login}, 你已经#{LOGIN_CN}#{SITE_NAME_CN}, 希望你在这里玩得开心!"
       redirect_back_or_default('/')
     else
-    	flash[:notice] = "你输入的#{ACCOUNT_ID_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新输入!"
+    	flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_ID_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
       render :action => 'new'
       flash[:notice] = nil
     end
@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = "#{@current_user.login}, 你已经#{LOGOUT_CN}#{SITE_NAME_CN}!"
+    flash[:notice] = "#{@current_user.login}, 你已经#{LOGOUT_CN}#{SITE_NAME_CN}, 期待你的再次到来!"
     redirect_back_or_default('/')
   end
   

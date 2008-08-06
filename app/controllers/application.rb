@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   # Protect a page from unauthorized access.
 	def protect
 		unless logged_in?
-			flash[:notice] = "请你先#{LOGIN_CN}#{SITE_NAME_CN}"
+			flash[:notice] = "#{SORRY_CN}, 你还没有#{LOGIN_CN}#{SITE_NAME_CN}!"
 			access_denied
 		end
 	end
@@ -35,8 +35,8 @@ class ApplicationController < ActionController::Base
 		a = params[:action]
 		if c == 'site'
 			@current_tab_type = 'site'
-		elsif @self_type == 'user' || (@user_id && @self_type == 'photo') || (@user_id && @self_type == 'review')
-			@current_tab_type = 'user'
+		elsif @self_type == 'cook' || (@user_id && @self_type == 'photo') || (@user_id && @self_type == 'review')
+			@current_tab_type = 'cook'
 		elsif c == 'mine' || (a == 'mine' && @self_type == 'photo') || (a == 'mine' && @self_type == 'review')
 			@current_tab_type = 'mine'
 		elsif @self_type == 'recipe' || (@parent_type == 'recipe' && @self_type == 'photo') || (@parent_type == 'recipe' && @self_type == 'review')

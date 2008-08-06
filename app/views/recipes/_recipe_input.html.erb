@@ -47,11 +47,11 @@
 		<tr>
 			<td class="label"><label for="difficulty"><%= "#{DIFFICULTY_CN}:" %></label></td>
 			<td class="input">
-				<%= f.radio_button :difficulty, 1 %><%= " #{DIFFICULTY_1_CN}&nbsp;&nbsp;&nbsp;" %>
-				<%= f.radio_button :difficulty, 2 %><%= " #{DIFFICULTY_2_CN}&nbsp;&nbsp;&nbsp;" %>
-				<%= f.radio_button :difficulty, 3 %><%= " #{DIFFICULTY_3_CN}&nbsp;&nbsp;&nbsp;" %>
-				<%= f.radio_button :difficulty, 4 %><%= " #{DIFFICULTY_4_CN}&nbsp;&nbsp;&nbsp;" %>
-				<%= f.radio_button :difficulty, 5 %><%= " #{DIFFICULTY_5_CN}&nbsp;&nbsp;&nbsp;" %>
+				<%= f.radio_button :difficulty, 1, :class => "radio_button" %><%= "#{DIFFICULTY_1_CN}&nbsp;&nbsp;" %>
+				<%= f.radio_button :difficulty, 2, :class => "radio_button" %><%= "#{DIFFICULTY_2_CN}&nbsp;&nbsp;" %>
+				<%= f.radio_button :difficulty, 3, :class => "radio_button" %><%= "#{DIFFICULTY_3_CN}&nbsp;&nbsp;" %>
+				<%= f.radio_button :difficulty, 4, :class => "radio_button" %><%= "#{DIFFICULTY_4_CN}&nbsp;&nbsp;" %>
+				<%= f.radio_button :difficulty, 5, :class => "radio_button" %><%= "#{DIFFICULTY_5_CN}&nbsp;&nbsp;" %>
 			</td>
 		</tr>
 		<tr>

@@ -36,8 +36,12 @@ class PhotosController < ApplicationController
 		
 		set_page_title(info)
 		set_block_title(info)
-
-    get_prev_next
+		
+		if @photos_set_count == 1
+			@photo_index = 1
+		else
+			get_prev_next
+		end
 
     respond_to do |format|
       format.html do # show.html.erb
@@ -234,7 +238,7 @@ class PhotosController < ApplicationController
 	
 	def after_create_error
 		respond_to do |format|
-			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 			format.html { render :action => "new" }
 			format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
 		
@@ -257,7 +261,7 @@ class PhotosController < ApplicationController
 
 	def after_update_error
 		respond_to do |format|
-			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 			format.html { render :action => "edit" }
 			format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
 		

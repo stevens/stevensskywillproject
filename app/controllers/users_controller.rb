@@ -24,10 +24,10 @@ class UsersController < ApplicationController
       self.current_user = @user
       flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}) 查收#{SITE_NAME_CN}#{ACCOUNT_CN}#{SIGN_UP_CN}确认#{EMAIL_CN}!"
       session[:user_id] = nil
-      redirect_to :controller => "site"
+      redirect_to :controller => 'site'
       # redirect_back_or_default('/')
     else
-      flash[:notice] = "你输入的#{SIGN_UP_CN}信息有#{ERROR_CN}, 请重新输入!"
+      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{SIGN_UP_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
       render :action => 'new'
       flash[:notice] = nil	
     end
@@ -40,7 +40,8 @@ class UsersController < ApplicationController
       current_user.activate
       flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}!"
     end
-    redirect_back_or_default('/')
+    # redirect_back_or_default('/')
+    redirect_to :controller => 'mine'
   end
 
 	private

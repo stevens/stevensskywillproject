@@ -61,18 +61,15 @@ Rails::Initializer.run do |config|
   # Include your application configuration below
 	
 	# SITE constants
-	TEAM_NAME_EN = 'Cookies-Online'
-	TEAM_NAME_CN = '取奇傲蓝'
-	SITE_NAME_EN = 'CookCat'
-	SITE_NAME_CN = '厨猫'
-	SITE_DOMAIN_EN = 'www.cookcat.com'
-	SITE_DOMAIN_CN = 'www.厨猫.com'
-	SITE_EMAIL = 'cookcat@sina.com'
+	STUDIO_NAME_EN = 'Cookies-Online'
+	STUDIO_NAME_CN = '取奇傲蓝'
+	SITE_NAME_EN = 'BeeCook'
+	SITE_NAME_CN = '蜂厨'
+	SITE_DOMAIN_EN = 'www.beecook.com'
+	SITE_DOMAIN_CN = 'www.蜂厨.com'
+	SITE_EMAIL = 'cookcat@sina.com' #TBD
 	YEAR_BEGIN = '2007'
 	YEAR_NOW = '2008'
-	
-	# LANGUAGE constants
-	DEFAULT_LANGUAGE = 'CHN'
 	
 	# WHO constants
 	I_CN = '我'
@@ -182,19 +179,17 @@ Rails::Initializer.run do |config|
 	SIGN_UP_CN = '注册'
 	SIGN_OFF_CN = '注销'
 	BECOME_CN = '作为'
-	SORRY_CN = '对不起'
 	
 	# KEY constants
 	RECIPE_EN = 'recipe'
 	RECIPE_CN = '食谱'
 	MENU_CN = '餐单'
-	COOK_CN = '厨师'
 	KITCHEN_CN = '厨房'
 	RANKING_CN = '榜单'
 	PHOTO_EN = 'photo'
 	CATEGORY_CN = '分类'
 	PHOTO_CN = '图片'
-	GROUP_CN = '厨圈'
+	GROUP_CN = '队伍'
 	FRIEND_CN = '厨友'
 	PROFILE_CN = '档案'
 	MAILBOX_CN = '信箱'
@@ -253,6 +248,7 @@ Rails::Initializer.run do |config|
 	COME_FROM_CN = '来自'
 	REQUIRED_CN = '必填项'
 	OPTIONAL_CN = '选填项'
+	SORRY_CN = '对不起'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 5
@@ -329,12 +325,12 @@ end
 	 	# :user_name => "beecook",
 	 	# :password => "CookBee2008"
 
-		:address => "smtp.sina.com",
-	 	:port => 25,
-	 	:authentication => :login,
-	 	:domain => "www.sina.com.cn",
-	 	:user_name => "cookcat",
-	 	:password => "CatCook0421"
+		:address => "smtp.sina.com", #TBD
+	 	:port => 25, #TBD
+	 	:authentication => :login, #TBD
+	 	:domain => "www.sina.com.cn", #TBD
+	 	:user_name => "cookcat", #TBD
+	 	:password => "CatCook0421" #TBD
 	 	
 	 	# :address => "ssl://smtp.gmail.com",
 	 	# :port => 465,

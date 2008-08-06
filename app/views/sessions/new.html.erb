@@ -10,28 +10,28 @@
 					<td class="label"><label for="login"><%= "#{ACCOUNT_ID_CN}:" %></label></td>
 					<td class="input">
 						<%= text_field_tag "login", "", :class => "text_s" %>
-						&nbsp;&nbsp;
-						<%= link_to "我忘记了#{ACCOUNT_ID_CN}?", root_path %>
 					</td>
 				</tr>
 				<tr>
 					<td class="label"><label for="password"><%= "#{PASSWORD_CN}:" %></label></td>
 					<td class="input">
 						<%= password_field_tag "password", "", :class => "text_s" %>
-						&nbsp;&nbsp;
-						<%= link_to "我忘记了#{PASSWORD_CN}?", root_path %>
 					</td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="input"><%= check_box_tag "remember_me" %><%= " 记住我" %></td>
+					<td class="input">
+						<%= check_box_tag "remember_me", "yes", false, :class => "check_box" %><%= "记住我" %>
+						&nbsp;&nbsp;
+						<%= link_to "我忘记了#{PASSWORD_CN}?", root_url %>
+					</td>
 				</tr>
 				<tr>
 					<td></td>
 					<td class="submit">
 						<%= submit_tag LOGIN_CN, :class => "submit" %>
 						&nbsp;&nbsp;
-						<%= link_to "&raquo;我还没有#{SITE_NAME_CN}#{ACCOUNT_CN}", "#{root_path}signup" %>
+						<%= link_to "&raquo;我还没有#{SITE_NAME_CN}#{ACCOUNT_CN}", "#{root_url}signup" %>
 					</td>
 				</tr>
 			</table>

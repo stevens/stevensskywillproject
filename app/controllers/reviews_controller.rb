@@ -155,7 +155,7 @@ class ReviewsController < ApplicationController
 	
 	def after_create_error
 		respond_to do |format|
-			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 			format.html { render :action => "new" }
 			format.xml  { render :xml => @review.errors, :status => :unprocessable_entity }
 		
@@ -178,7 +178,7 @@ class ReviewsController < ApplicationController
 
 	def after_update_error
 		respond_to do |format|
-			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 			format.html { render :action => "edit" }
 			format.xml  { render :xml => @review.errors, :status => :unprocessable_entity }
 		

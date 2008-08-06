@@ -52,6 +52,21 @@ class RecipesController < ApplicationController
     @reviews_set = reviews_for(nil, @self_type, @self_id, 'created_at DESC')
     @reviews_set_count = @reviews_set.size
     @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
+		
+		@ratings_count = Rating.count(:conditions => {:rateable_type => 'recipe', :rateable_id => @recipe.id})
+		if @ratings_count > 0
+			@total_rating = Rating.average('rating', :conditions => {:rateable_type => 'recipe', :rateable_id => @recipe.id})
+		else
+			@total_rating = 0
+		end
+		
+		if @current_user
+			if my_rating = @current_user.ratings.find(:first, :conditions => {:rateable_type => 'recipe', :rateable_id => @recipe.id})
+				@current_rating = my_rating.rating
+			else
+				@current_rating = 0
+			end
+		end
 			
 		if @recipe_user == @current_user
 			load_recipes_mine
@@ -288,7 +303,7 @@ class RecipesController < ApplicationController
   
   def after_create_error
   	respond_to do |format|
-			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 			format.html { render :action => "new" }
 			format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
 			
@@ -312,7 +327,7 @@ class RecipesController < ApplicationController
   
   def after_update_error
   	respond_to do |format|
-			flash[:notice] = "你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 			format.html { render :action => "edit" }
 			format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
 			

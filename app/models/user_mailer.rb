@@ -18,7 +18,7 @@ class UserMailer < ActionMailer::Base
     def setup_email(user)
       @recipients  = "#{user.email}"
       @from        = "#{SITE_NAME_EN} <#{SITE_EMAIL}>"
-      @subject     = "[#{SITE_NAME_EN}] "
+      @subject     = "[#{SITE_NAME_CN}] "
       @sent_on     = Time.now
       @body[:user] = user
     end
