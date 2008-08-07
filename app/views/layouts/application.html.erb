@@ -68,8 +68,8 @@
 				
 				<!-- current user -->
 				<div id="current_user">
-					<% if @current_user %> 
-						<%= "#{HELLO_CN}, " %><%= link_to @current_user.login, user_url(@current_user) %>
+					<% if current_user = User.find_by_id(session[:user_id]) %> 
+						<%= "#{HELLO_CN}, " %><%= link_to current_user.login, user_url(current_user) %>
 						<%= link_to LOGOUT_CN, "#{root_path}logout" %>
 					<% else %>
 						<%= link_to SIGN_UP_CN, "#{root_path}signup" %>
@@ -106,7 +106,7 @@
 					
 					<!-- sidebar colmun  -->
 				  <div id="sidebar_column">
-				  	<% if !@current_user && (params[:controller] != 'sessions') && (params[:controller] != 'users') %>
+				  	<% if !current_user && (params[:controller] != 'sessions') && (params[:controller] != 'users') %>
 					  	<%= render :partial => "layouts/login_sidebar" %>
 					  <% end %>
 						<%= render :partial => "layouts/search_sidebar" %>

@@ -37,7 +37,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_cookcat_session',
+    :session_key => '_beecook_session',
     :secret      => '5b33a2f59b95e9d035acae7deb142cb3708f77c37ab54170f015f22d9a111f86bdad30e06b72089916c60a2546932474a073f5f98f67cc2f49a312da86833db9'
   }
 
@@ -67,7 +67,7 @@ Rails::Initializer.run do |config|
 	SITE_NAME_CN = '蜂厨'
 	SITE_DOMAIN_EN = 'www.beecook.com'
 	SITE_DOMAIN_CN = 'www.蜂厨.com'
-	SITE_EMAIL = 'cookcat@sina.com' #TBD
+	SITE_EMAIL = 'beecook2007@gmail.com' #TBD
 	YEAR_BEGIN = '2007'
 	YEAR_NOW = '2008'
 	
@@ -313,34 +313,11 @@ Rails::Initializer.run do |config|
 	UNIT_REVIEW_CN = '条'
 	
 end
-
-	# ActionMailer::Base.delivery_method=:sendmail
 	
-	ActionMailer::Base.delivery_method = :smtp
-	ActionMailer::Base.smtp_settings = {
-		# :address => "smtp.126.com",
-	 	# :port => 25,
-	 	# :authentication => :login,
-	 	# :domain => "www.126.com",
-	 	# :user_name => "beecook",
-	 	# :password => "CookBee2008"
-
-		:address => "smtp.sina.com", #TBD
-	 	:port => 25, #TBD
-	 	:authentication => :login, #TBD
-	 	:domain => "www.sina.com.cn", #TBD
-	 	:user_name => "cookcat", #TBD
-	 	:password => "CatCook0421" #TBD
-	 	
-	 	# :address => "ssl://smtp.gmail.com",
-	 	# :port => 465,
-	 	# :authentication => :login,
-	 	# :domain => "www.gmail.com",
-	 	# :user_name => "haakaa2007",
-	 	# :password => "GreeNew0619"
-	}
+	# ActionMailer::Base.delivery_method = :smtp
+	# ActionMailer::Base.smtp_settings = { }
 	
 	require 'will_paginate'
 	# require 'acts_as_ferret'
 	
-	 TagList.delimiter = " "
+	TagList.delimiter = " "

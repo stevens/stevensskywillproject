@@ -11,16 +11,16 @@ class ApplicationController < ActionController::Base
   
   helper :all # include all helpers, all the time
 	
+  # See ActionController::RequestForgeryProtection for details
+  # Uncomment the :secret if you're not using the cookie session store
+  protect_from_forgery # :secret => 'cc8183fbb5f7c6d11416a4cd6469fe64'
+
 	before_filter :load_current_user
 	before_filter :load_user
   before_filter :load_parent
   before_filter :load_self
   before_filter :load_self_urls
 	before_filter :set_current_tab
-	
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => 'cc8183fbb5f7c6d11416a4cd6469fe64'
   
   # Protect a page from unauthorized access.
 	def protect
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
   end
   
   def load_user
-  	if params[:controller] == 'users'
+  	if params[:controller] == 'users' && params[:action] != 'activate'
   		@user_id = params[:id]
   	elsif params[:user_id]
 	  	@user_id = params[:user_id]

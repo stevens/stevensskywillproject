@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
 	
   def signup_notification(user)
     setup_email(user)
-    @subject    += "请确认你的#{SITE_NAME_CN}#{ACCOUNT_CN}#{SIGN_UP_CN}信息!"
+    @subject    += "请激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}!"
     @body[:url]  = "#{root_url}users/activate/#{user.activation_code}"
   end
   
