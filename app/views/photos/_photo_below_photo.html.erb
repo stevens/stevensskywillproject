@@ -1,6 +1,6 @@
 <% if show_photo_todo %>
 	<% if photo.user == @current_user %>
-		<%= link_to "#{EDIT_CN}", restfu_url_for(nil, {:type => photo.photo_type, :id => photo.belong_to_id}, {:type => 'photo', :id => photo.id}, 'edit') %> |
-		<%= link_to "#{DELETE_CN}", restfu_url_for(nil, {:type => photo.photo_type, :id => photo.belong_to_id}, {:type => 'photo', :id => photo.id}, nil), :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
+		<%= link_to "#{EDIT_CN}", restfu_url_for(nil, {:type => photo.photoable_type, :id => photo.photoable_id}, {:type => 'photo', :id => photo.id}, 'edit') %> |
+		<%= link_to "#{DELETE_CN}", restfu_url_for(nil, {:type => photo.photoable_type, :id => photo.photoable_id}, {:type => 'photo', :id => photo.id}, nil), :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
 	<% end %>
 <% end %>

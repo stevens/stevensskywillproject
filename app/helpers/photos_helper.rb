@@ -51,8 +51,8 @@ module PhotosHelper
 		if user
 			if photoable_type && photoable_id
 				user.photos.find(:all, :order => order, 
-												 :conditions => ["photo_type = ? AND 
-																			 	 belong_to_id = ?", 
+												 :conditions => ["photoable_type = ? AND 
+																			 	 photoable_id = ?", 
 																			 	 photoable_type, 
 																			 	 photoable_id])
 			else
@@ -61,8 +61,8 @@ module PhotosHelper
 		else
 			if photoable_type && photoable_id
 				Photo.find(:all, :order => order, 
-									 :conditions => ["photo_type = ? AND 
-																	 belong_to_id = ?", 
+									 :conditions => ["photoable_type = ? AND 
+																	 photoable_id = ?", 
 																	 photoable_type, 
 																	 photoable_id])
 			else

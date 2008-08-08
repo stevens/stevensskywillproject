@@ -7,13 +7,13 @@ defaults: &defaults
   socket: /opt/local/var/run/mysql5/mysqld.sock
 
 development:
-  database: cookcat_development
+  database: beecook_development
   <<: *defaults
 
 test:
-  database: cookcat_test 
+  database: beecook_test 
   <<: *defaults
 
 production:
-  database: cookcat_production
+  database: beecook_production
   <<: *defaults
