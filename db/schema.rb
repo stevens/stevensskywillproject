@@ -9,61 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 15) do
-
-  create_table "codes", :force => true do |t|
-    t.integer  "data_element_id"
-    t.string   "code"
-    t.string   "name"
-    t.string   "language"
-    t.text     "remark"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "data_elements", :force => true do |t|
-    t.string   "code"
-    t.string   "name"
-    t.string   "category"
-    t.string   "language"
-    t.text     "remark"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "infos", :force => true do |t|
-    t.string   "code"
-    t.string   "text"
-    t.string   "category"
-    t.string   "language"
-    t.text     "remark"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 9) do
 
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
     t.text     "caption"
-    t.string   "photo_type"
-    t.integer  "belong_to_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "content_type", :limit => 100
-    t.string   "filename"
-    t.string   "path"
-    t.integer  "parent_id"
-    t.string   "thumbnail"
-    t.integer  "size"
-    t.integer  "width"
-    t.integer  "height"
-  end
-
-  add_index "photos", ["user_id"], :name => "fk_photos_user"
-
-  create_table "photos_b", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "belong_to_id"
-    t.text     "caption"
+    t.string   "photoable_type"
+    t.integer  "photoable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content_type",   :limit => 100
@@ -74,23 +26,9 @@ ActiveRecord::Schema.define(:version => 15) do
     t.integer  "size"
     t.integer  "width"
     t.integer  "height"
-    t.string   "belong_to_type"
   end
 
-  create_table "photos_backup", :force => true do |t|
-    t.integer  "user_id"
-    t.text     "caption"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "content_type", :limit => 100
-    t.string   "filename"
-    t.string   "path"
-    t.integer  "parent_id"
-    t.string   "thumbnail"
-    t.integer  "size"
-    t.integer  "width"
-    t.integer  "height"
-  end
+  add_index "photos", ["user_id"], :name => "fk_photos_user"
 
   create_table "ratings", :force => true do |t|
     t.integer  "user_id"

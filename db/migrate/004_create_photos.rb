@@ -3,8 +3,8 @@ class CreatePhotos < ActiveRecord::Migration
     create_table :photos do |t|
 			t.references :user
 			t.text :caption
-			t.string :photo_type
-			t.integer :belong_to_id
+			t.string :photoable_type
+			t.integer :photoable_id
 
 			t.timestamps
 			
