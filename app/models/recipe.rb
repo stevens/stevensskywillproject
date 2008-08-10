@@ -1,7 +1,6 @@
 class Recipe < ActiveRecord::Base
 	include ApplicationHelper
 	
-	acts_as_ferret :fields => [:title, :description]
 	acts_as_taggable
 	acts_as_rateable
 	

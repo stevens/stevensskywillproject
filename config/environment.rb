@@ -318,6 +318,5 @@ end
 	# ActionMailer::Base.smtp_settings = { }
 	
 	require 'will_paginate'
-	# require 'acts_as_ferret'
 	
 	TagList.delimiter = " "
