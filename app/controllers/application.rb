@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include PhotosHelper
   include ReviewsHelper
   include TagsHelper
+  include RatingsHelper
   
   helper :all # include all helpers, all the time
 	

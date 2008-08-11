@@ -163,7 +163,7 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	@highlighted_recipes_set = highlighted_recipes
+  	@highlighted_recipes_set = highlighted_recipes(Time.today - 100.days)
   	@highlighted_recipe = @highlighted_recipes_set.rand
   	
   	@latest_recipes_set = latest_recipes(nil, 'created_at DESC', Time.today - 100.days, nil, true)

@@ -30,8 +30,33 @@ module RecipesHelper
 		conditions_result_recipes | tags_result_recipes
 	end
 	
-	def highlighted_recipes
-		Recipe.find(:all, :conditions => ["cover_photo_id IS NOT NULL"])
+	def highlighted_recipes(base_time)
+		recipes = Recipe.find_all_by_rating(MIN_HILIGHTED_ITEM_RATING..MAX_HILIGHTED_ITEM_RATING, 
+																				:conditions => ["title IS NOT NULL AND 
+																												title <> '' AND 
+																												description IS NOT NULL AND 
+																												description <> '' AND 
+																												ingredients IS NOT NULL AND 
+																												# ingredients <> '' AND
+																												directions IS NOT NULL AND
+																												# directions <> '' AND 
+																												cover_photo_id IS NOT NULL AND 
+																												# difficulty IS NOT NULL AND 
+																												# prep_time > 0 AND 
+																												# cook_time > 0 AND
+																												yield IS NOT NULL AND 
+																												# yield <> '' AND 
+																												recipes.created_at >= ?",  
+																												base_time])
+		highlighted_recipes = []
+		for recipe in recipes
+			ratings_count = ratings_count(recipe)
+			total_rating = total_rating(recipe)
+			if total_rating >= MIN_HILIGHTED_ITEM_RATING && total_rating <= MAX_HILIGHTED_ITEM_RATING && ratings_count >= 5
+				highlighted_recipes << recipe
+			end
+		end
+		highlighted_recipes
 	end
   
   def latest_recipes(user, order, base_time, only_has_photo, only_full_info)
