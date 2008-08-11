@@ -31,7 +31,7 @@
 		</li>
 		<%= paragraphs(item.description_summary) %>
 	</ul>
-	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, 'created_at DESC').size) > 0 %>
+	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, nil, nil, 'created_at DESC').size) > 0 %>
 		<%= link_to "(#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN})", 
 								restfu_url_for(nil, {:type => 'recipe', :id => item.id}, {:type => 'review'}, nil) %>
 	<% end %>

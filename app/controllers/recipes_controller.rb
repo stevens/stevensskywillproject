@@ -49,7 +49,7 @@ class RecipesController < ApplicationController
 		
 		@review_name = name_for('review')
 		@review_unit = unit_for('review')
-    @reviews_set = reviews_for(nil, @self_type, @self_id, 'created_at DESC')
+    @reviews_set = reviews_for(nil, @self_type, @self_id, nil, nil, 'created_at DESC')
     @reviews_set_count = @reviews_set.size
     @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 			
@@ -163,12 +163,12 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	@highlighted_recipes_set = highlighted_recipes(Time.today - 100.days)
+  	@highlighted_recipes_set = highlighted_recipes(nil, true, false, Time.today - 100.days, nil, nil)
   	@highlighted_recipe = @highlighted_recipes_set.rand
   	
-  	@latest_recipes_set = latest_recipes(nil, 'created_at DESC', Time.today - 100.days, nil, true)
+  	@latest_recipes_set = recipes_for(nil, true, false, Time.today - 100.days, nil, 'created_at DESC')
   	@latest_recipes = @latest_recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
-  	@latest_reviews_set = latest_reviews(nil, 'recipe', nil, 'created_at DESC', Time.today - 100.days)
+  	@latest_reviews_set = reviews_for(nil, 'recipe', nil, Time.today - 100.days, nil, 'created_at DESC')
   	@latest_reviews = @latest_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 	  
 	  @tags = recipe_tags_cloud(nil)

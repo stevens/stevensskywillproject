@@ -112,6 +112,10 @@ module ApplicationHelper
 		end
 	end
 	
+	def time_iso_format(time)
+		time.strftime("%Y-%m-%d %H:%M:%S")
+	end
+	
 	def items_rows_count(items_count, items_count_per_row)
 		rc = items_count/items_count_per_row
 		rc = items_count%items_count_per_row == 0 ? rc : rc+1
@@ -200,6 +204,10 @@ module ApplicationHelper
 		else
 			model_for(item_type).find_tagged_with(tag, :order => order)
 		end
+	end
+	
+	def rated_items(user, item_type, min_rating, max_rating, conditions, order)
+
 	end
 	
 end

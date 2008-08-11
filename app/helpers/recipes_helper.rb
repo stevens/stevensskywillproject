@@ -30,24 +30,16 @@ module RecipesHelper
 		conditions_result_recipes | tags_result_recipes
 	end
 	
-	def highlighted_recipes(base_time)
-		recipes = Recipe.find_all_by_rating(MIN_HILIGHTED_ITEM_RATING..MAX_HILIGHTED_ITEM_RATING, 
-																				:conditions => ["title IS NOT NULL AND 
-																												title <> '' AND 
-																												description IS NOT NULL AND 
-																												description <> '' AND 
-																												ingredients IS NOT NULL AND 
-																												# ingredients <> '' AND
-																												directions IS NOT NULL AND
-																												# directions <> '' AND 
-																												cover_photo_id IS NOT NULL AND 
-																												# difficulty IS NOT NULL AND 
-																												# prep_time > 0 AND 
-																												# cook_time > 0 AND
-																												yield IS NOT NULL AND 
-																												# yield <> '' AND 
-																												recipes.created_at >= ?",  
-																												base_time])
+	def highlighted_recipes(user, only_has_photo, only_full_info, created_at_from, created_at_to, order)
+		if user
+			recipes = user.recipes.find_all_by_rating(MIN_HILIGHTED_ITEM_RATING..MAX_HILIGHTED_ITEM_RATING, 
+																								:order => order, 
+																								:conditions => ["#{recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)}"])
+		else
+			recipes = Recipe.find_all_by_rating(MIN_HILIGHTED_ITEM_RATING..MAX_HILIGHTED_ITEM_RATING, 
+																					:order => order, 
+																					:conditions => ["#{recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)}"])
+		end
 		highlighted_recipes = []
 		for recipe in recipes
 			ratings_count = ratings_count(recipe)
@@ -58,81 +50,39 @@ module RecipesHelper
 		end
 		highlighted_recipes
 	end
-  
-  def latest_recipes(user, order, base_time, only_has_photo, only_full_info)
+	
+	def recipes_for(user, only_has_photo, only_full_info, created_at_from, created_at_to, order)
 		if user
-			if only_full_info
-				user.recipes.find(:all, :order => order, 
-													:conditions => ["title IS NOT NULL AND 
-																					title <> '' AND 
-																					description IS NOT NULL AND 
-																					description <> '' AND 
-																					ingredients IS NOT NULL AND 
-																					# ingredients <> '' AND 
-																					directions IS NOT NULL AND 
-																					# directions <> '' AND 
-																					cover_photo_id IS NOT NULL AND 
-																					# difficulty IS NOT NULL AND 
-																					# prep_time > 0 AND 
-																					# cook_time > 0 AND 
-																					yield IS NOT NULL AND 
-																					# yield <> '' AND 
-																					created_at >= ?",  
-																					base_time])
-			elsif only_has_photo
-				user.recipes.find(:all, :order => order, 
-													:conditions => ["title IS NOT NULL AND 
-																					title <> '' AND 
-																					description IS NOT NULL AND 
-																					description <> '' AND 
-																					cover_photo_id IS NOT NULL AND 
-																					created_at >= ?",  
-																					base_time])
-			
-			else
-				user.recipes.find(:all, :order => order, 
-													:conditions => ["title IS NOT NULL AND 
-																					title <> '' AND 
-																					description IS NOT NULL AND 
-																					description <> ''"])
-			end
+			user.recipes.find(:all, :order => order, 
+												:conditions => ["#{recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)}"])
 		else
-			if only_full_info
-				Recipe.find(:all, :order => order, 
-										:conditions => ["title IS NOT NULL AND 
-																		title <> '' AND 
-																		description IS NOT NULL AND 
-																		description <> '' AND 
-																		ingredients IS NOT NULL AND 
-																		# ingredients <> '' AND 
-																		directions IS NOT NULL AND 
-																		# directions <> '' AND 
-																		cover_photo_id IS NOT NULL AND 
-																		# difficulty IS NOT NULL AND 
-																		# prep_time > 0 AND 
-																		# cook_time > 0 AND 
-																		yield IS NOT NULL AND 
-																		# yield <> '' AND 
-																		created_at >= ?",  
-																		base_time])
-			elsif only_has_photo
-				Recipe.find(:all, :order => order, 
-										:conditions => ["title IS NOT NULL AND 
-																		title <> '' AND 
-																		description IS NOT NULL AND 
-																		description <> '' AND 
-																		cover_photo_id IS NOT NULL AND 
-																		created_at >= ?",  
-																		base_time])
-			
-			else
-				Recipe.find(:all, :order => order, 
-										:conditions => ["title IS NOT NULL AND 
-																		title <> '' AND 
-																		description IS NOT NULL AND 
-																		description <> ''"])
-			end
+			Recipe.find(:all, :order => order, 
+									:conditions => ["#{recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)}"])
 		end
-  end
+	end
+	
+  def recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)
+  	conditions = ["title IS NOT NULL", 
+  								"title <> ''", 
+  								"description IS NOT NULL", 
+  								"description <> ''"]
+		conditions << "cover_photo_id IS NOT NULL" if only_has_photo
+		if only_full_info
+			conditions << ["ingredients IS NOT NULL", 
+										 "ingredients <> ''", 
+										 "directions IS NOT NULL", 
+										 "directions <> ''", 
+										 "cover_photo_id IS NOT NULL", 
+										 "difficulty IS NOT NULL", 
+										 "prep_time > 0", 
+										 "cook_time > 0", 
+										 "yield IS NOT NULL", 
+										 "yield <> ''"]
+		end
+		conditions << "recipes.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
+		conditions << "recipes.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
+		conditions.join(" AND ")
+  end  
+  
 
 end

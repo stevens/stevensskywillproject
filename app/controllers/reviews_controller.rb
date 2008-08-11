@@ -6,9 +6,7 @@ class ReviewsController < ApplicationController
   # GET /reviews.xml
   def index
   	
-  	if @parent_obj
-  		load_reviews_all			
-  	end
+  	load_reviews_set			
   	
 	 	info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}(#{@reviews_set_count})"
 	 	
@@ -28,9 +26,7 @@ class ReviewsController < ApplicationController
   def show
 		load_review
 		
-		if @parent_obj
-			load_reviews_all	
-		end										
+		load_reviews_set								
 		
 		info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
 		
@@ -48,9 +44,7 @@ class ReviewsController < ApplicationController
   def new
     @review = @current_user.reviews.build
     
-  	if @parent_obj
-  		load_reviews_all			
-  	end
+  	load_reviews_set
   	
     info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
     
@@ -67,9 +61,7 @@ class ReviewsController < ApplicationController
   def edit
   	load_review
     
-  	if @parent_obj
-  		load_reviews_all			
-  	end
+  	load_reviews_set
    
  		info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
 		
@@ -113,6 +105,17 @@ class ReviewsController < ApplicationController
 		after_destroy_ok
   end
   
+  def recipe
+  	
+  
+  
+  
+  
+  
+  
+  
+  end
+  
 	private
 	
   def load_review
@@ -124,8 +127,8 @@ class ReviewsController < ApplicationController
   	end
   end
   
-  def load_reviews_all
- 		@reviews_set = reviews_for(nil, @parent_type, @parent_id, 'created_at DESC')
+  def load_reviews_set
+ 		@reviews_set = reviews_for(nil, @parent_type, @parent_id, nil, nil, 'created_at DESC')
   	@reviews_set_count = @reviews_set.size
   end
 
@@ -148,7 +151,7 @@ class ReviewsController < ApplicationController
 			format.html { render :action => "new" }
 			format.xml  { render :xml => @review.errors, :status => :unprocessable_entity }
 		
-			load_reviews_all
+			load_reviews_set
 			
 			info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
 			set_page_title(info)
@@ -171,7 +174,7 @@ class ReviewsController < ApplicationController
 			format.html { render :action => "edit" }
 			format.xml  { render :xml => @review.errors, :status => :unprocessable_entity }
 		
-			load_reviews_all
+			load_reviews_set
 			
 			info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
 			set_page_title(info)
