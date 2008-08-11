@@ -52,7 +52,7 @@ module RecipesHelper
 		for recipe in recipes
 			ratings_count = ratings_count(recipe)
 			total_rating = total_rating(recipe)
-			if total_rating >= MIN_HILIGHTED_ITEM_RATING && total_rating <= MAX_HILIGHTED_ITEM_RATING && ratings_count >= 5
+			if total_rating >= MIN_HILIGHTED_ITEM_RATING && total_rating <= MAX_HILIGHTED_ITEM_RATING && ratings_count >= MIN_RATINGS_COUNT
 				highlighted_recipes << recipe
 			end
 		end

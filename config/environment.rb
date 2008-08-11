@@ -299,7 +299,7 @@ Rails::Initializer.run do |config|
 	
 	MIN_HILIGHTED_ITEM_RATING = 7
 	MAX_HILIGHTED_ITEM_RATING = 10
-	
+	MIN_RATINGS_COUNT = 5
 	
 	#CODE SET constants
 	DIFFICULTY_1_CN = '很容易'
