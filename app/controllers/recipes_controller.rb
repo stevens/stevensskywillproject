@@ -52,21 +52,6 @@ class RecipesController < ApplicationController
     @reviews_set = reviews_for(nil, @self_type, @self_id, 'created_at DESC')
     @reviews_set_count = @reviews_set.size
     @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
-		
-		@ratings_count = Rating.count(:conditions => {:rateable_type => 'recipe', :rateable_id => @recipe.id})
-		if @ratings_count > 0
-			@total_rating = Rating.average('rating', :conditions => {:rateable_type => 'recipe', :rateable_id => @recipe.id})
-		else
-			@total_rating = 0
-		end
-		
-		if @current_user
-			if my_rating = @current_user.ratings.find(:first, :conditions => {:rateable_type => 'recipe', :rateable_id => @recipe.id})
-				@current_rating = my_rating.rating
-			else
-				@current_rating = 0
-			end
-		end
 			
 		if @recipe_user == @current_user
 			load_recipes_mine

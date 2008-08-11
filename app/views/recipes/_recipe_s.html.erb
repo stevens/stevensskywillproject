@@ -2,29 +2,35 @@
 	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
 	<ul>
 		<li>
-			<% if item.user == @current_user %>
-	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
-	    	<% else %>
-	    		<%= "来自 " %><%= link_to h(item.user.login), user_url(item.user) %>
-	    	<% end %>
-    		&nbsp;&nbsp;
-    		<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
+			<%= "来自 " %><%= link_to h(item_username(item)), user_url(item.user) %>
+			&nbsp;&nbsp;
+			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
 		</li>
 		<li>
+			<%= "#{TAG_CN}: " %>
 			<% if item.tag_list.size > 0 %>
-    		<%= "#{TAG_CN}: " %>					    			
     		<% for tag in item.tag_list %>
 	    		<%= link_to h(tag), {:action => :tag, :id => tag} %>
 	    	<% end %>
 			<% else %>
-	    	<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
+	    	<%= "还没有#{TAG_CN}" %>
 			<% end %>
 		</li>
 	</ul>
 </div>
 
 <div class="main">
-	<ul><%= paragraphs(item.description_summary) %></ul>
+	<ul>
+		<li>
+			<%= "#{RATE_CN}: " %>
+			<% if ratings_count(item) > 0 %>
+				<%= "#{total_rating(item)}/10 (#{ratings_count(item)}票)" %>
+			<% else %>
+				<%= "还没有#{RATE_CN}" %>
+			<% end %>
+		</li>
+		<%= paragraphs(item.description_summary) %>
+	</ul>
 	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, 'created_at DESC').size) > 0 %>
 		<%= link_to "(#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN})", 
 								restfu_url_for(nil, {:type => 'recipe', :id => item.id}, {:type => 'review'}, nil) %>

@@ -1,12 +1,7 @@
 <div class="basic">
 	<ul>
 		<li>
-			<%= "来自 " %>
-			<% if photo.user == @current_user %>
-    		<%= link_to "我", user_url(photo.user) %>
-    	<% else %>
-    		<%= link_to h(photo.user.login), user_url(photo.user) %>
-    	<% end %>			    			
+			<%= "来自 " %><%= link_to h(item_username(photo)), user_url(photo.user) %>		    			
 		</li>
 		<li>
 			<%= "#{photo.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>

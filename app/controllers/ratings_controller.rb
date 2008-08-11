@@ -22,8 +22,8 @@ class RatingsController < ApplicationController
 	    render :update do |page|   
 	      page.replace_html "#{@rateable_type}_rating", 
 	      									:partial => "rate", 
-	      									:locals => {:total_rating => total_rating, 
-	      															:ratings_count => ratings_count, 
+	      									:locals => {:ratings_count => ratings_count, 
+	      															:total_rating => total_rating, 
 	      															:current_rating => new_rating, 
 	      															:rateable_type => @rateable_type, 
 	      															:rateable_id => @rateable_id}   
@@ -37,7 +37,7 @@ class RatingsController < ApplicationController
   
   def load_rateable
   	@rateable = model_for(params[:rateable_type]).find(params[:rateable_id])
-  	@rateable_type = @rateable.class.to_s.downcase
+  	@rateable_type = type_for(@rateable)
   	@rateable_id = @rateable.id
   end
   

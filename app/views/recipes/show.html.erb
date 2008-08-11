@@ -37,9 +37,9 @@
 		    <td class="right_colomn">
 					<div id="recipe_rating" class="rating">
 						<%= render :partial => "/ratings/rate",
-											 :locals => {:total_rating => @total_rating, 
-											 						 :ratings_count => @ratings_count, 
-											 						 :current_rating => @current_rating, 
+											 :locals => {:ratings_count => ratings_count(@recipe),
+											 						 :total_rating => total_rating(@recipe), 
+											 						 :current_rating => user_rating(@current_user, @recipe), 
 											 						 :rateable_type => 'recipe',
 											 						 :rateable_id => @recipe.id} %>
 					</div>

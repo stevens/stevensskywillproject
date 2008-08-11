@@ -38,6 +38,18 @@ module ApplicationHelper
 			nil
 	end
 	
+	def type_for(object)
+		object.class.to_s.downcase
+	end
+	
+	def item_username(item)
+		if @current_user && item.user == @current_user
+		 '我'
+		else
+			item.user.login
+		end
+	end
+	
 	def item_title(item_type, item)
 		case item_type
 		when 'user'

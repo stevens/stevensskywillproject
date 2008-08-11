@@ -2,11 +2,7 @@
 	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
 	<ul>
 		<li>
-			<% if item.user == @current_user %>
-	    		<%= "来自 " %><%= link_to "我", user_url(item.user) %>
-	    	<% else %>
-	    		<%= "来自 " %><%= link_to h(item.user.login), user_url(item.user) %>
-	    	<% end %>
+			<%= "来自 " %><%= link_to h(item_username(item)), user_url(item.user) %>
 		</li>
 		<li>
 			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
