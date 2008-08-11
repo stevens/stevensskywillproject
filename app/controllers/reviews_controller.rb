@@ -113,17 +113,6 @@ class ReviewsController < ApplicationController
 		after_destroy_ok
   end
   
-  def load_latest_reviews
-  	@reviews_set = Review.find(:all, :order => 'created_at DESC', :limit => ITEMS_COUNT_PER_PAGE,
-  														 :conditions => [ "title IS NOT NULL AND
-  														 									title <> '' AND
-  														 									review IS NOT NULL AND
-  														 									review <> '' AND 
-  														 									reviewable_type = 'recipe' AND
-  														 									created_at >= ?", Time.today - 7.days ] )
-  	@reviews_set_count = @reviews_set.size
-  end
-  
 	private
 	
   def load_review
