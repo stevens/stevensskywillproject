@@ -105,8 +105,8 @@ class PhotosController < ApplicationController
   # POST /photos.xml
   def create
     @photo = @current_user.photos.build(params[:photo])
-		@photo.photo_type = @parent_type
-		@photo.belong_to_id = @parent_id
+		@photo.photoable_type = @parent_type
+		@photo.photoable_id = @parent_id
 		
 		if @parent_obj
   		load_photos_all			

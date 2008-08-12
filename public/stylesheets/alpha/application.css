@@ -114,14 +114,14 @@ ol {
 #help {
 	float: right;
 	margin-top: 10px;
-	margin-right: 30px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-color: #ff8159;
+	padding-right: 30px;
 	text-align: center;
 	z-index: 1000;
 }
 #help a, #help a:link, #help a:visited {
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: #ff8159;
 	color: #ffffff;
 }
 #help a:hover {
@@ -343,6 +343,9 @@ td.photo_item_cell {
 .block_main table {
 	width: 100%;
 }
+* html .block_main table {
+	width: 99.6%;
+}
 .block_main label {
 	float: right;
 	text-align: right;
@@ -388,6 +391,9 @@ td.photo_item_cell {
 	font-size: 12px;
 	font-weight: bold;
 	color: #373737;
+}
+.sidebar_block_main {
+	padding: 10px;
 }
 .panel_block_header {
 	padding-top: 3px;
