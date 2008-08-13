@@ -600,7 +600,7 @@ div.pagination a, div.pagination span {
 #flash {
 	margin-bottom: 10px;
 	padding: 10px;
-	padding-left: 30px;
+	padding-left: 20px;
 	background-color: #ffcc99;
 	border-top: 4px solid #ff8159;
 	/*border-bottom: 4px solid #ff8159;*/
@@ -609,7 +609,7 @@ div.pagination a, div.pagination span {
 #system_notice {
 	margin-bottom: 10px;
 	padding: 10px;
-	padding-left: 30px;
+	padding-left: 20px;
 	background-color: #ccffcc;
 	border-top: 4px solid #78b36d;
 	/*border-bottom: 4px solid #78b36d;*/

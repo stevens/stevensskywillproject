@@ -19,7 +19,7 @@
 					<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
 						<%= link_to RECIPE_CN, "#{recipes_url}/overview" %>
 					</li>
-					<li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
+					<!-- <li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
 						<%= link_to MENU_CN, root_path %>
 					</li>
 					<li class=<%= tab_css_class(@current_tab_type, 'friend') %>>
@@ -27,7 +27,7 @@
 					</li>
 					<li class=<%= tab_css_class(@current_tab_type, 'group') %>>
 						<%= link_to GROUP_CN, root_path %>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		
@@ -37,12 +37,12 @@
 						<%= link_to "我的#{SITE_NAME_CN}", "#{root_url}mine" %>
 					</li>
 					<% if logged_in? %>
-						<li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
+						<!-- <li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
 							<%= link_to PROFILE_CN, root_path %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'message') %>>
 							<%= link_to MAILBOX_CN, root_path %>
-						</li>
+						</li> -->
 						<li class=<%= tab_css_class(@current_tab_type, 'setting') %>>
 							<%= link_to SETTING_CN, root_path %>
 						</li>
@@ -87,16 +87,16 @@
 							<%= "Welcome to #{SITE_NAME_EN}!" %>
 						<% elsif @current_tab_type == 'mine' %>
 							<%= link_to "我的#{REVIEW_CN}", root_path %>
-							<%= link_to "我的#{PHOTO_CN}", root_path %>
+							<!-- <%= link_to "我的#{PHOTO_CN}", root_path %> -->
 							<%= link_to "我的#{TAG_CN}", root_path %>
 						<% elsif @current_tab_type %>
 							<% if @current_user %>
 								<%= link_to "我的#{@current_tab_name}", :controller => @current_tab_type.pluralize, :action => 'mine' %>
 							<% end %>
-							<%= link_to "分类#{@current_tab_name}", root_path %>
-							<%= link_to "#{@current_tab_name}#{RANKING_CN}", root_path %>
+							<!-- <%= link_to "分类#{@current_tab_name}", root_path %> -->
+							<!-- <%= link_to "#{@current_tab_name}#{RANKING_CN}", root_path %> -->
 							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", root_path %>
-							<%= link_to "#{@current_tab_name}#{PHOTO_CN}", root_path %>
+							<!-- <%= link_to "#{@current_tab_name}#{PHOTO_CN}", root_path %> -->
 							<%= link_to "#{@current_tab_name}#{TAG_CN}", root_path %>
 						<% else %>
 							<%= "Welcome to #{SITE_NAME_EN}!" %>
