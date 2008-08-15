@@ -10,7 +10,7 @@
 			<%= "#{TAG_CN}: " %>
 			<% if item.tag_list.size > 0 %>
     		<% for tag in item.tag_list %>
-	    		<%= link_to h(tag), {:action => :tag, :id => tag} %>
+	    		<%= link_to h(tag), {:action => :tags, :id => tag} %>
 	    	<% end %>
 			<% else %>
 	    	<%= "还没有#{TAG_CN}" %>

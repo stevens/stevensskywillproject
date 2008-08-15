@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/:controller', :action => 'mine'
 	map.connect ':controller/overview', :action => 'overview'
+	map.connect ':controller/reviews', :action => 'reviews'
+	map.connect ':controller/tags', :action => 'tags'
 	map.connetc ':controller/search/:id', :action => 'search'
   # map.resources :infos
 

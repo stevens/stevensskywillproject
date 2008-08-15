@@ -95,9 +95,9 @@
 							<% end %>
 							<!-- <%= link_to "分类#{@current_tab_name}", root_path %> -->
 							<!-- <%= link_to "#{@current_tab_name}#{RANKING_CN}", root_path %> -->
-							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", root_path %>
+							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", :action => 'reviews' %>
 							<!-- <%= link_to "#{@current_tab_name}#{PHOTO_CN}", root_path %> -->
-							<%= link_to "#{@current_tab_name}#{TAG_CN}", root_path %>
+							<%= link_to "#{@current_tab_name}#{TAG_CN}", :action => 'tags' %>
 						<% else %>
 							<%= "Welcome to #{SITE_NAME_EN}!" %>
 						<% end %>

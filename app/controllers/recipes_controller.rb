@@ -179,23 +179,47 @@ class RecipesController < ApplicationController
 		show_sidebar
   end
   
-  def tag
-  	load_tagged_recipes(nil, params[:id])
-	 	
-		recipes_paginate
-	 	
-	 	info = "#{@self_name}的#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
-	 	
-		set_page_title(info)
+  def tags
+  	if params[:id]
+	  	load_tagged_recipes(nil, params[:id])
+		 	
+			recipes_paginate
+		 	
+		 	info = "#{@self_name}的#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
+		 	
+			set_page_title(info)
+			set_block_title(info)
+	 		@show_header_link = false
+	 		
+	    respond_to do |format|
+	     	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}包含这个#{TAG_CN}......"
+	     	format.html { render :action => 'index' }
+	      format.xml  { render :xml => @recipes }
+	    end
+	    clear_notice
+		else
+			@tags = recipe_tags_cloud(nil)
+			render :partial => "/layouts/tag_cloud",
+						 :locals => {:tags => @tags}
+		end
+  end
+  
+  def reviews
+  	load_recipe_reviews
+  	
+	 	@reviews = @reviews_set.paginate :page => params[:page], 
+ 															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
+ 															 			   	
+  	info = "#{@self_name}的#{REVIEW_CN}(#{@reviews_set_count})"
+		@show_header_link = false
+  	
+  	set_page_title(info)
 		set_block_title(info)
- 		@show_header_link = false
- 		
+
     respond_to do |format|
-     	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}包含这个#{TAG_CN}......"
-     	format.html { render :action => 'index' }
-      format.xml  { render :xml => @recipes }
-    end
-    clear_notice
+     	format.html { render :template => "reviews/index" }
+      format.xml  { render :xml => @reviews }
+    end 	
   end
   
   def search
@@ -272,7 +296,12 @@ class RecipesController < ApplicationController
 		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC')
 		@recipes_set_count = @recipes_set.size
 	end
-
+	
+	def load_recipe_reviews
+		@reviews_set = reviews_for(nil, 'recipe', nil, nil, nil, 'created_at DESC')
+		@reviews_set_count = @reviews_set.size
+	end
+	
   def recipes_paginate
 	 	@recipes = @recipes_set.paginate :page => params[:page], 
  															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S

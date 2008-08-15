@@ -1,12 +1,14 @@
 <div class="content_block">
 	
 	<div class="block_header">
+		<% if @show_header_link %>
 		<div class="block_header_link">	
 			<% if @current_user %>
 				<%= link_to "#{ADD_CN}新#{@self_name}", @new_self_url %>	 |
 			<% end %>
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
+		<% end %>
 		<h1><%= h @block_title %></h1>
 	</div>
 	

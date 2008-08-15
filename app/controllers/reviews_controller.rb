@@ -105,17 +105,6 @@ class ReviewsController < ApplicationController
 		after_destroy_ok
   end
   
-  def recipe
-  	
-  
-  
-  
-  
-  
-  
-  
-  end
-  
 	private
 	
   def load_review
