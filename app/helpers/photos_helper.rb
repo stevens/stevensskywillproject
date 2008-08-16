@@ -11,11 +11,11 @@ module PhotosHelper
 		when 'matrix'
 			'mcube'
 		when 'list'
-			'small'
+			'tiny'
 		when 'portrait'
 			'small'
 		when 'sign'
-			'tiny'
+			'scube'
 		end
 	end
 	

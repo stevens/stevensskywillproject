@@ -22,7 +22,6 @@ img {
 }
 body {
 	width: 100%;
-	min-width: 1000px;
 	background-color: #695245;
 }
 a, a:link, a:visited {
@@ -90,18 +89,21 @@ ol {
 .css4 { font-size: 1.6em; }
 
 /* Header */
-#header {
+#header_wrapper {
 	height: 70px;
-	min-width: 1000px;
 	background-color: #428cbb;
 	color: #ffffff;
+}
+#header_content {
+	width: 980px;
+	margin: 0px auto;
+	padding: 0px 10px;
 }
 
 /* Logo */
 #logo {
-	position: absolute;
-	top: 10px;
-	left: 30px;
+	padding-top: 10px;
+	padding-left: 10px;
 }
 #logo img {
 	background-color: transparent;
@@ -113,8 +115,8 @@ ol {
 /* Help */
 #help {
 	float: right;
-	margin-top: 10px;
-	padding-right: 30px;
+	padding-top: 10px;
+	padding-right: 10px;
 	text-align: center;
 	z-index: 1000;
 }
@@ -147,44 +149,44 @@ ol {
 }
 
 /* Footer */
-#footer {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 30px;
-	padding-right: 10px;
+#footer_wrapper {
 	border-top: 4px solid #b8b9a7;
 	background-color: #428cbb;
 	color: #b8b9a7;
 }
-#footer a, #footer a:link, #footer a:visited {
-	margin-right: 10px;
+#footer_content {
+	width: 980px;
+	margin: 0px auto;
+	padding: 10px;
+}
+#footer_content a, #footer a:link, #footer a:visited {
+	margin-left: 10px;
 	color: #b8b9a7;	
 }
-#footer a:hover {
+#footer_content a:hover {
 	background-color: #ffffff;
 	color: #428cbb;
 }
-#footer span.copyright {
+#footer_content span.copyright {
+	margin-left: 10px;
 	color: #b8b9a7;
 }
 
 /* Main Navigation */
 #navigation {
-	position: absolute;
-	top: 44px;
-	width: 100%;
-	min-width: 1000px;
+	height: 26px;
+	width: 980px;
+	margin: auto;
+	margin-top: -26px;
 	white-space: nowrap;
 	color: #ffffff;
-	z-index: 500;
 }
 #left_navigation {
-	position: absolute;
-	left: 30px;
+	padding-left: 10px;
 }
 #right_navigation {
-	position: absolute;
-	right: 30px;
+	float: right;
+	padding-right: 10px;
 }
 #navigation ul {
 	display: inline;
@@ -232,7 +234,10 @@ ol {
 
 /* Content Wrapper */
 #content_wrapper {
-	
+	width: 980px;
+	margin: 0px auto;
+	padding: 0px 10px;
+	min-height: 500px;
 }
 
 /* Content Main */
@@ -246,8 +251,9 @@ ol {
 	height: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-left: 45px;
-	padding-right: 40px;
+	padding-left: 25px;
+	padding-right: 25px;
+	margin: 0px;
 	color: #ffffff;
 }
 #sub_navigation a, #sub_navigation a:link, #sub_navigation a:visited {
@@ -265,7 +271,6 @@ ol {
 	margin-right: 300px;
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-bottom: 1px;
 }
 #content_column a, #content_column a:link, #content_column a:visited {
 	color: #428cbb;
@@ -315,8 +320,8 @@ td.photo_item_cell {
 .block_header {
 	padding-top: 5px;
 	padding-bottom: 5px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
 	background-color: #99ccff;
 }
 .block_header h1 {
@@ -362,7 +367,6 @@ td.photo_item_cell {
 #sidebar_column {
 	float: right;
 	width: 290px;
-	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 0px;
 	z-index: 1000;
@@ -383,8 +387,8 @@ td.photo_item_cell {
 .sidebar_block_header {
 	padding-top: 3px;
 	padding-bottom: 3px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
 	background-color: #fcc601;
 }
 .sidebar_block_header h1 {
@@ -398,8 +402,8 @@ td.photo_item_cell {
 .panel_block_header {
 	padding-top: 3px;
 	padding-bottom: 3px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
 	background-color: #5d6266;	
 }
 .panel_block_header h1 {
@@ -441,6 +445,7 @@ div.matrix_block {
 	margin: auto;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	width: 106px;
 }
 
 /* Photo Div */
@@ -466,10 +471,11 @@ div.full_photo {
 	margin-bottom: 5px;
 	text-align: center;
 }
-.matrix_photo img, .full_photo img {
+.full_photo img {
 	border: 4px #eeeeee solid;
 }
 .matrix_photo img.cover {
+	margin-top: -4px;
 	border: 4px #ff8159 solid;
 }
 .matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover, .full_photo a:hover {
@@ -600,7 +606,7 @@ div.pagination a, div.pagination span {
 #flash {
 	margin-bottom: 10px;
 	padding: 10px;
-	padding-left: 20px;
+	padding-left: 15px;
 	background-color: #ffcc99;
 	border-top: 4px solid #ff8159;
 	/*border-bottom: 4px solid #ff8159;*/
@@ -609,7 +615,7 @@ div.pagination a, div.pagination span {
 #system_notice {
 	margin-bottom: 10px;
 	padding: 10px;
-	padding-left: 20px;
+	padding-left: 15px;
 	background-color: #ccffcc;
 	border-top: 4px solid #78b36d;
 	/*border-bottom: 4px solid #78b36d;*/

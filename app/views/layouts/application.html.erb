@@ -8,7 +8,34 @@
 		<link href="" rel="shortcut icon"/>	
 	</head>
 	<body>
-	
+		<div>
+			<!-- HEADER -->			
+			<div id="header_wrapper">
+				<div id="header_content">
+					<!-- help -->
+					<div id="help">
+						<%= link_to HELP_CN, root_path %>
+					</div>
+					
+					<!-- current user -->
+					<div id="current_user">
+						<% if current_user = User.find_by_id(session[:user_id]) %> 
+							<%= "#{HELLO_CN}, " %><%= link_to current_user.login, user_url(current_user) %>
+							<%= link_to LOGOUT_CN, "#{root_path}logout" %>
+						<% else %>
+							<%= link_to SIGN_UP_CN, "#{root_path}signup" %>
+							<%= link_to LOGIN_CN, "#{root_path}login" %>
+						<% end %>	
+					</div>
+					
+					<!-- logo -->
+					<div id="logo">
+						<%= link_to image_tag('alpha/beecook.png', :alt => SITE_NAME_EN), root_path %>
+					</div>
+				</div>
+			</div>
+			<!-- END HEADER -->	
+			
 		<!-- MAIN NAVIGATION -->		
 		<div id="navigation">
 			<div id="left_navigation">
@@ -51,32 +78,6 @@
 			</div>
 		</div>
 		<!-- END MAIN NAVIGATION -->
-		
-		<div>
-			<!-- HEADER -->			
-			<div id="header">
-				<!-- logo -->
-				<div id="logo">
-					<%= link_to image_tag('alpha/beecook.png', :alt => SITE_NAME_EN), root_path %>
-				</div>
-				
-				<!-- help -->
-				<div id="help">
-					<%= link_to HELP_CN, root_path %>
-				</div>
-				
-				<!-- current user -->
-				<div id="current_user">
-					<% if current_user = User.find_by_id(session[:user_id]) %> 
-						<%= "#{HELLO_CN}, " %><%= link_to current_user.login, user_url(current_user) %>
-						<%= link_to LOGOUT_CN, "#{root_path}logout" %>
-					<% else %>
-						<%= link_to SIGN_UP_CN, "#{root_path}signup" %>
-						<%= link_to LOGIN_CN, "#{root_path}login" %>
-					<% end %>	
-				</div>
-			</div>
-			<!-- END HEADER -->
 			
 			<!-- CONTENT -->		
 			<div id="content_wrapper">			
@@ -134,13 +135,15 @@
 			<!-- END CONTENT -->
 			
 			<!-- FOOTER -->			
-			<div id="footer">
-				<%= link_to "#{ABOUT_CN}#{SITE_NAME_CN}", root_path %> 
-				<%= link_to CONTACT_US_CN, root_path %> 
-				<%= link_to PRIVACY_POLICY_CN, root_path %> 
-				<%= link_to TERMS_OF_SERVICE_CN, root_path %> 
-				<%= link_to HELP_CN, root_path %> 
-				<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{STUDIO_NAME_EN}" %></span>
+			<div id="footer_wrapper">
+				<div id="footer_content">
+					<%= link_to "#{ABOUT_CN}#{SITE_NAME_CN}", root_path %> 
+					<%= link_to CONTACT_US_CN, root_path %> 
+					<%= link_to PRIVACY_POLICY_CN, root_path %> 
+					<%= link_to TERMS_OF_SERVICE_CN, root_path %> 
+					<%= link_to HELP_CN, root_path %> 
+					<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{STUDIO_NAME_EN}" %></span>
+				</div>
 			</div>
 			<!-- END FOOTER -->
 			
