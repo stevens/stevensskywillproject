@@ -7,7 +7,7 @@
 			<ul>
 				<li>
 					<%= radio_button_tag 'search_type', 'recipe', true, :class => "radio_button" %><%= "#{RECIPE_CN}&nbsp;&nbsp;" %>
-					<%= radio_button_tag 'search_type', 'menu', false, :class => "radio_button" %><%= "#{MENU_CN}&nbsp;&nbsp;" %>
+					<!-- <%= radio_button_tag 'search_type', 'menu', false, :class => "radio_button" %><%= "#{MENU_CN}&nbsp;&nbsp;" %> -->
 				</li>
 				<li>
 					<%= text_field_tag 'search', @conditions, :class => "search" %>

@@ -61,7 +61,7 @@
 			<div id="right_navigation">
 				<ul class="navigation">
 					<li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
-						<%= link_to "我的#{SITE_NAME_CN}", "#{root_url}mine" %>
+						<%= link_to "我的#{SITE_NAME_CN}", :controller => 'mine', :action => 'overview' %>
 					</li>
 					<% if logged_in? %>
 						<!-- <li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
@@ -87,9 +87,10 @@
 						<% if @current_tab_type == 'site' %>
 							<%= "Welcome to #{SITE_NAME_EN}!" %>
 						<% elsif @current_tab_type == 'mine' %>
-							<%= link_to "我的#{REVIEW_CN}", root_path %>
+							<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
+							<%= link_to "我的#{REVIEW_CN}", :controller => 'mine', :action => 'reviews' %>
 							<!-- <%= link_to "我的#{PHOTO_CN}", root_path %> -->
-							<%= link_to "我的#{TAG_CN}", root_path %>
+							<!-- <%= link_to "我的#{TAG_CN}", :controller => 'mine', :action => 'tags' %> -->
 						<% elsif @current_tab_type %>
 							<% if @current_user %>
 								<%= link_to "我的#{@current_tab_name}", :controller => @current_tab_type.pluralize, :action => 'mine' %>

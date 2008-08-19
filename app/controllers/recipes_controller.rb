@@ -179,6 +179,26 @@ class RecipesController < ApplicationController
 		show_sidebar
   end
   
+  def reviews
+		@reviews_set = reviews_for(nil, 'recipe', nil, nil, nil, 'created_at DESC')
+		@reviews_set_count = @reviews_set.size
+  	
+	 	@reviews = @reviews_set.paginate :page => params[:page], 
+ 															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
+ 															 			   	
+  	info = "#{@self_name}的#{REVIEW_CN}(#{@reviews_set_count})"
+		@show_header_link = false
+  	@show_review_parent = true
+  	
+  	set_page_title(info)
+		set_block_title(info)
+
+    respond_to do |format|
+     	format.html { render :template => "reviews/index" }
+      format.xml  { render :xml => @reviews }
+    end 	
+  end
+  
   def tags
   	if params[:id]
 	  	load_tagged_recipes(nil, params[:id])
@@ -211,24 +231,6 @@ class RecipesController < ApplicationController
 	      format.xml  { render :xml => @tags }
 	    end
 		end
-  end
-  
-  def reviews
-  	load_recipe_reviews
-  	
-	 	@reviews = @reviews_set.paginate :page => params[:page], 
- 															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
- 															 			   	
-  	info = "#{@self_name}的#{REVIEW_CN}(#{@reviews_set_count})"
-		@show_header_link = false
-  	
-  	set_page_title(info)
-		set_block_title(info)
-
-    respond_to do |format|
-     	format.html { render :template => "reviews/index" }
-      format.xml  { render :xml => @reviews }
-    end 	
   end
   
   def search
@@ -304,11 +306,6 @@ class RecipesController < ApplicationController
 	def load_search_result(user, keywords)
 		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC')
 		@recipes_set_count = @recipes_set.size
-	end
-	
-	def load_recipe_reviews
-		@reviews_set = reviews_for(nil, 'recipe', nil, nil, nil, 'created_at DESC')
-		@reviews_set_count = @reviews_set.size
 	end
 	
   def recipes_paginate
