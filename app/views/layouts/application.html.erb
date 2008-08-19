@@ -97,9 +97,9 @@
 							<% end %>
 							<!-- <%= link_to "分类#{@current_tab_name}", root_path %> -->
 							<!-- <%= link_to "#{@current_tab_name}#{RANKING_CN}", root_path %> -->
-							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", :controller => @current_tab_type.pluralize, :action => 'reviews' %>
+							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", :controller => @current_tab_type.pluralize, :action => 'reviews', :id => nil %>
 							<!-- <%= link_to "#{@current_tab_name}#{PHOTO_CN}", root_path %> -->
-							<%= link_to "#{@current_tab_name}#{TAG_CN}", :controller => @current_tab_type.pluralize, :action => 'tags' %>
+							<%= link_to "#{@current_tab_name}#{TAG_CN}", :controller => @current_tab_type.pluralize, :action => 'tags', :id => nil %>
 						<% else %>
 							<%= "Welcome to #{SITE_NAME_EN}!" %>
 						<% end %>

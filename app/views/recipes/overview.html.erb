@@ -23,7 +23,7 @@
 <div class="content_block">
 	<div class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多最新的#{RECIPE_CN}(#{@latest_recipes_set.size})", '' %>	
+			<%= link_to "更多最新的#{RECIPE_CN}(#{@latest_recipes_set.size})", 'latest' %>	
 		</div>
 		<h1><%= "最新的#{RECIPE_CN}" %></h1>
 	</div>
@@ -42,7 +42,7 @@
 <div class="content_block">
 	<div class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多最新的#{RECIPE_CN}#{REVIEW_CN}(#{@latest_reviews_set.size})", '' %>	
+			<%= link_to "更多最新的#{RECIPE_CN}#{REVIEW_CN}(#{@latest_reviews_set.size})", 'reviews/latest' %>	
 		</div>
 		<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	</div>

@@ -1,14 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
+	map.connect ':controller/latest', :action => 'index', :id => 'latest'
 	map.connect ':controller/overview', :action => 'overview'
-	map.connect ':controller/reviews', :action => 'reviews'
-	map.connect ':controller/tags', :action => 'tags'
+	map.connect ':controller/reviews/:id', :action => 'reviews'
+	map.connect ':controller/tags/:id', :action => 'tags'
 	map.connetc ':controller/search/:id', :action => 'search'
-  # map.resources :infos
-
-  # map.resources :codes
-
-  # map.resources :data_elements
 
   map.resources :users, :has_many => [:recipes, :photos, :reviews]
 	
@@ -20,12 +16,12 @@ ActionController::Routing::Routes.draw do |map|
 	
   map.resource :session
   
-  map.namespace :mine do |mine|
-   	mine.resources :recipes do |recipe|
-   		recipe.resources :photos 														
-   	end
-   	mine.resources :photos
-  end
+  # map.namespace :mine do |mine|
+  #  	mine.resources :recipes do |recipe|
+  #  		recipe.resources :photos 														
+  # 	end
+  # 	mine.resources :photos
+  # end
 
   # The priority is based upon order of creation: first created -> highest priority.
 

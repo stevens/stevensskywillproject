@@ -5,17 +5,23 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.xml
   def index
-  	if @user
-  		if @user == @current_user
-  			load_recipes_mine
-  			info = "我的#{@self_name}(#{@recipes_set_count})"
-  		else
-  			load_recipes_user(@user)
-  			info = "#{@user_title}的#{@self_name}(#{@recipes_set_count})"
-  		end
+  	if params[:id] == 'latest'
+  		@recipes_set = recipes_for(nil, true, false, Time.today - 100.days, nil, 'created_at DESC')
+  		@recipes_set_count = @recipes_set.size
+  		info = "最新的#{@self_name}(#{@recipes_set_count})"
   	else
-  		load_recipes_all
-  		info = "#{@self_name}(#{@recipes_set_count})"
+	  	if @user
+	  		if @user == @current_user
+	  			load_recipes_mine
+	  			info = "我的#{@self_name}(#{@recipes_set_count})"
+	  		else
+	  			load_recipes_user(@user)
+	  			info = "#{@user_title}的#{@self_name}(#{@recipes_set_count})"
+	  		end
+	  	else
+	  		load_recipes_all
+	  		info = "#{@self_name}(#{@recipes_set_count})"
+	  	end
   	end
   
 	 	recipes_paginate
@@ -180,13 +186,22 @@ class RecipesController < ApplicationController
   end
   
   def reviews
-		@reviews_set = reviews_for(nil, 'recipe', nil, nil, nil, 'created_at DESC')
-		@reviews_set_count = @reviews_set.size
-  	
+		if params[:id] == 'latest'
+  		@reviews_set = reviews_for(nil, 'recipe', nil, Time.today - 100.days, nil, 'created_at DESC')			
+			@reviews_set_count = @reviews_set.size
+		
+			info = "最新的#{@self_name}#{REVIEW_CN}(#{@reviews_set_count})"
+		else
+			@reviews_set = reviews_for(nil, 'recipe', nil, nil, nil, 'created_at DESC')
+			@reviews_set_count = @reviews_set.size
+	  	
+	  	info = "#{@self_name}#{REVIEW_CN}(#{@reviews_set_count})"
+	 	end
+	 		
 	 	@reviews = @reviews_set.paginate :page => params[:page], 
  															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
  															 			   	
-  	info = "#{@self_name}的#{REVIEW_CN}(#{@reviews_set_count})"
+  	
 		@show_header_link = false
   	@show_review_parent = true
   	
@@ -205,7 +220,7 @@ class RecipesController < ApplicationController
 		 	
 			recipes_paginate
 		 	
-		 	info = "#{@self_name}的#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
+		 	info = "#{@self_name}#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
 		 	
 			set_page_title(info)
 			set_block_title(info)
@@ -220,7 +235,7 @@ class RecipesController < ApplicationController
 		else
 			@tags = recipe_tags_cloud(nil)
 			
-	  	info = "#{@self_name}的#{TAG_CN}(#{@tags.size})"
+	  	info = "#{@self_name}#{TAG_CN}(#{@tags.size})"
 			@show_header_link = false
 	  	
 	  	set_page_title(info)
