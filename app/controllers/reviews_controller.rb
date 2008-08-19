@@ -9,6 +9,7 @@ class ReviewsController < ApplicationController
   	load_reviews_set			
   	
 	 	info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}(#{@reviews_set_count})"
+	 	@show_header_link = true
 	 	
 	 	reviews_paginate
  		
