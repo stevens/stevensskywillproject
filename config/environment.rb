@@ -65,6 +65,7 @@ Rails::Initializer.run do |config|
 	STUDIO_NAME_CN = '取奇傲蓝'
 	SITE_NAME_EN = 'BeeCook'
 	SITE_NAME_CN = '蜂厨'
+	SLOGAN_CN = "美食大\"革命\", 我厨我\"蜂\"狂"
 	SITE_DOMAIN_EN = 'www.beecook.com'
 	SITE_DOMAIN_CN = 'www.蜂厨.com'
 	SITE_EMAIL = 'beecook2007@gmail.com' #TBD
