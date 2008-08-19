@@ -721,6 +721,7 @@ div.welcome div.button {
 	background-color: #428cbb;
 	display: block;
 	padding: 10px;
+	height: 15px;
 	color: #ffffff;
 	font-weight: bold;
 	font-size: 18px;	

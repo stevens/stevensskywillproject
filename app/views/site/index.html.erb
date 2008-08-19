@@ -7,7 +7,11 @@
 	<p>就在这里——分享美食, 投身美食大"革命"!</p><br />
 	<p>就在这里——以厨会友, 享受我厨我"蜂"狂!<p><br />
 	
-	<div class="button"><%= link_to "加入#{SITE_NAME_CN}", "#{root_url}signup" %></div>
+	<div class="button">
+		<% unless @current_user %>
+			<%= link_to "加入#{SITE_NAME_CN}", "#{root_url}signup" %>
+		<% end %>
+	</div>
 </div>
 
 
