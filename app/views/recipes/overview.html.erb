@@ -1,24 +1,24 @@
-<div class="content_block">
-	<div class="block_header">
-		<h1><%= "本周精选#{RECIPE_CN}" %></h1>
+<% if @highlighted_recipe %>
+	<div class="content_block">
+		<div class="block_header">
+			<h1><%= "本周精选#{RECIPE_CN}" %></h1>
+		</div>
+		<div class="block_main">
+				<div class="full_photo">
+					<%= render :partial => "/layouts/item_photo",
+										 :locals => {:item_type => 'recipe', 
+										 						 :item => @highlighted_recipe, 
+										 						 :photo_style => 'full'} %>
+				</div>
+				<div class="sub_block_s">
+					<%= render :partial => "recipe_s", 
+										 :locals => {:item => @highlighted_recipe, 
+										 						 :show_parent => false, 
+										 						 :show_todo => false} %>
+				</div>
+		</div>
 	</div>
-	<div class="block_main">
-		<% if @highlighted_recipe %>
-			<div class="full_photo">
-				<%= render :partial => "/layouts/item_photo",
-									 :locals => {:item_type => 'recipe', 
-									 						 :item => @highlighted_recipe, 
-									 						 :photo_style => 'full'} %>
-			</div>
-			<div class="sub_block_s">
-				<%= render :partial => "recipe_s", 
-									 :locals => {:item => @highlighted_recipe, 
-									 						 :show_parent => false, 
-									 						 :show_todo => false} %>
-			</div>
-		<% end %>
-	</div>
-</div>
+<% end %>
 
 <div class="content_block">
 	<div class="block_header">

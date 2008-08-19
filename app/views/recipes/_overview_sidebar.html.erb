@@ -12,7 +12,7 @@
 		<h1><%= "#{RECIPE_CN}#{TAG_CN}(#{@tags.size})" %></h1>
 	</div>
 	<div class="sidebar_block_main">
-		<%= render :partial => "/layouts/tag_cloud",
+		<%= render :partial => "/tags/tag_cloud",
 							 :locals => {:tags => @tags} %>
 	</div>
 </div>

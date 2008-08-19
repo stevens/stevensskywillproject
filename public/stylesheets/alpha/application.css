@@ -87,6 +87,10 @@ ol {
 .css2 { font-size: 1.2em; }
 .css3 { font-size: 1.4em; }
 .css4 { font-size: 1.6em; }
+div.tag {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
 /* Header */
 #header_wrapper {
@@ -150,6 +154,7 @@ ol {
 
 /* Footer */
 #footer_wrapper {
+	clear: both;
 	border-top: 4px solid #b8b9a7;
 	background-color: #428cbb;
 	color: #b8b9a7;
@@ -237,7 +242,6 @@ ol {
 	width: 980px;
 	margin: 0px auto;
 	padding: 0px 10px;
-	min-height: 500px;
 }
 
 /* Content Main */

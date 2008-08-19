@@ -199,8 +199,17 @@ class RecipesController < ApplicationController
 	    clear_notice
 		else
 			@tags = recipe_tags_cloud(nil)
-			render :partial => "/layouts/tag_cloud",
-						 :locals => {:tags => @tags}
+			
+	  	info = "#{@self_name}的#{TAG_CN}(#{@tags.size})"
+			@show_header_link = false
+	  	
+	  	set_page_title(info)
+			set_block_title(info)
+	
+	    respond_to do |format|
+	     	format.html { render :template => "tags/index" }
+	      format.xml  { render :xml => @tags }
+	    end
 		end
   end
   
