@@ -1,0 +1,37 @@
+<div class="content_block">
+	<div class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "更多我的#{RECIPE_CN}(#{@recipes_set_count})", 'recipes' %>	
+		</div>
+		<h1><%= "我的#{RECIPE_CN}" %></h1>
+	</div>
+	<div class="block_main">
+		<%= render :partial => "/layouts/items_matrix",
+							 :locals => {:item_type => 'recipe', 
+							 						 :items => @recipes, 
+							 						 :items_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M,
+							 						 :photo_style => 'matrix',  
+							 						 :show_photo => true, 
+							 						 :show_title => true, 
+							 						 :show_photo_todo => false} %>
+	</div>
+</div>
+
+<div class="content_block">
+	<div class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "更多我的#{REVIEW_CN}(#{@reviews_set_count})", 'reviews' %>	
+		</div>
+		<h1><%= "我的#{REVIEW_CN}" %></h1>
+	</div>
+	<div class="block_main">
+		<%= render :partial => "/layouts/items_list",
+							 :locals => {:item_type => 'review', 
+							 						 :items => @reviews,
+							 						 :show_photo => true, 
+							 						 :show_title => false,
+							 						 :show_photo_todo => false,
+							 						 :show_parent => true, 
+							 						 :show_todo => false} %>
+	</div>
+</div>
