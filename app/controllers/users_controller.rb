@@ -8,8 +8,12 @@ class UsersController < ApplicationController
   	
   end
   
+  def show
+  
+  end
+  
   def new
-  	
+  	@user = User.new
   end
 
   def create
@@ -33,6 +37,22 @@ class UsersController < ApplicationController
     end
   end
 
+	def edit
+
+	end
+
+	def update
+
+	end
+	
+	def destroy
+	
+	end
+	
+	def enable
+	
+	end
+	
   def activate
     activation_code = params[:id]
     self.current_user = activation_code.blank? ? false : User.find_by_activation_code(activation_code)
@@ -43,7 +63,15 @@ class UsersController < ApplicationController
     # redirect_back_or_default('/')
     redirect_to :controller => 'mine'
   end
-
+  
+  def forgot_password
+  
+	end
+	
+	def reset_password
+	
+	end
+	
 	private
 	
 	def set_title

@@ -464,6 +464,7 @@ div.matrix_photo {
 	margin: auto;
 	margin-bottom: 5px;
 	text-align: center;
+	height: 100px;
 }
 div.list_photo {
 	margin: auto;
@@ -491,6 +492,10 @@ div.full_photo {
 }
 .matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover, .full_photo a:hover {
 	background-color: transparent !important;	
+}
+.matrix_photo a:hover img {
+	margin-top: -4px;
+	border: 4px #428cbb solid;	
 }
 div.below_photo {
 	text-align: center;
