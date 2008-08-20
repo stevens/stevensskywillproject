@@ -703,21 +703,11 @@ div.rating {
 /* Welcome */
 div.welcome {
 	background-color: #ffffff;
-	padding-top: 20px;
 	text-align: center;
-	border-top: #428cbb 8px solid;
 	color: #695245;
+	border-top: 8px #ff8159 solid;
 }
-div.welcome em {
-	font-weight: bold;
-	font-size: 18px;
-	font-style: normal;
-	color: #ff8159;
-}
-div.welcome span a:hover {
-	background-color: transparent !important;
-}
-div.welcome div.button {
+div.welcome_header {
 	background-color: #428cbb;
 	display: block;
 	padding: 10px;
@@ -726,11 +716,37 @@ div.welcome div.button {
 	font-weight: bold;
 	font-size: 18px;	
 }
-div.welcome div.button a, div.welcome div.button a:link, div.welcome div.button a:visited {
+div.welcome_footer {
+	background-color: #428cbb;
+	display: block;
+	padding: 10px;
+	height: 15px;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 18px;	
+}
+div.welcome_header a, div.welcome_header a:link, div.welcome_header a:visited {
 	color: #ffffff !important;
 	font-weight: bold;
 	font-size: 18px;
 }
-div.welcome div.button a:hover {
+div.welcome_footer a, div.welcome_footer a:link, div.welcome_footer a:visited {
+	color: #ffffff !important;
+	font-weight: bold;
+	font-size: 18px;
+}
+div.welcome_header a:hover, div.welcome_footer a:hover {
 	color: #ff8159 !important;
+}
+div.welcome_content {
+	padding: 20px;
+}
+div.welcome_content em {
+	font-weight: bold;
+	font-size: 18px;
+	font-style: normal;
+	color: #ff8159;
+}
+div.welcome_content span a:hover {
+	background-color: transparent !important;
 }
