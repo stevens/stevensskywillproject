@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 	
-	before_filter :protect, :except => [:index, :show, :overview, :reviews]
+	before_filter :protect, :except => [:index, :show, :overview, :reviews, :tags]
 
   # GET /recipes
   # GET /recipes.xml
