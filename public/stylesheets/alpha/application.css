@@ -744,9 +744,15 @@ div.welcome_header a:hover, div.welcome_footer a:hover {
 	color: #ff8159 !important;
 }
 div.welcome_content {
-	padding: 20px;
+	padding: 30px;
 }
 div.welcome_content em {
+	font-weight: bold;
+	font-size: 14px;
+	font-style: normal;
+	color: #428cbb;
+}
+div.welcome_content em.l {
 	font-weight: bold;
 	font-size: 18px;
 	font-style: normal;
