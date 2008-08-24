@@ -45,13 +45,14 @@ class RecipesController < ApplicationController
   def show 
 		load_recipe(nil)
 		
-    @photo_style = 'list'
-    @photo = cover_photo(@recipe)
-    @photo_file_url = photo_file_url(@photo, @self_type, @photo_style)
-    @photo_alt = photo_alt(@photo, "还没有#{PHOTO_CN}")
-    @photo_url = recipe_photo_url(@recipe, @photo)
+		@cover_photo = cover_photo(@recipe)
     @photos_set = photos_for(nil, @self_type, @self_id, 'created_at')
-    @photos_set_count = @photos_set.size	
+    @photos_set_count = @photos_set.size
+    @photos = []
+    if @cover_photo
+	    @photos << @cover_photo
+	    @photos += (@photos_set - @photos)[0..3]
+		end
 		
 		@review_name = name_for('review')
 		@review_unit = unit_for('review')

@@ -17,13 +17,14 @@
 		    
 		    <td class="left_colomn">
 		    	<div class="sub_block">
-	    			<div class="portrait_photo">
-		    			<%= render :partial => "/layouts/item_photo",
-		    								 :locals => {:item_type => 'recipe', 
-		    								 						 :item => @recipe, 
-		    								 						 :photo_style => 'portrait'} %>
-	    			</div>
-	    			
+		    		<div class="portrait_photo">
+							<%= render :partial => "/photos/photos",
+												 :locals => {:photos => @photos, 
+												 						 :photoable => @recipe, 
+												 						 :photoable_type => 'recipe', 
+																		 :photo_style => 'portrait'} %>
+						</div>
+						
 						<div class="below_photo">
 							<%= render :partial => "/layouts/item_below_photo", 
 												 :locals => {:item_type => 'recipe', 

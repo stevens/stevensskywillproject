@@ -74,6 +74,8 @@ module PhotosHelper
 	def cover_photo(photoable)
 		if id = photoable.cover_photo_id
 			Photo.find(id)
+		else
+			nil
 		end
 	end
 
