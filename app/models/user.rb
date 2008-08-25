@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   													:message => "#{ACCOUNT_ID_CN}已经存在"
   validates_uniqueness_of   :email, :case_sensitive => false,
   													:message => "#{EMAIL_ADDRESS_CN}已经存在"	
-	validates_exclusion_of 		:login, :in => %w( admin admins superuser superusers administrator administrators beecook beecooks skywill yogaskywill fengchu 蜂厨 疯厨 ), 
+	validates_exclusion_of 		:login, :in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖), 
 														:message => "#{ACCOUNT_ID_CN}已经存在"	
 
   before_save :encrypt_password
