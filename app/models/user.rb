@@ -37,7 +37,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :case_sensitive => false,
   													:message => "#{ACCOUNT_ID_CN}已经存在"
   validates_uniqueness_of   :email, :case_sensitive => false,
-  													:message => "#{EMAIL_ADDRESS_CN}已经存在"												
+  													:message => "#{EMAIL_ADDRESS_CN}已经存在"	
+	validates_exclusion_of 		:login, :in => %w( admin admins superuser superusers administrator administrators beecook beecooks skywill yogaskywill fengchu 蜂厨 疯厨 ), 
+														:message => "#{ACCOUNT_ID_CN}已经存在"	
 
   before_save :encrypt_password
   before_create :make_activation_code 
