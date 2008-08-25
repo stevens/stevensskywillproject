@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       self.current_user = @user
       flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活信!"
       session[:user_id] = nil
-      redirect_to :controller => 'site'
+      redirect_to root_url
       # redirect_back_or_default('/')
     else
       flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{SIGN_UP_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
       flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个\"蜂\"狂的厨师吧!"
     end
     # redirect_back_or_default('/')
-    redirect_to :controller => 'mine'
+    redirect_to root_url
   end
   
   def forgot_password
