@@ -117,7 +117,8 @@ class User < ActiveRecord::Base
 	def reset_password
 		# First update the password_reset_code before setting the
 		# reset_password flag to avoid duplicate email notifications.
-		update_attribute(:password_reset_code, nil)
+		# update_attribute(:password_reset_code, nil) 此行变更为下一行
+		self.password_reset_code = nil
 		@reset_password = true
 	end
 
@@ -144,7 +145,8 @@ class User < ActiveRecord::Base
 	end
 	  
 	def password_required?
-	  crypted_password.blank? || !password.blank?
+	  # crypted_password.blank? || !password.blank? 此行变更为下一行
+	  crypted_password.blank? || !password.nil?
 	end
 	
 	def make_activation_code

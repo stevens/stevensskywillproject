@@ -146,6 +146,14 @@ module ApplicationHelper
 		end
 	end
 	
+	def text_useful(text)
+    text_useful = nil
+    if text && text != ''
+			text_useful = text.strip if text.strip != ''
+		end
+		text_useful
+	end
+	
 	def conditions_id(text)
 		if text && text != ''
 			text.gsub(' ', '+')

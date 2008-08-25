@@ -16,13 +16,14 @@ class UserMailer < ActionMailer::Base
 
 	def forgot_password(user)
 		setup_email(user)
-    @subject    += "请重新设置你的#{PASSWORD_CN}"
+    @subject    += "请重新设置你的#{ACCOUNT_CN}#{PASSWORD_CN}"
     @body[:url]  = "#{root_url}reset_password/#{user.password_reset_code}" 
 	end
 
 	def reset_password(user)
 		setup_email(user)
-    @subject    += "你已经重新设置了#{PASSWORD_CN}"
+    @subject    += "你已经重新设置了#{ACCOUNT_CN}#{PASSWORD_CN}"
+    @body[:url]  = root_url
 	end
 
   protected

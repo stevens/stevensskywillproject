@@ -65,7 +65,7 @@ Rails::Initializer.run do |config|
 	STUDIO_NAME_CN = '取奇傲蓝'
 	SITE_NAME_EN = 'BeeCook'
 	SITE_NAME_CN = '蜂厨'
-	SLOGAN_CN = "美食大\"革命\", 我厨我\"蜂\"狂"
+	SLOGAN_CN = "美食大革命, 我厨我蜂狂!"
 	SITE_DOMAIN_EN = 'www.beecook.com'
 	SITE_DOMAIN_CN = 'www.蜂厨.com'
 	SITE_EMAIL = 'beecook2007@gmail.com' #TBD
@@ -172,6 +172,7 @@ Rails::Initializer.run do |config|
 	EXPORT_CN = '导出'
 	DISPLAY_CN = '显示'
 	PRINT_CN = '打印'
+	OK_CN = '确定'
 	CANCLE_CN = '取消'
 	GO_CN = '前往'
 	BACK_CN = '返回'
@@ -180,6 +181,7 @@ Rails::Initializer.run do |config|
 	SIGN_UP_CN = '注册'
 	SIGN_OFF_CN = '注销'
 	BECOME_CN = '作为'
+	RESET_CN = '重设'
 	
 	# KEY constants
 	RECIPE_EN = 'recipe'
@@ -209,7 +211,7 @@ Rails::Initializer.run do |config|
 	ACCOUNT_CN = '账户'
 	ACCOUNT_ID_CN = '账户ID'
 	PASSWORD_CN = '密码'
-	EMAIL_CN = '电子邮件'
+	EMAIL_CN = '邮件'
 	EMAIL_ADDRESS_CN = 'Email地址'
 	URL_CN = 'URL地址'
 	FILE_CN = '文件'

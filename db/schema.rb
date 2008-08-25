@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 9) do
+ActiveRecord::Schema.define(:version => 10) do
 
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
@@ -96,6 +96,8 @@ ActiveRecord::Schema.define(:version => 9) do
     t.datetime "remember_token_expires_at"
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
+    t.string   "password_reset_code",       :limit => 40
+    t.boolean  "enabled",                                 :default => true
   end
 
 end

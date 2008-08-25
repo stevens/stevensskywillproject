@@ -5,7 +5,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':controller/reviews/:id', :action => 'reviews'
 	map.connect ':controller/tags/:id', :action => 'tags'
 	map.connetc ':controller/search/:id', :action => 'search'
-
+	map.search '/search', :controller => 'site', :action => 'search'
+	
   map.resources :users, :has_many => [:recipes, :photos, :reviews]
 	
 	map.resources :recipes, :has_many => [:photos, :reviews]
@@ -66,7 +67,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.login '/login', :controller => 'sessions', :action => 'new'
 	map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 	map.activate '/activate/:id', :controller => 'users', :action => 'activate'
-	map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
-	map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
-	map.search '/search', :controller => 'site', :action => 'search'
+	map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
+	map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
+	
 end
