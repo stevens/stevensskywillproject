@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   
   def new
   	@user = User.new
-  	
+
 	 	info = "加入#{SITE_NAME_CN}"
 		
 		set_page_title(info)

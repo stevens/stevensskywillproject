@@ -38,7 +38,8 @@ class User < ActiveRecord::Base
   													:message => "#{ACCOUNT_ID_CN}已经存在"
   validates_uniqueness_of   :email, :case_sensitive => false,
   													:message => "#{EMAIL_ADDRESS_CN}已经存在"	
-	validates_exclusion_of 		:login, :in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖), 
+	validates_exclusion_of 		:login, 										 :if => :login_required?, 
+														:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖), 
 														:message => "#{ACCOUNT_ID_CN}已经存在"	
 
   before_save :encrypt_password
@@ -149,6 +150,10 @@ class User < ActiveRecord::Base
 	def password_required?
 	  # crypted_password.blank? || !password.blank? 此行变更为下一行
 	  crypted_password.blank? || !password.nil?
+	end
+	
+	def login_required?
+		!(recently_forgot_password? || recently_reset_password?)
 	end
 	
 	def make_activation_code
