@@ -11,15 +11,14 @@
 			<p><em class="l"><%= "欢迎来到#{SITE_NAME_CN}......" %></em></p><br />
 		<% end %>
 		<p>记录——<em>美食灵感</em>&nbsp;&nbsp;&nbsp;&nbsp;分享——<em>私房食谱</em></p><br />
-		<p>结交——<em>天下厨友</em>&nbsp;&nbsp;&nbsp;&nbsp;切磋——<em>江湖厨道</em></p>
-	</div>
-	
-	<div class="welcome_footer">
-		<% if @current_user %>
-			<%= link_to "进入我的#{SITE_NAME_CN}", "#{root_url}mine/overview" %>
-		<% else %>
-			<%= link_to "加入#{SITE_NAME_CN}", "#{root_url}signup" %>
-		<% end %>
+		<p>结交——<em>天下厨友</em>&nbsp;&nbsp;&nbsp;&nbsp;切磋——<em>江湖厨道</em></p><br />
+		<div class="welcome_todo_button">
+			<% if @current_user %>
+				<%= link_to "进入我的#{SITE_NAME_CN}", "#{root_url}mine/overview" %>
+			<% else %>
+				<%= link_to "加入#{SITE_NAME_CN}", "#{root_url}signup" %>
+			<% end %>
+		</div>
 	</div>
 </div>
 

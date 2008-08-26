@@ -21,8 +21,7 @@ img {
 	background-color: #ffffff;
 }
 body {
-	width: 100%;
-	background-color: #695245;
+	background-color: #ffffff;
 }
 a, a:link, a:visited {
 	text-decoration: none;
@@ -94,14 +93,15 @@ div.tag {
 
 /* Header */
 #header_wrapper {
+	width: 980px;
+	margin: 0px auto;
 	height: 70px;
-	background-color: #428cbb;
+	background: #428cbb;
 	color: #ffffff;
 }
 #header_content {
 	width: 980px;
 	margin: 0px auto;
-	padding: 0px 10px;
 }
 
 /* Logo */
@@ -154,20 +154,19 @@ div.tag {
 
 /* Footer */
 #footer_wrapper {
-	position: fixed;
-	bottom: 0px;
-	width: 100%;
-	border-top: 4px solid #b8b9a7;
+	width: 980px;
+	margin: 0px auto;
+	border-top: 8px solid #b8b9a7;
 	background-color: #428cbb;
 	color: #b8b9a7;
 }
 #footer_content {
-	width: 980px;
+	width: 930px;
 	margin: 0px auto;
-	padding: 5px 0px;
+	padding: 10px 25px;
 }
 #footer_content a, #footer a:link, #footer a:visited {
-	margin-left: 10px;
+	margin-right: 10px;
 	color: #b8b9a7;	
 }
 #footer_content a:hover {
@@ -175,7 +174,6 @@ div.tag {
 	color: #428cbb;
 }
 #footer_content span.copyright {
-	margin-left: 10px;
 	color: #b8b9a7;
 }
 
@@ -211,8 +209,8 @@ div.tag {
 	padding-left: 13px;
 	padding-right: 13px;
 	font-size: 14px;
-	background-color: #f1f1f1;
-	color: #695245;
+	background-color: #695245;
+	color: #f1f1f1;
 	text-align: center;
 }
 #navigation li a:hover {
@@ -232,28 +230,25 @@ div.tag {
 	padding-top: 8px;
 	font-size: 14px;
 	font-weight: bold;
-	background-color: #695245;
-	color: #ffffff;
+	background-color: #ffffff;
+	color: #695245;
 }
 #navigation li.active a:hover {
-	background-color: #695245;	
+	background-color: #ffffff;	
 }
 
 /* Content Wrapper */
 #content_wrapper {
 	width: 980px;
 	margin: 0px auto;
-	padding-top: 0px;
-	padding-bottom: 40px;
-	padding-left: 10px;
-	padding-right: 10px;
+	background-color: #ffffff;
 }
 * html #content_wrapper {
 	padding-bottom: 0px;
 }
 /* Content Main */
 #content_main {
-	background-color: #695245;
+	/*background-color: #695245;*/
 	color: #373737;
 }
 
@@ -265,16 +260,16 @@ div.tag {
 	padding-left: 25px;
 	padding-right: 25px;
 	margin: 0px;
-	color: #ffffff;
+	color: #695245;
 }
 #sub_navigation a, #sub_navigation a:link, #sub_navigation a:visited {
 	margin-right: 10px;
 	font-size: 14px;
-	color: #ffffff;
+	color: #695245;
 }
 #sub_navigation a:hover {
-	background-color: #ffffff;
-	color: #695245;
+	background-color: #695245;
+	color: #ffffff;
 }
 
 /* Content Column */
@@ -379,7 +374,6 @@ td.photo_item_cell {
 	float: right;
 	width: 290px;
 	padding-right: 10px;
-	padding-bottom: 0px;
 	z-index: 1000;
 }
 #sidebar_column a, #sidebar_column a:link, #sidebar_column a:visited {
@@ -409,8 +403,6 @@ td.photo_item_cell {
 }
 .sidebar_todo_button {
 	background-color: #ff8159;
-}
-.sidebar_todo_button h1 {
 	font-size: 14px;
 	font-weight: bold;
 	color: #ffffff;
@@ -422,6 +414,7 @@ td.photo_item_cell {
 	padding-left: 15px;
 	padding-right: 15px;
 	font-size: 14px !important;
+	font-weight: bold;
 	color: #ffffff !important;
 }
 .sidebar_todo_button a:hover {
@@ -484,7 +477,7 @@ div.matrix_photo {
 	margin: auto;
 	margin-bottom: 5px;
 	text-align: center;
-	height: 100px;
+	height: 105px;
 }
 div.list_photo {
 	margin: auto;
@@ -729,39 +722,9 @@ div.rating {
 div.welcome {
 	background-color: #ffffff;
 	text-align: center;
+	padding-bottom: 10px;
 	color: #695245;
-	border-top: 8px #ff8159 solid;
-}
-div.welcome_header {
-	background-color: #428cbb;
-	display: block;
-	padding: 10px;
-	height: 15px;
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 18px;	
-}
-div.welcome_footer {
-	background-color: #428cbb;
-	display: block;
-	padding: 10px;
-	height: 15px;
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 18px;	
-}
-div.welcome_header a, div.welcome_header a:link, div.welcome_header a:visited {
-	color: #ffffff !important;
-	font-weight: bold;
-	font-size: 18px;
-}
-div.welcome_footer a, div.welcome_footer a:link, div.welcome_footer a:visited {
-	color: #ffffff !important;
-	font-weight: bold;
-	font-size: 18px;
-}
-div.welcome_header a:hover, div.welcome_footer a:hover {
-	color: #ff8159 !important;
+	border-top: 8px #428cbb solid;
 }
 div.welcome_content {
 	padding: 30px;
@@ -780,4 +743,22 @@ div.welcome_content em.l {
 }
 div.welcome_content span a:hover {
 	background-color: transparent !important;
+}
+div.welcome_todo_button {
+	background-color: #428cbb;
+	margin: 0px auto;
+	width: 160px;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 18px;
+}
+div.welcome_todo_button a, div.welcome_todo_button a:link, div.welcome_todo_button a:visited {
+	display: block;
+	padding: 10px;
+	color: #ffffff !important;
+	font-weight: bold;
+	font-size: 18px;
+}
+div.welcome_todo_button a:hover {
+	background-color: #ff8159 !important;
 }

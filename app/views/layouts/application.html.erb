@@ -47,48 +47,48 @@
 			</div>
 			<!-- END HEADER -->	
 			
-		<!-- MAIN NAVIGATION -->		
-		<div id="navigation">
-			<div id="left_navigation">
-				<ul class="navigation">
-					<li class=<%= tab_css_class(@current_tab_type, 'site') %>>
-						<%= link_to HOME_CN, root_url %>
-					</li>
-					<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
-						<%= link_to RECIPE_CN, "#{recipes_url}/overview" %>
-					</li>
-					<!-- <li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
-						<%= link_to MENU_CN, root_url %>
-					</li>
-					<li class=<%= tab_css_class(@current_tab_type, 'friend') %>>
-						<%= link_to FRIEND_CN, root_url %>
-					</li>
-					<li class=<%= tab_css_class(@current_tab_type, 'group') %>>
-						<%= link_to GROUP_CN, root_url %>
-					</li> -->
-				</ul>
-			</div>
-		
-			<div id="right_navigation">
-				<ul class="navigation">
-					<li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
-						<%= link_to "我的#{SITE_NAME_CN}", :controller => 'mine', :action => 'overview' %>
-					</li>
-					<% if logged_in? %>
-						<!-- <li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
-							<%= link_to PROFILE_CN, root_url %>
+			<!-- MAIN NAVIGATION -->		
+			<div id="navigation">
+				<div id="left_navigation">
+					<ul class="navigation">
+						<li class=<%= tab_css_class(@current_tab_type, 'site') %>>
+							<%= link_to HOME_CN, root_url %>
 						</li>
-						<li class=<%= tab_css_class(@current_tab_type, 'message') %>>
-							<%= link_to MAILBOX_CN, root_url %>
+						<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
+							<%= link_to RECIPE_CN, "#{recipes_url}/overview" %>
+						</li>
+						<!-- <li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
+							<%= link_to MENU_CN, root_url %>
+						</li>
+						<li class=<%= tab_css_class(@current_tab_type, 'friend') %>>
+							<%= link_to FRIEND_CN, root_url %>
+						</li>
+						<li class=<%= tab_css_class(@current_tab_type, 'group') %>>
+							<%= link_to GROUP_CN, root_url %>
 						</li> -->
-						<li class=<%= tab_css_class(@current_tab_type, 'setting') %>>
-							<%= link_to SETTING_CN, root_url %>
+					</ul>
+				</div>
+			
+				<div id="right_navigation">
+					<ul class="navigation">
+						<li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
+							<%= link_to "我的#{SITE_NAME_CN}", :controller => 'mine', :action => 'overview' %>
 						</li>
-					<% end %>
-				</ul>
+						<% if logged_in? %>
+							<!-- <li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
+								<%= link_to PROFILE_CN, root_url %>
+							</li>
+							<li class=<%= tab_css_class(@current_tab_type, 'message') %>>
+								<%= link_to MAILBOX_CN, root_url %>
+							</li> -->
+							<li class=<%= tab_css_class(@current_tab_type, 'setting') %>>
+								<%= link_to SETTING_CN, root_url %>
+							</li>
+						<% end %>
+					</ul>
+				</div>
 			</div>
-		</div>
-		<!-- END MAIN NAVIGATION -->
+			<!-- END MAIN NAVIGATION -->
 			
 			<!-- CONTENT -->		
 			<div id="content_wrapper">			
