@@ -118,11 +118,11 @@
 					
 					<!-- sidebar colmun  -->
 				  <div id="sidebar_column">
+				  	<%= render :partial => "layouts/todo_sidebar" %>
 				  	<% if !current_user && (params[:controller] != 'sessions') && (params[:controller] != 'users') %>
 					  	<%= render :partial => "layouts/login_sidebar" %>
 					  <% end %>
 						<%= render :partial => "layouts/search_sidebar" %>
-						
 						<% if @show_sidebar %>
 							<%= render :partial => "#{params[:controller]}/#{params[:action]}_sidebar" %>
 						<% end %>

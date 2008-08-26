@@ -407,6 +407,26 @@ td.photo_item_cell {
 	font-weight: bold;
 	color: #373737;
 }
+.sidebar_todo_button {
+	background-color: #ff8159;
+}
+.sidebar_todo_button h1 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+}
+.sidebar_todo_button a, .sidebar_todo_button a:link, .sidebar_todo_button a:visited {
+	display: block;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 14px !important;
+	color: #ffffff !important;
+}
+.sidebar_todo_button a:hover {
+	background-color: #428cbb !important;
+}
 .sidebar_block_main {
 	padding: 10px;
 }
