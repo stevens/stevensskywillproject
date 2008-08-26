@@ -275,8 +275,7 @@ div.tag {
 /* Content Column */
 #content_column {
 	margin-right: 300px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 0px 10px;
 }
 #content_column a, #content_column a:link, #content_column a:visited {
 	color: #428cbb;
