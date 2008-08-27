@@ -3,7 +3,7 @@
 	<% for item in items %>
 	  <tr>  	
 	    
-	    <td class="left_colomn">
+	    <td class="left_column">
 	    	<div class="sub_block">
 					<% if show_photo %>
 						<div class="list_photo">
@@ -25,7 +25,7 @@
 				</div>
 	    </td>
 	    
-	    <td class="right_colomn_lined">
+	    <td class="right_column_lined">
 	    	<div class="sub_block">
     			<%= render :partial => "/#{item_type.pluralize}/#{item_type}_s", 
     								 :locals => {:item => item, 

@@ -43,23 +43,6 @@
 	</div>
 <% end %>
 
-<%= render :partial => "/photos/photos_matrix",
-					 :locals => {:photos => photos, 
-					 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
-					 						 :photoable => item, 
-					 						 :photo_link_url => false, 
-					 						 :photo_style => 'matrix', 
-					 						 :show_photo => true, 
-					 						 :show_photo_todo => false} %>
-					
-<div class="below_photo">
-	<%= render :partial => "/layouts/item_below_photo", 
-						 :locals => {:item_type => 'recipe', 
-						 						 :item => item, 
-						 						 :show_title => false, 
-						 						 :show_photo_todo => true} %>
-</div>
-
 <div class="main">
 	<h3><%= "#{DESCRIPTION_CN}:" %></h3>
 	<ul><%= paragraphs(item.description) %></ul>

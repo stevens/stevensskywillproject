@@ -8,7 +8,7 @@
 							
 							<% if show_photo %>
 								<div class="matrix_photo">
-				    			<%= render :partial => "photo_photo",
+				    			<%= render :partial => "/photos/photo_photo",
 				    								 :locals => {:photo => photos[i-1], 
 				    								 						 :photoable => photoable, 
 				    								 						 :photo_link_url => photo_link_url, 
@@ -17,7 +17,7 @@
 							<% end %>
 							
 							<div class="below_photo">
-								<%= render :partial => "photo_below_photo", 
+								<%= render :partial => "/photos/photo_below_photo", 
 													 :locals => {:photo => photos[i-1], 
 													 						 :show_photo_todo => show_photo_todo} %>
 							</div>
