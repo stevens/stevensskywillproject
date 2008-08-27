@@ -301,9 +301,19 @@ td.label {
 	width: 150px;
 	padding-top: 7px;
 	padding-right: 10px;
+	white-space: nowrap;
 }
 td.input {
+	width: 500px;
 	padding-top: 5px;
+}
+td.text {
+	width: 500px;
+	padding-top: 7px;
+}
+.panel_block_main td.input {
+	width: 204px;
+	white-space: nowrap;
 }
 td.submit {
 	padding-top: 15px;

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   include ReviewsHelper
   include TagsHelper
   include RatingsHelper
+  include PasswordsHelper
+  include SettingsHelper
   
   helper :all # include all helpers, all the time
 	
@@ -42,6 +44,8 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'mine'
 		elsif @self_type == 'recipe' || (@parent_type == 'recipe' && @self_type == 'photo') || (@parent_type == 'recipe' && @self_type == 'review')
 			@current_tab_type = 'recipe'
+		elsif c == 'settings'
+			@current_tab_type = c.singularize
 		end
 		if @current_tab_type
 			@current_tab_name = name_for(@current_tab_type)

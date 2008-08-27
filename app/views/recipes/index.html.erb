@@ -3,9 +3,9 @@
 	<div class="block_header">
 		<% if @show_header_link %>
 			<div class="block_header_link">	
-					<% if @current_user %>
-						<%= link_to "#{CREATE_CN}新#{@self_name}", new_recipe_url %>	
-					<% end %>
+				<% if @current_user %>
+					<%= link_to "#{CREATE_CN}新#{@self_name}", new_recipe_url %>	
+				<% end %>
 			</div>
 		<% end %>
 		<h1><%= h @block_title %></h1>

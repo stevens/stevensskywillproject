@@ -197,6 +197,7 @@ Rails::Initializer.run do |config|
 	PROFILE_CN = '档案'
 	MAILBOX_CN = '信箱'
 	SETTING_CN = '设置'
+	PRIVACY_CN = '隐私'
 	REVIEW_EN = 'review'
 	REVIEW_CN = '评论'
 	RESPOND_CN = '回应'
