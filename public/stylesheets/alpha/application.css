@@ -352,10 +352,7 @@ td.photo_item_cell {
 	background-color: #ffffff;	
 }
 .block_main table {
-	width: 100%;
-}
-* html .block_main table {
-	width: 99.6%;
+	margin: 0px auto;
 }
 .block_main label {
 	float: right;
