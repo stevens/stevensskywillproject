@@ -298,7 +298,7 @@ td.right_colomn {
 }
 td.right_colomn_lined {
 	width: 100%;
-	border-bottom: 4px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
 }
 td.label {
 	padding-top: 7px;
@@ -571,7 +571,7 @@ div.main h3 {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	padding-bottom: 5px;
-	border-bottom: 4px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
 	color: #e42300;
 	font-size: 14px;
 	font-weight: normal;
