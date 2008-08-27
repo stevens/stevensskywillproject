@@ -741,9 +741,11 @@ div.pagination a, div.pagination span {
 }
 div.rating {
 	float: right;
+	margin-right: 10px;
 	position: relative;
 	padding: 10px;
-	background-color: #f1f1f1;
+	border: 2px #ff8159 solid;
+	color: #695245;
 }
 
 /* Welcome */
