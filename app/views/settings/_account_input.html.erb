@@ -3,7 +3,27 @@
 		<td class="label"><label><%= "#{ACCOUNT_ID_CN}:" %></label></td>
 		<td class="text">
 			<%= account.login %>
-			
+		</td>
+	</tr>
+	<tr>
+		<td class="label"><label><%= "#{PORTRAIT_CN}:" %></label></td>
+		<td class="text">
+			<%= link_to image_tag('alpha/cook.png', :title => account.login), '' %><br /><br />
+			<%= submit_tag "#{CHANGE_CN}#{PORTRAIT_CN}", :class => "submit" %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label"><label><%= "#{EMAIL_ADDRESS_CN}:" %></label></td>
+		<td class="text">
+			<%= account.email %><br /><br />
+			<%= submit_tag "#{CHANGE_CN}#{EMAIL_ADDRESS_CN}", :class => "submit" %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label"><label><%= "#{PASSWORD_CN}:" %></label></td>
+		<td class="text">
+			<%= '**********' %><br /><br />
+			<%= submit_tag "#{CHANGE_CN}#{PASSWORD_CN}", :class => "submit" %>
 		</td>
 	</tr>
 </table>

@@ -29,13 +29,16 @@ a, a:link, a:visited {
 a:hover {
 	background-color: transparent;
 }
+label {
+	white-space: nowrap;
+}
 input {
 	height: 18px;
 	vertical-align: middle;
 }
 input.submit {
 	height: 24px;
-	width: 80px;
+	width: 100px;
 }
 input.search {
 	width: 210px;
@@ -55,17 +58,17 @@ input.text_s {
 	width: 200px;
 }
 input.check_box {
-	margin-right: 2px;
+	margin-right: 4px;
 }
-* +html input.check_box {
+/** +html input.check_box {
 	margin-top: 3px;
-}
+}*/
 input.radio_button {
-	margin-right: 2px;
+	margin-right: 4px;
 }
-* +html input.radio_button {
+/** +html input.radio_button {
 	margin-top: 3px;
-}
+}*/
 textarea {
 	width: 450px;
 	height: 300px;
@@ -298,22 +301,29 @@ td.right_colomn_lined {
 	border-bottom: 4px solid #f1f1f1;
 }
 td.label {
-	width: 150px;
 	padding-top: 7px;
 	padding-right: 10px;
-	white-space: nowrap;
+}
+td.label label{
+	width: 150px;
+}
+.panel_block_main td.label label {
+	width: auto;
 }
 td.input {
-	width: 500px;
+	width: 100%;
 	padding-top: 5px;
 }
 td.text {
-	width: 500px;
+	width: 100%;
 	padding-top: 7px;
 }
-.panel_block_main td.input {
-	width: 204px;
-	white-space: nowrap;
+td.radio {
+	width: 100%;
+	padding-top: 7px;	
+}
+* +html td.radio {
+	padding-top: 5px;
 }
 td.submit {
 	padding-top: 15px;
