@@ -186,7 +186,8 @@ div.tag {
 	width: 960px;
 	margin: 0px auto;
 	padding: 0px 10px;
-	margin-top: -26px;
+	padding-top: 3px;
+	margin-top: -29px;
 	white-space: nowrap;
 	color: #ffffff;
 }
@@ -473,10 +474,10 @@ div.matrix_block {
 
 /* Photo Div */
 div.matrix_photo {
-	margin: auto;
-	margin-bottom: 5px;
+	margin: 0px auto;
+	padding: 4px 0px;
 	text-align: center;
-	height: 105px;
+	height: 104px;
 }
 div.list_photo {
 	margin: auto;

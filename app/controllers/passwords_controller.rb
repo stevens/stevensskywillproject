@@ -31,21 +31,21 @@ class PasswordsController < ApplicationController
 				clear_notice
 			else
 				flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{EMAIL_ADDRESS_CN}!"
-				redirect_to "#{root_path}forgot_password"
+				redirect_to forgot_password_url
 			end
 		else
-			redirect_to login_url
+			redirect_to forgot_password_url
 		end
 	end
 	
 	def edit
 		if params[:id]
 			@user = User.find_by_password_reset_code(params[:id])
-		end
-			
-		unless @user
-			flash[:notice] = "#{SORRY_CN}, #{PASSWORD_CN}#{RESET_CN}的校验码有#{ERROR_CN}, 请查看#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!"
-			redirect_to login_url
+			unless @user
+				after_password_reset_code_error
+			end
+		else
+			after_password_reset_code_nil
 		end
 	end
 	
@@ -64,9 +64,10 @@ class PasswordsController < ApplicationController
 					clear_notice
 			  end
 			else
-				flash[:notice] = "#{SORRY_CN}, #{PASSWORD_CN}#{RESET_CN}的校验码有#{ERROR_CN}, 请查看#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!"
-				redirect_to login_url
-			end	
+				after_password_reset_code_error
+			end
+		else
+			after_password_reset_code_nil
 		end
 	end
 
@@ -78,5 +79,14 @@ class PasswordsController < ApplicationController
 		set_page_title(info)
 		set_block_title(info)
 	end
-
+	
+	def after_password_reset_code_nil
+		flash[:notice] = "#{SORRY_CN}, 没有#{PASSWORD_CN}#{RESET_CN}的校验码, 请查看#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!"
+		redirect_to login_url
+	end
+	
+	def after_password_reset_code_error
+		flash[:notice] = "#{SORRY_CN}, #{PASSWORD_CN}#{RESET_CN}的校验码不正确, 请查看#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!"
+		redirect_to login_url
+	end
 end
