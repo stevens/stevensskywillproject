@@ -45,17 +45,13 @@ input.search {
 }
 input.search_button {
 	width: 50px;
-	height: 24px;
-}
-input.login_button {
-	width: 50px;
-	height: 24px;
+	height: 24px;	
 }
 input.text {
 	width: 450px;
 }
 input.text_s {
-	width: 200px;
+	width: 180px;
 }
 input.check_box {
 	margin-right: 4px;
@@ -167,7 +163,7 @@ div.tag {
 #footer_content {
 	width: 930px;
 	margin: 0px auto;
-	padding: 10px 15px;
+	padding: 5px 15px;
 	border-top: 8px solid #b8b9a7;
 	background-color: #428cbb;
 }
@@ -409,9 +405,19 @@ td.photo_item_cell {
 }
 
 /* Sidebar Block */
-.sidebar_block {
+.sidebar_block, .sidebar_panel {
 	margin-bottom: 10px;
 	background-color: #ffffcc;
+}
+.sidebar_block label, .sidebar_panel label {
+	float: right;
+	text-align: right;
+	font-weight: bold;
+	width: auto !important;
+}
+.sidebar_block input.submit, .sidebar_panel input.submit {
+	width: 50px !important;
+	height: 24px !important;	
 }
 .sidebar_block_header {
 	padding-top: 3px;
@@ -424,6 +430,31 @@ td.photo_item_cell {
 	font-size: 12px;
 	font-weight: bold;
 	color: #373737;
+}
+.sidebar_block_main {
+	padding: 10px;
+	border: 1px #f1f1f1 solid;
+	border-top: none;
+}
+.sidebar_panel_header {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: #5d6266;	
+}
+.sidebar_panel_header h1 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #b8b9a7;
+}
+.sidebar_panel_main {
+	padding: 10px;
+	border: 1px #f1f1f1 solid;
+	border-top: none;
+}
+.sidebar_panel_main li {
+	margin-bottom: 3px;
 }
 .sidebar_todo_button {
 	background-color: #ff8159;
@@ -443,36 +474,6 @@ td.photo_item_cell {
 }
 .sidebar_todo_button a:hover {
 	background-color: #428cbb !important;
-}
-.sidebar_block_main {
-	padding: 10px;
-	border: 1px #f1f1f1 solid;
-	border-top: none;
-}
-.panel_block_header {
-	padding-top: 3px;
-	padding-bottom: 3px;
-	padding-left: 15px;
-	padding-right: 15px;
-	background-color: #5d6266;	
-}
-.panel_block_header h1 {
-	font-size: 12px;
-	font-weight: bold;
-	color: #b8b9a7;
-}
-.panel_block_main {
-	padding: 10px;
-	border: 1px #f1f1f1 solid;
-	border-top: none;
-}
-.panel_block_main li {
-	margin-bottom: 3px;
-}
-.sidebar_block label {
-	float: right;
-	text-align: right;
-	font-weight: bold;
 }
 
 /* Sub Block */

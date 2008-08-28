@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    self.current_user = User.authenticate(params[:login], params[:password])
+    self.current_user = User.authenticate(params[:email], params[:password])
     if logged_in?
       if params[:remember_me] == "1"
         self.current_user.remember_me
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "#{@current_user.login}, 你已经#{LOGIN_CN}#{SITE_NAME_CN}, 希望你在这里玩得开心!"
       redirect_back_or_default('/')
     else
-    	flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_ID_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+    	flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
       render :action => 'new'
       flash[:notice] = nil
     end

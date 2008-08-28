@@ -34,13 +34,13 @@ class User < ActiveRecord::Base
 														:message => "#{PASSWORD_CN}只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）"
   validates_confirmation_of :password,                   :if => :password_required?,
   													:message => "两次#{INPUT_CN}的#{PASSWORD_CN}不匹配"
-  validates_uniqueness_of   :login, :case_sensitive => false,
-  													:message => "#{ACCOUNT_ID_CN}已经存在"
+  # validates_uniqueness_of   :login, :case_sensitive => false,
+  # 													:message => "#{NICKNAME_CN}已经存在"
   validates_uniqueness_of   :email, :case_sensitive => false,
   													:message => "#{EMAIL_ADDRESS_CN}已经存在"	
-	validates_exclusion_of 		:login, 										 :if => :login_required?, 
-														:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖), 
-														:message => "#{ACCOUNT_ID_CN}已经存在"	
+	# validates_exclusion_of 		:login, 										 :if => :login_required?, 
+	# 													:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖), 
+	# 													:message => "这个#{NICKNAME_CN}已经存在"	
 
   before_save :encrypt_password
   before_create :make_activation_code 
@@ -68,11 +68,16 @@ class User < ActiveRecord::Base
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login] # need to get the salt
+  # def self.authenticate(login, password)
+  #   u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login] # need to get the salt
+  #   u && u.authenticated?(password) ? u : nil
+  # end  此代码段变更为下面的代码段
+  
+  def self.authenticate(email, password)
+    u = find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email] # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
-
+  
   # Encrypts some data with the salt.
   def self.encrypt(password, salt)
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")

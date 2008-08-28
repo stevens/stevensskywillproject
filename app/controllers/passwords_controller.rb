@@ -7,9 +7,9 @@ class PasswordsController < ApplicationController
 	end
 
 	def create
-		if request.post?
-			params[:email] = text_useful(params[:email])
-			if params[:email] =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i	
+		# if request.post?
+		# 	params[:email] = text_useful(params[:email])
+		# 	if params[:email] =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i	
 		    if @user = User.find_for_forget(params[:email])
 					@user.forgot_password
 					if @user.update_attribute(:password_reset_code, @user.password_reset_code)
@@ -25,17 +25,17 @@ class PasswordsController < ApplicationController
 		    	render :action => 'new'
     			clear_notice
 		    end
-			elsif params[:email]
-				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
-				render :action => 'new'
-				clear_notice
-			else
-				flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{EMAIL_ADDRESS_CN}!"
-				redirect_to forgot_password_url
-			end
-		else
-			redirect_to forgot_password_url
-		end
+		# 	elsif params[:email]
+		# 		flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
+		# 		render :action => 'new'
+		# 		clear_notice
+		# 	else
+		# 		flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{EMAIL_ADDRESS_CN}!"
+		# 		redirect_to forgot_password_url
+		# 	end
+		# else
+		# 	redirect_to forgot_password_url
+		# end
 	end
 	
 	def edit

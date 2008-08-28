@@ -1,0 +1,24 @@
+<% form_for user do |f| %>
+	<table class="content">
+		<tr>
+			<td class="label"><label for="login"><%= "#{NICKNAME_CN}:" %></label></td>
+			<td class="input">
+				<%= f.text_field :login, :class => "text_s" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<%= error_message_on "user", "login" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="submit">
+				<%= f.submit button_name, :class => "submit" %>
+				&nbsp;&nbsp;
+				<%= link_to "&raquo;#{CANCLE_CN}", :controller => 'settings', :action => 'account' %>
+			</td>
+		</tr>
+	</table>
+<% end %>

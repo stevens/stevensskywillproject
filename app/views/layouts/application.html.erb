@@ -34,8 +34,8 @@
 							<%= "#{HELLO_CN}, " %><%= link_to current_user.login, user_url(current_user) %>
 							<%= link_to LOGOUT_CN, "#{root_url}logout" %>
 						<% else %>
-							<%= link_to SIGN_UP_CN, "#{root_url}signup" %>
 							<%= link_to LOGIN_CN, "#{root_url}login" %>
+							<%= link_to SIGN_UP_CN, "#{root_url}signup" %>
 						<% end %>	
 					</div>
 					
@@ -121,13 +121,13 @@
 					
 					<!-- sidebar colmun  -->
 				  <div id="sidebar_column">
-				  	<%= render :partial => "layouts/todo_sidebar" %>
+				  	<%= render :partial => "/layouts/todo_sidebar" %>
 				  	<% if !current_user && (params[:controller] != 'sessions') && (params[:controller] != 'users') %>
-					  	<%= render :partial => "layouts/login_sidebar" %>
+					  	<%= render :partial => "/sessions/login_sidebar" %>
 					  <% end %>
-						<%= render :partial => "layouts/search_sidebar" %>
+						<%= render :partial => "/searches/search_sidebar" %>
 						<% if @show_sidebar %>
-							<%= render :partial => "#{params[:controller]}/#{params[:action]}_sidebar" %>
+							<%= render :partial => "/#{params[:controller]}/#{params[:action]}_sidebar" %>
 						<% end %>
 				  </div>
 					

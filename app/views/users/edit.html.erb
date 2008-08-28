@@ -4,6 +4,8 @@
 	</div>
 	
 	<div class="block_main">
-		<%= render :partial => "/users/user_input" %>
+		<%= render :partial => "change_nickname", 
+							 :locals => { :user => @user, 
+							 						  :button_name => SAVE_CHANGES_CN } %>
 	</div>
 </div>

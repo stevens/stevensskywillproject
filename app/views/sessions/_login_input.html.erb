@@ -1,0 +1,32 @@
+<% form_tag session_path do %>
+	<table class="content">
+		<tr>
+			<td class="label"><label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label></td>
+			<td class="input">
+				<%= text_field_tag "email", params[:email], :class => "text_s" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label"><label for="password"><%= "#{PASSWORD_CN}:" %></label></td>
+			<td class="input">
+				<%= password_field_tag "password", "", :class => "text_s" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="input">
+				<%= check_box_tag "remember_me", "1", false, :class => "check_box" %><%= "记住我" %>
+				&nbsp;&nbsp;
+				<%= link_to "我忘记了#{PASSWORD_CN}?", forgot_password_url %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="submit">
+				<%= submit_tag LOGIN_CN, :class => "submit" %>
+				&nbsp;&nbsp;
+				<%= link_to "&raquo;我还没有#{SITE_NAME_CN}#{ACCOUNT_CN}", signup_url %>
+			</td>
+		</tr>
+	</table>
+<% end %>

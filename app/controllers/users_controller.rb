@@ -52,11 +52,22 @@ class UsersController < ApplicationController
   end
 
 	def edit
+		@user = @current_user
 
+	 	info = "#{CHANGE_CN}#{NICKNAME_CN}"
+		
+		set_page_title(info)
+		set_block_title(info)
 	end
 
 	def update
-
+		@user = @current_user
+		
+	  if @user.update_attributes(params[:user])
+			after_update_ok
+	  else
+			after_update_error
+	  end
 	end
 	
 	def destroy
@@ -102,5 +113,26 @@ class UsersController < ApplicationController
 		end
 		clear_notice
   end
-
+  
+  def after_update_ok
+  	respond_to do |format|
+			flash[:notice] = "你已经成功#{CHANGE_CN}了你的#{NICKNAME_CN}!"
+			format.html { redirect_to :controller => 'settings', :action => 'account' }
+			format.xml  { head :ok }
+		end
+  end
+  
+  def after_update_error
+  	respond_to do |format|
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{NICKNAME_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			format.html { render :action => "edit" }
+			format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+			
+		 	info = "#{CHANGE_CN}#{NICKNAME_CN}"
+			
+			set_page_title(info)
+			set_block_title(info)
+		end
+		clear_notice
+  end
 end
