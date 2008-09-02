@@ -81,7 +81,7 @@ ol {
 }
 
 /* Tag */
-.css1 { font-size: 1.0em; }
+.css1 { font-size: 1em; }
 .css2 { font-size: 1.1em; }
 .css3 { font-size: 1.2em; }
 .css4 { font-size: 1.3em; }
@@ -303,10 +303,11 @@ td.right_column_lined {
 	border-bottom: 1px solid #f1f1f1;
 }
 td.label {
-	padding-top: 7px;
-	padding-right: 10px;
+
 }
 td.label label{
+	margin-top: 7px;
+	margin-right: 10px;
 	width: 150px;
 }
 .panel_block_main td.label label {
@@ -314,24 +315,40 @@ td.label label{
 }
 td.input {
 	width: 100%;
-	padding-top: 5px;
 }
-td.text {
-	width: 100%;
-	padding-top: 7px;
+td.input div.input {
+	margin-top: 5px;
+	margin-right: 10px;
+	margin-left: 0px;
+	margin-bottom: 0px;
 }
-td.radio {
-	width: 100%;
-	padding-top: 7px;	
+td.input div.radio {
+	margin-top: 7px;
+	margin-right: 10px;
+	margin-left: 0px;
+	margin-bottom: 0px;	
 }
-* +html td.radio {
-	padding-top: 5px;
+* +html td.input div.radio {
+	margin-top: 5px;
 }
-td.submit {
-	padding-top: 15px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	padding-right: 0px;
+td.input div.text {
+	margin-top: 7px;
+	margin-right: 10px;
+	margin-left: 0px;
+	margin-bottom: 0px;	
+	color: #999999;
+}
+td.input div.info {
+	margin-top: 7px;
+	margin-right: 10px;
+	margin-left: 0px;
+	margin-bottom: 0px;
+}
+td.input div.submit {
+	margin-top: 15px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 10px;
 }
 td.photo_item_cell {
 	text-align: center;
@@ -553,11 +570,13 @@ div.basic {
 	text-align: left;
 }
 div.basic h2 {
-	font-size: 14px;
-	font-weight: normal;
+	font-size: 12px;
+	font-weight: bold;
 	margin-bottom: 5px;
+	color: #373737;
 }
 div.basic h2 a, div.basic h2 a:link, div.basic h2 a:visited {
+	font-weight: normal;
 	font-size: 14px;
 	color: #ff8159 !important;
 }
@@ -567,6 +586,12 @@ div.basic h2 a:hover {
 }
 div.basic li {
 	margin-bottom: 3px;
+}
+div.video {
+	margin: 10px 0px;
+	padding: 4px;
+	text-align: center;
+	background-color: #f1f1f1;
 }
 div.main {
 	margin-bottom: 10px;
@@ -655,8 +680,8 @@ div.pagination a, div.pagination span {
 }
 .formError {
 	color: #ff0000;
-	padding-top: 2px;
-	padding-left: 10px;
+	margin-top: 5px;
+	margin-left: 10px;
 }
 
 /* Notice */
@@ -742,9 +767,10 @@ div.pagination a, div.pagination span {
 }
 div.rating {
 	float: right;
-	margin-right: 10px;
-	position: relative;
 	padding: 10px;
+}
+div.rates {
+	padding: 20px 10px;
 	border: 2px #ff8159 solid;
 	color: #695245;
 }

@@ -1,65 +1,75 @@
 <% form_for :user, :url => users_path do |f| %>
 	<table class="content">
 		<tr>
-			<td class="label"><label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label></td>
-			<td class="input">
-				<%= f.text_field :email, :class => "text_s" %>
+			<td class="label">
+				<label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label>
 			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
+			<td class="input">
+				<div class="input">
+					<%= f.text_field :email, :class => "text_s" %>
+				</div>
+				<div class="text">
+					<%= "请确认你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而接收#{ACCOUNT_CN}激活#{EMAIL_CN}" %>
+				</div>
 				<%= error_message_on "user", "email" %>
 			</td>
 		</tr>
 		<tr>
-			<td class="label"><label for="login"><%= "#{NICKNAME_CN}:" %></label></td>
-			<td class="input">
-				<%= f.text_field :login, :class => "text_s" %>
+			<td class="label">
+				<label for="login"><%= "#{NICKNAME_CN}:" %></label>
 			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
+			<td class="input">
+				<div class="input">
+					<%= f.text_field :login, :class => "text_s" %>
+				</div>
+				<div class="text">
+					<%= "#{NICKNAME_CN}的字数为#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位" %>
+				</div>
 				<%= error_message_on "user", "login" %>
 			</td>
 		</tr>
 		<tr>
-			<td class="label"><label for="password"><%= "#{PASSWORD_CN}:" %></label></td>
-			<td class="input">
-				<%= f.password_field :password, :class => "text_s" %>
+			<td class="label">
+				<label for="password"><%= "#{PASSWORD_CN}:" %></label>
 			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
+			<td class="input">
+				<div class="input">
+					<%= f.password_field :password, :class => "text_s" %>
+				</div>
+				<div class="text">
+					<%= "#{PASSWORD_CN}的字数为#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}" %><br />
+					<%= "只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）" %>
+				</div>
 				<%= error_message_on "user", "password" %>
 			</td>
 		</tr>
 		<tr>
-			<td class="label"><label for="password_confirmation"><%= "#{PASSWORD_CN}确认:" %></label></td>
-			<td class="input">
-				<%= f.password_field :password_confirmation, :class => "text_s" %>
+			<td class="label">
+				<label for="password_confirmation"><%= "#{PASSWORD_CN}确认:" %></label>
 			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
+			<td class="input">
+				<div class="input">
+					<%= f.password_field :password_confirmation, :class => "text_s" %>
+				</div>
 				<%= error_message_on "user", "password_confirmation" %>
 			</td>
 		</tr>
 		<tr>
 			<td></td>
 			<td class="input">
-				<%= "点击下面的\"#{SIGN_UP_CN}\", 表示我已经阅读并同意#{SITE_NAME_CN}的" %><%= link_to "\"#{TERMS_OF_SERVICE_CN}\"", '' %>和<%= link_to "\"#{PRIVACY_POLICY_CN}\"", '' %>
+				<div class="info">
+					<%= "点击下面的\"#{SIGN_UP_CN}\", 表示我已经阅读并同意#{SITE_NAME_CN}的" %><%= link_to "\"#{TERMS_OF_SERVICE_CN}\"", '' %>和<%= link_to "\"#{PRIVACY_POLICY_CN}\"", '' %>
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<td></td>
-			<td class="submit">
-				<%= submit_tag SIGN_UP_CN, :class => "submit" %>
-				&nbsp;&nbsp;
-				<%= link_to "&raquo;我已经有#{SITE_NAME_CN}#{ACCOUNT_CN}", login_url %>
+			<td class="input">
+				<div class="submit">
+					<%= submit_tag SIGN_UP_CN, :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;我已经有#{SITE_NAME_CN}#{ACCOUNT_CN}", login_url %>
+				</div>
 			</td>
 		</tr>
 	</table>

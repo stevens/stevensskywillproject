@@ -114,8 +114,6 @@ class RecipesController < ApplicationController
     @recipe = @current_user.recipes.build(params[:recipe])
     
     @recipe.tag_list = params[:tags]
-    @recipe.prep_time = params[:prep_time_hour].to_i.hours + params[:prep_time_minute].to_i.minutes
-    @recipe.cook_time = params[:cook_time_hour].to_i.hours + params[:cook_time_minute].to_i.minutes
     
 		if @recipe.save
 			after_create_ok
@@ -130,8 +128,6 @@ class RecipesController < ApplicationController
     load_recipe(@current_user)
     
     @recipe.tag_list = params[:tags]
-    @recipe.prep_time = params[:prep_time_hour].to_i.hours + params[:prep_time_minute].to_i.minutes
-    @recipe.cook_time = params[:cook_time_hour].to_i.hours + params[:cook_time_minute].to_i.minutes
 
 	  if @recipe.update_attributes(params[:recipe])
 			after_update_ok
@@ -170,10 +166,10 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	@highlighted_recipes_set = highlighted_recipes(nil, true, false, Time.today - 100.days, nil, nil)
+  	@highlighted_recipes_set = highlighted_recipes(nil, true, false, Time.today - 30.days, nil, nil)
   	@highlighted_recipe = @highlighted_recipes_set.rand
   	
-  	@latest_recipes_set = recipes_for(nil, true, false, Time.today - 100.days, nil, 'created_at DESC')
+  	@latest_recipes_set = recipes_for(nil, true, false, Time.today - 30.days, nil, 'created_at DESC')
   	@latest_recipes = @latest_recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
   	@latest_reviews_set = reviews_for(nil, 'recipe', nil, Time.today - 100.days, nil, 'created_at DESC')
   	@latest_reviews = @latest_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]

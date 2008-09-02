@@ -218,4 +218,13 @@ module ApplicationHelper
 
 	end
 	
+	def code_title(codeable_type, code)
+		c = Code.find(:first, :conditions => {:codeable_type => codeable_type, :code => code})
+		if c
+			c.title
+		else
+			nil
+		end
+	end
+	
 end

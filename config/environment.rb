@@ -226,11 +226,15 @@ Rails::Initializer.run do |config|
 	PREP_TIME_CN = '准备时间'
 	COOK_TIME_CN = '制作时间'
 	DIFFICULTY_CN = '难度'
+	COST_CN = '成本'
 	YIELD_CN = '出品量'
 	DESCRIPTION_CN	= '描述'
 	INGREDIENT_CN= '用料'
 	DIRECTION_CN = '做法'
 	TIP_CN = '小贴士'
+	VIDEO_URL_CN = '视频地址'
+	FROM_WHERE_CN = '来源'
+	VIDEO_CN = '视频'
 	
 	SUBJECT_CN = '标题'
 	
@@ -258,7 +262,7 @@ Rails::Initializer.run do |config|
 	SORRY_CN = '对不起'
 	
 	#SIZE constants
-	LIST_ITEMS_COUNT_PER_PAGE_S = 5
+	LIST_ITEMS_COUNT_PER_PAGE_S = 10
 	LIST_ITEMS_COUNT_PER_PAGE_M = 50
 	LIST_ITEMS_COUNT_PER_PAGE_L = 100
 	
@@ -277,6 +281,7 @@ Rails::Initializer.run do |config|
 	STRING_MAX_LENGTH_S = 30
 	STRING_MAX_LENGTH_M = 60
 	STRING_MAX_LENGTH_L = 90
+	STRING_MAX_LENGTH_XL = 200
 	
 	TEXT_MIN_LENGTH_S = 5
 	TEXT_MIN_LENGTH_M = 10
@@ -309,14 +314,6 @@ Rails::Initializer.run do |config|
 	MIN_RATINGS_COUNT = 5
 	
 	#CODE SET constants
-	DIFFICULTY_1_CN = '很容易'
-	DIFFICULTY_2_CN = '容易'
-	DIFFICULTY_3_CN = '普通'
-	DIFFICULTY_4_CN = '难'
-	DIFFICULTY_5_CN = '很难'
-	
-	UNIT_1_CN = '个'
-	UNIT_2_CN = '张'
 	
 	UNIT_USER_CN = '位'
 	UNIT_RECIPE_CN = '个'

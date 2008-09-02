@@ -1,8 +1,8 @@
 class AddRecipeFields < ActiveRecord::Migration
   def self.up
   	add_column :recipes, :difficulty, :string
-  	add_column :recipes, :prep_time, :integer
-  	add_column :recipes, :cook_time, :integer
+  	add_column :recipes, :prep_time, :string
+  	add_column :recipes, :cook_time, :string
   	add_column :recipes, :yield, :string
   end
 

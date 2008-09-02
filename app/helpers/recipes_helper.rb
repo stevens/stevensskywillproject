@@ -65,7 +65,9 @@ module RecipesHelper
   	conditions = ["title IS NOT NULL", 
   								"title <> ''", 
   								"description IS NOT NULL", 
-  								"description <> ''"]
+  								"description <> ''", 
+  								"from_type IS NOT NULL", 
+  								"privacy IS NOT NULL"]
 		conditions << "cover_photo_id IS NOT NULL" if only_has_photo
 		if only_full_info
 			conditions << ["ingredients IS NOT NULL", 
@@ -74,8 +76,8 @@ module RecipesHelper
 										 "directions <> ''", 
 										 "cover_photo_id IS NOT NULL", 
 										 "difficulty IS NOT NULL", 
-										 "prep_time > 0", 
-										 "cook_time > 0", 
+										 "prep_time IS NOT NULL", 
+										 "cook_time IS NOT NULL", 
 										 "yield IS NOT NULL", 
 										 "yield <> ''"]
 		end

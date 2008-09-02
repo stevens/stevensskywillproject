@@ -8,8 +8,13 @@ class Recipe < ActiveRecord::Base
 	has_many :photos, :order => "created_at"
 	has_many :reviews, :order => "updated_at DESC"
 	
-	validates_presence_of     :title, :description,
+	validates_presence_of     :title, :description, :from_type, :privacy, 
   													:message => "这一项是#{REQUIRED_CN}"
+	validates_presence_of     :from_where, :if => :from_where_required?, 
+  													:message => "请#{INPUT_CN}#{RECIPE_CN}的#{FROM_WHERE_CN}"
+	validates_inclusion_of 		:from_where, :if => :from_where_not_required?, 
+														:in => %w( ), 
+														:message => "请不要#{INPUT_CN}#{RECIPE_CN}的#{FROM_WHERE_CN}"
   validates_length_of       :title,    
   													:within => STRING_MIN_LENGTH_S..STRING_MAX_LENGTH_M,
   													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_M}位",
@@ -21,6 +26,12 @@ class Recipe < ActiveRecord::Base
   validates_length_of       :ingredients, :directions, :tips,    
   													:maximum => TEXT_MAX_LENGTH_L,
   													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_L}位"
+  validates_length_of       :yield, 
+  													:maximum => STRING_MAX_LENGTH_M,
+  													:too_long => "字数太长，最多不应该超过#{STRING_MAX_LENGTH_M}位"
+  validates_length_of       :video_url, :from_where, 
+  													:maximum => TEXT_MAX_LENGTH_S,
+  													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
   
   def description_summary
   	text_summary(description, TEXT_SUMMARY_LENGTH_M)
@@ -50,6 +61,16 @@ class Recipe < ActiveRecord::Base
 			s = 0
 		end
 		{:h => h, :m => m, :s => s}
+	end
+	
+	protected
+	
+	def from_where_required?
+		from_type != '1' && (from_where.nil? || from_where.blank?)
+	end
+	
+	def from_where_not_required?
+		from_type == '1' && !from_where.blank?
 	end
   
 end

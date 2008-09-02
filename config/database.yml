@@ -1,10 +1,10 @@
 defaults: &defaults
   adapter: mysql
-  # encoding: utf8
+  encoding: utf8
   username: root
   password: 
   host: localhost
-  socket: /opt/local/var/run/mysql5/mysqld.sock
+  # socket: /opt/local/var/run/mysql5/mysqld.sock
 
 development:
   database: beecook_development

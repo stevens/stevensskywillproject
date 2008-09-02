@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 10) do
+ActiveRecord::Schema.define(:version => 12) do
+
+  create_table "codes", :force => true do |t|
+    t.string   "codeable_type"
+    t.string   "code"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
@@ -52,9 +61,15 @@ ActiveRecord::Schema.define(:version => 10) do
     t.datetime "updated_at"
     t.integer  "cover_photo_id"
     t.string   "difficulty"
-    t.integer  "prep_time"
-    t.integer  "cook_time"
+    t.string   "prep_time"
+    t.string   "cook_time"
     t.string   "yield"
+    t.string   "from_type"
+    t.string   "from_where"
+    t.string   "cost"
+    t.string   "video_url"
+    t.string   "status"
+    t.string   "privacy"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_recipes_user"

@@ -1,5 +1,7 @@
 <div class="basic">
-	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
+	<h2>
+		<%= "[#{code_title('from_type', item.from_type)}] " %><%= link_to h(item.title), recipe_url(item) %>
+	</h2>
 	<ul>
 		<li>
 			<%= "来自 " %><%= link_to h(item_username(item)), user_url(item.user) %>
@@ -27,10 +29,17 @@
 
 <div class="main">
 	<ul>
-		<li><%= "#{PREP_TIME_CN}: #{time_display(item.prep_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
-		<li><%= "#{COOK_TIME_CN}: #{time_display(item.cook_time, 'hm', HOUR_CN, MINUTE_CN, SECOND_CN)}" %></li>
-		<li><%= "#{DIFFICULTY_CN}: #{item.difficulty}" %></li>
+		<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
+		<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.difficulty)}" %></li>
+		<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
+		<li><%= "#{COOK_TIME_CN}: #{code_title('recipe_time', item.cook_time)}" %></li>
 		<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
+		<li>
+			<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
+			<% if item.from_where %>
+				<%= "(#{h item.from_where})" %>
+			<% end %>
+		</li>
 	</ul>
 </div>
 
@@ -58,6 +67,10 @@
 						 						 :item => item, 
 						 						 :show_title => false, 
 						 						 :show_photo_todo => true} %>
+</div>
+
+<div class="video">
+	<%= item.video_url %>
 </div>
 
 <div class="main">
