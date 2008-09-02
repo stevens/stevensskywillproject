@@ -30,13 +30,13 @@
 <div class="main">
 	<ul>
 		<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
-		<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.difficulty)}" %></li>
+		<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.cost)}" %></li>
 		<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
 		<li><%= "#{COOK_TIME_CN}: #{code_title('recipe_time', item.cook_time)}" %></li>
 		<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
 		<li>
 			<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
-			<% if item.from_where %>
+			<% if !item.from_where.blank? %>
 				<%= "(#{h item.from_where})" %>
 			<% end %>
 		</li>
