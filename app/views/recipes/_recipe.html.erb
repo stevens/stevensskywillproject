@@ -71,7 +71,7 @@
 	</div>
 </div>
 
-<% if item.video_url %>
+<% if item.video_url && !item.video_url.blank? %>
 	<div class="video">
 		<%= item.video_url %>
 	</div>

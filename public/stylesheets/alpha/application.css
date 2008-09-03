@@ -10,6 +10,7 @@
 /* Common */
 * { 
 	margin: 0; padding: 0;
+	word-break: break-all;
 }
 body, a, p, ol, ul, td, input, textarea, select, option, button {
   font-family: Verdana;
