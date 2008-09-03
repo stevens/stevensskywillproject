@@ -112,7 +112,7 @@ class RecipesController < ApplicationController
   # POST /recipes.xml
   def create
     @recipe = @current_user.recipes.build(params[:recipe])
-    
+    @recipe.privacy = '10'
     @recipe.tag_list = params[:tags]
     
 		if @recipe.save
@@ -126,7 +126,7 @@ class RecipesController < ApplicationController
   # PUT /recipes/1.xml
   def update
     load_recipe(@current_user)
-    
+    @recipe.privacy = '10'
     @recipe.tag_list = params[:tags]
 
 	  if @recipe.update_attributes(params[:recipe])
