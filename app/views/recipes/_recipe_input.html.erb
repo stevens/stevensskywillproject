@@ -16,11 +16,12 @@
 				<label for="tags"><%= "#{TAG_CN}:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "请#{INPUT_CN}与#{RECIPE_CN}有关的关键字作为#{TAG_CN}, 可方便#{RECIPE_CN}的#{SEARCH_CN}和#{CATEGORY_CN}" %><br />
+					<%= "#{TAG_CN}之间请用\"空格\"分隔, 如: \"鱼肉 咖喱 东南亚 生日\"" %>
+				</div>
 				<div class="input">
 					<%= f.text_field :tag_list, :class => "text" %>
-				</div>
-				<div class="text">
-					<%= "#{TAG_CN}之间请用\"空格\"分隔" %>
 				</div>
 			</td>
 		</tr>
@@ -90,7 +91,7 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "请#{INPUT_CN}#{RECIPE_CN}的简介、特色等" %>
+					<%= "请#{INPUT_CN}#{RECIPE_CN}的简介和特色等" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :description %>
@@ -147,7 +148,7 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "如果有#{RECIPE_CN}的#{VIDEO_CN}，请#{INPUT_CN}#{VIDEO_CN}的#{URL_CN}" %>
+					<%= "如果有#{RECIPE_CN}的#{VIDEO_CN}, 请#{INPUT_CN}#{VIDEO_CN}的#{URL_CN}" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :video_url, :class => "text" %>
@@ -160,14 +161,14 @@
 				<label class="required" for="from_type"><%= "#{FROM_WHERE_CN}:" %></label>
 			</td>
 			<td class="input">
-				<div class="info">
+				<div class="text">
 					<%= "这是原创的私房#{RECIPE_CN}吗?" %>
 				</div>
 				<div class="input">
 					<%= f.select :from_type, Code.find(:all, :conditions => {:codeable_type => 'from_type'}).collect {|c| [ c.title, c.code ] } %>
 				</div>
 				<div class="text">
-					<%= "如果是转载的，请#{INPUT_CN}转载的报刊/书籍/网址等" %>
+					<%= "如果是转载的, 请#{INPUT_CN}转载的报刊/书籍/网址等" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :from_where, :class => "text" %>
