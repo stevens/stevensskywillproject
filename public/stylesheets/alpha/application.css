@@ -587,9 +587,15 @@ div.basic h2 a:hover {
 div.basic li {
 	margin-bottom: 3px;
 }
+div.photos {
+	padding: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+	background-color: #f1f1f1;
+}
 div.video {
-	margin: 10px 0px;
-	padding: 4px;
+	margin-bottom: 10px;
+	padding: 10px;
 	text-align: center;
 	background-color: #f1f1f1;
 }
@@ -768,11 +774,6 @@ div.pagination a, div.pagination span {
 div.rating {
 	float: right;
 	padding: 10px;
-}
-div.rates {
-	padding: 20px 10px;
-	border: 2px #ff8159 solid;
-	color: #695245;
 }
 
 /* Welcome */
