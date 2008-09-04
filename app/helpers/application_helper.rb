@@ -193,11 +193,11 @@ module ApplicationHelper
 	
 	def restfu_url_for(namespace, parent_obj, self_obj, action)
 		ns = "#{namespace}/" if namespace
-		po = "#{parent_obj[:type].pluralize}/#{parent_obj[:id]}/" if parent_obj && parent_obj[:type] && parent_obj[:id]
+		po = "#{parent_obj[:type].pluralize.downcase}/#{parent_obj[:id]}/" if parent_obj && parent_obj[:type] && parent_obj[:id]
 		if self_obj
 			if self_obj[:type]
 				if self_obj[:id]
-					so = "#{self_obj[:type].pluralize}/#{self_obj[:id]}"
+					so = "#{self_obj[:type].pluralize.downcase}/#{self_obj[:id]}"
 				else
 					so = "#{self_obj[:type].pluralize}"
 				end
