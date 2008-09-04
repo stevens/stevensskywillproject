@@ -85,9 +85,9 @@ class ApplicationController < ActionController::Base
  
 	def load_parent
   	if ("#{@url}".include? "#{'recipe'.pluralize}") && !("#{params[:controller]}".include? "#{'recipe'.pluralize}") && !("#{params[:id]}".include? "#{'recipe'.pluralize}")
-  		@parent_type = 'recipe'
+  		@parent_type = 'Recipe'
   	elsif ("#{@url}".include? "#{'photo'.pluralize}") && !("#{params[:controller]}".include? "#{'photo'.pluralize}") && !("#{params[:id]}".include? "#{'photo'.pluralize}")
-  		@parent_type = 'photo'
+  		@parent_type = 'Photo'
   	end
 		
 		if @parent_type

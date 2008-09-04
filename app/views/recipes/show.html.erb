@@ -15,9 +15,9 @@
 
 		<div id="recipe_rating" class="rating">
 			<%= render :partial => "/ratings/rate",
-								 :locals => {:ratings_count => ratings_count(@recipe),
-								 						 :total_rating => total_rating(@recipe), 
-								 						 :current_rating => user_rating(@current_user, @recipe), 
+								 :locals => {:ratings_count => @recipe.ratings.size,
+								 						 :average_rating_value => average_rating_value(@recipe), 
+								 						 :my_rating_value => user_rating_value(@current_user, @recipe), 
 								 						 :rateable_type => 'recipe',
 								 						 :rateable_id => @recipe.id} %>
 		</div>

@@ -140,8 +140,8 @@ class RecipesController < ApplicationController
   # DELETE /recipes/1.xml
   def destroy
     load_recipe(@current_user)
-    
-    @recipe.destroy
+
+		@recipe.destroy
 
 		after_destroy_ok
   end
@@ -166,8 +166,8 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	@highlighted_recipes_set = highlighted_recipes(nil, true, false, Time.today - 30.days, nil, nil)
-  	@highlighted_recipe = @highlighted_recipes_set.rand
+  	# @highlighted_recipes_set = highlighted_recipes(nil, true, false, Time.today - 30.days, nil, nil)
+  	# @highlighted_recipe = @highlighted_recipes_set.rand
   	
   	@latest_recipes_set = recipes_for(nil, true, false, Time.today - 30.days, nil, 'created_at DESC')
   	@latest_recipes = @latest_recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]

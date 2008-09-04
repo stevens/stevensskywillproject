@@ -1,23 +1,16 @@
 module RatingsHelper
-
-	def ratings_count(rateable)
-		Rating.count(:conditions => {:rateable_type => type_for(rateable), :rateable_id => rateable.id})
-	end
 	
 	def user_rating(user, rateable)
-		if user
-			user_rating = user.ratings.find(:first, :conditions => {:rateable_type => type_for(rateable), :rateable_id => rateable.id})
-			user_rating ? user_rating.rating : 0
-		end
+		user_rating = rateable.ratings.find_by_user_id(user)
 	end
 	
-	def total_rating(rateable)
-		ratings_count = ratings_count(rateable)
-		if ratings_count > 0
-			Rating.average('rating', :conditions => {:rateable_type => type_for(rateable), :rateable_id => rateable.id})
-		else
-			0
-		end
+	def user_rating_value(user, rateable)
+		user_rating = user_rating(user, rateable)
+		user_rating ? user_rating.rating : 0
+	end
+	
+	def average_rating_value(rateable)
+		rateable.ratings.size > 0 ? rateable.ratings.average('rating') : 0
 	end
 
 end

@@ -23,8 +23,8 @@
 	<ul>
 		<li>
 			<%= "#{RATE_CN}: " %>
-			<% if ratings_count(item) > 0 %>
-				<%= "#{total_rating(item)}/10 (#{ratings_count(item)}票)" %>
+			<% if item.ratings.size > 0 %>
+				<%= "#{average_rating_value(item)}/10 (#{item.ratings.size}票)" %>
 			<% else %>
 				<%= "还没有#{RATE_CN}" %>
 			<% end %>

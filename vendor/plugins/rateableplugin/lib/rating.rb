@@ -29,5 +29,6 @@
 #
 # rateable_type :string
 class Rating < ActiveRecord::Base
+	belongs_to :user #新添此行代码
   belongs_to :rateable, :polymorphic => true
 end

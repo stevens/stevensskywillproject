@@ -10,7 +10,8 @@ class Photo < ActiveRecord::Base
 							   :content_type => :image,
 							 	 :processor => 'Rmagick'
 	belongs_to :user
-	has_many :reviews, :order => "updated_at DESC"
+	belongs_to :photoable, :polymorphic => true
+	# has_many :reviews, :order => "updated_at DESC"
   
   validates_as_attachment
 	

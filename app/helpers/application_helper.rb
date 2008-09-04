@@ -39,7 +39,8 @@ module ApplicationHelper
 	end
 	
 	def type_for(object)
-		object.class.to_s.downcase
+		object.class
+		# object.class.to_s.downcase
 	end
 	
 	def item_username(item)

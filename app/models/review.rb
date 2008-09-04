@@ -2,6 +2,7 @@ class Review < ActiveRecord::Base
 	include ApplicationHelper
 	
 	belongs_to :user
+	belongs_to :reviewable, :polymorphic => true
 	
 	validates_presence_of     :title, :review,
   													:message => "这一项是#{REQUIRED_CN}"
