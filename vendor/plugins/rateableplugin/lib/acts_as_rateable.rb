@@ -82,7 +82,8 @@ module FortiusOne #:nodoc:
             def rating
               if average_rating?
                 # Integerize it for now -- no fractional average ratings
-                ratings.average(:rating).round
+                # ratings.average(:rating).round #此行变更外下一行
+                self.ratings.average('rating')
               else
                 self.old_rating.nil? ? nil : self.old_rating.rating
               end
@@ -139,9 +140,10 @@ module FortiusOne #:nodoc:
           
           condition_str = rating_conditions.collect {|cond| cond.first}.join(' OR ')
           condition_args = rating_conditions.collect {|cond| cond.slice(1..-1) }.flatten
-          with_scope(:find => {:conditions => [condition_str, *condition_args], :include => :rating}) do
+          # with_scope(:find => {:conditions => [condition_str, *condition_args], :include => :rating}) do #此行变更为下一行
+          with_scope(:find => {:conditions => [condition_str, *condition_args], :include => :ratings}) do
             find(:all, options)
-          end      
+          end
         end
         
         # Find the first object matching the conditions specified

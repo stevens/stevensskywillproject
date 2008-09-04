@@ -7,9 +7,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.connetc ':controller/search/:id', :action => 'search'
 	map.search '/search', :controller => 'site', :action => 'search'
 	
-  map.resources :users, :has_many => [:recipes, :photos, :reviews]
+  map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings]
 	
-	map.resources :recipes, :has_many => [:photos, :reviews]
+	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings]
 	
 	map.resources :photos, :has_many => :reviews
 	

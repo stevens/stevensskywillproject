@@ -33,18 +33,16 @@ module RecipesHelper
 	def highlighted_recipes(user, only_has_photo, only_full_info, created_at_from, created_at_to, order)
 		if user
 			recipes = user.recipes.find_all_by_rating(MIN_HILIGHTED_ITEM_RATING..MAX_HILIGHTED_ITEM_RATING, 
-																								:order => order, 
+																								:order => "recipes.#{order}", 
 																								:conditions => ["#{recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)}"])
 		else
 			recipes = Recipe.find_all_by_rating(MIN_HILIGHTED_ITEM_RATING..MAX_HILIGHTED_ITEM_RATING, 
-																					:order => order, 
+																					:order => "recipes.#{order}", 
 																					:conditions => ["#{recipes_conditions(only_has_photo, only_full_info, created_at_from, created_at_to)}"])
 		end
 		highlighted_recipes = []
 		for recipe in recipes
-			ratings_count = ratings_count(recipe)
-			total_rating = total_rating(recipe)
-			if total_rating >= MIN_HILIGHTED_ITEM_RATING && total_rating <= MAX_HILIGHTED_ITEM_RATING && ratings_count >= MIN_RATINGS_COUNT
+			if recipe.rating >= MIN_HILIGHTED_ITEM_RATING && recipe.rating <= MAX_HILIGHTED_ITEM_RATING && recipe.total_ratings >= MIN_RATINGS_COUNT
 				highlighted_recipes << recipe
 			end
 		end

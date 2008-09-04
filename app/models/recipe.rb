@@ -2,12 +2,11 @@ class Recipe < ActiveRecord::Base
 	include ApplicationHelper
 	
 	acts_as_taggable
-	# acts_as_rateable
+	acts_as_rateable :average => true
 	
 	belongs_to :user
 	has_many :photos, :dependent => :destroy, :as => :photoable, :foreign_key => :photoable_id, :order => "created_at"
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "updated_at DESC"
-	has_many :ratings, :dependent => :destroy, :as => :rateable, :foreign_key => :rateable_id, :order => "created_at"
 	
 	validates_presence_of     :title, :description, :from_type, :privacy, 
   													:message => "这一项是#{REQUIRED_CN}"

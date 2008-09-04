@@ -2,7 +2,7 @@ class RatingsController < ApplicationController
 
   before_filter :protect
        
-  def rate_it
+  def rate
   	load_rateable
   	
   	new_rating_value = params[:id].to_i
