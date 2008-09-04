@@ -136,7 +136,7 @@ module ApplicationHelper
 	end
 	
 	def text_summary(text, summary_length)
-		text.length > summary_length ? text.to(summary_length-1) + '......' : text
+		text.chars.length > summary_length ? text.to(summary_length-1) + '......' : text
 	end
 
 	def text_squish(text)

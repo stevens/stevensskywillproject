@@ -13,18 +13,18 @@ class Photo < ActiveRecord::Base
 	belongs_to :photoable, :polymorphic => true
 	# has_many :reviews, :order => "updated_at DESC"
   
+  attr_accessor :errors_on_caption
+  
   validates_as_attachment
 	
-	def errors_on_filename
-		"#{FILE_CN}名称有#{ERROR_CN}" if errors.invalid?('filename')
-	end
-	
-	def errors_on_file_type
-		"#{FILE_CN}类型有#{ERROR_CN}" if errors.invalid?('content_type')
-	end
-	
-	def errors_on_file_size
-		"#{FILE_CN}大小有#{ERROR_CN}" if errors.invalid?('size')
+	def errors_on_file
+		if errors.invalid?('filename')
+			"#{FILE_CN}名称有#{ERROR_CN}"
+		elsif errors.invalid?('content_type')
+			"#{FILE_CN}类型有#{ERROR_CN}"
+		elsif errors.invalid?('size')
+			"#{FILE_CN}大小有#{ERROR_CN}"
+		end
 	end
 	
 	def is_cover?(photoable)

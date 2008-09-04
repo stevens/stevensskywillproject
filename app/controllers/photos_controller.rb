@@ -112,6 +112,10 @@ class PhotosController < ApplicationController
   		load_photos_all			
   	end
 		
+		if !@photo.caption.blank? && @photo.caption.chars.length > TEXT_MAX_LENGTH_S
+			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
+			after_create_error
+		else
 		if @photos_set_count > 0
 	      if @photo.save
 					after_create_ok
@@ -131,6 +135,7 @@ class PhotosController < ApplicationController
       else
 				after_create_error
       end
+		end
 		end
   end
 

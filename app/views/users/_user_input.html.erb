@@ -9,7 +9,7 @@
 					<%= f.text_field :email, :class => "text_s" %>
 				</div>
 				<div class="text">
-					<%= "请确认你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而接收#{ACCOUNT_CN}激活#{EMAIL_CN}" %>
+					<%= "请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而接收#{ACCOUNT_CN}激活#{EMAIL_CN}" %>
 				</div>
 				<%= error_message_on "user", "email" %>
 			</td>
@@ -23,7 +23,7 @@
 					<%= f.text_field :login, :class => "text_s" %>
 				</div>
 				<div class="text">
-					<%= "#{NICKNAME_CN}的字数为#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位" %>
+					<%= "用自己喜欢的名字作为#{NICKNAME_CN}, 好让大家认识你" %>
 				</div>
 				<%= error_message_on "user", "login" %>
 			</td>
@@ -37,8 +37,7 @@
 					<%= f.password_field :password, :class => "text_s" %>
 				</div>
 				<div class="text">
-					<%= "#{PASSWORD_CN}的字数为#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}" %><br />
-					<%= "只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）" %>
+					<%= "#{PASSWORD_CN}只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）" %>
 				</div>
 				<%= error_message_on "user", "password" %>
 			</td>

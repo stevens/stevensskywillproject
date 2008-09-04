@@ -6,7 +6,7 @@
 			</td>
 			<td class="input">
 				<div class="input">
-					<% if photo.errors_on_filename || photo.errors_on_file_type || photo.errors_on_file_size %>
+					<% if photo.errors_on_file %>
 						<div class="fieldWithErrors">
 							<%= f.file_field :uploaded_data, :class => "text" %>
 						</div>
@@ -14,17 +14,12 @@
 						<%= f.file_field :uploaded_data, :class => "text" %>
 					<% end %>
 				</div>
-				<% if photo.errors_on_filename %>
-					<div class="formError">
-						<%= photo.errors_on_filename %>
-					</div>
-				<% elsif photo.errors_on_file_type %>
+				<div class="text">
+					<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于1M" %>
+				</div>
+				<% if photo.errors_on_file %>
 					<div class="formError">	
-						<%= photo.errors_on_file_type %>
-					</div>
-				<% elsif photo.errors_on_file_size %>
-					<div class="formError">
-						<%= photo.errors_on_file_size %>
+						<%= photo.errors_on_file %>
 					</div>
 				<% end %>
 			</td>
@@ -35,9 +30,19 @@
 			</td>
 			<td class="input">
 				<div class="input">
-					<%= f.text_area :caption, :class => 's' %>
+					<% if photo.errors_on_caption %>
+						<div class="fieldWithErrors">
+							<%= f.text_area :caption, :class => 's' %>
+						</div>
+					<% else %>
+						<%= f.text_area :caption, :class => 's' %>
+					<% end %>
 				</div>
-				<%= error_message_on "photo", "caption" %>
+				<% if photo.errors_on_caption %>
+					<div class="formError">	
+						<%= photo.errors_on_caption %>
+					</div>
+				<% end %>
 			</td>
 		</tr>
 		<tr>
