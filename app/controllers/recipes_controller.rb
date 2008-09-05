@@ -115,9 +115,9 @@ class RecipesController < ApplicationController
   def create
     @recipe = @current_user.recipes.build(params[:recipe])
     @recipe.privacy = '10'
-    @recipe.tag_list = params[:tags]
     
 		if @recipe.save
+			@recipe.tag_list = params[:tags]
 			after_create_ok
 		else
 			after_create_error
@@ -129,9 +129,9 @@ class RecipesController < ApplicationController
   def update
     load_recipe(@current_user)
     @recipe.privacy = '10'
-    @recipe.tag_list = params[:tags]
 
 	  if @recipe.update_attributes(params[:recipe])
+	  	@recipe.tag_list = params[:tags]
 			after_update_ok
 	  else
 			after_update_error
