@@ -15,7 +15,7 @@ class RatingsController < ApplicationController
   	
   	if my_rating.save
 	    render :update do |page|   
-	      page.replace_html "#{@rateable_type}_rating", 
+	      page.replace_html "#{@rateable_type.downcase}_rating", 
 	      									:partial => "rate", 
 	      									:locals => {:ratings_count => @rateable.ratings.size, 
 	       															:average_rating_value => average_rating_value(@rateable), 
