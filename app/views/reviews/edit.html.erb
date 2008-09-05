@@ -2,6 +2,7 @@
 
 	<div class="block_header">
 		<div class="block_header_link">	
+			<%= link_to SEE_CN, @self_url %> |
 			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@reviews_set_count})", @selfs_url %> |
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
@@ -10,7 +11,9 @@
 
 	<div class="block_main">
 		<%= render :partial => "review_input", 
-							 :locals => {:button_name => SAVE_CHANGES_CN} %>
+							 :locals => {:reviewable => @review.reviewable, 
+							 						 :review => @review, 
+							 						 :button_name => SAVE_CHANGES_CN} %>
 	</div>
 
 </div>

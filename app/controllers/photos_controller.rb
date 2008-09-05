@@ -10,7 +10,7 @@ class PhotosController < ApplicationController
   		load_photos_all			
   	end
   	
-	 	info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}(#{@photos_set_count})"
+	 	info = "#{@parent_name}#{@self_name}(#{@photos_set_count}) > #{@parent_title}"
 	 	
 	 	photos_paginate
  		
@@ -32,16 +32,16 @@ class PhotosController < ApplicationController
 			load_photos_all	
 		end														
 		
-		info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}"
-		
-		set_page_title(info)
-		set_block_title(info)
-		
 		if @photos_set_count == 1
 			@photo_index = 1
 		else
 			get_prev_next
 		end
+
+		info = "#{@parent_name}#{@self_name} > #{@parent_title}"
+		
+		set_page_title(info)
+		set_block_title(info)
 
     respond_to do |format|
       format.html do # show.html.erb
@@ -72,7 +72,7 @@ class PhotosController < ApplicationController
   		load_photos_all			
   	end
   	
-    info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
+    info = "新#{@parent_name}#{@self_name} > #{@parent_title}"
     
 		set_page_title(info)
 		set_block_title(info)
@@ -95,7 +95,7 @@ class PhotosController < ApplicationController
   	@photo_file_url = photo_file_url(@photo, @parent_type, @photo_style)
   	@photo_url = @self_url
    
- 		info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}"
+ 		info = "#{EDIT_CN}#{@parent_name}#{@self_name} > #{@parent_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -249,7 +249,7 @@ class PhotosController < ApplicationController
 		
 			load_photos_all
 			
-			info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
+			info = "新#{@parent_name}#{@self_name} > #{@parent_title}"
 			set_page_title(info)
 			set_block_title(info)
 		end
@@ -272,7 +272,7 @@ class PhotosController < ApplicationController
 		
 			load_photos_all
 			
-			info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}"
+			info = "#{EDIT_CN}#{@parent_name}#{@self_name} > #{@parent_title}"
 			set_page_title(info)
 			set_block_title(info)
 		end

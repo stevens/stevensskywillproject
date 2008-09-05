@@ -1,7 +1,8 @@
 <div class="content_block">
 	
 	<div class="block_header">
-		<div class="block_header_link">	
+		<div class="block_header_link">
+			<%= link_to EDIT_CN, @edit_self_url %> |	
 			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@reviews_set_count})", @selfs_url %> |
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>

@@ -1,6 +1,6 @@
 <% if item_type == 'review' %>
 	<%= link_to image_tag(default_photo_file_url('cook', 'sign')), '' %>
 <% else %>
-	<%= link_to image_tag(photo_file_url(cover_photo(item), item_type, photo_style), :title => h(item_title(item_type, item))), 
+	<%= link_to image_tag(photo_file_url(cover_photo(item), item_type, photo_style), :title => h(item_title(item))), 
 							item_url(item_type, item.id) %>
 <% end %>

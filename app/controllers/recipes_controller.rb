@@ -62,11 +62,13 @@ class RecipesController < ApplicationController
 			
 		if @recipe_user == @current_user
 			load_recipes_mine
-			info = "我的#{@self_name}: #{@recipe_title}"
+			# info = "我的#{@self_name}: #{@recipe_title}"
 		else
 			load_recipes_user(@recipe_user)
-			info = "#{@recipe_user_title}的#{@self_name}: #{@recipe_title}"
+			# info = "#{@recipe_user_title}的#{@self_name}: #{@recipe_title}"
 		end														
+		
+		info = "#{@self_name} - #{@recipe_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -84,7 +86,7 @@ class RecipesController < ApplicationController
 
 		load_recipes_mine
     
-    info = "#{CREATE_CN}新#{@self_name}"
+    info = "新#{@self_name}"
     
 		set_page_title(info)
 		set_block_title(info)
@@ -102,7 +104,7 @@ class RecipesController < ApplicationController
     
     load_recipes_mine
     
- 		info = "#{EDIT_CN}#{@self_name}: #{@recipe_title}"
+ 		info = "#{EDIT_CN}#{@self_name} - #{@recipe_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -217,7 +219,7 @@ class RecipesController < ApplicationController
 		 	
 			recipes_paginate
 		 	
-		 	info = "#{@self_name}#{TAG_CN}: #{params[:id]}(#{@recipes_set_count})"
+		 	info = "#{@self_name}#{TAG_CN} - #{params[:id]}(#{@recipes_set_count})"
 		 	
 			set_page_title(info)
 			set_block_title(info)
@@ -259,7 +261,7 @@ class RecipesController < ApplicationController
   	
   	recipes_paginate
   	
-	 	info = "#{@self_name}#{SEARCH_CN}: #{@conditions}(#{@recipes_set_count})"
+	 	info = "#{@self_name}#{SEARCH_CN} - #{@conditions}(#{@recipes_set_count})"
 	 	
 		set_page_title(info)
 		set_block_title(info)
@@ -341,7 +343,7 @@ class RecipesController < ApplicationController
 			
 			load_recipes_mine
 			 		
-			info = "#{CREATE_CN}新#{@self_name}"
+			info = "新#{@self_name}"
 			 		
 			set_page_title(info)
 			set_block_title(info)
@@ -365,7 +367,7 @@ class RecipesController < ApplicationController
 			
 			load_recipes_mine
 			
-			info = "#{EDIT_CN}我的#{@self_name}: #{@recipe_title}"
+			info = "#{EDIT_CN}#{@self_name} - #{@recipe_title}"
 			
 			set_page_title(info)
 			set_block_title(info)

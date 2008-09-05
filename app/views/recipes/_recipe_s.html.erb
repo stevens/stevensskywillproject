@@ -2,9 +2,9 @@
 	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
 	<ul>
 		<li>
-			<%= "来自 " %><%= link_to h(item_username(item)), user_url(item.user) %>
-			&nbsp;&nbsp;
-			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{CREATE_CN}" %>
+			<%= link_to h(item_username(item)), user_url(item.user) %>
+			&nbsp;
+			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}" %>
 		</li>
 		<li>
 			<%= "#{TAG_CN}: " %>

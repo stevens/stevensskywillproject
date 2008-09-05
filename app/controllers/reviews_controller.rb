@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
   	
   	load_reviews_set			
   	
-	 	info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}(#{@reviews_set_count})"
+	 	info = "#{@parent_name}#{@self_name}(#{@reviews_set_count}) > #{@parent_title}"
 	 	@show_header_link = true
 	 	@show_review_parent = false
 	 	
@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
 		
 		load_reviews_set								
 		
-		info = "#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
+		info = "#{@parent_name}#{@self_name} > #{@parent_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -48,7 +48,7 @@ class ReviewsController < ApplicationController
     
   	load_reviews_set
   	
-    info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
+    info = "新#{@parent_name}#{@self_name} > #{@parent_title}"
     
 		set_page_title(info)
 		set_block_title(info)
@@ -65,7 +65,7 @@ class ReviewsController < ApplicationController
     
   	load_reviews_set
    
- 		info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
+ 		info = "#{EDIT_CN}#{@parent_name}#{@self_name} > #{@parent_title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -144,7 +144,7 @@ class ReviewsController < ApplicationController
 		
 			load_reviews_set
 			
-			info = "#{ADD_CN}#{@parent_name}\"#{@parent_title}\"的新#{@self_name}"
+			info = "新#{@parent_name}#{@self_name} > #{@parent_title}"
 			set_page_title(info)
 			set_block_title(info)
 		end
@@ -167,7 +167,7 @@ class ReviewsController < ApplicationController
 		
 			load_reviews_set
 			
-			info = "#{EDIT_CN}#{@parent_name}\"#{@parent_title}\"的#{@self_name}: #{@review_title}"
+			info = "#{EDIT_CN}#{@parent_name}#{@self_name} > #{@parent_title}"
 			set_page_title(info)
 			set_block_title(info)
 		end

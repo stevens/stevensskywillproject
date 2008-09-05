@@ -1,5 +1,13 @@
-<% form_for :review, :url => do_url, :html => { :method => html_method } do |f| %>
+<% form_for  [reviewable, review] do |f| %>
 	<table class="content">
+		<tr>
+			<td></td>
+			<td class="input">
+				<div class="info">
+					<%= "#{name_for(type_for(reviewable))}-" %><%= link_to h("#{item_title(reviewable)}"), restfu_url_for(nil, nil, {:type => type_for(reviewable), :id => reviewable.id}, nil) %><%= "的#{REVIEW_CN}" %>
+				</div>
+			</td>
+		</tr>
 		<tr>
 			<td class="label">
 				<label class="required" for="title"><%= "#{SUBJECT_CN}:" %></label>
@@ -28,7 +36,7 @@
 				<div class="submit">
 					<%= f.submit button_name, :class => "submit" %>
 					&nbsp;&nbsp;
-					<%= link_to "&raquo;#{CANCLE_CN}", do_url %>
+					<%= link_to "&raquo;#{CANCLE_CN}", '' %>
 				</div>
 			</td>
 		</tr>

@@ -39,7 +39,7 @@ module ApplicationHelper
 	end
 	
 	def type_for(object)
-		object.class
+		object.class.to_s
 		# object.class.to_s.downcase
 	end
 	
@@ -51,9 +51,9 @@ module ApplicationHelper
 		end
 	end
 	
-	def item_title(item_type, item)
-		case item_type
-		when 'user'
+	def item_title(item)
+		case type_for(item)
+		when 'User'
 			item.login
 		else
 			item.title

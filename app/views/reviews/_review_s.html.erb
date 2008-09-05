@@ -4,17 +4,17 @@
 		<% if show_parent %>
 			<li>
 				<%= link_to h(item_username(item)), user_url(item.user) %>
-				&nbsp;&nbsp;
-				<%= "#{name_for(item.reviewable_type)}" %><%= link_to h("\"#{model_for(item.reviewable_type).find(item.reviewable_id).title}\""), restfu_url_for(nil, nil, {:type => item.reviewable_type, :id => item.reviewable_id}, nil) %><%= "的#{REVIEW_CN}" %>
+				&nbsp;
+				<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h("#{model_for(item.reviewable_type).find(item.reviewable_id).title}"), restfu_url_for(nil, nil, {:type => item.reviewable_type, :id => item.reviewable_id}, nil) %><%= "的#{REVIEW_CN}" %>
 			</li>
 			<li>
-				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
+				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}" %>
 			</li>
 		<% else %>
 			<li>
 				<%= link_to h(item_username(item)), user_url(item.user) %>
-				&nbsp;&nbsp;
-				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")} #{ADD_CN}" %>
+				&nbsp;
+				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}" %>
 			</li>	
 		<% end %>
 	</ul>

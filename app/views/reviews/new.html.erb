@@ -10,8 +10,8 @@
 
 	<div class="block_main">
 		<%= render :partial => "review_input", 
-							 :locals => {:do_url => @selfs_url,
-							 						 :html_method => '',
+							 :locals => {:reviewable => @parent_obj,
+							 						 :review => @review,
 							 						 :button_name => "#{ADD_CN}新#{@self_name}"} %>
 	</div>
 	

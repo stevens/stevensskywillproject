@@ -14,9 +14,9 @@
 		<% if show_parent %>
 			<li>
 				<% if photo.is_cover?(photoable) %>
-					<%= "这是#{name_for(photo.photoable_type)}" %><%= link_to h("\"#{item_title(photo.photoable_type, photoable)}\""), restfu_url_for(nil, nil, {:type => photo.photoable_type, :id => photo.photoable_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
+					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), restfu_url_for(nil, nil, {:type => photo.photoable_type, :id => photo.photoable_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
 				<% else %>
-					<%= "这是#{name_for(photo.photoable_type)}" %><%= link_to h("\"#{item_title(photo.photoable_type, photoable)}\""), restfu_url_for(nil, nil, {:type => photo.photoable_type, :id => photo.photoable_id}, nil) %><%= "的#{PHOTO_CN}" %>
+					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), restfu_url_for(nil, nil, {:type => photo.photoable_type, :id => photo.photoable_id}, nil) %><%= "的#{PHOTO_CN}" %>
 				<% end %>
 			</li>
 		<% end %>
