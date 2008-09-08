@@ -513,7 +513,7 @@ div.sub_block {
 }
 div.sub_block_s {
 	margin: auto;
-	width: 640px;
+	width: 660px;
 }
 div.sub_block_header {
 	padding-top: 3px;
@@ -666,7 +666,7 @@ div.submit {
 div.prev_next {
 	margin: auto;
 	margin-bottom: 5px;
-	width: 640px;
+	width: 660px;
 	color: #b8b9a7;
 }
 
