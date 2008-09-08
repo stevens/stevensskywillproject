@@ -4,23 +4,6 @@
 	</div>
 	
 	<div class="block_main">
-		<% form_tag url_for(:action => 'create') do %>
-			<table class="content">
-				<tr>
-					<td class="label"><label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label></td>
-					<td class="input">
-						<%= text_field_tag "email", params[:email], :class => "text_s" %>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td class="submit">
-						<%= submit_tag "#{RESET_CN}#{PASSWORD_CN}", :class => "submit" %>
-						&nbsp;&nbsp;
-						<%= link_to "&raquo;#{CANCLE_CN}", login_url %>
-					</td>
-				</tr>
-			</table>
-		<% end %>
+		<%= render :partial => "forgot_password" %>
 	</div>
 </div>
