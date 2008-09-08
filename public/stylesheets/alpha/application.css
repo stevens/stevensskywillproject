@@ -107,7 +107,7 @@ div.tag {
 #header_wrapper {
 	width: 960px;
 	margin: 0px auto;
-	padding: 0px 10px;
+	padding: 0px 0px;
 	color: #ffffff;
 }
 #header_content {
@@ -170,7 +170,7 @@ div.tag {
 	clear: both;
 	width: 960px;
 	margin: 0px auto;
-	padding: 0px 10px;
+	padding: 0px 0px;
 	color: #b8b9a7;
 }
 #footer_content {
@@ -197,7 +197,7 @@ div.tag {
 	height: 26px;
 	width: 960px;
 	margin: 0px auto;
-	padding: 0px 10px;
+	padding: 0px 0px;
 	padding-top: 3px;
 	margin-top: -29px;
 	white-space: nowrap;
@@ -256,7 +256,7 @@ div.tag {
 
 /* Content Wrapper */
 #content_wrapper {
-	width: 980px;
+	width: 960px;
 	margin: 0px auto;
 }
 /* Content Main */
@@ -270,8 +270,8 @@ div.tag {
 	height: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-left: 35px;
-	padding-right: 35px;
+	padding-left: 23px;
+	padding-right: 23px;
 	margin: 0px;
 	color: #695245;
 }
@@ -288,7 +288,7 @@ div.tag {
 /* Content Column */
 #content_column {
 	margin-right: 300px;
-	padding: 0px 10px;
+	padding: 0px 0px;
 }
 #content_column a, #content_column a:link, #content_column a:visited {
 	color: #428cbb;
@@ -423,7 +423,7 @@ td.photo_item_cell {
 #sidebar_column {
 	float: right;
 	width: 290px;
-	padding-right: 10px;
+	padding-right: 0px;
 	z-index: 1000;
 }
 #sidebar_column a, #sidebar_column a:link, #sidebar_column a:visited {
@@ -549,13 +549,15 @@ div.portrait_photo {
 	text-align: center;	
 }
 div.full_photo {
-	width: 648px;
+	width: 638px;
 	margin: auto;
 	margin-bottom: 5px;
+	padding: 10px;
 	text-align: center;
+	background-color: #f6f6f6;
 }
 .full_photo img {
-	border: 4px #eeeeee solid;
+	/*border: 4px #eeeeee solid;*/
 }
 .matrix_photo img.cover {
 	margin-top: -4px;
@@ -601,16 +603,20 @@ div.basic li {
 	margin-bottom: 3px;
 }
 div.photos {
+	width: 638px;
 	padding: 10px;
+	margin: 0px -10px;
 	margin-bottom: 10px;
 	text-align: center;
-	background-color: #f1f1f1;
+	background-color: #f6f6f6;
 }
 div.video {
+	width: 638px;
+	margin: 0px -10px;
 	margin-bottom: 10px;
 	padding: 10px;
 	text-align: center;
-	background-color: #f1f1f1;
+	background-color: #f6f6f6;
 }
 div.main {
 	margin-bottom: 10px;

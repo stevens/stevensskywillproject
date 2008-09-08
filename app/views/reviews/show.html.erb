@@ -2,7 +2,9 @@
 	
 	<div class="block_header">
 		<div class="block_header_link">
-			<%= link_to EDIT_CN, @edit_self_url %> |	
+			<% if @review_user == @current_user %>
+				<%= link_to EDIT_CN, @edit_self_url %> |
+			<% end %>
 			<%= link_to "#{@parent_name}的更多#{@self_name}(#{@reviews_set_count})", @selfs_url %> |
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
