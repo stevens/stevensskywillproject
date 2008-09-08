@@ -51,7 +51,7 @@ class RecipesController < ApplicationController
     @photos = []
     if @cover_photo
 	    @photos << @cover_photo
-	    @photos += (@photos_set - @photos)[0..3]
+	    @photos += (@photos_set - @photos)[0..4]
 		end
 		
 		@review_name = name_for('review')

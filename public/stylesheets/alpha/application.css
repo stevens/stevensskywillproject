@@ -105,13 +105,13 @@ div.tag {
 
 /* Header */
 #header_wrapper {
-	width: 960px;
+	width: 980px;
 	margin: 0px auto;
 	padding: 0px 0px;
 	color: #ffffff;
 }
 #header_content {
-	width: 960px;
+	width: 980px;
 	height: 70px;
 	margin: 0px auto;
 	background: #428cbb;
@@ -168,13 +168,13 @@ div.tag {
 /* Footer */
 #footer_wrapper {
 	clear: both;
-	width: 960px;
+	width: 980px;
 	margin: 0px auto;
 	padding: 0px 0px;
 	color: #b8b9a7;
 }
 #footer_content {
-	width: 930px;
+	width: 950px;
 	margin: 0px auto;
 	padding: 5px 15px;
 	border-top: 8px solid #b8b9a7;
@@ -195,7 +195,7 @@ div.tag {
 /* Main Navigation */
 #navigation {
 	height: 26px;
-	width: 960px;
+	width: 980px;
 	margin: 0px auto;
 	padding: 0px 0px;
 	padding-top: 3px;
@@ -256,7 +256,7 @@ div.tag {
 
 /* Content Wrapper */
 #content_wrapper {
-	width: 960px;
+	width: 980px;
 	margin: 0px auto;
 }
 /* Content Main */
@@ -549,7 +549,7 @@ div.portrait_photo {
 	text-align: center;	
 }
 div.full_photo {
-	width: 638px;
+	width: 658px;
 	margin: auto;
 	margin-bottom: 5px;
 	padding: 10px;
@@ -603,7 +603,7 @@ div.basic li {
 	margin-bottom: 3px;
 }
 div.photos {
-	width: 638px;
+	width: 658px;
 	padding: 10px;
 	margin: 0px -10px;
 	margin-bottom: 10px;
@@ -611,7 +611,7 @@ div.photos {
 	background-color: #f6f6f6;
 }
 div.video {
-	width: 638px;
+	width: 658px;
 	margin: 0px -10px;
 	margin-bottom: 10px;
 	padding: 10px;
