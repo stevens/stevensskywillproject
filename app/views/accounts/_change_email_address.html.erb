@@ -1,0 +1,62 @@
+<% form_for :user, :url => {:action => 'update', :id => params[:id]} do |f| %>
+	<table class="content">
+		<tr>
+			<td class="label">
+				<label for="login"><%= "当前#{EMAIL_ADDRESS_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="info">
+					<%= User.find_by_id(session[:user_id]).email %>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label for="login"><%= "新#{EMAIL_ADDRESS_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="input">
+					<%= f.text_field :email, :class => "text_s" %>
+				</div>
+				<div class="text">
+					<%= "请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效" %>
+				</div>
+				<%= error_message_on "user", "email" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label for="password"><%= "#{PASSWORD_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="input">
+					<% if password_error %>
+						<div class="fieldWithErrors">
+							<%= password_field_tag "password", "", :class => "text_s" %>
+						</div>
+					<% else %>
+						<%= password_field_tag "password", "", :class => "text_s" %>
+					<% end %>
+				</div>
+				<div class="text">
+					<%= "在#{CHANGE_CN}#{EMAIL_ADDRESS_CN}时, 需要#{INPUT_CN}#{PASSWORD_CN}进行安全验证" %>
+				</div>
+				<% if password_error %>
+					<div class="formError">	
+						<%= "#{PASSWORD_CN}不正确" %>
+					</div>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="submit">
+				<div class="submit">
+					<%= f.submit SAVE_CHANGES_CN, :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;#{CANCLE_CN}", :controller => 'settings', :action => 'account' %>
+				</div>
+			</td>
+		</tr>
+	</table>
+<% end %>

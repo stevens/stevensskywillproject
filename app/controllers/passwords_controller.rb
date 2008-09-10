@@ -1,6 +1,6 @@
 class PasswordsController < ApplicationController
 	
-	before_filter :set_title_reset
+	before_filter :set_title
 	
 	def new
 
@@ -73,7 +73,7 @@ class PasswordsController < ApplicationController
 
 	private
 	
-	def set_title_reset
+	def set_title
 		info = "#{RESET_CN}#{PASSWORD_CN}"
 		
 		set_page_title(info)

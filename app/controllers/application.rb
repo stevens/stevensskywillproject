@@ -44,8 +44,8 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'mine'
 		elsif @self_type == 'recipe' || (@parent_type == 'recipe' && @self_type == 'photo') || (@parent_type == 'recipe' && @self_type == 'review')
 			@current_tab_type = 'recipe'
-		elsif c == 'settings'
-			@current_tab_type = c.singularize
+		elsif c == 'settings' || c == 'accounts'
+			@current_tab_type = 'setting'
 		end
 		if @current_tab_type
 			@current_tab_name = name_for(@current_tab_type)

@@ -4,7 +4,7 @@
 	</div>
 	
 	<div class="block_main">
-		<%= render :partial => "change_nickname", 
-							 :locals => { :account => @account } %>
+		<%= render :partial => "change_#{params[:id]}", 
+							 :locals => {:password_error => @password_error} %>
 	</div>
 </div>

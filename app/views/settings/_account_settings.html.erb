@@ -5,7 +5,7 @@
 			<div class="info">
 				<%= account.login %>
 				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{NICKNAME_CN}", '' %>
+				<%= link_to "#{CHANGE_CN}#{NICKNAME_CN}", :controller => 'accounts', :action => 'edit', :id => 'nickname' %>
 				<br /><br />
 			</div>
 		</td>
@@ -27,7 +27,7 @@
 			<div class="info">
 				<%= account.email %>
 				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{EMAIL_ADDRESS_CN}", '' %>
+				<%= link_to "#{CHANGE_CN}#{EMAIL_ADDRESS_CN}", :controller => 'accounts', :action => 'edit', :id => 'email_address' %>
 				<br /><br />
 			</div>
 		</td>
@@ -38,7 +38,7 @@
 			<div class="info">
 				<%= '**********' %>
 				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{PASSWORD_CN}", '' %>
+				<%= link_to "#{CHANGE_CN}#{PASSWORD_CN}", :controller => 'accounts', :action => 'edit', :id => 'password' %>
 				<br /><br />
 			</div>
 		</td>
