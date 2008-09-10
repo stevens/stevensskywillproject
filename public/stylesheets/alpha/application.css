@@ -298,6 +298,13 @@ div.tag {
 	background-color: #428cbb;
 	color: #ffffff;
 }
+#content_column a.title, #content_column a.title:link, #content_column a.title:visited {
+	color: #ff8159;
+}
+#content_column a.title:hover {
+	background-color: #ff8159;
+	color: #ffffff;
+}
 
 /* Content Table */
 td {
