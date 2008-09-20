@@ -76,8 +76,42 @@ class UsersController < ApplicationController
     end
     redirect_back_or_default('/')
   end
+  
+  def overview
+    if !(@user && @user == @current_user)
+    	@integrality = 'more_required'
+    end
+  
+  	load_user_recipes(@user)
+  	@recipes = @recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
+  	
+  	load_user_reviews(@user)
+  	@reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
+	 	
+	 	info = "#{user_username(@user)}的#{SITE_NAME_CN}"
+		set_page_title(info)
+		
+    respond_to do |format|
+      if @user && @user == @current_user
+      	@show_todo = true
+      	format.html { redirect_to :controller => 'mine', :action => 'overview' }
+      else
+      	format.html # overview.html.erb
+      end
+    end
+  end
 	
 	private
+
+	def load_user_recipes(user)
+		@recipes_set = recipes_for(user, @integrality, nil, nil, 'created_at DESC')
+		@recipes_set_count = @recipes_set.size
+	end
+	
+	def load_user_reviews(user)
+		@reviews_set = reviews_for(user, @reviewable_type, nil, nil, nil, 'created_at DESC')
+		@reviews_set_count = @reviews_set.size
+	end
 	
   def after_create_ok
   	self.current_user = @user

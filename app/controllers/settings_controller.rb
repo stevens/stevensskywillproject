@@ -4,6 +4,7 @@ class SettingsController < ApplicationController
 	
 	def account
 	 	@account = @current_user
+	 	@current_portrait = user_portrait(@current_user)
 	 	
 	 	info = "#{ACCOUNT_CN}#{SETTING_CN}"
 	 	

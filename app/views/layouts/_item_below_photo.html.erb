@@ -6,7 +6,7 @@
 	<ul>
 		<li>
 			<% if (photos_count = photos_for(nil, item_type, item.id, 'created_at').size) > 0 %>
-				<%= link_to "更多#{PHOTO_CN}(#{photos_count})", restfu_url_for(nil, {:type => item_type, :id => item.id}, {:type => 'photo'}, nil) %>
+				<%= link_to "更多#{PHOTO_CN} (#{photos_count})", restfu_url_for(nil, {:type => item_type, :id => item.id}, {:type => 'photo'}, nil) %>
 			<% else %>
 				<%= "还没有#{PHOTO_CN}" %>
 			<% end %>

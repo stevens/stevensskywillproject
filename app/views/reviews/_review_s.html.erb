@@ -1,36 +1,46 @@
-<div class="basic">
-	<h2><%= link_to h(item.title), restfu_url_for(nil, {:type => item.reviewable_type, :id => item.reviewable_id}, {:type => 'review', :id => item.id}, nil) %></h2>
+<div id="review_<%= item.id %>_basic" class="basic">
 	<ul>
 		<% if show_parent %>
 			<li>
-				<%= link_to h(item_username(item)), user_url(item.user) %>
+				<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
-				<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h("#{model_for(item.reviewable_type).find(item.reviewable_id).title}"), restfu_url_for(nil, nil, {:type => item.reviewable_type, :id => item.reviewable_id}, nil) %><%= "的#{REVIEW_CN}" %>
+				<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h(item.reviewable.title), item.reviewable %><%= "的#{REVIEW_CN}" %>
 			</li>
 			<li>
-				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}" %>
+				<%= time_iso_format(item.created_at) %>
 			</li>
 		<% else %>
 			<li>
-				<%= link_to h(item_username(item)), user_url(item.user) %>
+				<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
-				<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}" %>
+				<%= time_iso_format(item.created_at) %>
 			</li>	
 		<% end %>
 	</ul>
 </div>
 
-<div class="main">
-	<ul><%= paragraphs(item.review_summary) %></ul>
+<%= render :partial => "/layouts/notice",
+					 :locals => {:nid => "review_#{item.id}",
+					 						 :notice => nil} %>
+
+<div id="input_form_for_review_<%= item.id %>">
+</div>
+
+<div id="review_<%= item.id %>" class="main">
+	<ul><%= paragraphs(item.review) %></ul>
 </div>
 
 <% if show_todo %>
-	<div class="todo">
+	<div id="review_<%= item.id %>_todo" class="todo_right">
 		<% if item.user == @current_user %>
-    	<%= link_to "#{EDIT_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}", restfu_url_for(nil, {:type => item.reviewable_type, :id => item.reviewable_id}, {:type => 'review', :id => item.id}, 'edit') %> |
-    	<%= link_to "#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}", restfu_url_for(nil, {:type => item.reviewable_type, :id => item.reviewable_id}, {:type => 'review', :id => item.id}, nil), :confirm => "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?", :method => :delete %>
-    <% elsif model_for(item.reviewable_type).find(item.reviewable_id).user == @current_user %>
-    	<%= link_to "#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}", restfu_url_for(nil, {:type => item.reviewable_type, :id => item.reviewable_id}, {:type => 'review', :id => item.id}, nil), :confirm => "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?", :method => :delete %>
+			<!-- <%= link_to RESPOND_CN, '' %> | -->
+    	<%= link_to_remote EDIT_CN, :url => edit_review_path(item.id), :method => :get %> |
+    	<%= link_to DELETE_CN, item, :confirm => "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?", :method => :delete %>
+    <% elsif item.reviewable.user == @current_user %>
+			<!-- <%= link_to RESPOND_CN, '' %> | -->
+    	<%= link_to DELETE_CN, item, :confirm => "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?", :method => :delete %>
+		<% else %>
+			<!-- <%= link_to RESPOND_CN, '' %> -->
 		<% end %>
 	</div>
 <% end %>

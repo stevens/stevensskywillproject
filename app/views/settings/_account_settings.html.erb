@@ -14,9 +14,17 @@
 		<td class="label"><label><%= "#{PORTRAIT_CN}:" %></label></td>
 		<td class="input">
 			<div class="info">
-				<%= link_to image_tag('alpha/cook.png', :title => account.login), '' %>
+				<%= render :partial => "/layouts/item_photo",
+									 :locals => {:item_type => 'user', 
+									 						 :item => @current_user,
+									 						 :photo_style => 'matrix'} %>
 				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{PORTRAIT_CN}", '' %>
+				<% if current_portrait %>
+					<%= link_to "#{CHANGE_CN}#{PORTRAIT_CN}", :controller => 'accounts', :action => 'edit', :id => 'portrait' %> |
+					<%= link_to "#{DELETE_CN}#{PORTRAIT_CN}", :controller => 'accounts', :action => 'delete', :id => 'portrait' %>
+				<% else %>
+					<%= link_to "#{UPLOAD_CN}#{PORTRAIT_CN}", :controller => 'accounts', :action => 'edit', :id => 'portrait' %>
+				<% end %>
 				<br /><br />
 			</div>
 		</td>

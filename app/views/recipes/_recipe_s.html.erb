@@ -1,10 +1,12 @@
 <div class="basic">
-	<h2><%= link_to h(item.title), recipe_url(item) %></h2>
+	<h2>
+		<%= "[#{code_title('from_type', item.from_type)}] " %><%= link_to h(item.title), item %>
+	</h2>
 	<ul>
 		<li>
-			<%= link_to h(item_username(item)), user_url(item.user) %>
+			<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
 			&nbsp;
-			<%= "#{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}" %>
+			<%= time_iso_format(item.created_at) %>
 		</li>
 		<li>
 			<%= "#{TAG_CN}: " %>
@@ -33,15 +35,15 @@
 	</ul>
 	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, nil, nil, 'created_at DESC').size) > 0 %>
 		<%= link_to "(#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN})", 
-								restfu_url_for(nil, {:type => 'recipe', :id => item.id}, {:type => 'review'}, nil) %>
+								item %>
 	<% end %>
 </div>
 
 <% if show_todo %>
-	<div class="todo">
+	<div class="todo_right">
 		<% if item.user == @current_user %>
 			<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", edit_recipe_url(item) %> |
-			<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", recipe_url(item), :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
+			<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", item, :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
 		<% end %>
 	</div>
 <% end %>

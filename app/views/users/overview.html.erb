@@ -1,10 +1,11 @@
 <div class="content_block">
 	<div class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多我的#{RECIPE_CN}(#{@recipes_set_count})", 'recipes' %>	
+			<%= link_to "#{user_username(@user)}的更多#{RECIPE_CN} (#{@recipes_set_count})", 'recipes' %>	
 		</div>
-		<h1><%= "我的#{RECIPE_CN}" %></h1>
+		<h1><%= "#{user_username(@user)}的#{RECIPE_CN}" %></h1>
 	</div>
+	
 	<div class="block_main">
 		<%= render :partial => "/layouts/items_matrix",
 							 :locals => {:item_type => 'recipe', 
@@ -20,18 +21,13 @@
 <div class="content_block">
 	<div class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多我的#{REVIEW_CN}(#{@reviews_set_count})", 'reviews' %>	
+			<%= link_to "#{user_username(@user)}的更多#{REVIEW_CN} (#{@reviews_set_count})", 'reviews' %>	
 		</div>
-		<h1><%= "我的#{REVIEW_CN}" %></h1>
+		<h1><%= "#{user_username(@user)}的#{REVIEW_CN}" %></h1>
 	</div>
-	<div class="block_main">
-		<%= render :partial => "/layouts/items_list",
-							 :locals => {:item_type => 'review', 
-							 						 :items => @reviews,
-							 						 :show_photo => true, 
-							 						 :show_title => false,
-							 						 :show_photo_todo => false,
-							 						 :show_parent => true, 
-							 						 :show_todo => false} %>
-	</div>
+	
+	<%= render :partial => "/reviews/reviews_list",
+						 :locals => {:reviews => @reviews, 
+						 						 :show_paginate => false,  
+						 						 :show_todo => @show_todo} %>
 </div>

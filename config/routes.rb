@@ -1,10 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
-	map.connect ':controller/latest', :action => 'index', :id => 'latest'
 	map.connect ':controller/overview', :action => 'overview'
-	map.connect ':controller/reviews/:id', :action => 'reviews'
+	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
 	map.connect ':controller/tags/:id', :action => 'tags'
-	map.connetc ':controller/search/:id', :action => 'search'
+	map.connetc ':controller/search/:id', :action => 'search'	
+	
 	map.search '/search', :controller => 'site', :action => 'search'
 	
   map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings]
@@ -58,7 +57,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-  map.connect ':controller/:id', :action => 'index'
   # map.connect ':controller/:id/:action'
   # map.connect ':namespace/:controller/:action/:id'
   

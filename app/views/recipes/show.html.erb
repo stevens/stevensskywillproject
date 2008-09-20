@@ -2,11 +2,11 @@
 	
 	<div class="block_header">
 		<div class="block_header_link">	
-			<% if @recipe_user == @current_user %>
+			<% if @recipe.user == @current_user %>
 				<%= link_to EDIT_CN, :action => 'edit' %> |
-				<%= link_to "我的更多#{RECIPE_CN}(#{@recipes_set_count})", :action => 'mine' %>
+				<%= link_to "我的更多#{RECIPE_CN} (#{@recipes_set_count})", :controller => 'mine', :action => 'recipes' %>
 			<% else %>
-				<%= link_to h("#{@recipe_user_title}的更多#{RECIPE_CN}(#{@recipes_set_count})"), user_recipes_url(@recipe_user) %>
+				<%= link_to h("#{user_username(@recipe.user)}的更多#{RECIPE_CN} (#{@recipes_set_count})"), user_recipes_path(@recipe.user) %>
 			<% end %>
 		</div>
 		<h1><%= h @block_title %></h1>
@@ -30,31 +30,22 @@
 									 						 :show_todo => true} %>
 		</div>
 		    	
-		<div class="sub_block">	    
-			<div class="sub_block_header">
-					<%= "#{REVIEW_CN}:" %>
-			</div>		  
-			<div class="todo_right">
-				<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
-				<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
-			</div>
-				
-			<% if @reviews_set_count > 0 %>
-				<%= render :partial => "/layouts/items_list",
-									 :locals => {:item_type => 'review', 
-									 						 :items => @reviews,
-									 						 :show_photo => true, 
-									 						 :show_below_photo => false, 
-									 						 :show_title => false, 
-									 						 :show_photo_todo => false, 
-									 						 :show_parent => false, 
-									 						 :show_todo => true} %>
-		    	
-	    	<div class="todo_right">
-					<%= link_to "#{REVIEW_CN}这个#{RECIPE_CN}", new_recipe_review_url(@recipe) %> |
-					<%= link_to "更多#{REVIEW_CN}(#{@reviews_set_count})", recipe_reviews_url(@recipe) %>
-	    	</div>
-			<% end %>
+		<div id="reviews_for_recipe_<%= @recipe.id %>" class="sub_block">
+			<%= render :partial => "/reviews/reviewable_reviews",
+								 :locals => {:reviewable => @recipe} %>
+		</div>
+		
+		<div class="sub_block_o">
+			<%= render :partial => "/layouts/notice",
+								 :locals => {:nid => "new_review",
+								 						 :notice => nil} %>
+			
+			<%= render :partial => "/reviews/input_review", 
+								 :locals => {:reviewable => @recipe,
+								 						 :review => @recipe.reviews.build, 
+								 						 :is_new => true, 
+								 						 :review_error => false, 
+								 						 :review_text => ''} %>
 		</div>
 	</div>
 	

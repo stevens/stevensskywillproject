@@ -3,29 +3,16 @@
 	<div class="block_header">
 		<% if @show_header_link %>
 			<div class="block_header_link">	
-				<% if @current_user %>
-					<%= link_to "#{CREATE_CN}新#{@self_name}", new_recipe_url %>	
-				<% end %>
+				<%= link_to "#{CREATE_CN}新#{RECIPE_CN}", new_recipe_path %>	
 			</div>
 		<% end %>
 		<h1><%= h @block_title %></h1>
 	</div>
 	
-	<%= render :partial => "layouts/items_paginate",
-						 :locals => {:items => @recipes} %>
-
-	<div class="block_main">
-		<%= render :partial => "/layouts/items_list",
-							 :locals => {:item_type => 'recipe', 
-							 						 :items => @recipes,
-							 						 :show_photo => true, 
-							 						 :show_title => false, 
-							 						 :show_photo_todo => true,
-							 						 :show_parent => false,  
-							 						 :show_todo => true} %>
-	</div>
-	
-	<%= render :partial => "layouts/items_paginate",
-						 :locals => {:items => @recipes} %>
+	<%= render :partial => "/recipes/recipes_list",
+						 :locals => {:recipes => @recipes, 
+						 						 :show_paginate => true,
+						 						 :show_photo_todo => @show_photo_todo,   
+						 						 :show_todo => @show_todo} %>
 
 </div>

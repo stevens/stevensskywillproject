@@ -1,6 +1,10 @@
-<% if item_type == 'review' %>
-	<%= link_to image_tag(default_photo_file_url('cook', 'sign')), '' %>
+<% if item_type == 'user' %>
+	<%= link_to image_tag(photo_file_url(user_portrait(item), 'cook', photo_style), :title => h(user_username(item))), 
+							user_first_link(item) %>
+<% elsif item_type == 'review' %>
+	<%= link_to image_tag(photo_file_url(user_portrait(item.user), 'cook', 'sign'), :title => h(user_username(item.user))), 
+							user_first_link(item.user) %>
 <% else %>
 	<%= link_to image_tag(photo_file_url(cover_photo(item), item_type, photo_style), :title => h(item_title(item))), 
-							item_url(item_type, item.id) %>
+							item %>
 <% end %>

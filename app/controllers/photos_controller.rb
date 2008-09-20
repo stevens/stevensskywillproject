@@ -10,7 +10,7 @@ class PhotosController < ApplicationController
   		load_photos_all			
   	end
   	
-	 	info = "#{@parent_name}#{@self_name}(#{@photos_set_count}) > #{@parent_title}"
+	 	info = "#{@parent_name}#{@self_name} (#{@photos_set_count}) > #{@parent_title}"
 	 	
 	 	photos_paginate
  		

@@ -519,6 +519,9 @@ div.sub_block {
 	padding: 10px;
 	margin: auto;
 }
+div.sub_block_o {
+	padding: 10px 20px;
+}
 div.sub_block_s {
 	margin: auto;
 	width: 660px;
@@ -528,7 +531,10 @@ div.sub_block_header {
 	padding-bottom: 3px;
 	padding-left: 10px;
 	margin-bottom: 10px;
-	font-size: 14px;
+	margin-left: -10px;
+	margin-right: -10px;
+	font-size: 12px;
+	font-weight: bold;
 	color: #ffffff;
 	background-color: #695245;
 }
@@ -562,7 +568,9 @@ div.full_photo {
 	margin-bottom: 5px;
 	padding: 10px;
 	text-align: center;
-	background-color: #f6f6f6;
+	background-color: #f5f5f5;
+	border-top: #f1f1f1 solid 1px;
+	border-bottom: #f1f1f1 solid 1px;
 }
 .full_photo img {
 	/*border: 4px #eeeeee solid;*/
@@ -581,6 +589,7 @@ div.full_photo {
 div.below_photo {
 	text-align: center;
 	color: #b8b9a7;
+	word-break: keep-all;
 }
 div.below_photo li {
 	margin-bottom: 3px;
@@ -616,7 +625,9 @@ div.photos {
 	margin: 0px -10px;
 	margin-bottom: 10px;
 	text-align: center;
-	background-color: #f6f6f6;
+	background-color: #f5f5f5;
+	border-top: #f1f1f1 solid 1px;
+	border-bottom: #f1f1f1 solid 1px;
 }
 div.video {
 	width: 658px;
@@ -624,7 +635,9 @@ div.video {
 	margin-bottom: 10px;
 	padding: 10px;
 	text-align: center;
-	background-color: #f6f6f6;
+	background-color: #f5f5f5;
+	border-top: #f1f1f1 solid 1px;
+	border-bottom: #f1f1f1 solid 1px;
 }
 div.main {
 	margin-bottom: 10px;
@@ -653,7 +666,7 @@ div.todo {
 }
 div.todo_right {
 	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	color: #b8b9a7;
 	text-align: right;
 }
@@ -735,6 +748,15 @@ div.pagination a, div.pagination span {
 	border-top: 4px solid #78b36d;
 	/*border-bottom: 4px solid #78b36d;*/
 	color: #373737;
+}
+.notice {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+	background-color: #ffcc99;
+	/*border-top: 4px solid #ff8159;*/
+	/*border-bottom: 4px solid #ff8159;*/
+	color: #373737;	
 }
 
 /* Rating */

@@ -5,19 +5,27 @@
 	    
 	    <td class="left_column">
 	    	<div class="sub_block">
+					<% if show_parent %>
+						<% item_type_for_photo = itemable_type(item, itemable_sym) %>
+						<% item_for_photo = itemable(item, itemable_sym) %>
+					<% else %>
+						<% item_type_for_photo = item_type %>
+						<% item_for_photo = item %>
+					<% end %>
+					
 					<% if show_photo %>
 						<div class="list_photo">
 		    			<%= render :partial => "/layouts/item_photo",
-		    								 :locals => {:item_type => item_type, 
-		    								 						 :item => item, 
+		    								 :locals => {:item_type => item_type_for_photo, 
+		    								 						 :item => item_for_photo, 
 		    								 						 :photo_style => 'list'} %>
 						</div>
 					<% end %>
 					
 					<div class="below_photo">
 						<%= render :partial => "/layouts/item_below_photo", 
-											 :locals => {:item_type => item_type, 
-											 						 :item => item, 
+											 :locals => {:item_type => item_type_for_photo, 
+											 						 :item => item_for_photo, 
 											 						 :show_title => show_title, 
 											 						 :show_photo_todo => show_photo_todo} %>
 					</div>

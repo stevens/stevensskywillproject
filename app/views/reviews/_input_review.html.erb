@@ -1,0 +1,40 @@
+<% if is_new %>
+	<% rid = "new_review" %>
+	<% button_name = "#{ADD_CN}新#{REVIEW_CN}" %>
+<% else %>
+	<% rid = "review_#{review.id}" %>
+	<% button_name = SAVE_CHANGES_CN %>
+<% end %>
+
+<div id="input_form_for_<%= rid %>">
+	<% remote_form_for [reviewable, review] do |f| %>
+		<% if is_new %>
+			<div class="label">
+				<label class="left" for="review"><%= "#{ADD_CN}新#{REVIEW_CN}:" %></label>
+			</div>
+			<div class="input">
+				<% if review_error %>
+					<div class="fieldWithErrors">
+						<%= f.text_area :review, :class => 's', :value => review_text %>
+					</div>
+				<% else %>
+					<%= f.text_area :review, :class => 's', :value => review_text %>
+				<% end %>
+			</div>
+		<% else %>
+			<div class="input">
+				<%= f.text_area :review, :class => 's', :value => review_text %>
+			</div>
+		<% end %>
+		<div class="error">
+			<%= error_message_on "review", "review" %>
+		</div>
+		<div class="submit">
+			<%= f.submit button_name, :class => "submit" %>
+			<% unless is_new %>
+				&nbsp;&nbsp;
+				<%= link_to_remote "&raquo;#{CANCLE_CN}", :url => {:controller => 'reviews', :action => 'cancle_input', :review_id => review.id} %>
+			<% end %>
+		</div>
+	<% end %>
+</div>

@@ -1,0 +1,17 @@
+<div class="sub_block_header">
+		<%= "#{name_for(type_for(reviewable))}#{REVIEW_CN} (#{reviewable.reviews.size})" %>
+</div>
+	
+<% if reviewable.reviews.size > 0 %>
+	<div>
+		<%= render :partial => "/layouts/items_list",
+							 :locals => {:item_type => 'review', 
+							 						 :items => reviewable.reviews,
+							 						 :itemable_sym => 'reviewable',
+							 						 :show_photo => true,  
+							 						 :show_title => false, 
+							 						 :show_photo_todo => false, 
+							 						 :show_parent => false, 
+							 						 :show_todo => true} %>
+	</div>
+<% end %>

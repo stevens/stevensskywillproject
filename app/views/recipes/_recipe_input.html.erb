@@ -105,7 +105,7 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "请在每一行只#{INPUT_CN}一种#{INGREDIENT_CN}, 并且按照 \"用料名称 用量 补充说明\" 的格式" %><br />
+					<%= "每一行请只#{INPUT_CN}一种#{INGREDIENT_CN}, 并按照\"用料名称 用量 补充说明\"的格式(以\"空格\"分隔)" %><br />
 					<%= "如: 猪里脊肉 500g" %>
 				</div>
 				<div class="input">
@@ -192,12 +192,26 @@
 			</td>
 		</tr> -->
 		<tr>
+			<td class="label">
+				<label for="any_else"><%= "闲话:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "可以在这里#{INPUT_CN}其他任何的内容" %>
+				</div>
+				<div class="input">
+					<%= f.text_area :any_else %>
+				</div>
+				<%= error_message_on "recipe", "any_else" %>
+			</td>
+		</tr>
+		<tr>
 			<td></td>
 			<td class="input">
 				<div class="submit">
 					<%= f.submit button_name, :class => "submit" %>
 					&nbsp;&nbsp;
-					<%= link_to "&raquo;#{CANCLE_CN}", :action => 'mine' %>
+					<%= link_to "&raquo;#{CANCLE_CN}", :controller => 'mine', :action => 'recipes' %>
 				</div>
 			</td>
 		</tr>

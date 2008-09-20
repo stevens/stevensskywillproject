@@ -1,0 +1,28 @@
+<% if notice %>
+	<div id="new_review_notice" class="notice">
+		<%= notice %>
+	</div>
+<% end %>
+
+<div class="sub_block">
+	<% remote_form_for [reviewable, review] do |f| %>
+		<div class="label">
+			<label class="left" for="review"><%= "#{ADD_CN}新#{REVIEW_CN}:" %></label>
+		</div>
+		<div class="input">
+			<% if review_error %>
+				<div class="fieldWithErrors">
+					<%= f.text_area :review, :class => 's', :value => review_text %>
+				</div>
+			<% else %>
+				<%= f.text_area :review, :class => 's', :value => review_text %>
+			<% end %>
+		</div>
+		<div class="error">
+			<%= error_message_on "review", "review" %>
+		</div>
+		<div class="submit">
+			<%= f.submit "#{ADD_CN}新#{REVIEW_CN}", :class => "submit" %>
+		</div>
+	<% end %>
+</div>

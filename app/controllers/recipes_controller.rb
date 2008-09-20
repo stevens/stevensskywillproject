@@ -1,49 +1,57 @@
 class RecipesController < ApplicationController
 	
-	before_filter :protect, :except => [:index, :show, :overview, :reviews, :tags]
+	before_filter :protect, :except => [:index, :show, :overview, :tags]
 
   # GET /recipes
   # GET /recipes.xml
   def index
-  	if params[:id] == 'latest'
-  		@recipes_set = recipes_for(nil, true, false, Time.today - 100.days, nil, 'created_at DESC')
-  		@recipes_set_count = @recipes_set.size
-  		info = "最新的#{@self_name}(#{@recipes_set_count})"
+    if !(@user && @user == @current_user)
+    	@integrality = 'more_required'
+    end
+      
+    load_recipes_set(@user)
+   	items_paginate(@recipes_set)
+   	@recipes = @items
+    
+  	if @user
+  		info = "#{@user_title}的#{@self_name} (#{@recipes_set_count})"
+  		@recipes_html_id_suffix = "user_#{@user_id}"
   	else
-	  	if @user
-	  		if @user == @current_user
-	  			load_recipes_mine
-	  			info = "我的#{@self_name}(#{@recipes_set_count})"
-	  		else
-	  			load_recipes_user(@user)
-	  			info = "#{@user_title}的#{@self_name}(#{@recipes_set_count})"
-	  		end
-	  	else
-	  		load_recipes_all
-	  		info = "#{@self_name}(#{@recipes_set_count})"
-	  	end
+			info = "#{@self_name} (#{@recipes_set_count})"
+			@recipes_html_id_suffix = "all_users"
   	end
-  
-	 	recipes_paginate
- 		
+  	
+  	@recipes_html_id = "recipes_of_#{@recipes_html_id_suffix}"
+  	
 		set_page_title(info)
 		set_block_title(info)
-		@show_header_link = false
  		
     respond_to do |format|
       if @user && @user == @current_user
-      	format.html { redirect_to :action => 'mine' }
+      	@show_header_link = true
+      	@show_photo_todo = true
+      	@show_todo = true
+      	format.html { redirect_to :controller => 'mine', :action => 'recipes' }
       else
       	format.html # index.html.erb
       end
       format.xml  { render :xml => @recipes }
-    end
+    end    
+
   end
 
   # GET /recipes/1
   # GET /recipes/1.xml
   def show 
+		session[:return_to] = nil
+		
 		load_recipe(nil)
+		
+    if @recipe.user != @current_user
+    	@integrality = 'more_required'
+    end
+			
+		load_recipes_set(@recipe.user)
 		
 		@cover_photo = cover_photo(@recipe)
     @photos_set = photos_for(nil, @self_type, @self_id, 'created_at')
@@ -58,20 +66,17 @@ class RecipesController < ApplicationController
 		@review_unit = unit_for('review')
     @reviews_set = reviews_for(nil, @self_type, @self_id, nil, nil, 'created_at DESC')
     @reviews_set_count = @reviews_set.size
-    @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
-			
-		if @recipe_user == @current_user
-			load_recipes_mine
-			# info = "我的#{@self_name}: #{@recipe_title}"
-		else
-			load_recipes_user(@recipe_user)
-			# info = "#{@recipe_user_title}的#{@self_name}: #{@recipe_title}"
-		end														
+    @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]													
 		
-		info = "#{@self_name} - #{@recipe_title}"
+		info = "#{@self_name} - #{@recipe.title}"
 		
 		set_page_title(info)
 		set_block_title(info)
+		
+		store_location
+		
+		current_view_count = @recipe.view_count ? @recipe.view_count : 0
+		@recipe.update_attribute('view_count', current_view_count + 1)
 																							 
     respond_to do |format|
       format.html # show.html.erb
@@ -84,7 +89,7 @@ class RecipesController < ApplicationController
   def new
     @recipe = @current_user.recipes.build
 
-		load_recipes_mine
+		load_recipes_set(@current_user)
     
     info = "新#{@self_name}"
     
@@ -102,9 +107,9 @@ class RecipesController < ApplicationController
   def edit
     load_recipe(@current_user)
     
-    load_recipes_mine
+    load_recipes_set(@current_user)
     
- 		info = "#{EDIT_CN}#{@self_name} - #{@recipe_title}"
+ 		info = "#{EDIT_CN}#{@self_name} - #{@recipe.title}"
 		
 		set_page_title(info)
 		set_block_title(info)
@@ -148,33 +153,18 @@ class RecipesController < ApplicationController
 		after_destroy_ok
   end
   
-  # /mine/recipes
-  def mine
-	 	load_recipes_mine
-	 	
-		recipes_paginate
-	 	
-	 	info = "我的#{@self_name}(#{@recipes_set_count})"
-	 	
-		set_page_title(info)
-		set_block_title(info)
- 		@show_header_link = true
- 		
-    respond_to do |format|
-     	format.html { render :action => 'index' }
-      format.xml  { render :xml => @recipes }
-    end
-  end
-  
   # /recipes/overview
   def overview
-  	@highlighted_recipes_set = highlighted_recipes(nil, true, true, Time.today - 60.days, nil, 'created_at DESC')
-  	@highlighted_recipe = @highlighted_recipes_set.rand
+  	@integrality = 'more_required'
   	
-  	@latest_recipes_set = recipes_for(nil, true, false, Time.today - 30.days, nil, 'created_at DESC')
-  	@latest_recipes = @latest_recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
-  	@latest_reviews_set = reviews_for(nil, 'recipe', nil, Time.today - 100.days, nil, 'created_at DESC')
-  	@latest_reviews = @latest_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
+  	@highlighted_recipes = highlighted_recipes(nil, @integrality, Time.today - 60.days, nil, 'created_at DESC')
+  	@highlighted_recipe = @highlighted_recipes.rand
+	  
+	  load_recipes_set(nil)
+	  @recipes = @recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
+	  
+	  load_recipe_reviews_set(nil)
+	  @recipe_reviews = @recipe_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 	  
 	  @tags = recipe_tags_cloud(nil)
 	  
@@ -184,46 +174,22 @@ class RecipesController < ApplicationController
 		show_sidebar
   end
   
-  def reviews
-		if params[:id] == 'latest'
-  		@reviews_set = reviews_for(nil, 'recipe', nil, Time.today - 100.days, nil, 'created_at DESC')			
-			@reviews_set_count = @reviews_set.size
-		
-			info = "最新的#{@self_name}#{REVIEW_CN}(#{@reviews_set_count})"
-		else
-			@reviews_set = reviews_for(nil, 'recipe', nil, nil, nil, 'created_at DESC')
-			@reviews_set_count = @reviews_set.size
-	  	
-	  	info = "#{@self_name}#{REVIEW_CN}(#{@reviews_set_count})"
-	 	end
-	 		
-	 	@reviews = @reviews_set.paginate :page => params[:page], 
- 															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
- 															 			   	
-  	
-		@show_header_link = false
-  	@show_review_parent = true
-  	
-  	set_page_title(info)
-		set_block_title(info)
-
-    respond_to do |format|
-     	format.html { render :template => "reviews/index" }
-      format.xml  { render :xml => @reviews }
-    end 	
-  end
-  
   def tags
+  	@tags = recipe_tags_cloud(nil)
+  
   	if params[:id]
 	  	load_tagged_recipes(nil, params[:id])
 		 	
-			recipes_paginate
+	   	items_paginate(@recipes_set)
+	   	@recipes = @items
 		 	
-		 	info = "#{@self_name}#{TAG_CN} - #{params[:id]}(#{@recipes_set_count})"
+		 	info = "#{@self_name}#{TAG_CN} - #{params[:id]} (#{@recipes_set_count})"
 		 	
 			set_page_title(info)
 			set_block_title(info)
 	 		@show_header_link = false
+	 		
+	 		show_sidebar
 	 		
 	    respond_to do |format|
 	     	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}包含这个#{TAG_CN}......"
@@ -232,14 +198,12 @@ class RecipesController < ApplicationController
 	    end
 	    clear_notice
 		else
-			@tags = recipe_tags_cloud(nil)
-			
-	  	info = "#{@self_name}#{TAG_CN}(#{@tags.size})"
+	  	info = "#{@self_name}#{TAG_CN} (#{@tags.size})"
 			@show_header_link = false
 	  	
 	  	set_page_title(info)
 			set_block_title(info)
-	
+			
 	    respond_to do |format|
 	     	format.html { render :template => "tags/index" }
 	      format.xml  { render :xml => @tags }
@@ -259,9 +223,10 @@ class RecipesController < ApplicationController
   		@conditions = ''
   	end
   	
-  	recipes_paginate
+   	items_paginate(@recipes_set)
+   	@recipes = @items
   	
-	 	info = "#{@self_name}#{SEARCH_CN} - #{@conditions}(#{@recipes_set_count})"
+	 	info = "#{@self_name}#{SEARCH_CN} - #{@conditions} (#{@recipes_set_count})"
 	 	
 		set_page_title(info)
 		set_block_title(info)
@@ -287,50 +252,36 @@ class RecipesController < ApplicationController
   
   def load_recipe(user)
   	if user
-  		@recipe = user.recipes.find(@self_id)
-  	else
-  		@recipe = Recipe.find(@self_id)
-  	end
-  	if @recipe
-  		@recipe_title = @recipe.title
-  		@recipe_user = @recipe.user
-  		@recipe_user_title = @recipe_user.login if @recipe_user
-  	end
+ 			@recipe = user.recipes.find(@self_id)
+ 		else
+ 			@recipe = Recipe.find(@self_id)
+ 		end
   end
   
-  def load_recipes_all
-  	@recipes_set = Recipe.find(:all, :order => 'created_at DESC')
+  def load_recipes_set(user)
+ 		@recipes_set = recipes_for(user, @integrality, nil, nil, 'created_at DESC')
   	@recipes_set_count = @recipes_set.size
   end
   
-  def load_recipes_user(user)
-  	@recipes_set = user.recipes.find(:all, :order => 'created_at DESC')
-  	@recipes_set_count = @recipes_set.size
-  end
-  
-  def load_recipes_mine
-		load_recipes_user(@current_user)
+  def load_recipe_reviews_set(user)
+  	@recipe_reviews_set = reviews_for(user, @self_type, nil, nil, nil, 'created_at DESC')
+  	@recipe_reviews_set_count = @recipe_reviews_set.size
   end
 
 	def load_tagged_recipes(user, tag)
-		@recipes_set = tagged_items(user, 'recipe', tag, 'created_at DESC')
+		@recipes_set = tagged_items(user, 'recipe', tag, 'created_at DESC', recipes_conditions('more_required', nil, nil))
 		@recipes_set_count = @recipes_set.size
 	end
 	
 	def load_search_result(user, keywords)
-		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC')
+		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC', recipes_conditions('more_required', nil, nil))
 		@recipes_set_count = @recipes_set.size
 	end
-	
-  def recipes_paginate
-	 	@recipes = @recipes_set.paginate :page => params[:page], 
- 															 			 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S
-  end
   
   def after_create_ok
   	respond_to do |format|
 			flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}!"
-			format.html { redirect_to recipe_url(@recipe) }
+			format.html { redirect_to @recipe }
 			format.xml  { render :xml => @recipe, :status => :created, :location => @recipe }
 		end
   end
@@ -341,7 +292,7 @@ class RecipesController < ApplicationController
 			format.html { render :action => "new" }
 			format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
 			
-			load_recipes_mine
+			load_recipes_set(@current_user)
 			 		
 			info = "新#{@self_name}"
 			 		
@@ -354,7 +305,7 @@ class RecipesController < ApplicationController
   def after_update_ok
   	respond_to do |format|
 			flash[:notice] = "你已经成功#{UPDATE_CN}了1#{@self_unit}#{@self_name}!"
-			format.html { redirect_to recipe_url(@recipe) }
+			format.html { redirect_to @recipe }
 			format.xml  { head :ok }
 		end
   end
@@ -365,9 +316,9 @@ class RecipesController < ApplicationController
 			format.html { render :action => "edit" }
 			format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
 			
-			load_recipes_mine
+			load_recipes_set(@current_user)
 			
-			info = "#{EDIT_CN}#{@self_name} - #{@recipe_title}"
+			info = "#{EDIT_CN}#{@self_name} - #{@recipe.title}"
 			
 			set_page_title(info)
 			set_block_title(info)
@@ -378,7 +329,7 @@ class RecipesController < ApplicationController
   def after_destroy_ok
 		respond_to do |format|
 			flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"
-		  format.html { redirect_to :action => "mine" }
+		  format.html { redirect_to session[:return_to] }
 		  format.xml  { head :ok }
 		end
   end

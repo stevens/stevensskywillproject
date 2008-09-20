@@ -1,0 +1,9 @@
+<div class="sidebar_block">
+	<div class="sidebar_block_header">
+		<h1><%= "#{name_for(taggable_type)}#{TAG_CN} (#{tags.size})" %></h1>
+	</div>
+	<div class="sidebar_block_main">
+		<%= render :partial => "/tags/tag_cloud",
+							 :locals => {:tags => tags} %>
+	</div>
+</div>

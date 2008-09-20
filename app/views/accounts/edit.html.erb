@@ -4,7 +4,13 @@
 	</div>
 	
 	<div class="block_main">
-		<%= render :partial => "change_#{params[:id]}", 
-							 :locals => {:password_error => @password_error} %>
+		<% if params[:id] == 'portrait' %>
+			<%= render :partial => "change_#{params[:id]}", 
+								 :locals => {:photo => @new_portrait} %>
+		<% else %>
+			<%= render :partial => "change_#{params[:id]}", 
+								 :locals => {:password_error => @password_error} %>
+		<% end %>
 	</div>
+	
 </div>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 12) do
+ActiveRecord::Schema.define(:version => 13) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -65,11 +65,13 @@ ActiveRecord::Schema.define(:version => 12) do
     t.string   "cook_time"
     t.string   "yield"
     t.string   "from_type"
-    t.string   "from_where"
+    t.text     "from_where"
     t.string   "cost"
-    t.string   "video_url"
+    t.text     "video_url"
     t.string   "status"
     t.string   "privacy"
+    t.text     "any_else"
+    t.integer  "view_count"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_recipes_user"

@@ -1,0 +1,38 @@
+<% form_for :photo, :url => {:action => 'update', :id => params[:id]}, :html => { :multipart => true, :method => '' } do |f| %>
+	<table class="content">
+		<tr>
+			<td class="label">
+				<label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="input">
+					<% if photo.errors_on_file %>
+						<div class="fieldWithErrors">
+							<%= f.file_field :uploaded_data, :class => "text" %>
+						</div>
+					<% else %>
+						<%= f.file_field :uploaded_data, :class => "text" %>
+					<% end %>
+				</div>
+				<div class="text">
+					<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于1M" %>
+				</div>
+				<% if photo.errors_on_file %>
+					<div class="formError">	
+						<%= photo.errors_on_file %>
+					</div>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="input">
+				<div class="submit">
+					<%= f.submit "#{UPLOAD_CN}#{PHOTO_CN}", :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;#{CANCLE_CN}", :controller => 'settings', :action => 'account' %>
+				</div>
+			</td>
+		</tr>
+	</table>
+<% end %>

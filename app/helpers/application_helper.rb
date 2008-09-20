@@ -51,6 +51,14 @@ module ApplicationHelper
 		end
 	end
 	
+	def user_username(user)
+		if @current_user && user == @current_user
+		 '我'
+		else
+			user.login
+		end	
+	end
+	
 	def item_title(item)
 		case type_for(item)
 		when 'User'
@@ -207,11 +215,12 @@ module ApplicationHelper
 		"#{root_url}#{ns}#{po}#{so}#{ac}"
 	end
 	
-	def tagged_items(user, item_type, tag, order)
+	def tagged_items(user, item_type, tag, order, conditions)
 		if user
-			model_for(item_type).find_tagged_with(tag, :order => order, :conditions => {:user_id => user.id})
+			conditions += " AND user_id = #{user.id}"
+			model_for(item_type).find_tagged_with(tag, :order => order, :conditions => [conditions])
 		else
-			model_for(item_type).find_tagged_with(tag, :order => order)
+			model_for(item_type).find_tagged_with(tag, :order => order, :conditions => [conditions])
 		end
 	end
 	
@@ -228,4 +237,30 @@ module ApplicationHelper
 		end
 	end
 	
+	def itemable_type(item, itemable_sym)
+		item["#{itemable_sym}_type".to_sym]
+	end
+	
+	def itemable_id(item, itemable_sym)
+		item["#{itemable_sym}_id".to_sym]
+	end
+	
+	def itemable(item, itemable_sym)
+		if itemable = model_for(itemable_type(item, itemable_sym)).find(itemable_id(item, itemable_sym))
+			itemable
+		else
+			nil
+		end
+	end
+	
+	def user_first_link(user)
+		if user
+			if user == @current_user
+				url_for(:controller => 'mine', :action => 'overview')
+			else
+				"#{user_path(user)}/overview"
+			end
+		end
+	end
+		
 end

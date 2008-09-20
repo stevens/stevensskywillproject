@@ -23,14 +23,15 @@
 <div class="content_block">
 	<div class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多最新的#{RECIPE_CN}(#{@latest_recipes_set.size})", 'latest' %>	
+			<%= link_to "更多#{RECIPE_CN} (#{@recipes_set_count})", recipes_path %>	
 		</div>
 		<h1><%= "最新的#{RECIPE_CN}" %></h1>
 	</div>
+	
 	<div class="block_main">
 		<%= render :partial => "/layouts/items_matrix",
 							 :locals => {:item_type => 'recipe', 
-							 						 :items => @latest_recipes, 
+							 						 :items => @recipes, 
 							 						 :items_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M,
 							 						 :photo_style => 'matrix',  
 							 						 :show_photo => true, 
@@ -42,18 +43,14 @@
 <div class="content_block">
 	<div class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多最新的#{RECIPE_CN}#{REVIEW_CN}(#{@latest_reviews_set.size})", 'reviews/latest' %>	
+			<%= link_to "更多#{RECIPE_CN}#{REVIEW_CN} (#{@recipe_reviews_set_count})", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
 		</div>
 		<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	</div>
-	<div class="block_main">
-		<%= render :partial => "/layouts/items_list",
-							 :locals => {:item_type => 'review', 
-							 						 :items => @latest_reviews,
-							 						 :show_photo => true, 
-							 						 :show_title => false,
-							 						 :show_photo_todo => false,
-							 						 :show_parent => true, 
-							 						 :show_todo => false} %>
-	</div>
+	
+	<%= render :partial => "/reviews/reviews_list",
+						 :locals => {:reviews => @recipe_reviews, 
+						 						 :show_paginate => false,  
+						 						 :show_todo => false} %>
+	
 </div>

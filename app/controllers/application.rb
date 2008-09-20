@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'cook'
 		elsif c == 'mine' || (a == 'mine' && @self_type == 'photo') || (a == 'mine' && @self_type == 'review')
 			@current_tab_type = 'mine'
-		elsif @self_type == 'recipe' || (@parent_type == 'recipe' && @self_type == 'photo') || (@parent_type == 'recipe' && @self_type == 'review')
+		elsif @self_type == 'recipe' || (@parent_type == 'Recipe' && @self_type == 'photo') || (params[:reviewable_type] == 'recipe' && @self_type == 'review')
 			@current_tab_type = 'recipe'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
@@ -77,8 +77,8 @@ class ApplicationController < ActionController::Base
   	if @user_id
 	  	@user = User.find(@user_id)
 	  	if @user
-	  		@user_title = @user.login
-	  		@user_url = user_url(@user)
+	  		@user_title = user_username(@user)
+	  		@user_url = user_first_link(@user)
 	  	end
 	  end
   end
@@ -139,6 +139,11 @@ class ApplicationController < ActionController::Base
 	
 	def clear_sidebar
 		@show_sidebar = false
+	end
+	
+	def items_paginate(items_set)
+		@items = items_set.paginate :page => params[:page], 
+ 																 	 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S		
 	end
 	
 end

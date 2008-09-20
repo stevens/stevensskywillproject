@@ -183,6 +183,8 @@ Rails::Initializer.run do |config|
 	SIGN_OFF_CN = '注销'
 	BECOME_CN = '作为'
 	RESET_CN = '重设'
+	UPLOAD_CN = '上传'
+	DOWNLOAD_CN = '下载'
 	
 	# KEY constants
 	RECIPE_EN = 'recipe'

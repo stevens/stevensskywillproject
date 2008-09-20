@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 module Technoweenie # :nodoc:
   module AttachmentFu # :nodoc:
     @@default_processors = %w(ImageScience Rmagick MiniMagick Gd2 CoreImage)
@@ -229,15 +231,20 @@ module Technoweenie # :nodoc:
       end
 
       # Gets the thumbnail name for a filename.  'foo.jpg' becomes 'foo_thumbnail.jpg'
+      # def thumbnail_name_for(thumbnail = nil)
+      #   return filename if thumbnail.blank?
+      #   ext = nil
+      #   basename = filename.gsub /\.\w+$/ do |s|
+      #     ext = s; ''
+      #   end
+      #   # ImageScience doesn't create gif thumbnails, only pngs
+      #   ext.sub!(/gif$/, 'png') if attachment_options[:processor] == "ImageScience"
+      #   "#{basename}_#{thumbnail}#{ext}" 
+      # end  # 此段代码变更为下面的代码
+      
       def thumbnail_name_for(thumbnail = nil)
-        return filename if thumbnail.blank?
-        ext = nil
-        basename = filename.gsub /\.\w+$/ do |s|
-          ext = s; ''
-        end
-        # ImageScience doesn't create gif thumbnails, only pngs
-        ext.sub!(/gif$/, 'png') if attachment_options[:processor] == "ImageScience"
-        "#{basename}_#{thumbnail}#{ext}"
+      	return filename if thumbnail.blank?
+      	"#{filename_basename(filename)}_#{thumbnail}#{filename_extension(filename)}"
       end
 
       # Creates or updates the thumbnail for the current attachment.
@@ -292,7 +299,8 @@ module Technoweenie # :nodoc:
       def uploaded_data=(file_data)
         return nil if file_data.nil? || file_data.size == 0
         self.content_type = file_data.content_type
-        self.filename     = file_data.original_filename if respond_to?(:filename)
+        # self.filename     = file_data.original_filename if respond_to?(:filename) #本行变更为下一行
+        self.filename = unique_filename(file_data.original_filename)
         self.size = file_data.size #增加本行代码
         if file_data.is_a?(StringIO)
           file_data.rewind
@@ -359,6 +367,21 @@ module Technoweenie # :nodoc:
       end
 
       protected
+        # 以下方法为新添加的方法
+        def filename_extension(filename)
+        	filename.scan(/\.\w+$/)
+        end
+        
+        # 以下方法为新添加的方法
+        def filename_basename(filename)
+          filename.gsub(/\.\w+$/, '')
+      	end
+        
+        # 以下方法为新添加的方法
+        def unique_filename(filename)
+        	"#{Digest::SHA1.hexdigest("--#{Time.now.utc.to_s}--#{filename}--")}#{filename_extension(filename)}"
+        end
+        
         # Generates a unique filename for a Tempfile.
         def random_tempfile_filename
           "#{rand Time.now.to_i}#{filename || 'attachment'}"

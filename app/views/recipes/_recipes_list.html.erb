@@ -1,0 +1,21 @@
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => recipes} %>
+<% end %>
+
+<div class="block_main">
+	<%= render :partial => "/layouts/items_list",
+						 :locals => {:item_type => 'recipe', 
+						 						 :items => recipes,
+						 						 :itemable_sym => nil, 
+						 						 :show_photo => true, 
+						 						 :show_title => false, 
+						 						 :show_photo_todo => show_photo_todo, 
+						 						 :show_parent => false,
+						 						 :show_todo => show_todo} %>
+</div>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => recipes} %>
+<% end %>

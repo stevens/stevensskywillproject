@@ -1,32 +1,12 @@
-<div class="content_block">
-	
+<div id="<%= @reviews_html_id %>" class="content_block">
+
 	<div class="block_header">
-		<% if @show_header_link %>
-			<div class="block_header_link">	
-				<% if @current_user %>
-					<%= link_to "#{ADD_CN}新#{@self_name}", @new_self_url %>	 |
-				<% end %>
-				<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
-			</div>
-		<% end %>
 		<h1><%= h @block_title %></h1>
 	</div>
-	
-	<%= render :partial => "layouts/items_paginate",
-						 :locals => {:items => @reviews} %>
 
-	<div class="block_main">
-		<%= render :partial => "/layouts/items_list",
-							 :locals => {:item_type => 'review', 
-							 						 :items => @reviews,
-							 						 :show_photo => true, 
-							 						 :show_title => false, 
-							 						 :show_photo_todo => false, 
-							 						 :show_parent => @show_review_parent,
-							 						 :show_todo => true} %>
-	</div>
-	
-	<%= render :partial => "layouts/items_paginate",
-						 :locals => {:items => @reviews} %>
+	<%= render :partial => "/reviews/reviews_list",
+						 :locals => {:reviews => @reviews, 
+						 						 :show_paginate => true,  
+						 						 :show_todo => @show_todo} %>
 
 </div>
