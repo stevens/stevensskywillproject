@@ -1,7 +1,7 @@
 <div class="sidebar_block">
 	<div class="sidebar_block_header">
 		<div class="sidebar_block_header_link">	
-			<%= link_to "更多#{name_for(taggable_type)}#{TAG_CN} (#{@tags_set.size})", url_for(:controller => taggable_type.pluralize, :action => 'tags') %>
+			<%= link_to "更多#{name_for(taggable_type)}#{TAG_CN} (#{tags_set.size})", {:controller => taggable_type.pluralize, :action => 'tags', :id => nil} %>
 		</div>
 		<h1><%= "#{name_for(taggable_type)}#{TAG_CN}" %></h1>
 	</div>

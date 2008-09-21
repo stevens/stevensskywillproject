@@ -109,6 +109,7 @@
 							<% if @current_user %>
 								<%= link_to "我的#{@current_tab_name}", :controller => 'mine', :action => @current_tab_type.downcase.pluralize %>
 							<% end %>
+							<%= link_to "#{@current_tab_name}列表", :controller => @current_tab_type.pluralize, :action => 'index' %>
 							<!-- <%= link_to "分类#{@current_tab_name}", root_url %> -->
 							<!-- <%= link_to "#{@current_tab_name}#{RANKING_CN}", root_url %> -->
 							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => @current_tab_type.downcase %>

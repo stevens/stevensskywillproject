@@ -176,8 +176,6 @@ class RecipesController < ApplicationController
   end
   
   def tags
-  	@tags = recipe_tags_cloud(nil, nil, 'name', 0)
-  
   	if params[:id]
 	  	load_tagged_recipes(nil, params[:id])
 		 	
@@ -190,6 +188,9 @@ class RecipesController < ApplicationController
 			set_block_title(info)
 	 		@show_header_link = false
 	 		
+		  @tags_set = recipe_tags_cloud(nil, nil, 'name', 0)
+		  @tags = recipe_tags_cloud(nil, 100, 'count desc', 3)
+	 		
 	 		show_sidebar
 	 		
 	    respond_to do |format|
@@ -199,8 +200,8 @@ class RecipesController < ApplicationController
 	    end
 	    clear_notice
 		else
+	  	@tags = recipe_tags_cloud(nil, nil, 'name', 0)
 	  	info = "#{@self_name}#{TAG_CN} (#{@tags.size})"
-			@show_header_link = false
 	  	
 	  	set_page_title(info)
 			set_block_title(info)
