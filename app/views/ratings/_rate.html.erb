@@ -33,7 +33,7 @@
 					<% name = "#{rank[i-1]}" %>
 					<%= link_to_remote "<span>#{name}</span>", 
 														 :url => {:controller => "ratings", :action => "rate", :id => i, :rateable_type => rateable_type, :rateable_id => rateable_id}, 
-														 :html => {:title => "#{i}分"} %>
+														 :html => {:title => ""} %>
 				</li>
 			<% end %>
 		</ul>
