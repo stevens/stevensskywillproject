@@ -702,6 +702,25 @@ div.todo_right {
 	color: #b8b9a7;
 	text-align: right;
 }
+div.todo_button {
+	background-color: #ff8159;
+	font-size: 12px;
+	color: #ffffff;
+	width: 120px;
+	text-align: center;
+}
+.todo_button a, .todo_button a:link, .todo_button a:visited {
+	display: block;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 12px !important;
+	color: #ffffff !important;
+}
+.todo_button a:hover {
+	background-color: #428cbb !important;
+}
 div.label {
 	margin-bottom: 5px;
 }

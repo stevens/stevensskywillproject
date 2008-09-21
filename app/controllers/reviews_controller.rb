@@ -50,7 +50,7 @@ class ReviewsController < ApplicationController
   # GET /reviews/new
   # GET /reviews/new.xml
   def new
-
+		redirect_to @parent_obj if @parent_obj
   end
 
   # GET /reviews/1/edit

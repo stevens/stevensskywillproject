@@ -39,13 +39,18 @@
 			<%= render :partial => "/layouts/notice",
 								 :locals => {:nid => "new_review",
 								 						 :notice => nil} %>
-			
-			<%= render :partial => "/reviews/input_review", 
-								 :locals => {:reviewable => @recipe,
-								 						 :review => @recipe.reviews.build, 
-								 						 :is_new => true, 
-								 						 :review_error => false, 
-								 						 :review_text => ''} %>
+			<% if @current_user %>
+				<%= render :partial => "/reviews/input_review", 
+									 :locals => {:reviewable => @recipe,
+									 						 :review => @recipe.reviews.build, 
+									 						 :is_new => true, 
+									 						 :review_error => false, 
+									 						 :review_text => ''} %>
+			<% else %>
+				<div class="todo_button">
+					<%= link_to "我要#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %>
+				</div>
+			<% end %>
 		</div>
 	</div>
 	
