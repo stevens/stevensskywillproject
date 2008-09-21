@@ -124,8 +124,8 @@ class PhotosController < ApplicationController
 	      end
 		else
       if @photo.save
-      	@parent_obj.cover_photo_id = @photo.id
-				if @parent_obj.save
+      	# @parent_obj.cover_photo_id = @photo.id
+				if @parent_obj.update_attribute('cover_photo_id', @photo.id)
 					after_create_ok
 				else
 					@photo.destroy
@@ -146,8 +146,8 @@ class PhotosController < ApplicationController
 
 	  if @photo.update_attributes(params[:photo])
 	    if params[:is_cover]
-	    	@parent_obj.cover_photo_id = @photo.id
-				if @parent_obj.save
+	    	# @parent_obj.cover_photo_id = @photo.id
+				if @parent_obj.update_attribute('cover_photo_id', @photo.id)
 					after_update_ok
 				else
 					after_update_error

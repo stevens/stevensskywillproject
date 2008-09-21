@@ -595,6 +595,7 @@ span.normal_photo {
 }
 img.icon {
 	margin-bottom: -3px;
+	margin-right: 3px;
 }
 .full_photo img {
 	/*border: 4px #eeeeee solid;*/
