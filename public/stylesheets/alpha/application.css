@@ -408,7 +408,7 @@ td.photo_item_cell {
 	font-size: 14px;
 	font-weight: bold;
 }
-.block_header .block_header_link {
+.block_header_link {
 	float: right;
 }
 .block_header a, .block_header a:link, .block_header a:visited {
@@ -483,6 +483,9 @@ td.photo_item_cell {
 	font-size: 12px;
 	font-weight: bold;
 	color: #373737;
+}
+.sidebar_block_header_link {
+	float: right;
 }
 .sidebar_block_main {
 	padding: 10px;

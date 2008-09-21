@@ -1,10 +1,10 @@
 module RecipesHelper
 
-	def recipe_tags_cloud(user)
+	def recipe_tags_cloud(user, limit, order, at_least)
 		if user
-			user.recipes.tag_counts
+			user.recipes.tag_counts(:limit => limit, :order => order, :at_least => at_least)
 		else
-			Recipe.tag_counts
+			Recipe.tag_counts(:limit => limit, :order => order, :at_least => at_least)
 		end
 	end
 	

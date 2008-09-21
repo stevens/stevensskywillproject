@@ -166,7 +166,8 @@ class RecipesController < ApplicationController
 	  load_recipe_reviews_set(nil)
 	  @recipe_reviews = @recipe_reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
 	  
-	  @tags = recipe_tags_cloud(nil)
+	  @tags_set = recipe_tags_cloud(nil, nil, 'name', 0)
+	  @tags = recipe_tags_cloud(nil, 100, 'count desc', 3)
 	  
 	  info = "#{@self_name}"
 		set_page_title(info)
@@ -175,7 +176,7 @@ class RecipesController < ApplicationController
   end
   
   def tags
-  	@tags = recipe_tags_cloud(nil)
+  	@tags = recipe_tags_cloud(nil, nil, 'name', 0)
   
   	if params[:id]
 	  	load_tagged_recipes(nil, params[:id])
