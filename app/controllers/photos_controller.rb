@@ -171,15 +171,15 @@ class PhotosController < ApplicationController
   	
     if @photo.is_cover?(@parent_obj)
     	if @photos_set_count == 1
-    		@parent_obj.cover_photo_id = nil
+    		cover_photo_id = nil
     	elsif @photos_set_count > 1
     		if @photo == @photos_set[0]
-    			@parent_obj.cover_photo_id = @photos_set[1].id
+    			cover_photo_id = @photos_set[1].id
     		else
-    			@parent_obj.cover_photo_id = @photos_set[0].id
+    			cover_photo_id = @photos_set[0].id
 				end
     	end
-    	if @parent_obj.save
+    	if @parent_obj.update_attribute('cover_photo_id', cover_photo_id)
     		@photo.destroy
 	   
 				after_destroy_ok 
