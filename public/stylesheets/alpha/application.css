@@ -50,6 +50,7 @@ input.search_button {
 }
 input.text {
 	width: 450px;
+	min-height: 20px;
 }
 input.text_s {
 	width: 180px;
