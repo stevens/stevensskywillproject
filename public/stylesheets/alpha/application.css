@@ -600,8 +600,14 @@ span.normal_photo {
 	text-align: left;		
 }
 img.icon {
-	margin-bottom: -3px;
-	margin-right: 3px;
+	margin-bottom: -5px;
+	margin-right: 5px;
+	background-color: transparent;	
+}
+img.other_icon {
+	margin-bottom: -4px;
+	margin-right: 1px;
+	background-color: transparent;
 }
 .full_photo img {
 	/*border: 4px #eeeeee solid;*/
