@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
 	end
 
 	def self.find_for_forget(email)
-		find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email]
+		find :first, :conditions => ['email = ? AND activated_at IS NOT NULL', email]
 	end
 
   protected

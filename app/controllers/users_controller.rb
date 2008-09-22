@@ -36,14 +36,9 @@ class UsersController < ApplicationController
     
     # @user.save
     # if @user.errors.empty?
-    #   self.current_user = @user
-    #   flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!"
-    #   session[:user_id] = nil
-		# 	redirect_back_or_default('/')
+
     # else
-    #   flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
-    #   render :action => 'new'
-    #   flash[:notice] = nil	
+
     # end
 		
 		if @user.save
@@ -119,7 +114,8 @@ class UsersController < ApplicationController
   	self.current_user = @user
   	session[:user_id] = nil
   	respond_to do |format|
-      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!"
+      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br />
+      								 如果偶尔有时不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系, 谢谢!"
 			format.html { redirect_to root_url }
 			format.xml  { render :xml => @user, :status => :created, :location => @user }
 		end
