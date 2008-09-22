@@ -1,4 +1,6 @@
 class SiteController < ApplicationController
+
+	before_filter :clear_location_unless_logged_in, :only => [:index]
 	
 	def index
 		set_page_title(HOME_CN)

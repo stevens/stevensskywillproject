@@ -1,10 +1,9 @@
 class MineController < ApplicationController
 	
 	before_filter :protect
+	before_filter :store_location_if_logged_in
 	
 	def overview
-  	session[:return_to] = nil
-  	
   	load_my_recipes
   	@recipes = @recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
   	
@@ -17,14 +16,10 @@ class MineController < ApplicationController
 		@user = @current_user
 		@show_todo = true
 		
-		store_location
-		
 		render :template => "users/overview"
 	end
 	
 	def recipes
-		session[:return_to] = nil
-    
 		load_my_recipes
 		items_paginate(@recipes_set)
 	 	@recipes = @items
@@ -41,14 +36,10 @@ class MineController < ApplicationController
 		set_page_title(info)
 		set_block_title(info)
 		
-		store_location
-		
 		render :template => "recipes/index"	
 	end
 	
-	def reviews
-		session[:return_to] = nil
-		
+	def reviews	
     if params[:reviewable_type]
     	@reviewable_type = params[:reviewable_type].downcase
     	@reviews_html_id_prefix = @reviewable_type

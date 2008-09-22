@@ -1,5 +1,6 @@
 class PasswordsController < ApplicationController
 	
+	before_filter :clear_location_unless_logged_in
 	before_filter :set_title
 	
 	def new

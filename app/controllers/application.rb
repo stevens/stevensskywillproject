@@ -146,4 +146,12 @@ class ApplicationController < ActionController::Base
  																 	 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S		
 	end
 	
+	def store_location_if_logged_in
+		store_location if logged_in?
+	end
+	
+	def clear_location_unless_logged_in
+		session[:return_to] = nil unless logged_in?
+	end
+	
 end

@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-	
+  
+	before_filter :clear_location_unless_logged_in
+
   def index
   	
   end

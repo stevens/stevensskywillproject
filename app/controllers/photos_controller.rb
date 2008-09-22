@@ -2,6 +2,7 @@ class PhotosController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location, :only => [:index, :show, :mine]
+	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
   
   # GET /photos
   # GET /photos.xml

@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show]
+	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
   
   # GET /reviews
   # GET /reviews.xml
@@ -242,7 +243,7 @@ class ReviewsController < ApplicationController
 	def after_destroy_ok
 		respond_to do |format|
 			flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"
-			format.html { redirect_to session[:return_to] }
+			format.html { redirect_back_or_default('/') }
 			format.xml  { head :ok }
 			format.js do
 				render :update do |page|

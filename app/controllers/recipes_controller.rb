@@ -1,7 +1,9 @@
 class RecipesController < ApplicationController
 	
 	before_filter :protect, :except => [:index, :show, :overview, :tags]
-
+	before_filter :store_location_if_logged_in, :only => [:show]
+	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :tags]
+	
   # GET /recipes
   # GET /recipes.xml
   def index
@@ -42,9 +44,7 @@ class RecipesController < ApplicationController
 
   # GET /recipes/1
   # GET /recipes/1.xml
-  def show 
-		session[:return_to] = nil
-		
+  def show
 		load_recipe(nil)
 		
     if @recipe.user != @current_user
@@ -72,8 +72,6 @@ class RecipesController < ApplicationController
 		
 		set_page_title(info)
 		set_block_title(info)
-		
-		store_location
 		
 		current_view_count = @recipe.view_count ? @recipe.view_count : 0
 		@recipe.update_attribute('view_count', current_view_count + 1)
