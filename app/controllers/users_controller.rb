@@ -115,7 +115,7 @@ class UsersController < ApplicationController
   	session[:user_id] = nil
   	respond_to do |format|
       flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br />
-      								 如果偶尔有时不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系, 谢谢!"
+      								 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
 			format.html { redirect_to root_url }
 			format.xml  { render :xml => @user, :status => :created, :location => @user }
 		end

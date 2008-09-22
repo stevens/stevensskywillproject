@@ -16,7 +16,7 @@ class PasswordsController < ApplicationController
 						@user.forgot_password
 						if @user.update_attribute(:password_reset_code, @user.password_reset_code)
 				    	flash[:notice] = "请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!<br />
-				    									 如果偶尔有时不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系, 谢谢!"
+				    									 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
 				    	redirect_to login_url
 			    	else
 		    			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
@@ -26,7 +26,7 @@ class PasswordsController < ApplicationController
 			    else
 			    	flash[:notice] = "#{SORRY_CN}, 用这个#{EMAIL_ADDRESS_CN}#{SIGN_UP_CN}的#{ACCOUNT_CN}还没有激活!<br />
 			    									 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br />
-      								 			 如果偶尔有时不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系, 谢谢!"
+      								 			 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
 			    	render :action => 'new'
 	    			clear_notice			    	
 			    end
