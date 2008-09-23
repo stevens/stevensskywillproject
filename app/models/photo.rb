@@ -12,6 +12,7 @@ class Photo < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :photoable, :polymorphic => true
 	# has_many :reviews, :order => "updated_at DESC"
+	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
   
   attr_accessor :errors_on_caption
   

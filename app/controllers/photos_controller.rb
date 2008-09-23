@@ -38,6 +38,8 @@ class PhotosController < ApplicationController
 		else
 			get_prev_next
 		end
+		
+		log_count(@photo)
 
 		info = "#{@parent_name}#{@self_name} > #{@parent_title}"
 		

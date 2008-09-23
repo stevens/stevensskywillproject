@@ -3,7 +3,6 @@ class RecipesController < ApplicationController
 	before_filter :protect, :except => [:index, :show, :overview, :tags]
 	before_filter :store_location_if_logged_in, :only => [:show]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :tags]
-	after_filter :log_recipe_count, :only => [:show]
 	
   # GET /recipes
   # GET /recipes.xml
@@ -67,7 +66,9 @@ class RecipesController < ApplicationController
 		@review_unit = unit_for('review')
     @reviews_set = reviews_for(nil, @self_type, @self_id, nil, nil, 'created_at DESC')
     @reviews_set_count = @reviews_set.size
-    @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]													
+    @reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]	
+    
+    log_count(@recipe)												
 		
 		info = "#{@self_name} - #{@recipe.title}"
 		
@@ -330,10 +331,6 @@ class RecipesController < ApplicationController
 		  format.html { redirect_to session[:return_to] }
 		  format.xml  { head :ok }
 		end
-  end
-  
-  def log_recipe_count
-  	log_count(@recipe)
   end
   
 end
