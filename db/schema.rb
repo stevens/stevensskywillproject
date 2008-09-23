@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(:version => 14) do
     t.string   "status"
     t.string   "privacy"
     t.text     "any_else"
-    t.integer  "view_count"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_recipes_user"
