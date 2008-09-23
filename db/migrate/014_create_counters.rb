@@ -5,6 +5,7 @@ class CreateCounters < ActiveRecord::Migration
 	    t.integer :countable_id
 	    t.integer :total_view_count
 	    t.integer :user_view_count
+	    t.integer :self_view_count
 
       t.timestamps
     end

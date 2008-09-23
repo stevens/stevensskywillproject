@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 14) do
     t.integer  "countable_id"
     t.integer  "total_view_count"
     t.integer  "user_view_count"
+    t.integer  "self_view_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
