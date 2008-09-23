@@ -157,15 +157,23 @@ class ApplicationController < ActionController::Base
 	
 	def log_count(countable)
 		if counter = countable.counter
-			current_view_count = counter.view_count ? counter.view_count : 0
-			counter.update_attribute('view_count', current_view_count + 1)
+			current_total_view_count = counter.total_view_count ? counter.total_view_count : 0
+			current_user_view_count = counter.user_view_count ? counter.user_view_count : 0
 		else
 			counter = Counter.new
 			counter.countable_type = type_for(countable)
-			counter.countable_id = countable.id
-			counter.view_count = 1
-			counter.save
+			counter.countable_id = countable.id			
+			current_total_view_count = 0
+			current_user_view_count = 0	
 		end
+		
+		counter.total_view_count = current_total_view_count + 1
+		
+		if @current_user && countable.user != @current_user
+			counter.user_view_count = current_user_view_count + 1
+		end
+		
+		counter.update_attributes(params[:counter])
 	end
 	
 end

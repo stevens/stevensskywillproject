@@ -3,7 +3,8 @@ class CreateCounters < ActiveRecord::Migration
     create_table :counters do |t|
 	    t.string :countable_type
 	    t.integer :countable_id
-	    t.integer :view_count
+	    t.integer :total_view_count
+	    t.integer :user_view_count
 
       t.timestamps
     end
