@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 14) do
+ActiveRecord::Schema.define(:version => 15) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -124,6 +124,8 @@ ActiveRecord::Schema.define(:version => 14) do
     t.datetime "activated_at"
     t.string   "password_reset_code",       :limit => 40
     t.boolean  "enabled",                                 :default => true
+    t.datetime "latest_loggedin_at"
+    t.integer  "login_count"
   end
 
 end

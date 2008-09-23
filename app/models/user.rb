@@ -51,7 +51,8 @@ class User < ActiveRecord::Base
   # Activates the user in the database.
   def activate
     @activated = true
-    self.activated_at = Time.now.utc
+    self.activated_at = Time.now.utc #此行变更为下一行
+    self.activated_at = Time.now
     self.activation_code = nil
     save(false)
     # save
@@ -141,6 +142,14 @@ class User < ActiveRecord::Base
 
 	def self.find_for_forget(email)
 		find :first, :conditions => ['email = ? AND activated_at IS NOT NULL', email]
+	end
+	
+	#以下为新增方法，记录最近登录时间和累计登录次数
+	def log_loggedin
+		self.latest_loggedin_at = Time.now
+		current_login_count = self.login_count ? self.login_count : 0
+		self.login_count = current_login_count + 1
+		save(false)
 	end
 
   protected

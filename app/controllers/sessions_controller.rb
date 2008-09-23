@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token, :expires => self.current_user.remember_token_expires_at }
       end
+      @current_user.log_loggedin #此行为新增
       flash[:notice] = "#{@current_user.login}, 你已经#{LOGIN_CN}#{SITE_NAME_CN}, 希望你在这里玩得开心!"
       redirect_back_or_default('/')
     else
