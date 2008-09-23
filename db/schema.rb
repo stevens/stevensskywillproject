@@ -9,13 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 13) do
+ActiveRecord::Schema.define(:version => 14) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
     t.string   "code"
     t.string   "title"
     t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "counters", :force => true do |t|
+    t.string   "countable_type"
+    t.integer  "countable_id"
+    t.integer  "view_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   include RatingsHelper
   include PasswordsHelper
   include SettingsHelper
+  include CountersHelper
   
   helper :all # include all helpers, all the time
 	
@@ -152,6 +153,19 @@ class ApplicationController < ActionController::Base
 	
 	def clear_location_unless_logged_in
 		session[:return_to] = nil unless logged_in?
+	end
+	
+	def log_count(countable)
+		if counter = countable.counter
+			current_view_count = counter.view_count ? counter.view_count : 0
+			counter.update_attribute('view_count', current_view_count + 1)
+		else
+			counter = Counter.new
+			counter.countable_type = type_for(countable)
+			counter.countable_id = countable.id
+			counter.view_count = 1
+			counter.save
+		end
 	end
 	
 end

@@ -7,6 +7,7 @@ class Recipe < ActiveRecord::Base
 	belongs_to :user
 	has_many :photos, :dependent => :destroy, :as => :photoable, :foreign_key => :photoable_id, :order => "created_at"
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "created_at DESC"
+	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
 	
 	validates_presence_of     :title, :description, :from_type, :privacy, 
   													:message => "这一项是#{REQUIRED_CN}"

@@ -3,6 +3,7 @@ class RecipesController < ApplicationController
 	before_filter :protect, :except => [:index, :show, :overview, :tags]
 	before_filter :store_location_if_logged_in, :only => [:show]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :tags]
+	after_filter :log_recipe_count, :only => [:show]
 	
   # GET /recipes
   # GET /recipes.xml
@@ -72,9 +73,6 @@ class RecipesController < ApplicationController
 		
 		set_page_title(info)
 		set_block_title(info)
-		
-		current_view_count = @recipe.view_count ? @recipe.view_count : 0
-		@recipe.update_attribute('view_count', current_view_count + 1)
 																							 
     respond_to do |format|
       format.html # show.html.erb
@@ -332,6 +330,10 @@ class RecipesController < ApplicationController
 		  format.html { redirect_to session[:return_to] }
 		  format.xml  { head :ok }
 		end
+  end
+  
+  def log_recipe_count
+  	log_count(@recipe)
   end
   
 end
