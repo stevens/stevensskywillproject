@@ -1,0 +1,24 @@
+<div class="user_bar">
+	<table>
+		<tr>
+			<td>
+				<div class="user_portrait">
+					<%= render :partial => "/layouts/item_photo",
+										 :locals => {:item => user, 
+										 						 :photo_style => 'sign'} %>
+				</div>
+			</td>
+			<td>
+				<div class="user_bar_username">
+					<%= user.login %>
+				</div>
+				<div class="user_bar_link">
+					<%= link_to "厨师主页", :controller => 'users', :action => 'overview', :id => user.id %> |
+					<%= link_to RECIPE_CN, user_recipes_path(user) %> |
+					<%= link_to REVIEW_CN, user_reviews_path(user) %> |
+					<%= link_to TAG_CN, :user_id => user.id, :controller => 'taggings', :action => 'index' %>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

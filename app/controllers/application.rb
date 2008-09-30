@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_parent
   before_filter :load_self
   before_filter :load_self_urls
+  before_filter :load_user_bar
 	before_filter :set_current_tab
   
   # Protect a page from unauthorized access.
@@ -94,7 +95,7 @@ class ApplicationController < ActionController::Base
 	 		@parent_unit = unit_for(@parent_type)
 			@parent_id = params[id_for(@parent_type).to_sym]
 	 		@parent_obj = @parent_model.find(@parent_id) if @parent_id
-	 		@parent_url = restfu_url_for(nil, {:type => nil, :id => nil}, {:type => @parent_type, :id => @parent_id}, nil)
+	 		@parent_url = @parent_obj
  		end
 	end
 	
@@ -106,6 +107,11 @@ class ApplicationController < ActionController::Base
 			@self_name = name_for(@self_type)
 			@self_unit = unit_for(@self_type)
 			@self_id = params[:id]
+			# if @self_model && @self_id
+			# 	if self_obj = @self_model.find(@self_id)
+			# 		@self_obj = self_obj
+			# 	end
+			# end
  		end
 	end
   
@@ -114,6 +120,18 @@ class ApplicationController < ActionController::Base
   	@self_url = restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @self_id}, nil)
 		@new_self_url = restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type}, 'new')
 		@edit_self_url = restfu_url_for(nil, {:type => @parent_type, :id => @parent_id}, {:type => @self_type, :id => @self_id}, 'edit')
+	end
+	
+	def load_user_bar
+		if @user
+			@user_bar = @user
+		elsif %w[mine settings].include?(params[:controller]) || %w[mine new edit].include?(params[:action])
+			@user_bar = @current_user
+		elsif @parent_obj && @parent_obj.user
+			@user_bar = @parent_obj.user
+		elsif params[:controller] == 'recipes' && params[:action] == 'show'
+			@user_bar = @self_model.find(@self_id).user
+		end
 	end
 
   def clear_notice

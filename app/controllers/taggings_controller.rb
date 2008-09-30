@@ -8,7 +8,11 @@ class TaggingsController < ApplicationController
 			@taggable_id = @parent_obj.id
 		end
 		
-		@taggable_type = params[:taggable_type].camelize if params[:taggable_type]
+		if params[:taggable_type]
+			@taggable_type = params[:taggable_type].camelize
+		else
+			@taggable_type = 'Recipe'
+		end
 	
   	load_tags_set(@user)
   	

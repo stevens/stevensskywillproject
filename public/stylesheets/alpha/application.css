@@ -937,3 +937,29 @@ div.welcome_todo_button a, div.welcome_todo_button a:link, div.welcome_todo_butt
 div.welcome_todo_button a:hover {
 	background-color: #ff8159 !important;
 }
+
+/* User Bar */
+.user_bar {
+	padding-top: 6px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 10px;
+	border: 1px #f1f1f1 solid;
+	background-color: #ffffcc;
+}
+.user_portrait {
+	margin-right: 10px;
+}
+.user_portrait a:hover {
+	background-color: transparent !important;
+}
+.user_bar_username {
+	color: #695245;
+	padding: 5px 0px;
+	font-size: 16px;
+	font-weight:bold;
+}
+.user_bar_link {
+	color: #b8b9a7;
+}

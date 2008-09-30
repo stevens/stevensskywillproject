@@ -137,6 +137,11 @@
 						<% if flash[:notice] %>
 							<div id="flash"><%= flash[:notice] %></div>
 						<% end %>
+						
+						<% if @user_bar %>
+							<%= render :partial => "/users/user_bar",
+												 :locals => {:user => @user_bar} %>
+						<% end %>
 
 						<%= yield %>
 						
