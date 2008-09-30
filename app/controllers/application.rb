@@ -125,7 +125,7 @@ class ApplicationController < ActionController::Base
 	def load_user_bar
 		if @user
 			@user_bar = @user
-		elsif %w[mine settings].include?(params[:controller]) || %w[mine new edit].include?(params[:action])
+		elsif %w[mine].include?(params[:controller]) || %w[mine new edit].include?(params[:action])
 			@user_bar = @current_user
 		elsif @parent_obj && @parent_obj.user
 			@user_bar = @parent_obj.user
