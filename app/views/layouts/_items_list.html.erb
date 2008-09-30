@@ -1,3 +1,19 @@
+<% if show_paginate %>
+	<% items = items_paginate(items_set) %>
+<% elsif limit %>
+	<% items = items_set[0..limit-1] %>
+<% else %>
+	<% items = items_set %>
+<% end %>
+<% if items.size > 0 %>
+	<% item_type = type_for(items[0]) %>
+<% end %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => items} %>
+<% end %>
+
 <table class="content">
 	
 	<% for item in items %>
@@ -6,39 +22,40 @@
 	    <td class="left_column">
 	    	<div class="sub_block">
 					<% if show_parent %>
-						<% item_type_for_photo = itemable_type(item, itemable_sym) %>
-						<% item_for_photo = itemable(item, itemable_sym) %>
+						<% photoable_type = itemable_type(item, itemable_sym) %>
+						<% photoable = itemable(item, itemable_sym) %>
 					<% else %>
-						<% item_type_for_photo = item_type %>
-						<% item_for_photo = item %>
+						<% photoable_type = item_type %>
+						<% photoable = item %>
 					<% end %>
 					
 					<% if show_photo %>
 						<div class="list_photo">
 		    			<%= render :partial => "/layouts/item_photo",
-		    								 :locals => {:item_type => item_type_for_photo, 
-		    								 						 :item => item_for_photo, 
+		    								 :locals => {:item => photoable, 
 		    								 						 :photo_style => 'list'} %>
 						</div>
 					<% end %>
 					
-					<div class="below_photo">
-						<%= render :partial => "/layouts/item_below_photo", 
-											 :locals => {:item_type => item_type_for_photo, 
-											 						 :item => item_for_photo, 
-											 						 :show_title => show_title, 
-											 						 :show_photo_todo => show_photo_todo} %>
-					</div>
+					<% if show_below_photo %>
+						<div class="below_photo">
+							<%= render :partial => "/layouts/below_item_photo", 
+												 :locals => {:item => photoable, 
+												 						 :show_title => show_title, 
+												 						 :show_photo_todo => show_photo_todo} %>
+						</div>
+					<% end %>
 
 				</div>
 	    </td>
 	    
 	    <td class="right_column_lined">
 	    	<div class="sub_block">
-    			<%= render :partial => "/#{item_type.pluralize}/#{item_type}_s", 
+    			<%= render :partial => "/#{controller_name(item_type)}/#{item_type.downcase}_s", 
     								 :locals => {:item => item, 
     								 						 :show_parent => show_parent, 
-    								 						 :show_todo => show_todo} %>
+    								 						 :show_todo => show_todo, 
+    								 						 :delete_remote => delete_remote} %>
 	    	</div>
 	    </td>
 	    
@@ -46,3 +63,8 @@
 	<% end %>
 	
 </table>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => items} %>
+<% end %>

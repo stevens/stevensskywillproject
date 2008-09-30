@@ -1,18 +1,29 @@
-<div class="content_block">
+<div id="recipes_wrapper" class="content_block">
 	
-	<div class="block_header">
-		<% if @show_header_link %>
-			<div class="block_header_link">	
-				<%= link_to "#{CREATE_CN}新#{RECIPE_CN}", new_recipe_path %>	
-			</div>
-		<% end %>
-		<h1><%= h @block_title %></h1>
+	<div id="recipes_header" class="block_header">
+		<%= render :partial => "/layouts/index_header", 
+							 :locals => {:show_header_link => true, 
+							 						 :show_new_link => true, 
+							 						 :block_title => @block_title} %>
 	</div>
 	
-	<%= render :partial => "/recipes/recipes_list",
-						 :locals => {:recipes => @recipes, 
-						 						 :show_paginate => true,
-						 						 :show_photo_todo => @show_photo_todo,   
-						 						 :show_todo => @show_todo} %>
+	<% if @taggables_set %>
+		<% @recipes_set = @taggables_set %>
+	<% end %>
+	
+	<div id="recipes_detail" class="block_main">
+		<%= render :partial => "/layouts/items_list",
+							 :locals => {:show_paginate => true,
+							 						 :items_set => @recipes_set, 
+							 						 :limit => nil,
+							 						 :itemable_sym => nil, 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => true, 
+							 						 :show_title => false, 
+							 						 :show_photo_todo => @show_photo_todo, 
+							 						 :show_parent => false,
+							 						 :show_todo => @show_todo, 
+							 						 :delete_remote => false} %>
+	</div>
 
 </div>

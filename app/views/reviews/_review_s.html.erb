@@ -19,28 +19,28 @@
 	</ul>
 </div>
 
-<%= render :partial => "/layouts/notice",
-					 :locals => {:nid => "review_#{item.id}",
-					 						 :notice => nil} %>
+<div id="notice_for_review_<%= item.id %>">
+</div>
 
 <div id="input_form_for_review_<%= item.id %>">
 </div>
 
-<div id="review_<%= item.id %>" class="main">
+<div id="review_<%= item.id %>_main" class="main">
 	<ul><%= paragraphs(item.review) %></ul>
 </div>
 
 <% if show_todo %>
 	<div id="review_<%= item.id %>_todo" class="todo_right">
 		<% if item.user == @current_user %>
-			<!-- <%= link_to RESPOND_CN, '' %> | -->
-    	<%= link_to_remote EDIT_CN, :url => edit_review_path(item.id), :method => :get %> |
-    	<%= link_to DELETE_CN, item, :confirm => "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?", :method => :delete %>
-    <% elsif item.reviewable.user == @current_user %>
-			<!-- <%= link_to RESPOND_CN, '' %> | -->
-    	<%= link_to DELETE_CN, item, :confirm => "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?", :method => :delete %>
-		<% else %>
-			<!-- <%= link_to RESPOND_CN, '' %> -->
-		<% end %>
+    	<%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %> | 
+    <% end %>
+    <% if item.user == @current_user || item.reviewable.user == @current_user %>
+    	<% delete_message = "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?" %>
+	    <% if delete_remote %>
+	    	<%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
+	    <% else %>
+	    	<%= link_to DELETE_CN, {:action => 'destroy', :id => item.id, :reviewable_type => params[:reviewable_type], :current_page => params[:page]}, :confirm => delete_message, :method => :delete %>
+	    <% end %>
+    <% end %>
 	</div>
 <% end %>

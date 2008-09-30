@@ -4,82 +4,40 @@ class MineController < ApplicationController
 	before_filter :store_location_if_logged_in
 	
 	def overview
-  	load_my_recipes
-  	@recipes = @recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
+  	load_my_recipes_set
   	
-  	load_my_reviews
-  	@reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
+  	load_my_reviews_set
 	 	
-	 	info = "我的#{SITE_NAME_CN}"
+	 	load_my_tags_set
+	 	
+	 	@user = @current_user
+	 	
+	 	info = "#{username_prefix(@current_user)}#{SITE_NAME_CN}"
 		set_page_title(info)
 		
-		@user = @current_user
 		@show_todo = true
+		
+		show_sidebar
 		
 		render :template => "users/overview"
 	end
 	
-	def recipes
-		load_my_recipes
-		items_paginate(@recipes_set)
-	 	@recipes = @items
- 																 		 
- 		info = "我的#{RECIPE_CN} (#{@recipes_set_count})"
- 		@recipes_html_id_suffix = "user_#{@current_user.id}"
- 		
- 		@show_header_link = true
- 		@show_photo_todo = true
-  	@show_todo = true
-  	
-  	@recipes_html_id = "recipes_of_#{@recipes_html_id_suffix}"
-  	
-		set_page_title(info)
-		set_block_title(info)
-		
-		render :template => "recipes/index"	
-	end
-	
-	def reviews	
-    if params[:reviewable_type]
-    	@reviewable_type = params[:reviewable_type].downcase
-    	@reviews_html_id_prefix = @reviewable_type
-    else
-    	@reviews_html_id_prefix = 'all'
-    end
-    
-		load_my_reviews
-		items_paginate(@reviews_set)
-	 	@reviews = @items
- 																 		 
- 		info = "我的#{name_for(@reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})"
- 		@reviews_html_id_suffix = "user_#{@current_user.id}"
- 		
-  	@show_todo = true
-  	
-  	@reviews_html_id = "#{@reviews_html_id_prefix}_reviews_of_#{@reviews_html_id_suffix}"
-  	
-		set_page_title(info)
-		set_block_title(info)
-		
- 		if @reviewable_type
- 			session[:return_to] = "#{user_reviews_path(@current_user)}?reviewable_type=#{@reviewable_type}"
- 		else
- 			session[:return_to] = user_reviews_path(@current_user)
- 		end
-		
-		render :template => "reviews/index"
-	end
-	
 	private
 	
-	def load_my_recipes
-		@recipes_set = recipes_for(@current_user, nil, nil, nil, 'created_at DESC')
+	def load_my_recipes_set
+		@recipes_set = recipes_for(@current_user, nil)
 		@recipes_set_count = @recipes_set.size
 	end
 	
-	def load_my_reviews
-		@reviews_set = reviews_for(@current_user, @reviewable_type, nil, nil, nil, 'created_at DESC')
+	def load_my_reviews_set
+		@reviews_set = reviews_for(@current_user, nil, nil)
 		@reviews_set_count = @reviews_set.size
+	end
+	
+	def load_my_tags_set
+	  @tags_set = tags_for(@current_user, 'Recipe')
+	  @tags_set_count = @tags_set.size
+  	@custom_tags_set = tags_for(@current_user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 	end
 
 end

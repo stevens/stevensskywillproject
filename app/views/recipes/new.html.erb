@@ -2,7 +2,7 @@
 	
 	<div class="block_header">
 		<div class="block_header_link">
-			<%= link_to "我的更多#{RECIPE_CN} (#{@recipes_set_count})", :controller => 'mine', :action => 'recipes' %>
+			<%= link_to h("#{username_prefix(@recipe.user)}更多#{RECIPE_CN} (#{@recipes_set_count})"), :action => 'mine' %>
 		</div>
 		<h1><%= h @block_title %></h1>
 	</div>
@@ -10,7 +10,7 @@
 	<div class="block_main">
 		<%= render :partial => "recipe_input", 
 							 :locals => {:recipe => @recipe, 
-							 						 :button_name => "#{CREATE_CN}新#{@self_name}"} %>
+							 						 :is_new => true} %>
 	</div>
 
 </div>

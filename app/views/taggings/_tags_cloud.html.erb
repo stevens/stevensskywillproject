@@ -1,0 +1,25 @@
+<% if show_paginate %>
+	<% tags = items_paginate(tags_set, TAGS_COUNT_PER_PAGE) %>
+<% elsif limit %>
+	<% tags = tags_set[0..limit-1] %>
+<% else %>
+	<% tags = tags_set %>
+<% end %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => tags} %>
+<% end %>
+
+<% tag_cloud tags, %w(css1 css2 css3 css4 css5 css6 css7) do |tag, css_class| %>
+	<% if taggable_type %>
+		<%= link_to h(tag.name), "#{root_path}#{taggable_type.downcase}/taggings/#{tag.name}", :class => css_class %>
+	<% else %>
+		<%= link_to h(tag.name), "#{taggings_path}/#{tag.name}", :class => css_class %>
+	<% end %>
+<% end %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => tags} %>
+<% end %>

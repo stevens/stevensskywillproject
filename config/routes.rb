@@ -1,20 +1,37 @@
 ActionController::Routing::Routes.draw do |map|
 	map.connect ':controller/overview', :action => 'overview'
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
-	map.connect ':controller/tags/:id', :action => 'tags'
-	map.connetc ':controller/search/:id', :action => 'search'	
+	
+	map.connect ':controller/search/:id', :action => 'search'	
+	
+	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
+	
+	map.connect 'mine/reviews', :controller => 'reviews', :action => 'mine'
+	map.connect ':reviewable_type/reviews', :controller => 'reviews', :action => 'index'
+	map.connect 'mine/:reviewable_type/reviews', :controller => 'reviews', :action => 'mine'
+	map.connect 'users/:user_id/:reviewable_type/reviews', :controller => 'reviews', :action => 'index'
+	
+	map.connect 'mine/taggings', :controller => 'taggings', :action => 'mine'
+	map.connect 'users/:user_id/taggings', :controller => 'taggings', :action => 'index'
+	map.connect ':taggable_type/taggings', :controller => 'taggings', :action => 'index'
+	map.connect ':taggable_type/taggings/:id', :controller => 'taggings', :action => 'show'
+	map.connect 'mine/:taggable_type/taggings', :controller => 'taggings', :action => 'mine'
+	map.connect 'users/:user_id/:taggable_type/taggings', :controller => 'taggings', :action => 'index'
 	
 	map.search '/search', :controller => 'site', :action => 'search'
 	
   map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings]
 	
-	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings]
+	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings, :tags]
 	
 	map.resources :photos, :has_many => :reviews
 	
 	map.resources :reviews
 	
+  map.resources :taggings
+  
   map.resource :session
+  
   
   # map.namespace :mine do |mine|
   #  	mine.resources :recipes do |recipe|

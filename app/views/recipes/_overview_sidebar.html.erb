@@ -1,13 +1,5 @@
-<!-- <div class="sidebar_block">
-	<div class="sidebar_block_header">
-		<h1><%= "#{RECIPE_CN}#{CATEGORY_CN}" %></h1>
-	</div>
-	<div class="sidebar_block_main">
-
-	</div>
-</div> -->
-
-<%= render :partial => "/tags/tags_sidebar",
-					 :locals => {:taggable_type => 'recipe', 
-					 						 :tags_set => @tags_set, 
-					 						 :tags => @tags} %>
+<%= render :partial => "/taggings/tags_sidebar",
+					 :locals => {:user => nil, 
+					 						 :tags_set_count => @tags_set_count, 
+					 						 :custom_tags_set => @custom_tags_set,
+					 						 :taggable_type => 'Recipe'} %>

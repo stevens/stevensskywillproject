@@ -1,17 +1,7 @@
-<% if show_cover && photo.is_cover?(photoable) %>
-	<% if photo_link_url %>
-		<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption), :class => "cover"), 
-								photo_link_url %>		
-	<% else %>
-		<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption), :class => "cover"), 
-								restfu_url_for(nil, {:type => photo.photoable_type, :id => photo.photoable_id}, {:type => 'photo', :id => photo.id}, nil) %>
-	<% end %>
+<% if show_cover && photo.is_cover?(photo.photoable) %>
+	<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption), :class => "cover"), 
+							photo_link_url ? photo_link_url : [photo.photoable, photo] %>
 <% else %>
-	<% if photo_link_url %>
-		<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption)), 
-								photo_link_url %>
-	<% else %>
-		<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption)), 
-								restfu_url_for(nil, {:type => photo.photoable_type, :id => photo.photoable_id}, {:type => 'photo', :id => photo.id}, nil) %>
-	<% end %>
+	<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption)), 
+							photo_link_url ? photo_link_url : [photo.photoable, photo] %>
 <% end %>

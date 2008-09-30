@@ -322,6 +322,12 @@ Rails::Initializer.run do |config|
 	UNIT_PHOTO_CN = '张'
 	UNIT_REVIEW_CN = '条'
 	
+	#TAG constants
+	TAGS_COUNT_PER_PAGE = 300
+	TAG_COUNT_AT_LEAST = 3
+	TAG_COUNT_AT_MOST = nil
+	TAGS_COUNT_LIMIT = 100
+	
 end
 	
 	# ActionMailer::Base.delivery_method = :smtp

@@ -1,31 +1,23 @@
-<div class="content_block">
+<div id="photos_wrapper" class="content_block">
 	
-	<div class="block_header">
-		<div class="block_header_link">
-			<% if @parent_user && @parent_user == @current_user %>
-				<%= link_to "#{ADD_CN}新#{@self_name}", @new_self_url %> |	
-			<% end %>
-			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
-		</div>
-		<h1><%= h @block_title %></h1>
+	<div id="photos_header" class="block_header">
+		<%= render :partial => "/layouts/index_header", 
+							 :locals => {:show_header_link => true, 
+							 						 :show_new_link => true, 
+							 						 :block_title => @block_title} %>
 	</div>
-	
-	<%= render :partial => "layouts/items_paginate",
-						 :locals => {:items => @photos} %>
 
-	<div class="block_main">
-		<%= render :partial => "photos_matrix",
-							 :locals => {:photos => @photos, 
-							 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
-							 						 :photoable => @parent_obj, 
-							 						 :photo_link_url => false, 
-							 						 :photo_style => 'matrix', 
-							 						 :show_photo => true, 
-							 						 :show_photo_todo => true, 
-							 						 :show_cover => true} %>
+	<div id="photos_detail" class="block_main">
+		<% if @photos_set_count > 0 %>
+			<%= render :partial => "/photos/photos_matrix",
+								 :locals => {:show_paginate => false,
+								 						 :photos_set => @photos_set,
+								 						 :limit => nil, 
+								 						 :show_photo => true, 
+								 						 :show_below_photo => true,
+								 						 :show_cover => true, 
+								 						 :show_photo_todo => true} %>
+		<% end %>
 	</div>
-	
-	<%= render :partial => "layouts/items_paginate",
-						 :locals => {:items => @photos} %>
 
 </div>

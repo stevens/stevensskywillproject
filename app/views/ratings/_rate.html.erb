@@ -1,10 +1,10 @@
 <!-- <% rank = %w[Abysmal Terrible Bad Poor Mediocre Fair Good Great Suberb Perfect] %> -->
 <% rank = %w[水到家 很糟糕 不咋样 有点逊 一般般 还不错 赞一个 非常好 棒极了 超完美] %>
 <div id="average_rating">
-	<div class="">	
+	<div>	
 		<%= "平均#{RATE_CN}: " %>
 		<% if ratings_count > 0 %>
-			<%= "#{average_rating_value}/10 (#{ratings_count}票)" %>
+			<span class="rating"><%= "#{average_rating_value}/10 (#{ratings_count}票)" %></span>
 		<% else %>
 			<%= "还没有#{RATE_CN}" %>
 		<% end %>
@@ -16,10 +16,10 @@
 </div>
 <% if @current_user %>
 	<div id="my_rating">
-		<div class="">
+		<div>
 			<%= "我的#{RATE_CN}: " %>
 			<% if my_rating_value > 0 %>
-				<%= "#{my_rating_value}/10 (#{rank[my_rating_value-1]})" %>
+				<span class="rating"><%= "#{my_rating_value}/10 (#{rank[my_rating_value-1]})" %></span>
 			<% else %>
 				<%= "还没有#{RATE_CN}" %>
 			<% end %>

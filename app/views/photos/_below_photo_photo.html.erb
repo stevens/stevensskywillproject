@@ -1,0 +1,7 @@
+<% if show_photo_todo %>
+	<% if photo.user == @current_user %>
+			<% photoable_id_sym = photo.photoable_type.downcase.foreign_key.to_sym %>
+			<%= link_to "#{EDIT_CN}", photoable_id_sym => photo.photoable_id, :controller => 'photos', :action => 'edit', :id => photo.id %> |
+			<%= link_to "#{DELETE_CN}", {photoable_id_sym => photo.photoable_id, :controller => 'photos', :action => 'destroy', :id => photo.id}, :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
+	<% end %>
+<% end %>

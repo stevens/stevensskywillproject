@@ -1,3 +1,11 @@
+<div class="photos">
+	<%= render :partial => "photo_photo",
+						 :locals => {:photo => photo, 
+						 						 :show_cover => false, 
+						 						 :photo_style => 'full', 
+						 						 :photo_link_url => photo_link_url} %>
+</div>
+
 <div class="basic">
 	<ul>
 		<li>
@@ -13,10 +21,10 @@
 		<% end %>
 		<% if show_parent %>
 			<li>
-				<% if photo.is_cover?(photoable) %>
-					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), restfu_url_for(nil, nil, {:type => photo.photoable_type, :id => photo.photoable_id}, nil) %><%= "的封面#{PHOTO_CN}" %>
+				<% if photo.is_cover?(photo.photoable) %>
+					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photo.photoable)}"), photo.photoable %><%= "的封面#{PHOTO_CN}" %>
 				<% else %>
-					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), restfu_url_for(nil, nil, {:type => photo.photoable_type, :id => photo.photoable_id}, nil) %><%= "的#{PHOTO_CN}" %>
+					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photo.photoable)}"), photo.photoable %><%= "的#{PHOTO_CN}" %>
 				<% end %>
 			</li>
 		<% end %>
@@ -26,8 +34,8 @@
 <% if show_todo %>
 	<div class="todo_right">
 		<% if photo.user == @current_user %>
-			<%= link_to "#{EDIT_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", restfu_url_for(nil, {:type => photo.photoable_type, :id => photo.photoable_id}, {:type => 'photo', :id => photo.id}, 'edit') %> |
-			<%= link_to "#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", restfu_url_for(nil, {:type => photo.photoable_type, :id => photo.photoable_id}, {:type => 'photo', :id => photo.id}, nil), :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
+			<%= link_to "#{EDIT_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", [photo.photoable, photo, :edit] %> |
+			<%= link_to "#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", [photo.photoable, photo], :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
 		<% end %>
 	</div>
 <% end %>

@@ -98,23 +98,18 @@
 						<% if @current_tab_type == 'site' %>
 							<%= SLOGAN_CN %>
 						<% elsif @current_tab_type == 'mine' %>
-							<%= link_to "我的#{RECIPE_CN}", :controller => 'mine', :action => 'recipes' %>
-							<%= link_to "我的#{REVIEW_CN}", :controller => 'mine', :action => 'reviews' %>
-							<!-- <%= link_to "我的#{PHOTO_CN}", root_url %> -->
-							<!-- <%= link_to "我的#{TAG_CN}", :controller => 'mine', :action => 'tags' %> -->
+							<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
+							<%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
+							<%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
 						<% elsif @current_tab_type == 'setting' %>
 							<%= link_to "#{ACCOUNT_CN}#{SETTING_CN}", :controller => 'settings', :action => 'account' %>
-							<!-- <%= link_to "#{PRIVACY_CN}#{SETTING_CN}", :controller => 'settings', :action => 'privacy' %> -->
 						<% elsif @current_tab_type == 'recipe' %>
 							<% if @current_user %>
-								<%= link_to "我的#{@current_tab_name}", :controller => 'mine', :action => @current_tab_type.downcase.pluralize %>
+								<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
 							<% end %>
-							<%= link_to "#{@current_tab_name}列表", :controller => @current_tab_type.pluralize, :action => 'index' %>
-							<!-- <%= link_to "分类#{@current_tab_name}", root_url %> -->
-							<!-- <%= link_to "#{@current_tab_name}#{RANKING_CN}", root_url %> -->
-							<%= link_to "#{@current_tab_name}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => @current_tab_type.downcase %>
-							<!-- <%= link_to "#{@current_tab_name}#{PHOTO_CN}", root_url %> -->
-							<%= link_to "#{@current_tab_name}#{TAG_CN}", :controller => @current_tab_type.pluralize, :action => 'tags', :id => nil %>
+							<%= link_to "#{RECIPE_CN}列表", :controller => 'recipes', :action => 'index' %>
+							<%= link_to "#{RECIPE_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>
+							<%= link_to "#{RECIPE_CN}#{TAG_CN}", :controller => 'taggings', :action => 'index', :taggable_type => 'recipe' %>
 						<% else %>
 							<%= SLOGAN_CN %>
 						<% end %>

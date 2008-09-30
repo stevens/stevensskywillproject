@@ -1,108 +1,120 @@
-<div class="basic">
-	<h2>
-		<!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
-		<% if item.from_type == '1' %>
-			<%= image_tag 'default/other/private.png', :title => '私房', :class => "icon" %>
-		<% end %>
-		<%= link_to h(item.title), item %>
-	</h2>
-	<ul>
-		<li>
-			<%= "来自 " %><%= link_to h(user_username(item.user)), user_first_link(item.user) %>
-		</li>
-		<li>
-			<%= "#{time_iso_format(item.created_at)} #{CREATE_CN}" %>
-		</li>
-		<% if item.created_at != item.updated_at %>
+<div id="recipe_<%= item.id %>_basic">
+	<div class="basic">
+		<h2>
+			<!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
+			<% if item.from_type == '1' %>
+				<%= image_tag 'default/other/private.png', :title => '私房', :class => "icon" %>
+			<% end %>
+			<%= link_to h(item.title), item %>
+		</h2>
+		<ul>
 			<li>
-				<%= "#{time_iso_format(item.updated_at)} #{UPDATE_CN}" %>
+				<%= "来自 " %><%= link_to h(user_username(item.user)), user_first_link(item.user) %>
 			</li>
-		<% end %>
-		<li>
-			<% if item.tag_list.size > 0 %>
-				<%= "#{TAG_CN}: " %>					    			
-				<% for tag in item.tag_list %>
-					<%= link_to h(tag), {:action => :tags, :id => tag} %>
+			<li>
+				<%= "#{time_iso_format(item.created_at)} #{CREATE_CN}" %>
+			</li>
+			<% if item.created_at != item.updated_at %>
+				<li>
+					<%= "#{time_iso_format(item.updated_at)} #{UPDATE_CN}" %>
+				</li>
+			<% end %>
+			<li>
+				<%= "#{TAG_CN}: " %>
+				<% if item.tag_list.size > 0 %>
+	    		<% for tag in item.tag_list %>
+		    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
+		    	<% end %>
+				<% else %>
+		    	<%= "还没有#{TAG_CN}" %>
 				<% end %>
-			<% else %>
-				<%= "#{TAG_CN}: 还没有#{TAG_CN}" %>
-			<% end %>
-		</li>
-	</ul>
-</div>
-
-<div class="main">
-	<ul>
-		<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
-		<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.cost)}" %></li>
-		<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
-		<li><%= "#{COOK_TIME_CN}: #{code_title('recipe_time', item.cook_time)}" %></li>
-		<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
-		<li>
-			<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
-			<% if !item.from_where.blank? %>
-				<%= "(#{h item.from_where})" %>
-			<% end %>
-		</li>
-	</ul>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="main">
+		<ul>
+			<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
+			<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.cost)}" %></li>
+			<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
+			<li><%= "#{COOK_TIME_CN}: #{code_title('recipe_time', item.cook_time)}" %></li>
+			<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
+			<li>
+				<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
+				<% if !item.from_where.blank? %>
+					<%= "(#{h item.from_where})" %>
+				<% end %>
+			</li>
+		</ul>
+	</div>
 </div>
 
 <% if show_todo %>
-	<div class="todo_right">
+	<div id="recipe_<%= item.id %>_todo" class="todo_right">
 		<% if item.user == @current_user %>
-			<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", edit_recipe_url(item) %> |
+			<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", [item, :edit] %> |
 			<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", item, :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
 		<% end %>
 	</div>
 <% end %>
 
-<div class="photos">
-	<%= render :partial => "/photos/photos_matrix",
-						 :locals => {:photos => photos, 
-						 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
-						 						 :photoable => item, 
-						 						 :photo_link_url => false, 
-						 						 :photo_style => 'matrix', 
-						 						 :show_photo => true, 
-						 						 :show_photo_todo => false, 
-						 						 :show_cover => false} %>
-						
+<div id="recipe_<%= item.id %>_photos" class="photos">
+	<% if item.photos.size > 0 %>
+		<%= render :partial => "/photos/photos_matrix",
+							 :locals => {:show_paginate => false,
+							 						 :photos_set => photos_set,
+							 						 :limit => 6, 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => false,
+							 						 :show_cover => false, 
+							 						 :show_photo_todo => false} %>
+	<% end %>					
 	<div class="below_photo">
-		<%= render :partial => "/layouts/item_below_photo", 
-							 :locals => {:item_type => 'recipe', 
-							 						 :item => item, 
+		<%= render :partial => "/layouts/below_item_photo", 
+							 :locals => {:item => item, 
 							 						 :show_title => false, 
 							 						 :show_photo_todo => true} %>
 	</div>
 </div>
 
-<% if item.video_url && !item.video_url.blank? %>
-	<div class="video">
+<div id="recipe_<%= item.id %>_video" class="video">
+	<% if item.video_url && !item.video_url.blank? %>
 		<%= item.video_url %>
+	<% else %>
+		<ul>
+			<li>
+				<%= "还没有#{VIDEO_CN}" %>
+			</li>
+			<li>
+				<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
+			</li>
+		<ul>
+	<% end %>
+</div>
+
+<div id="recipe_<%= item.id %>_main">
+	<div class="main">
+		<h3><%= "#{DESCRIPTION_CN}:" %></h3>
+		<ul><%= paragraphs(item.description) %></ul>
 	</div>
-<% end %>
-
-<div class="main">
-	<h3><%= "#{DESCRIPTION_CN}:" %></h3>
-	<ul><%= paragraphs(item.description) %></ul>
-</div>
-
-<div class="main">
-	<h3><%= "#{INGREDIENT_CN}:" %></h3>
-	<ul><%= paragraphs(item.ingredients) %></ul>
-</div>
-
-<div class="main">
-	<h3><%= "#{DIRECTION_CN}:" %></h3>
-	<ol><%= paragraphs(item.directions) %></ol>
-</div>
-
-<div class="main">
-	<h3><%= "#{TIP_CN}:" %></h3>
-	<ol><%= paragraphs(item.tips) %></ol>
-</div>
-
-<div class="main">
-	<h3><%= "闲话:" %></h3>
-	<ul><%= paragraphs(item.any_else) %></ul>
+	
+	<div class="main">
+		<h3><%= "#{INGREDIENT_CN}:" %></h3>
+		<ul><%= paragraphs(item.ingredients) %></ul>
+	</div>
+	
+	<div class="main">
+		<h3><%= "#{DIRECTION_CN}:" %></h3>
+		<ol><%= paragraphs(item.directions) %></ol>
+	</div>
+	
+	<div class="main">
+		<h3><%= "#{TIP_CN}:" %></h3>
+		<ol><%= paragraphs(item.tips) %></ol>
+	</div>
+	
+	<div class="main">
+		<h3><%= "闲话:" %></h3>
+		<ul><%= paragraphs(item.any_else) %></ul>
+	</div>
 </div>

@@ -1,0 +1,21 @@
+<% if show_title %>
+	<%= link_to h(item_title(item)), item %>
+<% end %>
+
+<% if show_photo_todo %>
+	<% item_id_sym = item_id(item).to_sym %>
+	<ul>
+		<li>
+			<% if item.photos.size > 0 %>
+				<%= link_to "更多#{PHOTO_CN} (#{item.photos.size})", item_id_sym => item.id, :controller => 'photos', :action => 'index' %>
+			<% else %>
+				<%= "还没有#{PHOTO_CN}" %>
+			<% end %>
+		</li>
+		<% if item.user == @current_user %>
+			<li>
+				<%= link_to "#{ADD_CN}新#{PHOTO_CN}", item_id_sym => item.id, :controller => 'photos', :action => 'new' %>
+			</li>
+		<% end %>
+	</ul>
+<% end %>

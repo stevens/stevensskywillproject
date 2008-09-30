@@ -19,7 +19,7 @@ module PhotosHelper
 		end
 	end
 	
-	def photos_rows_count(photos_count, photos_count_per_row)
+	def photos_rows_count(photos_count, photos_count_per_row = MATRIX_ITEMS_COUNT_PER_ROW_M)
 		items_rows_count(photos_count, photos_count_per_row)
 	end
 	
@@ -47,30 +47,6 @@ module PhotosHelper
 		end
 	end
 	
-	def photos_for(user, photoable_type, photoable_id, order)
-		if user
-			if photoable_type && photoable_id
-				user.photos.find(:all, :order => order, 
-												 :conditions => ["photoable_type = ? AND 
-																			 	 photoable_id = ?", 
-																			 	 photoable_type, 
-																			 	 photoable_id])
-			else
-				user.photos.find(:all, :order => order)
-			end
-		else
-			if photoable_type && photoable_id
-				Photo.find(:all, :order => order, 
-									 :conditions => ["photoable_type = ? AND 
-																	 photoable_id = ?", 
-																	 photoable_type, 
-																	 photoable_id])
-			else
-				Photo.find(:all, :order => order)
-			end
-		end
-	end
-	
 	def cover_photo(photoable)
 		if id = photoable.cover_photo_id
 			Photo.find(id)
@@ -85,5 +61,28 @@ module PhotosHelper
 																		  photoable_id = ?", 
 																		  user.id])
 	end
+
+	def photos_for(user, photoable_type, photoable_id, created_at_from = nil, created_at_to = nil, order = 'created_at')
+		if user
+			if photoable_type || photoable_id || created_at_from || created_at_to
+				user.photos.find(:all, :order => order, 
+												 :conditions => [photos_conditions(photoable_type, photoable_id, created_at_from, created_at_to)])
+			else
+				user.photos.find(:all, :order => order)
+			end			
+		else
+			Photo.find(:all, :order => order, 
+								 :conditions => [photos_conditions(photoable_type, photoable_id, created_at_from, created_at_to)])
+		end
+	end
+  
+  def photos_conditions(photoable_type, photoable_id, created_at_from = nil, created_at_to = nil)
+  	conditions = []
+  	conditions << "photoable_type = '#{photoable_type}'" if photoable_type
+  	conditions << "photoable_id = #{photoable_id}" if photoable_id
+		conditions << "photos.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
+		conditions << "photos.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
+		conditions.join(" AND ")
+  end
 
 end

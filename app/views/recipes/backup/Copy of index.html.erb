@@ -1,0 +1,20 @@
+<div class="content_block">
+	
+	<div class="block_header">
+		<% if @show_header_link %>
+			<div class="block_header_link">	
+				<%= link_to "#{CREATE_CN}新#{RECIPE_CN}", new_recipe_path %>	
+			</div>
+		<% end %>
+		<h1><%= h @block_title %></h1>
+	</div>
+	
+	<% recipes = @taggables ? @taggables : @recipes %>
+
+	<%= render :partial => "/recipes/recipes_list",
+						 :locals => {:recipes => recipes, 
+						 						 :show_paginate => true,
+						 						 :show_photo_todo => @show_photo_todo,   
+						 						 :show_todo => @show_todo} %>
+
+</div>

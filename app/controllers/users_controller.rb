@@ -16,7 +16,6 @@ class UsersController < ApplicationController
   	@user = User.new
 
 	 	info = "加入#{SITE_NAME_CN}"
-		
 		set_page_title(info)
 		set_block_title(info)
 		
@@ -33,13 +32,6 @@ class UsersController < ApplicationController
     # uncomment at your own risk
     # reset_session
     @user = User.new(params[:user])
-    
-    # @user.save
-    # if @user.errors.empty?
-
-    # else
-
-    # end
 		
 		if @user.save
 			after_create_ok
@@ -80,13 +72,13 @@ class UsersController < ApplicationController
     end
   
   	load_user_recipes(@user)
-  	@recipes = @recipes_set[0..MATRIX_ITEMS_COUNT_PER_PAGE_S - 1]
-  	
   	load_user_reviews(@user)
-  	@reviews = @reviews_set[0..LIST_ITEMS_COUNT_PER_PAGE_S - 1]
+	 	load_user_tags(@user)
 	 	
-	 	info = "#{user_username(@user)}的#{SITE_NAME_CN}"
+	 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
 		set_page_title(info)
+		
+		show_sidebar
 		
     respond_to do |format|
       if @user && @user == @current_user
@@ -100,39 +92,49 @@ class UsersController < ApplicationController
 	
 	private
 
-	def load_user_recipes(user)
+	def load_user_recipes(user = nil)
 		@recipes_set = recipes_for(user, @integrality, nil, nil, 'created_at DESC')
 		@recipes_set_count = @recipes_set.size
 	end
 	
-	def load_user_reviews(user)
+	def load_user_reviews(user = nil)
 		@reviews_set = reviews_for(user, @reviewable_type, nil, nil, nil, 'created_at DESC')
 		@reviews_set_count = @reviews_set.size
+	end
+	
+	def load_user_tags(user = nil)
+	  @tags_set = tags_for(user, 'Recipe')
+	  @tags_set_count = @tags_set.size
+   	@custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 	end
 	
   def after_create_ok
   	self.current_user = @user
   	session[:user_id] = nil
   	respond_to do |format|
-      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br />
-      								 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
-			format.html { redirect_to root_url }
+			format.html do
+	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br />
+	      								 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"				
+				redirect_to root_path
+			end
 			format.xml  { render :xml => @user, :status => :created, :location => @user }
 		end
   end
   
   def after_create_error
   	respond_to do |format|
-      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
-			format.html { render :action => "new" }
+			format.html do 
+	      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+				
+				info = "加入#{SITE_NAME_CN}"	
+				set_page_title(info)
+				set_block_title(info)
+				
+				render :action => "new"
+				clear_notice
+			end
 			format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-			 		
-			info = "加入#{SITE_NAME_CN}"
-			 		
-			set_page_title(info)
-			set_block_title(info)
 		end
-		clear_notice
   end
   
 end

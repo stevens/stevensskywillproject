@@ -85,7 +85,6 @@ class PasswordsController < ApplicationController
 	
 	def set_title
 		info = "#{RESET_CN}#{PASSWORD_CN}"
-		
 		set_page_title(info)
 		set_block_title(info)
 	end

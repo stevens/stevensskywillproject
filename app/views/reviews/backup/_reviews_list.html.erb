@@ -1,0 +1,29 @@
+<% if show_paginate %>
+	<% reviews = items_paginate(reviews_set) %>
+<% elsif limit %>
+	<% reviews = reviews_set[0..limit-1] %>
+<% else %>
+	<% reviews = reviews_set %>
+<% end %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => reviews} %>
+<% end %>
+
+<div class="block_main">
+	<%= render :partial => "/layouts/items_list",
+						 :locals => {:item_type => 'Review', 
+						 						 :items => reviews,
+						 						 :itemable_sym => 'reviewable', 
+						 						 :show_photo => true, 
+						 						 :show_title => false, 
+						 						 :show_photo_todo => false, 
+						 						 :show_parent => true,
+						 						 :show_todo => show_todo} %>
+</div>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => reviews} %>
+<% end %>

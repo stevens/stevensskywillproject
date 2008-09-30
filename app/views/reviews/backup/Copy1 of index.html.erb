@@ -1,0 +1,13 @@
+<div id="<%= @reviews_html_id %>" class="content_block">
+
+	<div class="block_header">
+		<h1><%= h @block_title %></h1>
+	</div>
+
+	<%= render :partial => "/reviews/reviews_list",
+						 :locals => {:reviews_set => @reviews_set, 
+						 						 :limit => nil, 
+						 						 :show_paginate => true,  
+						 						 :show_todo => @show_todo} %>
+
+</div>

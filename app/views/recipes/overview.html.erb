@@ -20,37 +20,46 @@
 	</div>
 <% end %>
 
-<div class="content_block">
-	<div class="block_header">
+<div id="recipes_wrapper" class="content_block">
+	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
 			<%= link_to "更多#{RECIPE_CN} (#{@recipes_set_count})", recipes_path %>	
 		</div>
 		<h1><%= "最新的#{RECIPE_CN}" %></h1>
 	</div>
 	
-	<div class="block_main">
+	<div id="recipes_detail" class="block_main">
 		<%= render :partial => "/layouts/items_matrix",
-							 :locals => {:item_type => 'recipe', 
-							 						 :items => @recipes, 
-							 						 :items_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M,
-							 						 :photo_style => 'matrix',  
+							 :locals => {:show_paginate => false,
+							 						 :items_set => @recipes_set, 
+							 						 :limit => MATRIX_ITEMS_COUNT_PER_PAGE_S, 
 							 						 :show_photo => true, 
+							 						 :show_below_photo => true,  
 							 						 :show_title => true, 
 							 						 :show_photo_todo => false} %>
 	</div>
 </div>
 
-<div class="content_block">
-	<div class="block_header">
+<div id="reviews_wrapper" class="content_block">
+	<div id="reviews_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多#{RECIPE_CN}#{REVIEW_CN} (#{@recipe_reviews_set_count})", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
+			<%= link_to "更多#{RECIPE_CN}#{REVIEW_CN} (#{@reviews_set_count})", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
 		</div>
 		<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	</div>
 	
-	<%= render :partial => "/reviews/reviews_list",
-						 :locals => {:reviews => @recipe_reviews, 
-						 						 :show_paginate => false,  
-						 						 :show_todo => false} %>
-	
+	<div id="reviews_detail" class="block_main">
+		<%= render :partial => "/layouts/items_list",
+							 :locals => {:show_paginate => false,
+							 						 :items_set => @reviews_set, 
+							 						 :limit => LIST_ITEMS_COUNT_PER_PAGE_S,
+							 						 :itemable_sym => 'reviewable', 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => false,  
+							 						 :show_title => false, 
+							 						 :show_photo_todo => false, 
+							 						 :show_parent => true,
+							 						 :show_todo => false, 
+							 						 :delete_remote => false} %>
+	</div>
 </div>

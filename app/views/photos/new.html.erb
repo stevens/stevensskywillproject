@@ -2,18 +2,17 @@
 	
 	<div class="block_header">
 		<div class="block_header_link">
-			<%= link_to "#{@parent_name}的更多#{@self_name} (#{@photos_set_count})", @selfs_url %> |
+			<%= link_to "#{@parent_name}的更多#{PHOTO_CN} (#{@photos_set_count})", @selfs_url %> |
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
 		<h1><%= h @block_title %></h1>
 	</div>
 	
 	<div class="block_main" >
-		<%= render :partial => "photo_input", 
-							 :locals => {:photo => @photo, 
-							 						 :do_url => @selfs_url,
-							 						 :html_method => '',
-							 						 :button_name => "#{ADD_CN}新#{@self_name}"} %>
+		<%= render :partial => "/photos/photo_input", 
+												    :locals => {:photoable => @parent_obj,
+												 						    :photo => @photo, 
+												 						    :is_new => true} %>
 	</div>
 	
 </div>

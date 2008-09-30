@@ -1,12 +1,25 @@
-<div id="<%= @reviews_html_id %>" class="content_block">
-
-	<div class="block_header">
-		<h1><%= h @block_title %></h1>
+<div id="reviews_wrapper" class="content_block">
+	
+	<div id="reviews_header" class="block_header">
+		<%= render :partial => "/layouts/index_header", 
+							 :locals => {:show_header_link => true, 
+							 						 :show_new_link => false, 
+							 						 :block_title => @block_title} %>
 	</div>
 
-	<%= render :partial => "/reviews/reviews_list",
-						 :locals => {:reviews => @reviews, 
-						 						 :show_paginate => true,  
-						 						 :show_todo => @show_todo} %>
+	<div id="reviews_detail" class="block_main">
+		<%= render :partial => "/layouts/items_list",
+							 :locals => {:show_paginate => true,
+							 						 :items_set => @reviews_set, 
+							 						 :limit => nil,
+							 						 :itemable_sym => 'reviewable', 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => false,  
+							 						 :show_title => false, 
+							 						 :show_photo_todo => false, 
+							 						 :show_parent => true,
+							 						 :show_todo => @show_todo, 
+							 						 :delete_remote => false} %>
+	</div>
 
 </div>

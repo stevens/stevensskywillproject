@@ -1,0 +1,20 @@
+<div id="tags_wrapper", class="content_block">
+	
+	<div id="tags_header" class="block_header">
+		<%= render :partial => "/layouts/index_header", 
+							 :locals => {:show_header_link => false, 
+							 						 :show_new_link => false, 
+							 						 :block_title => @block_title} %>
+	</div>
+	
+	<div id="tags_detail" class="block_main">
+		<div class="sub_block">
+			<%= render :partial => "/taggings/tags_cloud",
+								 :locals => {:show_paginate => true, 
+								 						 :tags_set => @tags_set,
+								 						 :limit => nil,  
+								 						 :taggable_type => @taggable_type} %>
+		</div>
+	</div>
+	
+</div>

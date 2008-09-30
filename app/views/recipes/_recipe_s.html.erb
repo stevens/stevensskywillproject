@@ -1,5 +1,4 @@
-<div class="basic">
-
+<div id="recipe_<%= item.id %>_basic" class="basic">
 	<h2>
 		<!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
 		<% if item.from_type == '1' %>
@@ -17,38 +16,43 @@
 			<%= "#{TAG_CN}: " %>
 			<% if item.tag_list.size > 0 %>
     		<% for tag in item.tag_list %>
-	    		<%= link_to h(tag), {:action => :tags, :id => tag} %>
+	    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
 	    	<% end %>
 			<% else %>
 	    	<%= "还没有#{TAG_CN}" %>
 			<% end %>
 		</li>
+		<li>
+			<% if (ratings_count = item.ratings.size) > 0 %>
+				<span class="rating"><%= "#{average_rating_value(item)}/10 (#{ratings_count}票)" %></span> |
+			<% else %>
+				<%= "还没有#{RATE_CN}" %> |
+			<% end %>
+			<% if (reviews_count = item.reviews.size) > 0 %>
+				<%= link_to "#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN}", item %>
+			<% else %>
+				<%= "还没有#{REVIEW_CN}" %>
+			<% end %>
+		</li>
 	</ul>
 </div>
 
-<div class="main">
+<div id="recipe_<%= item.id %>_main" class="main">
 	<ul>
-		<li>
-			<%= "#{RATE_CN}: " %>
-			<% if item.ratings.size > 0 %>
-				<%= "#{average_rating_value(item)}/10 (#{item.ratings.size}票)" %>
-			<% else %>
-				<%= "还没有#{RATE_CN}" %>
-			<% end %>
-		</li>
 		<%= paragraphs(item.description_summary) %>
 	</ul>
-	<% if (reviews_count = reviews_for(nil, 'recipe', item.id, nil, nil, 'created_at DESC').size) > 0 %>
-		<%= link_to "(#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN})", 
-								item %>
-	<% end %>
 </div>
 
 <% if show_todo %>
-	<div class="todo_right">
+	<div id="recipe_<%= item.id %>_todo" class="todo_right">
 		<% if item.user == @current_user %>
-			<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", edit_recipe_url(item) %> |
-			<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", item, :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
+			<% delete_message = "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?" %>
+			<%= link_to "#{EDIT_CN}", [item, :edit] %> | 
+			<% if delete_remote %>
+				<%= link_to_remote "#{DELETE_CN}", :url => item, :confirm => delete_message, :method => :delete %>
+			<% else %>
+				<%= link_to "#{DELETE_CN}", item, :confirm => delete_message, :method => :delete %>
+			<% end %>
 		<% end %>
 	</div>
 <% end %>

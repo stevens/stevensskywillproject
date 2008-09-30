@@ -3,38 +3,17 @@
 	<div class="block_header">
 		<div class="block_header_link">
 			<%= link_to SEE_CN, @self_url %> |
-			<%= link_to "#{@parent_name}的更多#{@self_name} (#{@photos_set_count})", @selfs_url %> |
+			<%= link_to "#{@parent_name}的更多#{PHOTO_CN} (#{@photos_set_count})", @selfs_url %> |
 			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_url %>
 		</div>
 		<h1><%= h @block_title %></h1>
 	</div>
 
 	<div class="block_main">
-		<table class="content">
-		  <tr>  	
-		    
-		    <td class="left_colomn">
-		    	<div class="sub_block">
-						<div class="portrait_photo">
-		    			<%= render :partial => "photo_photo",
-		    								 :locals => {:photo => @photo, 
-		    								 						 :photoable => @parent_obj, 
-		    								 						 :photo_style => 'portrait'} %>
-						</div>
-	    		</div>
-	    	</td>
-	    	
-	    	<td class="right_colomn">
-					<%= render :partial => "photo_edit", 
-										 :locals => {:photo => @photo, 
-										 						 :photoable => @parent_obj, 
-										 						 :do_url => @self_url,
-										 						 :html_method => 'put',
-										 						 :button_name => "#{SAVE_CHANGES_CN}"} %>
-	    	</td>
-	    	
-	    </tr>	
-		</table>	
+		<%= render :partial => "/photos/photo_input", 
+												    :locals => {:photoable => @parent_obj,
+												 						    :photo => @photo, 
+												 						    :is_new => false} %>
 	</div>
 	
 </div>

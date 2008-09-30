@@ -1,12 +1,4 @@
 module RecipesHelper
-
-	def recipe_tags_cloud(user, limit, order, at_least)
-		if user
-			user.recipes.tag_counts(:limit => limit, :order => order, :at_least => at_least)
-		else
-			Recipe.tag_counts(:limit => limit, :order => order, :at_least => at_least)
-		end
-	end
 	
 	def search_result_recipes(user, keywords, order, other_conditions)
 		if keywords && keywords != []
@@ -43,7 +35,7 @@ module RecipesHelper
 		highlighted_recipes
 	end
 	
-	def recipes_for(user, integrality, created_at_from, created_at_to, order)
+	def recipes_for(user, integrality = 'more_required', created_at_from = nil, created_at_to = nil, order = 'created_at DESC')
 		if user
 			user.recipes.find(:all, :order => order, 
 												:conditions => [recipes_conditions(integrality, created_at_from, created_at_to)])
@@ -53,7 +45,7 @@ module RecipesHelper
 		end
 	end
 	
-  def recipes_conditions(integrality, created_at_from, created_at_to)
+  def recipes_conditions(integrality = 'more_required', created_at_from = nil, created_at_to = nil)
   	conditions = ["title IS NOT NULL", 
   								"title <> ''", 
   								"description IS NOT NULL", 

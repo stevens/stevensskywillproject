@@ -1,7 +1,9 @@
-<% if item_type == 'user' %>
+<% item_type = type_for(item) %>
+
+<% if item_type == 'User' %>
 	<%= link_to image_tag(photo_file_url(user_portrait(item), 'cook', photo_style), :title => h(user_username(item))), 
 							user_first_link(item) %>
-<% elsif item_type == 'review' %>
+<% elsif item_type == 'Review' %>
 	<%= link_to image_tag(photo_file_url(user_portrait(item.user), 'cook', 'sign'), :title => h(user_username(item.user))), 
 							user_first_link(item.user) %>
 <% else %>

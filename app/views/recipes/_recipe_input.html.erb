@@ -1,3 +1,11 @@
+<% if is_new %>
+	<% button_name = "#{CREATE_CN}新#{RECIPE_CN}" %>
+	<% cancle_url = {:action => 'mine'} %>
+<% else %>
+	<% button_name = SAVE_CHANGES_CN %>
+	<% cancle_url = recipe %>
+<% end %>
+
 <% form_for recipe do |f| %>
 	<table class="content">
 		<tr>
@@ -211,7 +219,7 @@
 				<div class="submit">
 					<%= f.submit button_name, :class => "submit" %>
 					&nbsp;&nbsp;
-					<%= link_to "&raquo;#{CANCLE_CN}", :controller => 'mine', :action => 'recipes' %>
+					<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
 				</div>
 			</td>
 		</tr>

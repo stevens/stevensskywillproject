@@ -1,3 +1,17 @@
+<% if show_paginate %>
+	<% photos = items_paginate(photos_set) %>
+<% elsif limit %>
+	<% photos = photos_set[0..limit-1] %>
+<% else %>
+	<% photos = photos_set %>
+<% end %>
+<% photos_count_per_row = MATRIX_ITEMS_COUNT_PER_ROW_M %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => photos} %>
+<% end %>
+
 <table class="content">		
 	<% 1.upto(photos_rows_count(photos.size, photos_count_per_row)) do |r| %>
 		<tr>
@@ -10,18 +24,19 @@
 								<div class="matrix_photo">
 				    			<%= render :partial => "/photos/photo_photo",
 				    								 :locals => {:photo => photos[i-1], 
-				    								 						 :photoable => photoable, 
-				    								 						 :photo_link_url => photo_link_url, 
-				    								 						 :photo_style => photo_style, 
-				    								 						 :show_cover => show_cover} %>
+				    								 						 :photo_style => 'matrix', 
+				    								 						 :show_cover => show_cover, 
+				    								 						 :photo_link_url => nil} %>
 								</div>
 							<% end %>
 							
-							<div class="below_photo">
-								<%= render :partial => "/photos/photo_below_photo", 
-													 :locals => {:photo => photos[i-1], 
-													 						 :show_photo_todo => show_photo_todo} %>
-							</div>
+							<% if show_below_photo %>
+								<div class="below_photo">
+									<%= render :partial => "/photos/below_photo_photo", 
+														 :locals => {:photo => photos[i-1], 
+														 						 :show_photo_todo => show_photo_todo} %>
+								</div>
+							<% end %>
 							
 						</div>
 					</td>
@@ -32,3 +47,8 @@
 		</tr>	
 	<% end %>
 </table>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => photos} %>
+<% end %>

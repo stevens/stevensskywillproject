@@ -1,3 +1,17 @@
+<% if show_paginate %>
+	<% items = items_paginate(items_set) %>
+<% elsif limit %>
+	<% items = items_set[0..limit-1] %>
+<% else %>
+	<% items = items_set %>
+<% end %>
+<% items_count_per_row = MATRIX_ITEMS_COUNT_PER_ROW_M %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => items} %>
+<% end %>
+
 <table class="content">		
 	<% 1.upto(items_rows_count(items.size, items_count_per_row)) do |r| %>
 		<tr>
@@ -9,19 +23,19 @@
 							<% if show_photo %>
 								<div class="matrix_photo">
 				    			<%= render :partial => "/layouts/item_photo",
-				    								 :locals => {:item_type => item_type, 
-				    								 						 :item => items[i-1], 
-				    								 						 :photo_style => photo_style} %>
+				    								 :locals => {:item => items[i-1], 
+				    								 						 :photo_style => 'matrix'} %>
 								</div>
 							<% end %>
 							
-							<div class="below_photo">
-								<%= render :partial => "/layouts/item_below_photo", 
-													 :locals => {:item_type => item_type, 
-													 						 :item => items[i-1], 
-													 						 :show_title => show_title, 
-													 						 :show_photo_todo => show_photo_todo} %>
-							</div>
+							<% if show_below_photo %>
+								<div class="below_photo">
+									<%= render :partial => "/layouts/below_item_photo", 
+														 :locals => {:item => items[i-1], 
+														 						 :show_title => show_title, 
+														 						 :show_photo_todo => show_photo_todo} %>
+								</div>
+							<% end %>
 							
 						</div>
 					</td>
@@ -32,3 +46,8 @@
 		</tr>	
 	<% end %>
 </table>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => items} %>
+<% end %>

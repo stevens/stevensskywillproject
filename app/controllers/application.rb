@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include RecipesHelper
   include PhotosHelper
   include ReviewsHelper
-  include TagsHelper
+  include TaggingsHelper
   include RatingsHelper
   include PasswordsHelper
   include SettingsHelper
@@ -39,17 +39,14 @@ class ApplicationController < ActionController::Base
 		a = params[:action]
 		if c == 'site'
 			@current_tab_type = 'site'
-		elsif @self_type == 'cook' || (@user_id && @self_type == 'photo') || (@user_id && @self_type == 'review')
-			@current_tab_type = 'cook'
-		elsif c == 'mine' || (a == 'mine' && @self_type == 'photo') || (a == 'mine' && @self_type == 'review')
+		elsif c == 'mine' || a == 'mine'
 			@current_tab_type = 'mine'
-		elsif @self_type == 'recipe' || (@parent_type == 'Recipe' && @self_type == 'photo') || (params[:reviewable_type] == 'recipe' && @self_type == 'review')
-			@current_tab_type = 'recipe'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
-		end
-		if @current_tab_type
-			@current_tab_name = name_for(@current_tab_type)
+		elsif c == 'reviews' || c == 'photos' || c == 'taggings'
+			@current_tab_type = params[:reviewable_type] || params[:photoable_type] || params[:taggable_type]
+		else
+			@current_tab_type = c.singularize
 		end
 	end
 	
@@ -85,36 +82,25 @@ class ApplicationController < ActionController::Base
   end
  
 	def load_parent
-  	if ("#{@url}".include? "#{'recipe'.pluralize}") && !("#{params[:controller]}".include? "#{'recipe'.pluralize}") && !("#{params[:id]}".include? "#{'recipe'.pluralize}")
-  		@parent_type = 'Recipe'
-  	elsif ("#{@url}".include? "#{'photo'.pluralize}") && !("#{params[:controller]}".include? "#{'photo'.pluralize}") && !("#{params[:id]}".include? "#{'photo'.pluralize}")
-  		@parent_type = 'Photo'
-  	end
+		if params[:recipe_id]
+			@parent_type = 'Recipe'
+		elsif params[:photo_id]
+			@parent_type = 'Photo'
+		end
 		
 		if @parent_type
 			@parent_model = model_for(@parent_type)
 	 		@parent_name = name_for(@parent_type)
 	 		@parent_unit = unit_for(@parent_type)
-			parent_id_sym = @parent_type.foreign_key.to_sym
-			@parent_id = params[parent_id_sym]
-	 		
-	 		if @parent_id
-	 			@parent_obj = @parent_model.find(@parent_id)
-	 			if @parent_obj
-			 		@parent_title = @parent_obj.title
-			 		@parent_user = @parent_obj.user
-			 		@parent_user_title = @parent_user.login if @parent_user
-		 		end
-	 			@parent_url = restfu_url_for(nil, nil, {:type => @parent_type, :id => @parent_id}, nil)
-	 		end		
+			@parent_id = params[id_for(@parent_type).to_sym]
+	 		@parent_obj = @parent_model.find(@parent_id) if @parent_id
+	 		@parent_url = restfu_url_for(nil, {:type => nil, :id => nil}, {:type => @parent_type, :id => @parent_id}, nil)
  		end
 	end
 	
 	def load_self
-		st = params[:controller]
-		i = st.index('/')
-		st = st[i+1..st.length-1] if i
-		@self_type = st.singularize
+		@self_type = params[:controller].singularize.camelize
+		
 		if @self_type
 			@self_model = model_for(@self_type)
 			@self_name = name_for(@self_type)
@@ -140,11 +126,6 @@ class ApplicationController < ActionController::Base
 	
 	def clear_sidebar
 		@show_sidebar = false
-	end
-	
-	def items_paginate(items_set)
-		@items = items_set.paginate :page => params[:page], 
- 																 	 :per_page => LIST_ITEMS_COUNT_PER_PAGE_S		
 	end
 	
 	def store_location_if_logged_in

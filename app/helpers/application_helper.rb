@@ -1,3 +1,4 @@
+require 'iconv'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 	include TagsHelper
@@ -20,27 +21,38 @@ module ApplicationHelper
 		end
 	end
 	
-	def model_for(object_type)
-		object_type.camelize.constantize
+	def model_for(obj_type)
+		obj_type.camelize.constantize
 		rescue NameError
 			nil
 	end
 	
-	def name_for(object_type)
-		"#{object_type.upcase}_CN".constantize
+	def name_for(obj_type)
+		"#{obj_type.upcase}_CN".constantize
 		rescue NameError
 			nil
 	end
 	
-	def unit_for(object_type)
-		"UNIT_#{object_type.upcase}_CN".constantize
+	def unit_for(obj_type)
+		"UNIT_#{obj_type.upcase}_CN".constantize
 		rescue NameError
 			nil
 	end
 	
-	def type_for(object)
-		object.class.to_s
-		# object.class.to_s.downcase
+	def id_for(obj_type)
+		obj_type.downcase.foreign_key
+	end
+	
+	def type_for(obj)
+		obj.class.to_s
+	end
+	
+	def item_id(item)
+		type_for(item).downcase.foreign_key
+	end
+	
+	def controller_name(obj_type)
+		obj_type.downcase.pluralize
 	end
 	
 	def item_username(item)
@@ -53,10 +65,55 @@ module ApplicationHelper
 	
 	def user_username(user)
 		if @current_user && user == @current_user
-		 '我'
+			'我'
 		else
+			# 'TA'
 			user.login
 		end	
+	end
+	
+	def username_prefix(user)
+		if user
+			"#{user_username(user)}的"
+		else
+			nil
+		end
+	end
+	
+	def itemname_suffix(item)
+		if item
+			" < #{item_title(item)}"
+		else
+			nil
+		end
+	end
+	
+	def user_html_id(user = nil)
+		if user
+			"user_#{user.id}"
+		else
+			"all_users"
+		end
+	end
+	
+	def item_html_id(item_type, item_id = nil)
+		if item_id
+			"#{item_type.downcase}_#{item_id}"
+		else
+			item_type.downcase
+		end
+	end
+	
+	def items_html_id(item_type, itemable_type = nil, itemable_id = nil)
+		if itemable_type
+			"#{item_html_id(itemable_type, itemable_id)}_#{controller_name(item_type)}"
+		else
+			"all_#{controller_name(item_type)}"
+		end
+	end
+	
+	def user_items_html_id(item_type, itemable_type = nil, itemable_id = nil, user = nil)
+		"#{items_html_id(item_type, itemable_type, itemable_id)}_of_#{user_html_id(user)}"
 	end
 	
 	def item_title(item)
@@ -201,31 +258,18 @@ module ApplicationHelper
 	
 	def restfu_url_for(namespace, parent_obj, self_obj, action)
 		ns = "#{namespace}/" if namespace
-		po = "#{parent_obj[:type].pluralize.downcase}/#{parent_obj[:id]}/" if parent_obj && parent_obj[:type] && parent_obj[:id]
+		po = "#{controller_name(parent_obj[:type])}/#{parent_obj[:id]}/" if parent_obj && parent_obj[:type] && parent_obj[:id]
 		if self_obj
 			if self_obj[:type]
 				if self_obj[:id]
-					so = "#{self_obj[:type].pluralize.downcase}/#{self_obj[:id]}"
+					so = "#{controller_name(self_obj[:type])}/#{self_obj[:id]}"
 				else
-					so = "#{self_obj[:type].pluralize}"
+					so = "#{controller_name(self_obj[:type])}"
 				end
 			end
 		end
 		ac = "/#{action}" if action
 		"#{root_url}#{ns}#{po}#{so}#{ac}"
-	end
-	
-	def tagged_items(user, item_type, tag, order, conditions)
-		if user
-			conditions += " AND user_id = #{user.id}"
-			model_for(item_type).find_tagged_with(tag, :order => order, :conditions => [conditions])
-		else
-			model_for(item_type).find_tagged_with(tag, :order => order, :conditions => [conditions])
-		end
-	end
-	
-	def rated_items(user, item_type, min_rating, max_rating, conditions, order)
-
 	end
 	
 	def code_title(codeable_type, code)
@@ -260,6 +304,28 @@ module ApplicationHelper
 			else
 				"#{user_path(user)}/overview"
 			end
+		end
+	end
+	
+	def items_paginate(items_set, per_page = LIST_ITEMS_COUNT_PER_PAGE_S)
+		items_set.paginate :page => params[:page], 
+ 											 :per_page => per_page		
+	end
+	
+	def sort_by_gbk(items, method=:name) 
+		conv = Iconv.new("GBK", "utf-8") 
+		items.sort {|x, y| conv.iconv(x[method]) <=> conv.iconv(y[method])} 
+	end
+	
+	def gbk_for(str)
+		Iconv.iconv('GBK', 'utf-8', str)
+	end
+	
+	def page_for(current_page, items_set_count, items_count_per_page = LIST_ITEMS_COUNT_PER_PAGE_S)
+		if current_page && (current_page > 1) && (items_set_count <= (current_page - 1) * items_count_per_page)
+			current_page - 1
+		else
+			current_page
 		end
 	end
 		
