@@ -25,9 +25,9 @@ module PhotosHelper
 	
 	def default_photo_file_url(photoable_type, photo_style)
 		if photo_style == 'full'
-			"\default\/#{photoable_type}/\default_#{photoable_type}.png"
+			"\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}.png"
 		else
-			"\default\/#{photoable_type}/\default_#{photoable_type}_#{photo_size(photo_style)}.png"
+			"\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}_#{photo_size(photo_style)}.png"
 		end
 	end
 	
