@@ -173,6 +173,7 @@ div.tag {
 #current_user {
 	float:right;
 	margin-top: 10px;
+	margin-right: 13px;
 	z-index: 200;
 	color: #f1f1f1;
 }
