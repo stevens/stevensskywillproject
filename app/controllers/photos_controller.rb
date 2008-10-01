@@ -25,8 +25,10 @@ class PhotosController < ApplicationController
 		
 		if @photos_set_count == 1
 			@photo_index = 1
+			@photo_link_url = [@parent_obj, @photo]
 		else
 			get_prev_next
+			@photo_link_url = [@parent_obj, @next_photo]
 		end
 		
 		log_count(@photo)

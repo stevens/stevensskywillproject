@@ -29,7 +29,7 @@
 		<div class="sub_block">
 			<%= render :partial => "/photos/photo",
 								 :locals => {:photo => @photo,
-								 						 :photo_link_url => [@parent_obj, @next_photo], 
+								 						 :photo_link_url => @photo_link_url, 
 								 						 :show_parent => true, 
 								 						 :show_todo => true} %>
 		</div>
