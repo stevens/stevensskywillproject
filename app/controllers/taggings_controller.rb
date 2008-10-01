@@ -1,6 +1,7 @@
 class TaggingsController < ApplicationController
 	
 	before_filter :protect, :except => [:index]
+	before_filter :clear_location_unless_logged_in, :only => [:index]
 	before_filter :load_taggable_type
 	
 	def index 		
