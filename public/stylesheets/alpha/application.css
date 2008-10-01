@@ -330,7 +330,13 @@ div.tag {
 /* Content Table */
 table.content {
 	padding-top: 10px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
+}
+table.photo {
+	
+}
+.sidebar_panel_main table.content {
+	padding: 0px;
 }
 td {
 	vertical-align: top;

@@ -12,7 +12,7 @@
 						 :locals => {:items => photos} %>
 <% end %>
 
-<table class="content">		
+<table class="photo">		
 	<% 1.upto(photos_rows_count(photos.size, photos_count_per_row)) do |r| %>
 		<tr>
 			<% 1.upto(photos_count_per_row) do |c| %>
