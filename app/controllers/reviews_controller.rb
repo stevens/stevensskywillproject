@@ -3,21 +3,12 @@ class ReviewsController < ApplicationController
 	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
+	before_filter :load_reviewable_type, :only => [:index, :mine]
   
   # GET /reviews
   # GET /reviews.xml
   def index
-		load_reviewable_type
-    
-    load_reviews_set(@user)
-  	
-  	@show_todo = true if @parent_obj && @current_user
-  	
-  	info = "#{username_prefix(@user)}#{name_for(@reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})#{itemname_suffix(@parent_obj)}"
-		set_page_title(info)
-		set_block_title(info)
- 		
-    respond_to do |format|
+		respond_to do |format|
       if @user && @user == @current_user
       	if @reviewable_type
       		format.html { redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase }
@@ -25,6 +16,14 @@ class ReviewsController < ApplicationController
       		format.html { redirect_to :action => 'mine' }
       	end
       else
+		    load_reviews_set(@user)
+		  	
+		  	@show_todo = true if @parent_obj && @current_user
+		  	
+		  	info = "#{username_prefix(@user)}#{name_for(@reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})#{itemname_suffix(@parent_obj)}"
+				set_page_title(info)
+				set_block_title(info)
+
       	format.html # index.html.erb
       end
       format.xml  { render :xml => @reviews_set }
@@ -103,8 +102,6 @@ class ReviewsController < ApplicationController
   end
   
   def mine
-		load_reviewable_type
-		
     load_reviews_set(@current_user)
 		
 		@show_todo = true

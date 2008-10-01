@@ -1,25 +1,9 @@
 class TaggingsController < ApplicationController
 	
 	before_filter :protect, :except => [:index]
+	before_filter :load_taggable_type
 	
-	def index
-		if @parent_obj
-			@taggable_type = type_for(@parent_obj)
-			@taggable_id = @parent_obj.id
-		end
-		
-		if params[:taggable_type]
-			@taggable_type = params[:taggable_type].camelize
-		else
-			@taggable_type = 'Recipe'
-		end
-	
-  	load_tags_set(@user)
-  	
-  	info = "#{username_prefix(@user)}#{name_for(@taggable_type)}#{TAG_CN} (#{@tags_set_count})#{itemname_suffix(@parent_obj)}"
-		set_page_title(info)
-		set_block_title(info)
- 		
+	def index 		
     respond_to do |format|
       if @user && @user == @current_user
       	if @taggable_type
@@ -28,6 +12,12 @@ class TaggingsController < ApplicationController
       		format.html { redirect_to :action => 'mine' }
       	end
       else
+		  	load_tags_set(@user)
+		  	
+		  	info = "#{username_prefix(@user)}#{name_for(@taggable_type)}#{TAG_CN} (#{@tags_set_count})#{itemname_suffix(@parent_obj)}"
+				set_page_title(info)
+				set_block_title(info)
+		
       	format.html # index.html.erb
       end
       format.xml  { render :xml => @tags }
@@ -35,8 +25,6 @@ class TaggingsController < ApplicationController
 	end
 	
 	def show
-		@taggable_type = params[:taggable_type].camelize if params[:taggable_type]
-		
   	if params[:id]
 		 	load_taggables_set
 		 	
@@ -60,12 +48,6 @@ class TaggingsController < ApplicationController
 	end
 	
 	def mine
-		if params[:taggable_type]
-			@taggable_type = params[:taggable_type].camelize
-		else
-			@taggable_type = 'Recipe'
-		end
-		
 		load_tags_set(@current_user)
 		
   	info = "#{username_prefix(@current_user)}#{name_for(@taggable_type)}#{TAG_CN} (#{@tags_set_count})"
@@ -79,6 +61,16 @@ class TaggingsController < ApplicationController
 	end
 	
 	private
+	
+	def load_taggable_type
+		if @parent_type
+			@taggable_type = @parent_type
+		elsif params[:taggable_type]
+			@taggable_type = params[:taggable_type].camelize
+		else
+			@taggable_type = 'Recipe'
+		end
+	end
 	
 	def load_tags_set(user = nil)
 		if user && !@taggable_type

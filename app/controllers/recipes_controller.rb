@@ -7,16 +7,16 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.xml
   def index
-    load_recipes_set(@user)
-  	
-  	info = "#{username_prefix(@user)}#{RECIPE_CN} (#{@recipes_set_count})"
-		set_page_title(info)
-		set_block_title(info)
- 		
     respond_to do |format|
       if @user && @user == @current_user
       	format.html { redirect_to :action => 'mine' }
       else
+		    load_recipes_set(@user)
+		  	
+		  	info = "#{username_prefix(@user)}#{RECIPE_CN} (#{@recipes_set_count})"
+				set_page_title(info)
+				set_block_title(info)
+				
       	format.html # index.html.erb
       end
       format.xml  { render :xml => @recipes_set }

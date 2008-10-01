@@ -67,24 +67,21 @@ class UsersController < ApplicationController
   end
   
   def overview
-    if !(@user && @user == @current_user)
-    	@integrality = 'more_required'
-    end
-  
-  	load_user_recipes(@user)
-  	load_user_reviews(@user)
-	 	load_user_tags(@user)
-	 	
-	 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
-		set_page_title(info)
-		
-		show_sidebar
-		
     respond_to do |format|
       if @user && @user == @current_user
-      	@show_todo = true
       	format.html { redirect_to :controller => 'mine', :action => 'overview' }
       else
+		    @integrality = 'more_required'
+		  
+		  	load_user_recipes(@user)
+		  	load_user_reviews(@user)
+			 	load_user_tags(@user)
+			 	
+			 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
+				set_page_title(info)
+				
+				show_sidebar
+				
       	format.html # overview.html.erb
       end
     end
