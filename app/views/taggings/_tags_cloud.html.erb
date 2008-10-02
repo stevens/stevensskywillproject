@@ -11,6 +11,7 @@
 						 :locals => {:items => tags} %>
 <% end %>
 
+<div class="">
 <% tag_cloud tags, %w(css1 css2 css3 css4 css5 css6 css7) do |tag, css_class| %>
 	<% if taggable_type %>
 		<%= link_to h(tag.name), "#{root_path}#{taggable_type.downcase}/taggings/#{tag.name}", :class => css_class %>
@@ -18,6 +19,7 @@
 		<%= link_to h(tag.name), "#{taggings_path}/#{tag.name}", :class => css_class %>
 	<% end %>
 <% end %>
+</div>
 
 <% if show_paginate %>
 	<%= render :partial => "/layouts/items_paginate",

@@ -439,7 +439,6 @@ td.photo_item_cell {
 	background-color: #ffffff;
 	border: 1px #f1f1f1 solid;
 	border-top: none;
-	padding: 10px 0px;
 }
 .block_main table {
 	margin: 0px auto;
@@ -522,6 +521,9 @@ td.photo_item_cell {
 	padding: 10px;
 	border: 1px #f1f1f1 solid;
 	border-top: none;
+}
+div.sidebar_panel_main div.sub_block_tb {
+	padding: 0px;
 }
 .sidebar_panel_main li {
 	margin-bottom: 3px;
@@ -676,6 +678,9 @@ div.photos {
 	border-top: #f1f1f1 solid 1px;
 	border-bottom: #f1f1f1 solid 1px;
 }
+div.photos div.sub_block_tb {
+	padding: 0px;
+}
 div.photos a:hover {
 	background-color: transparent !important;	
 }
@@ -759,8 +764,7 @@ div.submit {
 	padding-right: 0px;
 }
 div.prev_next {
-	padding: 0px 10px;
-	margin-bottom: 10px;
+	padding: 10px;
 	color: #b8b9a7;
 }
 

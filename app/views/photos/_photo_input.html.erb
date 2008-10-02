@@ -9,6 +9,7 @@
 <% if is_new %>
 
 	<% form_for([photoable, photo], :html => { :multipart => true }) do |f| %>
+		<div class="sub_block_tb">
 		<table class="content">
 			<tr>
 				<td class="label">
@@ -66,10 +67,11 @@
 				</td>
 			</tr>
 		</table>
+		</div>
 	<% end %>
 	
 <% else %>
-
+	
 	<table class="content">
 	  <tr>  	
 	    

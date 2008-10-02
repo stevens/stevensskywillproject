@@ -12,6 +12,7 @@
 						 :locals => {:items => items} %>
 <% end %>
 
+<div class="sub_block_tb">
 <table class="content">		
 	<% 1.upto(items_rows_count(items.size, items_count_per_row)) do |r| %>
 		<tr>
@@ -46,6 +47,7 @@
 		</tr>	
 	<% end %>
 </table>
+</div>
 
 <% if show_paginate %>
 	<%= render :partial => "/layouts/items_paginate",

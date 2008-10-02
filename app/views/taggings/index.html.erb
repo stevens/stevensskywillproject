@@ -8,12 +8,12 @@
 	</div>
 	
 	<div id="tags_detail" class="block_main">
-		<div class="sub_block_lr">
-			<%= render :partial => "/taggings/tags_cloud",
-								 :locals => {:show_paginate => true, 
-								 						 :tags_set => @tags_set,
-								 						 :limit => nil,  
-								 						 :taggable_type => @taggable_type} %>
+		<div class="sub_block">
+		<%= render :partial => "/taggings/tags_cloud",
+							 :locals => {:show_paginate => true, 
+							 						 :tags_set => @tags_set,
+							 						 :limit => nil,  
+							 						 :taggable_type => @taggable_type} %>
 		</div>
 	</div>
 	
