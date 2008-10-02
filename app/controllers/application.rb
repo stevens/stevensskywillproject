@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   include PasswordsHelper
   include SettingsHelper
   include CountersHelper
+  include UsersHelper
   
   helper :all # include all helpers, all the time
 	
@@ -125,7 +126,7 @@ class ApplicationController < ActionController::Base
 	def load_user_bar
 		if @user
 			@user_bar = @user
-		elsif %w[mine].include?(params[:controller]) || %w[mine new edit].include?(params[:action])
+		elsif %w[mine].include?(params[:controller]) || (%w[mine new edit].include?(params[:action]) && !%w[settings accounts].include?(params[:controller]))
 			@user_bar = @current_user
 		elsif @parent_obj && @parent_obj.user
 			@user_bar = @parent_obj.user

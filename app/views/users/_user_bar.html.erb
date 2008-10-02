@@ -11,6 +11,10 @@
 			<td>
 				<div class="user_bar_username">
 					<%= user.login %>
+					<% if user == @current_user && !user_portrait(user) %>
+						&nbsp;
+						<span><%= link_to "快来#{UPLOAD_CN}#{PORTRAIT_CN}吧...", :controller => 'accounts', :action => 'edit', :id => 'portrait' %></span>
+					<% end %>
 				</div>
 				<div class="user_bar_link">
 					<%= link_to "厨师主页", :controller => 'users', :action => 'overview', :id => user.id %> |
