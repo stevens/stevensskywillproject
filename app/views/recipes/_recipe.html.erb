@@ -85,9 +85,11 @@
 			<li>
 				<%= "还没有#{VIDEO_CN}" %>
 			</li>
-			<li>
-				<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
-			</li>
+			<% if @current_user && item.user == @current_user %>
+				<li>
+					<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
+				</li>
+			<% end %>
 		<ul>
 	<% end %>
 </div>
