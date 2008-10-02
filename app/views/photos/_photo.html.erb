@@ -1,11 +1,3 @@
-<div id="photo_<%= photo.id %>_photo" class="photos">
-	<%= render :partial => "photo_photo",
-						 :locals => {:photo => photo, 
-						 						 :show_cover => false, 
-						 						 :photo_style => 'full', 
-						 						 :photo_link_url => photo_link_url} %>
-</div>
-
 <div id="photo_<%= photo.id %>_basic" class="basic">
 	<ul>
 		<li>
@@ -31,6 +23,10 @@
 	</ul>
 </div>
 
+<div id="photo_<%= photo.id %>_main" class="main">
+	<%= h photo.caption %>
+</div>
+
 <% if show_todo %>
 	<div id="photo_<%= photo.id %>_todo" class="todo_right">
 		<% if photo.user == @current_user %>
@@ -39,7 +35,3 @@
 		<% end %>
 	</div>
 <% end %>
-
-<div id="photo_<%= photo.id %>_main" class="main">
-	<%= h photo.caption %>
-</div>

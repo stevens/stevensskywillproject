@@ -329,8 +329,7 @@ div.tag {
 
 /* Content Table */
 table.content {
-	padding-top: 10px;
-	padding-bottom: 10px;
+
 }
 table.photo {
 	
@@ -440,6 +439,7 @@ td.photo_item_cell {
 	background-color: #ffffff;
 	border: 1px #f1f1f1 solid;
 	border-top: none;
+	padding: 10px 0px;
 }
 .block_main table {
 	margin: 0px auto;
@@ -558,6 +558,14 @@ td.photo_item_cell {
 	margin: auto;
 	width: 660px;
 }
+.sub_block_lr {
+	margin: auto;
+	padding: 0px 10px;
+}
+.sub_block_tb {
+	margin: auto;
+	padding: 10px 0px;
+}
 .sub_block_header {
 	padding-top: 3px;
 	padding-bottom: 3px;
@@ -598,7 +606,6 @@ div.portrait_photo {
 div.full_photo {
 	width: 658px;
 	margin: auto;
-	margin-bottom: 5px;
 	padding: 10px;
 	text-align: center;
 	background-color: #f5f5f5;
@@ -663,8 +670,7 @@ div.basic li {
 div.photos {
 	width: 658px;
 	padding: 10px;
-	margin: 0px -10px;
-	margin-bottom: 10px;
+	margin: 10px -10px;
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
@@ -715,7 +721,7 @@ div.todo {
 }
 div.todo_right {
 	margin-top: 5px;
-	margin-bottom: 10px;
+	/*margin-bottom: 10px;*/
 	color: #b8b9a7;
 	text-align: right;
 }
@@ -753,8 +759,8 @@ div.submit {
 	padding-right: 0px;
 }
 div.prev_next {
-	padding: 10px;
-	padding-bottom: 0px;
+	padding: 0px 10px;
+	margin-bottom: 10px;
 	color: #b8b9a7;
 }
 

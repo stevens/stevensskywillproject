@@ -26,10 +26,17 @@
 			<% end %>
 		</div>
 		
+		<div id="photo_<%= @photo.id %>_photo" class="full_photo">
+			<%= render :partial => "photo_photo",
+								 :locals => {:photo => @photo, 
+								 						 :show_cover => false, 
+								 						 :photo_style => 'full', 
+								 						 :photo_link_url => @photo_link_url} %>
+		</div>
+		
 		<div class="sub_block">
 			<%= render :partial => "/photos/photo",
 								 :locals => {:photo => @photo,
-								 						 :photo_link_url => @photo_link_url, 
 								 						 :show_parent => true, 
 								 						 :show_todo => true} %>
 		</div>

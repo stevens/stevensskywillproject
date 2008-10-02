@@ -18,6 +18,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/:taggable_type/taggings', :controller => 'taggings', :action => 'mine'
 	map.connect 'users/:user_id/:taggable_type/taggings', :controller => 'taggings', :action => 'index'
 	
+	map.connect ':searchable_type/searching/:id', :controller => 'searching', :action => 'show'
+	
 	map.search '/search', :controller => 'site', :action => 'search'
 	
   map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings]
