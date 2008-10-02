@@ -11,6 +11,7 @@ class RecipesController < ApplicationController
       if @user && @user == @current_user
       	format.html { redirect_to :action => 'mine' }
       else
+      	@integrality = 'more_required'
 		    load_recipes_set(@user)
 		  	
 		  	info = "#{username_prefix(@user)}#{RECIPE_CN} (#{@recipes_set_count})"
