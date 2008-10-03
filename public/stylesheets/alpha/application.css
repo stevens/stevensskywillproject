@@ -614,6 +614,9 @@ div.full_photo {
 	border-top: #f1f1f1 solid 1px;
 	border-bottom: #f1f1f1 solid 1px;
 }
+div.detail_photo {
+	margin-bottom: 5px;
+}
 span.normal_photo {
 	text-align: left;		
 }

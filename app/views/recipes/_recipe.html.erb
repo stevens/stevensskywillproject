@@ -60,11 +60,13 @@
 
 <div id="recipe_<%= item.id %>_photos" class="photos">
 	<% if cover_photo = cover_photo(item) %>
-		<%= render :partial => "/photos/photo_photo",
-							 :locals => {:photo => cover_photo, 
-							 						 :show_cover => false, 
-							 						 :photo_style => 'detail', 
-							 						 :photo_link_url => nil} %>
+		<div class="detail_photo">
+			<%= render :partial => "/photos/photo_photo",
+								 :locals => {:photo => cover_photo, 
+								 						 :show_cover => false, 
+								 						 :photo_style => 'detail', 
+								 						 :photo_link_url => nil} %>
+		</div>
 		<% if photos_set %>
 			<%= render :partial => "/photos/photos_matrix",
 								 :locals => {:show_paginate => false,
