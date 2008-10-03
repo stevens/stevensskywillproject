@@ -27,7 +27,7 @@
 		</div>
 		
 		<div id="photo_<%= @photo.id %>_photo" class="full_photo">
-			<%= render :partial => "photo_photo",
+			<%= render :partial => "/photos/photo_photo",
 								 :locals => {:photo => @photo, 
 								 						 :show_cover => false, 
 								 						 :photo_style => 'full', 

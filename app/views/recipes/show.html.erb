@@ -24,7 +24,7 @@
 		</div>
 		
 		<div id="recipe_<%= @recipe.id %>_self" class="sub_block">
-				<%= render :partial => "recipe",
+				<%= render :partial => "/recipes/recipe",
 									 :locals => {:item => @recipe, 
 									 						 :photos_set => @photos_set, 
 									 						 :show_todo => true} %>

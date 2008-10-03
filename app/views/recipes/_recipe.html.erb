@@ -59,16 +59,23 @@
 <% end %>
 
 <div id="recipe_<%= item.id %>_photos" class="photos">
-	<% if item.photos.size > 0 %>
-		<%= render :partial => "/photos/photos_matrix",
-							 :locals => {:show_paginate => false,
-							 						 :photos_set => photos_set,
-							 						 :limit => 6, 
-							 						 :show_photo => true, 
-							 						 :show_below_photo => false,
+	<% if cover_photo = cover_photo(item) %>
+		<%= render :partial => "/photos/photo_photo",
+							 :locals => {:photo => cover_photo, 
 							 						 :show_cover => false, 
-							 						 :show_photo_todo => false} %>
-	<% end %>					
+							 						 :photo_style => 'detail', 
+							 						 :photo_link_url => nil} %>
+		<% if photos_set %>
+			<%= render :partial => "/photos/photos_matrix",
+								 :locals => {:show_paginate => false,
+								 						 :photos_set => photos_set,
+								 						 :limit => 6, 
+								 						 :show_photo => true, 
+								 						 :show_below_photo => false,
+								 						 :show_cover => false, 
+								 						 :show_photo_todo => false} %>
+		<% end %>
+	<% end %>			
 	<div class="below_photo">
 		<%= render :partial => "/layouts/below_item_photo", 
 							 :locals => {:item => item, 
