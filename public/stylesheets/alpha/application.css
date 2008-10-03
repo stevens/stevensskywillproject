@@ -684,6 +684,9 @@ div.photos {
 div.photos div.sub_block_tb {
 	padding: 0px;
 }
+div.photos div.matrix_block {
+	padding: 0px;
+}
 div.photos a:hover {
 	background-color: transparent !important;	
 }
