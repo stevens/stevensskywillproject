@@ -217,7 +217,7 @@ Rails::Initializer.run do |config|
 	ACCOUNT_ID_CN = '帐户ID'
 	PASSWORD_CN = '密码'
 	EMAIL_CN = '邮件'
-	EMAIL_ADDRESS_CN = 'Email地址'
+	EMAIL_ADDRESS_CN = 'Email'
 	NICKNAME_CN = '昵称'
 	URL_CN = 'URL地址'
 	FILE_CN = '文件'
