@@ -245,15 +245,16 @@ module ApplicationHelper
 	end	
 	
 	def paragraphs(text)
+		ps = []
 		if text && text != ''
-			ps = text.split(/\n/)
-			1.upto(ps.size) do |i|
-				ps[i-1] = "<li>#{h text_squish(ps[i-1])}</li>"
+			ts = text.split(/\n/)
+			for t in ts
+				if (t = text_squish(t)) != ''
+					ps << "<li>#{h t}</li>"
+				end
 			end
-			ps
-		else
-			[]
 		end
+		ps
 	end
 	
 	def restfu_url_for(namespace, parent_obj, self_obj, action)
