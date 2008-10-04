@@ -1,5 +1,9 @@
 <!-- <% rank = %w[Abysmal Terrible Bad Poor Mediocre Fair Good Great Suberb Perfect] %> -->
 <% rank = %w[水到家 很糟糕 不咋样 有点逊 一般般 还不错 赞一个 非常好 棒极了 超完美] %>
+<% ratings_count = rateable.ratings.size %>
+<% average_rating_value = average_rating_value(rateable) %> 
+<% my_rating_value = user_rating_value(@current_user, rateable) %> 
+
 <div id="average_rating">
 	<div>	
 		<%= "平均#{RATE_CN}: " %>
@@ -14,7 +18,7 @@
 		</li>
 	</ul>
 </div>
-<% if @current_user %>
+<% if @current_user && rateable.user != @current_user %>
 	<div id="my_rating">
 		<div>
 			<%= "我的#{RATE_CN}: " %>
@@ -32,7 +36,7 @@
 				<li id="r<%= i %>">
 					<% name = "#{rank[i-1]}" %>
 					<%= link_to_remote "<span>#{name}</span>", 
-														 :url => {:controller => "ratings", :action => "rate", :id => i, :rateable_type => rateable_type, :rateable_id => rateable_id}, 
+														 :url => {:controller => "ratings", :action => "rate", :id => i, :rateable_type => type_for(rateable), :rateable_id => rateable.id}, 
 														 :html => {:title => ""} %>
 				</li>
 			<% end %>

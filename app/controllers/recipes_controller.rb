@@ -37,11 +37,6 @@ class RecipesController < ApplicationController
 		load_recipes_set(@recipe.user)
 		
 		@photos_set = []
-		# if cover_photo = cover_photo(@recipe)
-		# 	@photos_set << cover_photo
-		# 	@photos_set += (@recipe.photos - @photos_set)
-		# end
-		
 		if @cover_photo = cover_photo(@recipe)
 			@photos_set << @cover_photo
 			@photos_set = @recipe.photos - @photos_set

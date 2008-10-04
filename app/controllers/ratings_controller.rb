@@ -17,11 +17,7 @@ class RatingsController < ApplicationController
 	    render :update do |page|   
 	      page.replace_html "#{@rateable_type.downcase}_#{@rateable_id}_rating", 
 	      									:partial => "rate", 
-	      									:locals => {:ratings_count => @rateable.ratings.size, 
-	       															:average_rating_value => average_rating_value(@rateable), 
-	      															:my_rating_value => new_rating_value, 
-	      															:rateable_type => @rateable_type, 
-	      															:rateable_id => @rateable_id}   
+	      									:locals => {:rateable => @rateable}   
 	    end 		
   	else
   		flash[:notice] = "#{SORRY_CN}, 出现#{ERROR_CN}，请重新#{RATE_CN}!"

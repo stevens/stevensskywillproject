@@ -16,11 +16,7 @@
 	<div id="recipe_<%= @recipe.id %>_detail" class="block_main">
 		<div id="recipe_<%= @recipe.id %>_rating" class="rating">
 			<%= render :partial => "/ratings/rate",
-								 :locals => {:ratings_count => @recipe.ratings.size,
-								 						 :average_rating_value => average_rating_value(@recipe), 
-								 						 :my_rating_value => user_rating_value(@current_user, @recipe), 
-								 						 :rateable_type => 'recipe',
-								 						 :rateable_id => @recipe.id} %>
+								 :locals => {:rateable => @recipe} %>
 		</div>
 		
 		<div id="recipe_<%= @recipe.id %>_self" class="sub_block">
