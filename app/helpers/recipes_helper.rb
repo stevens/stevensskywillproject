@@ -54,47 +54,7 @@ module RecipesHelper
   								"privacy IS NOT NULL"]
   	conditions << "cover_photo_id IS NOT NULL" if photo_required
   	conditions << "status >= #{status}" if status
-  	conditions << "privacy <= #{privacy}" if privacy
-  	
-  	# case integrality
-		# when 'photo_required'
-		# 	conditions << "cover_photo_id IS NOT NULL"
-		# when 'more_required'
-		# 	conditions << ["cover_photo_id IS NOT NULL",
-		# 					 			 "ingredients IS NOT NULL", 
-		# 								 "ingredients <> ''", 
-		# 								 "directions IS NOT NULL", 
-		# 								 "directions <> ''", 
-		# 								 "difficulty IS NOT NULL", 
-		# 								 "cook_time IS NOT NULL"]
-		# when 'most_required'
-		# 	conditions << ["cover_photo_id IS NOT NULL",
-		# 					 			 "ingredients IS NOT NULL", 
-		# 								 "ingredients <> ''", 
-		# 								 "directions IS NOT NULL", 
-		# 								 "directions <> ''", 
-		# 								 "difficulty IS NOT NULL", 
-		# 								 "cook_time IS NOT NULL", 
-		# 								 "prep_time IS NOT NULL", 
-		# 								 "yield IS NOT NULL", 
-		# 								 "yield <> ''"]
-		# when 'full_required'
-		# 	conditions << ["cover_photo_id IS NOT NULL",
-		# 					 			 "ingredients IS NOT NULL", 
-		# 								 "ingredients <> ''", 
-		# 								 "directions IS NOT NULL", 
-		# 								 "directions <> ''", 
-		# 								 "difficulty IS NOT NULL", 
-		# 								 "cook_time IS NOT NULL", 
-		# 								 "prep_time IS NOT NULL", 
-		# 								 "yield IS NOT NULL", 
-		# 								 "yield <> ''", 
-		# 								 "tips IS NOT NULL", 
-		# 								 "tips <> ''", 
-		# 								 "any_else IS NOT NULL", 
-		# 								 "any_else <> ''"]
-		# end
-		
+  	conditions << "privacy <= #{privacy}" if privacy		
 		conditions << "recipes.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
 		conditions << "recipes.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
@@ -115,17 +75,16 @@ module RecipesHelper
 					if recipe.tips && !recipe.tips.blank? &&
 						 recipe.video_url && !recipe.video_url.blank? &&
 						 recipe.any_else && !recipe.any_else.blank?
-						status = '4'
-					else
 						status = '3'
+					else
+						status = '2'
 					end
 				else
-					status = '2'
+					status = '1'
 				end
 			else
-				status = '1'
+				status = '0'
 			end
-			status = ''
 		end	
   end
   
