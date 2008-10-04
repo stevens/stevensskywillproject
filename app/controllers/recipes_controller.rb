@@ -234,7 +234,7 @@ class RecipesController < ApplicationController
   end
 	
 	def load_search_result(user, keywords)
-		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC', recipes_conditions('more_required', nil, nil))
+		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC', recipes_conditions(true, '1', '11'))
 		@recipes_set_count = @recipes_set.size
 	end
   

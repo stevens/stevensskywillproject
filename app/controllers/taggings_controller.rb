@@ -89,7 +89,7 @@ class TaggingsController < ApplicationController
 	def load_taggables_set(user = nil)
 		case @taggable_type
 		when 'Recipe'
-			@taggables_set = taggables_for(user, @taggable_type, params[:id], recipes_conditions('more_required'))
+			@taggables_set = taggables_for(user, @taggable_type, params[:id], recipes_conditions(true, '1', '11'))
 		end
 		@taggables_set_count = @taggables_set.size if @taggables_set
 	end
