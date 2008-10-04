@@ -585,6 +585,7 @@ div.sidebar_panel_main div.sub_block_tb {
 	margin: auto;
 	padding-top: 10px;
 	width: 106px;
+	text-align: center !important;
 }
 
 /* Photo Div */
@@ -640,9 +641,11 @@ img.icon {
 	border: 4px #fcc601 solid;	
 }
 div.below_photo {
+	margin: 0px auto;
 	text-align: center;
 	color: #b8b9a7;
 	word-break: keep-all;
+	width: 96px;
 }
 div.below_photo li {
 	margin-bottom: 3px;
