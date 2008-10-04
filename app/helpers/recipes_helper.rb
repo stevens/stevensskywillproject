@@ -103,15 +103,17 @@ module RecipesHelper
   def recipe_status(recipe)
   	if recipe.title && !recipe.title.blank? &&
   		 recipe.description && !recipe.description.blank? &&
-  		 recipe.from_type &&
-  		 recipe.privacy
+  		 recipe.from_type && !recipe.from_type.blank? && 
+  		 recipe.privacy && !recipe.privacy.blank?
   		if recipe.ingredients && !recipe.ingredients.blank? &&
   			 recipe.directions && !recipe.directions.blank? &&
-  			 recipe.difficulty && 
-  			 recipe.cook_time
-				if recipe.prep_time && 
+  			 recipe.difficulty && !recipe.difficulty.blank?
+				if recipe.prep_time && !recipe.prep_time.blank? &&
+					 recipe.cook_time && !recipe.cook_time.blank? &&
+					 recipe.cost && !recipe.cost.blank? &&
 					 recipe.yield && !recipe.yield.blank?
 					if recipe.tips && !recipe.tips.blank? &&
+						 recipe.video_url && !recipe.video_url.blank? &&
 						 recipe.any_else && !recipe.any_else.blank?
 						status = '4'
 					else
@@ -123,6 +125,7 @@ module RecipesHelper
 			else
 				status = '1'
 			end
+			status = ''
 		end	
   end
   
