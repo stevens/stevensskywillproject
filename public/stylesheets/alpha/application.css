@@ -743,6 +743,10 @@ div.todo_button {
 	width: 120px;
 	text-align: center;
 }
+div.rating div.todo_button {
+	margin-top: 20px;
+	margin-left: 25px;
+}
 .todo_button a, .todo_button a:link, .todo_button a:visited {
 	display: block;
 	padding-top: 3px;
@@ -906,7 +910,7 @@ div.pagination a, div.pagination span {
 div.rating {
 	float: right;
 	margin-top: 10px;
-	margin-right: 10px;
+	padding-right: 10px;
 	color: #b8b9a7;
 }
 span.rating {

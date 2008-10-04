@@ -1,6 +1,10 @@
 class RatingsController < ApplicationController
 
   before_filter :protect
+  
+  def new
+		redirect_to @parent_obj if @parent_obj
+  end
        
   def rate
   	load_rateable
