@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
       		format.html { redirect_to :action => 'mine' }
       	end
       else
-		    load_reviews_set(@user)
+		    load_reviews_set(@user) if !@parent_obj
 		  	
 		  	@show_todo = true if @parent_obj && @current_user
 		  	

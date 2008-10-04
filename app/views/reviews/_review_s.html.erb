@@ -4,7 +4,11 @@
 			<li>
 				<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
-				<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h(item.reviewable.title), item.reviewable %><%= "的#{REVIEW_CN}" %>
+				<% if item.reviewable_type == 'Recipe' && item.reviewable == recipe_for(item.reviewable.user, item.reviewable.id) %>
+					<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h(item.reviewable.title), item.reviewable %><%= "的#{REVIEW_CN}" %>
+				<% else %>
+					<%= h "#{name_for(item.reviewable_type)}-#{item.reviewable.title}的#{REVIEW_CN}" %>
+				<% end %>
 			</li>
 			<li>
 				<%= time_iso_format(item.created_at) %>

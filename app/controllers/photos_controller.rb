@@ -3,6 +3,7 @@ class PhotosController < ApplicationController
 	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location, :only => [:index, :show, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
+	before_filter :check_photoable_accesible
 	before_filter :load_photos_set
   
   # GET /photos
@@ -21,7 +22,7 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.xml
   def show
-		load_photo													
+		load_photo if @photoable_accesible
 		
 		if @photos_set_count == 1
 			@photo_index = 1
@@ -46,7 +47,7 @@ class PhotosController < ApplicationController
   # GET /photos/new
   # GET /photos/new.xml
   def new
-    @photo = @current_user.photos.build
+    @photo = @parent_obj.photos.build if @parent_obj.user == @current_user
     
    	info = "新#{name_for(@parent_type)}#{PHOTO_CN}#{itemname_suffix(@parent_obj)}"
 		set_page_title(info)
@@ -60,7 +61,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/1/edit
   def edit
-  	load_photo
+  	load_photo(@current_user)
     
   	@photo_file_url = photo_file_url(@photo, @parent_type, 'list')
   	@photo_url = @self_url
@@ -105,7 +106,7 @@ class PhotosController < ApplicationController
   # PUT /photos/1
   # PUT /photos/1.xml
   def update
-    load_photo
+    load_photo(@current_user)
 
 	  if @photo.update_attributes(params[:photo])
 	    if params[:is_cover]
@@ -125,7 +126,7 @@ class PhotosController < ApplicationController
   # DELETE /photos/1
   # DELETE /photos/1.xml
   def destroy
-    load_photo
+    load_photo(@current_user)
   	
     if @photo.is_cover?(@parent_obj)
     	if @photos_set_count == 1
@@ -150,6 +151,23 @@ class PhotosController < ApplicationController
   end
   
 	private
+	
+	def check_photoable_accesible
+		if @parent_obj
+			if @parent_type == 'Recipe'
+				if @parent_obj == recipe_for(@parent_obj.user, @parent_id)
+					pa = true
+				else
+					pa = false
+				end
+			else
+				pa = false
+			end
+		else
+			pa = false
+		end
+		@photoable_accesible = pa
+	end
 	
 	def get_prev_next
     1.upto(@photos_set_count) do |i|
@@ -179,8 +197,10 @@ class PhotosController < ApplicationController
   end
   
   def load_photos_set(user = nil)
- 		@photos_set = photos_for(user, @parent_type, @parent_id)
-  	@photos_set_count = @photos_set.size
+  	if @photoable_accesible
+	 		@photos_set = photos_for(user, @parent_type, @parent_id)
+	  	@photos_set_count = @photos_set.size
+  	end
   end
 	
 	def after_create_ok

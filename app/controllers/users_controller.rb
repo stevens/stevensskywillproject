@@ -71,7 +71,7 @@ class UsersController < ApplicationController
       if @user && @user == @current_user
       	format.html { redirect_to :controller => 'mine', :action => 'overview' }
       else
-		    @integrality = 'more_required'
+		    # @integrality = 'more_required'
 		  
 		  	load_user_recipes(@user)
 		  	load_user_reviews(@user)
@@ -90,12 +90,12 @@ class UsersController < ApplicationController
 	private
 
 	def load_user_recipes(user = nil)
-		@recipes_set = recipes_for(user, @integrality, nil, nil, 'created_at DESC')
+		@recipes_set = recipes_for(user)
 		@recipes_set_count = @recipes_set.size
 	end
 	
 	def load_user_reviews(user = nil)
-		@reviews_set = reviews_for(user, @reviewable_type, nil, nil, nil, 'created_at DESC')
+		@reviews_set = reviews_for(user, @reviewable_type, nil)
 		@reviews_set_count = @reviews_set.size
 	end
 	

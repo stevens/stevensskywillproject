@@ -264,7 +264,7 @@ Rails::Initializer.run do |config|
 	SORRY_CN = '对不起'
 	
 	#SIZE constants
-	LIST_ITEMS_COUNT_PER_PAGE_S = 10
+	LIST_ITEMS_COUNT_PER_PAGE_S = 20
 	LIST_ITEMS_COUNT_PER_PAGE_M = 50
 	LIST_ITEMS_COUNT_PER_PAGE_L = 100
 	

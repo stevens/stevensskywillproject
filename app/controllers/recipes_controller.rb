@@ -11,7 +11,7 @@ class RecipesController < ApplicationController
       if @user && @user == @current_user
       	format.html { redirect_to :action => 'mine' }
       else
-      	@integrality = 'more_required'
+      	# @integrality = 'more_required'
 		    load_recipes_set(@user)
 		  	
 		  	info = "#{username_prefix(@user)}#{RECIPE_CN} (#{@recipes_set_count})"
@@ -30,9 +30,9 @@ class RecipesController < ApplicationController
   def show
 		load_recipe
 		
-    if @recipe.user != @current_user
-    	@integrality = 'more_required'
-    end
+    # if @recipe.user != @current_user
+    # 	@integrality = 'more_required'
+    # end
 			
 		load_recipes_set(@recipe.user)
 		
@@ -87,10 +87,10 @@ class RecipesController < ApplicationController
   # POST /recipes.xml
   def create
     @recipe = @current_user.recipes.build(params[:recipe])
-    @recipe.privacy = '10'
+    @recipe.status = recipe_status(@recipe)
     
 		if @recipe.save
-			@recipe.tag_list = params[:tags]
+			@recipe.tag_list = params[:tags].strip if !params[:tags].strip.blank?
 			after_create_ok
 		else
 			after_create_error
@@ -101,10 +101,10 @@ class RecipesController < ApplicationController
   # PUT /recipes/1.xml
   def update
     load_recipe(@current_user)
-    @recipe.privacy = '10'
+    @recipe.status = recipe_status(@recipe)
 
 	  if @recipe.update_attributes(params[:recipe])
-	  	@recipe.tag_list = params[:tags]
+	  	@recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
 			after_update_ok
 	  else
 			after_update_error
@@ -123,10 +123,10 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	@integrality = 'more_required'
+  	# @integrality = 'more_required'
   	
-  	@highlighted_recipes = highlighted_recipes(nil, @integrality, Time.today - 60.days, nil, 'created_at DESC')
-  	@highlighted_recipe = @highlighted_recipes.rand
+  	# @highlighted_recipes = highlighted_recipes(nil, @integrality, Time.today - 60.days, nil, 'created_at DESC')
+  	# @highlighted_recipe = @highlighted_recipes.rand
 	  
 	  load_recipes_set
 	  load_reviews_set
@@ -194,14 +194,31 @@ class RecipesController < ApplicationController
   
   def load_recipe(user = nil)
   	if user
- 			@recipe = user.recipes.find(@self_id)
+ 			recipe = user.recipes.find(@self_id)
  		else
- 			@recipe = Recipe.find(@self_id)
+ 			recipe = Recipe.find(@self_id)
+ 		end
+ 		if @current_user
+ 			if recipe.user == @current_user
+ 				@recipe = recipe
+ 			else
+ 				if recipe.cover_photo_id && recipe.status.to_i >= 1 && recipe.privacy != '90'
+ 					@recipe = recipe
+ 				else
+ 					@recipe = nil
+ 				end
+ 			end
+ 		else
+ 			if recipe.cover_photo_id && recipe.status.to_i >= 1 && recipe.privacy == '10'
+ 				@recipe = recipe
+ 			else
+ 				@recipe = nil
+ 			end
  		end
   end
   
   def load_recipes_set(user = nil)
- 		@recipes_set = recipes_for(user, @integrality)
+ 		@recipes_set = recipes_for(user)
   	@recipes_set_count = @recipes_set.size
   end
   
