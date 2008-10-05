@@ -60,6 +60,10 @@ class ApplicationController < ActionController::Base
 		@block_title = info
 	end
 	
+	def set_system_notice(info)
+		@system_notice = info
+	end
+	
 	# def param_posted?(symbol)
 	# 	request.post? and params[symbol]
 	# end
