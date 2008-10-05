@@ -91,7 +91,7 @@ class RecipesController < ApplicationController
     @recipe.status = recipe_status(@recipe)
     
 		if @recipe.save
-			@recipe.tag_list = params[:tags].strip if !params[:tags].strip.blank?
+			@recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
 			after_create_ok
 		else
 			after_create_error
