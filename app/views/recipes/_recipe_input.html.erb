@@ -153,6 +153,20 @@
 		</tr>
 		<tr>
 			<td class="label">
+				<label for="any_else"><%= "闲话:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "可以在这里#{INPUT_CN}其他任何的内容" %>
+				</div>
+				<div class="input">
+					<%= f.text_area :any_else %>
+				</div>
+				<%= error_message_on "recipe", "any_else" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
 				<label for="video_url"><%= "#{VIDEO_URL_CN}:" %></label>
 			</td>
 			<td class="input">
@@ -198,20 +212,6 @@
 					<%= f.select :privacy, Code.find(:all, :conditions => {:codeable_type => 'privacy'}).collect {|c| [ c.title, c.code ] } %>
 				</div>
 				<%= error_message_on "recipe", "privacy" %>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
-				<label for="any_else"><%= "闲话:" %></label>
-			</td>
-			<td class="input">
-				<div class="text">
-					<%= "可以在这里#{INPUT_CN}其他任何的内容" %>
-				</div>
-				<div class="input">
-					<%= f.text_area :any_else %>
-				</div>
-				<%= error_message_on "recipe", "any_else" %>
 			</td>
 		</tr>
 		<tr>
