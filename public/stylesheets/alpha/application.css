@@ -593,7 +593,7 @@ div.matrix_photo {
 	margin: 0px auto;
 	padding: 4px 0px;
 	text-align: center;
-	height: 104px;
+	height: 105px;
 }
 div.list_photo {
 	margin: auto;
@@ -626,18 +626,18 @@ img.icon {
 	margin-right: 2px;
 	background-color: transparent;
 }
-.full_photo img {
-	/*border: 4px #eeeeee solid;*/
+.matrix_photo img, .full_photo img, .cover_photo img {
+	border: #f1f1f1 solid 1px;
 }
 .matrix_photo img.cover {
-	margin-top: -4px;
+	margin-top: -3px;
 	border: 4px #ff8159 solid;
 }
 .matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover, .full_photo a:hover, .normal_photo a:hover {
 	background-color: transparent !important;	
 }
 .matrix_photo a:hover img {
-	margin-top: -4px;
+	margin-top: -3px;
 	border: 4px #fcc601 solid;	
 }
 div.below_photo {
