@@ -5,10 +5,10 @@ module TaggingsHelper
 			if user || taggable_id
 				if at_most
 					model_for(taggable_type).tag_counts(:at_least => at_least, :at_most => at_most, :limit => limit, :order => order, 
-																							:conditions => [tags_conditions(user, taggable_type, taggable_id)])
+																							:conditions => [tag_conditions(user, taggable_type, taggable_id)])
 				else
 					model_for(taggable_type).tag_counts(:at_least => at_least, :limit => limit, :order => order, 
-																							:conditions => [tags_conditions(user, taggable_type, taggable_id)])	
+																							:conditions => [tag_conditions(user, taggable_type, taggable_id)])	
 				end
 			else
 				if at_most
@@ -26,7 +26,7 @@ module TaggingsHelper
 		end
 	end
 	
-  def tags_conditions(user, taggable_type, taggable_id)
+  def tag_conditions(user, taggable_type, taggable_id)
   	conditions = []
   	conditions << "user_id = #{user.id}" if user
   	conditions << "#{controller_name_for(taggable_type)}.id = #{taggable_id}" if taggable_type && taggable_id
