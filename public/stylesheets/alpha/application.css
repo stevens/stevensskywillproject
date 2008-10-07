@@ -24,6 +24,10 @@ img {
 body {
 	background-color: #ffffff;
 }
+em {
+	font-style: normal;
+	font-weight: bold;
+}
 a, a:link, a:visited {
 	text-decoration: none;
 }

@@ -26,8 +26,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "请#{INPUT_CN}与#{RECIPE_CN}有关的关键字作为#{TAG_CN}, 可方便#{RECIPE_CN}的#{SEARCH_CN}和#{CATEGORY_CN}" %><br />
-					<%= "#{TAG_CN}之间请用\"空格\"分隔, 如: \"鱼肉 咖喱 东南亚 生日\"" %>
+					<%= "为了让大伙儿更容易发现你的#{RECIPE_CN}, 请准确#{INPUT_CN}与#{RECIPE_CN}有关的关键字作为#{TAG_CN}" %><br />
+					<%= "<em>#{TAG_CN}之间请用\"空格\"分隔</em>, 如: \"鱼肉 咖喱 东南亚 生日\"" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :tag_list, :class => "text" %>
@@ -114,7 +114,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "每一行请只#{INPUT_CN}一种#{INGREDIENT_CN}, 并按照\"用料名称 用量 补充说明\"的格式(以\"空格\"分隔)" %><br />
+					<%= "<em>每一行请只#{INPUT_CN}一种#{INGREDIENT_CN}</em>" %><br />
+					<%= "<em>并按照\"用料名称 用量 补充说明\"的格式, 用\"空格\"分隔</em>" %><br />
 					<%= "如: 猪里脊肉 500g" %>
 				</div>
 				<div class="input">
@@ -129,7 +130,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "请#{INPUT_CN}#{DIRECTION_CN}和步骤等, 每个段落会自动编号" %>
+					<%= "请#{INPUT_CN}#{DIRECTION_CN}和步骤等" %><br />
+					<%= "<em>每个段落会自动编号, 不需要自己再加编号了</em>" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :directions %>
@@ -143,7 +145,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "请#{INPUT_CN}有关的注意事项, 每个段落会自动编号" %>
+					<%= "请#{INPUT_CN}有关的注意事项" %><br />
+					<%= "<em>每个段落会自动编号, 不需要自己再加编号了</em>" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :tips %>
@@ -220,7 +223,9 @@
 			<td class="input">
 				<br />
 				<div class="text">
-					<%= "当你还来不及完成#{RECIPE_CN}的时候, 可以先#{SAVE_CN}为草稿" %>
+					<%= "当你还来不及完成#{RECIPE_CN}的时候, 可以先#{SAVE_CN}为草稿" %><br />
+					<%= "想跟大伙儿分享你的#{RECIPE_CN}, 请输入更完整的#{RECIPE_CN}信息" %><br />
+					<%= "<em>没有#{PHOTO_CN}或者信息不够完整的#{RECIPE_CN}, 会自动保存为草稿</em>" %>
 				</div>
 				<div class="input">
 					<%= f.check_box :is_draft %><%= " 保存为草稿" %>
