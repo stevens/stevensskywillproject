@@ -12,7 +12,6 @@ class RecipesController < ApplicationController
       if @user && @user == @current_user
       	format.html { redirect_to :action => 'mine' }
       else
-      	# @integrality = 'more_required'
 		    load_recipes_set(@user)
 		  	
 		  	info = "#{username_prefix(@user)}#{RECIPE_CN} (#{@recipes_set_count})"
@@ -30,10 +29,6 @@ class RecipesController < ApplicationController
   # GET /recipes/1.xml
   def show
 		load_recipe
-		
-    # if @recipe.user != @current_user
-    # 	@integrality = 'more_required'
-    # end
 			
 		load_recipes_set(@recipe.user)
 		
@@ -135,8 +130,6 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	# @integrality = 'more_required'
-  	
   	# @highlighted_recipes = highlighted_recipes(nil, @integrality, Time.today - 60.days, nil, 'created_at DESC')
   	# @highlighted_recipe = @highlighted_recipes.rand
 	  
@@ -251,7 +244,7 @@ class RecipesController < ApplicationController
   end
 	
 	def load_search_result(user, keywords)
-		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC', recipes_conditions(true, '1', '11'))
+		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC', recipe_conditions({:photo_required => true, :status => '1', :privacy => '11', :is_draft => '0'}))
 		@recipes_set_count = @recipes_set.size
 	end
   
