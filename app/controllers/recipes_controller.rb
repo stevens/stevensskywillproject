@@ -130,8 +130,8 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	# @highlighted_recipes = highlighted_recipes(nil, @integrality, Time.today - 60.days, nil, 'created_at DESC')
-  	# @highlighted_recipe = @highlighted_recipes.rand
+  	@highlighted_recipes = highlighted_recipes(nil, recipe_conditions({:photo_required => true, :status => '1', :privacy => recipe_privacy_cond, :is_draft => '0', :created_at_from => Time.today - 30.days}))
+  	@highlighted_recipe = @highlighted_recipes.rand
 	  
 	  load_recipes_set
 	  load_reviews_set
@@ -198,8 +198,8 @@ class RecipesController < ApplicationController
   private
   
   def system_notice
-  	info = "号外: 可爱的蜂厨们, 现在可以对食谱进行隐私设置了!"
-  	set_system_notice(info)
+  	# info = "号外: 可爱的蜂厨们, 现在可以对食谱进行隐私设置了!"
+  	# set_system_notice(info)
   end
   
   def load_recipe(user = nil)
