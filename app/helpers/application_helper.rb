@@ -63,36 +63,11 @@ module ApplicationHelper
 		end
 	end
 	
-	def user_username(user)
-		if @current_user && user == @current_user
-			'我'
-		else
-			# 'TA'
-			user.login
-		end	
-	end
-	
-	def username_prefix(user)
-		if user
-			"#{user_username(user)}的"
-		else
-			nil
-		end
-	end
-	
 	def itemname_suffix(item)
 		if item
 			" < #{item_title(item)}"
 		else
 			nil
-		end
-	end
-	
-	def user_html_id(user = nil)
-		if user
-			"user_#{user.id}"
-		else
-			"all_users"
 		end
 	end
 	
@@ -298,16 +273,6 @@ module ApplicationHelper
 		end
 	end
 	
-	def user_first_link(user)
-		if user
-			if user == @current_user
-				url_for(:controller => 'mine', :action => 'overview')
-			else
-				"#{user_path(user)}/overview"
-			end
-		end
-	end
-	
 	def items_paginate(items_set, per_page = LIST_ITEMS_COUNT_PER_PAGE_S)
 		items_set.paginate :page => params[:page], 
  											 :per_page => per_page		
@@ -329,5 +294,29 @@ module ApplicationHelper
 			current_page
 		end
 	end
+	
+	def conditions_for(item_type, item_conds)
+		if item_type && item_conds
+			case item_type
+			when 'Recipe'
+				recipe_conditions(item_conds)
+			end
+		end
+	end
+	
+	# --------------与数字处理相关的方法--------------
+	
+	# i 原始数, n 要保留的小数位数, flag=1 四舍五入 flag=0 不四舍五入
+	def f(i, n=2, flag=1)
+	  y = 1  
+	  n.times do |x|   
+	  	y = y*10  
+	  end   
+	  if flag==1  
+	  	(i*y).round/(y*1.0)   
+	  else  
+	  	(i*y).floor/(y*1.0)   
+	  end   
+	end 
 		
 end

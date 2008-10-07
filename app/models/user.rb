@@ -1,6 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  has_many :recipes, :order => "created_at DESC"
+  has_many :recipes, :order => "published_at DESC, created_at DESC"
   has_many :photos, :order => "created_at"
   has_many :reviews, :order => "created_at DESC"
   has_many :ratings, :order => "updated_at DESC"
@@ -147,6 +147,7 @@ class User < ActiveRecord::Base
 	#以下为新增方法，记录最近登录时间和累计登录次数
 	def log_loggedin
 		self.latest_loggedin_at = Time.now
+		# User.increment_counter(:login_count, id)
 		current_login_count = self.login_count ? self.login_count : 0
 		self.login_count = current_login_count + 1
 		save(false)

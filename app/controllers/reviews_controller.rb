@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
       else
 		    load_reviews_set(@user) if !@parent_obj
 		  	
-		  	@show_todo = true if @parent_obj && @current_user
+		  	# @show_todo = true if @parent_obj && @current_user
 		  	
 		  	info = "#{username_prefix(@user)}#{name_for(@reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})#{itemname_suffix(@parent_obj)}"
 				set_page_title(info)
@@ -135,7 +135,9 @@ class ReviewsController < ApplicationController
   end
   
   def load_reviews_set(user = nil)
- 		@reviews_set = reviews_for(user, @reviewable_type, @parent_id)
+  	review_conditions = review_conditions({:reviewable_type => @reviewable_type, :reviewable_id =>@parent_id})
+ 		reviewable_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)})
+ 		@reviews_set = reviews_for(user, review_conditions, @reviewable_type, reviewable_conditions)
   	@reviews_set_count = @reviews_set.size
   end
 	

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 15) do
+ActiveRecord::Schema.define(:version => 16) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(:version => 15) do
     t.string   "status"
     t.string   "privacy"
     t.text     "any_else"
+    t.datetime "published_at"
+    t.string   "is_draft"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_recipes_user"

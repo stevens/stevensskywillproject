@@ -88,7 +88,9 @@ class RecipesController < ApplicationController
   # POST /recipes.xml
   def create
     @recipe = @current_user.recipes.build(params[:recipe])
-    @recipe.status = recipe_status(@recipe)
+    @recipe.status = @recipe.get_status
+    @recipe.is_draft = @recipe.get_is_draft
+    @recipe.published_at = @recipe.get_published_at
     
 		if @recipe.save
 			@recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
@@ -102,8 +104,17 @@ class RecipesController < ApplicationController
   # PUT /recipes/1.xml
   def update
     load_recipe(@current_user)
-    @recipe.status = recipe_status(@recipe)
-
+    new_recipe = @current_user.recipes.build(params[:recipe])
+    new_recipe.cover_photo_id = @recipe.cover_photo_id
+    new_recipe.published_at = @recipe.published_at
+    new_recipe.status = new_recipe.get_status
+    new_recipe.is_draft = new_recipe.get_is_draft
+    new_recipe.published_at = new_recipe.get_published_at
+    
+    params[:recipe][:status] = new_recipe.status
+    params[:recipe][:is_draft] = new_recipe.is_draft
+    params[:recipe][:published_at] = new_recipe.published_at
+    
 	  if @recipe.update_attributes(params[:recipe])
 	  	@recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
 			after_update_ok
@@ -229,7 +240,7 @@ class RecipesController < ApplicationController
   end
   
   def load_reviews_set(user = nil)
-  	@reviews_set = reviews_for(user, 'Recipe', @self_id)
+  	@reviews_set = reviews_for(user, review_conditions({:reviewable_type => 'Recipe', :reviewable_id => @self_id}), 'Recipe', recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}))
   	@reviews_set_count = @reviews_set.size
   end
   
@@ -251,6 +262,9 @@ class RecipesController < ApplicationController
 				redirect_to @recipe
 			end
 			format.xml  { render :xml => @recipe, :status => :created, :location => @recipe }
+			format.js do
+				render @recipe
+			end
 		end
   end
   

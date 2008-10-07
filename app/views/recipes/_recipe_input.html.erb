@@ -215,6 +215,20 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="label">
+			</td>
+			<td class="input">
+				<br />
+				<div class="text">
+					<%= "当你还来不及完成#{RECIPE_CN}的时候, 可以先#{SAVE_CN}为草稿" %>
+				</div>
+				<div class="input">
+					<%= f.check_box :is_draft %><%= " 保存为草稿" %>
+				</div>
+				<%= error_message_on "recipe", "is_draft" %>
+			</td>
+		</tr>
+		<tr>
 			<td></td>
 			<td class="input">
 				<div class="submit">

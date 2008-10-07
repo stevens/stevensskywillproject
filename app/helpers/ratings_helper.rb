@@ -10,7 +10,7 @@ module RatingsHelper
 	end
 	
 	def average_rating_value(rateable)
-		rateable.ratings.size > 0 ? rateable.ratings.average('rating') : 0
+		rateable.ratings.size > 0 ? f(rateable.ratings.average('rating')) : 0
 	end
 
 end

@@ -89,7 +89,9 @@ class PhotosController < ApplicationController
       end
 		else
       if @photo.save
-				if @parent_obj.update_attribute('cover_photo_id', @photo.id)
+      	@parent_obj.cover_photo_id = @photo.id
+      	@parent_obj.published_at = @parent_obj.get_published_at
+				if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
 					after_create_ok
 				else
 					@photo.destroy
@@ -138,7 +140,10 @@ class PhotosController < ApplicationController
     			cover_photo_id = @photos_set[0].id
 				end
     	end
-    	if @parent_obj.update_attribute('cover_photo_id', cover_photo_id)
+    	@parent_obj.cover_photo_id = cover_photo_id
+    	@parent_obj.is_draft = @parent_obj.get_is_draft
+    	@parent_obj.published_at = @parent_obj.get_published_at
+			if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :is_draft => @parent_obj.is_draft, :published_at => @parent_obj.published_at })
     		@photo.destroy
 	   
 				after_destroy_ok 

@@ -25,12 +25,12 @@ class MineController < ApplicationController
 	private
 	
 	def load_my_recipes_set
-		@recipes_set = recipes_for(@current_user, nil)
+		@recipes_set = recipes_for(@current_user)
 		@recipes_set_count = @recipes_set.size
 	end
 	
 	def load_my_reviews_set
-		@reviews_set = reviews_for(@current_user, nil, nil)
+		@reviews_set = reviews_for(@current_user)
 		@reviews_set_count = @reviews_set.size
 	end
 	

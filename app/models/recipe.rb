@@ -64,6 +64,50 @@ class Recipe < ActiveRecord::Base
 		{:h => h, :m => m, :s => s}
 	end
 	
+	def get_status
+  	if title && !title.blank? &&
+  		 description && !description.blank? &&
+  		 from_type && !from_type.blank? && 
+  		 privacy && !privacy.blank?
+  		if ingredients && !ingredients.blank? &&
+  			 directions && !directions.blank? &&
+  			 difficulty && !difficulty.blank?
+				if prep_time && !prep_time.blank? &&
+					 cook_time && !cook_time.blank? &&
+					 cost && !cost.blank? &&
+					 self.yield && !self.yield.blank?
+					if tips && !tips.blank? &&
+						 video_url && !video_url.blank? &&
+						 any_else && !any_else.blank?
+						'3'
+					else
+						'2'
+					end
+				else
+					'1'
+				end
+			else
+				'0'
+			end
+		end	
+	end
+
+	def get_is_draft
+		if !cover_photo_id || status.to_i < 1
+			'1'
+		else
+			is_draft
+		end
+	end
+	
+	def get_published_at
+  	if !published_at && privacy != '90' && is_draft != '1'
+  		Time.now
+  	else
+  		published_at
+  	end
+	end
+	
 	protected
 	
 	def from_where_required?

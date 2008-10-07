@@ -8,16 +8,14 @@
 	</div>
 
 	<div id="photos_detail" class="block_main">
-		<% if @photos_set_count > 0 %>
-			<%= render :partial => "/photos/photos_matrix",
-								 :locals => {:show_paginate => false,
-								 						 :photos_set => @photos_set,
-								 						 :limit => nil, 
-								 						 :show_photo => true, 
-								 						 :show_below_photo => true,
-								 						 :show_cover => true, 
-								 						 :show_photo_todo => true} %>
-		<% end %>
+		<%= render :partial => "/photos/photos_matrix",
+							 :locals => {:show_paginate => false,
+							 						 :photos_set => @photos_set,
+							 						 :limit => nil, 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => true,
+							 						 :show_cover => true, 
+							 						 :show_photo_todo => true} %>
 	</div>
 
 </div>

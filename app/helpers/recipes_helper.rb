@@ -35,60 +35,43 @@ module RecipesHelper
 		highlighted_recipes
 	end
 	
-	def recipes_for(user, photo_required = recipe_photo_required_condition(user), status = recipe_status_condition(user), privacy = recipe_privacy_condition(user), created_at_from = nil, created_at_to = nil, order = 'created_at DESC')
+  def recipe_for(user, id, recipe_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}))
+  	if user
+  		user.recipes.find(id, :conditions => [recipe_conditions])
+  	else
+  		Recipe.find(id, :conditions => [recipe_conditions])
+  	end
+  	rescue ActiveRecord::RecordNotFound
+  		nil
+  end
+  
+	def recipes_for(user, recipe_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}), order = 'published_at DESC, created_at DESC')
 		if user
 			user.recipes.find(:all, :order => order, 
-												:conditions => [recipes_conditions(photo_required, status, privacy, created_at_from, created_at_to)])
+												:conditions => [recipe_conditions])
 		else
 			Recipe.find(:all, :order => order, 
-									:conditions => [recipes_conditions(photo_required, status, privacy, created_at_from, created_at_to)])
+									:conditions => [recipe_conditions])
 		end
 	end
-	
-  def recipes_conditions(photo_required = true, status = '1', privacy = '10', created_at_from = nil, created_at_to = nil)
-  	conditions = ["title IS NOT NULL", 
-  								"title <> ''", 
-  								"description IS NOT NULL", 
-  								"description <> ''", 
-  								"from_type IS NOT NULL", 
-  								"privacy IS NOT NULL"]
-  	conditions << "cover_photo_id IS NOT NULL" if photo_required
-  	conditions << "status >= #{status}" if status
-  	conditions << "privacy <= #{privacy}" if privacy		
-		conditions << "recipes.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
-		conditions << "recipes.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
+  
+  def recipe_conditions(conds = {:photo_required => true, :status => '1', :privacy => '10', :is_draft => '0', :created_at_from => nil, :created_at_to => nil})
+  	conditions = ["recipes.title IS NOT NULL", 
+  								"recipes.title <> ''", 
+  								"recipes.description IS NOT NULL", 
+  								"recipes.description <> ''", 
+  								"recipes.from_type IS NOT NULL", 
+  								"recipes.privacy IS NOT NULL"]
+  	conditions << "recipes.cover_photo_id IS NOT NULL" if conds[:photo_required]
+  	conditions << "recipes.status >= #{conds[:status]}" if conds[:status]
+  	conditions << "recipes.privacy <= #{conds[:privacy]}" if conds[:privacy]
+  	conditions << "recipes.is_draft = #{conds[:is_draft]}" if conds[:is_draft]
+		conditions << "recipes.created_at >= '#{time_iso_format(conds[:created_at_from])}'" if conds[:created_at_from]
+		conditions << "recipes.created_at <= '#{time_iso_format(conds[:created_at_to])}'" if conds[:created_at_to]
 		conditions.join(" AND ")
   end  
   
-  def recipe_status(recipe)
-  	if recipe.title && !recipe.title.blank? &&
-  		 recipe.description && !recipe.description.blank? &&
-  		 recipe.from_type && !recipe.from_type.blank? && 
-  		 recipe.privacy && !recipe.privacy.blank?
-  		if recipe.ingredients && !recipe.ingredients.blank? &&
-  			 recipe.directions && !recipe.directions.blank? &&
-  			 recipe.difficulty && !recipe.difficulty.blank?
-				if recipe.prep_time && !recipe.prep_time.blank? &&
-					 recipe.cook_time && !recipe.cook_time.blank? &&
-					 recipe.cost && !recipe.cost.blank? &&
-					 recipe.yield && !recipe.yield.blank?
-					if recipe.tips && !recipe.tips.blank? &&
-						 recipe.video_url && !recipe.video_url.blank? &&
-						 recipe.any_else && !recipe.any_else.blank?
-						status = '3'
-					else
-						status = '2'
-					end
-				else
-					status = '1'
-				end
-			else
-				status = '0'
-			end
-		end	
-  end
-  
-  def recipe_photo_required_condition(user)
+  def recipe_photo_required_cond(user = nil)
   	if user && user == @current_user
 			false
   	else
@@ -96,7 +79,7 @@ module RecipesHelper
   	end  	
   end
   
-  def recipe_status_condition(user)
+  def recipe_status_cond(user = nil)
   	if user && user == @current_user
 			nil
   	else
@@ -104,7 +87,7 @@ module RecipesHelper
   	end
   end
   
-  def recipe_privacy_condition(user)
+  def recipe_privacy_cond(user = nil)
   	if @current_user
   		if user && user == @current_user
   			'90'	
@@ -116,14 +99,12 @@ module RecipesHelper
   	end
   end
   
-  def recipe_for(user, id, photo_required = recipe_photo_required_condition(user), status = recipe_status_condition(user), privacy = recipe_privacy_condition(user))
-  	if user
-  		user.recipes.find(id, :conditions => [recipes_conditions(photo_required, status, privacy)])
+  def recipe_is_draft_cond(user)
+  	if user && user == @current_user
+			nil
   	else
-  		Recipe.find(id, :conditions => [recipes_conditions(photo_required, status, privacy)])
+  		'0'
   	end
-  	rescue ActiveRecord::RecordNotFound
-  		nil
   end
 
 end

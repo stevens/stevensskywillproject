@@ -58,6 +58,7 @@ input.text_s {
 input.check_box {
 	margin-right: 4px;
 }
+
 /** +html input.check_box {
 	margin-top: 3px;
 }*/
@@ -775,6 +776,10 @@ div.submit {
 	margin-top: 15px;
 	padding-left: 0px;
 	padding-right: 0px;
+}
+div.submit input {
+	height: 24px;
+	width: 100px;
 }
 div.prev_next {
 	padding: 10px;
