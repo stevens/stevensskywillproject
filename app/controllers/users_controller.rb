@@ -95,7 +95,9 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_reviews(user = nil)
-		@reviews_set = reviews_for(user, @reviewable_type, nil)
+  	review_conditions = review_conditions({:reviewable_type => @reviewable_type})
+ 		reviewable_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)})
+ 		@reviews_set = reviews_for(user, review_conditions, 'Recipe', reviewable_conditions)
 		@reviews_set_count = @reviews_set.size
 	end
 	
