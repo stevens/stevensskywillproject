@@ -25,9 +25,12 @@ module RecipesHelper
 	
 	def highlighted_recipes(recipes_set)
 		highlighted_recipes = []
+		min_highlighted_rating = 7
+		max_highlighted_rating = 10
+		min_ratings_count = 2
 		for recipe in recipes_set
 			rating = recipe.rating ? recipe.rating : 0
-			if rating >= MIN_HILIGHTED_ITEM_RATING && rating <= MAX_HILIGHTED_ITEM_RATING && recipe.total_ratings >= 3
+			if rating >= min_highlighted_rating && rating <= max_highlighted_rating && recipe.total_ratings >= min_ratings_count
 				highlighted_recipes << recipe
 			end
 		end
