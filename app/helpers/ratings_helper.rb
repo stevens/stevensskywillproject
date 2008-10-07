@@ -21,7 +21,7 @@ module RatingsHelper
 		items = []
 		for item in items_set
 			rating = item.rating ? item.rating : 0
-			if rating >= min_highlighted_rating && rating <= max_highlighted_rating && recipe.total_ratings >= min_ratings_count
+			if rating >= min_highlighted_rating && rating <= max_highlighted_rating && item.total_ratings >= min_ratings_count
 				items << item
 			end
 		end
