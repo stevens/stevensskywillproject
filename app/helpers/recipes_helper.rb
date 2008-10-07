@@ -23,12 +23,11 @@ module RecipesHelper
 		conditions_result_recipes | tags_result_recipes
 	end
 	
-	def highlighted_recipes(user, recipe_conditions)
-		recipes = recipes_for(user, recipe_conditions) 
+	def highlighted_recipes(recipes_set)
 		highlighted_recipes = []
-		for recipe in recipes
+		for recipe in recipes_set
 			rating = recipe.rating ? recipe.rating : 0
-			if rating >= MIN_HILIGHTED_ITEM_RATING && rating <= MAX_HILIGHTED_ITEM_RATING && recipe.total_ratings >= 2
+			if rating >= MIN_HILIGHTED_ITEM_RATING && rating <= MAX_HILIGHTED_ITEM_RATING && recipe.total_ratings >= 3
 				highlighted_recipes << recipe
 			end
 		end

@@ -130,12 +130,11 @@ class RecipesController < ApplicationController
   
   # /recipes/overview
   def overview
-  	@highlighted_recipes = highlighted_recipes(nil, recipe_conditions({:photo_required => true, :status => '1', :privacy => recipe_privacy_cond, :is_draft => '0', :created_at_from => Time.today - 30.days}))
-  	@highlighted_recipe = @highlighted_recipes.rand
-	  
 	  load_recipes_set
 	  load_reviews_set
 	  load_tags_set
+	  
+  	@highlighted_recipe = highlighted_recipes(@recipes_set[0..99]).rand
 	  
 	  info = RECIPE_CN
 		set_page_title(info)
