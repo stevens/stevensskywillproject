@@ -23,20 +23,6 @@ module RecipesHelper
 		conditions_result_recipes | tags_result_recipes
 	end
 	
-	def highlighted_recipes(recipes_set)
-		highlighted_recipes = []
-		min_highlighted_rating = 7
-		max_highlighted_rating = 10
-		min_ratings_count = 2
-		for recipe in recipes_set
-			rating = recipe.rating ? recipe.rating : 0
-			if rating >= min_highlighted_rating && rating <= max_highlighted_rating && recipe.total_ratings >= min_ratings_count
-				highlighted_recipes << recipe
-			end
-		end
-		highlighted_recipes
-	end
-	
   def recipe_for(user, id, recipe_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}))
   	if user
   		user.recipes.find(id, :conditions => [recipe_conditions])

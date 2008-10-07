@@ -134,7 +134,7 @@ class RecipesController < ApplicationController
 	  load_reviews_set
 	  load_tags_set
 	  
-  	@highlighted_recipe = highlighted_recipes(@recipes_set[0..99]).rand
+  	@highlighted_recipe = highlighted_items(@recipes_set[0..99]).rand
 	  
 	  info = RECIPE_CN
 		set_page_title(info)

@@ -45,7 +45,6 @@
 		</div>
 	<% end %>
 <% else %>
-
 	<div class="todo_button">
 		<%= link_to "我要#{RATE_CN}", id_for(type_for(rateable)).to_sym => rateable.id, :controller => 'ratings', :action => 'new' %>
 	</div>
