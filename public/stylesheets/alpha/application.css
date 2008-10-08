@@ -611,7 +611,7 @@ div.matrix_photo {
 	height: 48px;
 }
 * html .sidebar_block_main .matrix_photo {
-	height: 57px;
+	height: 57px !important;
 }
 div.list_photo {
 	margin: auto;
