@@ -1,3 +1,10 @@
 <% if notice %>
-	<div id="flash"><%= notice %></div>
+	<div id="flash">
+		<div class="close">
+			<%= link_to_function("x") do |page|
+				page.hide "flash"
+		  end %>
+		</div>
+		<%= notice %>
+	</div>
 <% end %>

@@ -135,9 +135,8 @@
 						<% end %>
 						
 						<div id="flash_wrapper">
-							<% if flash[:notice] %>
-								<div id="flash"><%= flash[:notice] %></div>
-							<% end %>
+							<%= render :partial => "/layouts/flash",
+												 :locals => {:notice => flash[:notice]} %>
 						</div>
 						
 						<% if @user_bar %>

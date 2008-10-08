@@ -176,7 +176,7 @@ div.tag {
 
 /* Current User */
 #current_user {
-	float:right;
+	float: right;
 	margin-top: 10px;
 	padding-right: 13px;
 	z-index: 200;
@@ -832,8 +832,10 @@ div.pagination a, div.pagination span {
 /* Notice */
 #flash {
 	margin-bottom: 10px;
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-left: 15px;
+	padding-right: 5px;
 	background-color: #ffcc99;
 	border-top: 4px solid #ff8159;
 	/*border-bottom: 4px solid #ff8159;*/
@@ -856,6 +858,18 @@ div.pagination a, div.pagination span {
 	/*border-top: 4px solid #ff8159;*/
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;	
+}
+#flash .close {
+	float: right;
+	margin-top: -10px;
+	font-weight: bold;
+}
+#flash .close a:link, #flash .close a:link, #flash .close a:visited {
+	color: #b8b9a7;
+}
+#flash .close a:hover {
+	background-color: transparent;
+	color: #ff8159;
 }
 
 /* Rating */
