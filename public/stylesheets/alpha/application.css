@@ -527,7 +527,7 @@ td.photo_item_cell {
 	border: 1px #f1f1f1 solid;
 	border-top: none;
 }
-div.sidebar_panel_main div.sub_block_tb {
+.sidebar_panel_main .sub_block_tb, .sidebar_block_main .sub_block_tb {
 	padding: 0px;
 }
 .sidebar_panel_main li {
@@ -592,6 +592,10 @@ div.sidebar_panel_main div.sub_block_tb {
 	width: 106px;
 	text-align: center !important;
 }
+.sidebar_block_main .matrix_block {
+	width: 64px;
+	padding: 0px;
+}
 
 /* Photo Div */
 div.matrix_photo {
@@ -599,6 +603,9 @@ div.matrix_photo {
 	padding: 4px 0px;
 	text-align: center;
 	height: 105px;
+}
+.sidebar_block_main .matrix_photo {
+	height: 48px;
 }
 div.list_photo {
 	margin: auto;

@@ -4,12 +4,12 @@
 		<div class="sidebar_block_header_link">	
 			<% if user %>
 				<% if user == @current_user %>
-					<%= link_to "更多 (#{tags_set_count})", {:controller => 'taggings', :action => 'mine', :taggable_type => taggable_type.downcase} %>
+					<%= link_to "更多", {:controller => 'taggings', :action => 'mine', :taggable_type => taggable_type.downcase} %>
 				<% else %>
-					<%= link_to "更多 (#{tags_set_count})", {:user_id => user.id, :controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
+					<%= link_to "更多", {:user_id => user.id, :controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
 				<% end %>
 			<% else %>
-				<%= link_to "更多 (#{tags_set_count})", {:controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
+				<%= link_to "更多", {:controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
 			<% end %>
 		</div>
 		<h1><%= "#{username_prefix(user)}#{name_for(taggable_type)}#{TAG_CN}" %></h1>

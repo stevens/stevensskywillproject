@@ -281,6 +281,10 @@ module ApplicationHelper
 		end
 	end
 	
+	def count_per_row(count = MATRIX_ITEMS_COUNT_PER_ROW_M)
+		count
+	end
+	
 	def items_paginate(items_set, per_page = LIST_ITEMS_COUNT_PER_PAGE_S)
 		items_set.paginate :page => params[:page], 
  											 :per_page => per_page		

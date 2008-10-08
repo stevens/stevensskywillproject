@@ -5,7 +5,6 @@
 <% else %>
 	<% items = items_set %>
 <% end %>
-<% items_count_per_row = MATRIX_ITEMS_COUNT_PER_ROW_M %>
 
 <% if show_paginate %>
 	<%= render :partial => "/layouts/items_paginate",
@@ -25,7 +24,7 @@
 								<div class="matrix_photo">
 				    			<%= render :partial => "/layouts/item_photo",
 				    								 :locals => {:item => items[i-1], 
-				    								 						 :photo_style => 'matrix'} %>
+				    								 						 :photo_style => photo_style} %>
 								</div>
 							<% end %>
 							

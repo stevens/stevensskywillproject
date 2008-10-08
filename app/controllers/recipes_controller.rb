@@ -37,8 +37,14 @@ class RecipesController < ApplicationController
 			@photos_set << @cover_photo
 			@photos_set = @recipe.photos - @photos_set
 		end
-    
+
+		recipe = [@recipe]
+		@other_recipes_set = @recipes_set - recipe
+		@related_recipes_set = Recipe.find_tagged_with(@recipe.tag_list, :conditions => recipe_conditions({:photo_required => recipe_photo_required_cond, :status => recipe_status_cond, :privacy => recipe_privacy_cond, :is_draft => recipe_is_draft_cond})) - recipe
+
     log_count(@recipe)												
+		
+		@show_sidebar = true
 		
 		info = "#{RECIPE_CN} - #{@recipe.title}"
 		set_page_title(info)

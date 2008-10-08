@@ -87,7 +87,7 @@ module RecipesHelper
   	end
   end
   
-  def recipe_is_draft_cond(user)
+  def recipe_is_draft_cond(user = nil)
   	if user && user == @current_user
 			nil
   	else
