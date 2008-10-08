@@ -620,8 +620,8 @@ div.portrait_photo {
 }
 div.full_photo {
 	width: 658px;
-	margin: auto;
-	padding: 10px;
+	margin: auto 2px;
+	padding: 8px;
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
@@ -689,8 +689,8 @@ div.basic li {
 }
 div.photos {
 	width: 658px;
-	padding: 10px;
-	margin: 10px -10px;
+	padding: 8px;
+	margin: 10px -8px;
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
@@ -711,9 +711,9 @@ div.photos div.below_photo a:hover {
 }
 div.video {
 	width: 658px;
-	margin: 0px -10px;
+	margin: 0px -8px;
 	margin-bottom: 10px;
-	padding: 10px;
+	padding: 8px;
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
