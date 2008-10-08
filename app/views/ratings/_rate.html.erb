@@ -20,6 +20,7 @@
 </div>
 <% if @current_user %>
 	<% if rateable.user != @current_user %>
+		<em><%= "鼠标点点就能评分啦..." %></em>
 		<div id="my_rating">
 			<div>
 				<%= "我的#{RATE_CN}: " %>

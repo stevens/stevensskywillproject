@@ -925,6 +925,10 @@ div.rating {
 	padding-right: 10px;
 	color: #b8b9a7;
 }
+div.rating em {
+	color: #e42300;
+	font-weight: normal;
+}
 span.rating {
 	color: #78b36d;
 }
