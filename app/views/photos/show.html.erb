@@ -12,7 +12,7 @@
 	</div>
 	
 	<div class="block_main">
-		<div class="prev_next">
+		<div id="photos_prev_next" class="prev_next">
 			<%= " (#{@photo_index} / #{@photos_set_count})" %>
 			&nbsp;
 			<% if @photos_set_count > 1 %>
@@ -34,7 +34,7 @@
 								 						 :photo_link_url => @photo_link_url} %>
 		</div>
 		
-		<div class="sub_block">
+		<div id="photo_<%= @photo.id %>_basic" class="sub_block">
 			<%= render :partial => "/photos/photo",
 								 :locals => {:photo => @photo,
 								 						 :show_parent => true, 

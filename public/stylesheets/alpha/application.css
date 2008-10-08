@@ -602,10 +602,16 @@ div.matrix_photo {
 	margin: 0px auto;
 	padding: 4px 0px;
 	text-align: center;
-	height: 105px;
+	height: 100px;
+}
+* html .matrix_photo {
+	height: 105px !important;
 }
 .sidebar_block_main .matrix_photo {
 	height: 48px;
+}
+* html .sidebar_block_main .matrix_photo {
+	height: 57px;
 }
 div.list_photo {
 	margin: auto;
@@ -620,12 +626,19 @@ div.portrait_photo {
 }
 div.full_photo {
 	width: 658px;
-	margin: auto 2px;
-	padding: 8px;
+	padding: 10px;
+	margin: auto;
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
 	border-bottom: #f1f1f1 solid 1px;
+}
+* html div.full_photo {
+	padding: 10px 8px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 2px;
+	margin-right: -2px;	
 }
 div.cover_photo {
 	margin-bottom: 5px;
@@ -689,12 +702,19 @@ div.basic li {
 }
 div.photos {
 	width: 658px;
-	padding: 8px;
-	margin: 10px -8px;
+	padding: 10px;
+	margin: 10px -10px;
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
 	border-bottom: #f1f1f1 solid 1px;
+}
+* html div.photos {
+	padding: 10px 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: -8px;
+	margin-right: -12px;
 }
 div.photos div.sub_block_tb {
 	padding: 0px;
@@ -711,14 +731,20 @@ div.photos div.below_photo a:hover {
 }
 div.video {
 	width: 658px;
-	margin: 0px -8px;
-	margin-bottom: 10px;
-	padding: 8px;
+	padding: 10px;
+	margin: 10px -10px;	
 	text-align: center;
 	background-color: #f5f5f5;
 	border-top: #f1f1f1 solid 1px;
 	border-bottom: #f1f1f1 solid 1px;
 	color: #b8b9a7;
+}
+* html div.video {
+	padding: 10px 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: -8px;
+	margin-right: -12px;
 }
 div.main {
 	margin-bottom: 10px;
