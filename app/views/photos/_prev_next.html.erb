@@ -1,0 +1,11 @@
+<%= " (#{photo_index} / #{photos_set_count})" %>
+&nbsp;
+<% if photos_set_count > 1 %>
+	<%= link_to "#{PREV_ONE_CN}#{UNIT_PHOTO_CN}", [photoable, prev_photo] %>
+	&nbsp;
+	<%= link_to "#{NEXT_ONE_CN}#{UNIT_PHOTO_CN}", [photoable, next_photo] %>
+<% else %>
+	<%= "#{PREV_ONE_CN}#{UNIT_PHOTO_CN}" %>
+	&nbsp;
+	<%= "#{NEXT_ONE_CN}#{UNIT_PHOTO_CN}" %>
+<% end %>

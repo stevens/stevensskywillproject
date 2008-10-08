@@ -13,17 +13,12 @@
 	
 	<div class="block_main">
 		<div id="photos_prev_next" class="prev_next">
-			<%= " (#{@photo_index} / #{@photos_set_count})" %>
-			&nbsp;
-			<% if @photos_set_count > 1 %>
-				<%= link_to "#{PREV_ONE_CN}#{@self_unit}", [@parent_obj, @prev_photo] %>
-				&nbsp;
-				<%= link_to "#{NEXT_ONE_CN}#{@self_unit}", [@parent_obj, @next_photo] %>
-			<% else %>
-				<%= "#{PREV_ONE_CN}#{@self_unit}" %>
-				&nbsp;
-				<%= "#{NEXT_ONE_CN}#{@self_unit}" %>
-			<% end %>
+			<%= render :partial => "/photos/prev_next", 
+								 :locals => {:photo_index => @photo_index, 
+								 						 :photos_set_count => @photos_set_count, 
+								 						 :photoable => @parent_obj, 
+								 						 :prev_photo => @prev_photo, 
+								 						 :next_photo => @next_photo} %>
 		</div>
 		
 		<div id="photo_<%= @photo.id %>_photo" class="full_photo">
