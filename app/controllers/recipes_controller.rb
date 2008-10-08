@@ -40,7 +40,8 @@ class RecipesController < ApplicationController
 
 		recipe = [@recipe]
 		@other_recipes_set = @recipes_set - recipe
-		@related_recipes_set = Recipe.find_tagged_with(@recipe.tag_list, :conditions => recipe_conditions({:photo_required => recipe_photo_required_cond, :status => recipe_status_cond, :privacy => recipe_privacy_cond, :is_draft => recipe_is_draft_cond})) - recipe
+		related_recipes_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond, :status => recipe_status_cond, :privacy => recipe_privacy_cond, :is_draft => recipe_is_draft_cond})
+		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, conditions = related_recipes_conditions) - recipe
 
     log_count(@recipe)												
 		
