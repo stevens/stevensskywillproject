@@ -134,9 +134,11 @@
 							<div id="system_notice"><%= @system_notice %></div>
 						<% end %>
 						
-						<% if flash[:notice] %>
-							<div id="flash"><%= flash[:notice] %></div>
-						<% end %>
+						<div id="flash_wrapper">
+							<% if flash[:notice] %>
+								<div id="flash"><%= flash[:notice] %></div>
+							<% end %>
+						</div>
 						
 						<% if @user_bar %>
 							<%= render :partial => "/users/user_bar",

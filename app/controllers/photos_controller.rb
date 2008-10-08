@@ -220,7 +220,6 @@ class PhotosController < ApplicationController
 	
 	def after_create_error
 		respond_to do |format|
-			
 			format.html do
 				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 				

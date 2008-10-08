@@ -257,6 +257,14 @@ module ApplicationHelper
 		end
 	end
 	
+	def add_brackets(str, left_mark = '[', right_mark = ']')
+		if str && !str.blank?
+			"#{left_mark}#{str}#{right_mark}"
+		else
+			''
+		end
+	end
+	
 	def itemable_type(item, itemable_sym)
 		item["#{itemable_sym}_type".to_sym]
 	end

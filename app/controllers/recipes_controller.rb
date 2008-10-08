@@ -128,6 +128,22 @@ class RecipesController < ApplicationController
 		after_destroy_ok
   end
   
+  def publish
+  	load_recipe(@current_user)
+    if params[:to_publish]
+	    @recipe.is_draft = '0'
+	    @recipe.published_at = @recipe.get_published_at
+			@notice = "你已经发布了这#{@self_unit}#{@self_name}!"
+	  else
+	  	@recipe.is_draft = '1'
+			@notice = "你已经将这#{@self_unit}#{@self_name}设置为草稿!"
+	  end
+  	
+		Recipe.update(@recipe.id, {:is_draft => @recipe.is_draft, :published_at => @recipe.published_at})
+
+		after_publish_ok
+  end
+  
   # /recipes/overview
   def overview
 	  load_recipes_set
@@ -314,6 +330,24 @@ class RecipesController < ApplicationController
 		  end
 		  format.xml  { head :ok }
 		end
+  end
+  
+  def after_publish_ok
+  	respond_to do |format|
+			format.js do
+				render :update do |page|
+					page.replace_html "flash_wrapper", 
+														:partial => "/layouts/flash", 
+														:locals => {:notice => @notice}
+					page.replace_html "recipe_#{@recipe.id}_title",
+														:partial => "/recipes/recipe_title", 
+														:locals => {:item => @recipe}
+					page.replace_html "recipe_#{@recipe.id}_todo",
+														:partial => "/recipes/recipe_todo", 
+														:locals => {:item => @recipe}
+				end
+			end
+  	end
   end
   
 end

@@ -1,0 +1,9 @@
+<% if item.user == @current_user %>
+	<% if item.is_draft == '1' && item.status.to_i >= 1 %>
+		<%= link_to_remote "发布这#{UNIT_RECIPE_CN}#{RECIPE_CN}", :url => {:action => 'publish', :id => item.id, :to_publish => true} %> |
+	<% elsif item.is_draft != '1' %>
+		<%= link_to_remote "设置为草稿", :url => {:action => 'publish', :id => item.id, :to_publish => false} %> |
+	<% end %>
+	<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", [item, :edit] %> |
+	<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", item, :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
+<% end %>

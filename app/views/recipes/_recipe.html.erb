@@ -1,11 +1,10 @@
 <div id="recipe_<%= item.id %>_basic">
 	<div class="basic">
 		<h2>
-			<!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
-			<% if item.from_type == '1' %>
-				<%= image_tag 'default/other/private.png', :title => '私房', :class => "icon" %>
-			<% end %>
-			<%= link_to h(item.title), item %>
+			<div id="recipe_<%= item.id %>_title">
+				<%= render :partial => "/recipes/recipe_title", 
+									 :locals => {:item => item} %>
+			</div>
 		</h2>
 		<ul>
 			<li>
@@ -19,6 +18,9 @@
 					<%= "#{time_iso_format(item.updated_at)} #{UPDATE_CN}" %>
 				</li>
 			<% end %>
+			<li>
+				<%= "#{code_title('privacy', item.privacy)}可以看到这#{UNIT_RECIPE_CN}#{RECIPE_CN}" %>
+			</li>
 			<li>
 				<%= "#{TAG_CN}: " %>
 				<% if item.tag_list.size > 0 %>
@@ -51,10 +53,8 @@
 
 <% if show_todo %>
 	<div id="recipe_<%= item.id %>_todo" class="todo_right">
-		<% if item.user == @current_user %>
-			<%= link_to "#{EDIT_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", [item, :edit] %> |
-			<%= link_to "#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}", item, :confirm => "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?", :method => :delete %>
-		<% end %>
+		<%= render :partial => "/recipes/recipe_todo", 
+							 :locals => {:item => item} %>
 	</div>
 <% end %>
 
