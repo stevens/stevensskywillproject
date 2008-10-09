@@ -217,6 +217,9 @@ div.tag {
 #footer_content span.copyright {
 	color: #b8b9a7;
 }
+#footer_content a.seo_link {
+	color: #ff8159;
+}
 
 /* Main Navigation */
 #navigation {
