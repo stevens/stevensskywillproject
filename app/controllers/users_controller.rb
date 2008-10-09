@@ -104,7 +104,8 @@ class UsersController < ApplicationController
 	def load_user_tags(user = nil)
 	  @tags_set = tags_for(user, 'Recipe')
 	  @tags_set_count = @tags_set.size
-   	@custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
+	  @custom_tags_set = tags_for(user, 'Recipe', nil, 0, nil, 100, order = 'count DESC, name')
+   	# @custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 	end
 	
   def after_create_ok

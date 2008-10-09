@@ -19,7 +19,7 @@
 		<%= render :partial => "/taggings/tags_cloud",
 							 :locals => {:show_paginate => false, 
 							 						 :tags_set => custom_tags_set,
-							 						 :limit => TAGS_COUNT_LIMIT, 
+							 						 :limit => limit, 
 							 						 :taggable_type => taggable_type} %>
 	</div>
 	

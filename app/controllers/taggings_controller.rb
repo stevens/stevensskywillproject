@@ -77,10 +77,12 @@ class TaggingsController < ApplicationController
 		if user && !@taggable_type
 			@recipe_tags_set = tags_for(user, 'Recipe')
 			@tags_set = @recipe_tags_set
-	  	@custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
+			@custom_tags_set = tags_for(user, 'Recipe', nil, 0, nil, 100, order = 'count DESC, name')
+	  	# @custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 		else
 			@tags_set = tags_for(user, @taggable_type, @taggable_id)
-			@custom_tags_set = tags_for(user, @taggable_type, @taggable_id, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
+			@custom_tags_set = tags_for(user, @taggable_type, @taggable_id, 0, nil, 100, order = 'count DESC, name')
+			# @custom_tags_set = tags_for(user, @taggable_type, @taggable_id, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 		end
 		@tags_set = sort_by_gbk(@tags_set)
 		@tags_set_count = @tags_set.size
