@@ -179,9 +179,15 @@ module ApplicationHelper
 		text.chars.length > summary_length ? text.to(summary_length-1) + '......' : text
 	end
 
-	def text_squish(text)
-		if text && text != ''
-			text.strip.gsub(/\s+/, ' ')
+	def text_squish(text, space_type = 1)
+		case space_type
+		when 1
+			space = ' '
+		when 2
+			space = '　'
+		end
+		if text && !text.blank?
+			text.strip.gsub(/\s+/, space)
 		else
 			nil
 		end
@@ -219,12 +225,13 @@ module ApplicationHelper
 		end
 	end	
 	
-	def paragraphs(text)
+	def paragraphs(text, space_type = 1)
 		ps = []
-		if text && text != ''
+		if text && !text.blank?
 			ts = text.split(/\n/)
 			for t in ts
-				if (t = text_squish(t)) != ''
+				t = text_squish(t, space_type)
+				if !t.blank?
 					ps << "<li>#{h t}</li>"
 				end
 			end
