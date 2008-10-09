@@ -158,8 +158,12 @@
 					<%= mail_to SITE_EMAIL, CONTACT_US_CN %> 
 					<%= link_to PRIVACY_POLICY_CN, root_url %> 
 					<%= link_to TERMS_OF_SERVICE_CN, root_url %> 
-					<%= link_to HELP_CN, root_url %> 
+					<%= link_to HELP_CN, root_url %>
+					|&nbsp;
 					<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{STUDIO_NAME_EN}" %></span>
+					&nbsp;|&nbsp;&nbsp;
+					<%= '友情链接 - ' %>
+					<%= link_to 'FLVCD', 'http://www.flvcd.com/' %>
 				</div>
 			</div>
 			<!-- END FOOTER -->
