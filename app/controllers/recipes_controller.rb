@@ -230,22 +230,8 @@ class RecipesController < ApplicationController
  		else
  			recipe = Recipe.find(@self_id)
  		end
- 		if @current_user
- 			if recipe.user == @current_user
- 				@recipe = recipe
- 			else
- 				if recipe.cover_photo_id && recipe.status.to_i >= 1 && recipe.privacy != '90'
- 					@recipe = recipe
- 				else
- 					@recipe = nil
- 				end
- 			end
- 		else
- 			if recipe.cover_photo_id && recipe.status.to_i >= 1 && recipe.privacy == '10'
- 				@recipe = recipe
- 			else
- 				@recipe = nil
- 			end
+ 		if recipe_accessible?(recipe)
+ 			@recipe = recipe
  		end
   end
   
@@ -255,7 +241,7 @@ class RecipesController < ApplicationController
   end
   
   def load_reviews_set(user = nil)
-  	@reviews_set = reviews_for(user, review_conditions({:reviewable_type => 'Recipe', :reviewable_id => @self_id}), 'Recipe', recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}))
+  	@reviews_set = reviews_for(user, 'Recipe', review_conditions('Recipe', @self_id), recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
   	@reviews_set_count = @reviews_set.size
   end
   

@@ -4,7 +4,7 @@
 			<li>
 				<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
-				<% if item.reviewable_type == 'Recipe' && item.reviewable == recipe_for(item.reviewable.user, item.reviewable.id) %>
+				<% if item.reviewable_type == 'Recipe' && recipe_accessible?(item.reviewable) %>
 					<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h(item.reviewable.title), item.reviewable %><%= "的#{REVIEW_CN}" %>
 				<% else %>
 					<%= h "#{name_for(item.reviewable_type)}-#{item.reviewable.title}的#{REVIEW_CN}" %>

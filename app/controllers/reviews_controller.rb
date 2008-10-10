@@ -135,9 +135,11 @@ class ReviewsController < ApplicationController
   end
   
   def load_reviews_set(user = nil)
-  	review_conditions = review_conditions({:reviewable_type => @reviewable_type, :reviewable_id =>@parent_id})
- 		reviewable_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)})
- 		@reviews_set = reviews_for(user, review_conditions, 'Recipe', reviewable_conditions)
+  	review_conditions = review_conditions(@reviewable_type, @parent_id)
+  	if @reviewable_type = 'Recipe'
+	 		reviewable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
+	 	end
+ 		@reviews_set = reviews_for(user, @reviewable_type, review_conditions, reviewable_conditions)
   	@reviews_set_count = @reviews_set.size
   end
 	

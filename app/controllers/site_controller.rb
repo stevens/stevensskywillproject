@@ -19,7 +19,7 @@ class SiteController < ApplicationController
 	private
 	
   def load_recipes_set(user = nil)
- 		@recipes_set = recipes_for(user, recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}), order = 'RAND()')
+ 		@recipes_set = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 10, 'RAND()')
   	@recipes_set_count = @recipes_set.size
   end
 	

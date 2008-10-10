@@ -32,6 +32,7 @@ class UsersController < ApplicationController
     # uncomment at your own risk
     # reset_session
     @user = User.new(params[:user])
+    @user.login = @user.login.strip
 		
 		if @user.save
 			after_create_ok
@@ -71,8 +72,8 @@ class UsersController < ApplicationController
       if @user && @user == @current_user
       	format.html { redirect_to :controller => 'mine', :action => 'overview' }
       else
-		    # @integrality = 'more_required'
-		  
+		  	@reviewable_type = 'Recipe'
+		  	
 		  	load_user_recipes(@user)
 		  	load_user_reviews(@user)
 			 	load_user_tags(@user)
@@ -95,10 +96,12 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_reviews(user = nil)
-  	review_conditions = review_conditions({:reviewable_type => @reviewable_type})
- 		reviewable_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)})
- 		@reviews_set = reviews_for(user, review_conditions, 'Recipe', reviewable_conditions)
-		@reviews_set_count = @reviews_set.size
+  	review_conditions = review_conditions(@reviewable_type)
+  	if @reviewable_type = 'Recipe'
+	 		reviewable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
+	 	end
+ 		@reviews_set = reviews_for(user, @reviewable_type, review_conditions, reviewable_conditions)
+  	@reviews_set_count = @reviews_set.size
 	end
 	
 	def load_user_tags(user = nil)

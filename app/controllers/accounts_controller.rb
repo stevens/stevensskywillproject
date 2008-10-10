@@ -40,6 +40,9 @@ class AccountsController < ApplicationController
 				after_update_error
 		  end
 		else
+			if params[:user][:login]
+				params[:user][:login] = params[:user][:login].strip
+			end
 		  if @user.update_attributes(params[:user])
 				after_update_ok
 		  else

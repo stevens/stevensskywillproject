@@ -22,40 +22,42 @@ module RecipesHelper
 		end
 		conditions_result_recipes | tags_result_recipes
 	end
-	
-  def recipe_for(user, id, recipe_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}))
-  	if user
-  		user.recipes.find(id, :conditions => [recipe_conditions])
-  	else
-  		Recipe.find(id, :conditions => [recipe_conditions])
-  	end
-  	rescue ActiveRecord::RecordNotFound
-  		nil
-  end
   
-	def recipes_for(user, recipe_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond(user), :status => recipe_status_cond(user), :privacy => recipe_privacy_cond(user), :is_draft => recipe_is_draft_cond(user)}), order = 'published_at DESC, created_at DESC')
+	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'published_at DESC, created_at DESC')
 		if user
-			user.recipes.find(:all, :order => order, 
+			user.recipes.find(:all, :limit => limit, :order => order, 
 												:conditions => [recipe_conditions])
 		else
-			Recipe.find(:all, :order => order, 
+			Recipe.find(:all, :limit => limit, :order => order, 
 									:conditions => [recipe_conditions])
 		end
 	end
+	
+	def recipe_accessible?(recipe)
+		if is_draft_cond = recipe_is_draft_cond(recipe.user)
+			if recipe.privacy.to_i <= recipe_privacy_cond(recipe.user).to_i && recipe.is_draft == is_draft_cond
+				true
+			end
+		else
+			if recipe.privacy.to_i <= recipe_privacy_cond(recipe.user).to_i
+				true
+			end
+		end
+	end
   
-  def recipe_conditions(conds = {:photo_required => true, :status => '1', :privacy => '10', :is_draft => '0', :created_at_from => nil, :created_at_to => nil})
+  def recipe_conditions(photo_required = true, status = '1', privacy = '10', is_draft = '0', created_at_from = nil, created_at_to = nil)
   	conditions = ["recipes.title IS NOT NULL", 
   								"recipes.title <> ''", 
   								"recipes.description IS NOT NULL", 
   								"recipes.description <> ''", 
   								"recipes.from_type IS NOT NULL", 
   								"recipes.privacy IS NOT NULL"]
-  	conditions << "recipes.cover_photo_id IS NOT NULL" if conds[:photo_required]
-  	conditions << "recipes.status >= #{conds[:status]}" if conds[:status]
-  	conditions << "recipes.privacy <= #{conds[:privacy]}" if conds[:privacy]
-  	conditions << "recipes.is_draft = #{conds[:is_draft]}" if conds[:is_draft]
-		conditions << "recipes.created_at >= '#{time_iso_format(conds[:created_at_from])}'" if conds[:created_at_from]
-		conditions << "recipes.created_at <= '#{time_iso_format(conds[:created_at_to])}'" if conds[:created_at_to]
+  	conditions << "recipes.cover_photo_id IS NOT NULL" if photo_required
+  	conditions << "recipes.status >= #{status}" if status
+  	conditions << "recipes.privacy <= #{privacy}" if privacy
+  	conditions << "recipes.is_draft = #{is_draft}" if is_draft
+		conditions << "recipes.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
+		conditions << "recipes.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
   end  
   
