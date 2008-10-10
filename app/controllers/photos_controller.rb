@@ -3,7 +3,7 @@ class PhotosController < ApplicationController
 	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location, :only => [:index, :show, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
-	before_filter :check_photoable_accesible
+	before_filter :check_photoable_accessible
 	before_filter :load_photos_set
   
   # GET /photos
@@ -22,7 +22,7 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.xml
   def show
-		load_photo if @photoable_accesible
+		load_photo if @photoable_accessible
 		
 		if @photos_set_count == 1
 			@photo_index = 1
@@ -157,21 +157,13 @@ class PhotosController < ApplicationController
   
 	private
 	
-	def check_photoable_accesible
+	def check_photoable_accessible
 		if @parent_obj
-			if @parent_type == 'Recipe'
-				if @parent_obj == recipe_for(@parent_obj.user, @parent_id)
-					pa = true
-				else
-					pa = false
-				end
-			else
-				pa = false
+			case @parent_type
+			when 'Recipe'
+				@photoable_accessible = recipe_accessible?(@parent_obj)
 			end
-		else
-			pa = false
 		end
-		@photoable_accesible = pa
 	end
 	
 	def get_prev_next
@@ -202,7 +194,7 @@ class PhotosController < ApplicationController
   end
   
   def load_photos_set(user = nil)
-  	if @photoable_accesible
+  	if @photoable_accessible
 	 		@photos_set = photos_for(user, @parent_type, @parent_id)
 	  	@photos_set_count = @photos_set.size
   	end
