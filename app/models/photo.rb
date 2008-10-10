@@ -2,7 +2,7 @@ class Photo < ActiveRecord::Base
 	include ApplicationHelper
 	
 	has_attachment :storage => :file_system,
-								 :size => 1.byte..1.megabyte,
+								 :size => 1.byte..640.kilobytes,
 								 :resize_to => '640x640>',
 								 :thumbnails => { :medium => '320x320>', :mcube => '96x96!',
 								 									:small => '160x160>', :scube => '48x48!',
