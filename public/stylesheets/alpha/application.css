@@ -599,6 +599,10 @@ td.photo_item_cell {
 	width: 64px;
 	padding: 0px;
 }
+.welcome_content .matrix_block {
+	width: 64px;
+	padding: 10px 0px;
+}
 
 /* Photo Div */
 div.matrix_photo {
@@ -610,10 +614,10 @@ div.matrix_photo {
 * html .matrix_photo {
 	height: 105px !important;
 }
-.sidebar_block_main .matrix_photo {
+.sidebar_block_main .matrix_photo, .welcome_content .matrix_photo {
 	height: 48px;
 }
-* html .sidebar_block_main .matrix_photo {
+* html .sidebar_block_main .matrix_photo, * html .welcome_content .matrix_photo {
 	height: 57px !important;
 }
 div.list_photo {
@@ -992,7 +996,8 @@ div.welcome {
 	border-top: 8px #428cbb solid;
 }
 div.welcome_content {
-	padding: 30px;
+	padding: 0px;
+	padding-top: 30px;
 	border: 1px #f1f1f1 solid;
 	border-top: none;
 }
