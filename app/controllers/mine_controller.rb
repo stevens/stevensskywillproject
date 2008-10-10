@@ -37,7 +37,8 @@ class MineController < ApplicationController
 	def load_my_tags_set
 	  @tags_set = tags_for(@current_user, 'Recipe')
 	  @tags_set_count = @tags_set.size
-  	@custom_tags_set = tags_for(@current_user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
+	  @custom_tags_set = tags_for(@current_user, 'Recipe', nil, 0, nil, 100, order = 'count DESC, name')
+  	# @custom_tags_set = tags_for(@current_user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 	end
 
 end
