@@ -2,7 +2,7 @@ module ReviewsHelper
 
 	def reviews_for(user = nil, reviewable_type = nil, review_conditions = review_conditions(reviewable_type), reviewable_conditions = nil, limit = nil, order = 'created_at DESC')
 		conditions = []
-		conditions << review_conditions
+		conditions << review_conditions if review_conditions
 		if reviewable_type && reviewable_conditions
 			join_table_name = controller_name(reviewable_type)
 			joins = "JOIN #{join_table_name} ON reviews.reviewable_id = #{join_table_name}.id"

@@ -245,11 +245,9 @@ class RecipesController < ApplicationController
   	@reviews_set_count = @reviews_set.size
   end
   
-  def load_tags_set(user =nil)
-	  @tags_set = tags_for(user, 'Recipe')
+  def load_tags_set(user = nil)
+	  @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
   	@tags_set_count = @tags_set.size
-  	@custom_tags_set = tags_for(user, 'Recipe', nil, 0, nil, 100, order = 'count DESC, name')
-  	# @custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
   end
 	
 	def load_search_result(user, keywords)

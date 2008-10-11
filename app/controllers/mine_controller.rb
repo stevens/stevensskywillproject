@@ -4,11 +4,11 @@ class MineController < ApplicationController
 	before_filter :store_location_if_logged_in
 	
 	def overview
-  	load_my_recipes_set
+  	load_recipes_set
   	
-  	load_my_reviews_set
+  	load_reviews_set
 	 	
-	 	load_my_tags_set
+	 	load_tags_set
 	 	
 	 	@user = @current_user
 	 	
@@ -24,21 +24,19 @@ class MineController < ApplicationController
 	
 	private
 	
-	def load_my_recipes_set
-		@recipes_set = recipes_for(@current_user)
+	def load_recipes_set(user = @current_user)
+		@recipes_set = recipes_for(user)
 		@recipes_set_count = @recipes_set.size
 	end
 	
-	def load_my_reviews_set
-		@reviews_set = reviews_for(@current_user)
+	def load_reviews_set(user = @current_user)
+		@reviews_set = reviews_for(user)
 		@reviews_set_count = @reviews_set.size
 	end
 	
-	def load_my_tags_set
-	  @tags_set = tags_for(@current_user, 'Recipe')
+	def load_tags_set(user = @current_user)
+	  @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
 	  @tags_set_count = @tags_set.size
-	  @custom_tags_set = tags_for(@current_user, 'Recipe', nil, 0, nil, 100, order = 'count DESC, name')
-  	# @custom_tags_set = tags_for(@current_user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
 	end
 
 end

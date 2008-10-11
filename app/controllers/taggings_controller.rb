@@ -64,9 +64,7 @@ class TaggingsController < ApplicationController
 	private
 	
 	def load_taggable_type
-		if @parent_type
-			@taggable_type = @parent_type
-		elsif params[:taggable_type]
+		if params[:taggable_type]
 			@taggable_type = params[:taggable_type].camelize
 		else
 			@taggable_type = 'Recipe'
@@ -74,24 +72,22 @@ class TaggingsController < ApplicationController
 	end
 	
 	def load_tags_set(user = nil)
-		if user && !@taggable_type
-			@recipe_tags_set = tags_for(user, 'Recipe')
-			@tags_set = @recipe_tags_set
-			@custom_tags_set = tags_for(user, 'Recipe', nil, 0, nil, 100, order = 'count DESC, name')
-	  	# @custom_tags_set = tags_for(user, 'Recipe', nil, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
-		else
-			@tags_set = tags_for(user, @taggable_type, @taggable_id)
-			@custom_tags_set = tags_for(user, @taggable_type, @taggable_id, 0, nil, 100, order = 'count DESC, name')
-			# @custom_tags_set = tags_for(user, @taggable_type, @taggable_id, TAG_COUNT_AT_LEAST, TAG_COUNT_AT_MOST, nil, order = 'count DESC')
+		case @taggable_type
+		when 'Recipe'
+			if params[:action] == 'index'
+				@tags_set = tags_for(user, @taggable_type, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
+				@tags_set = sort_by_gbk(@tags_set)
+			elsif params[:action] == 'show'
+				@tags_set = tags_for(user, @taggable_type, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
+			end		
 		end
-		@tags_set = sort_by_gbk(@tags_set)
 		@tags_set_count = @tags_set.size
 	end
 	
 	def load_taggables_set(user = nil)
 		case @taggable_type
 		when 'Recipe'
-			@taggables_set = taggables_for(user, @taggable_type, params[:id], recipe_conditions({:photo_required => true, :status => '1', :privacy => '11', :is_draft => '0'}))
+			@taggables_set = taggables_for(user, @taggable_type, params[:id], recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), nil, nil, nil, 'published_at DESC, created_at DESC')
 		end
 		@taggables_set_count = @taggables_set.size if @taggables_set
 	end

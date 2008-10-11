@@ -195,7 +195,7 @@ class PhotosController < ApplicationController
   
   def load_photos_set(user = nil)
   	if @photoable_accessible
-	 		@photos_set = photos_for(user, @parent_type, @parent_id)
+	 		@photos_set = photos_for(user, photo_conditions(@parent_type, @parent_id))
 	  	@photos_set_count = @photos_set.size
   	end
   end

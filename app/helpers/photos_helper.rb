@@ -62,17 +62,17 @@ module PhotosHelper
 																		  user.id])
 	end
 
-	def photos_for(user, photoable_type, photoable_id, created_at_from = nil, created_at_to = nil, limit = nil, order = 'created_at')
+	def photos_for(user = nil, photo_conditions = photo_conditions, limit = nil, order = 'created_at')
 		if user
 			user.photos.find(:all, :limit => limit, :order => order, 
-											 :conditions => [photos_conditions(photoable_type, photoable_id, created_at_from, created_at_to)])		
+											 :conditions => [photo_conditions])		
 		else
 			Photo.find(:all, :limit => limit, :order => order, 
-								 :conditions => [photos_conditions(photoable_type, photoable_id, created_at_from, created_at_to)])
+								 :conditions => [photo_conditions])
 		end
 	end
   
-  def photos_conditions(photoable_type, photoable_id, created_at_from = nil, created_at_to = nil)
+  def photo_conditions(photoable_type = nil, photoable_id = nil, created_at_from = nil, created_at_to = nil)
   	conditions = ["photos.filename IS NOT NULL", 
   								"photos.filename <> ''", 
   								"photos.parent_id IS NULL", 
