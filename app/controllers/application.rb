@@ -61,8 +61,8 @@ class ApplicationController < ActionController::Base
 		@block_title = info
 	end
 	
-	def set_system_notice(info)
-		@system_notice = info
+	def set_system_notice
+		@system_notice = "号外: 可爱的蜂厨们, 人气食谱TOP10新鲜出炉了, 快去给你喜欢的食谱评分吧!"
 	end
 	
 	# def param_posted?(symbol)

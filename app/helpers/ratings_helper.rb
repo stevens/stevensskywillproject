@@ -26,7 +26,7 @@ module RatingsHelper
 			end
 		end
 		items.sort! {|a,b| b.rating <=> a.rating}
-		items.sort! {|a,b| b.total_ratings <=> a.total_ratings}
+		# items.sort! {|a,b| b.total_ratings <=> a.total_ratings}
 	end
 
 end

@@ -130,9 +130,10 @@
 					<!-- content column -->
 					<div id="content_column">
 
-						<% if @system_notice %>
-							<div id="system_notice"><%= @system_notice %></div>
-						<% end %>
+						<div id="system_notice_wrapper">
+							<%= render :partial => "/layouts/system_notice",
+												 :locals => {:notice => @system_notice} %>
+						</div>
 						
 						<div id="flash_wrapper">
 							<%= render :partial => "/layouts/flash",

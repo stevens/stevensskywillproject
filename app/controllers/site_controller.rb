@@ -1,6 +1,7 @@
 class SiteController < ApplicationController
 
 	before_filter :clear_location_unless_logged_in, :only => [:index]
+	before_filter :set_system_notice, :only => [:index]
 	
 	def index
 		load_recipes_set

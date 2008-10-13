@@ -3,7 +3,7 @@ class RecipesController < ApplicationController
 	before_filter :protect, :except => [:index, :show, :overview]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
-	before_filter :system_notice, :only => [:overview, :mine, :new, :edit]
+	before_filter :set_system_notice, :only => [:overview, :show]
 	
   # GET /recipes
   # GET /recipes.xml
@@ -184,11 +184,6 @@ class RecipesController < ApplicationController
   end
   
   private
-  
-  def system_notice
-  	# info = "号外: 可爱的蜂厨们, 现在可以对食谱进行隐私设置了!"
-  	# set_system_notice(info)
-  end
   
   def load_recipe(user = nil)
   	if user

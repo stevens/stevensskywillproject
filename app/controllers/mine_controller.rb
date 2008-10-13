@@ -2,6 +2,7 @@ class MineController < ApplicationController
 	
 	before_filter :protect
 	before_filter :store_location_if_logged_in
+	before_filter :set_system_notice, :only => [:overview]
 	
 	def overview
   	load_recipes_set

@@ -899,17 +899,17 @@ div.pagination a, div.pagination span {
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;	
 }
-#flash .close {
+.close {
 	float: right;
 	margin-top: -10px;
 	font-weight: bold;
 }
-#flash .close a:link, #flash .close a:link, #flash .close a:visited {
-	color: #b8b9a7;
+.close a:link, .close a:link, .close a:visited {
+	color: #b8b9a7 !important;
 }
-#flash .close a:hover {
-	background-color: transparent;
-	color: #ff8159;
+.close a:hover {
+	background-color: transparent !important;
+	color: #373737 !important;
 }
 
 /* Rating */
@@ -1077,17 +1077,21 @@ div.welcome_todo_button a:hover {
 }
 #rank_list_wrapper span.rank_top3 {
 	display: block;
-	padding: 1px 5px;
+	padding: 1px;
 	background-color: #ff8159;
 	color: #ffffff;
 	font-weight: bold;
+	width: 20px;
+	text-align: center;
 }
 #rank_list_wrapper span.rank {
 	display: block;
-	padding: 1px 5px;
+	padding: 1px;
 	background-color: #428cbb;
 	color: #ffffff;
 	font-weight: bold;
+	width: 20px;
+	text-align: center;
 }
 #rank_list_wrapper div.basic {
 	margin-bottom: 5px;

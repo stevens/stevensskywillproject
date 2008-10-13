@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
   
 	before_filter :clear_location_unless_logged_in
+	before_filter :set_system_notice, :only => [:overview]
 
   def index
   	
