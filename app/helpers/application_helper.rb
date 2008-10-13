@@ -199,30 +199,6 @@ module ApplicationHelper
 			text_useful = text.strip if text.strip != ''
 		end
 		text_useful
-	end
-	
-	def conditions_id(text)
-		if text && text != ''
-			text.gsub(' ', '+')
-		else
-			nil
-		end
-	end
-	
-	def conditions(text)
-		if text && text != ''
-			text.gsub('+', ' ')
-		else
-			nil
-		end
-	end
-	
-	def keywords(text)
-		if text && text != ''
-			text.split('+')
-		else
-			[]
-		end
 	end	
 	
 	def paragraphs(text, space_type = 1)

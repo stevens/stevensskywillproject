@@ -1,6 +1,7 @@
 class SearchingsController < ApplicationController
 
-	before_filter :protect
+	# before_filter :protect
+	before_filter :clear_location_unless_logged_in
 	before_filter :load_searchable_type
 	
 	def search
