@@ -40,6 +40,10 @@ class SearchingsController < ApplicationController
 
 		set_page_title(info)
 		set_block_title(info)
+		
+		load_tags_set
+	 		
+	 	show_sidebar
  		
     respond_to do |format|
      	format.html do
@@ -56,6 +60,14 @@ class SearchingsController < ApplicationController
 		if params[:searchable_type]
 			@searchable_type = params[:searchable_type].camelize
 		end
+	end
+
+	def load_tags_set(user = nil)
+		case @searchable_type
+		when 'Recipe'
+			@tags_set = tags_for(user, @searchable_type, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
+		end
+		@tags_set_count = @tags_set.size
 	end
 	
 	def load_searchables_set(user = nil)
