@@ -39,10 +39,11 @@ module SearchingsHelper
 		searchables_set = searchables_set_1 | searchables_set_2
 		
 		if limit
-			searchables_set[0..limit-1].sort! {|a,b| b[:created_at] <=> a[:created_at]}
-		else
-			searchables_set.sort! {|a,b| b[:created_at] <=> a[:created_at]}
+			searchables_set = searchables_set[0..limit-1]
 		end
+		
+		searchables_set.sort! {|a,b| b[:published_at] <=> a[:published_at]}
+		searchables_set.sort! {|a,b| b[:created_at] <=> a[:created_at]}
 	end
 	
 end
