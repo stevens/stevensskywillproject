@@ -121,7 +121,7 @@
 						<% if !current_user && params[:controller] == 'site' %>
 					  	<%= render :partial => "/sessions/login_sidebar" %>
 					  <% end %>
-						<%= render :partial => "/searches/search_sidebar" %>
+						<%= render :partial => "/searchings/search_sidebar" %>
 						<% if @show_sidebar %>
 							<%= render :partial => "/#{params[:controller]}/#{params[:action]}_sidebar" %>
 						<% end %>

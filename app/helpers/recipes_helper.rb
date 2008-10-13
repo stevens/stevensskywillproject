@@ -1,35 +1,12 @@
 module RecipesHelper
-	
-	def search_result_recipes(user, keywords, order, other_conditions)
-		if keywords && keywords != []
-			conditions = "title LIKE '%#{keywords[0]}%'"
-			tags = keywords[0]
-			2.upto(keywords.size) do |i|
-				conditions += " AND title LIKE '%#{keywords[i-1]}%'"
-				tags += " #{keywords[i-1]}"
-			end
-			conditions += "AND #{other_conditions}"
-		else
-			conditions = nil
-			tags = nil
-		end
-		if user
-			conditions_result_recipes = user.recipes.find(:all, :order => order, :conditions => conditions)
-			tags_result_recipes = user.recipes.find_tagged_with(tags, :match_all => true, :conditions => other_conditions)
-		else
-			conditions_result_recipes = Recipe.find(:all, :order => order, :conditions => conditions)
-			tags_result_recipes = Recipe.find_tagged_with(tags, :match_all => true, :conditions => other_conditions)
-		end
-		conditions_result_recipes | tags_result_recipes
-	end
   
 	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'published_at DESC, created_at DESC')
 		if user
 			user.recipes.find(:all, :limit => limit, :order => order, 
-												:conditions => [recipe_conditions])
+												:conditions => recipe_conditions)
 		else
 			Recipe.find(:all, :limit => limit, :order => order, 
-									:conditions => [recipe_conditions])
+									:conditions => recipe_conditions)
 		end
 	end
 	

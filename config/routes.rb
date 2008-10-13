@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 	map.connect ':controller/overview', :action => 'overview'
-	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
-	
-	map.connect ':controller/search/:id', :action => 'search'	
+	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'	
 	
 	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
 	
@@ -18,9 +16,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/:taggable_type/taggings', :controller => 'taggings', :action => 'mine'
 	map.connect 'users/:user_id/:taggable_type/taggings', :controller => 'taggings', :action => 'index'
 	
-	map.connect ':searchable_type/searching/:id', :controller => 'searching', :action => 'show'
-	
-	map.search '/search', :controller => 'site', :action => 'search'
+	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
   map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings]
 	
@@ -31,6 +27,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :reviews
 	
   map.resources :taggings
+  
+  map.resources :searchings
   
   map.resource :session
   
@@ -86,5 +84,6 @@ ActionController::Routing::Routes.draw do |map|
 	map.activate '/activate/:id', :controller => 'users', :action => 'activate'
 	map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
 	map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
+	map.search '/search', :controller => 'searchings', :action => 'search'
 	
 end

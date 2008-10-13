@@ -1,0 +1,18 @@
+<div class="sidebar_panel">
+	<div class="sidebar_panel_header">
+		<h1><%= SEARCH_CN %></h1>
+	</div>
+	<div class="sidebar_panel_main">
+		<% form_tag search_path do %>
+			<ul>
+				<li>
+					<%= radio_button_tag 'searchable_type', 'Recipe', true, :class => "radio_button" %><%= "#{RECIPE_CN}&nbsp;&nbsp;" %>
+				</li>
+				<li>
+					<%= text_field_tag 'search_keywords', @keywords_line, :class => "search" %>
+					<%= submit_tag SEARCH_CN, :class => "search_button" %>
+				</li>
+			</ul>
+		<% end %>
+	</div>
+</div>

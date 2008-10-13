@@ -65,10 +65,10 @@ module PhotosHelper
 	def photos_for(user = nil, photo_conditions = photo_conditions, limit = nil, order = 'created_at')
 		if user
 			user.photos.find(:all, :limit => limit, :order => order, 
-											 :conditions => [photo_conditions])		
+											 :conditions => photo_conditions)
 		else
 			Photo.find(:all, :limit => limit, :order => order, 
-								 :conditions => [photo_conditions])
+								 :conditions => photo_conditions)
 		end
 	end
   

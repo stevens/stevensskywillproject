@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include PhotosHelper
   include ReviewsHelper
   include TaggingsHelper
+  include SearchingsHelper
   include RatingsHelper
   include PasswordsHelper
   include SettingsHelper
