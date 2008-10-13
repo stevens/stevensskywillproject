@@ -1,0 +1,26 @@
+<div id="recipe_<%= item.id %>_basic" class="basic">
+	<h2>
+		<!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
+		<% if item.from_type == '1' %>
+			<%= image_tag 'default/other/private.png', :title => '私房', :class => "icon" %>
+		<% end %>
+		<%= link_to h(item.title), item %>
+	</h2>
+	<ul>
+		<li>
+			<%= "来自 " %><%= link_to h(user_username(item.user)), user_first_link(item.user) %>
+		</li>
+		<li>
+			<% if (ratings_count = item.ratings.size) > 0 %>
+				<span class="rating"><%= "#{average_rating_value(item)}/10 (#{ratings_count}票)" %></span> |
+			<% else %>
+				<%= "还没有#{RATE_CN}" %> |
+			<% end %>
+			<% if (reviews_count = item.reviews.size) > 0 %>
+				<%= link_to "#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN}", item %>
+			<% else %>
+				<%= "还没有#{REVIEW_CN}" %>
+			<% end %>
+		</li>
+	</ul>
+</div>

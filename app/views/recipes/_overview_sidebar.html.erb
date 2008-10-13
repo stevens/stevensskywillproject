@@ -3,3 +3,7 @@
 					 						 :custom_tags_set => @tags_set,
 					 						 :limit => nil, 
 					 						 :taggable_type => 'Recipe'} %>
+					 						 
+<%= render :partial => "/layouts/rank_list_sidebar",
+					 :locals => {:rank_list_title => "人气#{RECIPE_CN}TOP10", 
+					 						 :items_set => @highest_rated_recipes} %>

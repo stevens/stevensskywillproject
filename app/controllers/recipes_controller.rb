@@ -157,7 +157,9 @@ class RecipesController < ApplicationController
 	  load_reviews_set
 	  load_tags_set
 	  
-  	@highlighted_recipe = highlighted_items(@recipes_set[0..99]).rand
+  	@highlighted_recipe = highest_rated_items(@recipes_set)[0..99].rand
+  	
+  	@highest_rated_recipes = highest_rated_items(@recipes_set)[0..9]
 	  
 	  info = RECIPE_CN
 		set_page_title(info)
@@ -179,42 +181,6 @@ class RecipesController < ApplicationController
       format.html { render :template => "recipes/index" }
       format.xml  { render :xml => @recipes_set }
     end
-  end
-  
-  def search
-  	id = params[:id]
-  	keywords = keywords(id)
-  	if keywords != []
-  		load_search_result(nil, keywords)
-  		@conditions = conditions(id)
-  	else
-  		@recipes_set = []
-  		@recipes_set_count = 0
-  		@conditions = ''
-  	end
-  	
-   	@recipes = items_paginate(@recipes_set)
-  	
-	 	info = "#{@self_name}#{SEARCH_CN} - #{@conditions} (#{@recipes_set_count})"
-	 	
-		set_page_title(info)
-		set_block_title(info)
- 		@show_header_link = false
- 		
-    respond_to do |format|
-    	if @conditions != ''
-    		if @recipes_set_count > 0
-		    	flash[:notice] = "共有#{@recipes_set_count}#{UNIT_RECIPE_CN}#{RECIPE_CN}符合#{SEARCH_CN}条件......"
-		    else
-		    	flash[:notice] = "#{SORRY_CN}, 没有符合#{SEARCH_CN}条件的#{RECIPE_CN}!"
-		    end
-	    else
-	    	flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{SEARCH_CN}条件!"
-	    end
-     	format.html { render :action => 'index' }
-      format.xml  { render :xml => @recipes }
-    end
-    clear_notice
   end
   
   private
@@ -249,11 +215,6 @@ class RecipesController < ApplicationController
 	  @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
   	@tags_set_count = @tags_set.size
   end
-	
-	def load_search_result(user, keywords)
-		@recipes_set = search_result_recipes(user, keywords, 'created_at DESC', recipe_conditions({:photo_required => true, :status => '1', :privacy => '11', :is_draft => '0'}))
-		@recipes_set_count = @recipes_set.size
-	end
   
   def after_create_ok
   	respond_to do |format|

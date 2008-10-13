@@ -13,19 +13,19 @@ module RatingsHelper
 		rateable.ratings.size > 0 ? f(rateable.ratings.average('rating')) : 0
 	end
 	
-	def highlighted_items(items_set)
-		min_highlighted_rating = 7
-		max_highlighted_rating = 10
-		min_ratings_count = 2
+	def highest_rated_items(items_set)
+		min_rating = 1
+		max_rating = 10
+		min_ratings_count = 1
 		
 		items = []
 		for item in items_set
 			rating = item.rating ? item.rating : 0
-			if rating >= min_highlighted_rating && rating <= max_highlighted_rating && item.total_ratings >= min_ratings_count
+			if rating >= min_rating && rating <= max_rating && item.total_ratings >= min_ratings_count
 				items << item
 			end
 		end
-		items
+		items.sort! {|a,b| b.rating <=> a.rating}
 	end
 
 end

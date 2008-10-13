@@ -1,0 +1,19 @@
+<div id="rank_list_wrapper", class="sidebar_block">
+
+	<div id="rank_list_header", class="sidebar_block_header">
+		<div class="sidebar_block_header_link">	
+
+		</div>
+		<h1><%= rank_list_title %></h1>
+	</div>
+	
+	<div id="rank_list_detail", class="sidebar_block_main">
+		<%= render :partial => "/layouts/rank_list",
+							 :locals => {:show_paginate => false,
+							 						 :items_set => items_set, 
+							 						 :limit => nil,
+							 						 :show_photo => true,
+							 						 :photo_style => 'sign'} %>
+	</div>
+	
+</div>

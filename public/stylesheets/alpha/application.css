@@ -1064,3 +1064,34 @@ div.welcome_todo_button a:hover {
 .user_bar_link {
 	color: #b8b9a7;
 }
+
+/* Rank List */
+#rank_list_wrapper .sub_block_lr {
+	padding: 0px 5px;
+}
+#rank_list_wrapper .sub_block_lr {
+	padding: 0px 5px;
+}
+#rank_list_wrapper h2 a, #rank_list_wrapper h2 a:link, #rank_list_wrapper h2 a:visited {
+	font-size: 12px;
+}
+#rank_list_wrapper span.rank_top3 {
+	display: block;
+	padding: 1px 5px;
+	background-color: #ff8159;
+	color: #ffffff;
+	font-weight: bold;
+}
+#rank_list_wrapper span.rank {
+	display: block;
+	padding: 1px 5px;
+	background-color: #428cbb;
+	color: #ffffff;
+	font-weight: bold;
+}
+#rank_list_wrapper div.basic {
+	margin-bottom: 5px;
+}
+#rank_list_wrapper .sidebar_block_main {
+	padding-bottom: 5px;
+}
