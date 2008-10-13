@@ -42,7 +42,6 @@ module SearchingsHelper
 			searchables_set = searchables_set[0..limit-1]
 		end
 		
-		searchables_set.sort! {|a,b| b[:published_at] <=> a[:published_at]}
 		searchables_set.sort! {|a,b| b[:created_at] <=> a[:created_at]}
 	end
 	
