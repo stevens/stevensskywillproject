@@ -6,7 +6,7 @@ class SearchingsController < ApplicationController
 	
 	def search
   	if @searchable_type && params[:search_keywords]
-  		keywords_line = text_squish(params[:search_keywords])
+  		keywords_line = str_squish(params[:search_keywords])
   		if !keywords_line.blank?
 		  	search_id = keywords_line_to_search_id(keywords_line)
 	  		redirect_to :searchable_type => @searchable_type.downcase, :action => 'show', :id => search_id
@@ -15,7 +15,9 @@ class SearchingsController < ApplicationController
 				
 				info = "#{name_for(@searchable_type)}#{SEARCH_CN}" 
 				set_page_title(info)
-				set_block_title(info) 	
+				set_block_title(info)
+				render :action => 'search'
+				clear_notice 	
 	  	end
   	end
 	end

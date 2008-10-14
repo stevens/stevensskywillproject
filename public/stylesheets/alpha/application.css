@@ -416,6 +416,7 @@ td.photo_item_cell {
 /* Content Block */
 .content_block {
 	margin-bottom: 10px;
+	border-top: 1px #428cbb solid;
 	/*border-top: #428cbb 4px solid;*/
 }
 
@@ -499,6 +500,7 @@ td.photo_item_cell {
 	padding-left: 13px;
 	padding-right: 13px;
 	background-color: #695245;
+	border-top: 1px #f1f1f1 solid;
 }
 .sidebar_block_header h1 {
 	font-size: 12px;
@@ -529,6 +531,7 @@ td.photo_item_cell {
 	padding-left: 13px;
 	padding-right: 13px;
 	background-color: #5d6266;	
+	border-top: 1px #f1f1f1 solid;
 }
 .sidebar_panel_header h1 {
 	font-size: 12px;
@@ -887,6 +890,7 @@ div.pagination a, div.pagination span {
 	padding-left: 15px;
 	padding-right: 5px;
 	background-color: #ffcc99;
+	border-top: 1px #ff8159 solid;
 	/*border-top: 4px solid #ff8159;*/
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;
@@ -898,6 +902,7 @@ div.pagination a, div.pagination span {
 	padding-left: 15px;
 	padding-right: 5px;
 	background-color: #ccffcc;
+	border-top: 1px #78b36d solid;
 	/*border-top: 4px solid #78b36d;*/
 	/*border-bottom: 4px solid #78b36d;*/
 	color: #373737;
@@ -907,6 +912,7 @@ div.pagination a, div.pagination span {
 	margin-bottom: 10px;
 	padding: 10px;
 	background-color: #ffcc99;
+	border-top: 1px #ff8159 solid;
 	/*border-top: 4px solid #ff8159;*/
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;	
