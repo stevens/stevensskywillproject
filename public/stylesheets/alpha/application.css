@@ -416,7 +416,7 @@ td.photo_item_cell {
 /* Content Block */
 .content_block {
 	margin-bottom: 10px;
-	border-top: #428cbb 4px solid;
+	/*border-top: #428cbb 4px solid;*/
 }
 
 /* Block Header */
@@ -887,7 +887,7 @@ div.pagination a, div.pagination span {
 	padding-left: 15px;
 	padding-right: 5px;
 	background-color: #ffcc99;
-	border-top: 4px solid #ff8159;
+	/*border-top: 4px solid #ff8159;*/
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;
 }
@@ -898,7 +898,7 @@ div.pagination a, div.pagination span {
 	padding-left: 15px;
 	padding-right: 5px;
 	background-color: #ccffcc;
-	border-top: 4px solid #78b36d;
+	/*border-top: 4px solid #78b36d;*/
 	/*border-bottom: 4px solid #78b36d;*/
 	color: #373737;
 }
