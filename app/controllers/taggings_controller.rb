@@ -74,7 +74,7 @@ class TaggingsController < ApplicationController
 	def load_tags_set(user = nil)
 		case @taggable_type
 		when 'Recipe'
-			if params[:action] == 'index' || params[:action] = 'mine'
+			if params[:action] == 'index' || params[:action] == 'mine'
 				@tags_set = tags_for(user, @taggable_type, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
 				@tags_set = sort_by_gbk(@tags_set)
 			elsif params[:action] == 'show'
