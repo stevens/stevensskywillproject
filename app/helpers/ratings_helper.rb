@@ -16,7 +16,7 @@ module RatingsHelper
 	def highest_rated_items(items_set)
 		min_rating = 7
 		max_rating = 10
-		min_ratings_count = 2
+		min_ratings_count = 3
 		
 		items = []
 		for item in items_set
@@ -25,8 +25,7 @@ module RatingsHelper
 				items << item
 			end
 		end
-		items.sort! {|a,b| b.rating <=> a.rating}
-		# items.sort! {|a,b| b.total_ratings <=> a.total_ratings}
+		items.sort {|a,b| [b.rating, b.total_ratings] <=> [a.rating, a.total_ratings]}
 	end
 
 end
