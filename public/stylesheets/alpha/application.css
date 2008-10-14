@@ -501,7 +501,7 @@ td.photo_item_cell {
 	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #b0a696;
+	background-color: #d4ccbf;
 	border-top: 1px #695245 solid;
 }
 .sidebar_block_header h1 {
@@ -510,7 +510,7 @@ td.photo_item_cell {
 	color: #695245;
 }
 .sidebar_block_header h1 em {
-	color: #fcc601;
+	color: #ff8159;
 }
 .sidebar_block_header_link {
 	float: right;
@@ -533,7 +533,7 @@ td.photo_item_cell {
 	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #b0a696;	
+	background-color: #d4ccbf;	
 	border-top: 1px #695245 solid;
 }
 .sidebar_panel_header h1 {
