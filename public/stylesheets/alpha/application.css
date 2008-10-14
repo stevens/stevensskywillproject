@@ -431,9 +431,11 @@ td.photo_item_cell {
 .block_header h1 {
 	font-size: 14px;
 	font-weight: bold;
+	color: #695245;
 }
 .block_header_link {
 	float: right;
+	color: #b8b9a7;
 }
 .block_header a, .block_header a:link, .block_header a:visited {
 	color: #695245 !important;
@@ -482,7 +484,7 @@ td.photo_item_cell {
 /* Sidebar Block */
 .sidebar_block, .sidebar_panel {
 	margin-bottom: 10px;
-	background-color: #ffffcc;
+	background-color: #ffffdd;
 }
 .sidebar_block label, .sidebar_panel label {
 	float: right;
@@ -499,26 +501,27 @@ td.photo_item_cell {
 	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #695245;
-	border-top: 1px #f1f1f1 solid;
+	background-color: #b0a696;
+	border-top: 1px #695245 solid;
 }
 .sidebar_block_header h1 {
 	font-size: 12px;
 	font-weight: bold;
-	color: #f1f1f1;
+	color: #695245;
 }
 .sidebar_block_header h1 em {
 	color: #fcc601;
 }
 .sidebar_block_header_link {
 	float: right;
+	color: #b8b9a7;
 }
 .sidebar_block_header_link a, .sidebar_block_header_link a:link, .sidebar_block_header_link a:visited {
-	color: #f1f1f1 !important;
+	color: #695245 !important;
 }
 .sidebar_block_header_link a:hover {
 	background-color: transparent !important;
-	color: #fcc601 !important;
+	color: #ff8159 !important;
 }
 .sidebar_block_main {
 	padding: 10px;
@@ -530,13 +533,13 @@ td.photo_item_cell {
 	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #5d6266;	
-	border-top: 1px #f1f1f1 solid;
+	background-color: #b0a696;	
+	border-top: 1px #695245 solid;
 }
 .sidebar_panel_header h1 {
 	font-size: 12px;
 	font-weight: bold;
-	color: #b8b9a7;
+	color: #695245;
 }
 .sidebar_panel_main {
 	padding: 10px;
@@ -873,7 +876,7 @@ div.pagination a, div.pagination span {
 
 /* Error */
 .fieldWithErrors * {
-	background-color: #ffffcc;
+	background-color: #ffffdd;
 	border: 2px solid #ff0000;
 }
 .formError {
@@ -1061,7 +1064,7 @@ div.welcome_todo_button a:hover {
 	padding-right: 10px;
 	margin-bottom: 10px;
 	border: 1px #f1f1f1 solid;
-	background-color: #ffffcc;
+	background-color: #ffffdd;
 }
 .user_portrait {
 	margin-right: 10px;
