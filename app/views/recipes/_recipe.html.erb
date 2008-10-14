@@ -115,12 +115,12 @@
 <div id="recipe_<%= item.id %>_main">
 	<div class="main">
 		<h3><%= "#{DESCRIPTION_CN}:" %></h3>
-		<ul><%= paragraphs(item.description) %></ul>
+		<ul><%= paragraphs(item.description, true) %></ul>
 	</div>
 	
 	<div class="main">
 		<h3><%= "#{INGREDIENT_CN}:" %></h3>
-		<ul><%= paragraphs(item.ingredients, 2) %></ul>
+		<ul><%= paragraphs(item.ingredients, false, 3) %></ul>
 	</div>
 	
 	<div class="main">
@@ -135,6 +135,6 @@
 	
 	<div class="main">
 		<h3><%= "闲话:" %></h3>
-		<ul><%= paragraphs(item.any_else) %></ul>
+		<ul><%= paragraphs(item.any_else, true) %></ul>
 	</div>
 </div>

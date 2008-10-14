@@ -178,41 +178,43 @@ module ApplicationHelper
 	def text_summary(text, summary_length)
 		text.chars.length > summary_length ? text.to(summary_length-1) + '......' : text
 	end
-
-	def text_squish(text, space_type = 1)
-		case space_type
-		when 1
-			space = ' '
-		when 2
-			space = '　'
+	
+	def str_squish(str, space_count = 1)
+		space = ''
+		1.upto(space_count) do
+			space += '&nbsp;'
 		end
-		if text && !text.blank?
-			text.strip.gsub(/\s+/, space)
+		if str && !str.blank?
+			str.strip.gsub(/\s+/, space)
 		else
 			nil
 		end
 	end
 	
-	def text_useful(text)
-    text_useful = nil
-    if text && text != ''
-			text_useful = text.strip if text.strip != ''
+	def str_keep_space(str)
+		if str && !str.blank?
+			str.rstrip.gsub(/\s/, '&nbsp;')
+		else
+			nil
 		end
-		text_useful
-	end	
+	end
 	
-	def paragraphs(text, space_type = 1)
-		ps = []
+	def paragraphs(text, keep_space = false, space_count = 1)
+		paragraphs = []
 		if text && !text.blank?
-			ts = text.split(/\n/)
-			for t in ts
-				t = text_squish(t, space_type)
-				if !t.blank?
-					ps << "<li>#{h t}</li>"
+			ps = text.split(/\n/)
+			for p in ps
+				if keep_space
+					p = str_keep_space(p)
+				else
+					p = str_squish(p, space_count)
+				end
+				if !p.blank?
+					paragraphs << "<li>#{strip_tags(p)}</li>"
 				end
 			end
 		end
-		ps
+		paragraphs
 	end
 	
 	def restfu_url_for(namespace, parent_obj, self_obj, action)

@@ -438,8 +438,8 @@ td.photo_item_cell {
 	color: #695245 !important;
 }
 .block_header a:hover {
-	background-color: #695245 !important;
-	color: #ffffff !important;
+	background-color: transparent !important;
+	color: #ff8159 !important;
 }
 
 /* Block Main */
@@ -498,15 +498,25 @@ td.photo_item_cell {
 	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #fcc601;
+	background-color: #695245;
 }
 .sidebar_block_header h1 {
 	font-size: 12px;
 	font-weight: bold;
-	color: #373737;
+	color: #f1f1f1;
+}
+.sidebar_block_header h1 em {
+	color: #fcc601;
 }
 .sidebar_block_header_link {
 	float: right;
+}
+.sidebar_block_header_link a, .sidebar_block_header_link a:link, .sidebar_block_header_link a:visited {
+	color: #f1f1f1 !important;
+}
+.sidebar_block_header_link a:hover {
+	background-color: transparent !important;
+	color: #fcc601 !important;
 }
 .sidebar_block_main {
 	padding: 10px;
@@ -583,7 +593,7 @@ td.photo_item_cell {
 	padding-right: 10px;
 	font-size: 12px;
 	font-weight: bold;
-	color: #ffffff;
+	color: #f1f1f1;
 	background-color: #695245;
 }
 .sub_block_header h1 {
@@ -883,8 +893,10 @@ div.pagination a, div.pagination span {
 }
 #system_notice {
 	margin-bottom: 10px;
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-left: 15px;
+	padding-right: 5px;
 	background-color: #ccffcc;
 	border-top: 4px solid #78b36d;
 	/*border-bottom: 4px solid #78b36d;*/
