@@ -25,7 +25,7 @@ module RatingsHelper
 				items << item
 			end
 		end
-		items.sort {|a,b| [b.rating, b.total_ratings] <=> [a.rating, a.total_ratings]}
+		items.sort {|a,b| [b.rating, b.total_ratings, b.reviews.size] <=> [a.rating, a.total_ratings, a.reviews.size]}
 	end
 
 end

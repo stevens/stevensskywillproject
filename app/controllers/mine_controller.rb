@@ -5,13 +5,13 @@ class MineController < ApplicationController
 	before_filter :set_system_notice, :only => [:overview]
 	
 	def overview
+		@user = @current_user
+	
   	load_recipes_set
   	
   	load_reviews_set
 	 	
 	 	load_tags_set
-	 	
-	 	@user = @current_user
 	 	
 	 	info = "#{username_prefix(@current_user)}#{SITE_NAME_CN}"
 		set_page_title(info)
