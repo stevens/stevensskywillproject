@@ -175,8 +175,8 @@ module ApplicationHelper
 		options
 	end
 	
-	def text_summary(text, summary_length)
-		text.chars.length > summary_length ? text.to(summary_length-1) + '......' : text
+	def text_summary(text, min_length = TEXT_SUMMARY_LENGTH_M)
+		text.chars.length > min_length ? text.to(min_length-1) + '......' : text
 	end
 	
 	def str_squish(str, space_count = 1)
@@ -199,7 +199,7 @@ module ApplicationHelper
 		end
 	end
 	
-	def paragraphs(text, keep_space = false, space_count = 1)
+	def paragraphs(text, keep_space = false, space_count = 1, min_paras_count = nil)
 		paragraphs = []
 		if text && !text.blank?
 			ps = text.split(/\n/)
@@ -214,7 +214,11 @@ module ApplicationHelper
 				end
 			end
 		end
-		paragraphs
+		if min_paras_count && paragraphs.size > min_paras_count
+			paragraphs[0..min_paras_count-1] + ["<li>......</li>"]
+		else
+			paragraphs
+		end
 	end
 	
 	def restfu_url_for(namespace, parent_obj, self_obj, action)

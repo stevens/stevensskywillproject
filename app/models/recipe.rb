@@ -35,7 +35,7 @@ class Recipe < ActiveRecord::Base
   													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
   
   def description_summary
-  	text_summary(description, TEXT_SUMMARY_LENGTH_M)
+  	text_summary(description)
   end
 	
 	def prep_time_display
