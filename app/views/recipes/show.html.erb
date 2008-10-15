@@ -66,6 +66,11 @@
 										 						 :review_error => false, 
 										 						 :review_text => ''} %>
 				</div>
+				<% if @recipe.user != @current_user %>
+					<div class="todo_right">
+						<%= link_to "给这#{UNIT_RECIPE_CN}#{RECIPE_CN}#{RATE_CN}", "#recipe_#{@recipe.id}_wrapper" %>
+					</div>
+				<% end %>
 			<% else %>
 				<div class="todo_button">
 					<%= link_to "我要#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %>
