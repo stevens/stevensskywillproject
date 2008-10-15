@@ -45,7 +45,7 @@
 											 						  :review => item.reviewable.reviews.build, 
 											 						  :is_new => true,  
 											 						  :review_error => false, 
-											 						  :review_text => "#{item.user.login}说: \"#{item.review}\"\n\n"}
+											 						  :review_text => "#{item.user.login}说: \"#{item.review}\""}
 	  end %>
 		<% if item.user == @current_user %>
     	| <%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %>
