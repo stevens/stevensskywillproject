@@ -152,6 +152,7 @@ class ReviewsController < ApplicationController
 			format.xml  { render :xml => @review, :status => :created, :location => @review }
 			format.js do
 				render :update do |page|
+					page.redirect_to "#reviews_header"
 					page.replace_html "notice_for_new_review", 
 														:partial => "/layouts/notice", 
 														:locals => {:notice => "你已经成功#{ADD_CN}了1#{@self_unit}新#{@self_name}!"}

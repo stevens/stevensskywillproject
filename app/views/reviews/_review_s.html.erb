@@ -37,13 +37,23 @@
 
 <% if show_todo %>
 	<div id="review_<%= item.id %>_todo" class="todo_right">
+		<%= link_to_function("引用") do |page|
+			page.redirect_to "#input_form_for_new_review"
+			page.replace_html "input_form_for_new_review",
+												:partial => "/reviews/review_input",
+											  :locals => {:reviewable => item.reviewable,
+											 						  :review => item.reviewable.reviews.build, 
+											 						  :is_new => true,  
+											 						  :review_error => false, 
+											 						  :review_text => "#{item.user.login}说: \"#{item.review}\"\n\n"}
+	  end %>
 		<% if item.user == @current_user %>
-    	<%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %> | 
+    	| <%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %>
     <% end %>
     <% if item.user == @current_user || item.reviewable.user == @current_user %>
     	<% delete_message = "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?" %>
 	    <% if delete_remote %>
-	    	<%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
+	    	| <%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
 	    <% else %>
 	    	<%= link_to DELETE_CN, {:action => 'destroy', :id => item.id, :reviewable_type => params[:reviewable_type], :current_page => params[:page]}, :confirm => delete_message, :method => :delete %>
 	    <% end %>
