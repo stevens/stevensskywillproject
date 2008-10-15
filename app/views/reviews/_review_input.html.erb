@@ -27,7 +27,7 @@
 		<%= error_message_on "review", "review" %>
 	</div>
 	<div class="submit">
-		<%= f.submit button_name, :class => "submit" %>
+		<%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
 		<% unless is_new %>
 			&nbsp;&nbsp;
 			<%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
