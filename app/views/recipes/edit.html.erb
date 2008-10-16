@@ -11,7 +11,8 @@
 	<div class="block_main">
 		<%= render :partial => "recipe_input", 
 							 :locals => {:recipe => @recipe, 
-							 						 :is_new => false } %>
+							 						 :is_new => false, 
+							 						 :from_type => (!@recipe.from_type ? '1' : @recipe.from_type)} %>
 	</div>
 
 </div>

@@ -190,17 +190,19 @@
 				<div class="text">
 					<%= "这是原创的私房#{RECIPE_CN}吗?" %>
 				</div>
-				<div class="input">
-					<%= f.select :from_type, Code.find(:all, :conditions => {:codeable_type => 'from_type'}).collect {|c| [ c.title, c.code ] } %>
+				<div id="from_type" class="input">
+					<%= f.select :from_type, Code.find(:all, :conditions => {:codeable_type => 'from_type'}).collect {|c| [ c.title, c.code ]}, {}, {:onchange => remote_function(:url => {:action => 'change_from_type'}, :with => "'from_type='+value")} %>
 				</div>
-				<div class="text">
+				<div id="from_where_prompt" class="text">
 					<%= "如果是转载的, 请#{INPUT_CN}转载的报刊/书籍/网址等" %>
 				</div>
-				<div class="input">
-					<%= f.text_field :from_where, :class => "text" %>
+				<div id="from_where" class="input">
+					<%= f.text_field :from_where, :disabled => (from_type != '1' ? false : true), :class => "text" %>
 				</div>
 				<%= error_message_on "recipe", "from_type" %>
+				<div id="from_where_errors">
 				<%= error_message_on "recipe", "from_where" %>
+				</div>
 			</td>
 		</tr>
 		<tr>

@@ -5,6 +5,19 @@ class RecipesController < ApplicationController
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
 	before_filter :set_system_notice, :only => [:overview, :show]
 	
+	def change_from_type
+  	respond_to do |format|
+			format.js do
+				render :update do |page|
+					page.replace_html "from_where",
+														:partial => '/recipes/recipe_from_where',
+														:locals => {:disabled => (params[:from_type] != '1' ? false : true)}
+					page.hide "from_where_errors"
+				end
+			end
+  	end
+	end
+	
   # GET /recipes
   # GET /recipes.xml
   def index
