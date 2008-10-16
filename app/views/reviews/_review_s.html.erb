@@ -37,16 +37,18 @@
 
 <% if show_todo %>
 	<div id="review_<%= item.id %>_todo" class="todo_right">
-		<%= link_to_function("引用") do |page|
-			page.redirect_to "#input_form_for_new_review"
-			page.replace_html "input_form_for_new_review",
-												:partial => "/reviews/review_input",
-											  :locals => {:reviewable => item.reviewable,
-											 						  :review => item.reviewable.reviews.build, 
-											 						  :is_new => true,  
-											 						  :review_error => false, 
-											 						  :review_text => "#{item.user.login}说: \"#{item.review}\""}
-	  end %>
+		<% if @current_user %>
+			<%= link_to_function("引用") do |page|
+				page.redirect_to "#input_form_for_new_review"
+				page.replace_html "input_form_for_new_review",
+													:partial => "/reviews/review_input",
+												  :locals => {:reviewable => item.reviewable,
+												 						  :review => item.reviewable.reviews.build, 
+												 						  :is_new => true,  
+												 						  :review_error => false, 
+												 						  :review_text => "#{item.user.login}说: \"#{item.review}\""}
+		  end %>
+	  <% end %>
 		<% if item.user == @current_user %>
     	| <%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %>
     <% end %>

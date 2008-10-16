@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 16) do
+ActiveRecord::Schema.define(:version => 17) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
+  add_index "codes", ["codeable_type"], :name => "pi_codeable_type"
+
   create_table "counters", :force => true do |t|
     t.string   "countable_type"
     t.integer  "countable_id"
@@ -29,6 +31,9 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "counters", ["countable_type", "countable_id"], :name => "pi_countable"
+  add_index "counters", ["countable_type"], :name => "pi_countable_type"
 
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
@@ -48,6 +53,8 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   add_index "photos", ["user_id"], :name => "fk_photos_user"
+  add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
+  add_index "photos", ["photoable_type"], :name => "pi_photoable_type"
 
   create_table "ratings", :force => true do |t|
     t.integer  "user_id"
@@ -59,6 +66,8 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   add_index "ratings", ["user_id"], :name => "fk_ratings_user"
+  add_index "ratings", ["rateable_type", "rateable_id"], :name => "pi_rateable"
+  add_index "ratings", ["rateable_type"], :name => "pi_rateable_type"
 
   create_table "recipes", :force => true do |t|
     t.integer  "user_id"
@@ -98,6 +107,8 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   add_index "reviews", ["user_id"], :name => "fk_reviews_user"
+  add_index "reviews", ["reviewable_type", "reviewable_id"], :name => "pi_reviewable"
+  add_index "reviews", ["reviewable_type"], :name => "pi_reviewable_type"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -108,6 +119,9 @@ ActiveRecord::Schema.define(:version => 16) do
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
   add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
+  add_index "taggings", ["taggable_type", "taggable_id"], :name => "pi_taggable"
+  add_index "taggings", ["taggable_type"], :name => "pi_taggable_type"
+  add_index "taggings", ["tag_id"], :name => "fk_tag"
 
   create_table "tags", :force => true do |t|
     t.string "name"
