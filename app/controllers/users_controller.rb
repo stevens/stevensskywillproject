@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     # uncomment at your own risk
     # reset_session
     @user = User.new(params[:user])
-    @user.login = @user.login.strip
+    @user.login = str_squish(@user.login, 0)
 		
 		if @user.save
 			after_create_ok

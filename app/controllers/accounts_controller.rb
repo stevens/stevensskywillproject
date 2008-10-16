@@ -41,7 +41,7 @@ class AccountsController < ApplicationController
 		  end
 		else
 			if params[:user][:login]
-				params[:user][:login] = params[:user][:login].strip
+				params[:user][:login] = str_squish(params[:user][:login], 0)
 			end
 		  if @user.update_attributes(params[:user])
 				after_update_ok
