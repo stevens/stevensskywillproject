@@ -364,7 +364,7 @@ td.right_column_lined {
 td.label {
 
 }
-td.label label{
+td.label label {
 	margin-top: 7px;
 	margin-right: 10px;
 	width: 150px;
@@ -557,6 +557,7 @@ td.photo_item_cell {
 	font-size: 14px;
 	font-weight: bold;
 	color: #ffffff;
+	border-top: 1px #f1f1f1 solid; 
 }
 .sidebar_todo_button a, .sidebar_todo_button a:link, .sidebar_todo_button a:visited {
 	display: block;

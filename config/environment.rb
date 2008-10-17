@@ -193,7 +193,7 @@ Rails::Initializer.run do |config|
 	KITCHEN_CN = '厨房'
 	RANKING_CN = '榜单'
 	PHOTO_EN = 'photo'
-	CATEGORY_CN = '分类'
+	CATEGORY_CN = '类别'
 	PHOTO_CN = '图片'
 	GROUP_CN = '队伍'
 	FRIEND_CN = '厨友'
@@ -239,6 +239,7 @@ Rails::Initializer.run do |config|
 	VIDEO_CN = '视频'
 	
 	SUBJECT_CN = '标题'
+	CONTENT_CN = '内容'
 	
 	#DISPLAY constants
 	TITLE_LINKER = '>'
@@ -262,6 +263,7 @@ Rails::Initializer.run do |config|
 	REQUIRED_CN = '必填项'
 	OPTIONAL_CN = '选填项'
 	SORRY_CN = '对不起'
+	FEEDBACK_CN = '反馈'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 20

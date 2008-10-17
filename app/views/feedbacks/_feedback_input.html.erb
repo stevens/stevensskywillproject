@@ -1,0 +1,81 @@
+<% if is_new %>
+	<% button_name = "提交#{FEEDBACK_CN}" %>
+	<% cancle_url = root_path %>
+<% else %>
+	<% button_name = SAVE_CHANGES_CN %>
+	<% cancle_url = root_path %>
+<% end %>
+
+<% form_for feedback do |f| %>
+	<div class="sub_block_tb">
+	<table class="content">
+		<% if !@current_user %>
+			<tr>
+				<td class="label">
+					<label for="submitter_name"><%= "你的名字:" %></label>
+				</td>
+				<td class="input">
+					<div class="input">
+						<%= f.text_field :submitter_name, :class => "text" %>
+					</div>
+					<%= error_message_on "feedback", "submitter_name" %>
+				</td>
+			</tr>
+			<tr>
+				<td class="label">
+					<label for="submitter_email"><%= "你的#{EMAIL_ADDRESS_CN}:" %></label>
+				</td>
+				<td class="input">
+					<div class="input">
+						<%= f.text_field :submitter_email, :class => "text" %>
+					</div>
+					<%= error_message_on "feedback", "submitter_email" %>
+				</td>
+			</tr>
+		<% end %>
+		<tr>
+			<td class="label">
+				<label for="category"><%= "#{CATEGORY_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="input">
+					<%= f.select :category, Code.find(:all, :order => 'code', :conditions => { :codeable_type => 'feedback_category' }).collect { |c| [ c.title, c.code ] } %>
+				</div>
+				<%= error_message_on "feedback", "category" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label for="title"><%= "#{SUBJECT_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="input">
+					<%= f.text_field :title, :class => "text" %>
+				</div>
+				<%= error_message_on "feedback", "title" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label for="body"><%= "#{CONTENT_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="input">
+					<%= f.text_area :body %>
+				</div>
+				<%= error_message_on "feedback", "body" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="input">
+				<div class="submit">
+					<%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+<% end %>

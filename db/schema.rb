@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 19) do
+ActiveRecord::Schema.define(:version => 20) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(:version => 19) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "submitter_type"
+    t.string   "submitter_name"
+    t.string   "submitter_email"
   end
 
   add_index "feedbacks", ["user_id"], :name => "fk_user"

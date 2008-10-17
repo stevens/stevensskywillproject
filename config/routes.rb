@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
 	
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
-  map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings]
+  map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings, :feedbacks]
 	
 	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings, :tags]
 	
@@ -31,6 +31,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :searchings
   
   map.resource :session
+  
+  map.resource :feedbacks
   
   
   # map.namespace :mine do |mine|
@@ -85,5 +87,5 @@ ActionController::Routing::Routes.draw do |map|
 	map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
 	map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
 	map.search '/search', :controller => 'searchings', :action => 'search'
-	
+	map.feedback '/feedback', :controller => 'feedbacks', :action => 'new'
 end

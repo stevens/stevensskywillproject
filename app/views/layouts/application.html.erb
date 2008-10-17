@@ -119,7 +119,7 @@
 					<!-- sidebar colmun  -->
 				  <div id="sidebar_column">
 				  	<%= render :partial => "/layouts/todo_sidebar" %>
-						<% if !current_user && params[:controller] == 'site' %>
+						<% if !current_user && ['site', 'feedbacks'].include?(params[:controller]) %>
 					  	<%= render :partial => "/sessions/login_sidebar" %>
 					  <% end %>
 						<%= render :partial => "/searchings/search_sidebar" %>
@@ -157,7 +157,7 @@
 			<div id="footer_wrapper">
 				<div id="footer_content">
 					<%= link_to "#{ABOUT_CN}#{SITE_NAME_CN}", root_url %> 
-					<%= mail_to SITE_EMAIL, CONTACT_US_CN %> 
+					<%= link_to CONTACT_US_CN, feedback_path %> 
 					<%= link_to PRIVACY_POLICY_CN, root_url %> 
 					<%= link_to TERMS_OF_SERVICE_CN, root_url %> 
 					<%= link_to HELP_CN, root_url %>
