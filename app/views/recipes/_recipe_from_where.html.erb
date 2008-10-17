@@ -1,1 +1,6 @@
-<%= text_field_tag 'recipe[from_where]', nil, :disabled => disabled, :class => "text" %>
+<div id="from_where_prompt" class="text">
+	<%= "如果是转载的, 请#{INPUT_CN}转载的报刊/书籍/网址等" %>
+</div>
+<div id="from_where" class="input">
+	<%= text_field_tag 'recipe[from_where]', '', :class => "text" %>
+</div>

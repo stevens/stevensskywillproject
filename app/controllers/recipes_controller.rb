@@ -9,10 +9,14 @@ class RecipesController < ApplicationController
   	respond_to do |format|
 			format.js do
 				render :update do |page|
-					page.replace_html "from_where",
-														:partial => '/recipes/recipe_from_where',
-														:locals => {:disabled => (params[:from_type] != '1' ? false : true)}
-					page.hide "from_where_errors"
+					if params[:from_type] == '1'
+						page.hide "from_where_wrapper"
+						page.hide "from_where_errors"
+					else
+						page.replace_html "from_where_wrapper",
+															:partial => '/recipes/recipe_from_where'
+						page.show "from_where_wrapper"
+					end
 				end
 			end
   	end

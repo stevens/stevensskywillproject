@@ -18,8 +18,6 @@ class Photo < ActiveRecord::Base
   
   validates_as_attachment
 	
-	before_create :change_filename
-	
 	def errors_on_file
 		if errors.invalid?('filename')
 			"#{FILE_CN}名称有#{ERROR_CN}"
@@ -32,12 +30,6 @@ class Photo < ActiveRecord::Base
 	
 	def is_cover?(photoable)
 		id == photoable.cover_photo_id
-	end
-	
-	protected
-	
-	def change_filename
-		filename = "1111"
 	end
 	
 end

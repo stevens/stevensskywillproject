@@ -9,7 +9,7 @@ class AddRatings < ActiveRecord::Migration
 			t.timestamps
 	  end
 	
-	  add_index :ratings, [:user_id], :name => 'fk_ratings_user'
+	  add_index :ratings, [:user_id], :name => 'fk_user'
   end
 
   def self.down

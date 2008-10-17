@@ -10,7 +10,7 @@ class CreateReviews < ActiveRecord::Migration
 			t.timestamps
 	  end
 	
-	  add_index :reviews, [:user_id], :name => 'fk_reviews_user'
+	  add_index :reviews, [:user_id], :name => 'fk_user'
 	end
 	
 	def self.down
