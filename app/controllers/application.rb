@@ -62,7 +62,8 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def set_system_notice
-		@system_notice = "号外: 可爱的蜂厨们, 人气食谱TOP10新鲜出炉了, 快去给你喜欢的食谱评分吧!"
+		@system_notice = "号外: 可爱的蜂厨们, 人气食谱TOP10新鲜出炉了, 快去给你喜欢的食谱评分吧!<br /><br />
+										 <em>提示: 由于存储提供商的服务器出现临时问题, 今天暂时不能上传食谱图片和头像, 实在不好意思!</em>"
 	end
 	
 	# def param_posted?(symbol)
