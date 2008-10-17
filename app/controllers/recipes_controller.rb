@@ -12,6 +12,8 @@ class RecipesController < ApplicationController
 					if params[:from_type] == '1'
 						page.hide "from_where_wrapper"
 						page.hide "from_where_errors"
+						page.replace_html "from_where_wrapper",
+															:partial => '/recipes/recipe_from_where'
 					else
 						page.replace_html "from_where_wrapper",
 															:partial => '/recipes/recipe_from_where'
