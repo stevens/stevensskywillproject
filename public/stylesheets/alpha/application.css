@@ -554,18 +554,18 @@ td.photo_item_cell {
 }
 .sidebar_todo_button {
 	background-color: #ff8159;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	color: #ffffff;
 	border-top: 1px #f1f1f1 solid; 
 }
 .sidebar_todo_button a, .sidebar_todo_button a:link, .sidebar_todo_button a:visited {
 	display: block;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	font-size: 14px !important;
+	font-size: 12px !important;
 	font-weight: bold;
 	color: #ffffff !important;
 }
