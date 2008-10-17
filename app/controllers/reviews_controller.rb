@@ -67,11 +67,11 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.xml
   def create
-  	@reviews_set_count = @parent_obj.reviews.size
     @review = @parent_obj.reviews.build(params[:review])
 		@review.user_id = @current_user.id
 		
 		if @review.save
+			@reviews_set_count = @parent_obj.reviews.size
 			after_create_ok
 		else
 			after_create_error
@@ -95,9 +95,8 @@ class ReviewsController < ApplicationController
   def destroy
     load_review
   	
-  	@reviews_set_count = @review.reviewable.reviews.size
-  	
   	if (@review.user == @current_user ) || (@review.reviewable.user == @current_user)
+  		@reviews_set_count = @review.reviewable.reviews.size
   		@review.destroy
   	end
 		
@@ -161,10 +160,10 @@ class ReviewsController < ApplicationController
 														:locals => {:notice => "你已经成功#{ADD_CN}了1#{@self_unit}新#{@self_name}!"}
 					page.show "notice_for_new_review"
 					page.replace_html "reviews_header", 
-														:partial => "/layouts/index_header", 
-							 							:locals => {:show_header_link => false, 
-							 						 							:show_new_link => false, 
-							 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count+1})"}
+					 									:partial => "/layouts/index_header", 
+					 		 							:locals => {:show_header_link => false, 
+					 		 						 							:show_new_link => false, 
+					 		 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})"}
 					page.insert_html :top, 'list_content', 
 													 :partial => "/layouts/list_item", 
 													 :locals => {:item => @review, 
@@ -192,8 +191,8 @@ class ReviewsController < ApplicationController
 					# 								 						  :delete_remote => true}									
 					page.replace_html "input_form_for_new_review",
 														:partial => "/reviews/review_input",
-													  :locals => {:reviewable => @review.reviewable,
-													 						  :review => @review.reviewable.reviews.build, 
+													  :locals => {:reviewable => @parent_obj,
+													 						  :review => @parent_obj.reviews.build, 
 													 						  :is_new => true,  
 													 						  :review_error => false, 
 													 						  :review_text => ''}
