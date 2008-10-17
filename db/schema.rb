@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 18) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -65,9 +65,10 @@ ActiveRecord::Schema.define(:version => 18) do
     t.integer  "height"
   end
 
-  add_index "photos", ["user_id"], :name => "fk_photos_user"
   add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
   add_index "photos", ["photoable_type"], :name => "pi_photoable_type"
+  add_index "photos", ["user_id"], :name => "fk_user"
+  add_index "photos", ["user_id", "photoable_type"], :name => "i_user_photoable_type"
 
   create_table "ratings", :force => true do |t|
     t.integer  "user_id"
@@ -78,9 +79,10 @@ ActiveRecord::Schema.define(:version => 18) do
     t.datetime "updated_at"
   end
 
-  add_index "ratings", ["user_id"], :name => "fk_ratings_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "pi_rateable"
   add_index "ratings", ["rateable_type"], :name => "pi_rateable_type"
+  add_index "ratings", ["user_id"], :name => "fk_user"
+  add_index "ratings", ["user_id", "rateable_type"], :name => "i_user_rateable_type"
 
   create_table "recipes", :force => true do |t|
     t.integer  "user_id"
@@ -107,7 +109,7 @@ ActiveRecord::Schema.define(:version => 18) do
     t.string   "is_draft"
   end
 
-  add_index "recipes", ["user_id"], :name => "fk_recipes_user"
+  add_index "recipes", ["user_id"], :name => "fk_user"
 
   create_table "reviews", :force => true do |t|
     t.integer  "user_id"
@@ -119,9 +121,10 @@ ActiveRecord::Schema.define(:version => 18) do
     t.datetime "updated_at"
   end
 
-  add_index "reviews", ["user_id"], :name => "fk_reviews_user"
   add_index "reviews", ["reviewable_type", "reviewable_id"], :name => "pi_reviewable"
   add_index "reviews", ["reviewable_type"], :name => "pi_reviewable_type"
+  add_index "reviews", ["user_id"], :name => "fk_user"
+  add_index "reviews", ["user_id", "reviewable_type"], :name => "i_user_reviewable_type"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -133,6 +136,7 @@ ActiveRecord::Schema.define(:version => 18) do
   add_index "taggings", ["taggable_type", "taggable_id"], :name => "pi_taggable"
   add_index "taggings", ["taggable_type"], :name => "pi_taggable_type"
   add_index "taggings", ["tag_id"], :name => "fk_tag"
+  add_index "taggings", ["tag_id", "taggable_type"], :name => "i_tag_taggable_type"
 
   create_table "tags", :force => true do |t|
     t.string "name"
