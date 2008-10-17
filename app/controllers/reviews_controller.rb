@@ -67,6 +67,7 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.xml
   def create
+  	@reviews_set_count = @parent_obj.reviews.size
     @review = @parent_obj.reviews.build(params[:review])
 		@review.user_id = @current_user.id
 		
@@ -93,6 +94,8 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1.xml
   def destroy
     load_review
+  	
+  	@reviews_set_count = @review.reviewable.reviews.size
   	
   	if (@review.user == @current_user ) || (@review.reviewable.user == @current_user)
   		@review.destroy
@@ -161,7 +164,7 @@ class ReviewsController < ApplicationController
 														:partial => "/layouts/index_header", 
 							 							:locals => {:show_header_link => false, 
 							 						 							:show_new_link => false, 
-							 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@review.reviewable.reviews.size})"}
+							 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count+1})"}
 					page.insert_html :top, 'list_content', 
 													 :partial => "/layouts/list_item", 
 													 :locals => {:item => @review, 
@@ -314,7 +317,7 @@ class ReviewsController < ApplicationController
 														:partial => "/layouts/index_header", 
 							 							:locals => {:show_header_link => false, 
 							 						 							:show_new_link => false, 
-							 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@review.reviewable.reviews.size})"}
+							 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count-1})"}
 					page.hide "review_#{@review.id}_line"
 					# page.replace_html "reviews_detail", 
 					# 									:partial => "/layouts/items_list", 
