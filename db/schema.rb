@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(:version => 19) do
   add_index "photos", ["photoable_type"], :name => "pi_photoable_type"
   add_index "photos", ["user_id"], :name => "fk_user"
   add_index "photos", ["user_id", "photoable_type"], :name => "i_user_photoable_type"
+  add_index "photos", ["user_id", "photoable_type", "photoable_id"], :name => "i_user_photoable"
+  add_index "photos", ["parent_id"], :name => "i_parent_photo"
 
   create_table "ratings", :force => true do |t|
     t.integer  "user_id"
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(:version => 19) do
   add_index "reviews", ["reviewable_type"], :name => "pi_reviewable_type"
   add_index "reviews", ["user_id"], :name => "fk_user"
   add_index "reviews", ["user_id", "reviewable_type"], :name => "i_user_reviewable_type"
+  add_index "reviews", ["user_id", "reviewable_type", "reviewable_id"], :name => "i_user_reviewable"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
