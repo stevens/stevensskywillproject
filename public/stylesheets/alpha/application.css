@@ -352,8 +352,12 @@ div.tag {
 	padding: 10px;
 	padding-bottom: 0px;
 	white-space: nowrap;
-	color: #78b36d;
-	font-weight: bold;
+}
+.group_by_title em {
+	padding: 0px 2px;
+	display: block;
+	background-color: #d4ccbf;
+	color: #695245;	
 }
 
 /* Content Table */
