@@ -1,0 +1,74 @@
+<% if limit %>
+	<% reviews = reviews_set[0..limit-1].group_by { |review| (review.created_at.to_date) }.sort {|a,b| b <=> a } %>
+<% else %>
+	<% reviews = reviews_set.group_by { |review| (review.created_at.to_date) }.sort {|a,b| b <=> a } %>
+<% end %>
+
+<% if show_paginate %>
+	<% items = items_paginate(reviews, 7) %>
+<% else %>
+	<% items = reviews %>
+<% end %>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => items} %>
+<% end %>
+
+<div class="sub_block_tb">
+<table class="content">
+	<% items.each do |date, reviews| %>
+		<tr>
+			<td class="left_column">
+				<div class="group_by_title">
+					<%= date %>
+				</div>
+			</td>
+		</tr>
+		
+		<% reviews.group_by { |review| (review.reviewable) }.each do |reviewable, reviews| %>
+			<tr>
+				<td class="left_column">
+					<div class="sub_block_tb">
+					<div class="list_photo">
+	    			<%= render :partial => "/layouts/item_photo",
+	    								 :locals => {:item => reviewable, 
+	    								 						 :photo_style => 'list'} %>
+					</div>
+					
+					<div class="below_photo">
+						<%= render :partial => "/layouts/below_item_photo", 
+											 :locals => {:item => reviewable, 
+											 						 :show_title => true, 
+											 						 :show_photo_todo => false} %>
+					</div>
+					</div>
+				</td>
+				
+				<td class="right_column_lined">
+					<div id="reviews_list_content">
+					<%= render :partial => "/layouts/items_list",
+										 :locals => {:show_paginate => false,
+										 						 :items_set => reviews, 
+										 						 :limit => nil,
+										 						 :itemable_sym => 'reviewable', 
+										 						 :show_photo => true, 
+										 						 :photo_style => 'mini', 
+										 						 :show_below_photo => false, 
+										 						 :show_title => false, 
+										 						 :show_photo_todo => false, 
+										 						 :show_parent => false,
+										 						 :show_todo => false, 
+										 						 :delete_remote => false} %>
+					</div>
+				</td>
+			</tr>
+		<% end %>
+	<% end %>
+</table>
+</div>
+
+<% if show_paginate %>
+	<%= render :partial => "/layouts/items_paginate",
+						 :locals => {:items => items} %>
+<% end %>

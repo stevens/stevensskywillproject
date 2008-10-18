@@ -2,12 +2,12 @@ class Photo < ActiveRecord::Base
 	include ApplicationHelper
 	
 	has_attachment :storage => :file_system,
+								 :content_type => :image,
 								 :size => 1.byte..640.kilobytes,
 								 :resize_to => '640x640>',
 								 :thumbnails => { :medium => '320x320>', :mcube => '96x96!',
 								 									:small => '160x160>', :scube => '48x48!',
 								 									:tiny => '80x80>', :tcube => '24x24!' },
-							   :content_type => :image,
 							 	 :processor => 'Rmagick'
 	belongs_to :user
 	belongs_to :photoable, :polymorphic => true

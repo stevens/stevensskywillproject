@@ -138,7 +138,7 @@ class ReviewsController < ApplicationController
   
   def load_reviews_set(user = nil)
   	review_conditions = review_conditions(@reviewable_type, @parent_id)
-  	if @reviewable_type = 'Recipe'
+  	if @reviewable_type == 'Recipe'
 	 		reviewable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
 	 	end
  		@reviews_set = reviews_for(user, @reviewable_type, review_conditions, reviewable_conditions)

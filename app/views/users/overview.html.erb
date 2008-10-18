@@ -29,18 +29,9 @@
 	</div>
 	
 	<div id="reviews_detail" class="block_main">
-		<%= render :partial => "/layouts/items_list",
-							 :locals => {:show_paginate => false,
-							 						 :items_set => @reviews_set, 
-							 						 :limit => LIST_ITEMS_COUNT_PER_PAGE_S,
-							 						 :itemable_sym => 'reviewable', 
-							 						 :show_photo => true, 
-							 						 :photo_style => 'list', 
-							 						 :show_below_photo => false,  
-							 						 :show_title => false, 
-							 						 :show_photo_todo => false, 
-							 						 :show_parent => true,
-							 						 :show_todo => false, 
-							 						 :delete_remote => false} %>
+		<%= render :partial => "/reviews/reviews_list", 
+							 :locals => { :reviews_set => @reviews_set, 
+							 							:show_paginate => false, 
+							 							:limit => 20 } %>
 	</div>
 </div>

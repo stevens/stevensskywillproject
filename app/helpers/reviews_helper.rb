@@ -10,7 +10,7 @@ module ReviewsHelper
 		end
 		if user
 			user.reviews.find(:all, :limit => limit, :order => order, :joins => joins, 
-												:conditions => conditions.join(" AND "))	
+												:conditions => conditions.join(" AND "))
 		else
 			Review.find(:all, :limit => limit, :order => order, :joins => joins, 
 									:conditions => conditions.join(" AND "))

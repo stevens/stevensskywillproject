@@ -16,6 +16,8 @@ module PhotosHelper
 			'small'
 		when 'sign'
 			'scube'
+		when 'mini'
+			'tcube'
 		end
 	end
 	

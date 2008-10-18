@@ -335,6 +335,27 @@ div.tag {
 	color: #ffffff;
 }
 
+/* Reviews List */
+#reviews_list_content {
+	text-align: left;
+}
+#reviews_list_content table.content {
+	width: 100%;
+}
+#reviews_list_content td.right_column_lined {
+	border: none;
+}
+#reviews_list_content .sub_block_tb {
+	padding: 0px;
+}
+.group_by_title {
+	padding: 10px;
+	padding-bottom: 0px;
+	white-space: nowrap;
+	color: #78b36d;
+	font-weight: bold;
+}
+
 /* Content Table */
 table.content {
 
