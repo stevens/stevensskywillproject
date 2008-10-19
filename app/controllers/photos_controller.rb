@@ -48,8 +48,9 @@ class PhotosController < ApplicationController
 					page.replace_html "main_photo", 
 														:partial => "/photos/photo_photo",
 								 						:locals => { :photo => @photo, 
-																				 :show_cover => false, 
 													 						   :photo_style => 'full', 
+																				 :show_cover => false, 
+													 						   :focus_photo => nil, 
 													 						   :photo_link_url => nil, 
 													 						   :photo_link_remote => true }
 					page.replace_html "photos_nav", 
