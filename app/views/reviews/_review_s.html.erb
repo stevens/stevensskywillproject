@@ -49,7 +49,7 @@
 												 						  :review_text => "#{item.user.login}说: \"#{item.review}\""}
 		  end %>
 	  <% end %>
-	  <% if params[:action] != 'mine' %>
+	  <% if params[:action] != 'mine' && (item.user == @current_user || item.reviewable.user == @current_user) %>
 			|
 		<% end %>
 		<% if item.user == @current_user %>
