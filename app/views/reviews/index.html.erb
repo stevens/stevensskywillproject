@@ -11,7 +11,9 @@
 		<%= render :partial => "/reviews/reviews_list", 
 							 :locals => { :reviews_set => @reviews_set, 
 							 							:show_paginate => true, 
-							 							:limit => nil } %>
+							 							:limit => nil, 
+							 							:show_todo => @show_todo, 
+							 							:delete_remote => false } %>
 	</div>
 	
 </div>
