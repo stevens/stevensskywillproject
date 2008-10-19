@@ -32,4 +32,8 @@ class Photo < ActiveRecord::Base
 		id == photoable.cover_photo_id
 	end
 	
+	def is_focus?(focus_photo)
+		(focus_photo && focus_photo == self) ? true : false
+	end
+	
 end

@@ -69,22 +69,29 @@
 
 <div id="recipe_<%= item.id %>_photos" class="photos">
 	<% if cover_photo = cover_photo(item) %>
-		<div class="cover_photo">
+		<div id="main_photo" class="cover_photo">
 			<%= render :partial => "/photos/photo_photo",
 								 :locals => {:photo => cover_photo, 
 								 						 :show_cover => false, 
+								 						 :focus_photo => nil, 
 								 						 :photo_style => 'full', 
-								 						 :photo_link_url => nil} %>
+								 						 :photo_link_url => nil, 
+								 						 :photo_link_remote => true} %>
 		</div>
 		<% if photos_set %>
+			<div id="photos_nav" >
 			<%= render :partial => "/photos/photos_matrix",
 								 :locals => {:show_paginate => false,
 								 						 :photos_set => photos_set,
-								 						 :limit => 6, 
+								 						 :limit => nil, 
 								 						 :show_photo => true, 
+								 						 :focus_photo => cover_photo, 
+								 						 :photo_style => 'matrix', 
+								 						 :photo_link_remote => true, 
 								 						 :show_below_photo => false,
-								 						 :show_cover => false, 
+								 						 :show_cover => true, 
 								 						 :show_photo_todo => false} %>
+			</div>
 		<% end %>
 	<% end %>			
 	<div class="below_photo">

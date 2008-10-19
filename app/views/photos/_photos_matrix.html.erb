@@ -22,17 +22,19 @@
 						<div class="matrix_block">
 							
 							<% if show_photo %>
-								<div class="matrix_photo">
+								<div id="photo_<%= photos[i-1].id %>" class="matrix_photo">
 				    			<%= render :partial => "/photos/photo_photo",
 				    								 :locals => {:photo => photos[i-1], 
-				    								 						 :photo_style => 'matrix', 
+				    								 						 :photo_style => photo_style, 
 				    								 						 :show_cover => show_cover, 
-				    								 						 :photo_link_url => nil} %>
+				    								 						 :focus_photo => focus_photo, 
+				    								 						 :photo_link_url => nil, 
+				    								 						 :photo_link_remote => photo_link_remote} %>
 								</div>
 							<% end %>
 							
 							<% if show_below_photo %>
-								<div class="below_photo">
+								<div id="below_photo_<%= photos[i-1].id %>" class="below_photo">
 									<%= render :partial => "/photos/below_photo_photo", 
 														 :locals => {:photo => photos[i-1], 
 														 						 :show_photo_todo => show_photo_todo} %>

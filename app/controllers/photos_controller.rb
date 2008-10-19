@@ -23,24 +23,49 @@ class PhotosController < ApplicationController
   # GET /photos/1.xml
   def show
 		load_photo if @photoable_accessible
-		
-		if @photos_set_count == 1
-			@photo_index = 1
-			@photo_link_url = [@parent_obj, @photo]
-		else
-			get_prev_next
-			@photo_link_url = [@parent_obj, @next_photo]
-		end
-		
-		log_count(@photo)
-
-  	info = "#{name_for(@parent_type)}#{PHOTO_CN}#{itemname_suffix(@parent_obj)}"
-		set_page_title(info)
-		set_block_title(info)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html  do 
+				if @photos_set_count == 1
+					@photo_index = 1
+					@photo_link_url = [@parent_obj, @photo]
+				else
+					get_prev_next
+					@photo_link_url = [@parent_obj, @next_photo]
+				end
+				
+				log_count(@photo)
+		
+		  	info = "#{name_for(@parent_type)}#{PHOTO_CN}#{itemname_suffix(@parent_obj)}"
+				set_page_title(info)
+				set_block_title(info)
+				
+      end # show.html.erb
+      
       format.xml  { render :xml => @photo }
+      format.js do 
+				render :update do |page|
+					page.replace_html "main_photo", 
+														:partial => "/photos/photo_photo",
+								 						:locals => { :photo => @photo, 
+																				 :show_cover => false, 
+													 						   :photo_style => 'full', 
+													 						   :photo_link_url => nil, 
+													 						   :photo_link_remote => true }
+					page.replace_html "photos_nav", 
+														:partial => "/photos/photos_matrix",
+													  :locals => { :show_paginate => false,
+														 						 :photos_set => @photos_set,
+														 						 :limit => nil, 
+														 						 :show_photo => true, 
+														 						 :focus_photo => @photo, 
+														 						 :photo_style => 'matrix', 
+														 						 :photo_link_remote => true, 
+														 						 :show_below_photo => false,
+														 						 :show_cover => true, 
+														 						 :show_photo_todo => false }
+				end
+      end
     end
   end  
   

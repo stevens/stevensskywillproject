@@ -53,9 +53,14 @@ class RecipesController < ApplicationController
 		
 		@photos_set = []
 		if @cover_photo = cover_photo(@recipe)
-			@photos_set << @cover_photo
-			@photos_set = @recipe.photos - @photos_set
+			@photos_set = @recipe.photos
 		end
+		
+		# @photos_set = []
+		# if @cover_photo = cover_photo(@recipe)
+		# 	@photos_set << @cover_photo
+		# 	@photos_set = @recipe.photos - @photos_set
+		# end
 
 		recipe = [@recipe]
 		@other_recipes_set = @recipes_set - recipe

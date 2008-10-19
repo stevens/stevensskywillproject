@@ -169,7 +169,7 @@ class ReviewsController < ApplicationController
 													 :locals => {:item => @review, 
 													 						 :itemable_sym => 'reviewable', 
 									 						 				 :show_photo => true, 
-									 										 :photo_style => 'list', 
+									 										 :photo_style => 'sign', 
 									 										 :show_below_photo => false, 
 									 										 :show_title => false, 
 																			 :show_photo_todo => false, 

@@ -1,7 +1,15 @@
-<% if show_cover && photo.is_cover?(photo.photoable) %>
-	<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption), :class => "cover"), 
-							photo_link_url ? photo_link_url : [photo.photoable, photo] %>
+<% if photo.is_focus?(focus_photo) %>
+	<% css_class = 'focus' %>
+<% elsif show_cover && photo.is_cover?(photo.photoable) %>
+	<% css_class = 'cover' %>
 <% else %>
-	<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption)), 
+	<% css_class = '' %>
+<% end %>
+
+<% if photo_link_remote %>
+	<%= link_to_remote image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption), :class => css_class), 
+										 :url => photo_link_url ? photo_link_url : [photo.photoable, photo], :method => :get %>
+<% else %>
+	<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => h(photo.caption), :class => css_class), 
 							photo_link_url ? photo_link_url : [photo.photoable, photo] %>
 <% end %>

@@ -24,9 +24,11 @@
 		<div id="photo_<%= @photo.id %>_photo" class="full_photo">
 			<%= render :partial => "/photos/photo_photo",
 								 :locals => {:photo => @photo, 
-								 						 :show_cover => false, 
 								 						 :photo_style => 'full', 
-								 						 :photo_link_url => @photo_link_url} %>
+								 						 :show_cover => false, 
+								 						 :focus_photo => nil, 
+								 						 :photo_link_url => @photo_link_url, 
+								 						 :photo_link_remote => false} %>
 		</div>
 		
 		<div id="photo_<%= @photo.id %>_basic" class="sub_block">
