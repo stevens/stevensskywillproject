@@ -82,7 +82,7 @@ module PhotosHelper
   	conditions << "photos.photoable_type = '#{photoable_type}'" if photoable_type
   	conditions << "photos.photoable_id = #{photoable_id}" if photoable_id
 		conditions << "photos.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
-		conditions << "photos.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
+		conditions << "photos.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
   end
 

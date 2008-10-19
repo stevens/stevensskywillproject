@@ -1,7 +1,7 @@
 <% if limit %>
-	<% reviews = reviews_set[0..limit-1].group_by { |review| (review.created_at.to_date) }.sort {|a,b| b <=> a } %>
+	<% reviews = reviews_set[0..limit-1].group_by { |review| (review.created_at.to_date) }.sort { |a, b| b <=> a } %>
 <% else %>
-	<% reviews = reviews_set.group_by { |review| (review.created_at.to_date) }.sort {|a,b| b <=> a } %>
+	<% reviews = reviews_set.group_by { |review| (review.created_at.to_date) }.sort { |a, b| b <=> a } %>
 <% end %>
 
 <% if show_paginate %>
@@ -26,7 +26,8 @@
 			</td>
 		</tr>
 		
-		<% reviews.group_by { |review| (review.reviewable) }.each do |reviewable, reviews| %>
+		<% sub_items = reviews.group_by { |review| (review.reviewable) }.sort { |a, b| b[0].latest_reviewed_at(nil, date.to_time, (date + 1).to_time) <=> a[0].latest_reviewed_at(nil, date.to_time, (date + 1).to_time) } %>
+		<% sub_items.each do |reviewable, reviews| %>
 			<tr>
 				<td class="left_column">
 					<div class="sub_block_tb">

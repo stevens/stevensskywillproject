@@ -1,5 +1,6 @@
 class Recipe < ActiveRecord::Base
 	include ApplicationHelper
+	include ReviewsHelper
 	
 	acts_as_taggable
 	acts_as_rateable :average => true
@@ -106,6 +107,12 @@ class Recipe < ActiveRecord::Base
   	else
   		published_at
   	end
+	end
+	
+	def latest_reviewed_at(user = nil, created_at_from = nil, created_at_to = nil, reviewable_conditions = nil)
+		if reviews = reviews_for(user, 'Recipe', review_conditions('Recipe', self.id, created_at_from, created_at_to), reviewable_conditions, 1)
+			reviews[0].created_at
+		end
 	end
 	
 	protected

@@ -34,7 +34,7 @@ module RecipesHelper
   	conditions << "recipes.privacy <= #{privacy}" if privacy
   	conditions << "recipes.is_draft = #{is_draft}" if is_draft
 		conditions << "recipes.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
-		conditions << "recipes.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
+		conditions << "recipes.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
   end  
   

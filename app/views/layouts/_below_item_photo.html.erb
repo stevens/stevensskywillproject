@@ -10,7 +10,7 @@
 	<ul>
 		<li>
 			<% if item.photos.size > 0 %>
-				<%= link_to "管理#{PHOTO_CN} (#{item.photos.size})", item_id_sym => item.id, :controller => 'photos', :action => 'index' %>
+				<%= link_to "更多#{PHOTO_CN} (#{item.photos.size})", item_id_sym => item.id, :controller => 'photos', :action => 'index' %>
 			<% else %>
 				<%= "还没有#{PHOTO_CN}" %>
 			<% end %>

@@ -23,7 +23,7 @@ module ReviewsHelper
   	conditions << "reviews.reviewable_type = '#{reviewable_type}'" if reviewable_type
   	conditions << "reviews.reviewable_id = #{reviewable_id}" if reviewable_id
 		conditions << "reviews.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
-		conditions << "reviews.created_at <= '#{time_iso_format(created_at_to)}'" if created_at_to
+		conditions << "reviews.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
   end
 
