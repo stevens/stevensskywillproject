@@ -707,6 +707,10 @@ img.icon {
 	margin-top: -3px;
 	border: 4px #ff8159 solid;
 }
+.matrix_photo img.focus {
+	margin-top: -3px;
+	border: 4px #428cbb solid;		
+}
 .matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover, .full_photo a:hover, .normal_photo a:hover {
 	background-color: transparent !important;	
 }
