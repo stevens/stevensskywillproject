@@ -30,9 +30,14 @@
 				<%= "还没有#{RATE_CN}" %> |
 			<% end %>
 			<% if (reviews_count = item.reviews.size) > 0 %>
-				<%= link_to "#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN}", item %>
+				<%= link_to "#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN}", item %> |
 			<% else %>
-				<%= "还没有#{REVIEW_CN}" %>
+				<%= "还没有#{REVIEW_CN}" %> |
+			<% end %>
+			<% if (photos_count = item.photos.size) > 0 %>
+				<%= link_to "#{photos_count}#{UNIT_PHOTO_CN}#{PHOTO_CN}", item %>
+			<% else %>
+				<%= "还没有#{PHOTO_CN}" %>
 			<% end %>
 		</li>
 	</ul>
