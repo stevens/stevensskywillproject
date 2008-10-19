@@ -369,12 +369,12 @@ module Technoweenie # :nodoc:
       protected
         # 以下方法为新添加的方法
         def filename_extension(filename)
-        	filename.scan(/\.\w+$/)
+        	filename.scan(/\.\w+$/).to_s.downcase
         end
         
         # 以下方法为新添加的方法
         def filename_basename(filename)
-          filename.gsub(/\.\w+$/, '')
+          filename.gsub(/\.\w+$/, '').to_s.downcase
       	end
         
         # 以下方法为新添加的方法
