@@ -912,6 +912,7 @@ div.pagination a, div.pagination span {
 .formError {
 	color: #ff0000;
 	margin-top: 5px;
+	margin-bottom: 5px;
 	margin-left: 10px;
 }
 

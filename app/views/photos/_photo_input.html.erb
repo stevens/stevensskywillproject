@@ -95,12 +95,22 @@
 						<div class="label">
 							<label class="left" for="caption"><%= "#{CAPTION_CN}:" %></label>
 						</div>
+						
 						<div class="input">
-							<%= f.text_area :caption, :class => 's' %>
+							<% if photo.errors_on_caption %>
+								<div class="fieldWithErrors">
+									<%= f.text_area :caption, :class => 's' %>
+								</div>
+							<% else %>
+								<%= f.text_area :caption, :class => 's' %>
+							<% end %>
 						</div>
-						<div class="error">
-							<%= error_message_on "photo", "caption" %>
-						</div>
+						<% if photo.errors_on_caption %>
+							<div class="formError">	
+								<%= photo.errors_on_caption %>
+							</div>
+						<% end %>
+
 						<div class="input">
 							<% if photo.is_cover?(photoable) %>
 								<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), photoable %><%= "的封面#{PHOTO_CN}" %>

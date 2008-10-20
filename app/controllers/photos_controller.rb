@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
 	
-	before_filter :protect, :except => [:index, :show]
+	before_filter :protect, :except => [:index, :show, :resize]
 	before_filter :store_location, :only => [:index, :show, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :check_photoable_accessible
@@ -107,27 +107,27 @@ class PhotosController < ApplicationController
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
 			after_create_error
 		else
-		if @photos_set_count > 0
-      if @photo.save
-				after_create_ok
-      else
-				after_create_error
-      end
-		else
-      if @photo.save
-      	@parent_obj.cover_photo_id = @photo.id
-      	@parent_obj.published_at = @parent_obj.get_published_at
-				if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
+			if @photos_set_count > 0
+	      if @photo.save
 					after_create_ok
-				else
-					@photo.destroy
-					
+	      else
 					after_create_error
-      	end        
-      else
-				after_create_error
-      end
-		end
+	      end
+			else
+	      if @photo.save
+	      	@parent_obj.cover_photo_id = @photo.id
+	      	@parent_obj.published_at = @parent_obj.get_published_at
+					if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
+						after_create_ok
+					else
+						@photo.destroy
+						
+						after_create_error
+	      	end        
+	      else
+					after_create_error
+	      end
+			end
 		end
   end
 
@@ -135,20 +135,25 @@ class PhotosController < ApplicationController
   # PUT /photos/1.xml
   def update
     load_photo(@current_user)
-
-	  if @photo.update_attributes(params[:photo])
-	    if params[:is_cover]
-				if @parent_obj.update_attribute('cover_photo_id', @photo.id)
-					after_update_ok
-				else
-					after_update_error
-	      end
-			else
-				after_update_ok
-   		end
-	  else
+    
+		if !params[:photo][:caption].blank? && params[:photo][:caption].chars.length > 3
+			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
 			after_update_error
-	  end
+		else
+		  if @photo.update_attributes(params[:photo])
+		    if params[:is_cover]
+					if @parent_obj.update_attribute('cover_photo_id', @photo.id)
+						after_update_ok
+					else
+						after_update_error
+		      end
+				else
+					after_update_ok
+	   		end
+		  else
+				after_update_error
+		  end
+		end
   end
 
   # DELETE /photos/1
