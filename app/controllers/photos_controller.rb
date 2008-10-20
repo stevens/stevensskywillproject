@@ -61,6 +61,7 @@ class PhotosController < ApplicationController
 														 						 :show_photo => true, 
 														 						 :focus_photo => @photo, 
 														 						 :photo_style => 'matrix', 
+														 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M,  
 														 						 :photo_link_remote => true, 
 														 						 :show_below_photo => false,
 														 						 :show_cover => true, 
