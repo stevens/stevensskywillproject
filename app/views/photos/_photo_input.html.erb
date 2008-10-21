@@ -102,13 +102,13 @@
 						<% else %>
 							<%= check_box_tag :is_cover, '1', true, :disabled => true %>
 						<% end %>
-						<%= " 用它作为#{name_for(photo.photoable_type)}的封面#{PHOTO_CN}" %>
+						<%= " 用它作为#{name_for(photo.photoable_type)}封面" %>
 					<% else %>
 						<% if photo.is_cover?(photoable) %>
-							<%= "这是#{name_for(photo.photoable_type)}的封面#{PHOTO_CN}" %>
+							<%= "这是#{name_for(photo.photoable_type)}封面" %>
 						<% else %>
 							<%= check_box_tag :is_cover %>
-							<%= " 用它作为#{name_for(photo.photoable_type)}的封面#{PHOTO_CN}" %>
+							<%= " 用它作为#{name_for(photo.photoable_type)}封面" %>
 						<% end %>
 					<% end %>
 				</div>
