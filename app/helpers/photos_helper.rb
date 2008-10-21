@@ -63,6 +63,10 @@ module PhotosHelper
 																		  photoable_id = ?", 
 																		  user.id])
 	end
+	
+	def filtered_photos(photoable, filter_type, filter)
+		photoable.photos.find(:all, :conditions => { filter_type.to_sym => filter })
+	end
 
 	def photos_for(user = nil, photo_conditions = photo_conditions, limit = nil, order = 'created_at')
 		if user
@@ -74,13 +78,14 @@ module PhotosHelper
 		end
 	end
   
-  def photo_conditions(photoable_type = nil, photoable_id = nil, created_at_from = nil, created_at_to = nil)
+  def photo_conditions(photoable_type = nil, photoable_id = nil, photo_type = nil, created_at_from = nil, created_at_to = nil)
   	conditions = ["photos.filename IS NOT NULL", 
   								"photos.filename <> ''", 
   								"photos.parent_id IS NULL", 
   								"photos.thumbnail IS NULL"]
   	conditions << "photos.photoable_type = '#{photoable_type}'" if photoable_type
   	conditions << "photos.photoable_id = #{photoable_id}" if photoable_id
+  	conditions << "photos.photo_type = #{photo_type}" if photo_type
 		conditions << "photos.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
 		conditions << "photos.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")

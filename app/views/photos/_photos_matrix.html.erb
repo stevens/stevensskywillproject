@@ -24,11 +24,14 @@
 								<div id="photo_<%= photos[i-1].id %>" class="matrix_photo">
 				    			<%= render :partial => "/photos/photo_photo",
 				    								 :locals => {:photo => photos[i-1], 
-				    								 						 :photo_style => photo_style, 
 				    								 						 :show_cover => show_cover, 
 				    								 						 :focus_photo => focus_photo, 
+				    								 						 :photo_style => photo_style, 
+				    								 						 :show_photo_link => true,
 				    								 						 :photo_link_url => nil, 
-				    								 						 :photo_link_remote => photo_link_remote} %>
+				    								 						 :photo_link_remote => photo_link_remote, 
+				    								 						 :photo_filtered => photo_filtered, 
+				    								 						 :filter_type => filter_type } %>
 								</div>
 							<% end %>
 							

@@ -2,24 +2,26 @@
 	
 	<div id="photos_header" class="block_header">
 		<%= render :partial => "/layouts/index_header", 
-							 :locals => {:show_header_link => true, 
-							 						 :show_new_link => true, 
-							 						 :block_title => @block_title} %>
+							 :locals => { :show_header_link => true, 
+							 						  :show_new_link => true, 
+							 						  :block_title => @block_title } %>
 	</div>
 
 	<div id="photos_detail" class="block_main">
 		<%= render :partial => "/photos/photos_matrix",
-							 :locals => {:show_paginate => false,
-							 						 :photos_set => @photos_set,
-							 						 :limit => nil, 
-							 						 :show_photo => true, 
-							 						 :focus_photo => nil, 
-							 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
-							 						 :photo_style => 'matrix', 
-							 						 :photo_link_remote => false, 
-							 						 :show_below_photo => true,
-							 						 :show_cover => true, 
-							 						 :show_photo_todo => true} %>
+							 :locals => { :show_paginate => false,
+							 						  :photos_set => @photos_set,
+							 						  :limit => nil, 
+							 						  :show_photo => true, 
+							 						  :focus_photo => nil, 
+							 						  :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
+							 						  :photo_style => 'matrix', 
+							 						  :photo_link_remote => false, 
+							 						  :show_below_photo => true,
+							 						  :show_cover => true, 
+							 						  :show_photo_todo => true, 
+							 						  :photo_filtered => false, 
+							 						  :filter_type => 'photo_type' } %>
 	</div>
 
 </div>

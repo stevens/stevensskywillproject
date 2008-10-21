@@ -1,0 +1,6 @@
+<% photoable_id_sym = item_id(photoable).to_sym %>
+
+<% if photoable.user == @current_user %>
+	<%= link_to "#{ADD_CN}新#{PHOTO_CN}", photoable_id_sym => photoable.id, :controller => 'photos', :action => 'new' %> |
+<% end %>
+<%= link_to "进入#{ALBUM_CN}", photoable_id_sym => photoable.id, :controller => 'photos', :action => 'index' %>

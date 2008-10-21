@@ -69,37 +69,46 @@
 
 <div id="recipe_<%= item.id %>_photos" class="photos">
 	<% if cover_photo = cover_photo(item) %>
+		<div id="photos_filter_bar">
+			<%= render :partial => "/photos/photos_filter_bar", 
+								 :locals => { :photoable => item, 
+								 							:current_filter => @current_filter, 
+								 							:filter_type => 'photo_type' } %>
+		</div>
 		<div id="main_photo" class="cover_photo">
 			<%= render :partial => "/photos/photo_photo",
-								 :locals => {:photo => cover_photo, 
-								 						 :show_cover => false, 
-								 						 :focus_photo => nil, 
-								 						 :photo_style => 'full', 
-								 						 :photo_link_url => nil, 
-								 						 :photo_link_remote => true} %>
+								 :locals => { :photo => cover_photo, 
+								 						  :show_cover => false, 
+								 						  :focus_photo => nil, 
+								 						  :photo_style => 'full', 
+								 						  :show_photo_link => false, 
+								 						  :photo_link_url => nil, 
+								 						  :photo_link_remote => false, 
+								 						  :photo_filtered => false, 
+								 						  :filter_type => 'photo_type' } %>
 		</div>
-		<% if photos_set %>
-			<div id="photos_nav" >
+		<div id="photos_nav" >
 			<%= render :partial => "/photos/photos_matrix",
-								 :locals => {:show_paginate => false,
-								 						 :photos_set => photos_set,
-								 						 :limit => nil, 
-								 						 :show_photo => true, 
-								 						 :focus_photo => cover_photo, 
-								 						 :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
-								 						 :photo_style => 'matrix', 
-								 						 :photo_link_remote => true, 
-								 						 :show_below_photo => false,
-								 						 :show_cover => true, 
-								 						 :show_photo_todo => false} %>
-			</div>
-		<% end %>
-	<% end %>			
-	<div class="below_photo">
-		<%= render :partial => "/layouts/below_item_photo", 
-							 :locals => {:item => item, 
-							 						 :show_title => false, 
-							 						 :show_photo_todo => true} %>
+								 :locals => { :show_paginate => false,
+								 						  :photos_set => item.photos,
+								 						  :limit => nil, 
+								 						  :show_photo => true, 
+								 						  :focus_photo => nil, 
+								 						  :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
+								 						  :photo_style => 'matrix', 
+								 						  :photo_link_remote => true, 
+								 						  :show_below_photo => false,
+								 						  :show_cover => true, 
+								 						  :show_photo_todo => false, 
+								 						  :photo_filtered => false, 
+								 						  :filter_type => 'photo_type' } %>
+		</div>
+	<% else %>
+		<%= "还没有#{PHOTO_CN}" %>
+	<% end %>		
+	<div id="photos_todo_bar" class="below_photo">
+		<%= render :partial => "/photos/photos_todo_bar", 
+							 :locals => { :photoable => item } %>
 	</div>
 </div>
 
@@ -107,16 +116,12 @@
 	<% if item.video_url && !item.video_url.blank? %>
 		<%= item.video_url %>
 	<% else %>
-		<ul>
-			<li>
-				<%= "还没有#{VIDEO_CN}" %>
-			</li>
-			<% if @current_user && item.user == @current_user %>
-				<li>
-					<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
-				</li>
-			<% end %>
-		<ul>
+		<%= "还没有#{VIDEO_CN}" %>
+		<% if @current_user && item.user == @current_user %>
+			<div id="video_todo_bar">
+				<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
+			</div>
+		<% end %>
 	<% end %>
 </div>
 

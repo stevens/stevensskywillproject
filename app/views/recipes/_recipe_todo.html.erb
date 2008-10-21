@@ -1,5 +1,5 @@
 <% if item.user == @current_user %>
-	<% if item.is_draft == '1' && item.status.to_i >= 1 %>
+	<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
 		<%= link_to_remote "发布这#{UNIT_RECIPE_CN}#{RECIPE_CN}", :url => {:action => 'publish', :id => item.id, :to_publish => true} %> |
 	<% elsif item.is_draft != '1' %>
 		<%= link_to_remote "设置为草稿", :url => {:action => 'publish', :id => item.id, :to_publish => false} %> |

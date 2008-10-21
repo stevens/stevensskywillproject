@@ -14,28 +14,31 @@
 	<div class="block_main">
 		<div id="photos_prev_next" class="prev_next">
 			<%= render :partial => "/photos/prev_next", 
-								 :locals => {:photo_index => @photo_index, 
-								 						 :photos_set_count => @photos_set_count, 
-								 						 :photoable => @parent_obj, 
-								 						 :prev_photo => @prev_photo, 
-								 						 :next_photo => @next_photo} %>
+								 :locals => { :photo_index => @photo_index, 
+								 						  :photos_set_count => @photos_set_count, 
+								 						  :photoable => @parent_obj, 
+								 						  :prev_photo => @prev_photo, 
+								 						  :next_photo => @next_photo } %>
 		</div>
 		
 		<div id="photo_<%= @photo.id %>_photo" class="full_photo">
 			<%= render :partial => "/photos/photo_photo",
-								 :locals => {:photo => @photo, 
-								 						 :photo_style => 'full', 
-								 						 :show_cover => false, 
-								 						 :focus_photo => nil, 
-								 						 :photo_link_url => @photo_link_url, 
-								 						 :photo_link_remote => false} %>
+								 :locals => { :photo => @photo, 
+								 						  :show_cover => false, 
+								 						  :focus_photo => nil, 
+								 						  :photo_style => 'full', 
+								 						  :show_photo_link => true, 
+								 						  :photo_link_url => @photo_link_url, 
+								 						  :photo_link_remote => false, 
+								 						  :photo_filtered => false, 
+								 						  :photo_filtered => 'photo_type' } %>
 		</div>
 		
 		<div id="photo_<%= @photo.id %>_basic" class="sub_block">
 			<%= render :partial => "/photos/photo",
-								 :locals => {:photo => @photo,
-								 						 :show_parent => true, 
-								 						 :show_todo => true} %>
+								 :locals => { :photo => @photo,
+								 						  :show_parent => true, 
+								 						  :show_todo => true } %>
 		</div>
 		
 	</div>

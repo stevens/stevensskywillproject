@@ -4,6 +4,7 @@ class PhotosController < ApplicationController
 	before_filter :store_location, :only => [:index, :show, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :check_photoable_accessible
+	before_filter :load_current_filter
 	before_filter :load_photos_set
   
   # GET /photos
@@ -16,6 +17,46 @@ class PhotosController < ApplicationController
     respond_to do |format|
 	   	format.html # index.html.erb
       format.xml  { render :xml => @photos_set }
+      format.js do
+      	render :update do |page|
+      		if @current_filter
+      			main_photo = @photos_set[0]
+      		else
+      			main_photo = cover_photo(@parent_obj)
+      		end
+					page.replace_html 'main_photo', 
+														:partial => "/photos/photo_photo",
+								 						:locals => { :photo => main_photo, 
+																				 :show_cover => false, 
+													 						   :focus_photo => nil, 
+													 						   :photo_style => 'full', 
+													 						   :show_photo_link => false, 
+													 						   :photo_link_url => nil, 
+													 						   :photo_link_remote => false,
+													 						   :photo_filtered => false, 
+													 						   :filter_type => 'photo_type' }
+					page.replace_html 'photos_nav', 
+														:partial => "/photos/photos_matrix",
+													  :locals => { :show_paginate => false,
+													 							 :photos_set => @photos_set,
+													 							 :limit => nil, 
+													 						   :show_photo => true, 
+													 						   :focus_photo => nil, 
+													 						   :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
+													 						   :photo_style => 'matrix', 
+													 						   :photo_link_remote => true, 
+													 						   :show_below_photo => false,
+													 						   :show_cover => true, 
+													 						   :show_photo_todo => false,
+													 						   :photo_filtered => @current_filter ? true : false,
+													 						   :filter_type => 'photo_type' }
+					page.replace_html 'photos_filter_bar', 
+														:partial => "/photos/photos_filter_bar", 
+														:locals => { :photoable => @parent_obj, 
+														 						 :current_filter => @current_filter, 
+ 														 						 :filter_type => 'photo_type' }
+      	end
+      end
     end
   end 
 
@@ -48,11 +89,14 @@ class PhotosController < ApplicationController
 					page.replace_html "main_photo", 
 														:partial => "/photos/photo_photo",
 								 						:locals => { :photo => @photo, 
-													 						   :photo_style => 'full', 
 																				 :show_cover => false, 
 													 						   :focus_photo => nil, 
+													 						   :photo_style => 'full', 
+																				 :show_photo_link => false, 
 													 						   :photo_link_url => nil, 
-													 						   :photo_link_remote => true }
+													 						   :photo_link_remote => false, 
+													 						   :photo_filtered => false, 
+													 						   :filter_type => 'photo_type' }
 					page.replace_html "photos_nav", 
 														:partial => "/photos/photos_matrix",
 													  :locals => { :show_paginate => false,
@@ -65,7 +109,9 @@ class PhotosController < ApplicationController
 														 						 :photo_link_remote => true, 
 														 						 :show_below_photo => false,
 														 						 :show_cover => true, 
-														 						 :show_photo_todo => false }
+														 						 :show_photo_todo => false, 
+														 						 :photo_filtered => @current_filter ? true : false,
+														 						 :filter_type => 'photo_type' }
 				end
       end
     end
@@ -207,6 +253,10 @@ class PhotosController < ApplicationController
 		end
 	end
 	
+	def load_current_filter
+		@current_filter = params[:filter]
+	end
+	
 	def get_prev_next
     1.upto(@photos_set_count) do |i|
     	if @photos_set[i-1] == @photo
@@ -236,7 +286,8 @@ class PhotosController < ApplicationController
   
   def load_photos_set(user = nil)
   	if @photoable_accessible
-	 		@photos_set = photos_for(user, photo_conditions(@parent_type, @parent_id))
+  		@photo_type = params[:filter]
+	 		@photos_set = photos_for(user, photo_conditions(@parent_type, @parent_id, @photo_type))
 	  	@photos_set_count = @photos_set.size
   	end
   end

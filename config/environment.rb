@@ -176,6 +176,7 @@ Rails::Initializer.run do |config|
 	CANCLE_CN = '取消'
 	CHANGE_CN = '更改'
 	GO_CN = '前往'
+	INTO_CN = '进入'
 	BACK_CN = '返回'
 	LOGIN_CN = '登录'
 	LOGOUT_CN = '退出'
@@ -187,44 +188,25 @@ Rails::Initializer.run do |config|
 	DOWNLOAD_CN = '下载'
 	
 	# KEY constants
-	RECIPE_EN = 'recipe'
-	RECIPE_CN = '食谱'
-	MENU_CN = '餐单'
-	KITCHEN_CN = '厨房'
-	RANKING_CN = '榜单'
-	PHOTO_EN = 'photo'
+	NAME_CN = '名字'
+	TITLE_CN = '名称'
+	TYPE_CN = '类型'
 	CATEGORY_CN = '类别'
-	PHOTO_CN = '图片'
-	GROUP_CN = '队伍'
-	FRIEND_CN = '厨友'
-	PROFILE_CN = '档案'
-	MAILBOX_CN = '信箱'
-	SETTING_CN = '设置'
-	PRIVACY_CN = '隐私'
+	SUBJECT_CN = '标题'
+	CONTENT_CN = '内容'
+	FROM_WHERE_CN = '来源'
+
 	REVIEW_EN = 'review'
 	REVIEW_CN = '评论'
 	RESPOND_CN = '回应'
 	RATE_CN = '评分'
+	RANKING_CN = '榜单'
 	TAG_CN = '标签'
-	ABOUT_CN = '关于'
-	CONTACT_US_CN = '联系我们'
-	PRIVACY_POLICY_CN = '隐私政策'
-	TERMS_OF_SERVICE_CN = '服务条款'
-	HELP_CN = '用户指南'
-	USER_CN = '用户'
-	PORTRAIT_CN = '头像'
-	ACCOUNT_CN = '帐户'
-	ACCOUNT_ID_CN = '帐户ID'
-	PASSWORD_CN = '密码'
-	EMAIL_CN = '邮件'
-	EMAIL_ADDRESS_CN = 'Email'
-	NICKNAME_CN = '昵称'
-	URL_CN = 'URL地址'
-	FILE_CN = '文件'
-	CAPTION_CN = '标注'
-	COVER_CN = '封面'
-	
-	TITLE_CN = '名称'
+
+	RECIPE_EN = 'recipe'
+	RECIPE_CN = '食谱'
+	MENU_CN = '餐单'
+	KITCHEN_CN = '厨房'
 	PREP_TIME_CN = '准备时间'
 	COOK_TIME_CN = '制作时间'
 	DIFFICULTY_CN = '难度'
@@ -234,36 +216,75 @@ Rails::Initializer.run do |config|
 	INGREDIENT_CN= '用料'
 	DIRECTION_CN = '做法'
 	TIP_CN = '小贴士'
-	VIDEO_URL_CN = '视频地址'
-	FROM_WHERE_CN = '来源'
-	VIDEO_CN = '视频'
+	PRIVATE_HOME_CN = '私房'
 	
-	SUBJECT_CN = '标题'
-	CONTENT_CN = '内容'
+	FILE_CN = '文件'	
+	URL_CN = 'URL地址'
+	VIDEO_CN = '视频'
+	VIDEO_URL_CN = '视频地址'
+
+	PHOTO_EN = 'photo'
+	PHOTO_CN = '图片'	
+	ALBUM_CN = '图册'
+	CAPTION_CN = '标注'
+	COVER_CN = '封面'
+	
+	USER_CN = '用户'
+	PORTRAIT_CN = '头像'
+	ACCOUNT_CN = '帐户'
+	ACCOUNT_ID_CN = '帐户ID'
+	PASSWORD_CN = '密码'
+	EMAIL_CN = '邮件'
+	EMAIL_ADDRESS_CN = 'Email'
+	NICKNAME_CN = '昵称'
+	GROUP_CN = '队伍'
+	FRIEND_CN = '厨友'
+	PROFILE_CN = '档案'
+	MAILBOX_CN = '信箱'
+	SETTING_CN = '设置'
+	PRIVACY_CN = '隐私'
+	
+	ABOUT_CN = '关于'
+	CONTACT_US_CN = '联系我们'
+	PRIVACY_POLICY_CN = '隐私政策'
+	TERMS_OF_SERVICE_CN = '服务条款'
+	HELP_CN = '用户指南'
+	FEEDBACK_CN = '反馈'
 	
 	#DISPLAY constants
 	TITLE_LINKER = '>'
 	
 	HOME_CN = '首页'
+	MAIN_PAGE_CN = '主页'
 	FIRST_PAGE_CN = '头页'
 	LAST_PAGE_CN = '尾页'
 	PREV_PAGE_CN = '上页'
 	NEXT_PAGE_CN = '下页'
 	PREV_ONE_CN = '上一'
 	NEXT_ONE_CN = '下一'
+	
+	ALL_CN = '所有'
 	MORE_CN = '更多'
+	
 	HELLO_CN = '你好'
 	THANK_CN = '感谢'
+	SORRY_CN = '对不起'
+	
 	INFO_CN = '信息'
 	ERROR_CN = '错误'
 	NEW_CN = '新'
 	HAS_NO_CN = '还没有'
 	REDO_CN = '重新'
 	COME_FROM_CN = '来自'
+	
 	REQUIRED_CN = '必填项'
 	OPTIONAL_CN = '选填项'
-	SORRY_CN = '对不起'
-	FEEDBACK_CN = '反馈'
+	
+	#UNIT SET constants
+	UNIT_USER_CN = '位'
+	UNIT_RECIPE_CN = '个'
+	UNIT_PHOTO_CN = '张'
+	UNIT_REVIEW_CN = '条'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 20
@@ -316,15 +337,7 @@ Rails::Initializer.run do |config|
 	MIN_HILIGHTED_ITEM_RATING = 7
 	MAX_HILIGHTED_ITEM_RATING = 10
 	MIN_RATINGS_COUNT = 5
-	
-	#CODE SET constants
-	
-	UNIT_USER_CN = '位'
-	UNIT_RECIPE_CN = '个'
-	UNIT_PHOTO_CN = '张'
-	UNIT_REVIEW_CN = '条'
-	
-	#TAG constants
+
 	TAGS_COUNT_PER_PAGE = 300
 	TAG_COUNT_AT_LEAST = 3
 	TAG_COUNT_AT_MOST = nil

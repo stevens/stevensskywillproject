@@ -236,7 +236,7 @@
 					<%= "<em>没有#{PHOTO_CN}或者信息不够完整的#{RECIPE_CN}, 会自动保存为草稿</em>" %>
 				</div>
 				<div class="input">
-					<%= f.check_box :is_draft %><%= " 保存为草稿" %>
+					<%= f.check_box :is_draft, :disabled => recipe.cover_photo_id ? false : true %><%= " 保存为草稿" %>
 				</div>
 				<%= error_message_on "recipe", "is_draft" %>
 			</td>

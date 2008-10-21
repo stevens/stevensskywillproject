@@ -50,17 +50,6 @@ class RecipesController < ApplicationController
 		load_recipe
 			
 		load_recipes_set(@recipe.user)
-		
-		@photos_set = []
-		if @cover_photo = cover_photo(@recipe)
-			@photos_set = @recipe.photos
-		end
-		
-		# @photos_set = []
-		# if @cover_photo = cover_photo(@recipe)
-		# 	@photos_set << @cover_photo
-		# 	@photos_set = @recipe.photos - @photos_set
-		# end
 
 		recipe = [@recipe]
 		@other_recipes_set = @recipes_set - recipe
@@ -85,7 +74,8 @@ class RecipesController < ApplicationController
   # GET /recipes/new.xml
   def new
     @recipe = @current_user.recipes.build
-
+		@recipe.is_draft = '1'
+		
 		load_recipes_set(@current_user)
     
     info = "新#{RECIPE_CN}"
