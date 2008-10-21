@@ -6,16 +6,30 @@
 	<% cancle_url = [photoable, photo] %>
 <% end %>
 
-<% if is_new %>
+<% if !is_new %>
+	<div id="photo_<%= photo.id %>_photo" class="full_photo">
+		<%= render :partial => "/photos/photo_photo",
+							 :locals => {:photo => photo, 
+							 						 :photo_style => 'full', 
+							 						 :show_cover => false, 
+							 						 :focus_photo => nil, 
+							 						 :photo_link_url => nil, 
+							 						 :photo_link_remote => false} %>
+	</div>
+<% end %>
 
-	<% form_for([photoable, photo], :html => { :multipart => true }) do |f| %>
-		<div class="sub_block_tb">
-		<table class="content">
+<% form_for([photoable, photo], :html => { :multipart => true }) do |f| %>
+	<div class="sub_block_tb">
+	<table class="content">
+		<% if is_new %>
 			<tr>
 				<td class="label">
 					<label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label>
 				</td>
 				<td class="input">
+					<div class="text">
+						<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于640K" %>
+					</div>
 					<div class="input">
 						<% if photo.errors_on_file %>
 							<div class="fieldWithErrors">
@@ -25,9 +39,6 @@
 							<%= f.file_field :uploaded_data, :class => "text" %>
 						<% end %>
 					</div>
-					<div class="text">
-						<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于640K" %>
-					</div>
 					<% if photo.errors_on_file %>
 						<div class="formError">	
 							<%= photo.errors_on_file %>
@@ -35,99 +46,84 @@
 					<% end %>
 				</td>
 			</tr>
-			<tr>
-				<td class="label">
-					<label for="caption"><%= "#{CAPTION_CN}:" %></label>
-				</td>
-				<td class="input">
-					<div class="input">
-						<% if photo.errors_on_caption %>
-							<div class="fieldWithErrors">
-								<%= f.text_area :caption, :class => 's' %>
-							</div>
-						<% else %>
-							<%= f.text_area :caption, :class => 's' %>
-						<% end %>
-					</div>
+		<% end %>
+		<tr>
+			<td class="label">
+				<label for="caption"><%= "#{CAPTION_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "给#{PHOTO_CN}加点文字标注吧" %>
+				</div>
+				<div class="input">
 					<% if photo.errors_on_caption %>
-						<div class="formError">	
-							<%= photo.errors_on_caption %>
+						<div class="fieldWithErrors">
+							<%= f.text_area :caption, :class => 's' %>
 						</div>
+					<% else %>
+						<%= f.text_area :caption, :class => 's' %>
 					<% end %>
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td class="input">
-					<div class="submit">
-						<%= f.submit button_name, :class => "submit" %>
-						&nbsp;&nbsp;
-						<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
-					</div>
-				</td>
-			</tr>
-		</table>
-		</div>
-	<% end %>
-	
-<% else %>
-	
-	<table class="content">
-	  <tr>  	
-	    
-	    <td class="left_colomn">
-	    	<div class="sub_block">
-					<div class="portrait_photo">
-	    			<%= render :partial => "photo_photo",
-	    								 :locals => { :photo => photo, 
-	    								 						  :photo_style => 'portrait', 
-	    								 						  :show_cover => false, 
-	    								 						  :focus_photo => nil, 
-	    								 						  :photo_link_url => nil, 
-	    								 						  :photo_link_remote => false } %>
-					</div>
-    		</div>
-    	</td>
-    	
-    	<td class="right_colomn">
-				<% form_for [photoable, photo] do |f| %>
-					<div class="sub_block">
-						<div class="label">
-							<label class="left" for="caption"><%= "#{CAPTION_CN}:" %></label>
-						</div>
-						
-						<div class="input">
-							<% if photo.errors_on_caption %>
-								<div class="fieldWithErrors">
-									<%= f.text_area :caption, :class => 's' %>
-								</div>
-							<% else %>
-								<%= f.text_area :caption, :class => 's' %>
-							<% end %>
-						</div>
-						<% if photo.errors_on_caption %>
-							<div class="formError">	
-								<%= photo.errors_on_caption %>
-							</div>
-						<% end %>
-
-						<div class="input">
-							<% if photo.is_cover?(photoable) %>
-								<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), photoable %><%= "的封面#{PHOTO_CN}" %>
-							<% else %>
-								<%= check_box_tag "is_cover" %><%= " 用这#{UNIT_PHOTO_CN}#{PHOTO_CN}作为#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photoable)}"), photoable %><%= "的封面#{PHOTO_CN}" %>
-							<% end %>
-						</div>
-						<div class="submit">
-							<%= f.submit button_name, :class => "submit" %>
-							&nbsp;&nbsp;
-							<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
-						</div>
+				</div>
+				<% if photo.errors_on_caption %>
+					<div class="formError">	
+						<%= photo.errors_on_caption %>
 					</div>
 				<% end %>
-    	</td>
-    	
-    </tr>	
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label for="photo_type"><%= "类型:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "这#{UNIT_PHOTO_CN}#{PHOTO_CN}上面是什么?" %>
+				</div>
+				<div class="radio">
+					<% for c in Code.find(:all, :conditions => {:codeable_type => 'photo_type'}, :order => 'code') %>
+						<%= f.radio_button :photo_type, c.code, :class => "radio_button" %><%= c.title %>&nbsp;&nbsp;
+					<% end %>
+				</div>
+				<%= error_message_on "photo", "photo_type" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "当#{name_for(photo.photoable_type)}只有一#{UNIT_PHOTO_CN}#{PHOTO_CN}时, 会用它自动作为封面" %><br />
+					<%= "当#{DELETE_CN}封面#{PHOTO_CN}时, 会用#{name_for(photo.photoable_type)}的第一#{UNIT_PHOTO_CN}#{PHOTO_CN}自动作为封面" %>
+				</div>
+				<div class="input">
+					<% if is_new %>
+						<% if photoable.cover_photo_id %>
+							<%= check_box_tag :is_cover %>
+						<% else %>
+							<%= check_box_tag :is_cover, '1', true, :disabled => true %>
+						<% end %>
+						<%= " 用它作为#{name_for(photo.photoable_type)}的封面#{PHOTO_CN}" %>
+					<% else %>
+						<% if photo.is_cover?(photoable) %>
+							<%= "这是#{name_for(photo.photoable_type)}的封面#{PHOTO_CN}" %>
+						<% else %>
+							<%= check_box_tag :is_cover %>
+							<%= " 用它作为#{name_for(photo.photoable_type)}的封面#{PHOTO_CN}" %>
+						<% end %>
+					<% end %>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="input">
+				<div class="submit">
+					<%= f.submit button_name, :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
+				</div>
+			</td>
+		</tr>
 	</table>
-
+	</div>
 <% end %>

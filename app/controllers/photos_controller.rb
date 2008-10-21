@@ -110,7 +110,15 @@ class PhotosController < ApplicationController
 		else
 			if @photos_set_count > 0
 	      if @photo.save
-					after_create_ok
+			    if params[:is_cover]
+						if @parent_obj.update_attribute('cover_photo_id', @photo.id)
+							after_update_ok
+						else
+							after_update_error
+			      end
+					else
+						after_create_ok
+					end
 	      else
 					after_create_error
 	      end
@@ -137,7 +145,7 @@ class PhotosController < ApplicationController
   def update
     load_photo(@current_user)
     
-		if !params[:photo][:caption].blank? && params[:photo][:caption].chars.length > 3
+		if !params[:photo][:caption].blank? && params[:photo][:caption].chars.length > TEXT_MAX_LENGTH_S
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
 			after_update_error
 		else

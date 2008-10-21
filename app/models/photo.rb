@@ -5,7 +5,8 @@ class Photo < ActiveRecord::Base
 								 :content_type => :image,
 								 :size => 1.byte..640.kilobytes,
 								 :resize_to => '640x640>',
-								 :thumbnails => { :medium => '320x320>', :mcube => '96x96!',
+								 :thumbnails => { :lcube => '192x192!', 
+								 									:medium => '320x320>', :mcube => '96x96!',
 								 									:small => '160x160>', :scube => '48x48!',
 								 									:tiny => '80x80>', :tcube => '24x24!' },
 							 	 :processor => 'Rmagick'
