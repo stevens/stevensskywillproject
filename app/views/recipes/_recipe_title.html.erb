@@ -1,6 +1,6 @@
 <!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
 <% if item.from_type == '1' %>
-	<%= image_tag 'default/other/private.png', :title => '私房', :class => "icon" %>
+	<%= image_tag 'default/other/private.png', :title => PRIVATE_HOME_CN, :class => "icon" %>
 <% end %>
 <%= link_to h("#{item.title}"), item %>
 <%= "#{add_brackets(code_title('is_draft', item.is_draft))}" %>
