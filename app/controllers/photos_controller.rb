@@ -75,6 +75,7 @@ class PhotosController < ApplicationController
   # GET /photos/new.xml
   def new
     @photo = @parent_obj.photos.build if @parent_obj.user == @current_user
+    @photo.photo_type = '99'
     
    	info = "新#{name_for(@parent_type)}#{PHOTO_CN}#{itemname_suffix(@parent_obj)}"
 		set_page_title(info)

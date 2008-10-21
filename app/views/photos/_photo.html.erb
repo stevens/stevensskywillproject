@@ -14,10 +14,11 @@
 		<% if show_parent %>
 			<li>
 				<% if photo.is_cover?(photo.photoable) %>
-					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photo.photoable)}"), photo.photoable %><%= "的封面#{PHOTO_CN}" %>
+					<%= "这#{UNIT_PHOTO_CN}#{PHOTO_CN}是#{name_for(photo.photoable_type)}的#{code_title('photo_type', photo.photo_type)}图, 也是#{name_for(photo.photoable_type)}封面" %>
 				<% else %>
-					<%= "这是#{name_for(photo.photoable_type)}-" %><%= link_to h("#{item_title(photo.photoable)}"), photo.photoable %><%= "的#{PHOTO_CN}" %>
+					<%= "这#{UNIT_PHOTO_CN}#{PHOTO_CN}是#{name_for(photo.photoable_type)}的#{code_title('photo_type', photo.photo_type)}图" %>
 				<% end %>
+				
 			</li>
 		<% end %>
 	</ul>
