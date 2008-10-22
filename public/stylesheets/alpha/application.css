@@ -725,7 +725,15 @@ div.below_photo {
 	margin: 0px auto;
 	text-align: center;
 	color: #b8b9a7;
-	/*min-width: 96px;*/
+}
+#reviews_detail div.below_photo {
+	width: 80px;
+}
+#recipes_detail div.below_photo {
+	width: 160px;
+}
+div.matrix_block div.below_photo {
+	width: 96px !important;
 }
 div.below_photo li {
 	margin-bottom: 3px;
