@@ -17,9 +17,9 @@
 				<%= "0票" %> |
 			<% end %>
 			<% if (favorites_count = item.favorites.size) > 0 %>
-				<%= link_to "#{favorites_count}藏", item %> |
+				<%= link_to "#{favorites_count}尝", item %> |
 			<% else %>
-				<%= "0藏" %> |
+				<%= "0尝" %> |
 			<% end %>
 			<% if (reviews_count = item.reviews.size) > 0 %>
 				<%= link_to "#{reviews_count}评", item %>

@@ -202,7 +202,7 @@ Rails::Initializer.run do |config|
 	RATE_CN = '评分'
 	RANKING_CN = '榜单'
 	TAG_CN = '标签'
-	FAVORITE_CN = '收藏'
+	FAVORITE_CN = '收尝'
 
 	RECIPE_EN = 'recipe'
 	RECIPE_CN = '食谱'
