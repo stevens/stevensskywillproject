@@ -3,28 +3,32 @@
 	<div id="recipes_header" class="block_header">
 		<%= render :partial => "/layouts/index_header", 
 							 :locals => {:show_header_link => true, 
-							 						 :show_new_link => true, 
+							 						 :show_new_link => false, 
 							 						 :block_title => @block_title} %>
 	</div>
 	
-	<% if @taggables_set %>
-		<% @recipes_set = @taggables_set %>
-	<% end %>
-	
 	<div id="recipes_detail" class="block_main">
-		<%= render :partial => "/layouts/items_list",
-							 :locals => {:show_paginate => true,
-							 						 :items_set => @recipes_set, 
-							 						 :limit => nil,
-							 						 :itemable_sym => nil, 
-							 						 :show_photo => true,
-							 						 :photo_style => 'portrait',  
-							 						 :show_below_photo => true, 
-							 						 :show_title => false, 
-							 						 :show_photo_todo => @show_photo_todo, 
-							 						 :show_parent => false,
-							 						 :show_todo => @show_todo, 
-							 						 :delete_remote => false} %>
+		<div id="recipes_filter_bar">
+			
+		</div>
+		
+		<div id="recipes_list">
+			<%= render :partial => "/layouts/items_list",
+								 :locals => {:show_paginate => true,
+								 						 :items_set => @taggables_set ? @taggables_set : @recipes_set, 
+								 						 :limit => nil,
+								 						 :itemable_sym => nil, 
+								 						 :show_photo => true,
+								 						 :photo_style => 'portrait',  
+								 						 :show_below_photo => true, 
+								 						 :show_title => false, 
+								 						 :show_photo_todo => @show_photo_todo, 
+								 						 :show_parent => false,
+								 						 :show_todo => @show_todo, 
+								 						 :show_favorite => @show_favorite, 
+								 						 :show_manage => @show_manage, 
+								 						 :delete_remote => false} %>
+		</div>
 	</div>
 
 </div>

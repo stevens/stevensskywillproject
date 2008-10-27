@@ -21,9 +21,11 @@
 		
 		<div id="recipe_<%= @recipe.id %>_self" class="sub_block">
 				<%= render :partial => "/recipes/recipe",
-									 :locals => {:item => @recipe, 
-									 						 :photos_set => @photos_set, 
-									 						 :show_todo => true} %>
+									 :locals => { :item => @recipe, 
+									 						  :photos_set => @photos_set, 
+									 						  :show_todo => true, 
+									 						  :show_favorite => true, 
+									 						  :show_manage => true } %>
 		</div>
 		
 		<div id="recipe_<%= @recipe.id %>_reviews">    	
@@ -47,6 +49,8 @@
 									 						 :show_photo_todo => false, 
 									 						 :show_parent => false,
 									 						 :show_todo => true, 
+									 						 :show_favorite => false, 
+								 							 :show_manage => true, 
 									 						 :delete_remote => true} %>
 			</div>
 		</div>
@@ -68,7 +72,7 @@
 				</div>
 				<% if @recipe.user != @current_user %>
 					<div class="todo_right">
-						<%= link_to "给这#{UNIT_RECIPE_CN}#{RECIPE_CN}#{RATE_CN}", "#recipe_#{@recipe.id}_wrapper" %>
+						<em><%= link_to "我要给#{RECIPE_CN}#{RATE_CN}", "#recipe_#{@recipe.id}_wrapper" %></em>
 					</div>
 				<% end %>
 			<% else %>

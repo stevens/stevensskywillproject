@@ -56,7 +56,7 @@
     	<%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %> |
     <% end %>
     <% if item.user == @current_user || item.reviewable.user == @current_user %>
-    	<% delete_message = "确定要#{DELETE_CN}这#{UNIT_REVIEW_CN}#{REVIEW_CN}吗?" %>
+    	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Review')}#{REVIEW_CN}吗?" %>
 	    <% if delete_remote %>
 	    	<%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
 	    <% else %>

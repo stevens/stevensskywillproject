@@ -8,6 +8,11 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':reviewable_type/reviews', :controller => 'reviews', :action => 'index'
 	map.connect 'mine/:reviewable_type/reviews', :controller => 'reviews', :action => 'mine'
 	map.connect 'users/:user_id/:reviewable_type/reviews', :controller => 'reviews', :action => 'index'
+
+	map.connect 'mine/favorites', :controller => 'favorites', :action => 'mine'
+	map.connect ':favorable_type/favorites', :controller => 'favorites', :action => 'index'
+	map.connect 'mine/:favorable_type/favorites', :controller => 'favorites', :action => 'mine'
+	map.connect 'users/:user_id/:favorable_type/favorites', :controller => 'favorites', :action => 'index'
 	
 	map.connect 'mine/taggings', :controller => 'taggings', :action => 'mine'
 	map.connect 'users/:user_id/taggings', :controller => 'taggings', :action => 'index'
@@ -18,9 +23,9 @@ ActionController::Routing::Routes.draw do |map|
 	
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
-  map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings, :feedbacks]
+  map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings, :feedbacks, :favorites]
 	
-	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings, :tags]
+	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites]
 	
 	map.resources :photos, :has_many => :reviews
 	
@@ -33,6 +38,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   
   map.resource :feedbacks
+  
+  map.resource :favorites
   
   
   # map.namespace :mine do |mine|

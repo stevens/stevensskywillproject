@@ -19,7 +19,7 @@
 				</li>
 			<% end %>
 			<li>
-				<%= "#{code_title('privacy', item.privacy)}可以看到这#{UNIT_RECIPE_CN}#{RECIPE_CN}" %>
+				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Recipe')}#{RECIPE_CN}" %>
 	    	<% if @current_user && item.user == @current_user %>
 	    		<%= link_to "[#{EDIT_CN}#{PRIVACY_CN}]", [item, :edit] %>
 	    	<% end %>
@@ -62,8 +62,21 @@
 
 <% if show_todo %>
 	<div id="recipe_<%= item.id %>_todo" class="todo_right">
-		<%= render :partial => "/recipes/recipe_todo", 
-							 :locals => {:item => item} %>
+		<% if show_favorite %>
+			<div id="recipe_<%= item.id %>_favorite">
+				<%= render :partial => '/favorites/favorite_bar', 
+									 :locals => { :favorable => item } %>
+			</div>
+		<% end %>
+		
+		<% if show_manage %>
+			<div id="recipe_<%= item.id %>_manage">
+				<%= render :partial => '/recipes/recipe_manage', 
+									 :locals => { :item => item, 
+									 							:for_show => true, 
+									 							:delete_remote => false } %>
+			</div>
+		<% end %>
 	</div>
 <% end %>
 

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :reviews, :order => "created_at DESC"
   has_many :ratings, :order => "updated_at DESC"
   has_many :feedbacks, :order => "created_at DESC"
+  has_many :favorites, :order => "created_at DESC"
   
   # Virtual attribute for the unencrypted password
   attr_accessor :password

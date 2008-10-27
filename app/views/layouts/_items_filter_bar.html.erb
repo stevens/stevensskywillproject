@@ -1,0 +1,8 @@
+<% photoable_id_sym = item_id(photoable).to_sym %>
+
+<%= link_to "#{ALL_CN} (#{items_set.size})", :url => { photoable_id_sym => photoable.id, :controller => 'photos', :action => 'index' }, :method => :get, :html => {:class => current_filter ? '' : 'current'} %>
+<% for c in Code.find(:all, :conditions => {:codeable_type => filter_type}, :order => 'code') %>
+	<% if (photos_count = filtered_photos(photoable, filter_type, c.code).size) != 0 %>
+		| <%= link_to_remote "#{c.title} (#{photos_count})", :url => { photoable_id_sym => photoable.id, :controller => 'photos', :action => 'index', :filter => c.code }, :method => :get, :html => {:class => c.code == current_filter ? 'current' : ''} %>
+	<% end %>
+<% end %>

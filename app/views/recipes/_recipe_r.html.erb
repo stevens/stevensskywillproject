@@ -12,14 +12,19 @@
 		</li>
 		<li>
 			<% if (ratings_count = item.ratings.size) > 0 %>
-				<span class="rating"><%= "#{average_rating_value(item)}/10 (#{ratings_count}票)" %></span> |
+				<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count}票)" %></span> |
 			<% else %>
-				<%= "还没有#{RATE_CN}" %> |
+				<%= "0票" %> |
+			<% end %>
+			<% if (favorites_count = item.favorites.size) > 0 %>
+				<%= link_to "#{favorites_count}藏", item %> |
+			<% else %>
+				<%= "0藏" %> |
 			<% end %>
 			<% if (reviews_count = item.reviews.size) > 0 %>
-				<%= link_to "#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN}", item %>
+				<%= link_to "#{reviews_count}评", item %>
 			<% else %>
-				<%= "还没有#{REVIEW_CN}" %>
+				<%= "0评" %>
 			<% end %>
 		</li>
 	</ul>

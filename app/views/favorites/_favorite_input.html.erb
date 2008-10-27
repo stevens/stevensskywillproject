@@ -1,0 +1,54 @@
+<% if is_new %>
+	<% button_name = "#{FAVORITE_CN}#{RECIPE_CN}" %>
+<% else %>
+	<% button_name = SAVE_CHANGES_CN %>
+<% end %>
+
+<% form_remote_for [favorable, favorite] do |f| %>
+	<table class="content">
+		<tr>
+			<td class="label">
+				
+			</td>
+			<td class="input">
+				<% statuses_set = favorite_statuses(type_for(favorable)) %>
+				<% 1.upto(statuses_set.size) do |i| %>
+					<% statuses = statuses_set[i-1][1] %>
+					<div class="radio">
+						<% 1.upto(statuses.size) do |j| %>
+							<%= radio_button_tag "status[#{i-1}]", statuses[j-1].code, ((current_status && current_status.split(' ').include?(statuses[j-1].code)) || (!current_status && j == 1)) ? true : false, :class => "radio_button" %><%= statuses[j-1].title %>&nbsp;&nbsp;
+						<% end %>
+					</div>
+				<% end %>
+				<%= error_message_on "favorite", "status" %>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="label">
+				<label for="note"><%= "附注:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "可以在这里#{INPUT_CN}关于#{FAVORITE_CN}的简短注释" %>
+				</div>
+				<div class="input">
+					<%= f.text_area :note, :class => 'xs' %>
+				</div>
+				<%= error_message_on "favorite", "note" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="input">
+				<div class="submit">
+					<%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
+						page.hide "overlay"
+		  		end %>
+				</div>
+			</td>
+		</tr>
+	</table>
+<% end %>

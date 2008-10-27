@@ -20,7 +20,7 @@ class RatingsController < ApplicationController
   	if my_rating.save
 	    render :update do |page|   
 	      page.replace_html "#{@rateable_type.downcase}_#{@rateable_id}_rating", 
-	      									:partial => "rate", 
+	      									:partial => "/ratings/rate", 
 	      									:locals => {:rateable => @rateable}   
 	    end 		
   	else

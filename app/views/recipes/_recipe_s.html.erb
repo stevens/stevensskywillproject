@@ -27,17 +27,22 @@
 			<% if (ratings_count = item.ratings.size) > 0 %>
 				<span class="rating"><%= "#{average_rating_value(item)}/10 (#{ratings_count}票)" %></span> |
 			<% else %>
-				<%= "还没有#{RATE_CN}" %> |
+				<%= "0票#{RATE_CN}" %> |
 			<% end %>
 			<% if (reviews_count = item.reviews.size) > 0 %>
-				<%= link_to "#{reviews_count}#{UNIT_REVIEW_CN}#{REVIEW_CN}", item %> |
+				<%= link_to "#{reviews_count}#{unit_for('Review')}#{REVIEW_CN}", item %> |
 			<% else %>
-				<%= "还没有#{REVIEW_CN}" %> |
+				<%= "0#{unit_for('Review')}#{REVIEW_CN}" %> |
+			<% end %>
+			<% if (favorites_count = item.favorites.size) > 0 %>
+				<%= link_to "#{favorites_count}人#{FAVORITE_CN}", item %> |
+			<% else %>
+				<%= "0人#{FAVORITE_CN}" %> |
 			<% end %>
 			<% if (photos_count = item.photos.size) > 0 %>
-				<%= link_to "#{photos_count}#{UNIT_PHOTO_CN}#{PHOTO_CN}", item %>
+				<%= link_to "#{photos_count}#{unit_for('Photo')}#{PHOTO_CN}", item %>
 			<% else %>
-				<%= "还没有#{PHOTO_CN}" %>
+				<%= "0#{unit_for('Photo')}#{PHOTO_CN}" %>
 			<% end %>
 		</li>
 	</ul>
@@ -51,14 +56,20 @@
 
 <% if show_todo %>
 	<div id="recipe_<%= item.id %>_todo" class="todo_right">
-		<% if item.user == @current_user %>
-			<% delete_message = "确定要#{DELETE_CN}这#{UNIT_RECIPE_CN}#{RECIPE_CN}吗?" %>
-			<%= link_to "#{EDIT_CN}", [item, :edit] %> | 
-			<% if delete_remote %>
-				<%= link_to_remote "#{DELETE_CN}", :url => item, :confirm => delete_message, :method => :delete %>
-			<% else %>
-				<%= link_to "#{DELETE_CN}", item, :confirm => delete_message, :method => :delete %>
-			<% end %>
+		<% if show_favorite %>
+			<div id="recipe_<%= item.id %>_favorite">
+				<%= render :partial => '/favorites/favorite_bar', 
+									 :locals => { :favorable => item } %>
+			</div>
 		<% end %>
+		
+		<% if show_manage %>
+			<div id="recipe_<%= item.id %>_manage">
+				<%= render :partial => '/recipes/recipe_manage', 
+									 :locals => { :item => item, 
+									 							:for_show => false, 
+									 							:delete_remote => delete_remote } %>
+			</div>
+		<% end %>	
 	</div>
 <% end %>

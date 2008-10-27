@@ -17,9 +17,10 @@
 					<% end %>
 				</div>
 				<div class="user_bar_link">
-					<%= link_to "厨师主页", :controller => 'users', :action => 'overview', :id => user.id %> |
+					<%= link_to "厨师#{MAIN_PAGE_CN}", :controller => 'users', :action => 'overview', :id => user.id %> |
 					<%= link_to RECIPE_CN, user_recipes_path(user) %> |
 					<%= link_to REVIEW_CN, user_reviews_path(user) %> |
+					<%= link_to FAVORITE_CN, user_favorites_path(user) %> |
 					<%= link_to TAG_CN, :user_id => user.id, :controller => 'taggings', :action => 'index' %>
 				</div>
 			</td>

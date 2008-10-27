@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   include SettingsHelper
   include CountersHelper
   include UsersHelper
+  include FavoritesHelper
   
   helper :all # include all helpers, all the time
 	

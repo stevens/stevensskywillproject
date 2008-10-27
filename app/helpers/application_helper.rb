@@ -39,6 +39,12 @@ module ApplicationHelper
 			nil
 	end
 	
+	def code_for(obj_type)
+		"CODE_#{obj_type.upcase}_CN".constantize
+		rescue NameError
+			nil
+	end
+	
 	def id_for(obj_type)
 		obj_type.downcase.foreign_key
 	end
@@ -48,7 +54,7 @@ module ApplicationHelper
 	end
 	
 	def item_id(item)
-		type_for(item).downcase.foreign_key
+		id_for(type_for(item))
 	end
 	
 	def controller_name(obj_type)
@@ -244,6 +250,14 @@ module ApplicationHelper
 		else
 			nil
 		end
+	end
+	
+	def codes_titles(codeable_type, codes)
+		titles = []
+		for code in codes
+			titles << code_title(codeable_type, code)
+		end
+		titles
 	end
 	
 	def add_brackets(str, left_mark = '[', right_mark = ']')

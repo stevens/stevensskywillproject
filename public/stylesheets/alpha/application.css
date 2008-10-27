@@ -37,6 +37,20 @@ a:hover {
 a.current, a.current:link, a.current:visited {
 	font-weight: bold;
 }
+em a {
+	font-weight: normal;
+	padding: 3px 10px;
+	width: 50px;
+	text-align: center;
+	color: #ffffff !important;
+	background-color: #ff8159 !important;
+}
+em a:hover {
+	background-color: #428cbb !important;
+}
+span.highlight {
+	color: #78b36d;
+}
 label {
 	white-space: nowrap;
 }
@@ -81,6 +95,10 @@ textarea {
 }
 textarea.s {
 	height: 150px;
+}
+textarea.xs {
+	height: 60px;
+	width: 300px;
 }
 ul {
 	list-style: none;
@@ -396,8 +414,14 @@ td.label label {
 	margin-top: 7px;
 	margin-right: 10px;
 	width: 150px;
+	float: right;
+	text-align: right;
+	font-weight: bold;
 }
-.panel_block_main td.label label {
+label.required {
+	color: #e42300;
+}
+.panel_block_main td.label label, .overlay_content td.label label {
 	width: auto;
 }
 td.input {
@@ -851,6 +875,9 @@ div.todo_right {
 	color: #b8b9a7;
 	text-align: right;
 }
+div.todo a, div.todo_right a {
+	margin-right: 0px;
+}
 div.todo_button {
 	background-color: #ff8159;
 	font-size: 12px;
@@ -967,7 +994,7 @@ div.pagination a, div.pagination span {
 	margin-bottom: 10px;
 	padding: 10px;
 	background-color: #ffcc99;
-	border-top: 1px #ff8159 solid;
+	/*border-top: 1px #ff8159 solid;*/
 	/*border-top: 4px solid #ff8159;*/
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;	
@@ -1044,7 +1071,6 @@ div.pagination a, div.pagination span {
 	display: block;
 	text-indent: -9999px; /* Hide the current rating text */
 	overflow: hidden;
-	z-index: 1;
 }
 div.rating {
 	float: right;
@@ -1172,3 +1198,44 @@ div.welcome_todo_button a:hover {
 #rank_list_wrapper .sidebar_block_main {
 	padding-bottom: 5px;
 }
+
+/* Overlay */
+.overlay_backgroud {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: #695245;
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+	z-index: 1000;
+}
+.overlay_wrapper {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 1005;
+}
+.overlay_content {
+	border: 8px solid #f5f5f5;
+	margin: -200px -200px;
+	width: 400px;
+	background-color: #ffffff;
+	z-index: 1010;
+}
+.overlay_content div.close {
+	position: relative;
+	top: 10px;
+	right: 5px;
+}
+.overlay_content a, .overlay_content a:link, .overlay_content a:visited {
+	color: #428cbb;
+}
+.overlay_content a:hover {
+	background-color: #428cbb;
+	color: #ffffff;
+}
+
+/* Favorite */
+

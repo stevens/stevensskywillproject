@@ -202,6 +202,7 @@ Rails::Initializer.run do |config|
 	RATE_CN = '评分'
 	RANKING_CN = '榜单'
 	TAG_CN = '标签'
+	FAVORITE_CN = '收藏'
 
 	RECIPE_EN = 'recipe'
 	RECIPE_CN = '食谱'
@@ -280,11 +281,18 @@ Rails::Initializer.run do |config|
 	REQUIRED_CN = '必填项'
 	OPTIONAL_CN = '选填项'
 	
-	#UNIT SET constants
+	#OBJECT constants
+	CODE_USER_CN = '0'
+	CODE_RECIPE_CN = '1'
+	CODE_PHOTO_CN = '2'
+	CODE_REVIEW_CN = '3'
+	CODE_FAVORITE_CN = '4'
+
 	UNIT_USER_CN = '位'
 	UNIT_RECIPE_CN = '个'
 	UNIT_PHOTO_CN = '张'
 	UNIT_REVIEW_CN = '条'
+	UNIT_FAVORITE_CN = '个'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 20

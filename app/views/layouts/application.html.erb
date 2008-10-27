@@ -92,7 +92,7 @@
 			<!-- END MAIN NAVIGATION -->
 			
 			<!-- CONTENT -->		
-			<div id="content_wrapper">			
+			<div id="content_wrapper">
 				<div id="content_main">
 					<!-- sub navigation -->
 					<div id="sub_navigation">
@@ -101,6 +101,7 @@
 						<% elsif @current_tab_type == 'mine' %>
 							<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
 							<%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
+							<%= link_to "我的#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
 							<%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
 						<% elsif @current_tab_type == 'setting' %>
 							<%= link_to "#{ACCOUNT_CN}#{SETTING_CN}", :controller => 'settings', :action => 'account' %>
@@ -147,7 +148,7 @@
 						<% end %>
 
 						<%= yield %>
-						
+												
 					</div>
 				</div>		
 			</div>
@@ -170,6 +171,10 @@
 			</div>
 			<!-- END FOOTER -->
 			
+		</div>
+		
+		<div id="overlay">
+					
 		</div>
 	
 	</body>

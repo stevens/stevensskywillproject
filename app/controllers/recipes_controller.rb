@@ -37,6 +37,9 @@ class RecipesController < ApplicationController
 				set_page_title(info)
 				set_block_title(info)
 				
+		  	@show_todo = true
+		  	@show_favorite = true
+				
       	format.html # index.html.erb
       end
       format.xml  { render :xml => @recipes_set }
@@ -186,6 +189,7 @@ class RecipesController < ApplicationController
     
   	@show_photo_todo = true
   	@show_todo = true
+  	@show_manage = true
 		
 		info = "#{username_prefix(@current_user)}#{RECIPE_CN} (#{@recipes_set_count})"
 		set_page_title(info)
@@ -304,9 +308,11 @@ class RecipesController < ApplicationController
 					page.replace_html "recipe_#{@recipe.id}_title",
 														:partial => "/recipes/recipe_title", 
 														:locals => {:item => @recipe}
-					page.replace_html "recipe_#{@recipe.id}_todo",
-														:partial => "/recipes/recipe_todo", 
-														:locals => {:item => @recipe}
+					page.replace_html "recipe_#{@recipe.id}_manage",
+														:partial => "/recipes/recipe_manage", 
+														:locals => { :item => @recipe, 
+									 											 :for_item_show => true, 
+									 											 :delete_remote => false }
 				end
 			end
   	end
