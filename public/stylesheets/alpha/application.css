@@ -1211,13 +1211,22 @@ div.welcome_todo_button a:hover {
 	filter: alpha(opacity=40);
 	z-index: 1000;
 }
+* html .overlay_backgroud {
+	position: absolute !important;
+	width: 100%;
+	height: 3000px;
+}
 .overlay_wrapper {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	z-index: 1005;
 }
+* html .overlay_wrapper {
+	position: absolute !important;
+}
 .overlay_content {
+	position: relative;
 	border: 8px solid #f5f5f5;
 	margin: -200px -200px;
 	width: 400px;
