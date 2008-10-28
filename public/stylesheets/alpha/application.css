@@ -1200,6 +1200,10 @@ div.welcome_todo_button a:hover {
 }
 
 /* Overlay */
+* html body {
+	height: 100%;	
+	overflow: auto; 
+}
 .overlay_backgroud {
 	position: fixed;
 	top: 0px;
@@ -1212,9 +1216,7 @@ div.welcome_todo_button a:hover {
 	z-index: 1000;
 }
 * html .overlay_backgroud {
-	position: absolute !important;
-	width: 100%;
-	height: 3000px;
+	position: absolute;
 }
 .overlay_wrapper {
 	position: fixed;
@@ -1223,7 +1225,7 @@ div.welcome_todo_button a:hover {
 	z-index: 1005;
 }
 * html .overlay_wrapper {
-	position: absolute !important;
+	position: absolute;
 }
 .overlay_content {
 	position: relative;
@@ -1247,4 +1249,3 @@ div.welcome_todo_button a:hover {
 }
 
 /* Favorite */
-
