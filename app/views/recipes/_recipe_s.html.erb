@@ -23,27 +23,9 @@
 	    	<%= "还没有#{TAG_CN}" %>
 			<% end %>
 		</li>
-		<li>
-			<% if (ratings_count = item.ratings.size) > 0 %>
-				<span class="rating"><%= "#{average_rating_value(item)}/10 (#{ratings_count}票)" %></span> |
-			<% else %>
-				<%= "0票#{RATE_CN}" %> |
-			<% end %>
-			<% if (reviews_count = item.reviews.size) > 0 %>
-				<%= link_to "#{reviews_count}#{unit_for('Review')}#{REVIEW_CN}", item %> |
-			<% else %>
-				<%= "0#{unit_for('Review')}#{REVIEW_CN}" %> |
-			<% end %>
-			<% if (favorites_count = item.favorites.size) > 0 %>
-				<%= link_to "#{favorites_count}人#{FAVORITE_CN}", item %> |
-			<% else %>
-				<%= "0人#{FAVORITE_CN}" %> |
-			<% end %>
-			<% if (photos_count = item.photos.size) > 0 %>
-				<%= link_to "#{photos_count}#{unit_for('Photo')}#{PHOTO_CN}", item %>
-			<% else %>
-				<%= "0#{unit_for('Photo')}#{PHOTO_CN}" %>
-			<% end %>
+		<li id="recipe_<%= item.id %>_stats">
+			<%= render :partial => '/recipes/recipe_stats', 
+								 :locals => { :item => item } %>
 		</li>
 	</ul>
 </div>
@@ -59,7 +41,8 @@
 		<% if show_favorite %>
 			<div id="recipe_<%= item.id %>_favorite">
 				<%= render :partial => '/favorites/favorite_bar', 
-									 :locals => { :favorable => item } %>
+									 :locals => { :favorable => item, 
+									 							:back_to_type => params[:action] } %>
 			</div>
 		<% end %>
 		

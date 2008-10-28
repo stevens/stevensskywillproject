@@ -4,16 +4,17 @@ class FavoritesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :load_favorable_type, :only => [:index, :mine]
+	before_filter :load_back_to_type, :except => [:index, :show]
 	
 	def index
 		respond_to do |format|
       if @user
       	if @user == @current_user
-	      	# if @favorable_type
-	      	# 	format.html { redirect_to :action => 'mine', :favorable_type => @favorable_type.downcase }
-	      	# else
+	      	if params[:favorable_type]
+	      		format.html { redirect_to :action => 'mine', :favorable_type => @favorable_type.downcase }
+	      	else
 	      		format.html { redirect_to :action => 'mine' }
-	      	# end
+	      	end
       	else
 		    	load_favorites_set(@user)
 		  	
@@ -45,7 +46,8 @@ class FavoritesController < ApplicationController
 		      									:locals => { :favorable => @parent_obj, 
 		      															 :favorite => @favorite, 
 		      															 :is_new => true, 
-		      															 :current_status => nil }
+		      															 :current_status => nil, 
+		      															 :back_to_type => @back_to_type }
 					page.show "overlay"
 				end
 			end
@@ -62,7 +64,8 @@ class FavoritesController < ApplicationController
 		      									:locals => { :favorable => @parent_obj, 
 		      															 :favorite => @favorite, 
 		      															 :is_new => false, 
-		      															 :current_status => @favorite.status }
+		      															 :current_status => @favorite.status, 
+		      															 :back_to_type => @back_to_type }
 					page.show "overlay"
 				end
 			end
@@ -74,6 +77,7 @@ class FavoritesController < ApplicationController
 			@favorite = @parent_obj.favorites.build(params[:favorite])
 			@favorite.user_id = @current_user.id
 			@favorite.status = params[:status].values.join(' ')
+			
 			if @favorite.save
 				@notice = "你已经成功#{ADD_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
 				after_save_ok
@@ -124,6 +128,10 @@ class FavoritesController < ApplicationController
 	end
 	
 	private
+	
+	def load_back_to_type
+		@back_to_type = params[:back_to_type]
+	end
 
 	def load_favorable_type
 		if params[:favorable_type]
@@ -167,7 +175,13 @@ class FavoritesController < ApplicationController
 					page.show "flash_wrapper"
 					page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
 														:partial => '/favorites/favorite_bar', 
-														:locals => { :favorable => @parent_obj }
+														:locals => { :favorable => @parent_obj, 
+																				 :back_to_type => @back_to_type }
+					if @back_to_type == 'index'
+						page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+															:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+									 						:locals => { :item => @parent_obj }
+					end
 					# page.visual_effect :highlight, "#{@parent_type.downcase}_#{@parent_id}_favorite", :duration => 3
 				end
 			end
@@ -187,7 +201,8 @@ class FavoritesController < ApplicationController
 													  :locals => { :favorable => @favorite.favorable, 
 								 												 :favorite => @favorite, 
 								 												 :is_new => true, 
-								 												 :current_status => @favorite.status }
+								 												 :current_status => @favorite.status, 
+								 												 :back_to_type => @back_to_type }
 					# page.visual_effect :fade, "notice_for_favorite", :duration => 3
 				end
 			end
@@ -198,14 +213,24 @@ class FavoritesController < ApplicationController
 		respond_to do |format|
 			format.js do
 				render :update do |page|
-					page.replace_html "flash_wrapper", 
-														:partial => "/layouts/flash",
-												 		:locals => { :notice => @notice }
-					page.show "flash_wrapper"
-					page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
-														:partial => '/favorites/favorite_bar', 
-														:locals => { :favorable => @parent_obj }
-					page.redirect_to ''
+					if @back_to_type == 'mine'
+						flash[:notice] = @notice
+						page.redirect_to ''
+					else
+						page.replace_html "flash_wrapper", 
+															:partial => "/layouts/flash",
+													 		:locals => { :notice => @notice }
+						page.show "flash_wrapper"
+						page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
+															:partial => '/favorites/favorite_bar', 
+															:locals => { :favorable => @parent_obj, 
+																					 :back_to_type => @back_to_type }
+						if @back_to_type == 'index'
+							page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+																:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+										 						:locals => { :item => @parent_obj }
+						end
+					end
 					# page.visual_effect :highlight, "#{@parent_type.downcase}_#{@parent_id}_favorite", :duration => 3
 				end
 			end

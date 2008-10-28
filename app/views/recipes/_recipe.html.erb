@@ -65,7 +65,8 @@
 		<% if show_favorite %>
 			<div id="recipe_<%= item.id %>_favorite">
 				<%= render :partial => '/favorites/favorite_bar', 
-									 :locals => { :favorable => item } %>
+									 :locals => { :favorable => item, 
+									 							:back_to_type => params[:action] } %>
 			</div>
 		<% end %>
 		
