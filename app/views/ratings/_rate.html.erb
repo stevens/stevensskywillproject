@@ -18,35 +18,34 @@
 		</li>
 	</ul>
 </div>
-<% if @current_user %>
-	<% if rateable.user != @current_user %>
-		<em><%= "鼠标点点就能评分啦..." %></em>
-		<div id="my_rating">
-			<div>
-				<%= "我的#{RATE_CN}: " %>
-				<% if my_rating_value > 0 %>
-					<span class="rating"><%= "#{my_rating_value}/10 (#{rank[my_rating_value-1]})" %></span>
-				<% else %>
-					<%= "还没有#{RATE_CN}" %>
-				<% end %>
-			</div>
-			<ul id="rating">
-				<li class="current_rating" style="width: <%= my_rating_value*17 %>px;">
-					<span><%= "#{rank[my_rating_value-1]}(#{my_rating_value})" %></span>
-				</li>
-				<% 1.upto(rank.size) do |i| %>
-					<li id="r<%= i %>">
-						<% name = "#{rank[i-1]}" %>
+
+<% if rateable.user != @current_user %>
+	<em><%= "鼠标点点就能评分啦..." %></em>
+	<div id="my_rating">
+		<div>
+			<%= "我的#{RATE_CN}: " %>
+			<% if my_rating_value > 0 %>
+				<span class="rating"><%= "#{my_rating_value}/10 (#{rank[my_rating_value-1]})" %></span>
+			<% else %>
+				<%= "还没有#{RATE_CN}" %>
+			<% end %>
+		</div>
+		<ul id="rating">
+			<li class="current_rating" style="width: <%= my_rating_value*17 %>px;">
+				<span><%= "#{rank[my_rating_value-1]}(#{my_rating_value})" %></span>
+			</li>
+			<% 1.upto(rank.size) do |i| %>
+				<li id="r<%= i %>">
+					<% name = "#{rank[i-1]}" %>
+					<% if @current_user %>
 						<%= link_to_remote "<span>#{name}</span>", 
 															 :url => {:controller => 'ratings', :action => 'rate', :id => i, :rateable_type => type_for(rateable), :rateable_id => rateable.id}, 
 															 :html => {:title => ""} %>
-					</li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-<% else %>
-	<div class="todo_button">
-		<%= link_to "我要#{RATE_CN}", id_for(type_for(rateable)).to_sym => rateable.id, :controller => 'ratings', :action => 'new' %>
+					<% else %>
+						<%= link_to "<span>#{name}</span>", id_for(type_for(rateable)).to_sym => rateable.id, :controller => 'ratings', :action => 'new' %>
+					<% end %>
+				</li>
+			<% end %>
+		</ul>
 	</div>
 <% end %>

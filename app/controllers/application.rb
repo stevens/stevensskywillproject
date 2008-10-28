@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def set_system_notice
-		@system_notice = "号外: 可爱的蜂厨们, <em>“食谱收尝”</em>功能热腾腾地刚出锅, 快去<em>收尝</em>你中意的食谱吧!"
+		@system_notice = "号外: 可爱的蜂厨们, <em>“食谱收尝”</em>功能(测试版)热腾腾地刚出锅, 快去试试<em>收尝</em>你中意的食谱吧!"
 	end
 	
 	# def param_posted?(symbol)

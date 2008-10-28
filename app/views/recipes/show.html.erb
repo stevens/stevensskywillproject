@@ -76,8 +76,8 @@
 					</div>
 				<% end %>
 			<% else %>
-				<div class="todo_button">
-					<%= link_to "我要#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %>
+				<div class="todo">
+					<em><%= link_to "我要#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %></em>
 				</div>
 			<% end %>
 		</div>
