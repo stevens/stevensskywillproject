@@ -1,5 +1,5 @@
 <% if (ratings_count = item.ratings.size) > 0 %>
-	<span class="rating"><%= "#{average_rating_value(item)}/10 (#{ratings_count}票)" %></span> |
+	<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count}票)" %></span> |
 <% else %>
 	<%= "0票#{RATE_CN}" %> |
 <% end %>
