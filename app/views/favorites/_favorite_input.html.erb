@@ -16,7 +16,7 @@
 					<% statuses = statuses_set[i-1][1] %>
 					<div class="radio">
 						<% 1.upto(statuses.size) do |j| %>
-							<%= radio_button_tag "status[#{i-1}]", statuses[j-1].code, ((current_status && current_status.split(' ').include?(statuses[j-1].code)) || (!current_status && j == 1)) ? true : false, :class => "radio_button" %><%= statuses[j-1].title %>&nbsp;&nbsp;
+							<%= radio_button_tag "status[#{i-1}]", statuses[j-1].code, current_status && current_status.split(' ').include?(statuses[j-1].code) ? true : false, :class => "radio_button" %><%= statuses[j-1].title %>&nbsp;&nbsp;
 						<% end %>
 					</div>
 				<% end %>
