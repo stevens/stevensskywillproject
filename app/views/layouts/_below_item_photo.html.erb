@@ -3,6 +3,7 @@
 		<%= image_tag 'default/other/private.png', :title => PRIVATE_HOME_CN, :class => "icon" %>
 	<% end %>
 	<%= link_to h(item_title(item)), item %>
+	<%= "#{add_brackets(code_title('is_draft', item.is_draft))}" %>
 <% end %>
 
 <% if show_photo_todo %>

@@ -8,9 +8,8 @@ class MineController < ApplicationController
 		@user = @current_user
 	
   	load_recipes_set
-  	
   	load_reviews_set
-	 	
+  	load_favorites_set
 	 	load_tags_set
 	 	
 	 	info = "#{username_prefix(@current_user)}#{SITE_NAME_CN}"
@@ -33,6 +32,11 @@ class MineController < ApplicationController
 	def load_reviews_set(user = @current_user)
 		@reviews_set = reviews_for(user)
 		@reviews_set_count = @reviews_set.size
+	end
+	
+	def load_favorites_set(user = @current_user)
+		@favorites_set = favorites_for(user)
+		@favorites_set_count = @favorites_set.size
 	end
 	
 	def load_tags_set(user = @current_user)

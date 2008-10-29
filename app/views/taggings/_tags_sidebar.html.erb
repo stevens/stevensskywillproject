@@ -1,21 +1,20 @@
-<div id="tags_wrapper", class="sidebar_block">
+<div id="tags_wrapper" class="sidebar_block">
 
-	<div id="tags_header", class="sidebar_block_header">
-		<div class="sidebar_block_header_link">	
-			<% if user %>
-				<% if user == @current_user %>
-					<%= link_to "更多", {:controller => 'taggings', :action => 'mine', :taggable_type => taggable_type.downcase} %>
-				<% else %>
-					<%= link_to "更多", {:user_id => user.id, :controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
-				<% end %>
-			<% else %>
+	<div id="tags_header" class="sidebar_block_header">
+		<% if user %>
+			<div class="sidebar_block_header_link">	
+				<%= link_to "更多", :user_id => user.id, :controller => 'taggings', :action => 'index' %>
+			</div>
+			<h1><%= "#{username_prefix(user)}#{TAG_CN}" %></h1>
+		<% else %>
+			<div class="sidebar_block_header_link">
 				<%= link_to "更多", {:controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
-			<% end %>
-		</div>
-		<h1><%= "#{username_prefix(user)}#{name_for(taggable_type)}#{TAG_CN}" %></h1>
+			</div>
+			<h1><%= "#{username_prefix(user)}#{name_for(taggable_type)}#{TAG_CN}" %></h1>
+		<% end %>
 	</div>
 	
-	<div id="tags_detail", class="sidebar_block_main">
+	<div id="tags_detail" class="sidebar_block_main">
 		<%= render :partial => "/taggings/tags_cloud",
 							 :locals => {:show_paginate => false, 
 							 						 :tags_set => custom_tags_set,

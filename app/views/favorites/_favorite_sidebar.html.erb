@@ -1,0 +1,37 @@
+<div id="favorites_wrapper" class="sidebar_block">
+
+	<div id="favorites_header" class="sidebar_block_header">
+		<% if user %>
+			<div class="sidebar_block_header_link">	
+				<%= link_to "更多", :user_id => user.id, :controller => 'favorites', :action => 'index' %>
+			</div>
+			<h1><%= "#{username_prefix(user)}#{FAVORITE_CN}" %></h1>
+		<% else %>
+			<div class="sidebar_block_header_link">
+				<%= link_to "更多", {:controller => 'favorites', :action => 'index', :favorable_type => favorable_type.downcase} %>
+			</div>
+			<h1><%= "#{username_prefix(user)}#{name_for(favorable_type)}#{FAVORITE_CN}" %></h1>
+		<% end %>
+	</div>
+	
+	<% if favorites_set %>
+		<% items_set = [] %>
+		<% for favorite in favorites_set %>
+			<% items_set << favorite.favorable %>
+		<% end %>
+	<% end %>
+	
+	<div id="favorites_detail" class="sidebar_block_main">
+		<%= render :partial => "/layouts/items_matrix",
+							 :locals => {:show_paginate => false,
+							 						 :items_set => items_set, 
+							 						 :limit => nil,
+							 						 :items_count_per_row => 4,  
+							 						 :show_photo => true, 
+							 						 :show_below_photo => false,  
+							 						 :show_title => false, 
+							 						 :show_photo_todo => false, 
+							 						 :photo_style => 'sign'} %>
+	</div>
+	
+</div>

@@ -7,7 +7,7 @@ class TaggingsController < ApplicationController
 	def index 		
     respond_to do |format|
       if @user && @user == @current_user
-      	if @taggable_type
+      	if params[:taggable_type]
       		format.html { redirect_to :action => 'mine', :taggable_type => @taggable_type.downcase }
       	else
       		format.html { redirect_to :action => 'mine' }
@@ -15,7 +15,7 @@ class TaggingsController < ApplicationController
       else
 		  	load_tags_set(@user)
 		  	
-		  	info = "#{username_prefix(@user)}#{name_for(@taggable_type)}#{TAG_CN} (#{@tags_set_count})#{itemname_suffix(@parent_obj)}"
+		  	info = "#{username_prefix(@user)}#{name_for(params[:taggable_type])}#{TAG_CN} (#{@tags_set_count})#{itemname_suffix(@parent_obj)}"
 				set_page_title(info)
 				set_block_title(info)
 		
@@ -51,7 +51,7 @@ class TaggingsController < ApplicationController
 	def mine
 		load_tags_set(@current_user)
 		
-  	info = "#{username_prefix(@current_user)}#{name_for(@taggable_type)}#{TAG_CN} (#{@tags_set_count})"
+  	info = "#{username_prefix(@current_user)}#{name_for(params[:taggable_type])}#{TAG_CN} (#{@tags_set_count})"
 		set_page_title(info)
 		set_block_title(info)
 		

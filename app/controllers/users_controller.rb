@@ -74,9 +74,11 @@ class UsersController < ApplicationController
       	format.html { redirect_to :controller => 'mine', :action => 'overview' }
       else
 		  	@reviewable_type = 'Recipe'
+		  	@favorable_type = 'Recipe'
 		  	
 		  	load_user_recipes(@user)
 		  	load_user_reviews(@user)
+		  	load_user_favorites(@user)
 			 	load_user_tags(@user)
 			 	
 			 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
@@ -103,6 +105,15 @@ class UsersController < ApplicationController
 	 	end
  		@reviews_set = reviews_for(user, @reviewable_type, review_conditions, reviewable_conditions)
   	@reviews_set_count = @reviews_set.size
+	end
+	
+	def load_user_favorites(user = nil)
+  	favorite_conditions = favorite_conditions(@able_type)
+  	if @favorable_type == 'Recipe'
+	 		favorable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
+	 	end
+ 		@favorites_set = favorites_for(user, @favorable_type, favorite_conditions, favorable_conditions)
+  	@favorites_set_count = @favorites_set.size
 	end
 	
 	def load_user_tags(user = nil)

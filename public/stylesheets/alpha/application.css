@@ -17,6 +17,9 @@ body, a, p, ol, ul, td, input, textarea, select, option, button {
 	font-size:   12px;
   line-height: 16px;
 }
+* html body {
+	height: 100%;	
+}
 img {
 	border: none;
 	background-color: #ffffff;
@@ -1200,10 +1203,6 @@ div.welcome_todo_button a:hover {
 }
 
 /* Overlay */
-* html body {
-	height: 100%;	
-	overflow: auto; 
-}
 .overlay_backgroud {
 	position: fixed;
 	top: 0px;
@@ -1217,6 +1216,8 @@ div.welcome_todo_button a:hover {
 }
 * html .overlay_backgroud {
 	position: absolute;
+	height: 6000px;
+	overflow: hidden;
 }
 .overlay_wrapper {
 	position: fixed;
@@ -1226,6 +1227,7 @@ div.welcome_todo_button a:hover {
 }
 * html .overlay_wrapper {
 	position: absolute;
+	overflow: hidden;
 }
 .overlay_content {
 	position: relative;
