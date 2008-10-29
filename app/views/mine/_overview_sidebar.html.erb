@@ -2,7 +2,8 @@
 					 :locals => { :user => @user, 
 					 						  :favorites_set => @favorites_set, 
 					 						  :limit => 12, 
-					 						  :favorable_type => 'Recipe' } %>
+					 						  :favorable_type => 'Recipe', 
+					 						  :show_type => 'favorable' } %>
 
 <%= render :partial => "/taggings/tags_sidebar",
 					 :locals => { :user => @current_user, 
