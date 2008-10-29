@@ -16,7 +16,7 @@
 	
 	<% if favorites_set %>
 		<% items_set = [] %>
-		<% for favorite in favorites_set %>
+		<% for favorite in favorites_set[0..limit-1] %>
 			<% items_set << favorite.favorable %>
 		<% end %>
 	<% end %>
