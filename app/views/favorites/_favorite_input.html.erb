@@ -14,16 +14,17 @@
 				<% statuses_set = favorite_statuses(type_for(favorable)) %>
 				<% 1.upto(statuses_set.size) do |i| %>
 					<div class="radio">
+						<% statuses = statuses_set[i-1][1] %>
 						<span id="favorite_statuses_<%= i %>">
 							<%= render :partial => '/favorites/favorite_statuses', 
-												 :locals => { :statuses => statuses_set[i-1][1], 
+												 :locals => { :statuses => statuses, 
 												 							:current_status => current_status, 
 												 							:i => i } %>
 						</span>
 						<%= link_to_function("清空") do |page|
 							page.replace_html "favorite_statuses_#{i}", 
 																:partial => '/favorites/favorite_statuses', 
-																:locals => { :statuses => statuses_set[i-1][1], 
+																:locals => { :statuses => statuses, 
 												 										 :current_status => nil, 
 												 						 				 :i => i }
 						end %>
