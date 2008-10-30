@@ -13,12 +13,22 @@
 			<td class="input">
 				<% statuses_set = favorite_statuses(type_for(favorable)) %>
 				<% 1.upto(statuses_set.size) do |i| %>
-					<% statuses = statuses_set[i-1][1] %>
 					<div class="radio">
-						<% 1.upto(statuses.size) do |j| %>
-							<%= radio_button_tag "status[#{i-1}]", statuses[j-1].code, current_status && current_status.split(' ').include?(statuses[j-1].code) ? true : false, :class => "radio_button" %><%= statuses[j-1].title %>&nbsp;&nbsp;
-						<% end %>
+						<span id="favorite_statuses_<%= i %>">
+							<%= render :partial => '/favorites/favorite_statuses', 
+												 :locals => { :statuses => statuses_set[i-1][1], 
+												 							:current_status => current_status, 
+												 							:i => i } %>
+						</span>
+						<%= link_to_function("清空") do |page|
+							page.replace_html "favorite_statuses_#{i}", 
+																:partial => '/favorites/favorite_statuses', 
+																:locals => { :statuses => statuses_set[i-1][1], 
+												 										 :current_status => nil, 
+												 						 				 :i => i }
+						end %>
 					</div>
+					<br />
 				<% end %>
 				<%= error_message_on "favorite", "status" %>
 			</td>

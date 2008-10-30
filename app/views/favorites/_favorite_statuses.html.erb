@@ -1,0 +1,3 @@
+<% 1.upto(statuses.size) do |j| %>
+	<%= radio_button_tag "status[#{i}]", statuses[j-1].code, current_status && current_status.split(' ').include?(statuses[j-1].code) ? true : false, :class => "radio_button" %><%= statuses[j-1].title %>&nbsp;&nbsp;
+<% end %>
