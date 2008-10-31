@@ -100,7 +100,7 @@ module ApplicationHelper
 	def item_title(item)
 		case type_for(item)
 		when 'User'
-			strip_tags(item.login)
+			item.login
 		else
 			item.title
 		end
