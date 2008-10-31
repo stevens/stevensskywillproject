@@ -8,44 +8,29 @@ class PasswordsController < ApplicationController
 	end
 
 	def create
-		# if request.post?
-		# 	params[:email] = text_useful(params[:email])
-			if params[:email] =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i	
-		    if @user = User.find_by_email(params[:email])
-		    	if @user.activated_at
-						@user.forgot_password
-						if @user.update_attribute(:password_reset_code, @user.password_reset_code)
-				    	flash[:notice] = "请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!<br />
-				    									 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
-				    	redirect_to login_url
-			    	else
-		    			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
-		    			render :action => 'new'
-	   					clear_notice
-			    	end
-			    else
-			    	flash[:notice] = "#{SORRY_CN}, 用这个#{EMAIL_ADDRESS_CN}#{SIGN_UP_CN}的#{ACCOUNT_CN}还没有激活!<br />
-			    									 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br />
-      								 			 如果偶尔不能收到#{EMAIL_CN}, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
-			    	render :action => 'new'
-	    			clear_notice			    	
-			    end
-		    else
-		    	flash[:notice] = "#{SORRY_CN}, 这个#{EMAIL_ADDRESS_CN}还没有#{SIGN_UP_CN}#{ACCOUNT_CN}!"
-		    	render :action => 'new'
-    			clear_notice
-		    end
-			elsif params[:email]
-				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
+		if params[:email] =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i	
+			@user = User.find_by_email(params[:email])
+			if @user && @user.activated_at
+				@user.forgot_password
+				if @user.update_attribute(:password_reset_code, @user.password_reset_code)
+					flash[:notice] = "请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}!<br /><br />
+													 <em>如果偶尔未能收到#{PASSWORD_CN}#{RESET_CN}#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
+					redirect_to login_url
+				else
+					flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+					render :action => 'new'
+					clear_notice
+				end
+			else
+				flash[:notice] = "#{SORRY_CN}, 这个#{EMAIL_ADDRESS_CN}还没有#{SIGN_UP_CN}#{ACCOUNT_CN} 或者 用这个#{EMAIL_ADDRESS_CN}#{SIGN_UP_CN}的#{ACCOUNT_CN}还没有激活!"
 				render :action => 'new'
-				clear_notice
-		# 	else
-		# 		flash[:notice] = "#{SORRY_CN}, 你还没有#{INPUT_CN}#{EMAIL_ADDRESS_CN}!"
-		# 		redirect_to forgot_password_url
+				clear_notice			    	
 			end
-		# else
-		# 	redirect_to forgot_password_url
-		# end
+		elsif params[:email]
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
+			render :action => 'new'
+			clear_notice
+		end
 	end
 	
 	def edit

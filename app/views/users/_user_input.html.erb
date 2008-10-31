@@ -10,7 +10,7 @@
 					<%= f.text_field :email, :class => "text_s" %>
 				</div>
 				<div class="text">
-					<%= "请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而接收#{ACCOUNT_CN}激活#{EMAIL_CN}" %>
+					<%= "<em>请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" %>
 				</div>
 				<%= error_message_on "user", "email" %>
 			</td>
