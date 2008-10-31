@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta name="verify-v1" content="hUX0qOnC9Aij4Hhvz5697CDY7m57cxWmkQFOAGbm+yU=" />
-		<title><%= h @page_title %></title>
+		<title><%= strip_tags @page_title %></title>
 		<%= stylesheet_link_tag "alpha/application.css" %>
 		<%= javascript_include_tag :defaults %>
 		<link rel="shortcut icon" href="http://www.beecook.com/favicon.ico" />
@@ -32,7 +32,7 @@
 					<!-- current user -->
 					<div id="current_user">
 						<% if current_user = User.find_by_id(session[:user_id]) %> 
-							<%= "#{HELLO_CN}, " %><%= link_to current_user.login, user_first_link(current_user) %>
+							<%= "#{HELLO_CN}, " %><%= link_to strip_tags(current_user.login), user_first_link(current_user) %>
 							<%= link_to LOGOUT_CN, "#{root_url}logout" %>
 						<% else %>
 							<%= link_to LOGIN_CN, "#{root_url}login" %>

@@ -1,7 +1,7 @@
 <div id="photo_<%= photo.id %>_basic" class="basic">
 	<ul>
 		<li>
-			<%= "来自 " %><%= link_to h(user_username(photo.user)), user_first_link(photo.user) %>		    			
+			<%= "来自 " %><%= link_to strip_tags(user_username(photo.user)), user_first_link(photo.user) %>		    			
 		</li>
 		<li>
 			<%= "#{time_iso_format(photo.created_at)} #{ADD_CN}" %>

@@ -3,7 +3,7 @@
 		<div class="sidebar_block_header_link">	
 			<%= link_to "更多", user_recipes_path(@recipe.user) %>	
 		</div>
-		<h1><%= h "#{username_prefix(@recipe.user)}其他#{RECIPE_CN}" %></h1>
+		<h1><%= strip_tags "#{username_prefix(@recipe.user)}其他#{RECIPE_CN}" %></h1>
 	</div>
 	
 	<div class="sidebar_block_main">
@@ -25,7 +25,7 @@
 		<div class="sidebar_block_header_link">	
 
 		</div>
-		<h1><%= h "相关的#{RECIPE_CN}" %></h1>
+		<h1><%= "相关的#{RECIPE_CN}" %></h1>
 	</div>
 	
 	<div class="sidebar_block_main">
@@ -47,7 +47,7 @@
 		<div class="sidebar_block_header_link">	
 			<!-- <%= link_to "更多", recipe_favorites_path(@recipe) %> -->
 		</div>
-		<h1><%= h "谁#{FAVORITE_CN}了这#{unit_for('Recipe')}#{RECIPE_CN}?" %></h1>
+		<h1><%= "谁#{FAVORITE_CN}了这#{unit_for('Recipe')}#{RECIPE_CN}?" %></h1>
 	</div>
 	
 	<div class="sidebar_block_main">

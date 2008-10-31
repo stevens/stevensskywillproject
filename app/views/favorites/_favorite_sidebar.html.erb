@@ -5,12 +5,12 @@
 			<div class="sidebar_block_header_link">	
 				<%= link_to "更多", :user_id => user.id, :controller => 'favorites', :action => 'index' %>
 			</div>
-			<h1><%= "#{username_prefix(user)}#{FAVORITE_CN}" %></h1>
+			<h1><%= strip_tags "#{username_prefix(user)}#{FAVORITE_CN}" %></h1>
 		<% else %>
 			<div class="sidebar_block_header_link">
 				<%= link_to "更多", {:controller => 'favorites', :action => 'index', :favorable_type => favorable_type.downcase} %>
 			</div>
-			<h1><%= "#{username_prefix(user)}#{name_for(favorable_type)}#{FAVORITE_CN}" %></h1>
+			<h1><%= strip_tags "#{username_prefix(user)}#{name_for(favorable_type)}#{FAVORITE_CN}" %></h1>
 		<% end %>
 	</div>
 	

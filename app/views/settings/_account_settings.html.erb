@@ -4,7 +4,7 @@
 		<td class="label"><label><%= "#{NICKNAME_CN}:" %></label></td>
 		<td class="input">
 			<div class="info">
-				<%= account.login %>
+				<%= strip_tags account.login %>
 				&nbsp;&nbsp;
 				<%= link_to "#{CHANGE_CN}#{NICKNAME_CN}", :controller => 'accounts', :action => 'edit', :id => 'nickname' %>
 				<br /><br />

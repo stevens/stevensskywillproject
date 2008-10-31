@@ -3,9 +3,9 @@
 	<div class="block_header">
 		<div class="block_header_link">
 			<%= link_to SEE_CN, :action => 'show' %> |
-			<%= link_to h("#{username_prefix(@recipe.user)}更多#{RECIPE_CN} (#{@recipes_set_count})"), :action => 'mine' %>
+			<%= link_to strip_tags("#{username_prefix(@recipe.user)}更多#{RECIPE_CN} (#{@recipes_set_count})"), :action => 'mine' %>
 		</div>
-		<h1><%= h @block_title %></h1>
+		<h1><%= strip_tags @block_title %></h1>
 	</div>
 	
 	<div class="block_main">

@@ -5,12 +5,12 @@
 			<div class="sidebar_block_header_link">	
 				<%= link_to "更多", :user_id => user.id, :controller => 'taggings', :action => 'index' %>
 			</div>
-			<h1><%= "#{username_prefix(user)}#{TAG_CN}" %></h1>
+			<h1><%= strip_tags "#{username_prefix(user)}#{TAG_CN}" %></h1>
 		<% else %>
 			<div class="sidebar_block_header_link">
 				<%= link_to "更多", {:controller => 'taggings', :action => 'index', :taggable_type => taggable_type.downcase} %>
 			</div>
-			<h1><%= "#{username_prefix(user)}#{name_for(taggable_type)}#{TAG_CN}" %></h1>
+			<h1><%= strip_tags "#{username_prefix(user)}#{name_for(taggable_type)}#{TAG_CN}" %></h1>
 		<% end %>
 	</div>
 	

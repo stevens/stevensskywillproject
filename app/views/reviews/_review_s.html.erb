@@ -2,7 +2,7 @@
 	<ul>
 		<% if show_parent %>
 			<li>
-				<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
+				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
 				<% if item.reviewable_type == 'Recipe' && recipe_accessible?(item.reviewable) %>
 					<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h(item.reviewable.title), item.reviewable %><%= "的#{REVIEW_CN}" %>
@@ -15,7 +15,7 @@
 			</li>
 		<% else %>
 			<li>
-				<%= link_to h(user_username(item.user)), user_first_link(item.user) %>
+				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
 				<%= time_iso_format(item.created_at) %>
 			</li>	
@@ -46,7 +46,7 @@
 												 						  :review => item.reviewable.reviews.build, 
 												 						  :is_new => true,  
 												 						  :review_error => false, 
-												 						  :review_text => "#{item.user.login}说: \"#{item.review}\""}
+												 						  :review_text => "#{strip_tags(item.user.login)}说: \"#{item.review}\""}
 		  end %>
 	  <% end %>
 	  <% if params[:action] != 'mine' && (item.user == @current_user || item.reviewable.user == @current_user) %>

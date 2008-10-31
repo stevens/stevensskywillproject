@@ -1,9 +1,9 @@
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "#{username_prefix(@user)}更多#{RECIPE_CN} (#{@recipes_set_count})", :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_prefix(@user)}更多#{RECIPE_CN} (#{@recipes_set_count})"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
 		</div>
-		<h1><%= "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
+		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
 	</div>
 	
 	<div id="recipes_detail" class="block_main">
@@ -23,9 +23,9 @@
 <div id="reviews_wrapper" class="content_block">
 	<div id="reviews_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "#{username_prefix(@user)}更多#{REVIEW_CN} (#{@reviews_set_count})", :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_prefix(@user)}更多#{REVIEW_CN} (#{@reviews_set_count})"), :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
 		</div>
-		<h1><%= "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
+		<h1><%= strip_tags "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
 	</div>
 	
 	<div id="reviews_detail" class="block_main">

@@ -3,15 +3,15 @@
 		<% if show_new_link %>
 			<% if @current_user %>
 				<% if @parent_obj && @parent_obj.user == @current_user %>
-					<%= link_to h("新#{@parent_name}#{@self_name}"), @new_self_url %> |
+					<%= link_to strip_tags("新#{@parent_name}#{@self_name}"), @new_self_url %> |
 				<% elsif params[:action] == 'mine' %>
-					<%= link_to h("新#{@self_name}"), @new_self_url %>
+					<%= link_to strip_tags("新#{@self_name}"), @new_self_url %>
 				<% end %>
 			<% end %>
 		<% end %>
 		<% if @parent_obj %>
-			<%= link_to h("#{BACK_CN}#{@parent_name}"), @parent_url %>
+			<%= link_to strip_tags("#{BACK_CN}#{@parent_name}"), @parent_url %>
 		<% end %>
 	</div>
 <% end %>
-<h1><%= h block_title %></h1>
+<h1><%= strip_tags block_title %></h1>

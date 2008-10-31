@@ -5,12 +5,12 @@
 			<% more_link_name = "#{username_prefix(@recipe.user)}更多#{RECIPE_CN} (#{@recipes_set_count})" %>
 			<% if @recipe.user == @current_user %>
 				<%= link_to EDIT_CN, :action => 'edit' %> |
-				<%= link_to h(more_link_name), :action => 'mine' %>
+				<%= link_to strip_tags(more_link_name), :action => 'mine' %>
 			<% else %>
-				<%= link_to h(more_link_name), user_recipes_path(@recipe.user) %>
+				<%= link_to strip_tags(more_link_name), user_recipes_path(@recipe.user) %>
 			<% end %>
 		</div>
-		<h1><%= h @block_title %></h1>
+		<h1><%= strip_tags @block_title %></h1>
 	</div>
 
 	<div id="recipe_<%= @recipe.id %>_detail" class="block_main">
