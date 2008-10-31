@@ -66,6 +66,9 @@ class RecipesController < ApplicationController
 		info = "#{RECIPE_CN} - #{@recipe.title}"
 		set_page_title(info)
 		set_block_title(info)
+		@meta_description = "这是#{@recipe.title}的#{RECIPE_CN}（菜谱）信息, 来自#{@recipe.user.login}. "
+		@meta_keywords = [@recipe.title, @recipe.user.login, DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
+		@meta_keywords << @recipe.tag_list
 																							 
     respond_to do |format|
       format.html # show.html.erb

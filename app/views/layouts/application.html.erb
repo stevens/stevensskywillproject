@@ -4,8 +4,10 @@
 	<head>
 		<meta name="verify-v1" content="hUX0qOnC9Aij4Hhvz5697CDY7m57cxWmkQFOAGbm+yU=" />
 		<title><%= strip_tags @page_title %></title>
-		<meta name="description" content="<%= strip_tags @meta_description %>" />
-		<meta name="keywords" content="<%= strip_tags @meta_keywords %>" />
+		<% default_meta_description = "蜂厨(BeeCook)——一个以美食和厨艺为主题的新概念社区化网络平台……" %>
+		<% default_meta_keywords = %w[蜂厨 BeeCook 美食 厨艺 厨房 厨师 厨友 吃 私房菜 食谱 菜谱 社区 社区化 图片 视频 评论 评分 收藏 收尝 标签] %>
+		<meta name="description" content="<%= strip_tags(@meta_description ? @meta_description : default_meta_description) %>" />
+		<meta name="keywords" content="<%= strip_tags(@meta_keywords ? (@meta_keywords + default_meta_keywords).join(',') : default_meta_keywords.join(',')) %>" />
 		<%= stylesheet_link_tag "alpha/application.css" %>
 		<%= javascript_include_tag :defaults %>
 		<link rel="shortcut icon" href="http://www.beecook.com/favicon.ico" />
