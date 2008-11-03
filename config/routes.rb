@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+	map.connect 'homepages/import', :controller => 'homepages', :action => 'import'
 	map.connect ':controller/overview', :action => 'overview'
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'	
 	
