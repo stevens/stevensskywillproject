@@ -121,6 +121,7 @@ class RecipesController < ApplicationController
     
 		if @recipe.save
 			@recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
+			reg_homepage(@recipe)
 			after_create_ok
 		else
 			after_create_error
@@ -144,6 +145,7 @@ class RecipesController < ApplicationController
     
 	  if @recipe.update_attributes(params[:recipe])
 	  	@recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
+			reg_homepage(@recipe, 'update')
 			after_update_ok
 	  else
 			after_update_error
@@ -156,7 +158,7 @@ class RecipesController < ApplicationController
     load_recipe(@current_user)
 
 		@recipe.destroy
-
+		reg_homepage(@recipe, 'destroy')
 		after_destroy_ok
   end
   
@@ -172,7 +174,7 @@ class RecipesController < ApplicationController
 	  end
   	
 		Recipe.update(@recipe.id, {:is_draft => @recipe.is_draft, :published_at => @recipe.published_at})
-
+		reg_homepage(@recipe, 'update')
 		after_publish_ok
   end
   
@@ -217,7 +219,7 @@ class RecipesController < ApplicationController
  		else
  			recipe = Recipe.find(@self_id)
  		end
- 		if recipe_accessible?(recipe)
+ 		if params[:action] == 'destroy' || recipe_accessible?(recipe)
  			@recipe = recipe
  		end
   end

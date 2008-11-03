@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.sitemap 'sitemap.xml' , :controller => 'sitemap' , :action => 'sitemap'
+  
+  map.resources :homepages
+
 	map.connect ':controller/overview', :action => 'overview'
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'	
 	
@@ -95,4 +99,5 @@ ActionController::Routing::Routes.draw do |map|
 	map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
 	map.search '/search', :controller => 'searchings', :action => 'search'
 	map.feedback '/feedback', :controller => 'feedbacks', :action => 'new'
+	
 end

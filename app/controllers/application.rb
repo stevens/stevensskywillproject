@@ -45,6 +45,8 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'site'
 		elsif c == 'mine' || a == 'mine'
 			@current_tab_type = 'mine'
+		elsif params[:user_id]
+			@current_tab_type = 'user'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
 		elsif c == 'reviews' || c == 'photos' || c == 'taggings'
@@ -186,6 +188,30 @@ class ApplicationController < ActionController::Base
 		end
 		
 		counter.update_attributes(params[:counter])
+	end
+	
+	def reg_homepage(homepageable, reg_type = 'create')
+		content = "#{controller_name(type_for(homepageable))}/#{homepageable.id}"
+		case reg_type
+		when 'create'
+			homepage = Homepage.new
+			homepage.title = "#{controller_name(type_for(homepageable))} #{homepageable.id}"
+			homepage.content = content
+			homepage.save
+		when 'update'
+			if homepage = Homepage.find(:first, :conditions => { :content => content })
+				homepage.save
+			else
+				homepage = Homepage.new
+				homepage.title = "#{controller_name(type_for(homepageable))} #{homepageable.id}"
+				homepage.content = content
+				homepage.save
+			end
+		when 'destroy'
+			if homepage = Homepage.find(:first, :conditions => { :content => content })
+				homepage.destroy
+			end
+		end
 	end
 	
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 22) do
+ActiveRecord::Schema.define(:version => 23) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(:version => 22) do
   add_index "feedbacks", ["user_id"], :name => "fk_user"
   add_index "feedbacks", ["category"], :name => "i_category"
   add_index "feedbacks", ["user_id", "category"], :name => "i_user_category"
+
+  create_table "homepages", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
