@@ -1,13 +1,13 @@
 class HomepagesController < ApplicationController
 
-	def import
-		recipes = Recipe.find(:all)
-		for recipe in recipes
-			reg_homepage(recipe)
-		end
-		flash[:notice] = 'import homepages from recipes OK'
-		redirect_to root_path
-	end
+	# def import
+	# 	recipes = Recipe.find(:all)
+	# 	for recipe in recipes
+	# 		reg_homepage(recipe)
+	# 	end
+	# 	flash[:notice] = 'import homepages from recipes OK'
+	# 	redirect_to root_path
+	# end
 	
   # GET /homepages
   # GET /homepages.xml
