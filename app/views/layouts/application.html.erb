@@ -57,16 +57,16 @@
 				<div id="left_navigation">
 					<ul class="navigation">
 						<li class=<%= tab_css_class(@current_tab_type, 'site') %>>
-							<%= link_to HOME_CN, root_url %>
+							<%= link_to HOME_CN, root_path %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
 							<%= link_to RECIPE_CN, "#{recipes_url}/overview" %>
 						</li>
+						<li class=<%= tab_css_class(@current_tab_type, 'friend') %>>
+							<%= link_to "#{FRIEND_CN}<span class='script'>快出锅喽!</span>", root_path %>
+						</li>
 						<!-- <li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
 							<%= link_to MENU_CN, root_url %>
-						</li>
-						<li class=<%= tab_css_class(@current_tab_type, 'friend') %>>
-							<%= link_to FRIEND_CN, root_url %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'group') %>>
 							<%= link_to GROUP_CN, root_url %>

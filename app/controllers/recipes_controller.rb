@@ -56,8 +56,13 @@ class RecipesController < ApplicationController
 
 		recipe = [@recipe]
 		@other_recipes_set = @recipes_set - recipe
-		related_recipes_conditions = recipe_conditions({:photo_required => recipe_photo_required_cond, :status => recipe_status_cond, :privacy => recipe_privacy_cond, :is_draft => recipe_is_draft_cond})
-		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, conditions = related_recipes_conditions) - recipe
+		recipes_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
+		related_recipes_conditions = recipes_conditions
+		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions) - recipe
+		same_title_recipes_conditions = [recipes_conditions]
+		same_title_recipes_conditions << "recipes.title = '#{@recipe.title}'"
+		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions.join(' AND ')) - recipe
+		@same_title_recipes_set_count = @same_title_recipes_set.size
 
     log_count(@recipe)												
 		

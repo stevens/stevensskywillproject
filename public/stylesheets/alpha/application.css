@@ -54,6 +54,11 @@ em a:hover {
 span.highlight {
 	color: #78b36d;
 }
+span.script {
+	font-size: 10px;
+	font-weight: bold;
+	color: #ffcc99;
+}
 label {
 	white-space: nowrap;
 }
@@ -282,6 +287,10 @@ div.tag {
 	background-color: #695245;
 	color: #f1f1f1;
 	text-align: center;
+	height: 16px;
+}
+* html #navigation li a, * html #navigation li a:link, * html #navigation li a:visited {
+	height: auto;
 }
 #navigation li a:hover {
 	background-color: #ff8159;
