@@ -51,7 +51,7 @@ class SearchingsController < ApplicationController
      	format.html do
      		render :template => "#{controller_name(@searchable_type)}/index"
      	end
-      format.xml  { render :xml => @searchables_set }
+      # format.xml  { render :xml => @searchables_set }
     end
     clear_notice
 	end

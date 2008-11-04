@@ -26,7 +26,7 @@ class ReviewsController < ApplicationController
 
       	format.html # index.html.erb
       end
-      format.xml  { render :xml => @reviews_set }
+      # format.xml  { render :xml => @reviews_set }
     end
   end 
 
@@ -114,7 +114,7 @@ class ReviewsController < ApplicationController
 		
     respond_to do |format|
       format.html { render :template => "reviews/index" }
-      format.xml  { render :xml => @reviews_set }
+      # format.xml  { render :xml => @reviews_set }
     end
   end
   

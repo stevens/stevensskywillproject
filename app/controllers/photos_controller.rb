@@ -16,7 +16,7 @@ class PhotosController < ApplicationController
  		
     respond_to do |format|
 	   	format.html # index.html.erb
-      format.xml  { render :xml => @photos_set }
+      # format.xml  { render :xml => @photos_set }
       format.js do
       	render :update do |page|
       		if @current_filter
@@ -83,7 +83,7 @@ class PhotosController < ApplicationController
 				
       end # show.html.erb
       
-      format.xml  { render :xml => @photo }
+      # format.xml  { render :xml => @photo }
       format.js do 
 				render :update do |page|
 					page.replace_html "main_photo", 
@@ -129,7 +129,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @photo }
+      # format.xml  { render :xml => @photo }
     end
   end
 

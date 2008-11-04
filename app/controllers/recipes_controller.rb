@@ -42,7 +42,7 @@ class RecipesController < ApplicationController
 				
       	format.html # index.html.erb
       end
-      format.xml  { render :xml => @recipes_set }
+      # format.xml  { render :xml => @recipes_set }
     end   
 
   end
@@ -77,7 +77,7 @@ class RecipesController < ApplicationController
 																							 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @recipe }
+      # format.xml  { render :xml => @recipe }
     end
   end
 
@@ -95,7 +95,7 @@ class RecipesController < ApplicationController
     
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @recipe }
+      # format.xml  { render :xml => @recipe }
     end
     
   end
@@ -207,7 +207,7 @@ class RecipesController < ApplicationController
 		
     respond_to do |format|
       format.html { render :template => "recipes/index" }
-      format.xml  { render :xml => @recipes_set }
+      # format.xml  { render :xml => @recipes_set }
     end
   end
   

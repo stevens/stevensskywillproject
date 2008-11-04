@@ -21,7 +21,7 @@ class TaggingsController < ApplicationController
 		
       	format.html # index.html.erb
       end
-      format.xml  { render :xml => @tags }
+      # format.xml  { render :xml => @tags }
     end
 	end
 	
@@ -42,7 +42,7 @@ class TaggingsController < ApplicationController
 	     		flash[:notice] = "共有#{@taggables_set_count}#{unit_for(@taggable_type)}#{name_for(@taggable_type)}包含这个#{TAG_CN}......"
 	     		render :template => "#{controller_name(@taggable_type)}/index"
 	     	end
-	      format.xml  { render :xml => @taggables }
+	      # format.xml  { render :xml => @taggables }
 	    end
 	    clear_notice
 		end
@@ -57,7 +57,7 @@ class TaggingsController < ApplicationController
 		
     respond_to do |format|
       format.html { render :template => "taggings/index" }
-      format.xml  { render :xml => @tags }
+      # format.xml  { render :xml => @tags }
     end
 	end
 	
