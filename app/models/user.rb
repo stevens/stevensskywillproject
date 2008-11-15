@@ -6,6 +6,14 @@ class User < ActiveRecord::Base
   has_many :ratings, :order => "updated_at DESC"
   has_many :feedbacks, :order => "created_at DESC"
   has_many :favorites, :order => "created_at DESC"
+  has_many :contacts, :order => "contact_type, accepted_at DESC, created_at DESC"
+	has_many :friends,
+					 :through => :contacts,
+					 :source => :contactor,
+					 :conditions => "contact_type = 1", 
+					 :order => "accepted_at DESC, created_at DESC"
+  has_many :stories, :order => "created_at DESC"
+  has_one :profile
   
   # Virtual attribute for the unencrypted password
   attr_accessor :password

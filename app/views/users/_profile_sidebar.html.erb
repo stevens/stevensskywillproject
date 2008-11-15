@@ -1,0 +1,19 @@
+<% if @mutual_contactors_set && @mutual_contactors_set_count > 0 %>
+	<%= render :partial => '/layouts/items_sideblock', 
+						 :locals => { :id => 'mutual_friends', 
+						 							:block_title => "共同的#{FRIEND_CN}", 
+						 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@user) }, 
+						 							:items_set => @mutual_contactors_set } %>
+<% end %>
+
+<%= render :partial => '/layouts/items_sideblock', 
+					 :locals => { :id => 'user_friends', 
+					 							:block_title => "#{FRIEND_CN}", 
+					 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@user) }, 
+					 							:items_set => @contactors_set } %>
+
+<%= render :partial => "/taggings/tags_sideblock",
+					 :locals => { :user => @user, 
+					 						  :custom_tags_set => @tags_set, 
+					 						  :limit => nil, 
+					 						  :taggable_type => 'Recipe' } %>

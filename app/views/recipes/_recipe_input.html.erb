@@ -40,8 +40,8 @@
 			</td>
 			<td class="input">
 				<div class="radio">
-					<% for d in Code.find(:all, :conditions => {:codeable_type => 'difficulty'}, :order => 'code') %>
-						<%= f.radio_button :difficulty, d.code, :class => "radio_button" %><%= d.title %>&nbsp;&nbsp;
+					<% for c in Code.find(:all, :conditions => {:codeable_type => 'difficulty'}, :order => 'code') %>
+						<%= f.radio_button :difficulty, c.code, :class => "radio_button" %><%= c.title %>&nbsp;&nbsp;
 					<% end %>
 				</div>
 				<%= error_message_on "recipe", "difficulty" %>

@@ -3,9 +3,13 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
   
 	before_filter :clear_location_unless_logged_in
-	before_filter :set_system_notice, :only => [:overview]
 
   def index
+  	load_users_set
+  	
+  	info = "#{PEOPLE_CN} (#{@users_set_count})"
+		set_page_title(info)
+		set_block_title(info)
   	
   end
   
@@ -69,29 +73,50 @@ class UsersController < ApplicationController
   end
   
   def overview
+	  load_users_set
+	  
+  	# @highlighted_user = 
+  	# @highest_rated_users = 
+  	@random_users = random_items(@users_set, 12)
+	  
+	  info = "#{PEOPLE_CN}"
+		set_page_title(info)
+		
+		show_sidebar
+  end
+  
+  def profile
     respond_to do |format|
       if @user && @user == @current_user
-      	format.html { redirect_to :controller => 'mine', :action => 'overview' }
+      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
       else
 		  	@reviewable_type = 'Recipe'
 		  	@favorable_type = 'Recipe'
 		  	
 		  	load_user_recipes(@user)
+		  	classify_recipes
 		  	load_user_reviews(@user)
 		  	load_user_favorites(@user)
+		  	classify_favorite_statuses
 			 	load_user_tags(@user)
+			 	load_user_contactors(@user)
 			 	
 			 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
 				set_page_title(info)
 				
 				show_sidebar
 				
-      	format.html # overview.html.erb
+      	format.html # profile.html.erb
       end
     end
   end
 	
 	private
+	
+  def load_users_set
+ 		@users_set = users_for
+  	@users_set_count = @users_set.size
+  end
 
 	def load_user_recipes(user = nil)
 		@recipes_set = recipes_for(user)
@@ -119,6 +144,25 @@ class UsersController < ApplicationController
 	def load_user_tags(user = nil)
 	  @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
 	  @tags_set_count = @tags_set.size
+	end
+	
+	def load_user_contactors(user)
+		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), 12, 'RAND()'))
+		if @current_user
+			current_user_contactors = contactors_for(contacts_for(@current_user, contact_conditions('1', '3'), 12, 'RAND()'))
+			@mutual_contactors_set = @contactors_set & current_user_contactors
+			@mutual_contactors_set_count = @mutual_contactors_set.size
+			@contactors_set -= @mutual_contactors_set
+		end
+		@contactors_set_count = @contactors_set.size
+	end
+	
+	def classify_recipes
+		@classified_recipes = classified_items(@recipes_set, 'from_type')
+	end
+	
+	def classify_favorite_statuses
+		@classify_favorite_statuses = classified_favorite_statuses(@favorites_set)
 	end
 	
   def after_create_ok

@@ -1,4 +1,21 @@
 module UsersHelper
+	
+	def users_for(conditions = user_conditions, limit = nil, order = 'activated_at DESC, created_at DESC')
+		User.find(:all, :limit => limit, :order => order, 
+							:conditions => user_conditions)
+	end
+  
+  def user_conditions(activated = true, created_at_from = nil, created_at_to = nil)
+  	conditions = ["users.login IS NOT NULL", 
+  								"users.login <> ''", 
+  								"users.email IS NOT NULL", 
+  								"users.email <> ''"]
+  	conditions << "users.activated_at IS NOT NULL" if activated
+		conditions << "users.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
+		conditions << "users.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
+		conditions.join(" AND ")
+  end
+	
 	def user_portrait(user)
 		user.photos.find(:first, 
 										 :conditions => ["photoable_type = 'User' AND 
@@ -8,11 +25,7 @@ module UsersHelper
 	
 	def user_first_link(user)
 		if user
-			if user == @current_user
-				url_for(:controller => 'mine', :action => 'overview')
-			else
-				"#{user_path(user)}/overview"
-			end
+			"#{user_path(user)}/profile"
 		end
 	end
 	

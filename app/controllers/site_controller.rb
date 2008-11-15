@@ -6,7 +6,7 @@ class SiteController < ApplicationController
 	def index
 		load_recipes_set
 		
-		set_page_title(HOME_CN)
+		set_page_title(SLOGAN_CN)
 	end
 	
 	private

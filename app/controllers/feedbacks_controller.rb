@@ -7,7 +7,7 @@ class FeedbacksController < ApplicationController
 			@feedback = Feedback.new
 		end
     
-    info = "#{FEEDBACK_CN} - 告诉我们任何你想说的......"
+    info = "#{FEEDBACK_CN} - 我对#{SITE_NAME_CN}说"
 		set_page_title(info)
 		set_block_title(info)
     
@@ -50,7 +50,7 @@ class FeedbacksController < ApplicationController
 			format.html do
 				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{FEEDBACK_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 				
-				info = "#{FEEDBACK_CN} - 告诉我们任何你想说的......"	
+				info = "#{FEEDBACK_CN} - 我对#{SITE_NAME_CN}说"	
 				set_page_title(info)
 				set_block_title(info)
 				

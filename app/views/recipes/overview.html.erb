@@ -4,12 +4,12 @@
 			<h1><%= strip_tags "人气#{RECIPE_CN} - #{@highlighted_recipe.title}" %></h1>
 		</div>
 		<div class="block_main">
-				<div class="full_photo">
-					<%= render :partial => "/layouts/item_photo",
-										 :locals => {:item_type => 'recipe', 
-										 						 :item => @highlighted_recipe, 
-										 						 :photo_style => 'full'} %>
-				</div>
+			<div class="full_photo">
+				<%= render :partial => "/layouts/item_photo",
+									 :locals => {:item_type => 'recipe', 
+									 						 :item => @highlighted_recipe, 
+									 						 :photo_style => 'full'} %>
+			</div>
 		</div>
 	</div>
 <% end %>
@@ -17,9 +17,9 @@
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多#{RECIPE_CN} (#{@recipes_set_count})", recipes_path %>	
+			<%= link_to "#{MORE_CN}#{RECIPE_CN} (#{@recipes_set_count})", recipes_path %>	
 		</div>
-		<h1><%= "最新的#{RECIPE_CN}" %></h1>
+		<h1><%= "新鲜#{RECIPE_CN}" %></h1>
 	</div>
 	
 	<div id="recipes_detail" class="block_main">
@@ -39,9 +39,9 @@
 <div id="reviews_wrapper" class="content_block">
 	<div id="reviews_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "更多#{RECIPE_CN}#{REVIEW_CN} (#{@reviews_set_count})", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
+			<%= link_to "#{MORE_CN}#{RECIPE_CN}#{REVIEW_CN} (#{@reviews_set_count})", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
 		</div>
-		<h1><%= "最新的#{RECIPE_CN}#{REVIEW_CN}" %></h1>
+		<h1><%= "新鲜#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	</div>
 
 	<div id="reviews_detail" class="block_main">	

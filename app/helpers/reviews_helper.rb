@@ -26,5 +26,14 @@ module ReviewsHelper
 		conditions << "reviews.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
   end
+  
+  def review_duplicate?(review)
+  	conditions = ["reviews.user_id = '#{review.user_id}'", 
+  								"reviews.reviewable_type = '#{review.reviewable_type}'", 
+  								"reviews.reviewable_id = '#{review.reviewable_id}'", 
+  								"reviews.review = '#{review.review}'", 
+  								"reviews.created_at > '#{time_iso_format(Time.now - 30.seconds)}'"]
+		Review.find(:first, :conditions => conditions.join(" AND ")) ? true : false
+  end
 
 end

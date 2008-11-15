@@ -1,7 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
 	map.connect 'homepages/import', :controller => 'homepages', :action => 'import'
 	map.connect ':controller/overview', :action => 'overview'
-	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'	
+	
+	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
+	map.connect 'users/:id/profile', :controller => 'users', :action => 'profile'
+
+	map.connect 'mine/contacts', :controller => 'contacts', :action => 'mine'
+	map.connect 'users/:user_id/:contact_type/contacts', :controller => 'contacts', :action => 'index'
+
+	map.connect 'mine/friends', :controller => 'contacts', :action => 'mine', :contact_type => 'friend'
+	map.connect 'users/:user_id/friends', :controller => 'contacts', :action => 'index', :contact_type => 'friend'
 	
 	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
 	
@@ -15,34 +23,34 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/:favorable_type/favorites', :controller => 'favorites', :action => 'mine'
 	map.connect 'users/:user_id/:favorable_type/favorites', :controller => 'favorites', :action => 'index'
 	
-	map.connect 'mine/taggings', :controller => 'taggings', :action => 'mine'
-	map.connect 'users/:user_id/taggings', :controller => 'taggings', :action => 'index'
-	map.connect ':taggable_type/taggings', :controller => 'taggings', :action => 'index'
-	map.connect ':taggable_type/taggings/:id', :controller => 'taggings', :action => 'show'
-	map.connect 'mine/:taggable_type/taggings', :controller => 'taggings', :action => 'mine'
-	map.connect 'users/:user_id/:taggable_type/taggings', :controller => 'taggings', :action => 'index'
+	map.connect 'mine/tags', :controller => 'taggings', :action => 'mine'
+	map.connect 'users/:user_id/tags', :controller => 'taggings', :action => 'index'
+	map.connect ':taggable_type/tags', :controller => 'taggings', :action => 'index'
+	map.connect ':taggable_type/tags/:id', :controller => 'taggings', :action => 'show'
+	map.connect 'mine/:taggable_type/tags', :controller => 'taggings', :action => 'mine'
+	map.connect 'users/:user_id/:taggable_type/tags', :controller => 'taggings', :action => 'index'
 	
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
-  map.resources :users, :has_many => [:recipes, :photos, :reviews, :ratings, :feedbacks, :favorites]
-	
-	map.resources :recipes, :has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites]
-	
-	map.resources :photos, :has_many => :reviews
-	
+	map.resources :users, 
+								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories], 
+								:has_one => [:profile]
+	map.resources :recipes, 
+								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites], 
+								:has_one => [:counter]
+	map.resources :photos, 
+								:has_many => [:reviews]
 	map.resources :reviews
+	map.resources :taggings
+	map.resources :searchings
+	map.resources :feedbacks
+	map.resources :favorites
+	map.resources :homepages
+	map.resources :contacts
+	map.resources :profiles
+	map.resources :stories
 	
-  map.resources :taggings
-  
-  map.resources :searchings
-  
-  map.resource :session
-  
-  map.resource :feedbacks
-  
-  map.resource :favorites
-  
-  map.resources :homepages
+	map.resource :session
   
   # map.namespace :mine do |mine|
   #  	mine.resources :recipes do |recipe|

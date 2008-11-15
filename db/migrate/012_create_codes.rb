@@ -3,6 +3,7 @@ class CreateCodes < ActiveRecord::Migration
     create_table :codes do |t|
       t.string :codeable_type
       t.string :code
+      t.string :name
       t.string :title
       t.text :description
 

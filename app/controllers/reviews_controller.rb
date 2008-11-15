@@ -70,11 +70,13 @@ class ReviewsController < ApplicationController
     @review = @parent_obj.reviews.build(params[:review])
 		@review.user_id = @current_user.id
 		
-		if @review.save
-			@reviews_set_count = @parent_obj.reviews.size
-			after_create_ok
-		else
-			after_create_error
+		unless review_duplicate?(@review)
+			if @review.save
+				@reviews_set_count = @parent_obj.reviews.size
+				after_create_ok
+			else
+				after_create_error
+			end
 		end
   end
 
@@ -317,7 +319,7 @@ class ReviewsController < ApplicationController
 							 							:locals => {:show_header_link => false, 
 							 						 							:show_new_link => false, 
 							 						 							:block_title => "#{name_for(@review.reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count-1})"}
-					page.hide "review_#{@review.id}_line"
+					page.remove "review_#{@review.id}_line"
 					# page.replace_html "reviews_detail", 
 					# 									:partial => "/layouts/items_list", 
 					# 		 							:locals => {:show_paginate => false,

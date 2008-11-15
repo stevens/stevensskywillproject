@@ -1,17 +1,30 @@
-<div id="recipes_wrapper" class="content_block">
-	<div id="recipes_header" class="block_header">
-		<div class="block_header_link">	
-			<%= link_to strip_tags("#{username_prefix(@user)}更多#{RECIPE_CN} (#{@recipes_set_count})"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
+<% if @highlighted_user %>
+	<div class="content_block">
+		<div class="block_header">
+			<h1><%= strip_tags "#{PEOPLE_CN}之星 - #{item_title(@highlighted_user)}" %></h1>
 		</div>
-		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
+		<div class="block_main">
+			<div class="full_photo">
+
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<div id="users_wrapper" class="content_block">
+	<div id="users_header" class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "#{MORE_CN}#{PEOPLE_CN} (#{@users_set_count})", users_path %>	
+		</div>
+		<h1><%= "#{PEOPLE_CN}新面孔" %></h1>
 	</div>
 	
-	<div id="recipes_detail" class="block_main">
+	<div id="users_detail" class="block_main">
 		<%= render :partial => "/layouts/items_matrix",
 							 :locals => {:show_paginate => false,
-							 						 :items_set => @recipes_set, 
-							 						 :limit => 18, 
-							 						 :items_count_per_row => count_per_row, 
+							 						 :items_set => @users_set, 
+							 						 :limit => 18,
+							 						 :items_count_per_row => count_per_row,  
 							 						 :show_photo => true, 
 							 						 :show_below_photo => true,  
 							 						 :show_title => true, 
@@ -20,20 +33,17 @@
 	</div>
 </div>
 
-<div id="reviews_wrapper" class="content_block">
-	<div id="reviews_header" class="block_header">
+<!--
+<div id="user_stroies_wrapper" class="content_block">
+	<div id="user_stroies_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to strip_tags("#{username_prefix(@user)}更多#{REVIEW_CN} (#{@reviews_set_count})"), :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
+			<%= link_to "#{MORE_CN}#{PEOPLE_CN}动向", users_path %>	
 		</div>
-		<h1><%= strip_tags "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
+		<h1><%= "#{PEOPLE_CN}新动向" %></h1>
 	</div>
 	
-	<div id="reviews_detail" class="block_main">
-		<%= render :partial => "/reviews/reviews_list", 
-							 :locals => { :reviews_set => @reviews_set, 
-							 							:show_paginate => false, 
-							 							:limit => 20,
-							 							:show_todo => false, 
-							 							:delete_remote => false} %>
+	<div id="users_stroies_detail" class="block_main">
+
 	</div>
 </div>
+-->

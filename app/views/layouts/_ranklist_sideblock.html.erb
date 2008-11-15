@@ -8,12 +8,14 @@
 	</div>
 	
 	<div id="rank_list_detail", class="sidebar_block_main">
-		<%= render :partial => "/layouts/rank_list",
-							 :locals => {:show_paginate => false,
-							 						 :items_set => items_set, 
-							 						 :limit => nil,
-							 						 :show_photo => true,
-							 						 :photo_style => 'sign'} %>
+		<% if items_set %>
+			<%= render :partial => "/layouts/ranklist",
+								 :locals => {:show_paginate => false,
+								 						 :items_set => items_set, 
+								 						 :limit => nil,
+								 						 :show_photo => true,
+								 						 :photo_style => 'sign'} %>
+		<% end %>
 	</div>
 	
 </div>

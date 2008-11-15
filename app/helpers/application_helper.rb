@@ -100,7 +100,7 @@ module ApplicationHelper
 	def item_title(item)
 		case type_for(item)
 		when 'User'
-			item.login
+			user_username(item)
 		else
 			item.title
 		end
@@ -108,6 +108,22 @@ module ApplicationHelper
 	
 	def item_url(item_type, item_id)
 		"#{root_url}#{item_type.pluralize}/#{item_id}"
+	end
+	
+	def classified_items(items, classify_by)
+		items.group_by { |item| (item[classify_by.to_sym]) }.sort { |a, b| a <=> b }
+	end
+	
+	def random_items(items, count)
+		random_items = []
+		1.upto(count) do |i|
+			random_items << items.rand
+			random_items.uniq!
+			if random_items.size < i
+				count += 1
+			end
+		end
+		random_items
 	end
 
 	def second_to_hms(second)
@@ -243,23 +259,6 @@ module ApplicationHelper
 		"#{root_url}#{ns}#{po}#{so}#{ac}"
 	end
 	
-	def code_title(codeable_type, code)
-		c = Code.find(:first, :conditions => {:codeable_type => codeable_type, :code => code})
-		if c
-			c.title
-		else
-			nil
-		end
-	end
-	
-	def codes_titles(codeable_type, codes)
-		titles = []
-		for code in codes
-			titles << code_title(codeable_type, code)
-		end
-		titles
-	end
-	
 	def add_brackets(str, left_mark = '[', right_mark = ']')
 		if str && !str.blank?
 			"#{left_mark}#{str}#{right_mark}"
@@ -288,9 +287,9 @@ module ApplicationHelper
 		count
 	end
 	
-	def items_paginate(items_set, per_page = LIST_ITEMS_COUNT_PER_PAGE_S)
+	def items_paginate(items_set, count_per_page = LIST_ITEMS_COUNT_PER_PAGE_S)
 		items_set.paginate :page => params[:page], 
- 											 :per_page => per_page		
+ 											 :per_page => count_per_page		
 	end
 	
 	def sort_by_gbk(items, method=:name) 

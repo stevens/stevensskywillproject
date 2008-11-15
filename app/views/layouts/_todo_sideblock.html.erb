@@ -1,0 +1,19 @@
+<div class="sidebar_block">
+	<% if ['site', 'mine', 'recipe'].include?(@current_tab_type) %>
+		<div class="sidebar_todo_button">
+			<%= link_to "+ #{CREATE_CN}新#{RECIPE_CN}......", new_recipe_path %>
+		</div>
+	<% end %>
+	
+	<% if ['site', 'mine', 'people'].include?(@current_tab_type) && params[:action] != 'profile' %>
+		<div class="sidebar_todo_button">
+			<%= link_to "+ 邀请新#{FRIEND_CN}......", '' %>
+		</div>		
+	<% end %>
+	
+	<% if ['site', 'mine'].include?(@current_tab_type) %>
+		<div class="sidebar_todo_button">
+			<%= link_to "+ 想对#{SITE_NAME_CN}说......", feedback_path %>
+		</div>
+	<% end %>
+</div>

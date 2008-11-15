@@ -1,12 +1,15 @@
 <% item_type = type_for(item) %>
 
 <% if item_type == 'User' %>
-	<%= link_to image_tag(photo_file_url(user_portrait(item), 'cook', photo_style), :title => h(user_username(item))), 
+	<%= link_to image_tag(photo_file_url(user_portrait(item), 'cook', photo_style), :title => strip_tags(user_username(item))), 
 							user_first_link(item) %>
+<% elsif item_type == 'Contact' %>
+	<%= link_to image_tag(photo_file_url(user_portrait(item.contactor), 'cook', photo_style), :title => strip_tags(user_username(item.contactor))), 
+							user_first_link(item.contactor) %>
 <% elsif item_type == 'Review' %>
-	<%= link_to image_tag(photo_file_url(user_portrait(item.user), 'cook', photo_style), :title => h(user_username(item.user))), 
+	<%= link_to image_tag(photo_file_url(user_portrait(item.user), 'cook', photo_style), :title => strip_tags(user_username(item.user))), 
 							user_first_link(item.user) %>
 <% else %>
-	<%= link_to image_tag(photo_file_url(cover_photo(item), item_type, photo_style), :title => h(item_title(item))), 
+	<%= link_to image_tag(photo_file_url(cover_photo(item), item_type, photo_style), :title => strip_tags(item_title(item))), 
 							item %>
 <% end %>

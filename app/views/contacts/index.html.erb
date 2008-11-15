@@ -1,0 +1,34 @@
+<div id="contacts_wrapper" class="content_block">
+	
+	<div id="contacts_header" class="block_header">
+		<%= render :partial => "/layouts/index_header", 
+							 :locals => { :show_header_link => true, 
+							 						  :show_new_link => false, 
+							 						  :block_title => @block_title } %>
+	</div>
+	
+	<div id="contacts_detail" class="block_main">
+		<div id="contacts_filter_bar">
+			
+		</div>
+		
+		<div id="contacts_list">
+			<%= render :partial => "/layouts/items_list",
+								 :locals => {:show_paginate => true,
+								 						 :items_set => @contacts_set, 
+								 						 :limit => nil,
+								 						 :itemable_sym => nil, 
+								 						 :show_photo => true,
+								 						 :photo_style => 'list',  
+								 						 :show_below_photo => false, 
+								 						 :show_title => false, 
+								 						 :show_photo_todo => false, 
+								 						 :show_parent => false,
+								 						 :show_todo => @show_todo, 
+								 						 :show_favorite => false, 
+								 						 :show_manage => @show_manage, 
+								 						 :delete_remote => false} %>
+		</div>
+	</div>
+
+</div>

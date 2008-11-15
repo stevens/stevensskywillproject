@@ -35,5 +35,14 @@ module FavoritesHelper
 		conditions << "favorites.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
   end
+  
+  def classified_favorite_statuses(favorites)
+		statuses_set = []
+		for favorite in favorites
+			statuses_set += favorite.status.split(' ')
+		end
+		statuses_set = statuses_set.group_by { |status| (status) }.sort { |a, b| a <=> b }
+		statuses_set.group_by { |statuses| (statuses[0][1..1]) }.sort { |a, b| a <=> b }
+  end
 
 end

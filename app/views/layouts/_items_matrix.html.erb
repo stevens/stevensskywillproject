@@ -1,5 +1,5 @@
 <% if show_paginate %>
-	<% items = items_paginate(items_set) %>
+	<% items = items_paginate(items_set, items_count_per_page) %>
 <% elsif limit %>
 	<% items = items_set[0..limit-1] %>
 <% else %>

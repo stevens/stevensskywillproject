@@ -3,7 +3,6 @@ class RecipesController < ApplicationController
 	before_filter :protect, :except => [:index, :show, :overview]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
-	before_filter :set_system_notice, :only => [:overview, :show]
 	
 	def change_from_type
   	respond_to do |format|
@@ -58,10 +57,10 @@ class RecipesController < ApplicationController
 		@other_recipes_set = @recipes_set - recipe
 		recipes_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
 		related_recipes_conditions = recipes_conditions
-		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions) - recipe
+		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe
 		same_title_recipes_conditions = [recipes_conditions]
 		same_title_recipes_conditions << "recipes.title = '#{@recipe.title}'"
-		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions.join(' AND ')) - recipe
+		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions.join(' AND '), nil, 'RAND()') - recipe
 		@same_title_recipes_set_count = @same_title_recipes_set.size
 
     log_count(@recipe)												
@@ -185,8 +184,8 @@ class RecipesController < ApplicationController
 	  load_tags_set
 	  
   	@highlighted_recipe = highest_rated_items(@recipes_set)[0..99].rand
-  	
   	@highest_rated_recipes = highest_rated_items(@recipes_set)[0..9]
+  	@random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN
 		set_page_title(info)

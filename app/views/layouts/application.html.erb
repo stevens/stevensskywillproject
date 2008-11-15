@@ -46,7 +46,7 @@
 					
 					<!-- logo -->
 					<div id="logo">
-						<%= link_to image_tag('alpha/beecook.png', :title => SLOGAN_CN), root_url %>
+						<%= link_to image_tag('alpha/bc_logo_web.png', :title => SLOGAN_CN), root_url %>
 					</div>
 				</div>
 			</div>
@@ -60,24 +60,18 @@
 							<%= link_to HOME_CN, root_path %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
-							<%= link_to RECIPE_CN, "#{recipes_url}/overview" %>
+							<%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'user') %>>
-							<%= link_to "#{FRIEND_CN}<span class='script'>快出锅喽!</span>", root_path %>
+							<%= link_to "#{PEOPLE_CN}<span class='script'>新出锅!</span>", "#{users_path}/overview" %>
 						</li>
-						<!-- <li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
-							<%= link_to MENU_CN, root_url %>
-						</li>
-						<li class=<%= tab_css_class(@current_tab_type, 'group') %>>
-							<%= link_to GROUP_CN, root_url %>
-						</li> -->
 					</ul>
 				</div>
 			
 				<div id="right_navigation">
 					<ul class="navigation">
 						<li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
-							<%= link_to "我的#{SITE_NAME_CN}", :controller => 'mine', :action => 'overview' %>
+							<%= link_to "我的#{SITE_NAME_CN}", :controller => 'mine', :action => 'profile' %>
 						</li>
 						<% if logged_in? %>
 							<!-- <li class=<%= tab_css_class(@current_tab_type, 'profile') %>>
@@ -100,10 +94,21 @@
 				<div id="content_main">
 					<!-- sub navigation -->
 					<div id="sub_navigation">
-						<% if @current_tab_type == 'site' %>
-							<%= SLOGAN_CN %>
-						<% elsif @current_tab_type == 'mine' %>
+						<div id="shotcut_bar">
+							<% if ['site', 'mine', 'recipe'].include?(@current_tab_type) %>
+								<em><%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %></em>
+							<% end %>
+							<!-- <% if ['mine', 'user'].include?(@current_tab_type) %>
+								<em><%= link_to "邀请#{FRIEND_CN}", '' %></em>
+							<% end %> -->
+							<% if ['site', 'mine'].include?(@current_tab_type) %>
+								<em><%= link_to FEEDBACK_CN, feedback_path %></em>
+							<% end %>
+						</div>
+						
+						<% if @current_tab_type == 'mine' %>
 							<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
+							<%= link_to "我的#{FRIEND_CN}", :controller => 'contacts', :action => 'mine' %>
 							<%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
 							<%= link_to "我的#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
 							<%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
@@ -116,6 +121,13 @@
 							<%= link_to "#{RECIPE_CN}浏览", recipes_path %>
 							<%= link_to "#{RECIPE_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>
 							<%= link_to "#{RECIPE_CN}#{TAG_CN}", :controller => 'taggings', :action => 'index', :taggable_type => 'recipe' %>
+						<% elsif @current_tab_type == 'user' %>
+							<% if @current_user %>
+								<%= link_to "我的#{FRIEND_CN}", :controller => 'contacts', :action => 'mine' %>
+								<!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
+							<% end %>
+							<%= link_to "#{PEOPLE_CN}浏览", users_path %>
+							<!-- <%= link_to "#{PEOPLE_CN}动向", '' %> -->
 						<% else %>
 							<%= SLOGAN_CN %>
 						<% end %>
@@ -123,11 +135,14 @@
 					
 					<!-- sidebar colmun  -->
 				  <div id="sidebar_column">
-				  	<%= render :partial => "/layouts/todo_sidebar" %>
 						<% if !current_user && ['site', 'feedbacks'].include?(params[:controller]) %>
-					  	<%= render :partial => "/sessions/login_sidebar" %>
+					  	<%= render :partial => "/sessions/login_sideblock" %>
 					  <% end %>
-						<%= render :partial => "/searchings/search_sidebar" %>
+					  
+					  <% if ['user', 'recipe'].include?(@current_tab_type) && params[:action] != 'profile' %>
+							<%= render :partial => "/searchings/search_sideblock" %>
+						<% end %>
+						
 						<% if @show_sidebar %>
 							<%= render :partial => "/#{params[:controller]}/#{params[:action]}_sidebar" %>
 						<% end %>

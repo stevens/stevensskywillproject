@@ -62,6 +62,9 @@ span.script {
 label {
 	white-space: nowrap;
 }
+select {
+	height: 22px;
+}
 input {
 	height: 18px;
 	vertical-align: middle;
@@ -174,7 +177,7 @@ div.tag {
 
 /* Logo */
 #logo {
-	padding-top: 10px;
+	padding-top: 5px;
 	padding-left: 10px;
 }
 #logo img {
@@ -334,7 +337,7 @@ div.tag {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 23px;
-	padding-right: 23px;
+	padding-right: 10px;
 	margin: 0px;
 	color: #695245;
 }
@@ -346,6 +349,15 @@ div.tag {
 #sub_navigation a:hover {
 	background-color: #695245;
 	color: #ffffff;
+}
+#shotcut_bar {
+	float: right;
+	font-size: 12px;
+}
+#shotcut_bar a, #shotcut_bar a:link, #shotcut_bar a:visited {
+	margin-right: 0px;
+	margin-left: 3px;
+	font-size: 12px;
 }
 
 /* Content Column */
@@ -410,14 +422,17 @@ td.left_column {
 
 }
 td.left_column_lined {
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px dashed #f1f1f1;
+}
+td.middle_column {
+	white-space: nowrap;
 }
 td.right_column {
 	width: 100%;
 }
 td.right_column_lined {
 	width: 100%;
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px dashed #f1f1f1;
 }
 td.label {
 
@@ -1164,7 +1179,7 @@ div.welcome_todo_button a:hover {
 }
 .user_bar_username {
 	color: #695245;
-	padding: 5px 0px;
+	margin-bottom: 1px;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -1172,7 +1187,19 @@ div.welcome_todo_button a:hover {
 	font-size: 12px;
 	font-weight: normal;
 }
+.user_bar_info {
+	color: #b8b9a7;
+	margin-bottom: 1px;
+}
 .user_bar_link {
+	color: #b8b9a7;
+}
+.todo_block {
+	float: right;
+	color: #78b36d;
+}
+.todo_block span {
+	margin-left: 5px;
 	color: #b8b9a7;
 }
 

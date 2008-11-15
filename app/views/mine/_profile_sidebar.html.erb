@@ -1,0 +1,11 @@
+<%= render :partial => '/layouts/items_sideblock', 
+					 :locals => { :id => 'my_friends', 
+					 							:block_title => "#{FRIEND_CN}", 
+					 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@current_user) }, 
+					 							:items_set => @contactors_set} %>
+
+<%= render :partial => "/taggings/tags_sideblock",
+					 :locals => { :user => @current_user, 
+					 						  :custom_tags_set => @tags_set, 
+					 						  :limit => nil, 
+					 						  :taggable_type => 'Recipe' } %>

@@ -1,0 +1,13 @@
+<div class="sidebar_panel">
+	<div class="sidebar_panel_header">
+		<h1><%= @current_tab_type == 'user' ? "#{PEOPLE_CN}#{SEARCH_CN}" : "#{name_for(@current_tab_type.camelize)}#{SEARCH_CN}" %></h1>
+	</div>
+	<div class="sidebar_panel_main">
+		<% form_tag search_path do %>
+			<% searchable_type = @current_tab_type.camelize %>
+			<%= hidden_field_tag 'searchable_type', searchable_type %>
+			<%= text_field_tag 'search_keywords', @keywords_line, :class => "search" %>
+			<%= submit_tag SEARCH_CN, :class => "search_button" %>
+		<% end %>
+	</div>
+</div>

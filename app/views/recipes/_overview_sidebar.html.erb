@@ -1,8 +1,16 @@
-<%= render :partial => "/layouts/rank_list_sidebar",
-					 :locals => {:rank_list_title => "人气#{RECIPE_CN}TOP10", 
-					 						 :items_set => @highest_rated_recipes} %>
+<% if @highest_rated_recipes && @highest_rated_recipes.size > 0 %>
+	<%= render :partial => "/layouts/ranklist_sideblock",
+						 :locals => {:rank_list_title => "#{RECIPE_CN}人气榜 TOP10", 
+						 						 :items_set => @highest_rated_recipes} %>
+<% end %>
+
+<%= render :partial => '/layouts/items_sideblock', 
+					 :locals => { :id => 'random_recipes', 
+					 							:block_title => "#{RECIPE_CN}随机秀", 
+					 							:block_header_link => nil, 
+					 							:items_set => @random_recipes } %>
 					 						 
-<%= render :partial => "/taggings/tags_sidebar",
+<%= render :partial => "/taggings/tags_sideblock",
 					 :locals => {:user => nil, 
 					 						 :custom_tags_set => @tags_set,
 					 						 :limit => nil, 

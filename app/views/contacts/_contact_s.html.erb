@@ -1,0 +1,24 @@
+<div id="contact_<%= item.id %>_basic" class="basic">
+	<h2>
+		<%= link_to strip_tags(user_username(item.contactor)), user_first_link(item.contactor) %>
+	</h2>
+</div>
+
+<% if show_todo %>
+	<div id="contact_<%= item.id %>_todo" class="todo_right">
+		
+		<div id="friendship_status_with_user_<%= item.contactor.id %>" class="todo_block">
+			<%= render :partial => '/contacts/contact_status', 
+								 :locals => { :contact_type => '1', 
+								 							:status => item.status, 
+								 							:user => item.contactor, 
+								 							:ref => 'contacts_list' } %>
+		</div>
+		
+		<% if show_manage %>
+			<div id="contact_<%= item.id %>_manage">
+
+			</div>
+		<% end %>	
+	</div>
+<% end %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 26) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -18,9 +18,20 @@ ActiveRecord::Schema.define(:version => 23) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "codes", ["codeable_type"], :name => "pi_codeable_type"
+
+  create_table "contacts", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "contactor_id"
+    t.string   "contact_type"
+    t.string   "status"
+    t.datetime "accepted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "counters", :force => true do |t|
     t.string   "countable_type"
@@ -101,6 +112,21 @@ ActiveRecord::Schema.define(:version => 23) do
   add_index "photos", ["parent_id"], :name => "i_parent_photo"
   add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
 
+  create_table "profiles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "gender"
+    t.string   "gender_show_type"
+    t.datetime "birthday"
+    t.string   "birthday_show_type"
+    t.string   "location"
+    t.string   "hometown"
+    t.string   "blog"
+    t.text     "intro"
+    t.string   "privacy"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ratings", :force => true do |t|
     t.integer  "user_id"
     t.integer  "rating"
@@ -157,6 +183,15 @@ ActiveRecord::Schema.define(:version => 23) do
   add_index "reviews", ["user_id"], :name => "fk_user"
   add_index "reviews", ["user_id", "reviewable_type"], :name => "i_user_reviewable_type"
   add_index "reviews", ["user_id", "reviewable_type", "reviewable_id"], :name => "i_user_reviewable"
+
+  create_table "stories", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "storyable_type"
+    t.integer  "storyable_id"
+    t.string   "story_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

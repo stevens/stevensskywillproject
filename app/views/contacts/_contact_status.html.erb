@@ -1,0 +1,33 @@
+<% if contact_type == '1' %>
+	<% if status == '0' %>
+		<%= "正在发送#{FRIEND_CN}请求..." %>
+	<% elsif status == '1' %>
+		<%= "等待我处理#{FRIEND_CN}请求" %>
+		<% if ref == 'contacts_list' %>
+			<span>
+				<%= link_to_remote "接受", :url => { :controller => 'contacts', :action => 'accept', :id => user.id, :contact_type => contact_type, :ref => ref }, :confirm => "确定要接受#{strip_tags(user_username(user))}的#{FRIEND_CN}请求吗?" %> |
+				<%= link_to_remote "谢绝", :url => { :controller => 'contacts', :action => 'delete', :id => user.id, :contact_type => contact_type, :ref => ref }, :confirm => "确定要谢绝#{strip_tags(user_username(user))}的#{FRIEND_CN}请求吗?" %>
+			</span>
+		<% end %>
+	<% elsif status == '2' %>
+		<%= "等待对方处理#{FRIEND_CN}请求" %>
+		<% if ref == 'contacts_list' %>
+			<span>
+				<%= link_to_remote "#{CANCLE_CN}", :url => { :controller => 'contacts', :action => 'delete', :id => user.id, :contact_type => contact_type, :ref => ref }, :confirm => "确定要#{CANCLE_CN}对#{strip_tags(user_username(user))}的#{FRIEND_CN}请求吗?" %>
+			</span>
+		<% end %>
+	<% elsif status == '3' %>
+		<% if ref == 'user_bar' %>
+			<%= "#{strip_tags(user_username(user))}是我的#{FRIEND_CN}" %>
+		<% end %>
+		<% if ref == 'contacts_list' %>
+			<span>
+				<%= link_to_remote "解除#{FRIEND_CN}关系", :url => { :controller => 'contacts', :action => 'delete', :id => user.id, :contact_type => contact_type, :ref => ref }, :confirm => "确定要和#{strip_tags(user_username(user))}解除#{FRIEND_CN}关系吗?" %>
+			</span>
+		<% end %>
+	<% elsif status == '-1' %>
+		<em><%= link_to "加为#{FRIEND_CN}", :user_id => user.id, :controller => 'contacts', :action => 'new', :ref => ref %></em>
+	<% else %>
+		<em><%= link_to_remote "加为#{FRIEND_CN}", :url => { :controller => 'contacts', :action => 'create', :id => user.id, :contact_type => contact_type, :ref => ref } %></em>
+	<% end %>
+<% end %>

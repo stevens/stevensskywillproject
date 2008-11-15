@@ -72,12 +72,12 @@
 				</div>
 				<% if @recipe.user != @current_user %>
 					<div class="todo_right">
-						<em><%= link_to "我要给#{RECIPE_CN}#{RATE_CN}", "#recipe_#{@recipe.id}_wrapper" %></em>
+						<em><%= link_to "我要#{RATE_CN}", "#recipe_#{@recipe.id}_wrapper" %></em>
 					</div>
 				<% end %>
 			<% else %>
 				<div class="todo">
-					<em><%= link_to "我要#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %></em>
+					<em><%= link_to "#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %></em>
 				</div>
 			<% end %>
 		</div>

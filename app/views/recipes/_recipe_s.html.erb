@@ -4,7 +4,7 @@
 		<% if item.from_type == '1' %>
 			<%= image_tag 'default/other/private.png', :title => PRIVATE_HOME_CN, :class => "icon" %>
 		<% end %>
-		<%= link_to h(item.title), item %>
+		<%= link_to strip_tags(item.title), item %>
 		<%= "#{add_brackets(code_title('is_draft', item.is_draft))}" %>
 	</h2>
 	<ul>
@@ -17,7 +17,7 @@
 			<%= "#{TAG_CN}: " %>
 			<% if item.tag_list.size > 0 %>
     		<% for tag in item.tag_list %>
-	    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
+	    		<%= link_to strip_tags(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
 	    	<% end %>
 			<% else %>
 	    	<%= "还没有#{TAG_CN}" %>

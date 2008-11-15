@@ -1,0 +1,22 @@
+<div id="users_wrapper" class="content_block">
+	<div id="users_header" class="block_header">
+		<div class="block_header_link">	
+				
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
+	
+	<div id="users_detail" class="block_main">
+		<%= render :partial => "/layouts/items_matrix",
+							 :locals => {:show_paginate => true,
+							 						 :items_set => @users_set, 
+							 						 :limit => nil,
+							 						 :items_count_per_row => count_per_row, 
+							 						 :items_count_per_page => 60, 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => true,  
+							 						 :show_title => true, 
+							 						 :show_photo_todo => false, 
+							 						 :photo_style => 'matrix'} %>
+	</div>
+</div>

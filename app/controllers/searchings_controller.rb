@@ -30,12 +30,14 @@ class SearchingsController < ApplicationController
 	  	
 			 	load_searchables_set
 			 	
-			 	info = "#{name_for(@searchable_type)}#{SEARCH_CN} - #{@keywords_line} (#{@searchables_set_count})"
+			 	searchable_type_name = @searchable_type == 'User' ? PEOPLE_CN : name_for(@searchable_type)
+			 	
+			 	info = "#{searchable_type_name}#{SEARCH_CN} - #{@keywords_line} (#{@searchables_set_count})"
 			 	
 				if @searchables_set_count > 0
-					flash[:notice] = "共有#{@searchables_set_count}#{unit_for(@searchable_type)}#{name_for(@searchable_type)}符合#{SEARCH_CN}条件......"
+					flash[:notice] = "共有#{@searchables_set_count}#{unit_for(@searchable_type)}#{searchable_type_name}符合#{SEARCH_CN}条件......"
 				else
-					flash[:notice] = "#{SORRY_CN}, 没有符合#{SEARCH_CN}条件的#{name_for(@searchable_type)}!"
+					flash[:notice] = "#{SORRY_CN}, 没有符合#{SEARCH_CN}条件的#{searchable_type_name}!"
 				end
 			end
 		end
@@ -43,9 +45,10 @@ class SearchingsController < ApplicationController
 		set_page_title(info)
 		set_block_title(info)
 		
-		load_tags_set
-	 		
-	 	show_sidebar
+		if ['Recipe'].include? @searchable_type
+			load_tags_set	
+	 		show_sidebar
+	 	end
  		
     respond_to do |format|
      	format.html do
@@ -77,6 +80,9 @@ class SearchingsController < ApplicationController
 		when 'Recipe'
 			@searchables_set = searchables_for(user, @searchable_type, @keywords, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), nil, true, nil, 'published_at DESC, created_at DESC')
 			@recipes_set = @searchables_set
+		when 'User'
+			@searchables_set = searchables_for(nil, @searchable_type, @keywords, user_conditions, nil, true, nil, 'activated_at DESC, created_at DESC')
+			@users_set = @searchables_set
 		end
 		@searchables_set_count = @searchables_set.size
 	end

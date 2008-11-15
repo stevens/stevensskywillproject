@@ -4,7 +4,7 @@ class FavoritesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :load_favorable_type, :only => [:index, :mine]
-	before_filter :load_back_to_type, :except => [:index, :show]
+	before_filter :load_back_to_type, :except => [:index, :show, :edit]
 	
 	def index
 		respond_to do |format|
@@ -193,6 +193,14 @@ class FavoritesController < ApplicationController
 						page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
 															:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
 									 						:locals => { :item => @parent_obj }
+					elsif @back_to_type == 'show'
+						page.replace_html "favorite_users_detail", 
+															:partial => '/favorites/favorite_detail', 
+														  :locals => { :favorites_set => @parent_obj.favorites.find(:all, :order => 'RAND()'), 
+														 							 :limit => 12, 
+														 							 :show_type => 'user', 
+														 							 :photo_style => 'sign', 
+														 							 :show_title => false }
 					end
 					# page.visual_effect :highlight, "#{@parent_type.downcase}_#{@parent_id}_favorite", :duration => 3
 				end
@@ -241,6 +249,14 @@ class FavoritesController < ApplicationController
 							page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
 																:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
 										 						:locals => { :item => @parent_obj }
+						elsif @back_to_type == 'show'
+							page.replace_html "favorite_users_detail", 
+																:partial => '/favorites/favorite_detail', 
+															  :locals => { :favorites_set => @parent_obj.favorites.find(:all, :order => 'RAND()'), 
+															 							 :limit => 12, 
+															 							 :show_type => 'user', 
+															 							 :photo_style => 'sign', 
+															 							 :show_title => false }
 						end
 					end
 					# page.visual_effect :highlight, "#{@parent_type.downcase}_#{@parent_id}_favorite", :duration => 3

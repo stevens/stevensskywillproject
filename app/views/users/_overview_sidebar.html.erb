@@ -1,12 +1,11 @@
-<%= render :partial => "/favorites/favorite_sidebar",
-					 :locals => { :user => @user, 
-					 						  :favorites_set => @favorites_set, 
-					 						  :limit => 12, 
-					 						  :favorable_type => 'Recipe', 
-					 						  :show_type => 'favorable' } %>
+<% if @highest_rated_users && @highest_rated_users.size > 0 %>
+	<%= render :partial => "/layouts/ranklist_sideblock",
+						 :locals => {:rank_list_title => "蜂神榜 TOP10", 
+						 						 :items_set => @highest_rated_users} %>
+<% end %>
 
-<%= render :partial => "/taggings/tags_sidebar",
-					 :locals => { :user => @user, 
-					 						  :custom_tags_set => @tags_set, 
-					 						  :limit => nil, 
-					 						  :taggable_type => 'Recipe' } %>
+<%= render :partial => '/layouts/items_sideblock', 
+					 :locals => { :id => 'random_users', 
+					 							:block_title => "#{PEOPLE_CN}随机秀", 
+					 							:block_header_link => nil, 
+					 							:items_set => @random_users } %>

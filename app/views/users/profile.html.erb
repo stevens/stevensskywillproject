@@ -1,0 +1,105 @@
+<!-- <% if @user != @current_user %>
+	<div id="same_tastes_wrapper" class="content_block">
+		<div id="same_tastes_header" class="block_header">
+			<div class="block_header_link">	
+				<%= link_to "#{MORE_CN}的口味相投点", '' %>
+			</div>
+			<h1><%= strip_tags "我和#{username_prefix(@user)}口味相投点" %></h1>
+		</div>
+		
+		<div id="same_tastes_detail" class="block_main">
+	
+		</div>
+	</div>
+<% end %> -->
+
+<div id="recipes_wrapper" class="content_block">
+	<div id="recipes_header" class="block_header">
+		<div class="block_header_link">	
+			<% from_types = Code.find(:all, :conditions => {:codeable_type => 'from_type'}, :order => 'code') %>
+			<% 1.upto(from_types.size) do |i| %>
+				<% if @classified_recipes[i-1] && from_types[i-1].code == @classified_recipes[i-1][0] %>
+					<% classified_recipes_count = @classified_recipes[i-1][1].size %>
+				<% else %>
+					<% classified_recipes_count = 0 %>
+				<% end %>
+				<%= link_to "#{from_types[i-1].title} (#{classified_recipes_count})", :user_id => @user.id, :controller => 'recipes', :action => 'index', :from_type => from_types[i-1].name %>
+				<% if i < from_types.size %>
+					|
+				<% end %>
+			<% end %>
+		</div>
+		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
+	</div>
+	
+	<div id="recipes_detail" class="block_main">
+		<%= render :partial => "/layouts/items_matrix",
+							 :locals => {:show_paginate => false,
+							 						 :items_set => @recipes_set, 
+							 						 :limit => 12, 
+							 						 :items_count_per_row => count_per_row, 
+							 						 :show_photo => true, 
+							 						 :show_below_photo => true,  
+							 						 :show_title => true, 
+							 						 :show_photo_todo => false, 
+							 						 :photo_style => 'matrix'} %>
+	</div>
+</div>
+
+<div id="favorite_recipes_wrapper" class="content_block">
+	<div id="favorite_recipes_header" class="block_header">
+		<div class="block_header_link">
+			<% statuses_set = favorite_statuses('Recipe') %>
+			<% 1.upto(statuses_set.size) do |i| %>
+				<% statuses = statuses_set[i-1][1] %>
+				<% if @classify_favorite_statuses && @classify_favorite_statuses[i-1] %>
+					<% classify_favorite_statuses = @classify_favorite_statuses[i-1][1] %>
+				<% end %>
+				<% 1.upto(statuses.size) do |j| %>
+					
+					<% if classify_favorite_statuses && classify_favorite_statuses[j-1] && statuses[j-1].code == classify_favorite_statuses[j-1][0] %>
+						<% classified_statuses_count = classify_favorite_statuses[j-1][1].size %>
+					<% else %>
+						<% classified_statuses_count = 0 %>
+					<% end %>
+					
+					<%= link_to "#{statuses[j-1].title} (#{classified_statuses_count})", :user_id => @user.id, :controller => 'favorites', :action => 'index', :favorable_type => 'recipe', :status => statuses[j-1].name %>
+					<% if j < statuses.size %>
+						·
+					<% end %>
+				<% end %>
+				<% if i < statuses_set.size %>
+					|
+				<% end %>
+			<% end %>
+		</div>
+		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}#{FAVORITE_CN}" %></h1>
+	</div>
+	
+	<div id="favorite_recipes_detail" class="block_main">
+		<%= render :partial => '/favorites/favorite_detail', 
+							 :locals => { :favorites_set => @favorites_set, 
+							 							:limit => 12, 
+							 							:show_type => 'favorable', 
+							 							:photo_style => 'matrix', 
+							 							:show_title => true } %>
+	</div>
+</div>
+
+<div id="reviews_wrapper" class="content_block">
+	<div id="reviews_header" class="block_header">
+		<div class="block_header_link">	
+			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{REVIEW_CN} (#{@reviews_set_count})"), :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
+		</div>
+		<h1><%= strip_tags "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
+	</div>
+	
+	<div id="reviews_detail" class="block_main">
+		<%= render :partial => "/reviews/reviews_list", 
+							 :locals => { :reviews_set => @reviews_set, 
+							 							:show_paginate => false, 
+							 							:limit => 10,
+							 							:show_todo => false, 
+							 							:delete_remote => false } %>
+	</div>
+</div>

@@ -20,18 +20,12 @@
 			<% end %>
 			<li>
 				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Recipe')}#{RECIPE_CN}" %>
-	    	<% if @current_user && item.user == @current_user %>
-	    		<%= link_to "[#{EDIT_CN}#{PRIVACY_CN}]", [item, :edit] %>
-	    	<% end %>
 			</li>
 			<li>
 				<%= "#{TAG_CN}: " %>
 				<% if item.tag_list.size > 0 %>
 	    		<% for tag in item.tag_list %>
 		    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
-		    	<% end %>
-		    	<% if @current_user && item.user == @current_user %>
-		    		<%= link_to "[#{EDIT_CN}#{TAG_CN}]", [item, :edit] %>
 		    	<% end %>
 				<% else %>
 		    	<%= "还没有#{TAG_CN}" %>

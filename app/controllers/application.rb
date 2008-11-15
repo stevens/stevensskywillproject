@@ -3,18 +3,29 @@
 
 class ApplicationController < ActionController::Base
 	include AuthenticatedSystem
-  include ApplicationHelper
-  include RecipesHelper
-  include PhotosHelper
-  include ReviewsHelper
-  include TaggingsHelper
-  include SearchingsHelper
-  include RatingsHelper
-  include PasswordsHelper
-  include SettingsHelper
-  include CountersHelper
-  include UsersHelper
-  include FavoritesHelper
+	include ApplicationHelper
+	include CodesHelper
+	include ContactsHelper
+	include CountersHelper
+	include FavoritesHelper
+	include FeedbacksHelper
+	include HomepagesHelper
+	include MineHelper
+	include PasswordsHelper
+	include PhotosHelper
+	include ProfilesHelper
+	include RatingsHelper
+	include RecipesHelper
+	include ReviewsHelper
+	include SearchingsHelper
+	include SessionsHelper
+	include SettingsHelper
+	include SiteHelper
+	include SitemapHelper
+	include StoriesHelper
+	include SystemHelper
+	include TaggingsHelper
+	include UsersHelper
   
   helper :all # include all helpers, all the time
 	
@@ -45,13 +56,13 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'site'
 		elsif c == 'mine' || a == 'mine'
 			@current_tab_type = 'mine'
-		elsif params[:user_id]
+		elsif (c == 'users' && a != 'new') || params[:user_id] || c == 'contacts'
 			@current_tab_type = 'user'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
-		elsif c == 'reviews' || c == 'photos' || c == 'taggings'
-			@current_tab_type = params[:reviewable_type] || params[:photoable_type] || params[:taggable_type]
-		else
+		elsif c == 'reviews' || c == 'photos' || c == 'taggings' || c == 'searchings' 
+			@current_tab_type = params[:reviewable_type] || params[:photoable_type] || params[:taggable_type] || params[:searchable_type]
+		elsif c == 'recipes'
 			@current_tab_type = c.singularize
 		end
 	end
@@ -65,7 +76,7 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def set_system_notice
-		@system_notice = "号外: 可爱的蜂厨们, <em>“食谱收尝”</em>功能(测试版)热腾腾地刚出锅, 快去试试<em>收尝</em>你中意的食谱吧!"
+		@system_notice = "号外: 可爱的朋友们, <em>“蜂人(测试版)”</em>新出锅, 大家可以<em>互相加为伙伴</em>了呵！"
 	end
 	
 	# def param_posted?(symbol)
