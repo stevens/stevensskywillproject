@@ -198,6 +198,7 @@ class FavoritesController < ApplicationController
 															:partial => '/favorites/favorite_detail', 
 														  :locals => { :favorites_set => @parent_obj.favorites.find(:all, :order => 'RAND()'), 
 														 							 :limit => 12, 
+														 							 :items_count_per_row => 4,
 														 							 :show_type => 'user', 
 														 							 :photo_style => 'sign', 
 														 							 :show_title => false }
@@ -254,6 +255,7 @@ class FavoritesController < ApplicationController
 																:partial => '/favorites/favorite_detail', 
 															  :locals => { :favorites_set => @parent_obj.favorites.find(:all, :order => 'RAND()'), 
 															 							 :limit => 12, 
+															 							 :items_count_per_row => 4, 
 															 							 :show_type => 'user', 
 															 							 :photo_style => 'sign', 
 															 							 :show_title => false }
