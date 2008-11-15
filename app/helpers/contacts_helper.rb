@@ -2,7 +2,7 @@ module ContactsHelper
 
 	def contacts_for(user, conditions = contact_conditions('1', '3'), limit = nil, order = 'contact_type, accepted_at DESC, created_at DESC')
 		user.contacts.find(:all, :limit => limit, :order => order, 
-											 :conditions => contact_conditions)
+											 :conditions => conditions)
 	end
   
   def contact_conditions(contact_type = nil, status = nil, created_at_from = nil, created_at_to = nil)

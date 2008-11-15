@@ -2,7 +2,7 @@ module UsersHelper
 	
 	def users_for(conditions = user_conditions, limit = nil, order = 'activated_at DESC, created_at DESC')
 		User.find(:all, :limit => limit, :order => order, 
-							:conditions => user_conditions)
+							:conditions => conditions)
 	end
   
   def user_conditions(activated = true, created_at_from = nil, created_at_to = nil)

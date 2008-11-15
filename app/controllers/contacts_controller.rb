@@ -132,7 +132,7 @@ class ContactsController < ApplicationController
   def load_contacts_set(user)
  		if user && user == @current_user
  			@contacts_set = contacts_for(user, contact_conditions('1'), nil, 'created_at DESC')
- 			friends_set_count = contacts_for(user, contact_conditions('1', '3')).size
+ 			friends_set_count = contacts_for(user).size
  			@contacts_set_count = friends_set_count
  		else
  			@contacts_set = contacts_for(user, contact_conditions('1', '3'), nil, 'created_at DESC')
