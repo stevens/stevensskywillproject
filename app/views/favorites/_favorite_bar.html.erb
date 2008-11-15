@@ -2,7 +2,7 @@
 
 <% if @current_user %>
 	<% if favorite = favorable.favorites.find(:first, :conditions => { :user_id => @current_user.id }) %>
-		<em><%= link_to_remote "我: #{codes_titles('favorite_status', favorite.status.split(' ')).join(' / ')}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'edit', :back_to_type => back_to_type }, :method => :get %></em>
+		<em class="highlight"><%= link_to_remote "我: #{codes_titles('favorite_status', favorite.status.split(' ')).join(' / ')}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'edit', :back_to_type => back_to_type }, :method => :get %></em>
 		&nbsp;
 		<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Favorite')}#{name_for(type_for(favorable))}#{FAVORITE_CN}吗?" %>
 		<%= link_to_remote "#{DELETE_CN}#{FAVORITE_CN}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'destroy', :back_to_type => back_to_type }, :confirm => delete_message, :method => :delete %>

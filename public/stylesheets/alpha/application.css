@@ -51,6 +51,12 @@ em a {
 em a:hover {
 	background-color: #428cbb !important;
 }
+em.highlight a {
+	background-color: #78b36d !important;
+}
+em.highlight a:hover {
+	background-color: #428cbb !important;
+}
 span.highlight {
 	color: #78b36d;
 }
@@ -1285,5 +1291,3 @@ div.welcome_todo_button a:hover {
 	background-color: #428cbb;
 	color: #ffffff;
 }
-
-/* Favorite */
