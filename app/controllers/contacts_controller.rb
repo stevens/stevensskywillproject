@@ -82,6 +82,11 @@ class ContactsController < ApplicationController
 																						 :status => '3', 
 																						 :user => @contactor, 
 																						 :ref => 'contacts_list' }
+							page.replace_html "contacts_header", 
+																:partial => "/layouts/index_header", 
+									 							:locals => { :show_header_link => false, 
+									 						 							 :show_new_link => false, 
+									 						 							 :block_title => "我的#{FRIEND_CN} (#{contacts_for(@current_user).size})" }
 						end
 					end
 				end

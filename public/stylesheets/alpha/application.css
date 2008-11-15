@@ -567,7 +567,11 @@ td.photo_item_cell {
 }
 
 /* Sidebar Block */
-.sidebar_block, .sidebar_panel {
+.sidebar_block {
+	margin-bottom: 10px;
+	background-color: #f5f5f5;
+}
+.sidebar_panel {
 	margin-bottom: 10px;
 	background-color: #ffffdd;
 }
@@ -618,7 +622,7 @@ td.photo_item_cell {
 	padding-bottom: 3px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #d4ccbf;	
+	background-color: #ffcc99;	
 	border-top: 1px #695245 solid;
 }
 .sidebar_panel_header h1 {

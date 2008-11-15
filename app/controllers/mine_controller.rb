@@ -10,6 +10,8 @@ class MineController < ApplicationController
 	
 	def profile
 		@user = @current_user
+		
+		load_notifications if @current_user
 	
   	load_recipes_set
   	classify_recipes
@@ -30,6 +32,14 @@ class MineController < ApplicationController
 	end
 	
 	private
+	
+  def load_notifications(user = @current_user)
+  	@notifications = []
+  	contacts_set = contacts_for(user, contact_conditions('1', '1'))
+  	if contacts_set.size > 0
+  		@notifications << "你有#{contacts_set.size}个#{FRIEND_CN}请求"
+  	end
+  end
 	
 	def load_recipes_set(user = @current_user)
 		@recipes_set = recipes_for(user)
