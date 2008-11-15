@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def set_system_notice
-		@system_notice = "号外1: <em>“蜂人(测试版)”栏目</em>新出锅, 大家可以<em>互相加为伙伴</em>了呵！<br /><br/>
+		@system_notice = "号外1: <em>“蜂人(测试版)”栏目</em>新出锅, 大家可以<em>互相加为伙伴</em>啦！<br /><br/>
 											号外2: 大家可以到<em>账户设置</em>里添加<em>自己的blog</em>啦！"
 	end
 	
