@@ -49,7 +49,7 @@
 <div id="favorite_recipes_wrapper" class="content_block">
 	<div id="favorite_recipes_header" class="block_header">
 		<div class="block_header_link">
-			<% statuses_set = favorite_statuses('Recipe') %>
+			<!-- <% statuses_set = favorite_statuses('Recipe') %>
 			<% 1.upto(statuses_set.size) do |i| %>
 				<% statuses = statuses_set[i-1][1] %>
 				<% if @classify_favorite_statuses && @classify_favorite_statuses[i-1] %>
@@ -71,7 +71,8 @@
 				<% if i < statuses_set.size %>
 					|
 				<% end %>
-			<% end %>
+			<% end %> -->
+			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{FAVORITE_CN} (#{@favorites_set_count})"), :user_id => @user.id, :controller => 'favorites', :action => 'index' %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}#{FAVORITE_CN}" %></h1>
 	</div>
