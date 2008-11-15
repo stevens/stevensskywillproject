@@ -13,11 +13,17 @@
 					<%= strip_tags(user.login) %>
 					<% if user == @current_user && !user_portrait(user) %>
 						&nbsp;
-						<span><%= link_to "快来#{UPLOAD_CN}#{PORTRAIT_CN}吧...", :controller => 'accounts', :action => 'edit', :id => 'portrait' %></span>
+						<span><%= link_to "#{UPLOAD_CN}#{PORTRAIT_CN}", :controller => 'accounts', :action => 'edit', :id => 'portrait' %></span>
 					<% end %>
 				</div>
 				<div class="user_bar_info">
 					blog:
+					<% if user.profile && ! user.profile.blog.blank? %>
+						<%= link_to strip_tags(user.profile.blog), "http://#{user.profile.blog}" %>
+					<% else %>
+						&nbsp;
+						<span><%= link_to "#{ADD_CN}blog", :controller => 'settings', :action => 'account' %></span>
+					<% end %>
 				</div>
 				<div class="user_bar_link">
 					<%= link_to "#{PEOPLE_CN}#{MAIN_PAGE_CN}", :controller => 'users', :action => 'profile', :id => user.id %> |

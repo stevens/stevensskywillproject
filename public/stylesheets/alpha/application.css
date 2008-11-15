@@ -79,6 +79,10 @@ input.submit {
 	height: 24px;
 	width: 100px;
 }
+input.submit_s {
+	height: 24px;
+	width: auto;
+}
 input.search {
 	width: 210px;
 }

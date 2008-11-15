@@ -54,4 +54,17 @@
 			</div>
 		</td>
 	</tr>
+	<tr>
+		<td class="label"><label><%= "blog:" %></label></td>
+		<td class="input">
+			<div class="info">
+				<% form_for profile do |f| %>
+					http://
+					<%= f.text_field :blog, :class => "text_s" %>
+					<%= f.submit SAVE_CN, :disable_with => "#{SAVE_CN}中...", :class => "submit_s" %>
+				<% end %>
+				<br /><br />
+			</div>
+		</td>
+	</tr>
 </table>

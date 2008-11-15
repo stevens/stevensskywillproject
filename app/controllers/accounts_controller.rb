@@ -8,7 +8,7 @@ class AccountsController < ApplicationController
 		
 		if params[:id] == 'portrait'
 			@new_portrait = @current_user.photos.build
-		end	
+		end
 	end
 	
 	def update	
