@@ -79,7 +79,8 @@
 	<div id="favorite_recipes_detail" class="block_main">
 		<%= render :partial => '/favorites/favorite_detail', 
 							 :locals => { :favorites_set => @favorites_set, 
-							 							:limit => 12, 
+							 							:limit => 18, 
+							 							:item_count_per_row => 6, 
 							 							:show_type => 'favorable', 
 							 							:photo_style => 'matrix', 
 							 							:show_title => true } %>
