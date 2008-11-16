@@ -74,10 +74,11 @@ class UsersController < ApplicationController
   
   def overview
 	  load_users_set
+	  load_random_users
 	  
   	# @highlighted_user = 
   	# @highest_rated_users = 
-  	@random_users = random_items(@users_set, 12)
+  	# @random_users = random_items(@users_set, 12)
 	  
 	  info = "#{PEOPLE_CN}"
 		set_page_title(info)
@@ -116,6 +117,10 @@ class UsersController < ApplicationController
   def load_users_set
  		@users_set = users_for
   	@users_set_count = @users_set.size
+  end
+  
+  def load_random_users
+  	@random_users = users_for(user_conditions, 12, 'RAND()')
   end
 
 	def load_user_recipes(user = nil)

@@ -180,12 +180,13 @@ class RecipesController < ApplicationController
   # /recipes/overview
   def overview
 	  load_recipes_set
+	  load_random_recipes
 	  load_reviews_set
 	  load_tags_set
 	  
   	@highlighted_recipe = highest_rated_items(@recipes_set)[0..99].rand
   	@highest_rated_recipes = highest_rated_items(@recipes_set)[0..9]
-  	@random_recipes = random_items(@recipes_set, 12)
+  	# @random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN
 		set_page_title(info)
@@ -226,6 +227,10 @@ class RecipesController < ApplicationController
   def load_recipes_set(user = nil)
  		@recipes_set = recipes_for(user)
   	@recipes_set_count = @recipes_set.size
+  end
+  
+  def load_random_recipes(user = nil)
+  	@random_recipes = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 12, 'RAND()')
   end
   
   def load_reviews_set(user = nil)
