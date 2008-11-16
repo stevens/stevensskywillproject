@@ -48,10 +48,11 @@ class User < ActiveRecord::Base
   # 													:message => "#{NICKNAME_CN}已经存在"
   validates_uniqueness_of   :email, :case_sensitive => false,
   													:message => "#{EMAIL_ADDRESS_CN}已经存在"	
-	# validates_exclusion_of 		:login, 										 :if => :login_required?, 
-	# 													:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖), 
-	# 													:message => "这个#{NICKNAME_CN}已经存在"	
-
+	validates_exclusion_of 		:login, 										 :if => :login_required?, 
+	 													:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks fengchu fengchus 蜂厨), 
+	 													:message => "这个#{NICKNAME_CN}不可用"	
+	# admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖
+	
   before_save :encrypt_password
   before_create :make_activation_code 
   # prevents a user from submitting a crafted form that bypasses activation
