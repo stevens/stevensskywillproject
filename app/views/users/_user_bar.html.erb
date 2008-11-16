@@ -18,9 +18,9 @@
 				</div>
 				<div class="user_bar_info">
 					blog:
-					<% if user.profile && ! user.profile.blog.blank? %>
+					<% if user.profile && !user.profile.blog.blank? %>
 						<%= link_to strip_tags(user.profile.blog), "http://#{user.profile.blog}", :target => "_blank" %>
-					<% else %>
+					<% elsif user == @current_user %>
 						&nbsp;
 						<span><%= link_to "#{ADD_CN}blog", :controller => 'settings', :action => 'account' %></span>
 					<% end %>
