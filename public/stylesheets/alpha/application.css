@@ -1323,3 +1323,6 @@ div.welcome_todo_button a:hover {
 	padding-right: 13px;
 	color: #b8b9a7;
 }
+.filter_bar a {
+	margin-right: 10px;
+}

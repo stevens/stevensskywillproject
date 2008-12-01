@@ -16,9 +16,9 @@
 	<% end %>
 	<% for c in Code.find(:all, :conditions => { :codeable_type => codeable_type }, :order => 'code') %>
 		<% if c.name == params[:filter] %>
-			| <%= link_to "#{c.title} (#{items_set_count})", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => 'current' %>
+			<%= link_to "#{c.title} (#{items_set_count})", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => 'current' %>
 		<% else %>
-			| <%= link_to "#{c.title}", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => '' %>
+			<%= link_to "#{c.title}", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => '' %>
 		<% end %>
 	<% end %>
 	
