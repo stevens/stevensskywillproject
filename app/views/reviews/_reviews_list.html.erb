@@ -1,7 +1,6 @@
+<% reviews = reviews_set.group_by { |review| (review.created_at.to_date) }.sort { |a, b| b <=> a } %>
 <% if limit %>
-	<% reviews = reviews_set[0..limit-1].group_by { |review| (review.created_at.to_date) }.sort { |a, b| b <=> a } %>
-<% else %>
-	<% reviews = reviews_set.group_by { |review| (review.created_at.to_date) }.sort { |a, b| b <=> a } %>
+	<% reviews = reviews[0..limit-1] %>
 <% end %>
 
 <% if show_paginate %>
