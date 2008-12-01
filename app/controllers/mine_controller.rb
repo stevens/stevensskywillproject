@@ -17,10 +17,10 @@ class MineController < ApplicationController
 		@favorable_type = 'Recipe'
 		
   	load_recipes_set
-  	classify_recipes
+  	# classify_recipes
   	load_reviews_set
   	load_favorites_set
-  	classify_favorite_statuses
+  	# classify_favorite_statuses
 	 	load_tags_set
 	 	load_contactors_set
 	 	

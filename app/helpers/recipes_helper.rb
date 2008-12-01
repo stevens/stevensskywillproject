@@ -1,5 +1,27 @@
 module RecipesHelper
   
+	def filtered_recipes(user = nil, filter = nil)
+ 		case filter
+ 		when 'published'
+ 			is_draft_cond = '0' 
+ 			from_type_cond = ''
+ 		when 'draft'
+ 			is_draft_cond = '1'
+ 			from_type_cond = ''
+ 		when 'original'
+ 			is_draft_cond = recipe_is_draft_cond(user)
+ 			from_type_cond = " AND recipes.from_type = 1"
+ 		when 'repaste'
+ 			is_draft_cond = recipe_is_draft_cond(user)
+ 			from_type_cond = " AND recipes.from_type = 2"
+ 		else
+ 			is_draft_cond = recipe_is_draft_cond(user)
+ 			from_type_cond = ''
+ 		end
+ 		recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), is_draft_cond) + from_type_cond
+ 		recipes_for(user, recipe_conditions)
+	end
+	
 	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'published_at DESC, created_at DESC')
 		if user
 			user.recipes.find(:all, :limit => limit, :order => order, 

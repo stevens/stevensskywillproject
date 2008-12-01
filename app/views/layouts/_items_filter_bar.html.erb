@@ -1,14 +1,27 @@
-<% if @user || params[:action] == 'mine' %>
-	
-	<% if @user %>
-		<% user = @user %>
-	<% elsif params[:action] == 'mine' %>
-		<% user = @current_user %>
+<% if user %>
+	<% if params[:filter] %>
+		<%= link_to "#{ALL_CN}", { :user_id => user.id, :controller => params[:controller], :action => 'index' }, :class => '' %>
+	<% else %>
+		<%= link_to "#{ALL_CN} (#{items_set_count})", { :user_id => user.id, :controller => params[:controller], :action => 'index' }, :class => 'current' %>
 	<% end %>
-	
-	<%= link_to "#{ALL_CN} ()", { :user_id => user.id, :controller => params[:controller], :action => 'index' }, :class => params[:filter] ? '' : 'current' %>
-	<% for c in Code.find(:all, :conditions => { :codeable_type => "#{params[:controller].singularize}_filter" }, :order => 'code') %>
-		| <%= link_to "#{c.title} ()", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => c.code == params[:filter] ? 'current' : '' %>
+	<% for c in Code.find(:all, :conditions => { :codeable_type => codeable_type }, :order => 'code') %>
+		<% if c.name == params[:filter] %>
+			<%= link_to "#{c.title} (#{items_set_count})", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => 'current' %>
+		<% else %>
+			<%= link_to "#{c.title}", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => '' %>
+		<% end %>
 	<% end %>
-	
+<% else %>
+	<% if params[:filter] %>
+		<%= link_to "#{ALL_CN}", { :controller => params[:controller], :action => 'index' }, :class => '' %>
+	<% else %>
+		<%= link_to "#{ALL_CN} (#{items_set_count})", { :controller => params[:controller], :action => 'index' }, :class => 'current' %>
+	<% end %>
+	<% for c in Code.find(:all, :conditions => { :codeable_type => codeable_type }, :order => 'code') %>
+		<% if c.name == params[:filter] %>
+			<%= link_to "#{c.title} (#{items_set_count})", { :controller => params[:controller], :action => 'index', :filter => c.name}, :class => 'current' %>
+		<% else %>
+			<%= link_to "#{c.title}", { :controller => params[:controller], :action => 'index', :filter => c.name}, :class => '' %>
+		<% end %>
+	<% end %>
 <% end %>

@@ -17,7 +17,7 @@ class ReviewsController < ApplicationController
       		format.html { redirect_to :action => 'mine', :filter => @current_filter }
       	end
       else
-		    load_reviews_set(@user, @current_filter) if !@parent_obj
+		    load_reviews_set(@user) if !@parent_obj
 		  	
 		  	# @show_todo = true if @parent_obj && @current_user
 		  	
@@ -107,7 +107,7 @@ class ReviewsController < ApplicationController
   end
   
   def mine
-    load_reviews_set(@current_user, @current_filter)
+    load_reviews_set(@current_user)
 		
 		@show_todo = true
 		
@@ -122,10 +122,6 @@ class ReviewsController < ApplicationController
   end
   
 	private
-	
-	def load_current_filter
-		@current_filter = params[:filter]
-	end
 	
 	def load_reviewable_type
 		if @parent_type
@@ -143,7 +139,7 @@ class ReviewsController < ApplicationController
  		end
   end
   
-  def load_reviews_set(user = nil, filter = nil)
+  def load_reviews_set(user = nil)
   	reviewable_type = @reviewable_type ? @reviewable_type : 'Recipe'
 		@reviews_set = filtered_reviews(user, reviewable_type, @current_filter)
   	@reviews_set_count = @reviews_set.size
@@ -293,8 +289,8 @@ class ReviewsController < ApplicationController
     		if @parent_obj
     			load_reviews_set
     		else
-    			current_filter = params[:current_filter] if params[:current_filter]
-    			load_reviews_set(@current_user, current_filter)
+    			@current_filter = params[:current_filter] if params[:current_filter]
+    			load_reviews_set(@current_user)
     		end
     		
 				current_page = params[:current_page].to_i if params[:current_page]

@@ -3,6 +3,7 @@ class RecipesController < ApplicationController
 	before_filter :protect, :except => [:index, :show, :overview]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
+	before_filter :load_current_filter, :only => [:index, :mine]
 	
 	def change_from_type
   	respond_to do |format|
@@ -28,11 +29,11 @@ class RecipesController < ApplicationController
   def index
     respond_to do |format|
       if @user && @user == @current_user
-      	format.html { redirect_to :action => 'mine' }
+      	format.html { redirect_to :action => 'mine', :filter => @current_filter }
       else
 		    load_recipes_set(@user)
 		  	
-		  	info = "#{username_prefix(@user)}#{RECIPE_CN} (#{@recipes_set_count})"
+		  	info = "#{username_prefix(@user)}#{RECIPE_CN}"
 				set_page_title(info)
 				set_block_title(info)
 				
@@ -201,7 +202,7 @@ class RecipesController < ApplicationController
   	@show_todo = true
   	@show_manage = true
 		
-		info = "#{username_prefix(@current_user)}#{RECIPE_CN} (#{@recipes_set_count})"
+		info = "#{username_prefix(@current_user)}#{RECIPE_CN}"
 		set_page_title(info)
 		set_block_title(info)
 		
@@ -225,7 +226,8 @@ class RecipesController < ApplicationController
   end
   
   def load_recipes_set(user = nil)
- 		@recipes_set = recipes_for(user)
+ 		# @recipes_set = recipes_for(user)
+  	@recipes_set = filtered_recipes(user, @current_filter)
   	@recipes_set_count = @recipes_set.size
   end
   

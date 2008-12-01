@@ -16,18 +16,7 @@
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<% from_types = Code.find(:all, :conditions => {:codeable_type => 'from_type'}, :order => 'code') %>
-			<% 1.upto(from_types.size) do |i| %>
-				<% if @classified_recipes[i-1] && from_types[i-1].code == @classified_recipes[i-1][0] %>
-					<% classified_recipes_count = @classified_recipes[i-1][1].size %>
-				<% else %>
-					<% classified_recipes_count = 0 %>
-				<% end %>
-				<%= link_to "#{from_types[i-1].title} (#{classified_recipes_count})", :user_id => @user.id, :controller => 'recipes', :action => 'index', :from_type => from_types[i-1].name %>
-				<% if i < from_types.size %>
-					|
-				<% end %>
-			<% end %>
+			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{RECIPE_CN} (#{@recipes_set_count})"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
 	</div>
@@ -49,29 +38,6 @@
 <div id="favorite_recipes_wrapper" class="content_block">
 	<div id="favorite_recipes_header" class="block_header">
 		<div class="block_header_link">
-			<!-- <% statuses_set = favorite_statuses('Recipe') %>
-			<% 1.upto(statuses_set.size) do |i| %>
-				<% statuses = statuses_set[i-1][1] %>
-				<% if @classify_favorite_statuses && @classify_favorite_statuses[i-1] %>
-					<% classify_favorite_statuses = @classify_favorite_statuses[i-1][1] %>
-				<% end %>
-				<% 1.upto(statuses.size) do |j| %>
-					
-					<% if classify_favorite_statuses && classify_favorite_statuses[j-1] && statuses[j-1].code == classify_favorite_statuses[j-1][0] %>
-						<% classified_statuses_count = classify_favorite_statuses[j-1][1].size %>
-					<% else %>
-						<% classified_statuses_count = 0 %>
-					<% end %>
-					
-					<%= link_to "#{statuses[j-1].title} (#{classified_statuses_count})", :user_id => @user.id, :controller => 'favorites', :action => 'index', :favorable_type => 'recipe', :status => statuses[j-1].name %>
-					<% if j < statuses.size %>
-						·
-					<% end %>
-				<% end %>
-				<% if i < statuses_set.size %>
-					|
-				<% end %>
-			<% end %> -->
 			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{FAVORITE_CN} (#{@favorites_set_count})"), :user_id => @user.id, :controller => 'favorites', :action => 'index' %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{FAVORITE_CN}" %></h1>

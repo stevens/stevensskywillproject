@@ -95,10 +95,10 @@ class UsersController < ApplicationController
 		  	@favorable_type = 'Recipe'
 		  	
 		  	load_user_recipes(@user)
-		  	classify_recipes
+		  	# classify_recipes
 		  	load_user_reviews(@user)
 		  	load_user_favorites(@user)
-		  	classify_favorite_statuses
+		  	# classify_favorite_statuses
 			 	load_user_tags(@user)
 			 	load_user_contactors(@user)
 			 	

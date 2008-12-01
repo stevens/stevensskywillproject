@@ -1,12 +1,14 @@
 <% codeable_type = "#{params[:controller].singularize}_filter" %>
-<% items_set_count = @reviews_set_count %>
+<% items_set_count = @recipes_set_count %>
 
-<% if @user %>
-	<% user = @user %>
-	<% codeable_type += "_ta" %>
-<% elsif params[:action] == 'mine' %>
+<% if params[:action] == 'mine' %>
 	<% user = @current_user %>
 	<% codeable_type += "_my" %>
+<% else %>
+	<% if @user %>
+		<% user = @user %>
+	<% end %>
+	<% codeable_type += "_ta" %>
 <% end %>
 
 <%= render :partial => "/layouts/items_filter_bar", 

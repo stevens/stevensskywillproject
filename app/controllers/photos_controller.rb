@@ -253,10 +253,6 @@ class PhotosController < ApplicationController
 		end
 	end
 	
-	def load_current_filter
-		@current_filter = params[:filter]
-	end
-	
 	def get_prev_next
     1.upto(@photos_set_count) do |i|
     	if @photos_set[i-1] == @photo

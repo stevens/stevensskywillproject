@@ -8,14 +8,16 @@
 	</div>
 	
 	<div id="recipes_detail" class="block_main">
-		<div id="recipes_filter_bar">
-			
-		</div>
+		<% if params[:controller] == 'recipes' %>
+			<div id="recipes_filter_bar" class="filter_bar">
+				<%= render :partial => "/recipes/recipes_filter_bar" %>
+			</div>
+		<% end %>
 		
 		<div id="recipes_list">
 			<%= render :partial => "/layouts/items_list",
 								 :locals => {:show_paginate => true,
-								 						 :items_set => @taggables_set ? @taggables_set : @recipes_set, 
+								 						 :items_set => @recipes_set || @taggables_set || @searchables_set, 
 								 						 :limit => nil,
 								 						 :itemable_sym => nil, 
 								 						 :show_photo => true,

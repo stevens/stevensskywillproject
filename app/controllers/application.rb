@@ -156,6 +156,10 @@ class ApplicationController < ActionController::Base
 			@user_bar = @self_model.find(@self_id).user
 		end
 	end
+	
+	def load_current_filter
+		@current_filter = params[:filter]
+	end
 
   def clear_notice
 		flash[:notice] = nil
