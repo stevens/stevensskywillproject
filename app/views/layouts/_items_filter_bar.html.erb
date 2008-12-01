@@ -1,8 +1,14 @@
-<% photoable_id_sym = item_id(photoable).to_sym %>
-
-<%= link_to "#{ALL_CN} (#{items_set.size})", :url => { photoable_id_sym => photoable.id, :controller => 'photos', :action => 'index' }, :method => :get, :html => {:class => current_filter ? '' : 'current'} %>
-<% for c in Code.find(:all, :conditions => {:codeable_type => filter_type}, :order => 'code') %>
-	<% if (photos_count = filtered_photos(photoable, filter_type, c.code).size) != 0 %>
-		| <%= link_to_remote "#{c.title} (#{photos_count})", :url => { photoable_id_sym => photoable.id, :controller => 'photos', :action => 'index', :filter => c.code }, :method => :get, :html => {:class => c.code == current_filter ? 'current' : ''} %>
+<% if @user || params[:action] == 'mine' %>
+	
+	<% if @user %>
+		<% user = @user %>
+	<% elsif params[:action] == 'mine' %>
+		<% user = @current_user %>
 	<% end %>
+	
+	<%= link_to "#{ALL_CN} ()", { :user_id => user.id, :controller => params[:controller], :action => 'index' }, :class => params[:filter] ? '' : 'current' %>
+	<% for c in Code.find(:all, :conditions => { :codeable_type => "#{params[:controller].singularize}_filter" }, :order => 'code') %>
+		| <%= link_to "#{c.title} ()", { :user_id => user.id, :controller => params[:controller], :action => 'index', :filter => c.name}, :class => c.code == params[:filter] ? 'current' : '' %>
+	<% end %>
+	
 <% end %>

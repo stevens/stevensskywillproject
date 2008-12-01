@@ -8,8 +8,9 @@
 	</div>
 	
 	<div id="reviews_detail" class="block_main">	
-		<div id="reviews_filter_bar">
-			
+		<div id="reviews_filter_bar" class="filter_bar">
+			<%= render :partial => "/reviews/reviews_filter_bar", 
+								 :locals => { :items_set_count => @reviews_set_count } %>
 		</div>
 		
 		<div id="reviews_list">

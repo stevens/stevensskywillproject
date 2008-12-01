@@ -29,12 +29,15 @@ module UsersHelper
 		end
 	end
 	
-	def user_username(user)
+	def user_username(user, show_username = true)
 		if @current_user && user == @current_user
 			'我'
 		else
-			# 'TA'
-			user.login
+			if show_username
+				user.login
+			else
+				'TA'
+			end
 		end	
 	end
 	

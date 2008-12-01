@@ -12,7 +12,10 @@ class MineController < ApplicationController
 		@user = @current_user
 		
 		load_notifications if @current_user
-	
+		
+		@reviewable_type = 'Recipe'
+		@favorable_type = 'Recipe'
+		
   	load_recipes_set
   	classify_recipes
   	load_reviews_set
@@ -47,7 +50,7 @@ class MineController < ApplicationController
 	end
 	
 	def load_reviews_set(user = @current_user)
-		@reviews_set = reviews_for(user)
+		@reviews_set = filtered_reviews(user, @reviewable_type)
 		@reviews_set_count = @reviews_set.size
 	end
 	

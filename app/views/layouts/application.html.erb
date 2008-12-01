@@ -148,6 +148,10 @@
 							<%= render :partial => "/searchings/search_sideblock" %>
 						<% end %>
 						
+						<% if ['site'].include?(params[:controller]) %>
+							<%= render :partial => "/site/partner_sideblock" %>
+						<% end %>
+						
 						<% if @show_sidebar %>
 							<%= render :partial => "/#{params[:controller]}/#{params[:action]}_sidebar" %>
 						<% end %>
@@ -191,6 +195,7 @@
 					&nbsp;|&nbsp;&nbsp;
 					<%= '友情链接 - ' %>
 					<%= link_to 'FLVCD', 'http://www.flvcd.com/', :class => 'seo_link', :target => "_blank" %>
+					<%= link_to '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', :class => 'seo_link', :target => "_blank" %>
 				</div>
 			</div>
 			<!-- END FOOTER -->

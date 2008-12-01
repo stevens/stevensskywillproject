@@ -232,7 +232,11 @@ module ApplicationHelper
 					p = str_squish(p, space_count)
 				end
 				if !p.blank?
-					paragraphs << "<li>#{strip_tags(p)}</li>"
+					if p.starts_with?('[') && p.ends_with?(']')
+						paragraphs << "<span>#{strip_tags(p)}</span>"
+					else
+						paragraphs << "<li>#{strip_tags(p)}</li>"
+					end
 				end
 			end
 		end

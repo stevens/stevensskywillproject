@@ -16,7 +16,7 @@ module RatingsHelper
 	def highest_rated_items(items_set)
 		min_rating = 7
 		max_rating = 10
-		min_ratings_count = 4
+		min_ratings_count = 5
 		
 		items = []
 		for item in items_set

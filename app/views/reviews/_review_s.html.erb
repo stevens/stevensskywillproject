@@ -60,7 +60,7 @@
 	    <% if delete_remote %>
 	    	<%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
 	    <% else %>
-	    	<%= link_to DELETE_CN, {:controller => 'reviews', :action => 'destroy', :id => item.id, :reviewable_type => params[:reviewable_type], :current_page => params[:page]}, :confirm => delete_message, :method => :delete %>
+	    	<%= link_to DELETE_CN, {:controller => 'reviews', :action => 'destroy', :id => item.id, :reviewable_type => params[:reviewable_type], :current_filter => params[:filter], :current_page => params[:page]}, :confirm => delete_message, :method => :delete %>
 	    <% end %>
     <% end %>
 	</div>

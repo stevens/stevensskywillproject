@@ -60,9 +60,11 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'user'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
-		elsif c == 'reviews' || c == 'photos' || c == 'taggings' || c == 'searchings' 
-			@current_tab_type = params[:reviewable_type] || params[:photoable_type] || params[:taggable_type] || params[:searchable_type]
-		elsif c == 'recipes'
+		elsif c == 'reviews' || c == 'taggings' || c == 'searchings' 
+			@current_tab_type = params[:reviewable_type] || params[:taggable_type] || params[:searchable_type]
+		elsif c == 'photos'
+			@current_tab_type = params[:photoable_type] || @parent_type.downcase
+		elsif c == 'recipes' || c == 'photos'
 			@current_tab_type = c.singularize
 		end
 	end
@@ -77,7 +79,7 @@ class ApplicationController < ActionController::Base
 	
 	def set_system_notice
 		@system_notice = "号外1: <em>“蜂人(测试版)”栏目</em>新出锅, 大家可以<em>互相加为伙伴</em>啦！<br /><br/>
-											号外2: 大家可以到<em>账户设置</em>里添加<em>自己的blog</em>啦！"
+											号外2: 大家可以到<em>帐户设置</em>里添加<em>自己的blog</em>啦！"
 	end
 	
 	# def param_posted?(symbol)

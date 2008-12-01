@@ -4,6 +4,7 @@ class ReviewsController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :load_reviewable_type, :only => [:index, :mine]
+  before_filter :load_current_filter, :only => [:index, :mine]
   
   # GET /reviews
   # GET /reviews.xml
@@ -11,16 +12,16 @@ class ReviewsController < ApplicationController
 		respond_to do |format|
       if @user && @user == @current_user
       	if @reviewable_type
-      		format.html { redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase }
+      		format.html { redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase, :filter => @current_filter }
       	else
-      		format.html { redirect_to :action => 'mine' }
+      		format.html { redirect_to :action => 'mine', :filter => @current_filter }
       	end
-      else
-		    load_reviews_set(@user) if !@parent_obj
+      elsif @user
+		    load_reviews_set(@user, @current_filter) if !@parent_obj
 		  	
 		  	# @show_todo = true if @parent_obj && @current_user
 		  	
-		  	info = "#{username_prefix(@user)}#{name_for(@reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})#{itemname_suffix(@parent_obj)}"
+		  	info = "#{username_prefix(@user)}#{name_for(@reviewable_type)}#{REVIEW_CN}"
 				set_page_title(info)
 				set_block_title(info)
 
@@ -106,11 +107,11 @@ class ReviewsController < ApplicationController
   end
   
   def mine
-    load_reviews_set(@current_user)
+    load_reviews_set(@current_user, @current_filter)
 		
 		@show_todo = true
 		
-  	info = "#{username_prefix(@current_user)}#{name_for(@reviewable_type)}#{REVIEW_CN} (#{@reviews_set_count})"
+  	info = "#{username_prefix(@current_user)}#{name_for(@reviewable_type)}#{REVIEW_CN}"
 		set_page_title(info)
 		set_block_title(info)
 		
@@ -121,6 +122,10 @@ class ReviewsController < ApplicationController
   end
   
 	private
+	
+	def load_current_filter
+		@current_filter = params[:filter]
+	end
 	
 	def load_reviewable_type
 		if @parent_type
@@ -138,12 +143,9 @@ class ReviewsController < ApplicationController
  		end
   end
   
-  def load_reviews_set(user = nil)
-  	review_conditions = review_conditions(@reviewable_type, @parent_id)
-  	if @reviewable_type == 'Recipe'
-	 		reviewable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
-	 	end
- 		@reviews_set = reviews_for(user, @reviewable_type, review_conditions, reviewable_conditions)
+  def load_reviews_set(user = nil, filter = nil)
+  	reviewable_type = @reviewable_type ? @reviewable_type : 'Recipe'
+		@reviews_set = filtered_reviews(user, reviewable_type, @current_filter)
   	@reviews_set_count = @reviews_set.size
   end
 	
@@ -291,7 +293,8 @@ class ReviewsController < ApplicationController
     		if @parent_obj
     			load_reviews_set
     		else
-    			load_reviews_set(@current_user)
+    			current_filter = params[:current_filter] if params[:current_filter]
+    			load_reviews_set(@current_user, current_filter)
     		end
     		
 				current_page = params[:current_page].to_i if params[:current_page]
@@ -302,9 +305,9 @@ class ReviewsController < ApplicationController
 				if @parent_obj
 					redirect_to id_for(@parent_type).to_sym => @parent_id, :action => 'index', :page => page
 				elsif @reviewable_type
-					redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase, :page => page
+					redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase, :filter => current_filter, :page => page
 				else
-					redirect_to :action => 'mine', :page => page
+					redirect_to :action => 'mine', :filter => current_filter, :page => page
 				end
 			end
 			format.xml  { head :ok }

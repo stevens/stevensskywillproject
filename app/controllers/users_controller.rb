@@ -90,7 +90,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user && @user == @current_user
       	format.html { redirect_to :controller => 'mine', :action => 'profile' }
-      else
+      elsif @user
 		  	@reviewable_type = 'Recipe'
 		  	@favorable_type = 'Recipe'
 		  	
@@ -129,11 +129,7 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_reviews(user = nil)
-  	review_conditions = review_conditions(@reviewable_type)
-  	if @reviewable_type == 'Recipe'
-	 		reviewable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
-	 	end
- 		@reviews_set = reviews_for(user, @reviewable_type, review_conditions, reviewable_conditions)
+ 		@reviews_set = filtered_reviews(user, @reviewable_type)
   	@reviews_set_count = @reviews_set.size
 	end
 	

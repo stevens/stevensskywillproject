@@ -5,13 +5,13 @@
 		<p>是的, 人人皆可成为厨师!</p><br />
 		<% if @current_user %>
 			<p><span>
-				<%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'cook', 'matrix'), :title => "进入我的#{SITE_NAME_CN}"), 
+				<%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'user', 'matrix'), :title => "进入我的#{SITE_NAME_CN}"), 
 										user_first_link(@current_user) %>
 			</span></p><br />
 			<p><em class="l"><%= "#{strip_tags(@current_user.login)} - #{SLOGAN_CN}" %></em></p><br />			
 		<% else %>
 			<p><span>
-				<%= link_to image_tag(photo_file_url(nil, 'cook', 'matrix'), :title => "加入#{SITE_NAME_CN}"), 
+				<%= link_to image_tag(photo_file_url(nil, 'user', 'matrix'), :title => "加入#{SITE_NAME_CN}"), 
 										signup_url %>
 			</span></p><br />
 			<p><em class="l"><%= SLOGAN_CN %></em></p><br />
