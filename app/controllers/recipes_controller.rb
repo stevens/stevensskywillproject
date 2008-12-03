@@ -167,10 +167,10 @@ class RecipesController < ApplicationController
     if params[:to_publish]
 	    @recipe.is_draft = '0'
 	    @recipe.published_at = @recipe.get_published_at
-			@notice = "你已经发布了这#{@self_unit}#{@self_name}!"
+			@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
 	  else
 	  	@recipe.is_draft = '1'
-			@notice = "你已经将这#{@self_unit}#{@self_name}设置为草稿!"
+			@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
 	  end
   	
 		Recipe.update(@recipe.id, {:is_draft => @recipe.is_draft, :published_at => @recipe.published_at})
@@ -317,17 +317,23 @@ class RecipesController < ApplicationController
   	respond_to do |format|
 			format.js do
 				render :update do |page|
-					page.replace_html "flash_wrapper", 
-														:partial => "/layouts/flash", 
-														:locals => {:notice => @notice}
-					page.replace_html "recipe_#{@recipe.id}_title",
-														:partial => "/recipes/recipe_title", 
-														:locals => {:item => @recipe}
-					page.replace_html "recipe_#{@recipe.id}_manage",
-														:partial => "/recipes/recipe_manage", 
-														:locals => { :item => @recipe, 
-									 											 :for_item_show => true, 
-									 											 :delete_remote => false }
+					case params[:ref]
+					when 'show'
+						page.replace_html "flash_wrapper", 
+															:partial => "/layouts/flash", 
+															:locals => {:notice => @notice}
+						page.replace_html "recipe_#{@recipe.id}_title",
+															:partial => "/recipes/recipe_title", 
+															:locals => {:item => @recipe}
+						page.replace_html "recipe_#{@recipe.id}_manage",
+															:partial => "/recipes/recipe_manage", 
+															:locals => { :item => @recipe, 
+										 											 :ref => 'show', 
+										 											 :delete_remote => false }
+					when 'index'
+		  			flash[:notice] = @notice	
+		  			page.redirect_to ''
+					end
 				end
 			end
   	end

@@ -1,19 +1,24 @@
 <% if item.user == @current_user %>
 	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
-	<% if for_show %>
+	<% if ref == 'show' %>
 		<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
-			<%= link_to_remote "发布这#{unit_for('Recipe')}#{RECIPE_CN}", :url => {:action => 'publish', :id => item.id, :to_publish => true} %> |
+			<%= link_to_remote "发布这#{unit_for('Recipe')}#{RECIPE_CN}", :url => { :action => 'publish', :id => item.id, :to_publish => true, :ref => ref } %> |
 		<% elsif item.is_draft != '1' %>
-			<%= link_to_remote "设置为草稿", :url => {:action => 'publish', :id => item.id, :to_publish => false} %> |
+			<%= link_to_remote "设置为草稿", :url => { :action => 'publish', :id => item.id, :to_publish => false, :ref => ref } %> |
 		<% end %>
-		<%= link_to "#{EDIT_CN}这#{unit_for('Recipe')}#{RECIPE_CN}", [item, :edit] %> |
-		<%= link_to "#{DELETE_CN}这#{unit_for('Recipe')}#{RECIPE_CN}", item, :confirm => delete_message, :method => :delete %>
-	<% else %>
-		<%= link_to EDIT_CN, [item, :edit] %> | 
+		<%= link_to "#{EDIT_CN}这#{unit_for('Recipe')}#{RECIPE_CN}", { :action => 'edit', :id => item.id, :ref => ref } %> |
+		<%= link_to "#{DELETE_CN}这#{unit_for('Recipe')}#{RECIPE_CN}", { :action => 'destroy', :id => item.id, :ref => ref }, :confirm => delete_message, :method => :delete %>
+	<% elsif ref == 'index' %>
+		<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
+			<%= link_to_remote "发布", :url => { :action => 'publish', :id => item.id, :to_publish => true, :ref => ref } %> |
+		<% elsif item.is_draft != '1' %>
+			<%= link_to_remote "设置为草稿", :url => {:action => 'publish', :id => item.id, :to_publish => false, :ref => ref } %> |
+		<% end %>
+		<%= link_to EDIT_CN, { :action => 'edit', :id => item.id, :ref => ref } %> | 
 		<% if delete_remote %>
-			<%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
+			<%= link_to_remote DELETE_CN, :url => { :action => 'destroy', :id => item.id, :ref => ref }, :confirm => delete_message, :method => :delete %>
 		<% else %>
-			<%= link_to DELETE_CN, item, :confirm => delete_message, :method => :delete %>
+			<%= link_to DELETE_CN, { :action => 'destroy', :id => item.id, :ref => ref }, :confirm => delete_message, :method => :delete %>
 		<% end %>
 	<% end %>
 <% end %>
