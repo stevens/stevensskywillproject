@@ -87,7 +87,7 @@ class RecipesController < ApplicationController
     @recipe = @current_user.recipes.build
 		@recipe.is_draft = '1'
 		
-		load_recipes_set(@current_user)
+		# load_recipes_set(@current_user)
     
     info = "新#{RECIPE_CN}"
 		set_page_title(info)
@@ -104,7 +104,7 @@ class RecipesController < ApplicationController
   def edit
     load_recipe(@current_user)
     
-    load_recipes_set(@current_user)
+    # load_recipes_set(@current_user)
     
  		info = "#{EDIT_CN}#{RECIPE_CN} - #{@recipe.title}"
 		set_page_title(info)

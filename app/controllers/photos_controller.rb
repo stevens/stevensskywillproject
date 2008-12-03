@@ -1,16 +1,16 @@
 class PhotosController < ApplicationController
 	
-	before_filter :protect, :except => [:index, :show, :resize]
+	before_filter :protect, :except => [:index, :show]
 	before_filter :store_location, :only => [:index, :show, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :check_photoable_accessible
 	before_filter :load_current_filter
-	before_filter :load_photos_set
+	before_filter :load_photos_set, :except => [:new, :edit]
   
   # GET /photos
   # GET /photos.xml
   def index
-  	info = "#{name_for(@parent_type)}#{PHOTO_CN} (#{@photos_set_count})#{itemname_suffix(@parent_obj)}"
+  	info = "#{name_for(@parent_type)}#{ALBUM_CN} (#{@photos_set_count})#{itemname_suffix(@parent_obj)}"
 		set_page_title(info)
 		set_block_title(info)
  		
