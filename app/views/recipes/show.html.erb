@@ -3,8 +3,7 @@
 	<div id="recipe_<%= @recipe.id %>_header" class="block_header">
 		<div class="block_header_link">	
 			<% if @recipe.user == @current_user %>
-				<%= link_to EDIT_CN, :action => 'edit' %> |
-				<%= link_to strip_tags(more_link_name), :action => 'mine' %>
+				<%= link_to EDIT_CN, :action => 'edit' %>
 			<% end %>
 		</div>
 		<h1><%= strip_tags @block_title %></h1>

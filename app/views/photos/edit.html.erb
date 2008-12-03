@@ -3,7 +3,7 @@
 	<div class="block_header">
 		<div class="block_header_link">
 			<%= link_to SEE_CN, @self_url %> |
-			<%= link_to strip_tags("#{@parent_name}的更多#{PHOTO_CN} (#{@photos_set_count})"), @selfs_url %> |
+			<%= link_to strip_tags("更多#{PHOTO_CN} (#{@photos_set_count})"), @selfs_url %> |
 			<%= link_to strip_tags("#{BACK_CN}#{@parent_name}"), @parent_url %>
 		</div>
 		<h1><%= strip_tags @block_title %></h1>
