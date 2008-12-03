@@ -2,12 +2,9 @@
 	
 	<div id="recipe_<%= @recipe.id %>_header" class="block_header">
 		<div class="block_header_link">	
-			<% more_link_name = "#{username_prefix(@recipe.user)}更多#{RECIPE_CN} (#{@recipes_set_count})" %>
 			<% if @recipe.user == @current_user %>
 				<%= link_to EDIT_CN, :action => 'edit' %> |
 				<%= link_to strip_tags(more_link_name), :action => 'mine' %>
-			<% else %>
-				<%= link_to strip_tags(more_link_name), user_recipes_path(@recipe.user) %>
 			<% end %>
 		</div>
 		<h1><%= strip_tags @block_title %></h1>
