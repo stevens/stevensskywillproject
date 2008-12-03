@@ -1331,3 +1331,6 @@ div.welcome_todo_button a:hover {
 	margin-top: 3px;
 	font-size: 9px;
 }
+.item_user a {
+	font-size: 9px;
+}
