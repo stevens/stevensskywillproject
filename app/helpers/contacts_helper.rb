@@ -1,5 +1,14 @@
 module ContactsHelper
 
+	def filtered_contacts(user = nil, filter = nil, limit = nil, order = 'created_at DESC')
+ 		if @user && !filter
+ 			filter = 'accepted'
+ 		end
+		contact_status_cond = codes_for(code_conditions('contact_status', nil, nil, filter), 1)[0].code if filter
+ 		contact_conditions = contact_conditions('1', contact_status_cond)
+ 		contacts_for(user, contact_conditions, limit, order)
+	end
+	
 	def contacts_for(user, conditions = contact_conditions('1', '3'), limit = nil, order = 'contact_type, accepted_at DESC, created_at DESC')
 		user.contacts.find(:all, :limit => limit, :order => order, 
 											 :conditions => conditions)

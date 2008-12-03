@@ -4,15 +4,16 @@ class ContactsController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index]
   before_filter :load_contact_type, :load_contactor
+  before_filter :load_current_filter, :only => [:index, :mine]
   
   def index
     respond_to do |format|
       if @user && @user == @current_user
-      	format.html { redirect_to :action => 'mine' }
+      	format.html { redirect_to :action => 'mine', :filter => @current_filter }
       else
 		    load_contacts_set(@user)
 		  	
-		  	info = "#{username_prefix(@user)}#{FRIEND_CN} (#{@contacts_set_count})"
+		  	info = "#{username_prefix(@user)}#{FRIEND_CN}"
 				set_page_title(info)
 				set_block_title(info)
 				
@@ -114,7 +115,7 @@ class ContactsController < ApplicationController
   	@show_todo = true
   	@show_manage = true
 		
-		info = "#{username_prefix(@current_user)}#{FRIEND_CN} (#{@contacts_set_count})"
+		info = "#{username_prefix(@current_user)}#{FRIEND_CN}"
 		set_page_title(info)
 		set_block_title(info)
 		
@@ -135,14 +136,8 @@ class ContactsController < ApplicationController
 	end
 	
   def load_contacts_set(user)
- 		if user && user == @current_user
- 			@contacts_set = contacts_for(user, contact_conditions('1'), nil, 'created_at DESC')
- 			friends_set_count = contacts_for(user).size
- 			@contacts_set_count = friends_set_count
- 		else
- 			@contacts_set = contacts_for(user, contact_conditions('1', '3'), nil, 'created_at DESC')
- 			@contacts_set_count = @contacts_set.size
- 		end
+  	@contacts_set = filtered_contacts(user, @current_filter)
+  	@contacts_set_count = @contacts_set.size
   end
 	
 end

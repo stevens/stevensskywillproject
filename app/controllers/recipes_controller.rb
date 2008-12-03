@@ -226,7 +226,6 @@ class RecipesController < ApplicationController
   end
   
   def load_recipes_set(user = nil)
- 		# @recipes_set = recipes_for(user)
   	@recipes_set = filtered_recipes(user, @current_filter)
   	@recipes_set_count = @recipes_set.size
   end

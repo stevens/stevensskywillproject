@@ -8,9 +8,11 @@
 	</div>
 	
 	<div id="contacts_detail" class="block_main">
-		<div id="contacts_filter_bar">
-			
-		</div>
+		<% if @user || params[:action] == 'mine' %>	
+			<div id="contacts_filter_bar" class="filter_bar">
+				<%= render :partial => "/contacts/contacts_filter_bar" %>
+			</div>
+		<% end %>
 		
 		<div id="contacts_list">
 			<%= render :partial => "/layouts/items_list",
