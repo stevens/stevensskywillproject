@@ -1326,3 +1326,8 @@ div.welcome_todo_button a:hover {
 .filter_bar a {
 	margin-right: 10px;
 }
+
+.item_user {
+	margin-top: 3px;
+	font-size: 9px;
+}
