@@ -91,9 +91,6 @@ class UsersController < ApplicationController
       if @user && @user == @current_user
       	format.html { redirect_to :controller => 'mine', :action => 'profile' }
       elsif @user
-		  	@reviewable_type = 'Recipe'
-		  	@favorable_type = 'Recipe'
-		  	
 		  	load_user_recipes(@user)
 		  	# classify_recipes
 		  	load_user_reviews(@user)
@@ -129,16 +126,14 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_reviews(user = nil)
- 		@reviews_set = filtered_reviews(user, @reviewable_type)
+  	reviewable_type = @reviewable_type || 'Recipe'
+ 		@reviews_set = filtered_reviews(user, reviewable_type)
   	@reviews_set_count = @reviews_set.size
 	end
 	
 	def load_user_favorites(user = nil)
-  	favorite_conditions = favorite_conditions(@able_type)
-  	if @favorable_type == 'Recipe'
-	 		favorable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
-	 	end
- 		@favorites_set = favorites_for(user, @favorable_type, favorite_conditions, favorable_conditions)
+  	favorable_type = @favorable_type || 'Recipe'
+		@favorites_set = filtered_favorites(user, favorable_type)
   	@favorites_set_count = @favorites_set.size
 	end
 	

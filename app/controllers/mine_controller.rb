@@ -13,9 +13,6 @@ class MineController < ApplicationController
 		
 		load_notifications if @current_user
 		
-		@reviewable_type = 'Recipe'
-		@favorable_type = 'Recipe'
-		
   	load_recipes_set
   	# classify_recipes
   	load_reviews_set
@@ -50,13 +47,15 @@ class MineController < ApplicationController
 	end
 	
 	def load_reviews_set(user = @current_user)
-		@reviews_set = filtered_reviews(user, @reviewable_type)
+		reviewable_type = @reviewable_type || 'Recipe'
+		@reviews_set = filtered_reviews(user, reviewable_type)
 		@reviews_set_count = @reviews_set.size
 	end
 	
 	def load_favorites_set(user = @current_user)
-		@favorites_set = favorites_for(user)
-		@favorites_set_count = @favorites_set.size
+  	favorable_type = @favorable_type || 'Recipe'
+		@favorites_set = filtered_favorites(user, favorable_type)
+  	@favorites_set_count = @favorites_set.size
 	end
 	
 	def load_tags_set(user = @current_user)

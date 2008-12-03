@@ -5,21 +5,22 @@ class FavoritesController < ApplicationController
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
 	before_filter :load_favorable_type, :only => [:index, :mine]
 	before_filter :load_back_to_type, :except => [:index, :show, :edit]
+	before_filter :load_current_filter, :only => [:index, :mine]
 	
 	def index
 		respond_to do |format|
 			if @user
 		  	if @user == @current_user
 	      	if params[:favorable_type]
-	      		format.html { redirect_to :action => 'mine', :favorable_type => @favorable_type.downcase }
+	      		format.html { redirect_to :action => 'mine', :favorable_type => @favorable_type.downcase, :filter => @current_filter }
 	      	else
-	      		format.html { redirect_to :action => 'mine' }
+	      		format.html { redirect_to :action => 'mine', :filter => @current_filter }
 	      	end
 		  	else
 			    load_favorites_set(@user)
 			    load_favorables_set
 			    
-			    info = "#{username_prefix(@user)}#{name_for(params[:favorable_type])}#{FAVORITE_CN} (#{@favorites_set_count})"
+			    info = "#{username_prefix(@user)}#{name_for(params[:favorable_type])}#{FAVORITE_CN}"
 			    set_page_title(info)
 			    set_block_title(info)
 			    
@@ -119,7 +120,7 @@ class FavoritesController < ApplicationController
     load_favorites_set(@current_user)
     load_favorables_set
 		
-  	info = "#{username_prefix(@current_user)}#{name_for(params[:favorable_type])}#{FAVORITE_CN} (#{@favorites_set_count})"
+  	info = "#{username_prefix(@current_user)}#{name_for(params[:favorable_type])}#{FAVORITE_CN}"
 		set_page_title(info)
 		set_block_title(info)
 		
@@ -156,11 +157,13 @@ class FavoritesController < ApplicationController
   end
   
   def load_favorites_set(user = nil)
-  	favorite_conditions = favorite_conditions(@favorable_type, @parent_id)
-  	if @favorable_type == 'Recipe'
-	 		favorable_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
-	 	end
- 		@favorites_set = favorites_for(user, @favorable_type, favorite_conditions, favorable_conditions)
+  	# favorite_conditions = favorite_conditions(@favorable_type)
+  	# if @favorable_type == 'Recipe'
+	 	# 	favorable_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
+	 	# end
+ 		# @favorites_set = favorites_for(user, @favorable_type, favorite_conditions, favorable_conditions)
+  	favorable_type = @favorable_type || 'Recipe'
+		@favorites_set = filtered_favorites(user, favorable_type, @current_filter)
   	@favorites_set_count = @favorites_set.size
   end
   

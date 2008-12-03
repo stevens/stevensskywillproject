@@ -1,0 +1,13 @@
+<% codeable_type = "#{favorable_type.downcase}_favorite_status" %>
+<% items_set_count = @favorites_set_count %>
+
+<% if @user %>
+	<% user = @user %>
+<% elsif params[:action] == 'mine' %>
+	<% user = @current_user %>
+<% end %>
+
+<%= render :partial => "/layouts/items_filter_bar", 
+					 :locals => { :user => user, 
+					 							:codeable_type => codeable_type, 
+					 							:items_set_count => items_set_count } %>

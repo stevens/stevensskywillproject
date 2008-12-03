@@ -140,7 +140,7 @@ class ReviewsController < ApplicationController
   end
   
   def load_reviews_set(user = nil)
-  	reviewable_type = @reviewable_type ? @reviewable_type : 'Recipe'
+  	reviewable_type = @reviewable_type || 'Recipe'
 		@reviews_set = filtered_reviews(user, reviewable_type, @current_filter)
   	@reviews_set_count = @reviews_set.size
   end

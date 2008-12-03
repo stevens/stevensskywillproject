@@ -1,11 +1,29 @@
 module FavoritesHelper
 
 	def favorite_statuses(favorable_type)
-		conditions = ["codes.codeable_type = 'favorite_status'"]
-		conditions << "codes.code LIKE '#{code_for(favorable_type)}__'"
+		# conditions = ["codes.codeable_type = 'favorite_status'"]
+		# conditions << "codes.code LIKE '#{code_for(favorable_type)}__'"
+		# statuses_set = Code.find(:all, :order => 'code', 
+		# 												 :conditions => conditions.join(' AND '))
 		statuses_set = Code.find(:all, :order => 'code', 
-														 :conditions => conditions.join(' AND '))
+														 :conditions => { :codeable_type => "#{favorable_type.downcase}_favorite_status" })
 		statuses_set.group_by { |status| (status.code[1..1]) }.sort { |a, b| a <=> b }
+	end
+	
+	def filtered_favorites(user = nil, favorable_type = nil, filter = nil, limit = nil, order = 'created_at DESC')
+ 		if filter
+ 			favorite_status_cond = Code.find(:first, 
+ 																			 :conditions => { :codeable_type => "#{favorable_type.downcase}_favorite_status", 
+ 																			 									:name => filter }).code
+ 		end
+ 		favorite_conditions = favorite_conditions(favorable_type, nil, favorite_status_cond)
+
+  	case favorable_type
+  	when 'Recipe'
+	 		favorable_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
+	 	end
+ 		
+ 		favorites_for(user, favorable_type, favorite_conditions, favorable_conditions, limit, order)
 	end
 	
 	def favorites_for(user = nil, favorable_type = nil, favorite_conditions = favorite_conditions(favorable_type), favorable_conditions = nil, limit = nil, order = 'created_at DESC')

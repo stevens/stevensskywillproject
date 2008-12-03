@@ -12,6 +12,11 @@
 			<div id="recipes_filter_bar" class="filter_bar">
 				<%= render :partial => "/recipes/recipes_filter_bar" %>
 			</div>
+		<% elsif params[:controller] == 'favorites' %>
+			<div id="favorites_filter_bar" class="filter_bar">
+				<%= render :partial => "/favorites/favorites_filter_bar", 
+									 :locals => { :favorable_type => 'Recipe' } %>
+			</div>			
 		<% end %>
 		
 		<div id="recipes_list">

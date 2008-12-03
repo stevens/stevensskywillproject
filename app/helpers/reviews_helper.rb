@@ -1,31 +1,29 @@
 module ReviewsHelper
 
-	def filtered_reviews(user = nil, reviewable_type = nil, filter = nil)
-  	if reviewable_type
-  		review_conditions = review_conditions(reviewable_type)	
-  	end
-  	
-  	if reviewable_type == 'Recipe'
+	def filtered_reviews(user = nil, reviewable_type = nil, filter = nil, limit = nil, order = 'created_at DESC')
+		review_conditions = review_conditions(reviewable_type)
+		
+  	case reviewable_type
+  	when 'Recipe'
 	 		reviewable_conditions_1 = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
 	 	end
 	 	
- 		if user
- 			reviewable_conditions_2 = reviewable_conditions_1 + " AND #{controller_name(reviewable_type)}.user_id = #{user.id}"
- 		else
- 			reviewable_conditions_2 = reviewable_conditions_1
- 		end
+	 	reviewable_conditions_2 = []
+ 		reviewable_conditions_2 << reviewable_conditions_1
+		reviewable_conditions_2 << "#{controller_name(reviewable_type)}.user_id = #{user.id}" if user
 
  		by_reviews_set = reviews_for(user, reviewable_type, review_conditions, reviewable_conditions_1)
- 		to_reviews_set = reviews_for(nil, reviewable_type, review_conditions, reviewable_conditions_2)
+ 		to_reviews_set = reviews_for(nil, reviewable_type, review_conditions, reviewable_conditions_2.join(' AND '))
  		
  		case filter
  		when 'by'
- 			by_reviews_set
+ 			reviews_set = by_reviews_set
  		when 'to'
- 			to_reviews_set - by_reviews_set
+ 			reviews_set = to_reviews_set - by_reviews_set
  		else
- 			by_reviews_set | to_reviews_set
+ 			reviews_set = by_reviews_set | to_reviews_set
  		end
+		reviews_set
 	end
 
 	def reviews_for(user = nil, reviewable_type = nil, review_conditions = review_conditions(reviewable_type), reviewable_conditions = nil, limit = nil, order = 'created_at DESC')
