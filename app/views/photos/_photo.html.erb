@@ -1,7 +1,11 @@
 <div id="photo_<%= photo.id %>_basic" class="basic">
 	<ul>
 		<li>
-			<%= "来自 " %><%= link_to strip_tags(user_username(photo.user)), user_first_link(photo.user) %>		    			
+			<%= "来自 " %>
+			<% if photo.user.is_role_of?('brain') %>
+				<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
+			<% end %>
+			<%= link_to strip_tags(user_username(photo.user)), user_first_link(photo.user) %>		    			
 		</li>
 		<li>
 			<%= "#{time_iso_format(photo.created_at)} #{ADD_CN}" %>

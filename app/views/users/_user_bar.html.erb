@@ -11,7 +11,7 @@
 			<td class="middle_column">
 				<div class="user_bar_username">
 					<% if user.is_role_of?('brain') %>
-						<%= image_tag 'default/other/brain.png', :title => '智囊蜂', :class => "icon" %>
+						<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
 					<% end %>
 					<%= strip_tags(user.login) %>
 					<% if user == @current_user && !user_portrait(user) %>

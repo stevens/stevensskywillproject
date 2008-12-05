@@ -1,5 +1,8 @@
 <div id="contact_<%= item.id %>_basic" class="basic">
 	<h2>
+		<% if item.contactor.is_role_of?('brain') %>
+			<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
+		<% end %>
 		<%= link_to strip_tags(user_username(item.contactor)), user_first_link(item.contactor) %>
 	</h2>
 </div>
