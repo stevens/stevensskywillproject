@@ -183,12 +183,12 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def log_count(countable)
+		countable_type = type_for(countable)
 		if counter = countable.counter
 			current_total_view_count = counter.total_view_count || 0
 			current_user_view_count = counter.user_view_count || 0
 			current_self_view_count = counter.self_view_count || 0
 		else
-			countable_type = type_for(countable)
 			counter = Counter.new
 			counter.countable_type = countable_type
 			counter.countable_id = countable.id			
@@ -200,10 +200,18 @@ class ApplicationController < ActionController::Base
 		counter.total_view_count = current_total_view_count + 1
 		
 		if @current_user
-			if countable_type != 'User' && countable.user == @current_user
-				counter.self_view_count = current_self_view_count + 1
+			if countable_type == 'User'
+				if countable == @current_user
+					counter.self_view_count = current_self_view_count + 1
+				else
+					counter.user_view_count = current_user_view_count + 1
+				end
 			else
-				counter.user_view_count = current_user_view_count + 1
+				if countable.user == @current_user
+					counter.self_view_count = current_self_view_count + 1
+				else
+					counter.user_view_count = current_user_view_count + 1
+				end
 			end
 		end
 		

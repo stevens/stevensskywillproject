@@ -62,6 +62,9 @@
 						<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
 							<%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
 						</li>
+						<li class=<%= tab_css_class(@current_tab_type, '') %>>
+							<%= link_to "比赛<span class='script'>烹制中...</span>", root_path %>
+						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'user') %>>
 							<%= link_to "#{PEOPLE_CN}", "#{users_path}/overview" %>
 						</li>
