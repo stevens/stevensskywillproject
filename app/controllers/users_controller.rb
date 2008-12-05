@@ -99,6 +99,8 @@ class UsersController < ApplicationController
 			 	load_user_tags(@user)
 			 	load_user_contactors(@user)
 			 	
+			 	log_count(@user)
+			 	
 			 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
 				set_page_title(info)
 				

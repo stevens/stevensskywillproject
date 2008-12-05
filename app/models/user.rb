@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 					 :order => "accepted_at DESC, created_at DESC"
   has_many :stories, :order => "created_at DESC"
   has_one :profile
+	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
   
   # Virtual attribute for the unencrypted password
   attr_accessor :password

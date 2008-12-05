@@ -34,12 +34,13 @@ ActionController::Routing::Routes.draw do |map|
 	
 	map.resources :users, 
 								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories], 
-								:has_one => [:profile]
+								:has_one => [:profile, :counter]
 	map.resources :recipes, 
 								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites], 
 								:has_one => [:counter]
 	map.resources :photos, 
-								:has_many => [:reviews]
+								:has_many => [:reviews], 
+								:has_one => [:counter]
 	map.resources :reviews
 	map.resources :taggings
 	map.resources :searchings

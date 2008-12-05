@@ -78,8 +78,9 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def set_system_notice
-		@system_notice = "号外1: <em>“蜂人(测试版)”栏目</em>新出锅, 大家可以<em>互相加为伙伴</em>啦！<br /><br/>
-											号外2: 大家可以到<em>帐户设置</em>里添加<em>自己的blog</em>啦！"
+		# @system_notice = "号外1: <em>“蜂人(测试版)”栏目</em>新出锅, 大家可以<em>互相加为伙伴</em>啦！<br /><br/>
+		#  									号外2: 大家可以到<em>帐户设置</em>里添加<em>自己的blog</em>啦！"
+		@system_notice = "号外: <em>“蜂厨”</em>与新浪著名美食圈子<em>“美食·人生”</em>结成<em>友情合作伙伴</em>!"
 	end
 	
 	# def param_posted?(symbol)
@@ -183,12 +184,13 @@ class ApplicationController < ActionController::Base
 	
 	def log_count(countable)
 		if counter = countable.counter
-			current_total_view_count = counter.total_view_count ? counter.total_view_count : 0
-			current_user_view_count = counter.user_view_count ? counter.user_view_count : 0
-			current_self_view_count = counter.self_view_count ? counter.self_view_count : 0
+			current_total_view_count = counter.total_view_count || 0
+			current_user_view_count = counter.user_view_count || 0
+			current_self_view_count = counter.self_view_count || 0
 		else
+			countable_type = type_for(countable)
 			counter = Counter.new
-			counter.countable_type = type_for(countable)
+			counter.countable_type = countable_type
 			counter.countable_id = countable.id			
 			current_total_view_count = 0
 			current_user_view_count = 0
@@ -198,7 +200,7 @@ class ApplicationController < ActionController::Base
 		counter.total_view_count = current_total_view_count + 1
 		
 		if @current_user
-			if countable.user == @current_user
+			if countable_type != 'User' && countable.user == @current_user
 				counter.self_view_count = current_self_view_count + 1
 			else
 				counter.user_view_count = current_user_view_count + 1
