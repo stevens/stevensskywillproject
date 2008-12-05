@@ -2,7 +2,7 @@ module SearchingsHelper
 
 	def keywords_line_to_search_id(keywords_line)
 		if keywords_line && !str_squish(keywords_line).blank?
-			keywords_line.gsub(' ', '+')
+			keywords_line.gsub('&nbsp;', '+')
 		else
 			nil
 		end
