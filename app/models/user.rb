@@ -1,5 +1,7 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+	include CodesHelper
+
   has_many :recipes, :order => "published_at DESC, created_at DESC"
   has_many :photos, :order => "created_at"
   has_many :reviews, :order => "created_at DESC"
@@ -163,6 +165,16 @@ class User < ActiveRecord::Base
 		current_login_count = self.login_count ? self.login_count : 0
 		self.login_count = current_login_count + 1
 		save(false)
+	end
+	
+	#判断用户是否为某个角色
+	def is_role_of?(role_name)
+		if roles
+			role_code = codes_for(code_conditions('user_role', nil, nil, role_name), 1)[0].code
+			roles.include?(role_code)
+		else
+			false
+		end
 	end
 
   protected

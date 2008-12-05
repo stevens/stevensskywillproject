@@ -5,12 +5,13 @@ module UsersHelper
 							:conditions => conditions)
 	end
   
-  def user_conditions(activated = true, created_at_from = nil, created_at_to = nil)
+  def user_conditions(role = nil, activated = true, created_at_from = nil, created_at_to = nil)
   	conditions = ["users.login IS NOT NULL", 
   								"users.login <> ''", 
   								"users.email IS NOT NULL", 
   								"users.email <> ''"]
   	conditions << "users.activated_at IS NOT NULL" if activated
+  	conditions << "users.roles LIKE '%#{role}%'" if role
 		conditions << "users.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
 		conditions << "users.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")

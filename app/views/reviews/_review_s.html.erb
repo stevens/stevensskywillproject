@@ -2,6 +2,9 @@
 	<ul>
 		<% if show_parent %>
 			<li>
+				<% if item.user.is_role_of?('brain') %>
+					<%= image_tag 'default/other/brain.png', :title => '智囊蜂', :class => "icon" %>
+				<% end %>
 				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
 				<% if item.reviewable_type == 'Recipe' && recipe_accessible?(item.reviewable) %>
@@ -15,6 +18,9 @@
 			</li>
 		<% else %>
 			<li>
+				<% if item.user.is_role_of?('brain') %>
+					<%= image_tag 'default/other/brain.png', :title => '智囊蜂', :class => "icon" %>
+				<% end %>
 				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
 				<%= time_iso_format(item.created_at) %>

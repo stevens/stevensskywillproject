@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 28) do
+ActiveRecord::Schema.define(:version => 29) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(:version => 28) do
     t.boolean  "enabled",                                 :default => true
     t.datetime "latest_loggedin_at"
     t.integer  "login_count"
+    t.string   "roles"
   end
 
 end

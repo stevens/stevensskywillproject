@@ -2,6 +2,8 @@
 	<div>
 		<% if type_for(item) == 'Recipe' && item.from_type == '1' %>
 			<%= image_tag 'default/other/private.png', :title => PRIVATE_HOME_CN, :class => "icon" %>
+		<% elsif type_for(item) == 'User' && item.is_role_of?('brain') %>
+			<%= image_tag 'default/other/brain.png', :title => '智囊蜂', :class => "icon" %>
 		<% end %>
 		<%= link_to strip_tags(item_title(item)), type_for(item) == 'User' ? user_first_link(item) : item %>
 		<% if type_for(item) == 'Recipe' %>

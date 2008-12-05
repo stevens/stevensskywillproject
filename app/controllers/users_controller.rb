@@ -3,11 +3,19 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
   
 	before_filter :clear_location_unless_logged_in
+	before_filter :load_category
 
   def index
   	load_users_set
   	
-  	info = "#{PEOPLE_CN} (#{@users_set_count})"
+  	case params[:category]
+  	when 'brain'
+  		title = "智囊团"
+  	else
+  		title = PEOPLE_CN
+  	end
+  	
+  	info = "#{title} (#{@users_set_count})"
 		set_page_title(info)
 		set_block_title(info)
   	
@@ -113,8 +121,14 @@ class UsersController < ApplicationController
 	
 	private
 	
+	def load_category
+		if role_name = params[:category]
+			@role_code = codes_for(code_conditions('user_role', nil, nil, role_name), 1)[0].code
+		end
+	end
+	
   def load_users_set
- 		@users_set = users_for
+ 		@users_set = users_for(user_conditions(@role_code))
   	@users_set_count = @users_set.size
   end
   

@@ -130,6 +130,7 @@
 								<!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
 							<% end %>
 							<%= link_to "#{PEOPLE_CN}浏览", users_path %>
+							<%= link_to "智囊团", :controller => 'users', :action => 'index', :category => 'brain' %>
 							<!-- <%= link_to "#{PEOPLE_CN}动向", '' %> -->
 						<% else %>
 							<%= SLOGAN_CN %>
