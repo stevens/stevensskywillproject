@@ -9,6 +9,12 @@
 		<div class="label">
 			<label class="left" for="review"><%= "#{ADD_CN}新#{REVIEW_CN}:" %></label>
 		</div>
+		<div id="new_review_quotation">
+			<%= render :partial => "/reviews/review_quotation", 
+								 :locals => { :is_new => true, 
+								 							:quotation_submitter_id => quotation_submitter_id, 
+					 										:quotation => quotation } %>
+		</div>
 		<div class="input">
 			<% if review_error %>
 				<div class="fieldWithErrors">
@@ -23,9 +29,11 @@
 			<%= f.text_area :review, :class => 's', :value => review_text %>
 		</div>
 	<% end %>
+	
 	<div class="error">
 		<%= error_message_on "review", "review" %>
 	</div>
+	
 	<div id="submit_button_for_new_review" class="submit">
 		<%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
 		<% unless is_new %>

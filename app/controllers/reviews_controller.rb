@@ -218,11 +218,13 @@ class ReviewsController < ApplicationController
 					page.show "notice_for_new_review"
 					page.replace_html "input_form_for_new_review",
 														:partial => "/reviews/review_input",
-													  :locals => {:reviewable => @review.reviewable,
-													 						  :review => @review.reviewable.reviews.build,
-													 						  :is_new => true, 
-													 						  :review_error => true,
-													 						  :review_text => params[:review][:review]}
+													  :locals => { :reviewable => @review.reviewable,
+													 						   :review => @review.reviewable.reviews.build,
+													 						   :is_new => true, 
+													 						   :review_error => true,
+													 						   :review_text => params[:review][:review], 
+													 						   :quotation_submitter_id => params[:review][:quotation_submitter_id], 
+						 														 :quotation => params[:review][:quotation] }
 				  page.visual_effect :fade, "notice_for_new_review", :duration => 3
 				end	
 			end

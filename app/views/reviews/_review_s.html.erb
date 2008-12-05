@@ -26,6 +26,13 @@
 <div id="notice_for_review_<%= item.id %>">
 </div>
 
+<div id="review_<%= item.id %>_quotation">
+	<%= render :partial => "/reviews/review_quotation", 
+						 :locals => { :is_new => false, 
+						 							:quotation_submitter_id => item.quotation_submitter_id, 
+						 							:quotation => item.quotation } %>
+</div>
+
 <div id="input_form_for_review_<%= item.id %>">
 </div>
 
@@ -42,11 +49,13 @@
 				page.redirect_to "#input_form_for_new_review"
 				page.replace_html "input_form_for_new_review",
 													:partial => "/reviews/review_input",
-												  :locals => {:reviewable => item.reviewable,
-												 						  :review => item.reviewable.reviews.build, 
-												 						  :is_new => true,  
-												 						  :review_error => false, 
-												 						  :review_text => "#{strip_tags(item.user.login)}说: \"#{item.review}\""}
+												  :locals => { :reviewable => item.reviewable,
+												 						   :review => item.reviewable.reviews.build, 
+												 						   :is_new => true,  
+												 						   :review_error => false,  
+												 						   :review_text => '', 
+												 						   :quotation_submitter_id => item.user_id, 
+						 													 :quotation => item.review }
 		  end %>
 	  <% end %>
 	  <% if params[:action] != 'mine' && (item.user == @current_user || item.reviewable.user == @current_user) %>

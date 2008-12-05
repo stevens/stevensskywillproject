@@ -1,0 +1,27 @@
+<% if quotation_submitter_id %>
+	<div class="quotation">
+		<% if is_new %>
+			<div class="close">
+				<%= link_to_function("x") do |page|
+					page.hide "new_review_quotation"
+					page.replace_html "new_review_quotation", 
+														:partial => "/reviews/review_quotation", 
+													  :locals => { :is_new => false, 
+													 							 :quotation_submitter_id => nil, 
+										 										 :quotation => nil }
+			  end %>
+			</div>
+		<% end %>
+		
+		<h3>
+			<%= "#{strip_tags(user_username(User.find(quotation_submitter_id)))} 说: " %>
+			<%= hidden_field_tag 'review[quotation_submitter_id]', quotation_submitter_id %>
+		</h3>
+		<ul>
+			<%= paragraphs(quotation) %>
+			<%= hidden_field_tag 'review[quotation]', quotation %>
+		</ul>
+		
+
+	</div>
+<% end %>

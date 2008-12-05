@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 27) do
+ActiveRecord::Schema.define(:version => 28) do
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -185,6 +185,8 @@ ActiveRecord::Schema.define(:version => 27) do
     t.integer  "reviewable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "quotation"
+    t.integer  "quotation_submitter_id"
   end
 
   add_index "reviews", ["reviewable_type", "reviewable_id"], :name => "pi_reviewable"

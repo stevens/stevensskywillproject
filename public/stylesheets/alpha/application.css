@@ -390,7 +390,7 @@ div.tag {
 	color: #ffffff;
 }
 
-/* Reviews List */
+/* Reviews */
 #reviews_list_content {
 	text-align: left;
 }
@@ -413,6 +413,16 @@ div.tag {
 	display: block;
 	background-color: #d4ccbf;
 	color: #695245;	
+}
+.quotation {
+	padding: 3px 5px;
+	margin-bottom: 5px;
+	background-color: rgb(236, 239, 245);
+	font-size: 12px;
+	color: #b8b9a7;
+}
+.quotation h3 {
+	font-size: 12px;
 }
 
 /* Content Table */
@@ -998,6 +1008,13 @@ div.pagination a:hover {
 div.pagination a, div.pagination span {
 	padding: 0px 5px 0px 5px;
 }
+.item_user {
+	margin-top: 3px;
+	font-size: 9px;
+}
+.item_user a {
+	font-size: 9px;
+}
 
 /* Error */
 .fieldWithErrors * {
@@ -1057,6 +1074,9 @@ div.pagination a, div.pagination span {
 .close a:hover {
 	background-color: transparent !important;
 	color: #373737 !important;
+}
+.quotation .close {
+	margin-top: -5px;
 }
 
 /* Rating */
@@ -1283,7 +1303,7 @@ div.welcome_todo_button a:hover {
 }
 * html .overlay_wrapper {
 	position: absolute;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 .overlay_content {
 	position: relative;
@@ -1325,12 +1345,4 @@ div.welcome_todo_button a:hover {
 }
 .filter_bar a {
 	margin-right: 10px;
-}
-
-.item_user {
-	margin-top: 3px;
-	font-size: 9px;
-}
-.item_user a {
-	font-size: 9px;
 }
