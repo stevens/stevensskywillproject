@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
   
 	before_filter :clear_location_unless_logged_in
-	before_filter :load_category
+	before_filter :load_category, :only => [:index, :overview]
 
   def index
   	load_users_set

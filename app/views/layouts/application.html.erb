@@ -36,7 +36,11 @@
 					<!-- current user -->
 					<div id="current_user">
 						<% if current_user = User.find_by_id(session[:user_id]) %> 
-							<%= "#{HELLO_CN}, " %><%= link_to strip_tags(current_user.login), user_first_link(current_user) %>
+							<%= "#{HELLO_CN}, " %>
+							<% if current_user.is_role_of?('brain') %>
+								<%= image_tag 'default/other/brain.png', :title => '智囊蜂', :class => "icon" %>
+							<% end %>
+							<%= link_to strip_tags(current_user.login), user_first_link(current_user) %>
 							<%= link_to LOGOUT_CN, "#{root_url}logout" %>
 						<% else %>
 							<%= link_to LOGIN_CN, "#{root_url}login" %>
