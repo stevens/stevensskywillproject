@@ -325,7 +325,7 @@ module ApplicationHelper
 	# --------------与数字处理相关的方法--------------
 	
 	# i 原始数, n 要保留的小数位数, flag=1 四舍五入 flag=0 不四舍五入
-	def f(i, n=2, flag=1)
+	def f(i, n=1, flag=1)
 	  y = 1  
 	  n.times do |x|   
 	  	y = y*10  
