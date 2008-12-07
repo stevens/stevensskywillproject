@@ -15,7 +15,8 @@ class UsersController < ApplicationController
   		title = PEOPLE_CN
   	end
   	
-  	info = "#{title} (#{@users_set_count})"
+  	# info = "#{title} (#{@users_set_count})"
+  	info = "#{title}"
 		set_page_title(info)
 		set_block_title(info)
   	

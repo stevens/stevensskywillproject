@@ -14,7 +14,7 @@
 <div id="users_wrapper" class="content_block">
 	<div id="users_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "#{MORE_CN}#{PEOPLE_CN} (#{@users_set_count})", users_path %>	
+			<%= link_to "#{MORE_CN}#{PEOPLE_CN}", users_path %>	
 		</div>
 		<h1><%= "#{PEOPLE_CN}新面孔" %></h1>
 	</div>
@@ -28,6 +28,7 @@
 							 						 :show_photo => true, 
 							 						 :show_below_photo => true,  
 							 						 :show_title => true, 
+							 						 :show_user => false, 
 							 						 :show_photo_todo => false, 
 							 						 :photo_style => 'matrix'} %>
 	</div>
