@@ -235,13 +235,13 @@ module ApplicationHelper
 					if p.starts_with?('[') && p.ends_with?(']')
 						paragraphs << "<span>#{strip_tags(p)}</span>"
 					else
-						paragraphs << "<li>#{strip_tags(p)}</li>"
+						paragraphs << "<li><em class='none'>#{strip_tags(p)}</em></li>"
 					end
 				end
 			end
 		end
 		if min_paras_count && paragraphs.size > min_paras_count
-			paragraphs[0..min_paras_count-1] + ["<li>......</li>"]
+			paragraphs[0..min_paras_count-1] + ["<li><em class='none'>......</em></li>"]
 		else
 			paragraphs
 		end

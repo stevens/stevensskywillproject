@@ -61,6 +61,9 @@ em.more {
 	color: #e42300;
 	font-weight: normal;
 }
+em.none {
+	font-weight: normal;
+}
 span.highlight {
 	color: #78b36d;
 }
@@ -906,7 +909,8 @@ div.main li {
 	margin-bottom: 5px;
 }
 div.main ol {
-	padding-left: 25px;
+	padding-left: 30px;
+	font-weight: bold;
 }
 div.main ul span {
 	font-weight: bolder;
