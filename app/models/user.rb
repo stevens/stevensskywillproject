@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 														:message => "#{EMAIL_ADDRESS_CN}格式不正确"
   validates_format_of 			:password, 									 :if => :password_required?,
 														:with => /^[A-Za-z0-9._%+-]+$/,
-														:message => "#{PASSWORD_CN}只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）"
+														:message => "#{PASSWORD_CN}只能包含英文字母(区分大小写), 数字(0-9)和半角符号(._%+-)"
   validates_confirmation_of :password,                   :if => :password_required?,
   													:message => "两次#{INPUT_CN}的#{PASSWORD_CN}不匹配"
   # validates_uniqueness_of   :login, :case_sensitive => false,
