@@ -15,12 +15,13 @@
 				<label for="login"><%= "新#{EMAIL_ADDRESS_CN}:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "请确认#{EMAIL_ADDRESS_CN}真实有效" %>
+				</div>
 				<div class="input">
 					<%= f.text_field :email, :class => "text_s" %>
 				</div>
-				<div class="text">
-					<%= "请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效" %>
-				</div>
+
 				<%= error_message_on "user", "email" %>
 			</td>
 		</tr>
@@ -29,6 +30,9 @@
 				<label for="password"><%= "#{PASSWORD_CN}:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "在#{CHANGE_CN}#{EMAIL_ADDRESS_CN}时, 需要#{INPUT_CN}#{PASSWORD_CN}进行安全验证" %>
+				</div>
 				<div class="input">
 					<% if password_error %>
 						<div class="fieldWithErrors">
@@ -37,9 +41,6 @@
 					<% else %>
 						<%= password_field_tag "password", "", :class => "text_s" %>
 					<% end %>
-				</div>
-				<div class="text">
-					<%= "在#{CHANGE_CN}#{EMAIL_ADDRESS_CN}时, 需要#{INPUT_CN}#{PASSWORD_CN}进行安全验证" %>
 				</div>
 				<% if password_error %>
 					<div class="formError">	

@@ -5,6 +5,9 @@
 				<label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于640K" %>
+				</div>
 				<div class="input">
 					<% if photo.errors_on_file %>
 						<div class="fieldWithErrors">
@@ -13,9 +16,6 @@
 					<% else %>
 						<%= f.file_field :uploaded_data, :class => "text" %>
 					<% end %>
-				</div>
-				<div class="text">
-					<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于640K" %>
 				</div>
 				<% if photo.errors_on_file %>
 					<div class="formError">	
