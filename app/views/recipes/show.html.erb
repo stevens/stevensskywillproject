@@ -60,11 +60,13 @@
 			<% if @current_user %>
 				<div id="input_form_for_new_review">
 					<%= render :partial => "/reviews/review_input", 
-										 :locals => {:reviewable => @recipe,
-										 						 :review => @recipe.reviews.build, 
-										 						 :is_new => true, 
-										 						 :review_error => false, 
-										 						 :review_text => ''} %>
+										 :locals => { :reviewable => @recipe,
+										 						  :review => @recipe.reviews.build, 
+										 						  :is_new => true, 
+										 						  :review_error => false, 
+										 						  :review_text => '', 
+										 						  :quotation_submitter_id => nil, 
+						 										  :quotation => nil } %>
 				</div>
 				<% if @recipe.user != @current_user %>
 					<div class="todo_right">

@@ -27,7 +27,9 @@
 			<td class="input">
 				<div class="text">
 					<%= "为了让大伙儿更容易发现你的#{RECIPE_CN}, 请准确#{INPUT_CN}与#{RECIPE_CN}有关的关键字作为#{TAG_CN}" %><br />
-					<%= "<em>#{TAG_CN}之间请用\"空格\"分隔</em>, 如: \"鱼肉 咖喱 东南亚 生日\"" %>
+					<%= "<em class='more'>可以从\"主料 / 口味 / 烹调技法 / 菜系 / 地域 / 场合和节日 / 功效\"等多个角度设置#{TAG_CN}</em>" %><br />
+					<%= "<em class='more'>#{TAG_CN}之间请用\"空格\"分隔</em>" %><br />
+					<%= "如: \"鱼肉&nbsp;&nbsp;咖喱&nbsp;&nbsp;东南亚&nbsp;&nbsp;生日\"" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :tag_list, :class => "text" %>
@@ -86,7 +88,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "请#{INPUT_CN}#{YIELD_CN}, 如: 4人份, 18-20个, 9寸左右(馅饼)等" %>
+					<%= "请根据相关#{INGREDIENT_CN}的使用量确定#{YIELD_CN}" %><br />
+					<%= "如: \"4人份\", \"18-20个\", \"9寸左右\"(Pizza)等" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :yield, :class => "text" %>
@@ -114,9 +117,11 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "<em>每一行请只#{INPUT_CN}一种#{INGREDIENT_CN}</em>" %><br />
-					<%= "<em>并按照\"用料名称 用量 补充说明\"的格式, 用\"空格\"分隔</em>" %><br />
-					<%= "如: 猪里脊肉 500g" %>
+					<%= "<em class='more'>每一行请只#{INPUT_CN}一种#{INGREDIENT_CN}</em>" %><br />
+					<%= "<em class='more'>每种#{INGREDIENT_CN}请按照\"用料名称&nbsp;&nbsp;使用量&nbsp;&nbsp;补充说明\"的格式, 各部分之间请用\"空格\"分隔</em>" %><br />
+					<%= "如: \"猪里脊肉&nbsp;&nbsp;500g\"" %><br />
+					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
+					<%= "如: \"[主料]\", \"[配料]\", \"[调味料]\"" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :ingredients %>
@@ -131,7 +136,9 @@
 			<td class="input">
 				<div class="text">
 					<%= "请#{INPUT_CN}#{DIRECTION_CN}和步骤等" %><br />
-					<%= "<em>每个段落会自动编号, 不需要自己再加编号了</em>" %>
+					<%= "<em class='more'>每个段落会自动编号, 不需要自己再加编号了</em>" %><br />
+					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
+					<%= "如: \"[酱料的做法]\", \"[烘烤的步骤]\"" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :directions %>
@@ -146,7 +153,9 @@
 			<td class="input">
 				<div class="text">
 					<%= "请#{INPUT_CN}有关的注意事项" %><br />
-					<%= "<em>每个段落会自动编号, 不需要自己再加编号了</em>" %>
+					<%= "<em class='more'>每个段落会自动编号, 不需要自己再加编号了</em>" %><br />
+					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
+					<%= "如: \"[制作酱料的窍门]\", \"[烘烤的注意事项]\"" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :tips %>
@@ -198,7 +207,7 @@
 						<%= f.hidden_field :from_where %>
 					<% else %>
 						<div id="from_where_prompt" class="text">
-							<%= "如果是转载的, 请#{INPUT_CN}转载的报刊/书籍/网址等" %>
+							<%= "如果是转载的, 请#{INPUT_CN}转载的\"报刊 / 书籍 / 网址\"等" %>
 						</div>
 						<div id="from_where" class="input">
 							<%= f.text_field :from_where, :class => "text" %>
@@ -232,8 +241,8 @@
 				<br />
 				<div class="text">
 					<%= "当你还来不及完成#{RECIPE_CN}的时候, 可以先#{SAVE_CN}为草稿" %><br />
-					<%= "想跟大伙儿分享你的#{RECIPE_CN}, 请输入更完整的#{RECIPE_CN}信息" %><br />
-					<%= "<em>没有#{PHOTO_CN}或者信息不够完整的#{RECIPE_CN}, 会自动保存为草稿</em>" %>
+					<%= "<em class='more'>想跟大伙儿分享你的#{RECIPE_CN}, 请输入更完整的#{RECIPE_CN}信息并且#{ADD_CN}#{PHOTO_CN}</em>" %><br />
+					<%= "<em class='more'>信息不够完整或者没有#{PHOTO_CN}的#{RECIPE_CN}, 会自动保存为草稿</em>" %>
 				</div>
 				<div class="input">
 					<%= f.check_box :is_draft, :disabled => recipe.cover_photo_id ? false : true %><%= " 保存为草稿" %>

@@ -57,6 +57,10 @@ em.highlight a {
 em.highlight a:hover {
 	background-color: #428cbb !important;
 }
+em.more {
+	color: #e42300;
+	font-weight: normal;
+}
 span.highlight {
 	color: #78b36d;
 }

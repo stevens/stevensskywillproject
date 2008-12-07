@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :password_confirmation,      :if => :password_required?,
   													:message => "请再次#{INPUT_CN}#{PASSWORD_CN}"
   validates_length_of       :login,    
-  													:within => STRING_MIN_LENGTH_S..STRING_MAX_LENGTH_S,
+  													:within => 2..STRING_MAX_LENGTH_S,
   													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位",
   													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位"
   validates_length_of       :email,    

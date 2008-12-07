@@ -6,11 +6,11 @@
 				<label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "<em class='more'>请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而才能接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" %>
+				</div>
 				<div class="input">
 					<%= f.text_field :email, :class => "text_s" %>
-				</div>
-				<div class="text">
-					<%= "<em>请确认#{INPUT_CN}的#{EMAIL_ADDRESS_CN}真实有效, 从而接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" %>
 				</div>
 				<%= error_message_on "user", "email" %>
 			</td>
@@ -20,11 +20,11 @@
 				<label for="login"><%= "#{NICKNAME_CN}:" %></label>
 			</td>
 			<td class="input">
-				<div class="input">
-					<%= f.text_field :login, :class => "text_s" %>
-				</div>
 				<div class="text">
 					<%= "用自己喜欢的名字作为#{NICKNAME_CN}, 好让大伙儿认识你" %>
+				</div>
+				<div class="input">
+					<%= f.text_field :login, :class => "text_s" %>
 				</div>
 				<%= error_message_on "user", "login" %>
 			</td>
@@ -34,11 +34,11 @@
 				<label for="password"><%= "#{PASSWORD_CN}:" %></label>
 			</td>
 			<td class="input">
-				<div class="input">
-					<%= f.password_field :password, :class => "text_s" %>
-				</div>
 				<div class="text">
 					<%= "#{PASSWORD_CN}只能包含英文字母（区分大小写）、数字（0-9）和半角符号（._%+-）" %>
+				</div>
+				<div class="input">
+					<%= f.password_field :password, :class => "text_s" %>
 				</div>
 				<%= error_message_on "user", "password" %>
 			</td>
@@ -48,6 +48,9 @@
 				<label for="password_confirmation"><%= "#{PASSWORD_CN}确认:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "请再次#{INPUT_CN}相同的#{PASSWORD_CN}进行确认" %>
+				</div>
 				<div class="input">
 					<%= f.password_field :password_confirmation, :class => "text_s" %>
 				</div>
