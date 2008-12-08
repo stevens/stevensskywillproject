@@ -17,7 +17,7 @@
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "#{MORE_CN}#{RECIPE_CN} (#{@recipes_set_count})", recipes_path %>	
+			<%= link_to "#{MORE_CN}#{RECIPE_CN}", recipes_path %>	
 		</div>
 		<h1><%= "新鲜#{RECIPE_CN}" %></h1>
 	</div>
@@ -40,7 +40,7 @@
 <div id="reviews_wrapper" class="content_block">
 	<div id="reviews_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "#{MORE_CN}#{RECIPE_CN}#{REVIEW_CN} (#{@reviews_set_count})", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
+			<%= link_to "#{MORE_CN}#{RECIPE_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>	
 		</div>
 		<h1><%= "新鲜#{RECIPE_CN}#{REVIEW_CN}" %></h1>
 	</div>
