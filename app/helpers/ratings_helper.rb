@@ -7,7 +7,7 @@ module RatingsHelper
 	def user_rating_value(user, rateable)
 		user_rating = user_rating(user, rateable)
 		if user_rating
-			r = user_rating.rating/10.0
+			r = user_rating.rating / 10.0
 			r == r.round ? r.round : r
 		else
 			0
@@ -16,7 +16,7 @@ module RatingsHelper
 	
 	def average_rating_value(rateable)
 		if rateable.ratings.size > 0
-			r = rateable.ratings.average('rating')/10.0
+			r = rateable.ratings.average('rating') / 10.0
 			r == r.round ? r.round : f(r)
 		else
 			0
@@ -30,7 +30,11 @@ module RatingsHelper
 		
 		items = []
 		for item in items_set
-			rating = item.rating/10.0 ? item.rating : 0
+			if item.rating
+				rating = item.rating / 10.0
+			else
+				0
+			end
 			if rating >= min_rating && rating <= max_rating && item.total_ratings >= min_ratings_count
 				items << item
 			end
