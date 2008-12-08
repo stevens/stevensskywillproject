@@ -8,11 +8,11 @@
 			<%= link_to strip_tags(user_username(photo.user)), user_first_link(photo.user) %>		    			
 		</li>
 		<li>
-			<%= "#{time_iso_format(photo.created_at)} #{ADD_CN}" %>
+			<%= "#{time_iso_format(photo.created_at, true)} #{ADD_CN}" %>
 		</li>
 		<% if photo.created_at != photo.updated_at %>
 			<li>
-				<%= "#{time_iso_format(photo.updated_at)} #{UPDATE_CN}" %>
+				<%= "#{time_iso_format(photo.updated_at, true)} #{UPDATE_CN}" %>
 			</li>
 		<% end %>
 		<% if show_parent %>

@@ -14,7 +14,7 @@
 				<% end %>
 			</li>
 			<li>
-				<%= time_iso_format(item.created_at) %>
+				<%= time_iso_format(item.created_at, true) %>
 			</li>
 		<% else %>
 			<li>
@@ -23,7 +23,7 @@
 				<% end %>
 				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
 				&nbsp;
-				<%= time_iso_format(item.created_at) %>
+				<%= time_iso_format(item.created_at, true) %>
 			</li>	
 		<% end %>
 	</ul>

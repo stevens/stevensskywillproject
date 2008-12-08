@@ -175,9 +175,29 @@ module ApplicationHelper
 		end
 	end
 	
-	def time_iso_format(time)
-		time.strftime("%Y-%m-%d %H:%M:%S")
+	def time_iso_format(time, better = false)
+		if better
+			i = Time.now - time
+			case 
+			when i < 60
+				"#{i.floor}秒钟前"
+			when i >= 60 && i < 60*60
+				"#{(i/60).floor}分钟前"
+			when i >= 60*60 && i < 60*60*24
+				"#{(i/(60*60)).floor}小时前"
+			when i >= 60*60*24 && i < 60*60*48
+				time.strftime("昨天 %H:%M:%S")
+			when i >= 60*60*48 && i < 60*60*72
+				time.strftime("前天 %H:%M:%S")
+			else
+				time.strftime("%Y-%m-%d %H:%M:%S")
+			end
+		else
+			time.strftime("%Y-%m-%d %H:%M:%S")
+		end
 	end
+	
+	
 	
 	def items_rows_count(items_count, items_count_per_row)
 		rc = items_count/items_count_per_row
