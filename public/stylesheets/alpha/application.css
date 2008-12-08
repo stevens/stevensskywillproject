@@ -1121,19 +1121,6 @@ div.pagination a, div.pagination span {
 	text-decoration:none;
 }
 
-/*
-#r1{width: 17px;z-index: 200;}
-#r2{width: 34px;z-index: 190;}
-#r3{width: 51px;z-index: 180;}
-#r4{width: 68px;z-index: 170;}
-#r5{width: 85px;z-index: 160;}
-#r6{width: 102px;z-index: 150;}
-#r7{width: 119px;z-index: 140;}
-#r8{width: 136px;z-index: 130;}
-#r9{width: 153px;z-index: 120;}
-#r10{width: 170px;z-index: 110;}
-*/
-
 #r5{width: 8.5px;z-index: 200;}
 #r10{width: 17px;z-index: 195;}
 #r15{width: 25.5px;z-index: 190;}
