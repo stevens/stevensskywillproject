@@ -185,10 +185,8 @@ module ApplicationHelper
 				"#{(i/60).floor}分钟前"
 			when i >= 60*60 && i < 60*60*24
 				"#{(i/(60*60)).floor}小时前"
-			when i >= 60*60*24 && i < 60*60*48
-				time.strftime("昨天 %H:%M:%S")
-			when i >= 60*60*48 && i < 60*60*72
-				time.strftime("前天 %H:%M:%S")
+			when i >= 60*60*24 && i < 60*60*24*7
+				"#{(i/(60*60*24)).floor}天前"
 			else
 				time.strftime("%Y-%m-%d %H:%M:%S")
 			end
