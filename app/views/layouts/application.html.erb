@@ -198,12 +198,12 @@
 					<%= link_to PRIVACY_POLICY_CN, root_url %> 
 					<%= link_to TERMS_OF_SERVICE_CN, root_url %> 
 					<%= link_to HELP_CN, root_url %>
-					|&nbsp;
-					<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{YEAR_NOW} is a service of #{STUDIO_NAME_EN}" %></span>
-					&nbsp;|&nbsp;&nbsp;
-					<%= '友情链接 - ' %>
-					<%= link_to 'FLVCD', 'http://www.flvcd.com/', :class => 'seo_link', :target => "_blank" %>
-					<%= link_to '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', :class => 'seo_link', :target => "_blank" %>
+					<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %></span>
+					<div class="seo_link">
+						<%= '友情链接 - ' %>
+						<%= link_to 'FLVCD', 'http://www.flvcd.com/', :target => "_blank" %>
+						<%= link_to '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', :target => "_blank" %>
+					</div>
 				</div>
 			</div>
 			<!-- END FOOTER -->
