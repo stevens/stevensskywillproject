@@ -252,7 +252,7 @@ div.tag {
 	width: 950px;
 	margin: 0px auto;
 	padding: 5px 15px;
-	border-top: 8px solid #b8b9a7;
+	border-top: 1px solid #b8b9a7;
 	background-color: #428cbb;
 }
 #footer_content a, #footer a:link, #footer a:visited {
@@ -268,8 +268,12 @@ div.tag {
 	float: right;
 }
 #footer_content .seo_link {
-	margin-top: 3px;
+	margin: 0px -15px;
+	margin-bottom: -5px;
+	margin-top: 5px;
+	padding: 2px 15px;
 	text-align: center;
+	background-color: #b8b9a7;
 }
 .seo_link a {
 	color: #ff8159 !important;
