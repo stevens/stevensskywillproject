@@ -9,7 +9,7 @@ class RatingsController < ApplicationController
   def rate
   	load_rateable
   	
-  	new_rating_value = params[:id].to_i
+  	new_rating_value = params[:id]
   	
   	if my_rating = user_rating(@current_user, @rateable)
   		my_rating.rating = new_rating_value

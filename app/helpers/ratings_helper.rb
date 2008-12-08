@@ -6,11 +6,21 @@ module RatingsHelper
 	
 	def user_rating_value(user, rateable)
 		user_rating = user_rating(user, rateable)
-		user_rating ? user_rating.rating : 0
+		if user_rating
+			r = user_rating.rating/10.0
+			r == r.round ? r.round : r
+		else
+			0
+		end
 	end
 	
 	def average_rating_value(rateable)
-		rateable.ratings.size > 0 ? f(rateable.ratings.average('rating')) : 0
+		if rateable.ratings.size > 0
+			r = rateable.ratings.average('rating')/10.0
+			r == r.round ? r.round : f(r)
+		else
+			0
+		end
 	end
 	
 	def highest_rated_items(items_set)
@@ -20,7 +30,7 @@ module RatingsHelper
 		
 		items = []
 		for item in items_set
-			rating = item.rating ? item.rating : 0
+			rating = item.rating/10.0 ? item.rating : 0
 			if rating >= min_rating && rating <= max_rating && item.total_ratings >= min_ratings_count
 				items << item
 			end

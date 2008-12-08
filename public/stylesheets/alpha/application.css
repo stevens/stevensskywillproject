@@ -1121,6 +1121,7 @@ div.pagination a, div.pagination span {
 	text-decoration:none;
 }
 
+/*
 #r1{width: 17px;z-index: 200;}
 #r2{width: 34px;z-index: 190;}
 #r3{width: 51px;z-index: 180;}
@@ -1131,6 +1132,28 @@ div.pagination a, div.pagination span {
 #r8{width: 136px;z-index: 130;}
 #r9{width: 153px;z-index: 120;}
 #r10{width: 170px;z-index: 110;}
+*/
+
+#r5{width: 8.5px;z-index: 200;}
+#r10{width: 17px;z-index: 195;}
+#r15{width: 25.5px;z-index: 190;}
+#r20{width: 34px;z-index: 185;}
+#r25{width: 42.5px;z-index: 180;}
+#r30{width: 51px;z-index: 175;}
+#r35{width: 59.5px;z-index: 170;}
+#r40{width: 68px;z-index: 165;}
+#r45{width: 76.5px;z-index: 160;}
+#r50{width: 85px;z-index: 155;}
+#r55{width: 93.5px;z-index: 150;}
+#r60{width: 102px;z-index: 145;}
+#r65{width: 110.5px;z-index: 140;}
+#r70{width: 119px;z-index: 135;}
+#r75{width: 127.5px;z-index: 130;}
+#r80{width: 136px;z-index: 125;}
+#r85{width: 144.5px;z-index: 120;}
+#r90{width: 153px;z-index: 115;}
+#r95{width: 161.5px;z-index: 110;}
+#r100{width: 170px;z-index: 105;}
 
 #rating li a:hover {
 	background:url(/images/rating/rating.png) 0px -100px;
