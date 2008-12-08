@@ -188,7 +188,7 @@ module ApplicationHelper
 			when i >= 60*60*24 && i < 60*60*24*7
 				"#{(i/(60*60*24)).floor}天前"
 			else
-				time.strftime("%Y-%m-%d %H:%M:%S")
+				time.strftime("%Y-%m-%d")
 			end
 		else
 			time.strftime("%Y-%m-%d %H:%M:%S")
