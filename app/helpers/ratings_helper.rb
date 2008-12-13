@@ -33,7 +33,7 @@ module RatingsHelper
 			if item.rating
 				rating = item.rating / 10.0
 			else
-				0
+				rating = 0
 			end
 			if rating >= min_rating && rating <= max_rating && item.total_ratings >= min_ratings_count
 				items << item

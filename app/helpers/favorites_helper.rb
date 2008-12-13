@@ -62,5 +62,13 @@ module FavoritesHelper
 		statuses_set = statuses_set.group_by { |status| (status) }.sort { |a, b| a <=> b }
 		statuses_set.group_by { |statuses| (statuses[0][1..1]) }.sort { |a, b| a <=> b }
   end
+  
+  def favorite_users(favorites)
+  	favorite_users = []
+  	for favorite in favorites
+  		favorite_users << favorite.user
+  	end
+  	favorite_users
+  end
 
 end

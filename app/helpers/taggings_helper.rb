@@ -8,7 +8,7 @@ module TaggingsHelper
 																			  :conditions => conditions.join(" AND "))
 	end
   
-	def taggables_for(user = nil, taggable_type = nil, tags = nil, taggable_conditions = nil, exclude = nil, match_all = nil, limit = nil, order = 'created_at DESC')
+	def taggables_for(user = nil, taggable_type = nil, tags = nil, taggable_conditions = nil, exclude = false, match_all = false, limit = nil, order = 'created_at DESC')
 		conditions = []
 		conditions << "#{controller_name(taggable_type)}.user_id = #{user.id}" if user
 		conditions << taggable_conditions if taggable_conditions

@@ -23,10 +23,10 @@ module SearchingsHelper
 				conditions << "#{title_field} LIKE '%#{keyword}%'"
 			end
 		end
-		conditions.join(' AND ')
+		conditions.join(' OR ')
 	end
 	
-	def searchables_for(user = nil, searchable_type = nil, keywords = [], searchable_conditions = nil, exclude = nil, match_all = true, limit = nil, order = 'created_at DESC')
+	def searchables_for(user = nil, searchable_type = nil, keywords = [], searchable_conditions = nil, exclude = false, match_all = false, limit = nil, order = 'created_at DESC')
 		conditions = searchable_type == 'User' ? [keywords_to_conditions(keywords, 'login')] : [keywords_to_conditions(keywords)]
 		conditions << "#{controller_name(searchable_type)}.user_id = #{user.id}" if user
 		conditions << searchable_conditions if searchable_conditions
