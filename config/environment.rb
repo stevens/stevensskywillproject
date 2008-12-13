@@ -241,11 +241,22 @@ Rails::Initializer.run do |config|
 	GROUP_CN = '队伍'
 	FRIEND_CN = '伙伴'
 	INTERESTED_CN = '感兴趣的'
-	PEOPLE_CN = '蜂人'
+	PEOPLE_CN = '蜂友'
 	PROFILE_CN = '档案'
 	MAILBOX_CN = '信箱'
 	SETTING_CN = '设置'
 	PRIVACY_CN = '隐私'
+	BRAIN_CN = '智囊'
+	MAIN_PAGE_CN = '蜂窝'
+	
+	MATCH_CN = '比赛'
+	ENTRY_CN = '参赛作品'
+	PLAYER_CN = '参赛人'
+	VOTE_CN = '投票'
+	VOTER_CN = '投票人'
+	AWARD_CN = '奖项'
+	WINNING_CN = '获奖作品'
+	WINNER_CN = '获奖人'
 	
 	ABOUT_CN = '关于'
 	CONTACT_US_CN = '联系我们'
@@ -258,7 +269,6 @@ Rails::Initializer.run do |config|
 	TITLE_LINKER = '>'
 	
 	HOME_CN = '首页'
-	MAIN_PAGE_CN = '主页'
 	FIRST_PAGE_CN = '头页'
 	LAST_PAGE_CN = '尾页'
 	PREV_PAGE_CN = '上页'
@@ -295,6 +305,11 @@ Rails::Initializer.run do |config|
 	UNIT_PHOTO_CN = '张'
 	UNIT_REVIEW_CN = '条'
 	UNIT_FAVORITE_CN = '个'
+	UNIT_MATCH_CN = '个'
+	UNIT_ENTRY_CN = '项'
+	UNIT_VOTE_CN = '票'
+	UNIT_RATE_CN = '次'
+	UNIT_AWARD_CN = '个'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 20
@@ -361,3 +376,4 @@ end
 	require 'will_paginate'
 	
 	TagList.delimiter = " "
+	Tag.destroy_unused = true

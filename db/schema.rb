@@ -9,7 +9,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 29) do
+ActiveRecord::Schema.define(:version => 33) do
+
+  create_table "awards", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "match_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "order"
+    t.string   "quota"
+    t.string   "prize_title"
+    t.text     "prize_description"
+    t.string   "prize_value"
+    t.integer  "cover_photo_id"
+    t.string   "status"
+    t.integer  "photos_count"
+    t.integer  "reviews_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "awards", ["user_id"], :name => "fk_user"
+  add_index "awards", ["match_id"], :name => "fk_match"
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
@@ -53,6 +74,27 @@ ActiveRecord::Schema.define(:version => 29) do
   add_index "counters", ["countable_type", "countable_id"], :name => "pi_countable"
   add_index "counters", ["countable_type"], :name => "pi_countable_type"
 
+  create_table "entries", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "match_id"
+    t.integer  "award_id"
+    t.string   "title"
+    t.text     "description"
+    t.string   "entriable_type"
+    t.integer  "entriable_id"
+    t.integer  "total_votes"
+    t.string   "status"
+    t.integer  "votes_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "entries", ["user_id"], :name => "fk_user"
+  add_index "entries", ["match_id"], :name => "fk_match"
+  add_index "entries", ["award_id"], :name => "fk_award"
+  add_index "entries", ["entriable_type"], :name => "i_entriable_type"
+  add_index "entries", ["entriable_type", "entriable_id"], :name => "i_entriable"
+
   create_table "favorites", :force => true do |t|
     t.integer  "user_id"
     t.string   "favorable_type"
@@ -93,6 +135,42 @@ ActiveRecord::Schema.define(:version => 29) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "matches", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "subject"
+    t.string   "entriable_type"
+    t.text     "description"
+    t.string   "organiger_type"
+    t.integer  "organiger_id"
+    t.integer  "cover_photo_id"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "voting_start_at"
+    t.datetime "voting_end_at"
+    t.integer  "entries_per_player"
+    t.integer  "entries_per_voter"
+    t.integer  "votes_per_entry"
+    t.integer  "votes_lower_limit"
+    t.string   "voting_type"
+    t.string   "self_vote"
+    t.text     "any_else"
+    t.string   "status"
+    t.string   "privacy"
+    t.integer  "photos_count"
+    t.integer  "reviews_count"
+    t.integer  "favorites_count"
+    t.integer  "entries_count"
+    t.integer  "awards_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "matches", ["user_id"], :name => "fk_user"
+  add_index "matches", ["entriable_type"], :name => "i_entriable_type"
+  add_index "matches", ["organiger_type"], :name => "i_organiger_type"
+  add_index "matches", ["organiger_type", "organiger_id"], :name => "i_organiger"
 
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
@@ -243,5 +321,19 @@ ActiveRecord::Schema.define(:version => 29) do
     t.integer  "login_count"
     t.string   "roles"
   end
+
+  create_table "votes", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "voteable_type"
+    t.integer  "voteable_id"
+    t.integer  "votes"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["user_id"], :name => "fk_user"
+  add_index "votes", ["voteable_type"], :name => "i_voteable_type"
+  add_index "votes", ["voteable_type", "voteable_id"], :name => "i_voteable"
 
 end

@@ -918,15 +918,19 @@ div.main li {
 	margin-bottom: 5px;
 }
 div.main ol {
-	padding-left: 30px;
+	padding-left: 35px;
 	font-weight: bold;
 }
 div.main ul span {
-	font-weight: bolder;
+	font-weight: bold;
+	display: block;
+	padding-top: 5px;
 }
 div.main ol span {
-	margin-left: -25px;
-	font-weight: bolder;
+	margin-left: -35px;
+	font-weight: bold;
+	display: block;
+	padding-top: 5px;
 }
 div.main h3 {
 	margin-top: 10px;

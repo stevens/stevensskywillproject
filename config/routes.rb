@@ -33,13 +33,13 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
 	map.resources :users, 
-								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories], 
+								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :awards], 
 								:has_one => [:profile, :counter]
 	map.resources :recipes, 
-								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites], 
+								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries], 
 								:has_one => [:counter]
 	map.resources :photos, 
-								:has_many => [:reviews], 
+								:has_many => [:reviews, :taggings, :tags], 
 								:has_one => [:counter]
 	map.resources :reviews
 	map.resources :taggings
@@ -50,7 +50,16 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :contacts
 	map.resources :profiles
 	map.resources :stories
-	
+  map.resources :matches, 
+  							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :entries, :awards], 
+  							:has_one => [:counter]
+  map.resources :entries, 
+  							:has_many => [:votes], 
+  							:has_one => [:counter]
+  map.resources :votes
+  map.resources :awards, 
+  							:has_many => [:photos, :reviews], 
+  							:has_one => [:counter]
 	map.resource :session
   
   # map.namespace :mine do |mine|
