@@ -1,0 +1,16 @@
+<div class="content_block">
+	
+	<div class="block_header">
+		<div class="block_header_link">
+
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
+	
+	<div class="block_main">
+		<%= render :partial => "/matches/match_input", 
+							 :locals => { :match => @match, 
+							 						  :is_new => true } %>
+	</div>
+
+</div>

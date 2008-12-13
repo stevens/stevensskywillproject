@@ -1,31 +1,17 @@
 <div id="review_<%= item.id %>_basic" class="basic">
 	<ul>
-		<% if show_parent %>
-			<li>
-				<% if item.user.is_role_of?('brain') %>
-					<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-				<% end %>
-				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
-				&nbsp;
-				<% if item.reviewable_type == 'Recipe' && recipe_accessible?(item.reviewable) %>
-					<%= "#{name_for(item.reviewable_type)}-" %><%= link_to h(item.reviewable.title), item.reviewable %><%= "的#{REVIEW_CN}" %>
-				<% else %>
-					<%= h "#{name_for(item.reviewable_type)}-#{item.reviewable.title}的#{REVIEW_CN}" %>
-				<% end %>
-			</li>
-			<li>
-				<%= time_iso_format(item.created_at, true) %>
-			</li>
-		<% else %>
-			<li>
-				<% if item.user.is_role_of?('brain') %>
-					<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-				<% end %>
-				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
-				&nbsp;
-				<%= time_iso_format(item.created_at, true) %>
-			</li>	
-		<% end %>
+		<li>
+			<%= render :partial => '/users/user_basic', 
+								 :locals => { :user => item.user, 
+								 							:show_come_from => false, 
+								 							:show_icon => true,
+								 							:show_name => true, 
+								 							:show_link => true, 
+								 							:show_username => true,
+								 							:show_myname => false } %>
+			&nbsp;
+			<%= time_iso_format(item.created_at, true) %>
+		</li>
 	</ul>
 </div>
 

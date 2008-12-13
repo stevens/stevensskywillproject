@@ -1,20 +1,36 @@
+<% item_type = type_for(item) %>
+
 <% if show_title %>
 	<div>
-		<% if type_for(item) == 'Recipe' && item.from_type == '1' %>
-			<%= image_tag 'default/other/private.png', :title => PRIVATE_HOME_CN, :class => "icon" %>
-		<% elsif type_for(item) == 'User' && item.is_role_of?('brain') %>
-			<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-		<% end %>
-		<%= link_to strip_tags(item_title(item)), type_for(item) == 'User' ? user_first_link(item) : item %>
-		<% if type_for(item) == 'Recipe' %>
-			<%= "#{add_brackets(code_title('is_draft', item.is_draft))}" %>
+		<% if item_type == 'User' %>
+			<%= render :partial => '/users/user_basic', 
+						 :locals => { :user => item, 
+						 							:show_come_from => false, 
+						 							:show_icon => true,
+						 							:show_name => true, 
+						 							:show_link => true, 
+						 							:show_username => true,
+						 							:show_myname => false } %>		
+		<% else %>
+			<%= render :partial => '/layouts/item_basic', 
+								 :locals => { :item => item,
+								 							:show_icon => true,
+								 							:show_title => true,
+								 							:show_link => true } %>
 		<% end %>
 	</div>
 <% end %>
 
 <% if show_user %>
 	<div class="item_user">
-		来自 <%= link_to strip_tags(item_username(item)), user_first_link(item.user) %>
+		<%= render :partial => '/users/user_basic', 
+					 :locals => { :user => item.user, 
+					 							:show_come_from => true, 
+					 							:show_icon => false,
+					 							:show_name => true, 
+					 							:show_link => true, 
+					 							:show_username => true,
+					 							:show_myname => false } %>
 	</div>
 <% end %>
 

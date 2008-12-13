@@ -10,10 +10,14 @@
 			</td>
 			<td class="middle_column">
 				<div class="user_bar_username">
-					<% if user.is_role_of?('brain') %>
-						<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-					<% end %>
-					<%= strip_tags(user.login) %>
+					<%= render :partial => '/users/user_basic', 
+										 :locals => { :user => user, 
+										 							:show_come_from => false, 
+										 							:show_icon => true,
+										 							:show_name => true, 
+										 							:show_link => false, 
+										 							:show_username => true,
+										 							:show_myname => true } %>
 					<% if user == @current_user && !user_portrait(user) %>
 						&nbsp;
 						<span><%= link_to "#{UPLOAD_CN}#{PORTRAIT_CN}", :controller => 'accounts', :action => 'edit', :id => 'portrait' %></span>
@@ -29,7 +33,7 @@
 					<% end %>
 				</div>
 				<div class="user_bar_link">
-					<%= link_to "#{PEOPLE_CN}#{MAIN_PAGE_CN}", :controller => 'users', :action => 'profile', :id => user.id %> |
+					<%= link_to MAIN_PAGE_CN, :controller => 'users', :action => 'profile', :id => user.id %> |
 					<%= link_to RECIPE_CN, user_recipes_path(user) %> |
 					<%= link_to FRIEND_CN, user_contacts_path(user) %> |
 					<%= link_to REVIEW_CN, user_reviews_path(user) %> |

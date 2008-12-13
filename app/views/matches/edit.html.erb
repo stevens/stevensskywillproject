@@ -1,0 +1,12 @@
+<h1>Editing match</h1>
+
+<%= error_messages_for :match %>
+
+<% form_for(@match) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @match %> |
+<%= link_to 'Back', matches_path %>

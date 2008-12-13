@@ -2,17 +2,23 @@
 	<div class="basic">
 		<h2>
 			<div id="recipe_<%= item.id %>_title">
-				<%= render :partial => "/recipes/recipe_title", 
-									 :locals => {:item => item} %>
+				<%= render :partial => '/layouts/item_basic', 
+									 :locals => { :item => item,
+									 							:show_icon => true,
+									 							:show_title => true,
+									 							:show_link => true } %>
 			</div>
 		</h2>
 		<ul>
 			<li>
-				<%= '来自 ' %>
-				<% if item.user.is_role_of?('brain') %>
-					<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-				<% end %>
-				<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
+				<%= render :partial => '/users/user_basic', 
+									 :locals => { :user => item.user, 
+									 							:show_come_from => true, 
+									 							:show_icon => true,
+									 							:show_name => true, 
+									 							:show_link => true, 
+									 							:show_username => true,
+									 							:show_myname => false } %>
 			</li>
 			<li>
 				<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
@@ -50,8 +56,11 @@
 			<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
 			<li>
 				<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
-				<% if !item.from_where.blank? %>
-					<%= "(#{h item.from_where})" %>
+				<% if item.from_type == '1' %>
+					<% remark = "这个#{RECIPE_CN}的文字和#{PHOTO_CN}都是#{strip_tags(user_username(item.user))}的辛苦原创, 未经许可, 请勿转载!" %>
+					<%= "<em class='more'>#{add_brackets(remark)}</em>" %>
+				<% elsif !item.from_where.nil? && !item.from_where.blank? %>
+					<%= "[#{h item.from_where}]" %>
 				<% end %>
 			</li>
 		</ul>

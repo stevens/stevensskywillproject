@@ -1,0 +1,17 @@
+<% if include_blank %>
+	<% option_tags = ["<option></option>"] %>
+<% elsif include_no_limit %>
+	<% option_tags = ["<option>不限</option>"] %>
+<% else %>
+	<% option_tags = [] %>
+<% end %>
+
+<% min.upto(max) do |i| %>
+	<% if i == selected %>
+		<% option_tags << "<option selected='selected'>#{i}</option>" %>
+	<% else %>
+		<% option_tags << "<option>#{i}</option>" %>
+	<% end %>
+<% end %>
+
+<%= select_tag name, option_tags.join('') %>

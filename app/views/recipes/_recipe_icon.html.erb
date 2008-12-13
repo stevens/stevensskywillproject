@@ -1,0 +1,13 @@
+<% from_type_code_code = item.from_type %>
+<% if from_type_code_code == '1' %>
+	<% if from_type_code = codes_for(code_conditions('from_type', from_type_code_code))[0] %>
+		<%= image_tag "icon/recipe/#{from_type_code.name}.png", :title => from_type_code.title, :class => "icon" %>
+	<% end %>
+<% end %>
+
+<% is_draft_code_code = item.is_draft %>
+<% if is_draft_code_code == '1' %>
+	<% if is_draft_code = codes_for(code_conditions('is_draft', is_draft_code_code))[0] %>
+		<%= add_brackets(is_draft_code.title) %>
+	<% end %>
+<% end %>

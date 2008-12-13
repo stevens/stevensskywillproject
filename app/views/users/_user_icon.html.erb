@@ -1,0 +1,7 @@
+<% if user_roles = user.roles %>
+	<% for role_code_code in user_roles.split(' ') %>
+		<% if role_code = codes_for(code_conditions('user_role', role_code_code))[0] %>
+			<%= image_tag "icon/user/#{role_code.name}.png", :title => role_code.title, :class => "icon" %>
+		<% end %>
+	<% end %>
+<% end %>

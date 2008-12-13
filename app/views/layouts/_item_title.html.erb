@@ -1,0 +1,5 @@
+<% if show_link %>
+	<%= link_to strip_tags(item.title), item %>
+<% else %>
+	<%= strip_tags(item.title) %>
+<% end %>

@@ -18,11 +18,8 @@
 					 							:block_header_link => nil, 
 					 							:items_set => @related_recipes_set } %>
 
-<%= render :partial => '/favorites/favorites_sideblock', 
+<%= render :partial => '/layouts/items_sideblock', 
 					 :locals => { :id => 'favorite_users', 
 					 							:block_title => "谁#{FAVORITE_CN}了这#{unit_for('Recipe')}#{RECIPE_CN}?", 
 					 							:block_header_link => nil, 
-					 							:favorites_set => @recipe.favorites.find(:all, :order => 'RAND()'), 
-					 							:limit => 12, 
-					 							:show_type => 'user', 
-					 							:photo_style => 'sign' } %>
+					 							:items_set => @favorite_users_set } %>

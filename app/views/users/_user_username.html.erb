@@ -1,0 +1,5 @@
+<% if show_link %>
+	<%= link_to strip_tags(user_username(user, show_username, show_myname)), user_first_link(user) %>
+<% else %>
+	<%= strip_tags(user_username(user, show_username, show_myname)) %>
+<% end %>

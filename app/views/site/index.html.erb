@@ -4,23 +4,29 @@
 		<p>"Every people can be a cook. —— Remy"</p><br />
 		<p>是的, 人人皆可成为厨师!</p><br />
 		<% if @current_user %>
-			<p><span>
-				<%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'user', 'matrix'), :title => "进入我的#{SITE_NAME_CN}"), 
-										user_first_link(@current_user) %>
-			</span></p><br />
+			<p>
+				<span>
+					<%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'user', 'matrix'), :title => "进入我的#{SITE_NAME_CN}"), 
+											user_first_link(@current_user) %>
+				</span>
+			</p>
+			<br />
 			<p><em class="l"><%= "#{strip_tags(@current_user.login)} - #{SLOGAN_CN}" %></em></p><br />			
 		<% else %>
-			<p><span>
-				<%= link_to image_tag(photo_file_url(nil, 'user', 'matrix'), :title => "加入#{SITE_NAME_CN}"), 
-										signup_url %>
-			</span></p><br />
+			<p>
+				<span>
+					<%= link_to image_tag(photo_file_url(nil, 'user', 'matrix'), :title => "加入#{SITE_NAME_CN}"), 
+											signup_url %>
+				</span>
+			</p>
+			<br />
 			<p><em class="l"><%= SLOGAN_CN %></em></p><br />
 		<% end %>
 		<p>记录——<em>美食灵感</em>&nbsp;&nbsp;&nbsp;&nbsp;分享——<em>私房食谱</em></p><br />
 		<p>结交——<em>天下厨友</em>&nbsp;&nbsp;&nbsp;&nbsp;切磋——<em>江湖厨道</em></p><br />
 		<div class="welcome_todo_button">
 			<% if @current_user %>
-				<%= link_to "进入我的#{SITE_NAME_CN}", user_first_link(@current_user) %>
+				<%= link_to "进入我的#{MAIN_PAGE_CN}", user_first_link(@current_user) %>
 			<% else %>
 				<%= link_to "加入#{SITE_NAME_CN}", signup_url %>
 			<% end %>

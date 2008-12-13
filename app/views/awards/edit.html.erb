@@ -1,0 +1,12 @@
+<h1>Editing award</h1>
+
+<%= error_messages_for :award %>
+
+<% form_for(@award) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @award %> |
+<%= link_to 'Back', awards_path %>

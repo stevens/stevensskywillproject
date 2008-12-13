@@ -1,9 +1,13 @@
 <div id="contact_<%= item.id %>_basic" class="basic">
 	<h2>
-		<% if item.contactor.is_role_of?('brain') %>
-			<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-		<% end %>
-		<%= link_to strip_tags(user_username(item.contactor)), user_first_link(item.contactor) %>
+		<%= render :partial => '/users/user_basic', 
+							 :locals => { :user => item.contactor, 
+							 							:show_come_from => false, 
+							 							:show_icon => true,
+							 							:show_name => true, 
+							 							:show_link => true, 
+							 							:show_username => true,
+							 							:show_myname => false } %>
 	</h2>
 </div>
 

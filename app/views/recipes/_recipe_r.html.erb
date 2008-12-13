@@ -1,18 +1,21 @@
 <div id="recipe_<%= item.id %>_basic" class="basic">
 	<h2>
-		<!-- <%= "[#{code_title('from_type', item.from_type)}] " %> -->
-		<% if item.from_type == '1' %>
-			<%= image_tag 'default/other/private.png', :title => '私房', :class => "icon" %>
-		<% end %>
-		<%= link_to h(item.title), item %>
+		<%= render :partial => '/layouts/item_basic', 
+							 :locals => { :item => item,
+							 							:show_icon => true,
+							 							:show_title => true,
+							 							:show_link => true } %>
 	</h2>
 	<ul>
 		<li>
-			<%= "来自 " %>
-			<% if item.user.is_role_of?('brain') %>
-				<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-			<% end %>
-			<%= link_to strip_tags(user_username(item.user)), user_first_link(item.user) %>
+			<%= render :partial => '/users/user_basic', 
+								 :locals => { :user => item.user, 
+								 							:show_come_from => false, 
+								 							:show_icon => true,
+								 							:show_name => true, 
+								 							:show_link => true, 
+								 							:show_username => true,
+								 							:show_myname => false } %>
 		</li>
 		<li>
 			<% if (ratings_count = item.ratings.size) > 0 %>

@@ -1,11 +1,14 @@
 <div id="photo_<%= photo.id %>_basic" class="basic">
 	<ul>
 		<li>
-			<%= "来自 " %>
-			<% if photo.user.is_role_of?('brain') %>
-				<%= image_tag 'default/other/brain.png', :title => codes_for(code_conditions('user_role', nil, nil, 'brain'))[0].title, :class => "icon" %>
-			<% end %>
-			<%= link_to strip_tags(user_username(photo.user)), user_first_link(photo.user) %>		    			
+			<%= render :partial => '/users/user_basic', 
+								 :locals => { :user => photo.user, 
+								 							:show_come_from => true, 
+								 							:show_icon => true,
+								 							:show_name => true, 
+								 							:show_link => true, 
+								 							:show_username => true,
+								 							:show_myname => false } %>	    			
 		</li>
 		<li>
 			<%= "#{time_iso_format(photo.created_at, true)} #{ADD_CN}" %>
@@ -22,7 +25,6 @@
 				<% else %>
 					<%= "这#{UNIT_PHOTO_CN}#{PHOTO_CN}是#{name_for(photo.photoable_type)}的#{code_title('photo_type', photo.photo_type)}图" %>
 				<% end %>
-				
 			</li>
 		<% end %>
 	</ul>
