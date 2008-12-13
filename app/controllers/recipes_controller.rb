@@ -63,6 +63,8 @@ class RecipesController < ApplicationController
 		same_title_recipes_conditions << "recipes.title = '#{@recipe.title}'"
 		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions.join(' AND '), nil, 'RAND()') - recipe
 		@same_title_recipes_set_count = @same_title_recipes_set.size
+		@favorite_users_set = favorite_users(@recipe.favorites.find(:all, :limit => 12, :order => 'RAND()'))
+		@favorite_users_set_count = @favorite_users_set.size
 
     log_count(@recipe)												
 		

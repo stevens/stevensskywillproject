@@ -78,15 +78,17 @@ class FavoritesController < ApplicationController
 	
 	def create
 		if @current_user && @parent_obj.user != @current_user
-			@favorite = @parent_obj.favorites.build(params[:favorite])
-			@favorite.user_id = @current_user.id
-			@favorite.status = params[:status].values.join(' ')
-			
-			if @favorite.save
-				@notice = "你已经成功#{ADD_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
-				after_save_ok
-			else
-				after_save_error
+			unless @parent_obj.favorites.find(:first, :conditions => { :user_id => @current_user.id })
+				@favorite = @parent_obj.favorites.build(params[:favorite])
+				@favorite.user_id = @current_user.id
+				@favorite.status = params[:status].values.join(' ')
+				
+				if @favorite.save
+					@notice = "你已经成功#{ADD_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
+					after_save_ok
+				else
+					after_save_error
+				end
 			end
 		end
 	end
@@ -198,13 +200,17 @@ class FavoritesController < ApplicationController
 									 						:locals => { :item => @parent_obj }
 					elsif @back_to_type == 'show'
 						page.replace_html "favorite_users_detail", 
-															:partial => '/favorites/favorite_detail', 
-														  :locals => { :favorites_set => @parent_obj.favorites.find(:all, :order => 'RAND()'), 
-														 							 :limit => 12, 
-														 							 :items_count_per_row => 4,
-														 							 :show_type => 'user', 
-														 							 :photo_style => 'sign', 
-														 							 :show_title => false }
+															:partial => "/layouts/items_matrix",
+														  :locals => { :show_paginate => false,
+														 						   :items_set => favorite_users(@parent_obj.favorites.find(:all, :limit => 12, :order => 'RAND()')), 
+														 						   :limit => 12,
+														 						   :items_count_per_row => 4,  
+														 						   :show_photo => true, 
+														 						   :show_below_photo => false,  
+														 						   :show_title => false, 
+														 						   :show_user => false, 
+														 						   :show_photo_todo => false, 
+														 						   :photo_style => 'sign' }
 					end
 					# page.visual_effect :highlight, "#{@parent_type.downcase}_#{@parent_id}_favorite", :duration => 3
 				end
@@ -255,13 +261,17 @@ class FavoritesController < ApplicationController
 										 						:locals => { :item => @parent_obj }
 						elsif @back_to_type == 'show'
 							page.replace_html "favorite_users_detail", 
-																:partial => '/favorites/favorite_detail', 
-															  :locals => { :favorites_set => @parent_obj.favorites.find(:all, :order => 'RAND()'), 
-															 							 :limit => 12, 
-															 							 :items_count_per_row => 4, 
-															 							 :show_type => 'user', 
-															 							 :photo_style => 'sign', 
-															 							 :show_title => false }
+																:partial => "/layouts/items_matrix",
+															  :locals => { :show_paginate => false,
+															 						   :items_set => favorite_users(@parent_obj.favorites.find(:all, :limit => 12, :order => 'RAND()')), 
+															 						   :limit => 12,
+															 						   :items_count_per_row => 4,  
+															 						   :show_photo => true, 
+															 						   :show_below_photo => false,  
+															 						   :show_title => false, 
+															 						   :show_user => false, 
+															 						   :show_photo_todo => false, 
+															 						   :photo_style => 'sign' }
 						end
 					end
 					# page.visual_effect :highlight, "#{@parent_type.downcase}_#{@parent_id}_favorite", :duration => 3
