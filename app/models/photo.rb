@@ -11,7 +11,7 @@ class Photo < ActiveRecord::Base
 								 									:tiny => '80x80>', :tcube => '24x24!' },
 							 	 :processor => 'Rmagick'
 	belongs_to :user
-	belongs_to :photoable, :polymorphic => true
+	belongs_to :photoable, :polymorphic => true, :counter_cache => true
 	# has_many :reviews, :order => "updated_at DESC"
 	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
   

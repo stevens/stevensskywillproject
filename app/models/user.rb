@@ -15,6 +15,15 @@ class User < ActiveRecord::Base
 					 :conditions => "contact_type = 1", 
 					 :order => "accepted_at DESC, created_at DESC"
   has_many :stories, :order => "created_at DESC"
+  has_many :matches, :order => "created_at DESC"
+  has_many :org_matches, 
+  				 :class_name => "Match", 
+  				 :dependent => :destroy, 
+  				 :as => :organiger, 
+  				 :foreign_key => :organiger_id, 
+  				 :order => "created_at DESC"
+ 	has_many :entries, :order => "created_at DESC"
+ 	has_many :votes, :order => "created_at DESC"
   has_one :profile
 	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
   
