@@ -45,14 +45,17 @@
 	</div>
 	
 	<div id="favorite_recipes_detail" class="block_main">
-		<%= render :partial => '/favorites/favorite_detail', 
-							 :locals => { :favorites_set => @favorites_set, 
-							 							:limit => 18, 
-							 							:items_count_per_row => 6, 
-							 							:show_type => 'favorable', 
-							 							:photo_style => 'matrix', 
-							 							:show_title => true, 
-							 							:show_user => true } %>
+		<%= render :partial => '/layouts/items_matrix', 
+							 :locals => { :show_paginate => false,
+						 						    :items_set => favorite_favorables(@favorites_set), 
+						 						    :limit => 18,
+						 						    :items_count_per_row => 6, 
+						 						    :show_photo => true, 
+						 						    :show_below_photo => true,  
+						 						    :show_title => true, 
+						 						    :show_user => true, 
+						 						    :show_photo_todo => false, 
+						 						    :photo_style => 'matrix' } %>
 	</div>
 </div>
 

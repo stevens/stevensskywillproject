@@ -70,5 +70,13 @@ module FavoritesHelper
   	end
   	favorite_users
   end
+  
+  def favorite_favorables(favorites)
+  	favorite_favorables = []
+  	for favorite in favorites
+  		favorite_favorables << favorite.favorable
+  	end
+  	favorite_favorables
+  end
 
 end
