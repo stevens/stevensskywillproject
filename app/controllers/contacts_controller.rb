@@ -13,7 +13,7 @@ class ContactsController < ApplicationController
       else
 		    load_contacts_set(@user)
 		  	
-		  	info = "#{username_prefix(@user)}#{FRIEND_CN}"
+		  	info = "#{username_prefix(@user)}#{PEOPLE_CN}"
 				set_page_title(info)
 				set_block_title(info)
 				
@@ -115,7 +115,7 @@ class ContactsController < ApplicationController
   	@show_todo = true
   	@show_manage = true
 		
-		info = "#{username_prefix(@current_user)}#{FRIEND_CN}"
+		info = "#{username_prefix(@current_user)}#{PEOPLE_CN}"
 		set_page_title(info)
 		set_block_title(info)
 		

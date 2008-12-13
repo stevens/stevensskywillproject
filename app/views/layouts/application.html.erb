@@ -121,7 +121,7 @@
 						
 						<% if @current_tab_type == 'mine' %>
 							<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
-							<%= link_to "我的#{FRIEND_CN}", :controller => 'contacts', :action => 'mine' %>
+							<%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
 							<%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
 							<%= link_to "我的#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
 							<%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
@@ -136,7 +136,7 @@
 							<%= link_to "#{RECIPE_CN}#{TAG_CN}", :controller => 'taggings', :action => 'index', :taggable_type => 'recipe' %>
 						<% elsif @current_tab_type == 'user' %>
 							<% if @current_user %>
-								<%= link_to "我的#{FRIEND_CN}", :controller => 'contacts', :action => 'mine' %>
+								<%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
 								<!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
 							<% end %>
 							<%= link_to "#{PEOPLE_CN}浏览", users_path %>
