@@ -1203,12 +1203,16 @@ div.welcome_content em {
 	font-size: 14px;
 	font-style: normal;
 	color: #428cbb;
+	padding: 5px 10px;
 }
 div.welcome_content em.l {
 	font-weight: bold;
 	font-size: 18px;
 	font-style: normal;
 	color: #ff8159;
+}
+div.welcome_content table {
+	margin: auto;
 }
 div.welcome_content span a:hover {
 	background-color: transparent !important;

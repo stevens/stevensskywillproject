@@ -22,8 +22,26 @@
 			<br />
 			<p><em class="l"><%= SLOGAN_CN %></em></p><br />
 		<% end %>
-		<p>记录——<em>美食灵感</em>&nbsp;&nbsp;&nbsp;&nbsp;分享——<em>私房食谱</em></p><br />
-		<p>结交——<em>天下厨友</em>&nbsp;&nbsp;&nbsp;&nbsp;切磋——<em>江湖厨道</em></p><br />
+		<p>
+			<table style="margin: auto">
+				<% subjects = [['mslg.gif', '记录美食灵感'], ['sfsp.gif', '分享私房食谱'], ['txcy.gif', '结交天下厨友'], ['jhcd.gif', '切磋江湖厨道']] %>
+				<tr>
+					<% for subject in subjects %>
+						<td>
+							<%= image_tag "site/#{subject[0]}", :title => subject[1] %>
+						</td>
+					<% end %>
+				</tr>
+				<tr>
+					<% for subject in subjects %>
+						<td>
+							<em><%= subject[1] %></em>
+						</td>
+					<% end %>
+				</tr>
+			</table>
+		</p>
+		<br />
 		<div class="welcome_todo_button">
 			<% if @current_user %>
 				<%= link_to "进入我的#{MAIN_PAGE_CN}", user_first_link(@current_user) %>
