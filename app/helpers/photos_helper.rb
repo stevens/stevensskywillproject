@@ -51,14 +51,18 @@ module PhotosHelper
 	end
 	
 	def photo_dimension(photo, thumbnail = nil)
-		if thumbnail
-			if thumbnail_photo = Photo.find(:first, :conditions => { :parent_id => photo.id, :thumbnail => thumbnail })
-				[thumbnail_photo.width, thumbnail_photo.height]
+		if photo
+			if thumbnail
+				if thumbnail_photo = Photo.find(:first, :conditions => { :parent_id => photo.id, :thumbnail => thumbnail })
+					[thumbnail_photo.width, thumbnail_photo.height]
+				else
+					[0, 0]
+				end
 			else
-				[0, 0]
+				[photo.width, photo.height]
 			end
 		else
-			[photo.width, photo.height]
+			[0, 0]
 		end
 	end
 	
