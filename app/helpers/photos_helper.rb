@@ -50,6 +50,18 @@ module PhotosHelper
   	end
 	end
 	
+	def photo_dimension(photo, thumbnail = nil)
+		if thumbnail
+			if thumbnail_photo = Photo.find(:first, :conditions => { :parent_id => photo.id, :thumbnail => thumbnail })
+				[thumbnail_photo.width, thumbnail_photo.height]
+			else
+				[0, 0]
+			end
+		else
+			[photo.width, photo.height]
+		end
+	end
+	
 	def photo_alt(photo, no_photo_info)
 		if photo
 			photo.caption

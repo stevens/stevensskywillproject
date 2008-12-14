@@ -19,7 +19,8 @@
 	<% url = item %>
 <% end %>
 
-<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title))), 
+<% photo_demension = photo_dimension(photo, photo_size(photo_style)) %>
+<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :style => "width: #{photo_demension[0]}px; height: #{photo_demension[1]}px"), 
 						url %>
 
 
