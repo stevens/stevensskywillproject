@@ -802,8 +802,10 @@ img.icon {
 }
 .matrix_photo img {
 	width: 96px;
+	height: 96px;
 }
 .sidebar_block_main .matrix_photo img, .welcome_content .matrix_photo img {
+	width: 48px;
 	width: 48px;
 }
 .matrix_photo img.cover {
@@ -1269,6 +1271,10 @@ div.welcome_todo_button a:hover {
 }
 .user_portrait a:hover {
 	background-color: transparent !important;
+}
+.user_portrait img {
+	width: 48px;
+	height: 48px;
 }
 .user_bar_username {
 	color: #695245;
