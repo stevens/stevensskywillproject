@@ -1,15 +1,25 @@
 <% item_type = type_for(item) %>
 
-<% if item_type == 'User' %>
-	<%= link_to image_tag(photo_file_url(user_portrait(item), 'user', photo_style), :title => strip_tags(str_squish(user_username(item)))), 
-							user_first_link(item) %>
-<% elsif item_type == 'Contact' %>
-	<%= link_to image_tag(photo_file_url(user_portrait(item.contactor), 'user', photo_style), :title => strip_tags(str_squish(user_username(item.contactor)))), 
-							user_first_link(item.contactor) %>
-<% elsif item_type == 'Review' %>
-	<%= link_to image_tag(photo_file_url(user_portrait(item.user), 'user', photo_style), :title => strip_tags(str_squish(user_username(item.user)))), 
-							user_first_link(item.user) %>
+<% if ['User', 'Contact', 'Review'].include?(item_type) %>
+	<% if item_type == 'User' %>
+		<% user = item %>
+	<% elsif item_type == 'Contact' %>
+		<% user = item.contactor %>
+	<% elsif item_type == 'Review' %>
+		<% user = item.user %>
+	<% end %>
+	<% photo = user_portrait(user) %>
+	<% photoable_type = 'User' %>
+	<% title = user_username(user) %>
+	<% url = user_first_link(user) %>
 <% else %>
-	<%= link_to image_tag(photo_file_url(cover_photo(item), item_type, photo_style), :title => strip_tags(str_squish(item_title(item)))), 
-							item %>
+	<% photo = cover_photo(item) %>
+	<% photoable_type = item_type %>
+	<% title = item_title(item) %>
+	<% url = item %>
 <% end %>
+
+<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title))), 
+						url %>
+
+

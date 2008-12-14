@@ -356,7 +356,7 @@ div.tag {
 	/*background-color: #695245;*/
 	color: #373737;
 	margin: 0px auto;
-	width: 980px;
+	width: 980px !important;
 }
 
 /* Sub Navigation */
@@ -391,6 +391,7 @@ div.tag {
 /* Content Column */
 #content_column {
 	margin-right: 300px;
+	/*width: 680px;*/
 	padding: 0px 0px;
 }
 #content_column a, #content_column a:link, #content_column a:visited {
@@ -798,6 +799,12 @@ img.icon {
 }
 .matrix_photo img, .full_photo img, .cover_photo img {
 	border: #f1f1f1 solid 1px;
+}
+.matrix_photo img {
+	width: 96px;
+}
+.sidebar_block_main .matrix_photo img, .welcome_content .matrix_photo img {
+	width: 48px;
 }
 .matrix_photo img.cover {
 	margin-top: -3px;

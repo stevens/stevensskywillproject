@@ -26,18 +26,19 @@ module PhotosHelper
 	end
 	
 	def default_photo_file_url(photoable_type, photo_style)
-		if photoable_type == 'user'
-			if photo_style == 'full'
-				"\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}.gif"
-			else
-				"\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}_#{photo_size(photo_style)}.gif"
-			end
+		url_common = "\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
+
+		case photoable_type
+		when 'User'
+			file_ext = 'gif'
 		else
-			if photo_style == 'full'
-				"\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}.png"
-			else
-				"\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}_#{photo_size(photo_style)}.png"
-			end
+			file_ext = 'png'
+		end
+		
+		if photo_style == 'full'
+			"#{url_common}.#{file_ext}"
+		else
+			"#{url_common}_#{photo_size(photo_style)}.#{file_ext}"
 		end
 	end
 	
