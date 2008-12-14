@@ -806,7 +806,7 @@ img.icon {
 }
 .sidebar_block_main .matrix_photo img, .welcome_content .matrix_photo img {
 	width: 48px;
-	width: 48px;
+	height: 48px;
 }
 .matrix_photo img.cover {
 	margin-top: -3px;
