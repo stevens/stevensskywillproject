@@ -1218,6 +1218,15 @@ div.welcome_content table {
 div.welcome_content span a:hover {
 	background-color: transparent !important;
 }
+div.welcome_content #random_items_bar {
+	border: none;
+	border-top: solid 1px #f1f1f1;
+	background-color: #f5f5f5;
+	margin-top: 20px;
+}
+div.welcome_content .sub_block_tb {
+	padding: 0px !important;
+}
 div.welcome_todo_button {
 	background-color: #428cbb;
 	margin: 0px auto;
