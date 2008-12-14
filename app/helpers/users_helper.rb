@@ -61,4 +61,8 @@ module UsersHelper
 			"all_users"
 		end
 	end
+	
+	def user_role_code(role_name)
+		codes_for(code_conditions('user_role', nil, nil, role_name), 1)[0].code
+	end
 end

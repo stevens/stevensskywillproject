@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   	
   	case params[:category]
   	when 'brain'
-  		title = "智囊团"
+  		title = "#{BRAIN_CN}团"
   	else
   		title = PEOPLE_CN
   	end
@@ -83,6 +83,7 @@ class UsersController < ApplicationController
   
   def overview
 	  load_users_set
+	  load_brains_set
 	  load_random_users
 	  
   	# @highlighted_user = 
@@ -124,13 +125,18 @@ class UsersController < ApplicationController
 	
 	def load_category
 		if role_name = params[:category]
-			@role_code = codes_for(code_conditions('user_role', nil, nil, role_name), 1)[0].code
+			@role_code = user_role_code(role_name)
 		end
 	end
 	
   def load_users_set
  		@users_set = users_for(user_conditions(@role_code))
   	@users_set_count = @users_set.size
+  end
+  
+  def load_brains_set
+  	@brains_set = users_for(user_conditions(user_role_code('brain')), 18, 'RAND()')
+  	@brains_set_count = @brains_set.size
   end
   
   def load_random_users
