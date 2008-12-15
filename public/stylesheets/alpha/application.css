@@ -24,6 +24,13 @@ img {
 	border: none;
 	background-color: #ffffff;
 }
+img.icon {
+	margin-bottom: -3px;
+	margin-right: 1px;
+	background-color: transparent;
+	width: 14px;
+	height: 14px;
+}
 body {
 	background-color: #ffffff;
 }
@@ -801,11 +808,6 @@ div.cover_photo {
 }
 span.normal_photo {
 	text-align: left;		
-}
-img.icon {
-	margin-bottom: -3px;
-	margin-right: 2px;
-	background-color: transparent;
 }
 .matrix_photo img, .full_photo img, .cover_photo img {
 	border: #f1f1f1 solid 1px;
