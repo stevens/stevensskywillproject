@@ -67,6 +67,9 @@ em.none {
 em.red {
 	color: red;
 }
+em.white {
+	color: #ffffff;
+}
 em.s {
 	font-size: 12px;
 	color: #695245;

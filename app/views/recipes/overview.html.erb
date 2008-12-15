@@ -1,7 +1,7 @@
 <% if @highlighted_recipe %>
 	<div id="highlighted_item" class="content_block">
 		<div class="block_header">
-			<h1><%= "红#{RECIPE_CN} - #{strip_tags(@highlighted_recipe.title)} <em class='s'>来自</em> #{strip_tags(user_username(@highlighted_recipe.user))}" %></h1>
+			<h1><%= "红#{RECIPE_CN} - #{strip_tags(@highlighted_recipe.title)}&nbsp;&nbsp;<em class='s'>来自 <em class='white'>#{strip_tags(user_username(@highlighted_recipe.user))}</em></em>" %></h1>
 		</div>
 		<div class="block_main">
 			<div class="full_photo">
