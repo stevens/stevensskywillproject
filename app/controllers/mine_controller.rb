@@ -21,7 +21,7 @@ class MineController < ApplicationController
 	 	load_tags_set
 	 	load_contactors_set
 	 	
-	 	info = "#{username_prefix(@current_user)}#{SITE_NAME_CN}"
+	 	info = "#{username_prefix(@current_user)}#{MAIN_PAGE_CN}"
 		set_page_title(info)
 		
 		@show_todo = true

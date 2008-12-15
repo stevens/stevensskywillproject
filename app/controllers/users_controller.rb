@@ -111,7 +111,7 @@ class UsersController < ApplicationController
 			 	
 			 	log_count(@user)
 			 	
-			 	info = "#{username_prefix(@user)}#{SITE_NAME_CN}"
+			 	info = "#{username_prefix(@user)}#{MAIN_PAGE_CN}"
 				set_page_title(info)
 				
 				show_sidebar
