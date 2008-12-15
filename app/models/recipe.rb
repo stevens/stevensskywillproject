@@ -12,7 +12,7 @@ class Recipe < ActiveRecord::Base
 	has_many :photos, :dependent => :destroy, :as => :photoable, :foreign_key => :photoable_id, :order => "created_at"
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "created_at DESC"	
 	has_many :favorites, :dependent => :destroy, :as => :favorable, :foreign_key => :favorable_id, :order => "created_at DESC"
-	has_many :entries, :dependent => :destroy, :as => :entriable, :foreign_key => :entriable_id, :order => "created_at DESC"
+	# has_many :entries, :dependent => :destroy, :as => :entriable, :foreign_key => :entriable_id, :order => "created_at DESC"
 	
 	validates_presence_of     :title, :description, :from_type, :privacy, 
   													:message => "这一项是#{REQUIRED_CN}"

@@ -1,6 +1,6 @@
 <% if @highest_rated_recipes && @highest_rated_recipes.size > 0 %>
 	<%= render :partial => "/layouts/ranklist_sideblock",
-						 :locals => {:rank_list_title => "#{RECIPE_CN}红榜 TOP10", 
+						 :locals => {:rank_list_title => "#{RECIPE_CN}<em class='red'>红</em>榜 TOP10", 
 						 						 :items_set => @highest_rated_recipes} %>
 <% end %>
 
