@@ -187,8 +187,12 @@ class RecipesController < ApplicationController
 	  load_reviews_set
 	  load_tags_set
 	  
-  	@highlighted_recipe = highest_rated_items(@recipes_set)[0..99].rand
-  	@highest_rated_recipes = highest_rated_items(@recipes_set)[0..9]
+  	ranked_recipes_set = highest_rated_items(@recipes_set)[0..99]
+  	if ranked_recipes_set
+	  	@highlighted_recipe = ranked_recipes_set.rand
+	  	@highlighted_recipe_rank = ranked_recipes_set.index(@highlighted_recipe) + 1
+	  	@highest_rated_recipes = ranked_recipes_set[0..9]
+	  end
   	# @random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN

@@ -1302,7 +1302,7 @@ div.welcome_todo_button a:hover {
 	color: #b8b9a7;
 }
 
-/* Rank List */
+/* Rank */
 #rank_list_wrapper .sub_block_lr {
 	padding: 0px 5px;
 }
@@ -1336,6 +1336,42 @@ div.welcome_todo_button a:hover {
 #rank_list_wrapper .sidebar_block_main {
 	padding-bottom: 5px;
 }
+#highlighted_item {
+	border-top-color: red;
+}
+#highlighted_item .block_header {
+	background-color: #ff8159;
+}
+#highlighted_item h1 {
+	color: #ffffff;
+}
+#highlighted_item div.rank {
+	position: relative;
+	padding: 10px 0px;
+	text-align: center;
+	vertical-align: text-bottom;
+	background-color: red;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	height: 20px;
+	width: 40px;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 14px;
+	z-index: 10000 !important;
+	/*left: 9px;*/
+}
+* +html #highlighted_item div.rank {
+	margin-left: -617px;
+}
+* html #highlighted_item div.rank {
+	margin-left: -617px;
+}
+#highlighted_item div.ranked_photo	 {
+	margin-top: -41px;
+	z-index: 100 !important;
+}
+
 
 /* Overlay */
 .overlay_backgroud {
