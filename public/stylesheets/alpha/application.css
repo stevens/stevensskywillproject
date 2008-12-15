@@ -1346,6 +1346,10 @@ div.welcome_todo_button a:hover {
 #rank_list_wrapper .sidebar_block_main {
 	padding-bottom: 5px;
 }
+#rank_list_wrapper img {
+	width: 48px;
+	height: 48px;
+}
 #highlighted_item {
 	border-top-color: red;
 }
