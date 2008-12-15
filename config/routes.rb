@@ -50,6 +50,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :contacts
 	map.resources :profiles
 	map.resources :stories
+        map.resources :keepers, :member => { :enable => :put }
+        map.resources :newsletters, :member => { :sendmails => :put }
   map.resources :matches, 
   							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :entries, :awards], 
   							:has_one => [:counter]

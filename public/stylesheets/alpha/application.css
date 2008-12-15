@@ -468,6 +468,18 @@ table.content {
 table.photo {
 	
 }
+table#keepers { width: 100%;}
+table#keepers th { font-size: 95%; }
+table#keepers td { font-size: 90%; }
+th { background-color: #933; color: #fff; }
+tr.odd { background-color: #fcc; }
+tr.even { background-color: #ecc; }
+#adminsidemenu ul {
+list-style: none;
+margin-left: 20px;
+padding: 0;
+}
+
 .sidebar_panel_main table.content {
 	padding: 0px;
 }

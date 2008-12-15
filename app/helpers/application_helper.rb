@@ -10,7 +10,15 @@ module ApplicationHelper
 			''
 		end
 	end
-	
+        
+	def yes_no(bool)
+            if bool == true
+               "yes"
+            else
+               "no"
+            end
+        end
+        
 	def page_title(info1, info2)
 		if info1 == '' && info2 == ''
 			SITE_NAME_CN

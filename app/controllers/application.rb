@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
 	include AuthenticatedSystem
+        include LoginSystem
 	include ApplicationHelper
 	include CodesHelper
 	include ContactsHelper

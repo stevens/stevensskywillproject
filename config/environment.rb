@@ -374,6 +374,7 @@ end
 	# ActionMailer::Base.smtp_settings = { }
 	
 	require 'will_paginate'
+        require 'action_mailer/ar_mailer'
 	
 	TagList.delimiter = " "
 	Tag.destroy_unused = true

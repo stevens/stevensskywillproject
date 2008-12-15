@@ -1,0 +1,13 @@
+<tr class="<%= cycle('odd', 'even') -%>">
+<td><%= keeper.login -%></td>
+<td><%= keeper.email -%>
+<td><%= link_to 'yes', "#{root_url}sendmail/#{keeper.id}"   %>
+<!--<% unless keeper == logged_in_keeper -%>
+<% if keeper.enabled -%>
+[<%= link_to('disable', keeper_url(keeper.id), :method => :delete) %>]
+<% else -%>
+[<%= link_to('enable', enable_keeper_url(keeper.id), :method => :put) %>]
+<% end -%>
+<% end -%>-->
+</td>
+</tr>

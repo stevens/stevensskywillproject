@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 33) do
+ActiveRecord::Schema.define(:version => 38) do
 
   create_table "awards", :force => true do |t|
     t.integer  "user_id"
@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(:version => 33) do
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
     t.string   "code"
+    t.string   "name"
     t.string   "title"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
   end
 
   add_index "codes", ["codeable_type"], :name => "pi_codeable_type"
@@ -73,6 +73,15 @@ ActiveRecord::Schema.define(:version => 33) do
 
   add_index "counters", ["countable_type", "countable_id"], :name => "pi_countable"
   add_index "counters", ["countable_type"], :name => "pi_countable_type"
+
+  create_table "emails", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.integer  "last_send_attempt", :default => 0
+    t.text     "mail"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "entries", :force => true do |t|
     t.integer  "user_id"
@@ -136,6 +145,19 @@ ActiveRecord::Schema.define(:version => 33) do
     t.datetime "updated_at"
   end
 
+  create_table "keepers", :force => true do |t|
+    t.string   "username",   :limit => 64,                   :null => false
+    t.string   "hashed_pwd",                                 :null => false
+    t.boolean  "enabled",                  :default => true, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "keepers_roles", :id => false, :force => true do |t|
+    t.integer "role_id",   :null => false
+    t.integer "keeper_id", :null => false
+  end
+
   create_table "matches", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -172,6 +194,14 @@ ActiveRecord::Schema.define(:version => 33) do
   add_index "matches", ["organiger_type"], :name => "i_organiger_type"
   add_index "matches", ["organiger_type", "organiger_id"], :name => "i_organiger"
 
+  create_table "newsletters", :force => true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.boolean  "sent",       :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "photos", :force => true do |t|
     t.integer  "user_id"
     t.text     "caption"
@@ -191,11 +221,11 @@ ActiveRecord::Schema.define(:version => 33) do
   end
 
   add_index "photos", ["user_id"], :name => "fk_user"
+  add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
   add_index "photos", ["photoable_type"], :name => "pi_photoable_type"
   add_index "photos", ["user_id", "photoable_type"], :name => "i_user_photoable_type"
   add_index "photos", ["user_id", "photoable_type", "photoable_id"], :name => "i_user_photoable"
   add_index "photos", ["parent_id"], :name => "i_parent_photo"
-  add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
@@ -223,9 +253,9 @@ ActiveRecord::Schema.define(:version => 33) do
     t.datetime "updated_at"
   end
 
+  add_index "ratings", ["user_id"], :name => "fk_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "pi_rateable"
   add_index "ratings", ["rateable_type"], :name => "pi_rateable_type"
-  add_index "ratings", ["user_id"], :name => "fk_user"
   add_index "ratings", ["user_id", "rateable_type"], :name => "i_user_rateable_type"
 
   create_table "recipes", :force => true do |t|
@@ -235,9 +265,9 @@ ActiveRecord::Schema.define(:version => 33) do
     t.text     "ingredients"
     t.text     "directions"
     t.text     "tips"
+    t.integer  "cover_photo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "cover_photo_id"
     t.string   "difficulty"
     t.string   "prep_time"
     t.string   "cook_time"
@@ -267,11 +297,15 @@ ActiveRecord::Schema.define(:version => 33) do
     t.integer  "quotation_submitter_id"
   end
 
+  add_index "reviews", ["user_id"], :name => "fk_user"
   add_index "reviews", ["reviewable_type", "reviewable_id"], :name => "pi_reviewable"
   add_index "reviews", ["reviewable_type"], :name => "pi_reviewable_type"
-  add_index "reviews", ["user_id"], :name => "fk_user"
   add_index "reviews", ["user_id", "reviewable_type"], :name => "i_user_reviewable_type"
   add_index "reviews", ["user_id", "reviewable_type", "reviewable_id"], :name => "i_user_reviewable"
+
+  create_table "roles", :force => true do |t|
+    t.string "name"
+  end
 
   create_table "stories", :force => true do |t|
     t.integer  "user_id"
