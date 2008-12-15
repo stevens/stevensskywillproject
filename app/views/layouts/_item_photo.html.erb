@@ -19,5 +19,27 @@
 	<% url = item %>
 <% end %>
 
-<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title))), 
+<% if photo_style == 'full' %>
+	<% style = "max-width: 640px; max-height: 640px;" %>
+<% else %>
+	<% photo_size = photo_size(photo_style) %>
+	<% case photo_size
+		 when 'medium' 
+			 style = "max-width: 320px; max-height: 320px;"
+		 when 'small'
+		 	 style = "max-width: 160px; max-height: 160px;"
+		 when 'tiny'
+		 	 style = "max-width: 80px; max-height: 80px;"
+		 when 'lcube'
+		 	 style = "width: 192px; height: 192px;"
+		 when 'mcube'
+		 	 style = "width: 96px; height: 96px;"
+		 when 'scube'
+		 	 style = "width: 48px; height: 48px;"
+		 when 'tcube'
+		 	 style = "width: 24px; height: 24px;"
+		 end %>
+<% end %>
+
+<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :style => style), 
 						url %>

@@ -1383,11 +1383,14 @@ div.welcome_todo_button a:hover {
 * html #highlighted_item div.rank {
 	margin-left: -617px;
 }
-#highlighted_item div.ranked_photo	 {
+#highlighted_item div.ranked_photo {
 	margin-top: -41px;
 	z-index: 100 !important;
 }
-
+#highlighted_item div.ranked_photo img {
+	max-width: 640px;
+	max-height: 640px;
+}
 
 /* Overlay */
 .overlay_backgroud {
