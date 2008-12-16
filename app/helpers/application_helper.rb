@@ -12,12 +12,12 @@ module ApplicationHelper
 	end
         
 	def yes_no(bool)
-            if bool == true
-               "yes"
-            else
-               "no"
-            end
-        end
+    if bool == true
+       "yes"
+    else
+       "no"
+    end
+	end
         
 	def page_title(info1, info2)
 		if info1 == '' && info2 == ''
@@ -71,11 +71,6 @@ module ApplicationHelper
 	
 	def item_username(item)
 		user_username(item.user)
-		# if @current_user && item.user == @current_user
-		#  '我'
-		# else
-		# 	item.user.login
-		# end
 	end
 	
 	def item_title(item)
