@@ -89,6 +89,12 @@ span.script {
 	font-weight: bold;
 	color: #ffcc99;
 }
+span.source {
+	display: inline !important;
+	font-weight: normal !important;
+	font-size: 9px !important;
+	color: #b8b9a7;
+}
 label {
 	white-space: nowrap;
 }
@@ -468,18 +474,6 @@ table.content {
 table.photo {
 	
 }
-table#keepers { width: 100%;}
-table#keepers th { font-size: 95%; }
-table#keepers td { font-size: 90%; }
-th { background-color: #933; color: #fff; }
-tr.odd { background-color: #fcc; }
-tr.even { background-color: #ecc; }
-#adminsidemenu ul {
-list-style: none;
-margin-left: 20px;
-padding: 0;
-}
-
 .sidebar_panel_main table.content {
 	padding: 0px;
 }
