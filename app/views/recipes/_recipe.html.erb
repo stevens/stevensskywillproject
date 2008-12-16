@@ -1,3 +1,5 @@
+<% user = item.user %>
+
 <div id="recipe_<%= item.id %>_basic">
 	<div class="basic">
 		<h2>
@@ -12,7 +14,7 @@
 		<ul>
 			<li>
 				<%= render :partial => '/users/user_basic', 
-									 :locals => { :user => item.user, 
+									 :locals => { :user => user, 
 									 							:show_come_from => true, 
 									 							:show_icon => true,
 									 							:show_name => true, 
@@ -39,7 +41,7 @@
 		    	<% end %>
 				<% else %>
 		    	<%= "还没有#{TAG_CN}" %>
-		    	<% if @current_user && item.user == @current_user %>
+		    	<% if @current_user && user == @current_user %>
 		    		<%= link_to "[#{ADD_CN}#{TAG_CN}]", [item, :edit] %>
 		    	<% end %>
 				<% end %>
@@ -57,7 +59,7 @@
 			<li>
 				<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
 				<% if item.from_type == '1' %>
-					<% remark = "这个#{RECIPE_CN}的文字和#{PHOTO_CN}都是#{strip_tags(user_username(item.user))}的辛苦原创, 未经许可, 请勿转载!" %>
+					<% remark = "这个#{RECIPE_CN}的文字和#{PHOTO_CN}都是#{strip_tags(user_username(user))}的辛苦原创, 未经许可, 请勿转载!" %>
 					<%= "<em class='more'>#{add_brackets(remark)}</em>" %>
 				<% elsif !item.from_where.nil? && !item.from_where.blank? %>
 					<%= "[#{h item.from_where}]" %>
@@ -138,7 +140,7 @@
 		<%= item.video_url %>
 	<% else %>
 		<%= "还没有#{VIDEO_CN}" %>
-		<% if @current_user && item.user == @current_user %>
+		<% if @current_user && user == @current_user %>
 			<div id="video_todo_bar">
 				<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
 			</div>
@@ -170,5 +172,18 @@
 	<div class="main">
 		<h3><%= "闲话:" %></h3>
 		<ul><%= paragraphs(item.any_else, true) %></ul>
+	</div>
+	
+	<div class="main">
+		<h3><%= "相关链接:" %></h3>
+		<ul>
+			<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
+				<li>
+					<%= "更多#{RECIPE_CN}, 请访问" %>
+					<%= link_to "#{user_username(user, true, true)}的blog", url_with_protocol(blog), :target => "_blank" %>
+					<span class="source"><%= "[#{blog}]" %></span>
+				</li>
+			<% end %>
+		</ul>
 	</div>
 </div>

@@ -3,7 +3,7 @@ class ProfilesController < ApplicationController
   def create
     @profile = Profile.new(params[:profile])
 		@profile.user = @current_user
-		@profile.blog = str_squish(params[:profile][:blog], 0).gsub("http://", '')
+		@profile.blog = url_without_protocol(params[:profile][:blog])
 		
     respond_to do |format|
       if @profile.save
@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = Profile.find(params[:id])
-		params[:profile][:blog] = str_squish(params[:profile][:blog], 0).gsub("http://", '')
+		params[:profile][:blog] = url_without_protocol(params[:profile][:blog])
 		
     respond_to do |format|
       if @profile.update_attributes(params[:profile])

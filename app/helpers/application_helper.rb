@@ -70,10 +70,20 @@ module ApplicationHelper
 	end
 	
 	def item_username(item)
-		if @current_user && item.user == @current_user
-		 '我'
+		user_username(item.user)
+		# if @current_user && item.user == @current_user
+		#  '我'
+		# else
+		# 	item.user.login
+		# end
+	end
+	
+	def item_title(item)
+		case type_for(item)
+		when 'User'
+			user_username(item)
 		else
-			item.user.login
+			item.title
 		end
 	end
 	
@@ -83,6 +93,10 @@ module ApplicationHelper
 		else
 			nil
 		end
+	end
+
+	def item_url(item_type, item_id)
+		"#{root_url}#{item_type.pluralize}/#{item_id}"
 	end
 	
 	def item_html_id(item_type, item_id = nil)
@@ -103,19 +117,6 @@ module ApplicationHelper
 	
 	def user_items_html_id(item_type, itemable_type = nil, itemable_id = nil, user = nil)
 		"#{items_html_id(item_type, itemable_type, itemable_id)}_of_#{user_html_id(user)}"
-	end
-	
-	def item_title(item)
-		case type_for(item)
-		when 'User'
-			user_username(item)
-		else
-			item.title
-		end
-	end
-	
-	def item_url(item_type, item_id)
-		"#{root_url}#{item_type.pluralize}/#{item_id}"
 	end
 	
 	def classified_items(items, classify_by)

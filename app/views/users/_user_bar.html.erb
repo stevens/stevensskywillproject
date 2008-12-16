@@ -25,8 +25,8 @@
 				</div>
 				<div class="user_bar_info">
 					blog:
-					<% if user.profile && !user.profile.blog.blank? %>
-						<%= link_to strip_tags(text_summary(user.profile.blog, 40)), "http://#{user.profile.blog}", :target => "_blank" %>
+					<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
+						<%= link_to text_summary(blog, 40), url_with_protocol(blog), :target => "_blank" %>
 					<% elsif user == @current_user %>
 						&nbsp;
 						<span><%= link_to "#{ADD_CN}blog", :controller => 'settings', :action => 'account' %></span>
