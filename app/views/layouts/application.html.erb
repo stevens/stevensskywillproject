@@ -85,6 +85,7 @@
 				<div id="right_navigation">
 					<ul class="navigation">
 					
+						<!-- 后台管理 -->
 		        <% if is_admin_logged_in? %>
 		            <li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
 		                    <%= link_to "网站管理", :controller => 'keepers', :action => 'index' %>
@@ -178,6 +179,7 @@
 							<%= render :partial => "/#{params[:controller]}/#{params[:action]}_sidebar" %>
 						<% end %>
 						
+						<!-- 后台管理 -->
 						<% if is_admin_logged_in? %>
 						    <%=render :partial => "/layouts/admin" %>
 						<% end %>
