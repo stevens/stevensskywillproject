@@ -953,13 +953,15 @@ div.main ol {
 div.main ul span {
 	font-weight: bold;
 	display: block;
-	padding-top: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 div.main ol span {
 	margin-left: -35px;
 	font-weight: bold;
 	display: block;
-	padding-top: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 div.main h3 {
 	margin-top: 10px;
