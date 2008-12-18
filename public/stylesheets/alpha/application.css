@@ -1073,6 +1073,9 @@ div.pagination a, div.pagination span {
 	background-color: #ffffdd;
 	border: 2px solid #ff0000;
 }
+div.radio .fieldWithErrors {
+	display: inline;
+}
 .formError {
 	color: #ff0000;
 	margin-top: 5px;
