@@ -1,0 +1,19 @@
+<div class="overlay_backgroud">
+
+</div>
+
+<div class="overlay_wrapper">
+	<div class="overlay_content">
+		<div class="close">
+			<%= link_to_function("x") do |page|
+				page.hide "overlay"
+		  end %>
+		</div>
+		<div class="block_header">
+			<%= render :partial => "/layouts/index_header", 
+								 :locals => {:show_header_link => false, 
+								 						 :show_new_link => false, 
+								 						 :block_title => "请稍等......"} %>
+		</div>
+	</div>
+</div>
