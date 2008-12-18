@@ -43,21 +43,16 @@ class FavoritesController < ApplicationController
   	respond_to do |format|
   		format.html { redirect_to @parent_obj }
 			format.js do
-				# @favorite = @parent_obj.favorites.build
+				@favorite = @parent_obj.favorites.build
 				render :update do |page|
-					page.replace_html "overlay", 
-														:partial => "/layouts/overlay"
+		      page.replace_html "overlay", 
+		      									:partial => "/favorites/favorite_overlay", 
+		      									:locals => { :favorable => @parent_obj, 
+		      															 :favorite => @favorite, 
+		      															 :is_new => true, 
+		      															 :current_status => nil, 
+		      															 :back_to_type => @back_to_type }
 					page.show "overlay"
-					if @favorite = @parent_obj.favorites.build
-			      page.replace_html "overlay", 
-			      									:partial => "/favorites/favorite_overlay", 
-			      									:locals => { :favorable => @parent_obj, 
-			      															 :favorite => @favorite, 
-			      															 :is_new => true, 
-			      															 :current_status => nil, 
-			      															 :back_to_type => @back_to_type }
-						page.show "overlay"
-					end
 				end
 			end
   	end
@@ -66,21 +61,16 @@ class FavoritesController < ApplicationController
 	def edit
   	respond_to do |format|
 			format.js do
-				# load_favorite(@current_user)
+				load_favorite(@current_user)
 				render :update do |page|
-					page.replace_html "overlay", 
-														:partial => "/layouts/waiting_overlay"
+		      page.replace_html "overlay", 
+		      									:partial => "/favorites/favorite_overlay", 
+		      									:locals => { :favorable => @parent_obj, 
+		      															 :favorite => @favorite, 
+		      															 :is_new => false, 
+		      															 :current_status => @favorite.status, 
+		      															 :back_to_type => @back_to_type }
 					page.show "overlay"
-					if @favorite = Favorite.find(@self_id)
-			      page.replace_html "overlay", 
-			      									:partial => "/favorites/favorite_overlay", 
-			      									:locals => { :favorable => @parent_obj, 
-			      															 :favorite => @favorite, 
-			      															 :is_new => false, 
-			      															 :current_status => @favorite.status, 
-			      															 :back_to_type => @back_to_type }
-						page.show "overlay"
-					end
 				end
 			end
   	end
