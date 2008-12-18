@@ -1,7 +1,7 @@
 class Favorite < ActiveRecord::Base
 
 	belongs_to :user
-	belongs_to :favorable, :polymorphic => true, :counter_cache => true
+	belongs_to :favorable, :polymorphic => true
 
   validates_length_of       :note,  
   													:maximum => 500,
