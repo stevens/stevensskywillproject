@@ -4,7 +4,7 @@ class ContactsController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index]
   before_filter :load_contact_type, :load_contactor
-  before_filter :load_current_filter, :only => [:index, :mine]
+  before_filter :load_current_filter, :only => [:index, :mine, :accept]
   
   def index
     respond_to do |format|
@@ -67,17 +67,13 @@ class ContactsController < ApplicationController
 				render :update do |page|
 					if @contact_type == '1'
 						if Contact.friendship_accept(@current_user, @contactor)
-							page.replace_html "friendship_status_with_user_#{@contactor.id}", 
-																:partial => '/contacts/contact_status', 
-																:locals => { :contact_type => @contact_type, 
-																						 :status => '3', 
-																						 :user => @contactor, 
-																						 :ref => 'contacts_list' }
-							page.replace_html "contacts_header", 
-																:partial => "/layouts/index_header", 
-									 							:locals => { :show_header_link => false, 
-									 						 							 :show_new_link => false, 
-									 						 							 :block_title => "我的#{FRIEND_CN} (#{contacts_for(@current_user).size})" }
+							page.redirect_to ''
+							# page.replace_html "friendship_status_with_user_#{@contactor.id}", 
+							# 									:partial => '/contacts/contact_status', 
+							# 									:locals => { :contact_type => @contact_type, 
+							# 															 :status => '3', 
+							# 															 :user => @contactor, 
+							# 															 :ref => 'contacts_list' }
 						end
 					end
 				end
