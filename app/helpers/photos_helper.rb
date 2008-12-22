@@ -31,6 +31,8 @@ module PhotosHelper
 		case photoable_type
 		when 'User'
 			file_ext = 'gif'
+		when 'Recipe'
+			file_ext = 'gif'
 		else
 			file_ext = 'png'
 		end
