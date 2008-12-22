@@ -1,0 +1,18 @@
+<h1>Listing match_actors</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for match_actor in @match_actors %>
+  <tr>
+    <td><%= link_to 'Show', match_actor %></td>
+    <td><%= link_to 'Edit', edit_match_actor_path(match_actor) %></td>
+    <td><%= link_to 'Destroy', match_actor, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New match_actor', new_match_actor_path %>

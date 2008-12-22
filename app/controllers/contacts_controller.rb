@@ -32,30 +32,20 @@ class ContactsController < ApplicationController
 			format.js do
 				render :update do |page|
 					if @contact_type == '1'
-						page.replace_html "friendship_status_with_user_#{@contactor.id}", 
-															:partial => '/contacts/contact_status', 
-															:locals => { :contact_type => @contact_type, 
-																					 :status => '0', 
-																					 :user => nil, 
-																					 :ref => 'user_bar' }
 						if Contact.friendship_request(@current_user, @contactor)
-							page.delay(2) do
-								page.replace_html "friendship_status_with_user_#{@contactor.id}", 
-																	:partial => '/contacts/contact_status', 
-																	:locals => { :contact_type => @contact_type, 
-																							 :status => '2', 
-																							 :user => nil, 
-																							 :ref => 'user_bar' }
-							end
+							page.replace_html "friendship_status_with_user_#{@contactor.id}", 
+																:partial => '/contacts/contact_status', 
+																:locals => { :contact_type => @contact_type, 
+																						 :status => '2', 
+																						 :user => nil, 
+																						 :ref => 'user_bar' }
 						else
-							page.delay(2) do
-								page.replace_html "friendship_status_with_user_#{@contactor.id}", 
-																	:partial => '/contacts/contact_status', 
-																	:locals => { :contact_type => @contact_type, 
-																							 :status => '2', 
-																							 :user => @contactor, 
-																							 :ref => 'user_bar' }
-							end
+							page.replace_html "friendship_status_with_user_#{@contactor.id}", 
+																:partial => '/contacts/contact_status', 
+																:locals => { :contact_type => @contact_type, 
+																						 :status => '-1', 
+																						 :user => @contactor, 
+																						 :ref => 'user_bar' }
 						end
 					end
 				end

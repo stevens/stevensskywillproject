@@ -334,10 +334,13 @@ class RecipesController < ApplicationController
 					when 'show'
 						page.replace_html "flash_wrapper", 
 															:partial => "/layouts/flash", 
-															:locals => {:notice => @notice}
+															:locals => { :notice => @notice }
 						page.replace_html "recipe_#{@recipe.id}_title",
-															:partial => "/recipes/recipe_title", 
-															:locals => {:item => @recipe}
+															:partial => "/layouts/item_basic", 
+															:locals => { :item => @recipe,
+									 												 :show_icon => true,
+									 												 :show_title => true,
+									 												 :show_link => true }
 						page.replace_html "recipe_#{@recipe.id}_manage",
 															:partial => "/recipes/recipe_manage", 
 															:locals => { :item => @recipe, 

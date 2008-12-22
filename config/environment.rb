@@ -53,7 +53,7 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
-  config.active_record.observers = :user_observer, :homepage_observer
+  config.active_record.observers = :user_observer, :homepage_observer, :contact_observer
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
@@ -374,7 +374,7 @@ end
 	# ActionMailer::Base.smtp_settings = { }
 	
 	require 'will_paginate'
-  require 'action_mailer/ar_mailer' #后台管理用
+  # require 'action_mailer/ar_mailer' #后台管理用
 	
 	TagList.delimiter = " "
 	Tag.destroy_unused = true

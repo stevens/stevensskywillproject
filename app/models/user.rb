@@ -24,6 +24,14 @@ class User < ActiveRecord::Base
   				 :order => "created_at DESC"
  	has_many :entries, :order => "created_at DESC"
  	has_many :votes, :order => "created_at DESC"
+ 	has_many :get_votes, 
+  				 :class_name => "Vote", 
+  				 :dependent => :destroy, 
+  				 :as => :voteable, 
+  				 :foreign_key => :voteable_id, 
+  				 :order => "created_at DESC"
+ 	has_many :winners, :dependent => :destroy, :as => :winnerable, :foreign_key => :winnerable_id
+ 	has_many :match_actors, :order => "created_at DESC"
   has_one :profile
 	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
   

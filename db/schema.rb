@@ -9,10 +9,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 38) do
+ActiveRecord::Schema.define(:version => 45) do
 
   create_table "awards", :force => true do |t|
-    t.integer  "user_id"
     t.integer  "match_id"
     t.string   "title"
     t.text     "description"
@@ -27,19 +26,20 @@ ActiveRecord::Schema.define(:version => 38) do
     t.integer  "reviews_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "awardable_type"
+    t.integer  "winners_count"
   end
 
-  add_index "awards", ["user_id"], :name => "fk_user"
   add_index "awards", ["match_id"], :name => "fk_match"
 
   create_table "codes", :force => true do |t|
     t.string   "codeable_type"
     t.string   "code"
-    t.string   "name"
     t.string   "title"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "codes", ["codeable_type"], :name => "pi_codeable_type"
@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(:version => 38) do
   create_table "entries", :force => true do |t|
     t.integer  "user_id"
     t.integer  "match_id"
-    t.integer  "award_id"
     t.string   "title"
     t.text     "description"
     t.string   "entriable_type"
@@ -100,7 +99,6 @@ ActiveRecord::Schema.define(:version => 38) do
 
   add_index "entries", ["user_id"], :name => "fk_user"
   add_index "entries", ["match_id"], :name => "fk_match"
-  add_index "entries", ["award_id"], :name => "fk_award"
   add_index "entries", ["entriable_type"], :name => "i_entriable_type"
   add_index "entries", ["entriable_type", "entriable_id"], :name => "i_entriable"
 
@@ -158,6 +156,18 @@ ActiveRecord::Schema.define(:version => 38) do
     t.integer "keeper_id", :null => false
   end
 
+  create_table "match_actors", :force => true do |t|
+    t.integer  "match_id"
+    t.integer  "user_id"
+    t.string   "roles"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "match_actors", ["user_id"], :name => "fk_user"
+  add_index "match_actors", ["match_id"], :name => "fk_match"
+
   create_table "matches", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -187,6 +197,11 @@ ActiveRecord::Schema.define(:version => 38) do
     t.integer  "awards_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "photos_lower_limit"
+    t.integer  "chars_lower_limit"
+    t.integer  "winners_count"
+    t.integer  "players_count"
+    t.integer  "votes_count"
   end
 
   add_index "matches", ["user_id"], :name => "fk_user"
@@ -221,11 +236,11 @@ ActiveRecord::Schema.define(:version => 38) do
   end
 
   add_index "photos", ["user_id"], :name => "fk_user"
-  add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
   add_index "photos", ["photoable_type"], :name => "pi_photoable_type"
   add_index "photos", ["user_id", "photoable_type"], :name => "i_user_photoable_type"
   add_index "photos", ["user_id", "photoable_type", "photoable_id"], :name => "i_user_photoable"
   add_index "photos", ["parent_id"], :name => "i_parent_photo"
+  add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
@@ -253,9 +268,9 @@ ActiveRecord::Schema.define(:version => 38) do
     t.datetime "updated_at"
   end
 
-  add_index "ratings", ["user_id"], :name => "fk_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "pi_rateable"
   add_index "ratings", ["rateable_type"], :name => "pi_rateable_type"
+  add_index "ratings", ["user_id"], :name => "fk_user"
   add_index "ratings", ["user_id", "rateable_type"], :name => "i_user_rateable_type"
 
   create_table "recipes", :force => true do |t|
@@ -265,9 +280,9 @@ ActiveRecord::Schema.define(:version => 38) do
     t.text     "ingredients"
     t.text     "directions"
     t.text     "tips"
-    t.integer  "cover_photo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cover_photo_id"
     t.string   "difficulty"
     t.string   "prep_time"
     t.string   "cook_time"
@@ -297,9 +312,9 @@ ActiveRecord::Schema.define(:version => 38) do
     t.integer  "quotation_submitter_id"
   end
 
-  add_index "reviews", ["user_id"], :name => "fk_user"
   add_index "reviews", ["reviewable_type", "reviewable_id"], :name => "pi_reviewable"
   add_index "reviews", ["reviewable_type"], :name => "pi_reviewable_type"
+  add_index "reviews", ["user_id"], :name => "fk_user"
   add_index "reviews", ["user_id", "reviewable_type"], :name => "i_user_reviewable_type"
   add_index "reviews", ["user_id", "reviewable_type", "reviewable_id"], :name => "i_user_reviewable"
 
@@ -364,10 +379,28 @@ ActiveRecord::Schema.define(:version => 38) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "votein_type"
+    t.integer  "votein_id"
   end
 
   add_index "votes", ["user_id"], :name => "fk_user"
   add_index "votes", ["voteable_type"], :name => "i_voteable_type"
   add_index "votes", ["voteable_type", "voteable_id"], :name => "i_voteable"
+
+  create_table "winners", :force => true do |t|
+    t.integer  "match_id"
+    t.integer  "award_id"
+    t.string   "winnerable_type"
+    t.integer  "winnerable_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "winners", ["match_id"], :name => "fk_match"
+  add_index "winners", ["award_id"], :name => "fk_award"
+  add_index "winners", ["match_id", "winnerable_type"], :name => "i_match_winnerable_type"
+  add_index "winners", ["match_id", "winnerable_type", "winnerable_id"], :name => "i_match_winnerable"
+  add_index "winners", ["winnerable_type", "winnerable_id"], :name => "i_winnerable"
 
 end

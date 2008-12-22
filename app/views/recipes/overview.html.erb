@@ -10,7 +10,7 @@
 					<%= @highlighted_recipe_rank %>
 				</div>
 				<div class="ranked_photo">
-					<%= link_to image_tag(photo_file_url(photo, 'Recipe', 'full'), :title => strip_tags(str_squish(@highlighted_recipe.title))), @highlighted_recipe %>
+					<%= link_to image_tag(photo_file_url(photo, 'Recipe', 'full'), :title => strip_tags(str_squish(@highlighted_recipe.title)), :alt => ''), @highlighted_recipe %>
 				</div>
 			</div>
 		</div>

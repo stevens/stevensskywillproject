@@ -45,6 +45,9 @@ class FavoritesController < ApplicationController
 			format.js do
 				@favorite = @parent_obj.favorites.build
 				render :update do |page|
+					page.replace_html "overlay", 
+	      									:partial => "/layouts/waiting_overlay"
+					page.show "overlay"
 		      page.replace_html "overlay", 
 		      									:partial => "/favorites/favorite_overlay", 
 		      									:locals => { :favorable => @parent_obj, 
@@ -63,6 +66,9 @@ class FavoritesController < ApplicationController
 			format.js do
 				load_favorite(@current_user)
 				render :update do |page|
+					page.replace_html "overlay", 
+	      									:partial => "/layouts/waiting_overlay"
+					page.show "overlay"
 		      page.replace_html "overlay", 
 		      									:partial => "/favorites/favorite_overlay", 
 		      									:locals => { :favorable => @parent_obj, 

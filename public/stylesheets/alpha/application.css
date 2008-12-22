@@ -47,6 +47,20 @@ a:hover {
 a.current, a.current:link, a.current:visited {
 	font-weight: bold;
 }
+a.notice {
+	color: #78b36d !important;
+	background-color: transparent !important;
+	padding: 0px;
+}
+a.notice:hover {
+	background-color: transparent !important;
+}
+a.notice img {
+	margin-bottom: -4px;
+	margin-right: 3px;
+	width: 16px;
+	height: 16px;
+}
 em a {
 	font-weight: normal;
 	padding: 3px 10px;
@@ -812,10 +826,13 @@ div.full_photo {
 div.cover_photo {
 	margin-bottom: 5px;
 }
+div.full_photo img, div.cover_photo img {
+	background-color: transparent !important;
+}
 span.normal_photo {
 	text-align: left;		
 }
-.matrix_photo img, .full_photo img, .cover_photo img {
+.matrix_photo img {
 	border: #f1f1f1 solid 1px;
 }
 .matrix_photo img {
@@ -1327,15 +1344,13 @@ div.welcome_todo_button a:hover {
 
 /* Rank */
 #rank_list_wrapper .sub_block_lr {
-	padding: 0px 5px;
-}
-#rank_list_wrapper .sub_block_lr {
-	padding: 0px 5px;
+	padding: 0px 4px;
 }
 #rank_list_wrapper h2 a, #rank_list_wrapper h2 a:link, #rank_list_wrapper h2 a:visited {
 	font-size: 12px;
 }
 #rank_list_wrapper span.rank_top3 {
+	margin-top: 1px;
 	display: block;
 	padding: 1px;
 	background-color: #ff8159;
@@ -1345,6 +1360,7 @@ div.welcome_todo_button a:hover {
 	text-align: center;
 }
 #rank_list_wrapper span.rank {
+	margin-top: 1px;
 	display: block;
 	padding: 1px;
 	background-color: #428cbb;
@@ -1362,6 +1378,7 @@ div.welcome_todo_button a:hover {
 #rank_list_wrapper div.list_photo img {
 	width: 48px;
 	height: 48px;
+	border: #f1f1f1 solid 1px;
 }
 #highlighted_item {
 	border-top-color: red;
@@ -1395,7 +1412,7 @@ div.welcome_todo_button a:hover {
 	margin-left: -617px;
 }
 #highlighted_item div.ranked_photo {
-	margin-top: -41px;
+	margin-top: -40px;
 	z-index: 100 !important;
 }
 #highlighted_item div.ranked_photo img {

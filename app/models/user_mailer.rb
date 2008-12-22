@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
 	include ActionController::UrlWriter
+	include UsersHelper
   default_url_options[:host] = SITE_DOMAIN_EN
 	
   def signup_notification(user)
@@ -25,13 +26,24 @@ class UserMailer < ActionMailer::Base
     @subject    += "你已经重新设置了#{ACCOUNT_CN}#{PASSWORD_CN}"
     @body[:url]  = root_url
 	end
+	
+	def friendship_request(contact)
+		user = User.find(contact.user_id)
+		contactor = User.find(contact.contactor_id)
+		setup_email(user)
+		# @body[:contactor] = User.find(contact.contactor_id)
+		@body[:url] = user_first_link(contactor, false)
+		@subject += "#{contactor.login}向你发出了#{FRIEND_CN}请求"
+		@body[:contactor] = contactor
+	end
 
   protected
-    def setup_email(user)
-      @recipients  = "#{user.email}"
-      @from        = "#{SITE_NAME_EN} <#{SITE_EMAIL}>"
-      @subject     = "[#{SITE_NAME_CN}] "
-      @sent_on     = Time.now
-      @body[:user] = user
-    end
+  
+	def setup_email(user)
+	  @recipients  = "#{user.email}"
+	  @from        = "#{SITE_NAME_EN} <#{SITE_EMAIL}>"
+	  @subject     = "[#{SITE_NAME_CN}] "
+	  @sent_on     = Time.now
+	  @body[:user] = user
+	end
 end

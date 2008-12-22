@@ -1,7 +1,7 @@
 <% from_type_code_code = item.from_type %>
 <% if from_type_code_code == '1' %>
 	<% if from_type_code = codes_for(code_conditions('from_type', from_type_code_code))[0] %>
-		<%= image_tag "icon/recipe/#{from_type_code.name}.png", :title => from_type_code.title, :class => "icon" %>
+		<%= image_tag "icon/recipe/#{from_type_code.name}.png", :title => from_type_code.title, :alt => '', :class => "icon" %>
 	<% end %>
 <% end %>
 

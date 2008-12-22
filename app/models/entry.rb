@@ -7,5 +7,6 @@ class Entry < ActiveRecord::Base
 	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
 	
 	has_many :votes, :dependent => :destroy, :as => :voteable, :foreign_key => :voteable_id, :order => "created_at DESC"
+	has_many :winners, :dependent => :destroy, :as => :winnerable, :foreign_key => :winnerable_id
 	
 end

@@ -1,0 +1,12 @@
+<h1>Editing winner</h1>
+
+<%= error_messages_for :winner %>
+
+<% form_for(@winner) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @winner %> |
+<%= link_to 'Back', winners_path %>

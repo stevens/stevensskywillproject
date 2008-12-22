@@ -24,9 +24,13 @@ module UsersHelper
 																		 user.id])
 	end
 	
-	def user_first_link(user)
+	def user_first_link(user, only_path = true)
 		if user
-			"#{user_path(user)}/profile"
+			if only_path
+				"#{user_path(user)}/profile"
+			else
+				"#{user_url(user)}/profile"
+			end
 		end
 	end
 	

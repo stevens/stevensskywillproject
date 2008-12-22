@@ -1,0 +1,13 @@
+<%= "亲爱的#{strip_tags(@user.login)}, #{HELLO_CN}!" %>
+
+<%= "#{PEOPLE_CN}#{strip_tags(@contactor.login)}向你发出了#{FRIEND_CN}请求, 请登录#{SITE_NAME_CN}进行处理..." %>
+
+<%= root_url %>
+
+<%= "可以访问下面的#{URL_CN}, 进入#{strip_tags(@contactor.login)}的#{MAIN_PAGE_CN}:" %>
+
+<%= @url %>
+  
+<%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %>
+
+<%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %> 

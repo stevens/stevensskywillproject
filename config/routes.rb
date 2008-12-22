@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+
 	map.connect 'homepages/import', :controller => 'homepages', :action => 'import'
 	map.connect ':controller/overview', :action => 'overview'
 	
@@ -33,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
 	map.resources :users, 
-								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :awards], 
+								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :winners, :match_actors], 
 								:has_one => [:profile, :counter]
 	map.resources :recipes, 
 								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries], 
@@ -50,18 +51,22 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :contacts
 	map.resources :profiles
 	map.resources :stories
-        map.resources :keepers, :member => { :enable => :put }
-        map.resources :newsletters, :member => { :sendmails => :put }
+        
   map.resources :matches, 
-  							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :entries, :awards], 
+  							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :entries, :awards, :votes, :winners, :match_actors], 
   							:has_one => [:counter]
   map.resources :entries, 
-  							:has_many => [:votes], 
+  							:has_many => [:votes, :winners], 
   							:has_one => [:counter]
   map.resources :votes
   map.resources :awards, 
-  							:has_many => [:photos, :reviews], 
-  							:has_one => [:counter]
+  							:has_many => [:photos, :reviews, :favorites, :winners]
+  map.resources :winners
+  map.resources :match_actors
+  
+	map.resources :keepers, :member => { :enable => :put } #后台管理用
+	map.resources :newsletters, :member => { :sendmails => :put } #后台管理用
+  
 	map.resource :session
   
   # map.namespace :mine do |mine|
