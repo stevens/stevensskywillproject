@@ -1,7 +1,5 @@
 <% if contact_type == '1' %>
-	<% if status == '0' %>
-		<%= "正在发送#{FRIEND_CN}请求..." %>
-	<% elsif status == '1' %>
+	<% if status == '1' %>
 		<%= "等待我处理#{FRIEND_CN}请求" %>
 		<% if ref == 'contacts_list' %>
 			<span>
@@ -29,6 +27,6 @@
 		<em><%= link_to "加为#{FRIEND_CN}", :user_id => user.id, :controller => 'contacts', :action => 'new', :ref => ref %></em>
 	<% else %>
 		<em><%= link_to_remote "加为#{FRIEND_CN}", :url => { :controller => 'contacts', :action => 'create', :id => user.id, :contact_type => contact_type, :ref => ref },  
-																							:before => "document.getElementById('friendship_requesting').className='notice'; this.innerHTML='<img alt=\"Doing_indicator\" src=\"/images/default/other/doing_indicator.gif\" title=\"请稍等...\" alt='' />正在发送#{FRIEND_CN}请求...'", :html => { :id => "friendship_requesting" } %></em>
+																							:before => "document.getElementById('friendship_requesting').className='notice'; this.innerHTML='<img src=\"/images/default/other/doing_indicator.gif\" title=\"请稍等...\" alt=\"\" />正在发送#{FRIEND_CN}请求...'", :html => { :id => "friendship_requesting" } %></em>
 	<% end %>
 <% end %>
