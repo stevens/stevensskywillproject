@@ -20,13 +20,15 @@
 	</ul>
 </div>
 
-<div class="items_bar">
-	<div id="contact_<%= item.id %>_latest_items_bar" class="block_main">
-		<% items_count = 8 %>
-		<% interval = 30 %>
-		<% recipe_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond, Date.today - (interval-1).days) %>
-		<% recipes = recipes_for(user, recipe_conditions, items_count) %>
-		<% if recipes.size > 0 %>
+
+<% items_count = 8 %>
+<% interval = 300 %>
+<% recipe_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond, Date.today - (interval-1).days) %>
+<% recipes = recipes_for(user, recipe_conditions, items_count) %>
+
+<% if recipes.size > 0 %>
+	<div class="items_bar">
+		<div id="contact_<%= item.id %>_latest_items_bar" class="block_main">
 			<%= "最近#{interval}日的新鲜#{RECIPE_CN}" %>
 			<%= render :partial => "/layouts/items_matrix",
 								 :locals => {:show_paginate => false,
@@ -39,9 +41,9 @@
 								 						 :show_user => false, 
 								 						 :show_photo_todo => false, 
 								 						 :photo_style => 'sign'} %>
-		<% end %>
+		</div>
 	</div>
-</div>
+<% end %>
 
 <% if show_todo %>
 	<div id="contact_<%= item.id %>_todo" class="todo_right">

@@ -488,7 +488,7 @@ div.tag {
 .quotation {
 	padding: 5px 8px;
 	margin-bottom: 5px;
-	background-color: rgb(236, 239, 245);
+	background-color: #eceff5;
 	font-size: 12px;
 	color: #b8b9a7;
 }
@@ -1355,7 +1355,7 @@ div.welcome_todo_button a:hover {
 	color: #b8b9a7;
 }
 .items_bar table {
-	margin: auto !important;
+	margin-left: 10px !important;
 }
 .items_bar .sub_block_tb {
 	padding: 0px;
