@@ -22,7 +22,7 @@
 
 
 <% items_count = 8 %>
-<% interval = 300 %>
+<% interval = 30 %>
 <% recipe_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond, Date.today - (interval-1).days) %>
 <% recipes = recipes_for(user, recipe_conditions, items_count) %>
 
