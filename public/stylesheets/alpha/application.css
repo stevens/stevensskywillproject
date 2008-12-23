@@ -828,8 +828,8 @@ div.full_photo {
 	margin: auto;
 	text-align: center;
 	background-color: #f5f5f5;
-	border-top: red solid 1px;
-	border-bottom: red solid 1px;
+	border-top: #f1f1f1 solid 1px;
+	border-bottom: #f1f1f1 solid 1px;
 }
 * html div.full_photo {
 	padding: 10px 8px;
