@@ -805,10 +805,10 @@ div.matrix_photo {
 * html .matrix_photo {
 	height: 105px !important;
 }
-.sidebar_block_main .matrix_photo, .welcome_content .matrix_photo {
+.sidebar_block_main .matrix_photo, .welcome_content .matrix_photo, .items_bar .matrix_photo {
 	height: 48px;
 }
-* html .sidebar_block_main .matrix_photo, * html .welcome_content .matrix_photo {
+* html .sidebar_block_main .matrix_photo, * html .welcome_content .matrix_photo, * html .items_bar .matrix_photo {
 	height: 57px !important;
 }
 div.list_photo {
@@ -854,7 +854,7 @@ span.normal_photo {
 	width: 96px;
 	height: 96px;
 }
-.sidebar_block_main .matrix_photo img, .welcome_content .matrix_photo img {
+.sidebar_block_main .matrix_photo img, .welcome_content .matrix_photo img, .items_bar .matrix_photo img {
 	width: 48px;
 	height: 48px;
 }
@@ -1348,6 +1348,25 @@ div.welcome_todo_button a:hover {
 .todo_block span {
 	margin-left: 5px;
 	color: #b8b9a7;
+}
+
+/* Items Bar */
+.items_bar {
+	color: #b8b9a7;
+}
+.items_bar table {
+	margin: auto !important;
+}
+.items_bar .sub_block_tb {
+	padding: 0px;
+}
+.items_bar .block_main {
+	border: none !important;
+	margin-top: -5px;
+}
+.items_bar .matrix_block {
+	width: 64px;
+	padding: 0px;
 }
 
 /* Rank */
