@@ -179,9 +179,11 @@
 		<ul>
 			<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
 				<li>
-					<%= "更多#{RECIPE_CN}, 请访问" %>
-					<%= link_to "#{user_username(user, true, true)}的blog", url_with_protocol(blog), :target => "_blank" %>
-					<span class="source"><%= "[#{blog}]" %></span>
+					<span class='text'>
+						<%= "更多#{RECIPE_CN}, 请访问" %>
+						<%= link_to "#{user_username(user, true, true)}的blog", url_with_protocol(blog), :target => "_blank" %>
+						<span class="source"><%= "[#{blog}]" %></span>
+					</span>
 				</li>
 			<% end %>
 		</ul>

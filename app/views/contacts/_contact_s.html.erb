@@ -1,7 +1,9 @@
+<% user = item.contactor %>
+
 <div id="contact_<%= item.id %>_basic" class="basic">
 	<h2>
 		<%= render :partial => '/users/user_basic', 
-							 :locals => { :user => item.contactor, 
+							 :locals => { :user => user, 
 							 							:show_come_from => false, 
 							 							:show_icon => true,
 							 							:show_name => true, 
@@ -9,16 +11,23 @@
 							 							:show_username => true,
 							 							:show_myname => false } %>
 	</h2>
+	<ul>
+		<li>
+			<%= render :partial => '/users/user_blog', 
+								 :locals => { :user => user, 
+								 							:show_add => false } %>
+		</li>
+	</ul>
 </div>
 
 <% if show_todo %>
 	<div id="contact_<%= item.id %>_todo" class="todo_right">
 		
-		<div id="friendship_status_with_user_<%= item.contactor.id %>" class="todo_block">
+		<div id="friendship_status_with_user_<%= user.id %>" class="todo_block">
 			<%= render :partial => '/contacts/contact_status', 
 								 :locals => { :contact_type => '1', 
 								 							:status => item.status, 
-								 							:user => item.contactor, 
+								 							:user => user, 
 								 							:ref => 'contacts_list' } %>
 		</div>
 		

@@ -24,13 +24,9 @@
 					<% end %>
 				</div>
 				<div class="user_bar_info">
-					blog:
-					<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
-						<%= link_to text_summary(blog, 40), url_with_protocol(blog), :target => "_blank" %>
-					<% elsif user == @current_user %>
-						&nbsp;
-						<span><%= link_to "#{ADD_CN}blog", :controller => 'settings', :action => 'account' %></span>
-					<% end %>
+					<%= render :partial => '/users/user_blog', 
+										 :locals => { :user => user, 
+										 							:show_add => true } %>
 				</div>
 				<div class="user_bar_link">
 					<%= link_to MAIN_PAGE_CN, :controller => 'users', :action => 'profile', :id => user.id %> |
