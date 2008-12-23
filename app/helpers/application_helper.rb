@@ -220,7 +220,7 @@ module ApplicationHelper
 	end
 	
 	def text_summary(text, min_length = TEXT_SUMMARY_LENGTH_M)
-		text.chars.length > min_length ? text.to(min_length-1) + '......' : text
+		text.chars.length > min_length ? text.to(min_length-1) + '...' : text
 	end
 	
 	def str_squish(str, space_count = 1)
@@ -243,27 +243,30 @@ module ApplicationHelper
 		end
 	end
 	
-	def paragraphs(text, keep_space = false, space_count = 1, min_paras_count = nil)
+	def paragraphs(text, keep_blank_line = false, keep_left_space = false, min_paras_count = nil)
 		paragraphs = []
 		if text && !text.blank?
-			ps = text.split(/\n/)
+			ps = auto_link(text).split(/\n/)
 			for p in ps
-				if keep_space
-					p = str_keep_space(p)
-				else
-					p = str_squish(p, space_count)
-				end
-				if !p.blank?
+				p = sanitize(p.strip, :tags => %w[a], :attributes => %w[href target])
+				if keep_blank_line
+					p = '&nbsp;' if p.blank?
 					if p.starts_with?('[') && p.ends_with?(']')
-						paragraphs << "<span>#{strip_tags(p)}</span>"
+						paragraphs << "<span class='subtitle'>#{p}</span>"
 					else
-						paragraphs << "<li><em class='none'>#{strip_tags(p)}</em></li>"
+						paragraphs << "<li><span class='text'>#{p}</span></li>"
+					end
+				elsif !p.blank?
+					if p.starts_with?('[') && p.ends_with?(']')
+						paragraphs << "<span class='subtitle'>#{p}</span>"
+					else
+						paragraphs << "<li><span class='text'>#{p}</span></li>"
 					end
 				end
 			end
 		end
 		if min_paras_count && paragraphs.size > min_paras_count
-			paragraphs[0..min_paras_count-1] + ["<li><em class='none'>......</em></li>"]
+			paragraphs[0..min_paras_count-1] + ["<li><span class='none'>...</span></li>"]
 		else
 			paragraphs
 		end

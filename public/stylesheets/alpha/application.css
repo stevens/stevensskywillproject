@@ -109,6 +109,18 @@ span.source {
 	font-size: 9px !important;
 	color: #b8b9a7;
 }
+span.subtitle {
+	font-weight: bold;
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;	
+}
+span.text {
+	font-weight: normal !important;
+}
+span.text a {
+	font-weight: normal;
+}
 label {
 	white-space: nowrap;
 }
@@ -171,6 +183,9 @@ ul {
 ol {
 	list-style: decimal;
 	list-style-position: outside;
+}
+.wide_space {
+	word-spacing: 5px;
 }
 
 /* Tag */
@@ -967,18 +982,11 @@ div.main ol {
 	padding-left: 35px;
 	font-weight: bold;
 }
-div.main ul span {
-	font-weight: bold;
-	display: block;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-div.main ol span {
+div.main ol span.subtitle {
 	margin-left: -35px;
-	font-weight: bold;
-	display: block;
-	margin-top: 5px;
-	margin-bottom: 5px;
+}
+div.item_detail ul span.text {
+	margin-left: 10px;
 }
 div.main h3 {
 	margin-top: 10px;
