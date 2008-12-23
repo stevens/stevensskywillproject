@@ -979,14 +979,14 @@ div.main li {
 	margin-bottom: 5px;
 }
 div.main ol {
-	padding-left: 35px;
+	padding-left: 40px;
 	font-weight: bold;
 }
 div.main ol span.subtitle {
-	margin-left: -35px;
+	margin-left: -40px;
 }
 div.item_detail ul span.text {
-	margin-left: 10px;
+	margin-left: 24px;
 }
 div.main h3 {
 	margin-top: 10px;
