@@ -54,14 +54,14 @@
 			|
 		<% end %>
 		<% if item.user == @current_user %>
-    	<%= link_to_remote EDIT_CN, :url => [item, :edit], :method => :get %> |
+    	<%= link_to_remote EDIT_CN, :url => { :controller => 'reviews', :action => 'edit', :id => item.id, :filter => @current_filter }, :method => :get %> |
     <% end %>
     <% if item.user == @current_user || item.reviewable.user == @current_user %>
     	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Review')}#{REVIEW_CN}吗?" %>
 	    <% if delete_remote %>
-	    	<%= link_to_remote DELETE_CN, :url => item, :confirm => delete_message, :method => :delete %>
+	    	<%= link_to_remote DELETE_CN, :url => { :controller => 'reviews', :action => 'destroy', :id => item.id, :filter => @current_filter }, :confirm => delete_message, :method => :delete %>
 	    <% else %>
-	    	<%= link_to DELETE_CN, {:controller => 'reviews', :action => 'destroy', :id => item.id, :reviewable_type => params[:reviewable_type], :current_filter => params[:filter], :current_page => params[:page]}, :confirm => delete_message, :method => :delete %>
+	    	<%= link_to DELETE_CN, { :controller => 'reviews', :action => 'destroy', :id => item.id, :reviewable_type => params[:reviewable_type], :filter => @current_filter, :current_page => params[:page] }, :confirm => delete_message, :method => :delete %>
 	    <% end %>
     <% end %>
 	</div>

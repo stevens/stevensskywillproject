@@ -328,6 +328,10 @@ class RecipesController < ApplicationController
   
   def after_publish_ok
   	respond_to do |format|
+  		format.html do
+  			flash[:notice] = @notice	
+  			redirect_back_or_default('mine')
+  		end
 			format.js do
 				render :update do |page|
 					case params[:ref]
@@ -347,8 +351,8 @@ class RecipesController < ApplicationController
 										 											 :ref => 'show', 
 										 											 :delete_remote => false }
 					when 'index'
-		  			flash[:notice] = @notice	
-		  			page.redirect_to ''
+		  			# flash[:notice] = @notice	
+		  			# page.redirect_to ''
 					end
 				end
 			end

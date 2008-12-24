@@ -291,7 +291,7 @@ class ReviewsController < ApplicationController
     		if @parent_obj
     			load_reviews_set
     		else
-    			@current_filter = params[:current_filter] if params[:current_filter]
+    			# @current_filter = params[:current_filter] if params[:current_filter]
     			load_reviews_set(@current_user)
     		end
     		
@@ -303,9 +303,9 @@ class ReviewsController < ApplicationController
 				if @parent_obj
 					redirect_to id_for(@parent_type).to_sym => @parent_id, :action => 'index', :page => page
 				elsif @reviewable_type
-					redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase, :filter => current_filter, :page => page
+					redirect_to :action => 'mine', :reviewable_type => @reviewable_type.downcase, :filter => params[:filter], :page => page
 				else
-					redirect_to :action => 'mine', :filter => current_filter, :page => page
+					redirect_to :action => 'mine', :filter => params[:filter], :page => page
 				end
 			end
 			format.xml  { head :ok }
