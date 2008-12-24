@@ -15,12 +15,19 @@
 		<% else %>
 			<p>
 				<span>
-					<%= link_to image_tag('default/bee/default_bee_mcube.png', :title => "加入#{SITE_NAME_CN}", :alt => ''), 
+					<% if Date.today > 2009-02-01 %>
+						<% signup_image_url = 'day/2008/2008-12-24_xmas.jpg' %>
+						<% slogan = '过节我做煮, 新年更蜂狂!' %>
+					<% else %>
+						<% signup_image_url = 'default/bee/default_bee_mcube.png' %>
+						<% slogan = SLOGAN_CN %>
+					<% end %>
+					<%= link_to image_tag(signup_image_url, :title => "加入#{SITE_NAME_CN}", :alt => ''), 
 											signup_url %>
 				</span>
 			</p>
 			<br />
-			<p><em class="l"><%= SLOGAN_CN %></em></p><br />
+			<p><em class="l"><%= slogan %></em></p><br />
 		<% end %>
 		<p>
 			<table style="margin: auto">
