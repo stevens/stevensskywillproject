@@ -1,10 +1,12 @@
 <%= "亲爱的 #{strip_tags(@user.login)}, #{HELLO_CN}!" %>
 
 <%= "那啥，有个叫 #{strip_tags(@contactor.login)} 的#{PEOPLE_CN}想和你成为#{FRIEND_CN}, 可以不?" %>
-<%= "请#{LOGIN_CN}#{SITE_NAME_CN}处理一下吧..." %>
-<%= root_url %>
 
-<%= "这是 #{strip_tags(@contactor.login)} 的#{MAIN_PAGE_CN}:" %>
+<%= "麻烦你#{LOGIN_CN}#{SITE_NAME_CN}:" %>
+<%= root_url %>
+<%= "抽空处理一下吧..." %>
+
+<%= "这是 #{strip_tags(@contactor.login)} 的#{MAIN_PAGE_CN}地址:" %>
 <%= @url %>
 <%= "去转悠一圈吧..." %>
   

@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
   def activation(user)
     setup_email(user)
     @subject    += "恭喜你加入#{SITE_NAME_CN}"
-    @body[:url]  = root_url
+    @body[:url]  = user_first_link(user, false)
   end
 
 	def forgot_password(user)
@@ -24,14 +24,13 @@ class UserMailer < ActionMailer::Base
 	def reset_password(user)
 		setup_email(user)
     @subject    += "你已经重新设置了#{ACCOUNT_CN}#{PASSWORD_CN}"
-    @body[:url]  = root_url
+    @body[:url]  = user_first_link(user, false)
 	end
 	
 	def friendship_request(contact)
 		user = User.find(contact.user_id)
 		contactor = User.find(contact.contactor_id)
 		setup_email(user)
-		# @body[:contactor] = User.find(contact.contactor_id)
 		@body[:url] = user_first_link(contactor, false)
 		@subject += "#{contactor.login}向你发出了#{FRIEND_CN}请求"
 		@body[:contactor] = contactor
