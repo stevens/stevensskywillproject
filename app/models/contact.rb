@@ -9,12 +9,16 @@ class Contact < ActiveRecord::Base
 		find_by_user_id_and_contactor_id_and_contact_type(user, contactor, '1')
 	end
 	
+	def check_friendship_status?(status_name)
+		contact_type == '1' && status == Code.find_by_codeable_type_and_name('contact_status', status_name).code
+	end
+	
 	def self.friendship_exists?(user, contactor)
 		find_friendship(user, contactor) ? true : false
 	end
 	
 	def self.friendship_request(user, contactor)
-		unless user == contactor || friendship_exists?(user, contactor)
+		unless user == contactor || find_friendship(user, contactor)
 			transaction do
 				create(:user => user, :contactor => contactor, :contact_type => '1', :status => '2')
 				create(:user => contactor, :contactor => user, :contact_type => '1', :status => '1')
@@ -23,7 +27,7 @@ class Contact < ActiveRecord::Base
 	end
 	
 	def self.friendship_accept(user, contactor)
-		if friendship_exists?(user, contactor)
+		if contact_for_mail = find_friendship(contactor, user)
 			transaction do
 				accepted_at = Time.now
 				accept_one_side(user, contactor, accepted_at)
@@ -33,7 +37,7 @@ class Contact < ActiveRecord::Base
 	end
 	
 	def self.friendship_breakup(user, contactor)
-		if friendship_exists?(user, contactor)
+		if find_friendship(user, contactor)
 			transaction do
 				destroy(find_by_user_id_and_contactor_id(user, contactor))
 				destroy(find_by_user_id_and_contactor_id(contactor, user))
@@ -44,7 +48,7 @@ class Contact < ActiveRecord::Base
 	private
 
 	def self.accept_one_side(user, contactor, accepted_at)
-		request = find_by_user_id_and_contactor_id(user, contactor)
+		request = find_friendship(user, contactor)
 		request.status = '3'
 		request.accepted_at = accepted_at
 		request.save!

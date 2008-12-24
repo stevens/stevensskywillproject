@@ -3,20 +3,6 @@
 	<table class="content">
 		<tr>
 			<td class="label">
-				<label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label>
-			</td>
-			<td class="input">
-				<div class="text">
-					<%= "<em class='more'>请确认#{EMAIL_ADDRESS_CN}真实有效, 才能接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" %>
-				</div>
-				<div class="input">
-					<%= f.text_field :email, :class => "text_s" %>
-				</div>
-				<%= error_message_on "user", "email" %>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
 				<label for="login"><%= "#{NICKNAME_CN}:" %></label>
 			</td>
 			<td class="input">
@@ -27,6 +13,20 @@
 					<%= f.text_field :login, :class => "text_s" %>
 				</div>
 				<%= error_message_on "user", "login" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "<em class='more'>请确认#{EMAIL_ADDRESS_CN}真实有效, 才能接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" %>
+				</div>
+				<div class="input">
+					<%= f.text_field :email, :class => "text_s" %>
+				</div>
+				<%= error_message_on "user", "email" %>
 			</td>
 		</tr>
 		<tr>

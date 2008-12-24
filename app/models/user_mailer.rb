@@ -35,6 +35,15 @@ class UserMailer < ActionMailer::Base
 		@subject += "#{contactor.login}向你发出了#{FRIEND_CN}请求"
 		@body[:contactor] = contactor
 	end
+	
+	def friendship_accept(contact)
+		user = User.find(contact.user_id)
+		contactor = User.find(contact.contactor_id)
+		setup_email(user)
+		@body[:url] = user_first_link(contactor, false)
+		@subject += "#{contactor.login}接受了你的#{FRIEND_CN}请求"
+		@body[:contactor] = contactor
+	end
 
   protected
   
@@ -43,6 +52,7 @@ class UserMailer < ActionMailer::Base
 	  @from        = "#{SITE_NAME_EN} <#{SITE_EMAIL}>"
 	  @subject     = "[#{SITE_NAME_CN}] "
 	  @sent_on     = Time.now
+	  @content_type = "text/html"
 	  @body[:user] = user
 	end
 end

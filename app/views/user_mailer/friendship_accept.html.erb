@@ -1,15 +1,12 @@
 
 <%= "亲爱的 #{strip_tags(@user.login)}, #{HELLO_CN}!" %><br />
 <br />
-<%= "那啥, 有个叫 #{strip_tags(@contactor.login)} 的#{PEOPLE_CN}想和你成为#{FRIEND_CN}, 可以不?" %><br />
-<br />
-<%= "麻烦你#{LOGIN_CN}#{SITE_NAME_CN}:" %><br />
-<%= auto_link(root_url, :all, :target => "_blank") %><br />
-<%= "抽空处理一下吧..." %><br />
+<%= "那个叫 #{strip_tags(@contactor.login)} 的#{PEOPLE_CN}已经同意和你成为#{FRIEND_CN}啦!" %><br />
+<%= "你们俩的名字会互相出现在对方的#{FRIEND_CN}列表中, 挺酷吧?" %><br />
 <br />
 <%= "这是 #{strip_tags(@contactor.login)} 的#{MAIN_PAGE_CN}地址:" %><br />
 <%= auto_link(@url, :all, :target => "_blank") %><br />
-<%= "去转悠一圈吧..." %><br />
+<%= "记得常去串门喔..." %><br />
 <br />
 <%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %><br />
 <br />

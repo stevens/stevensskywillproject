@@ -1,14 +1,14 @@
 
-<%= "亲爱的 #{strip_tags(@user.login)}, #{HELLO_CN}!" %>
-
-<%= "你已经#{SIGN_UP_CN}了一个#{SITE_NAME_CN}#{ACCOUNT_CN}, 赞呵!" %>
-<%= "你#{SIGN_UP_CN}的#{EMAIL_ADDRESS_CN}是:" %>
-<%= auto_link(@user.email, :all, :target => "_blank") %>
-
-<%= "请访问这个#{URL_CN}:" %>
-<%= auto_link(@url, :all, :target => "_blank") %>
-<%= "这就激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}吧..." %>
-  
-<%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %>
-
-<%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %> 
+<%= "亲爱的 #{strip_tags(@user.login)}, #{HELLO_CN}!" %><br />
+<br />
+<%= "你已经#{SIGN_UP_CN}了一个#{SITE_NAME_CN}#{ACCOUNT_CN}, 赞呵赞呵!" %><br />
+<%= "你#{SIGN_UP_CN}的#{EMAIL_ADDRESS_CN}是:" %><br />
+<%= auto_link(@user.email, :all, :target => "_blank") %><br />
+<br />
+<%= "请访问这个#{URL_CN}:" %><br />
+<%= auto_link(@url, :all, :target => "_blank") %><br />
+<%= "这就激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}吧..." %><br />
+<br />
+<%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %><br />
+<br />
+<%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %><br />
