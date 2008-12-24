@@ -25,11 +25,10 @@
 		<p>
 			<table style="margin: auto">
 				<% subjects = [['mslg', '记录美食灵感'], ['sfsp', '分享私房食谱'], ['txcy', '结交天下厨友'], ['jhcd', '切磋江湖厨道']] %>
-				<% filename_common_party = '42.png' %>
 				<tr>
 					<% for subject in subjects %>
-						<td>
-							<%= image_tag "site/#{subject[0]}#{filename_common_party}", :title => subject[1], :alt => '' %>
+						<td style="width: 150px">
+							<%= image_tag "site/#{subject[0]}.png", :title => subject[1], :alt => '' %>
 						</td>
 					<% end %>
 				</tr>
