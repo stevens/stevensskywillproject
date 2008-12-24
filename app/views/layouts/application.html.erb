@@ -59,7 +59,7 @@
 					
 					<!-- logo -->
 					<div id="logo">
-						<%= link_to image_tag('alpha/bc_logo_web.png', :title => SLOGAN_CN, :alt => ''), root_url %>
+						<%= link_to image_tag('logo/bc_logo_web.png', :title => SLOGAN_CN, :alt => '', :class => 'logo'), root_url %>
 					</div>
 				</div>
 			</div>
@@ -183,7 +183,7 @@
 						
 						<!-- 后台管理 -->
 						<% if is_admin_logged_in? %>
-						    <%=render :partial => "/layouts/admin" %>
+							<%=render :partial => "/layouts/admin" %>
 						<% end %>
 						
 				  </div>

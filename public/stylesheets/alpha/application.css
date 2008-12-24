@@ -25,11 +25,14 @@ img {
 	background-color: #ffffff;
 }
 img.icon {
-	margin-bottom: -3px;
-	margin-right: 1px;
+	margin-bottom: -2px;
+	margin-right: 0px;
 	background-color: transparent;
-	width: 14px;
-	height: 14px;
+	width: 12px;
+	height: 12px;
+}
+img.logo {
+	background-color: transparent !important;
 }
 body {
 	background-color: #ffffff;
@@ -587,7 +590,8 @@ td.photo_item_cell {
 .content_block {
 	margin-bottom: 10px;
 	border-top: 1px #428cbb solid;
-	/*border-top: #428cbb 4px solid;*/
+	/*border-bottom: 1px #f1f1f1 solid;
+	border-top: #428cbb 4px solid;*/
 }
 
 /* Block Header */
@@ -618,7 +622,7 @@ td.photo_item_cell {
 /* Block Main */
 .block_main {
 	background-color: #ffffff;
-	border: 1px #f1f1f1 solid;
+	border-bottom: 1px #f1f1f1 solid;
 	border-top: none;
 }
 .block_main table {
@@ -989,13 +993,17 @@ div.item_detail ul span.text {
 	margin-left: 24px;
 }
 div.main h3 {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin: 10px -10px;
+	padding-left: 10px;
 	padding-bottom: 5px;
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px dashed #f1f1f1;
 	color: #e42300;
 	font-size: 14px;
 	font-weight: normal;
+}
+* html div.main h3 {
+	margin: 10px -8px;
+	padding-left: 8px;
 }
 div.todo {
 	margin-top: 5px;
@@ -1254,8 +1262,8 @@ div.welcome {
 div.welcome_content {
 	padding: 0px;
 	padding-top: 30px;
-	border: 1px #f1f1f1 solid;
-	border-top: none;
+	/*border: 1px #f1f1f1 solid;
+	border-top: none;*/
 }
 div.welcome_content em {
 	font-weight: bold;
@@ -1279,6 +1287,7 @@ div.welcome_content span a:hover {
 div.welcome_content #random_items_bar {
 	border: none;
 	border-top: solid 1px #f1f1f1;
+	border-bottom: solid 1px #f1f1f1;
 	background-color: #f5f5f5;
 	margin-top: 20px;
 }
@@ -1311,7 +1320,8 @@ div.welcome_todo_button a:hover {
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-bottom: 10px;
-	border: 1px #f1f1f1 solid;
+	border-top: 1px #ffffdd solid;
+	border-top: 1px #ffffdd solid;
 	background-color: #ffffdd;
 }
 .user_portrait {
@@ -1448,7 +1458,13 @@ div.welcome_todo_button a:hover {
 }
 #highlighted_item div.full_photo {
 	border: none;
+	background-color: transparent !important;
+}
+#highlighted_item div.block_main {
 	background-color: #ffffdd;
+	border: none;
+	border-left: #ffffdd solid 1px;
+	border-right: #ffffdd solid 1px;
 }
 
 /* Overlay */

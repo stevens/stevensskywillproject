@@ -24,11 +24,12 @@
 		<% end %>
 		<p>
 			<table style="margin: auto">
-				<% subjects = [['mslg.gif', '记录美食灵感'], ['sfsp.gif', '分享私房食谱'], ['txcy.gif', '结交天下厨友'], ['jhcd.gif', '切磋江湖厨道']] %>
+				<% subjects = [['mslg', '记录美食灵感'], ['sfsp', '分享私房食谱'], ['txcy', '结交天下厨友'], ['jhcd', '切磋江湖厨道']] %>
+				<% filename_common_party = '42.png' %>
 				<tr>
 					<% for subject in subjects %>
 						<td>
-							<%= image_tag "site/#{subject[0]}", :title => subject[1], :alt => '' %>
+							<%= image_tag "site/#{subject[0]}#{filename_common_party}", :title => subject[1], :alt => '' %>
 						</td>
 					<% end %>
 				</tr>
