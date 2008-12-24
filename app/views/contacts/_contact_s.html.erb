@@ -48,13 +48,27 @@
 <% if show_todo %>
 	<div id="contact_<%= item.id %>_todo" class="todo_right">
 		
-		<div id="friendship_status_with_user_<%= user.id %>" class="todo_block">
-			<%= render :partial => '/contacts/contact_status', 
-								 :locals => { :contact_type => '1', 
-								 							:status => item.status, 
-								 							:user => user, 
-								 							:ref => 'contacts_list' } %>
-		</div>
+		<% unless @current_user && user == @current_user %>
+			<% if params[:action] == 'mine' %>
+				<% contact_status = item.status %>
+				<% ref = 'contacts_list' %>
+			<% elsif @current_user %>
+				<% contact = Contact.find_friendship(@current_user, user) %>
+				<% contact_status = contact ? contact.status : nil %>
+				<% ref = 'user_contacts_list' %>
+			<% else %>
+				<% contact_status = '-1' %>
+				<% ref = 'user_contacts_list' %>
+			<% end %>
+			
+			<div id="friendship_status_with_user_<%= user.id %>" class="todo_block">
+				<%= render :partial => '/contacts/contact_status', 
+									 :locals => { :contact_type => '1', 
+									 							:status => contact_status, 
+									 							:user => user, 
+									 							:ref => ref } %>
+			</div>
+		<% end %>
 		
 		<% if show_manage %>
 			<div id="contact_<%= item.id %>_manage">

@@ -5,12 +5,16 @@ class Contact < ActiveRecord::Base
 	
 	validates_presence_of :user_id, :contactor_id
 	
+	def self.find_friendship(user, contactor)
+		find_by_user_id_and_contactor_id_and_contact_type(user, contactor, '1')
+	end
+	
 	def self.friendship_exists?(user, contactor)
-		find_by_user_id_and_contactor_id_and_contact_type(user, contactor, '1') ? true : false
+		find_friendship(user, contactor) ? true : false
 	end
 	
 	def self.friendship_request(user, contactor)
-		unless user == contactor || Contact.friendship_exists?(user, contactor)
+		unless user == contactor || friendship_exists?(user, contactor)
 			transaction do
 				create(:user => user, :contactor => contactor, :contact_type => '1', :status => '2')
 				create(:user => contactor, :contactor => user, :contact_type => '1', :status => '1')
@@ -19,7 +23,7 @@ class Contact < ActiveRecord::Base
 	end
 	
 	def self.friendship_accept(user, contactor)
-		if Contact.friendship_exists?(user, contactor)
+		if friendship_exists?(user, contactor)
 			transaction do
 				accepted_at = Time.now
 				accept_one_side(user, contactor, accepted_at)
@@ -29,7 +33,7 @@ class Contact < ActiveRecord::Base
 	end
 	
 	def self.friendship_breakup(user, contactor)
-		if Contact.friendship_exists?(user, contactor)
+		if friendship_exists?(user, contactor)
 			transaction do
 				destroy(find_by_user_id_and_contactor_id(user, contactor))
 				destroy(find_by_user_id_and_contactor_id(contactor, user))

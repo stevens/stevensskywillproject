@@ -41,7 +41,7 @@
 				<% if user != @current_user %>
 					<div id="friendship_status_with_user_<%= user.id %>" class="todo_block">
 						<% if @current_user %>
-							<% if contact = @current_user.contacts.find(:first, :conditions => { :contactor_id => user.id, :contact_type => '1' }) %>
+							<% if contact = Contact.find_friendship(@current_user, user) %>
 								<% status = contact.status %>
 							<% end %>
 						<% else %>

@@ -1,12 +1,12 @@
-<%= "亲爱的#{strip_tags(@user.login)}, #{HELLO_CN}!" %>
+<%= "亲爱的 #{strip_tags(@user.login)}, #{HELLO_CN}!" %>
 
-<%= "#{PEOPLE_CN}#{strip_tags(@contactor.login)}向你发出了#{FRIEND_CN}请求, 请登录#{SITE_NAME_CN}进行处理..." %>
-
+<%= "那啥，有个叫 #{strip_tags(@contactor.login)} 的#{PEOPLE_CN}想和你成为#{FRIEND_CN}, 可以不?" %>
+<%= "请#{LOGIN_CN}#{SITE_NAME_CN}处理一下吧..." %>
 <%= root_url %>
 
-<%= "可以访问下面的#{URL_CN}, 进入#{strip_tags(@contactor.login)}的#{MAIN_PAGE_CN}:" %>
-
+<%= "这是 #{strip_tags(@contactor.login)} 的#{MAIN_PAGE_CN}:" %>
 <%= @url %>
+<%= "去转悠一圈吧..." %>
   
 <%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %>
 

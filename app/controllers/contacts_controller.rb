@@ -4,7 +4,7 @@ class ContactsController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:index, :mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index]
   before_filter :load_contact_type, :load_contactor
-  before_filter :load_current_filter, :only => [:index, :mine, :accept]
+  before_filter :load_current_filter, :only => [:index, :mine]
   
   def index
     respond_to do |format|
@@ -38,14 +38,14 @@ class ContactsController < ApplicationController
 																:locals => { :contact_type => @contact_type, 
 																						 :status => '2', 
 																						 :user => nil, 
-																						 :ref => 'user_bar' }
+																						 :ref => params[:ref] }
 						else
 							page.replace_html "friendship_status_with_user_#{@contactor.id}", 
 																:partial => '/contacts/contact_status', 
 																:locals => { :contact_type => @contact_type, 
 																						 :status => '-1', 
 																						 :user => @contactor, 
-																						 :ref => 'user_bar' }
+																						 :ref => params[:ref] }
 						end
 					end
 				end
@@ -67,13 +67,7 @@ class ContactsController < ApplicationController
 				render :update do |page|
 					if @contact_type == '1'
 						if Contact.friendship_accept(@current_user, @contactor)
-							page.redirect_to ''
-							# page.replace_html "friendship_status_with_user_#{@contactor.id}", 
-							# 									:partial => '/contacts/contact_status', 
-							# 									:locals => { :contact_type => @contact_type, 
-							# 															 :status => '3', 
-							# 															 :user => @contactor, 
-							# 															 :ref => 'contacts_list' }
+							page.redirect_to :controller => 'contacts', :action => 'mine', :filter => params[:filter]
 						end
 					end
 				end
@@ -87,7 +81,7 @@ class ContactsController < ApplicationController
 				render :update do |page|
 					if @contact_type == '1'
 						if Contact.friendship_breakup(@current_user, @contactor)
-							page.redirect_to ''
+							page.redirect_to :controller => 'contacts', :action => 'mine', :filter => params[:filter]
 						end
 					end
 				end
@@ -98,7 +92,6 @@ class ContactsController < ApplicationController
   def mine
     load_contacts_set(@current_user)
     
-  	@show_todo = true
   	@show_manage = true
 		
 		info = "#{username_prefix(@current_user)}#{PEOPLE_CN}"
