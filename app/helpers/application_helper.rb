@@ -246,7 +246,7 @@ module ApplicationHelper
 	def paragraphs(text, keep_blank_line = false, keep_left_space = false, min_paras_count = nil)
 		paragraphs = []
 		if text && !text.blank?
-			ps = auto_link(text).split(/\n/)
+			ps = auto_link(text, :all, :target => "_blank").split(/\n/)
 			for p in ps
 				p = sanitize(p.strip, :tags => %w[a], :attributes => %w[href target])
 				if keep_blank_line

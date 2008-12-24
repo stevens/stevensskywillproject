@@ -3,11 +3,11 @@
 <%= "那啥，有个叫 #{strip_tags(@contactor.login)} 的#{PEOPLE_CN}想和你成为#{FRIEND_CN}, 可以不?" %>
 
 <%= "麻烦你#{LOGIN_CN}#{SITE_NAME_CN}:" %>
-<%= root_url %>
+<%= auto_link(root_url, :all, :target => "_blank") %>
 <%= "抽空处理一下吧..." %>
 
 <%= "这是 #{strip_tags(@contactor.login)} 的#{MAIN_PAGE_CN}地址:" %>
-<%= @url %>
+<%= auto_link(@url, :all, :target => "_blank") %>
 <%= "去转悠一圈吧..." %>
   
 <%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %>
