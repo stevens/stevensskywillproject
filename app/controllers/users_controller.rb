@@ -190,7 +190,7 @@ class UsersController < ApplicationController
   	respond_to do |format|
 			format.html do
 	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收<em>#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}</em>!<br /><br/>
-	      								 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"				
+	      								 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."				
 				redirect_to root_path
 			end
 			format.xml  { render :xml => @user, :status => :created, :location => @user }

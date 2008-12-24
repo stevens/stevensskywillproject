@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
     else
     	flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!<br /><br />
     									 <em>如果你已经用这个#{EMAIL_ADDRESS_CN}注册过, 请核实是否收到#{ACCOUNT_CN}激活#{EMAIL_CN}并激活了你的#{ACCOUNT_CN}?</em><br />
-    									 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系......"
+    									 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."
       render :action => 'new'
       flash[:notice] = nil
     end
