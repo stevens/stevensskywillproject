@@ -54,7 +54,9 @@ class RecipesController < ApplicationController
 		load_recipe
 			
 		load_recipes_set(@recipe.user)
-
+		
+		@recipe_index = @recipes_set.index(@recipe)
+		
 		recipe = [@recipe]
 		@other_recipes_set = @recipes_set - recipe
 		recipes_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
