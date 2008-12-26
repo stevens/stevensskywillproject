@@ -1,10 +1,10 @@
 <% item_unit = unit_for(type_for(items_set[0])) %>
-<% prev_index = current_index - 1 %>
-<% next_index = current_index + 1 %>
+<% prev_index = current_index + 1 %>
+<% next_index = current_index - 1 %>
 
 <span style="float: right">
 	<%= "#{NEXT_ONE_CN}#{item_unit} " %>
-	<% if next_index == items_set.size %>
+	<% if next_index == -1 %>
 		无
 	<% else %>
 		<% next_item = items_set[next_index] %>
@@ -13,7 +13,7 @@
 </span>
 
 <%= "#{PREV_ONE_CN}#{item_unit} " %>
-<% if prev_index == -1 %>
+<% if prev_index == items_set.size %>
 	无
 <% else %>
 	<% prev_item = items_set[prev_index] %>
