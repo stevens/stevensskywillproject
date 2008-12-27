@@ -1,3 +1,11 @@
+<% if recipe_roles = item.roles %>
+	<% for role_code_code in recipe_roles.split(' ') %>
+		<% if role_code = codes_for(code_conditions('recipe_role', role_code_code))[0] %>
+			<%= image_tag "icon/recipe/#{role_code.name}.png", :title => role_code.title, :alt => '', :class => "icon" %>
+		<% end %>
+	<% end %>
+<% end %>
+
 <% from_type_code_code = item.from_type %>
 <% if from_type_code_code == '1' %>
 	<% if from_type_code = codes_for(code_conditions('from_type', from_type_code_code))[0] %>

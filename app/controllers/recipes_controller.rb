@@ -6,6 +6,26 @@ class RecipesController < ApplicationController
 	before_filter :load_current_filter, :only => [:index, :mine]
 	before_filter :set_system_notice, :only => [:show, :new, :edit]
 	
+	def choice
+		load_recipe
+		respond_to do |format|
+			format.html do
+				current_roles = @recipe.roles || ''
+				
+		    if params[:to_choice]
+					@recipe.roles = current_roles + ' 11'
+					flash[:notice] = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
+			  else
+			  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
+					flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
+			  end
+
+				Recipe.update(@recipe.id, { :roles => @recipe.roles })
+				redirect_to @recipe
+			end
+		end
+	end
+	
 	def change_from_type
   	respond_to do |format|
 			format.js do
@@ -187,6 +207,7 @@ class RecipesController < ApplicationController
   def overview
 	  load_recipes_set
 	  load_random_recipes
+	  load_choice_recipes
 	  load_reviews_set
 	  load_tags_set
 	  
@@ -243,6 +264,10 @@ class RecipesController < ApplicationController
   def load_recipes_set(user = nil)
   	@recipes_set = filtered_recipes(user, @current_filter)
   	@recipes_set_count = @recipes_set.size
+  end
+  
+  def load_choice_recipes(user = nil)
+  	@choice_recipes = roles_recipes(user, '11', 12)
   end
   
   def load_random_recipes(user = nil)

@@ -21,6 +21,13 @@ module RecipesHelper
  		recipes_for(user, recipe_conditions.join(' AND '), limit, order)
 	end
 	
+	def roles_recipes(user = nil, role_condition = nil, limit = nil, order = 'RAND()')
+ 		recipe_conditions = []
+ 		recipe_conditions << recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
+ 		recipe_conditions << "recipes.roles LIKE '%#{role_condition}%'" if role_condition
+ 		recipes_for(user, recipe_conditions.join(' AND '), limit, order)	
+	end
+	
 	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'published_at DESC, created_at DESC')
 		if user
 			user.recipes.find(:all, :limit => limit, :order => order, 
