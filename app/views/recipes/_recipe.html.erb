@@ -72,7 +72,7 @@
 <% if show_todo %>
 	<div id="recipe_<%= item.id %>_todo" class="todo_right">
 		<% if show_favorite %>
-			<div id="recipe_<%= item.id %>_favorite">
+			<div id="recipe_<%= item.id %>_favorite" style="margin-bottom: 5px">
 				<%= render :partial => '/favorites/favorite_bar', 
 									 :locals => { :favorable => item, 
 									 							:ref => nil,
