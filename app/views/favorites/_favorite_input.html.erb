@@ -49,7 +49,16 @@
 				<%= error_message_on "favorite", "note" %>
 			</td>
 		</tr>
-		<%= hidden_field_tag "back_to_type", back_to_type %>
+		<% if favorable_type %>
+			<%= hidden_field_tag "favorable_type", favorable_type %>
+		<% end %>
+		<% if filter %>
+			<%= hidden_field_tag "filter", filter %>
+		<% end %>
+		<%= hidden_field_tag "ref", ref %>
+		<% if favoriter_id %>
+			<%= hidden_field_tag "favoriter_id", favoriter_id %>
+		<% end %>
 		<tr>
 			<td></td>
 			<td class="input">

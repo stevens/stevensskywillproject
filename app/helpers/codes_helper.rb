@@ -1,7 +1,12 @@
 module CodesHelper
 
-	def code_title(codeable_type, code)
-		c = Code.find(:first, :conditions => {:codeable_type => codeable_type, :code => code})
+	def code_title(codeable_type, condition, by = 'code')
+		case by
+		when 'code'
+			c = Code.find(:first, :conditions => {:codeable_type => codeable_type, :code => condition})
+		when 'name'
+			c = Code.find(:first, :conditions => {:codeable_type => codeable_type, :name => condition})
+		end
 		if c
 			c.title
 		else
@@ -9,10 +14,10 @@ module CodesHelper
 		end
 	end
 	
-	def codes_titles(codeable_type, codes)
+	def codes_titles(codeable_type, conditions, by = 'code')
 		titles = []
-		for code in codes
-			titles << code_title(codeable_type, code)
+		for condition in conditions
+			titles << code_title(codeable_type, condition, by)
 		end
 		titles
 	end

@@ -1,15 +1,45 @@
-<% favorable_id_sym = item_id(favorable).to_sym %>
 <% favorable_type = type_for(favorable) %>
 
-<% if @current_user %>
-	<% if favorite = favorable.favorites.find(:first, :conditions => { :user_id => @current_user.id }) %>
-		<em class="highlight"><%= link_to_remote "我: #{codes_titles("#{favorable_type.downcase}_favorite_status", favorite.status.split(' ')).join(' / ')}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'edit', :back_to_type => back_to_type }, :method => :get %></em>
-		&nbsp;
-		<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Favorite')}#{name_for(favorable_type)}#{FAVORITE_CN}吗?" %>
-		<%= link_to_remote "#{DELETE_CN}#{FAVORITE_CN}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'destroy', :back_to_type => back_to_type }, :confirm => delete_message, :method => :delete %>
-	<% elsif favorable.user != @current_user %>
-		<em><%= link_to_remote "我要#{FAVORITE_CN}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :action => 'new', :back_to_type => back_to_type }, :method => :get %></em>
+<% unless ref %>
+	<% if params[:controller] == controller_name(favorable_type) %>
+		<% case params[:action]
+			 when 'show'
+			 	 ref = 'favorable_show'
+			 when 'index'
+			 	 ref = 'favorables_list'
+			 when 'mine'
+			 	 ref = 'my_favorables_list'
+			 end %>
+	<% elsif params[:controller] == 'favorites' %>
+		<% case params[:action]
+			 when 'index'
+			   ref = 'favorites_list'
+			 when 'mine'
+			 	 ref = 'my_favorites_list'
+			 end %>
 	<% end %>
-<% else %>
-	<em><%= link_to "我要#{FAVORITE_CN}", favorable_id_sym => favorable.id, :controller => 'favorites', :action => 'new' %></em>
+<% end %>
+
+<% if ref != 'my_favorables_list' %>
+	<% if ref == 'favorites_list' && favoriter_id %>
+		<% if user_favorite = favorable.favorites.find(:first, :conditions => { :user_id => favoriter_id }) %>
+			<%= "TA: #{codes_titles("#{favorable_type.downcase}_favorite_status", user_favorite.status.split(' ')).join(' / ')}" %>
+		<% end %>
+	<% end %>
+
+	<% favorable_id_sym = item_id(favorable).to_sym %>
+	
+	<% if @current_user %>
+		<% if favorite = favorable.favorites.find(:first, :conditions => { :user_id => @current_user.id }) %>
+			<% favorite_status_info = codes_titles("#{favorable_type.downcase}_favorite_status", favorite.status.split(' ')).join(' / ') %>
+			<em class="highlight"><%= link_to_remote "我: #{favorite_status_info}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'edit', :favorable_type => params[:favorable_type], :filter => params[:filter], :ref => ref, :favoriter_id => favoriter_id }, :method => :get %></em>
+			&nbsp;
+			<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Favorite')}#{name_for(favorable_type)}#{FAVORITE_CN}吗?" %>
+			<%= link_to_remote "#{DELETE_CN}#{FAVORITE_CN}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :id => favorite.id, :action => 'destroy', :favorable_type => params[:favorable_type], :filter => params[:filter], :ref => ref, :favoriter_id => favoriter_id }, :confirm => delete_message, :method => :delete %>
+		<% elsif favorable.user != @current_user %>
+			<em><%= link_to_remote "我要#{FAVORITE_CN}", :url => { favorable_id_sym => favorable.id, :controller => 'favorites', :action => 'new', :favorable_type => params[:favorable_type], :filter => params[:filter], :ref => ref, :favoriter_id => favoriter_id }, :method => :get %></em>
+		<% end %>
+	<% else %>
+		<em><%= link_to "我要#{FAVORITE_CN}", favorable_id_sym => favorable.id, :controller => 'favorites', :action => 'new', :favorable_type => params[:favorable_type], :filter => params[:filter], :ref => ref, :favoriter_id => favoriter_id %></em>
+	<% end %>
 <% end %>
