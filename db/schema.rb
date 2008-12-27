@@ -297,6 +297,7 @@ ActiveRecord::Schema.define(:version => 46) do
     t.datetime "published_at"
     t.string   "is_draft"
     t.string   "roles"
+    t.datetime "original_updated_at"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_user"

@@ -21,9 +21,9 @@ class RecipesController < ApplicationController
 						flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
 				  end
 					
-					updated_at = @recipe.updated_at
-					Recipe.update(@recipe.id, { :roles => @recipe.roles, :updated_at => updated_at })
-					redirect_to @recipe
+					if Recipe.update(@recipe.id, { :roles => @recipe.roles })
+						redirect_to @recipe
+					end
 				end
 			end
 		end
@@ -170,6 +170,7 @@ class RecipesController < ApplicationController
     params[:recipe][:status] = new_recipe.status
     params[:recipe][:is_draft] = new_recipe.is_draft
     params[:recipe][:published_at] = new_recipe.published_at
+    params[:recipe][:original_updated_at] = Time.now
     
 	  if @recipe.update_attributes(params[:recipe])
 	  	@recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
@@ -201,7 +202,7 @@ class RecipesController < ApplicationController
 			@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
 	  end
   	
-		Recipe.update(@recipe.id, {:is_draft => @recipe.is_draft, :published_at => @recipe.published_at})
+		Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
 		reg_homepage(@recipe, 'update')
 		after_publish_ok
   end
