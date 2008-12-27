@@ -20,8 +20,9 @@ class RecipesController < ApplicationController
 				  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
 						flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
 				  end
-	
-					Recipe.update(@recipe.id, { :roles => @recipe.roles })
+					
+					updated_at = @recipe.updated_at
+					Recipe.update(@recipe.id, { :roles => @recipe.roles, :updated_at => updated_at })
 					redirect_to @recipe
 				end
 			end

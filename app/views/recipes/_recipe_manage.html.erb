@@ -1,7 +1,7 @@
 <% if item.user == @current_user %>
 	<% if @current_user.is_role_of?('admin') && params[:action] == 'show' %>
 		<% if item.roles && item.roles.include?('11') %>
-			<%= link_to "#{DELETE_CN}精选", :action => 'choice', :id => item.id, :to_choice => false, :ref => ref %> |
+			<%= link_to "#{DELETE_CN}精选", { :action => 'choice', :id => item.id, :to_choice => false, :ref => ref }, :confirm => "确定要#{DELETE_CN}这#{unit_for('Recipe')}精选#{RECIPE_CN}吗?" %> |
 		<% else %>
 			<%= link_to '加为精选', :action => 'choice', :id => item.id, :to_choice => true, :ref => ref %> |
 		<% end %>
@@ -32,7 +32,7 @@
 <% else %>
 	<% if @current_user.is_role_of?('admin') && params[:action] == 'show' %>
 		<% if item.roles && item.roles.include?('11') %>
-			<%= link_to "#{DELETE_CN}精选", :action => 'choice', :id => item.id, :to_choice => false, :ref => ref %>
+			<%= link_to "#{DELETE_CN}精选", { :action => 'choice', :id => item.id, :to_choice => false, :ref => ref }, :confirm => "确定要#{DELETE_CN}这#{unit_for('Recipe')}精选#{RECIPE_CN}吗?" %>
 		<% else %>
 			<%= link_to '加为精选', :action => 'choice', :id => item.id, :to_choice => true, :ref => ref %>
 		<% end %>
