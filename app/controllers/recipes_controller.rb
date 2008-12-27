@@ -7,21 +7,23 @@ class RecipesController < ApplicationController
 	before_filter :set_system_notice, :only => [:show, :new, :edit]
 	
 	def choice
-		load_recipe
-		respond_to do |format|
-			format.html do
-				current_roles = @recipe.roles || ''
-				
-		    if params[:to_choice]
-					@recipe.roles = current_roles + ' 11'
-					flash[:notice] = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
-			  else
-			  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
-					flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
-			  end
-
-				Recipe.update(@recipe.id, { :roles => @recipe.roles })
-				redirect_to @recipe
+		if @current_user && @current_user.is_role_of?('admin')
+			load_recipe
+			respond_to do |format|
+				format.html do
+					current_roles = @recipe.roles || ''
+					
+			    if params[:to_choice]
+						@recipe.roles = current_roles + ' 11'
+						flash[:notice] = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
+				  else
+				  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
+						flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
+				  end
+	
+					Recipe.update(@recipe.id, { :roles => @recipe.roles })
+					redirect_to @recipe
+				end
 			end
 		end
 	end
