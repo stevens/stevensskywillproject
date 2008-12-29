@@ -29,8 +29,6 @@ module PhotosHelper
 		url_common = "\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
 
 		case photoable_type
-		when 'User'
-			file_ext = 'gif'
 		when 'Recipe'
 			file_ext = 'gif'
 		else
