@@ -6,29 +6,6 @@ class RecipesController < ApplicationController
 	before_filter :load_current_filter, :only => [:index, :mine]
 	before_filter :set_system_notice, :only => [:show, :new, :edit]
 	
-	def choice
-		if @current_user && @current_user.is_role_of?('admin')
-			load_recipe
-			respond_to do |format|
-				format.html do
-					current_roles = @recipe.roles || ''
-					
-			    if params[:to_choice]
-						@recipe.roles = current_roles + ' 11'
-						flash[:notice] = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
-				  else
-				  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
-						flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
-				  end
-					
-					if Recipe.update(@recipe.id, { :roles => @recipe.roles })
-						redirect_to @recipe
-					end
-				end
-			end
-		end
-	end
-	
 	def change_from_type
   	respond_to do |format|
 			format.js do
@@ -191,6 +168,7 @@ class RecipesController < ApplicationController
 		after_destroy_ok
   end
   
+  # 发布
   def publish
   	load_recipe(@current_user)
     if params[:to_publish]
@@ -202,10 +180,36 @@ class RecipesController < ApplicationController
 			@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
 	  end
   	
-		Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
-		reg_homepage(@recipe, 'update')
-		after_publish_ok
+		if Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
+			reg_homepage(@recipe, 'update')
+			after_publish_ok
+		end
   end
+  
+  # 精选
+	def choice
+		if @current_user && @current_user.is_role_of?('admin')
+			load_recipe
+			respond_to do |format|
+				format.html do
+					current_roles = @recipe.roles || ''
+					
+			    if params[:to_choice]
+						@recipe.roles = current_roles + ' 11'
+						@notice = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
+				  else
+				  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
+						@notice = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
+				  end
+					
+					if Recipe.update(@recipe.id, { :roles => @recipe.roles })
+						# redirect_to @recipe
+						after_choice_ok
+					end
+				end
+			end
+		end
+	end
   
   # /recipes/overview
   def overview
@@ -387,6 +391,29 @@ class RecipesController < ApplicationController
 					end
 				end
 			end
+  	end
+  end
+  
+  def after_choice_ok
+  	respond_to do |format|
+  		format.js do
+  			render :update do |page|
+					page.replace_html "flash_wrapper", 
+														:partial => "/layouts/flash", 
+														:locals => { :notice => @notice }
+					page.replace_html "recipe_#{@recipe.id}_title",
+														:partial => "/layouts/item_basic", 
+														:locals => { :item => @recipe,
+								 												 :show_icon => true,
+								 												 :show_title => true,
+								 												 :show_link => true }
+					page.replace_html "recipe_#{@recipe.id}_manage",
+														:partial => "/recipes/recipe_manage", 
+														:locals => { :item => @recipe, 
+									 											 :ref => 'show', 
+									 											 :delete_remote => false }
+  			end
+  		end
   	end
   end
   

@@ -182,29 +182,29 @@ class FavoritesController < ApplicationController
   	end
   end
   
-  def page_update_flash_notice(page)
-		page.replace_html "flash_wrapper", 
+  def page_update_flash_notice
+		@page.replace_html "flash_wrapper", 
 											:partial => "/layouts/flash",
 									 		:locals => { :notice => @notice }
-		page.show "flash_wrapper"  
+		@page.show "flash_wrapper"  
   end
   
-  def page_update_favorite_bar(page)
-		page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
+  def page_update_favorite_bar
+		@page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
 											:partial => '/favorites/favorite_bar', 
 											:locals => { :favorable => @parent_obj,
 																	 :ref => params[:ref], 
 																	 :favoriter_id => params[:favoriter_id] }
   end
   
-  def page_update_favorable_stats(page)
-		page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+  def page_update_favorable_stats
+		@page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
 											:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
 					 						:locals => { :item => @parent_obj }
   end
   
-  def page_update_favorite_users(page)
-		page.replace_html "favorite_users_detail", 
+  def page_update_favorite_users
+		@page.replace_html "favorite_users_detail", 
 											:partial => "/layouts/items_matrix",
 										  :locals => { :show_paginate => false,
 										 						   :items_set => favorite_users(@parent_obj.favorites.find(:all, :limit => 12, :order => 'RAND()')), 
@@ -218,9 +218,9 @@ class FavoritesController < ApplicationController
 										 						   :photo_style => 'sign' }
   end
   
-  def page_update_my_favorites_list(page)
+  def page_update_my_favorites_list
 		flash[:notice] = @notice
-		page.redirect_to :controller => 'favorites', :action => 'mine', :favorable_type => params[:favorable_type], :filter => params[:filter]
+		@page.redirect_to :controller => 'favorites', :action => 'mine', :favorable_type => params[:favorable_type], :filter => params[:filter]
   end
   
   def after_todo_ok(name)
@@ -233,7 +233,7 @@ class FavoritesController < ApplicationController
 															:partial => "/layouts/flash",
 													 		:locals => { :notice => @notice }
 						page.show "flash_wrapper"
-			  		# page_update_flash_notice(page)
+			  		# page_update_flash_notice
 			  		
 						case name
 						when 'create'
@@ -262,9 +262,9 @@ class FavoritesController < ApplicationController
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
 								end
-								# page_update_favorite_bar(page)
-								# page_update_favorable_stats(page)
-								# page_update_favorite_users(page) if params[:ref] == 'favorable_show'
+								# page_update_favorite_bar
+								# page_update_favorable_stats
+								# page_update_favorite_users if params[:ref] == 'favorable_show'
 							end
 						when 'update'
 							if params[:ref] == 'my_favorites_list'
@@ -274,14 +274,14 @@ class FavoritesController < ApplicationController
 								else
 									page.redirect_to :controller => 'favorites', :action => 'mine', :filter => params[:filter]
 								end
-								# page_update_my_favorites_list(page)
+								# page_update_my_favorites_list
 							else
 								page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
 																	:partial => '/favorites/favorite_bar', 
 																	:locals => { :favorable => @parent_obj,
 																							 :ref => params[:ref], 
 																							 :favoriter_id => params[:favoriter_id] }
-								# page_update_favorite_bar(page)
+								# page_update_favorite_bar
 							end
 						when 'destroy'
 							if params[:ref] == 'my_favorites_list'
@@ -291,7 +291,7 @@ class FavoritesController < ApplicationController
 								else
 									page.redirect_to :controller => 'favorites', :action => 'mine', :filter => params[:filter]
 								end
-								# page_update_my_favorites_list(page)
+								# page_update_my_favorites_list
 							else
 								page.replace_html "#{@parent_type.downcase}_#{@parent_id}_favorite", 
 																	:partial => '/favorites/favorite_bar', 
@@ -317,9 +317,9 @@ class FavoritesController < ApplicationController
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
 								end
-								# page_update_favorite_bar(page)
-								# page_update_favorable_stats(page)
-								# page_update_favorite_users(page) if params[:ref] == 'favorable_show'
+								# page_update_favorite_bar
+								# page_update_favorable_stats
+								# page_update_favorite_users if params[:ref] == 'favorable_show'
 							end
 						end
 						

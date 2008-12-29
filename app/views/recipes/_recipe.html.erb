@@ -25,7 +25,7 @@
 			<li>
 				<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
 			</li>
-			<% if item.created_at != item.original_updated_at %>
+			<% if item.original_updated_at && item.created_at != item.original_updated_at %>
 				<li>
 					<%= "#{time_iso_format(item.original_updated_at, true)} #{UPDATE_CN}" %>
 				</li>
