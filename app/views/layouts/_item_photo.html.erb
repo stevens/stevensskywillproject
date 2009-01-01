@@ -40,9 +40,13 @@
 		 	 style = "width: 24px; height: 24px;"
 		 end %>
 <% end %>
+<!-- tips显示代码start -->
 <span onmouseover="_tipon(this)" onmouseout="_tipoff()"><span class="google-src-text">
   <%= link_to image_tag(photo_file_url(photo, photoable_type, 'full'), :title => strip_tags(str_squish(title))), url%>
 </span>
+<!-- tips显示代码end -->
 <%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :alt => '', :style => style), 
 						url %>
+<!-- tips显示代码start -->
 </span>
+<!-- tips显示代码end -->
