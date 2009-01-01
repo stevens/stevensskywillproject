@@ -41,12 +41,16 @@
 		 end %>
 <% end %>
 <!-- tips显示代码start -->
+<% unless item_type == 'User' || item_type == 'Contact' || item_type == 'Review' %>
 <span onmouseover="_tipon(this)" onmouseout="_tipoff()"><span class="google-src-text">
   <%= link_to image_tag(photo_file_url(photo, photoable_type, 'full'), :title => strip_tags(str_squish(title))), url%>
 </span>
+<% end %>
 <!-- tips显示代码end -->
 <%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :alt => '', :style => style), 
 						url %>
 <!-- tips显示代码start -->
+<% unless item_type == 'User' || item_type == 'Contact' || item_type == 'Review' %>
 </span>
+<% end  %>
 <!-- tips显示代码end -->
