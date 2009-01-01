@@ -12,9 +12,12 @@
 		<%= stylesheet_link_tag "alpha/admin.css" %>
 		
 		<%= javascript_include_tag :defaults %>
-		
+		<%= javascript_include_tag 'beecook.js' %>
 		<%= calendar_date_select_includes "silver" %>
-		
+		<style type="text/css">
+                .google-src-text { display: none !important } 
+                .google-src-active-text { display: block !important; color:black !important; }
+                </style>
 		<link rel="shortcut icon" href="http://www.beecook.com/favicon.ico" />
 		
 		<script type="text/javascript">
@@ -25,10 +28,14 @@
 			var pageTracker = _gat._getTracker("UA-2323873-2");
 			pageTracker._trackPageview();
 		</script>
-		
+		<script type="text/javascript">
+                        _intlStrings._originalText = "图片:";
+                        _intlStrings._interfaceDirection="ltr";
+                        _intlStrings._interfaceAlign="left"
+                </script>
 	</head>
 	
-	<body>
+	<body  onload="_setupIW();">
 		<div>
 			<!-- HEADER -->			
 			<div id="header_wrapper">
