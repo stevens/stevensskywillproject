@@ -28,6 +28,8 @@
 					<%= check_box_tag "remember_me", "1", false, :class => "check_box" %><%= "记住我" %>
 					&nbsp;&nbsp;
 					<%= link_to "我忘记了#{PASSWORD_CN}?", forgot_password_url %>
+					&nbsp;&nbsp;
+					<%= link_to "#{RESEND_CN}#{ACTIVATE_CN}#{EMAIL_CN}?", resend_activemail_url %>
 				</div>
 			</td>
 		</tr>

@@ -1,0 +1,29 @@
+<% form_tag url_for(:action => 'create') do %>
+	<div class="sub_block_tb">
+	<table class="content">
+		<tr>
+			<td class="label">
+				<label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "请#{INPUT_CN}#{SIGN_UP_CN}#{ACCOUNT_CN}时用的#{EMAIL_ADDRESS_CN}" %>
+				</div>
+				<div class="input">
+					<%= text_field_tag "email", params[:email], :class => "text_s" %>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="submit">
+				<div class="submit">
+					<%= submit_tag "#{RESEND_CN}#{ACTIVATE_CN}#{EMAIL_CN}", :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;#{CANCLE_CN}", login_url %>
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+<% end %>

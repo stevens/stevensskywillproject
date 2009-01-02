@@ -26,6 +26,14 @@ class UserMailer < ActionMailer::Base
     @subject    += "你已经重新设置了#{ACCOUNT_CN}#{PASSWORD_CN}"
     @body[:url]  = user_first_link(user, false)
 	end
+        
+        #重发激活邮件代码start
+        def resend_activemail(user)
+          setup_email(user)
+          @subject += "#{RESEND_CN}#{EMAIL_CN}"
+          @body[:url]  = "#{root_url}activate/#{user.activation_code}"
+        end
+        #重发激活邮件代码end
 	
 	def friendship_request(contact)
 		user = User.find(contact.user_id)

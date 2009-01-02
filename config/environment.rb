@@ -292,6 +292,10 @@ Rails::Initializer.run do |config|
 	
 	REQUIRED_CN = '必填项'
 	OPTIONAL_CN = '选填项'
+        #重发激活邮件代码start
+	RESEND_CN = '重发'
+        ACTIVATE_CN = '激活'
+        #重发激活邮件代码end
 	
 	#OBJECT constants
 	CODE_USER_CN = '0'

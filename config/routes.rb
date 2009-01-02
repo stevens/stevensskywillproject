@@ -118,9 +118,13 @@ ActionController::Routing::Routes.draw do |map|
 	map.login '/login', :controller => 'sessions', :action => 'new'
 	map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 	map.activate '/activate/:id', :controller => 'users', :action => 'activate'
+        map.sendmail '/sendmail/:id', :controller => 'keepers', :action => 'sendnewsletter'
 	map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
 	map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
 	map.search '/search', :controller => 'searchings', :action => 'search'
 	map.feedback '/feedback', :controller => 'feedbacks', :action => 'new'
 	map.sitemap 'sitemap.xml' , :controller => 'sitemap' , :action => 'sitemap'
+        #重发激活邮件代码start
+        map.resend_activemail '/resend_activemail', :controller =>'activemails', :action => 'new'
+        #重发激活邮件代码end
 end

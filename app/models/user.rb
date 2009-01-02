@@ -88,6 +88,17 @@ class User < ActiveRecord::Base
     save(false)
     # save
   end
+  
+  #重发激活邮件代码start
+  def resend
+    @resend = true
+    save(false)
+  end
+  
+  def resending?
+    @resend
+  end
+  #重发激活邮件代码end
 
   def active?
     # the existence of an activation code means they have not activated yet
