@@ -28,7 +28,7 @@ module PhotosHelper
 	def default_photo_file_url(photoable_type, photo_style)
 		url_common = "\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
 
-		if %w[Recipe Match].include?(photoable_type)
+		if %w[Recipe].include?(photoable_type)
 			file_ext = 'gif'
 		else
 			file_ext = 'png'
