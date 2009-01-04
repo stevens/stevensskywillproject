@@ -8,14 +8,39 @@
 
 <% photoable_id_sym = item_id(photo.photoable).to_sym %>
 
-<% if show_photo_link %>
-	<% if photo_link_remote %>
-		<%= link_to_remote image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '', :class => css_class), 
-											 :url => { photoable_id_sym => photo.photoable.id, :controller => 'photos', :action => 'show', :id => photo.id, :filter => photo_filtered ? photo[filter_type.to_sym] : nil }, :method => :get %>
+<% if photo_style == 'full' %>
+	<% if show_photo_link %>
+		<% if photo_link_remote %>
+			<%= link_to_remote image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '', :class => css_class), 
+												 :url => { photoable_id_sym => photo.photoable.id, :controller => 'photos', :action => 'show', :id => photo.id, :filter => photo_filtered ? photo[filter_type.to_sym] : nil }, :method => :get %>
+		<% else %>
+			<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '', :class => css_class), 
+									photo_link_url ? photo_link_url : [photo.photoable, photo] %>
+		<% end %>
 	<% else %>
-		<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '', :class => css_class), 
-								photo_link_url ? photo_link_url : [photo.photoable, photo] %>
+		<%= image_tag photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '' %>
 	<% end %>
 <% else %>
-	<%= image_tag photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '' %>
+	<!-- tips显示代码start -->
+	<span onmouseover="_tipon(this)" onmouseout="_tipoff()" class="pop_tips">
+		<span class="google-src-text">
+		  <%= image_tag photo_file_url(photo, photo.photoable_type, 'detail'), :title => strip_tags(str_squish(photo.caption)), :alt => '' %>
+		</span>
+	<!-- tips显示代码end -->
+	
+		<% if show_photo_link %>
+			<% if photo_link_remote %>
+				<%= link_to_remote image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '', :class => css_class), 
+													 :url => { photoable_id_sym => photo.photoable.id, :controller => 'photos', :action => 'show', :id => photo.id, :filter => photo_filtered ? photo[filter_type.to_sym] : nil }, :method => :get %>
+			<% else %>
+				<%= link_to image_tag(photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '', :class => css_class), 
+										photo_link_url ? photo_link_url : [photo.photoable, photo] %>
+			<% end %>
+		<% else %>
+			<%= image_tag photo_file_url(photo, photo.photoable_type, photo_style), :title => strip_tags(str_squish(photo.caption)), :alt => '' %>
+		<% end %>
+	
+	<!-- tips显示代码start -->
+	</span>
+	<!-- tips显示代码end -->
 <% end %>

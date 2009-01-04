@@ -11,12 +11,16 @@
 	<% photo = user_portrait(user) %>
 	<% photoable_type = 'User' %>
 	<% title = user_username(user) %>
-	<% url = user_first_link(user) %>
+	<% item_link_url = user_first_link(user) %>
 <% else %>
 	<% photo = cover_photo(item) %>
 	<% photoable_type = item_type %>
 	<% title = item_title(item) %>
-	<% url = item %>
+	<% if item_type == 'Match' %>
+		<% item_link_url = item_first_link(item) %>
+	<% else %>
+		<% item_link_url = item %>
+	<% end %>
 <% end %>
 
 <% if photo_style == 'full' %>
@@ -40,17 +44,22 @@
 		 	 style = "width: 24px; height: 24px;"
 		 end %>
 <% end %>
-<!-- tips显示代码start -->
-<% unless item_type == 'User' || item_type == 'Contact' || item_type == 'Review' %>
-<span onmouseover="_tipon(this)" onmouseout="_tipoff()"><span class="google-src-text">
-  <%= link_to image_tag(photo_file_url(photo, photoable_type, 'full'), :title => strip_tags(str_squish(title))), url%>
-</span>
+
+<% if item_type == 'User' || item_type == 'Contact' || item_type == 'Review' %>
+	<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :alt => '', :style => style), 
+							item_link_url %>
+<% else %>			
+	<!-- tips显示代码start -->
+	<span onmouseover="_tipon(this)" onmouseout="_tipoff()" class="pop_tips">
+		<span class="google-src-text">
+		  <%= image_tag photo_file_url(photo, photoable_type, 'detail'), :title => strip_tags(str_squish(title)), :alt => '' %>
+		</span>
+	<!-- tips显示代码end -->
+	
+		<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :alt => '', :style => style), 
+								item_link_url %>
+	
+	<!-- tips显示代码start -->
+	</span>
+	<!-- tips显示代码end -->
 <% end %>
-<!-- tips显示代码end -->
-<%= link_to image_tag(photo_file_url(photo, photoable_type, photo_style), :title => strip_tags(str_squish(title)), :alt => '', :style => style), 
-						url %>
-<!-- tips显示代码start -->
-<% unless item_type == 'User' || item_type == 'Contact' || item_type == 'Review' %>
-</span>
-<% end  %>
-<!-- tips显示代码end -->
