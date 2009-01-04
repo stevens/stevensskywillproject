@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 46) do
+ActiveRecord::Schema.define(:version => 47) do
 
   create_table "awards", :force => true do |t|
     t.integer  "match_id"
@@ -197,11 +197,19 @@ ActiveRecord::Schema.define(:version => 46) do
     t.integer  "awards_count"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "photos_lower_limit"
-    t.integer  "chars_lower_limit"
+    t.integer  "photos_per_entry"
+    t.integer  "chars_per_entry"
     t.integer  "winners_count"
     t.integer  "players_count"
     t.integer  "votes_count"
+    t.integer  "tags_per_entry"
+    t.integer  "awards_per_entry"
+    t.integer  "awards_per_player"
+    t.datetime "enrolling_start_at"
+    t.datetime "enrolling_end_at"
+    t.datetime "collecting_start_at"
+    t.datetime "collecting_end_at"
+    t.datetime "original_updated_at"
   end
 
   add_index "matches", ["user_id"], :name => "fk_user"
