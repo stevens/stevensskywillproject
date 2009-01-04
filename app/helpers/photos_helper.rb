@@ -28,8 +28,7 @@ module PhotosHelper
 	def default_photo_file_url(photoable_type, photo_style)
 		url_common = "\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
 
-		case photoable_type
-		when 'Recipe'
+		if %w[Recipe Match].include?(photoable_type)
 			file_ext = 'gif'
 		else
 			file_ext = 'png'
@@ -114,6 +113,15 @@ module PhotosHelper
 		conditions << "photos.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from
 		conditions << "photos.created_at < '#{time_iso_format(created_at_to)}'" if created_at_to
 		conditions.join(" AND ")
+  end
+  
+  # 判断图片所属对象的可访问性
+  def photoable_accessible?(photoable)
+  	if type_for(photoable) == 'Recipe'
+  		recipe_accessible?(photoable)
+  	else
+  		photoable.accessible?
+  	end
   end
 
 end

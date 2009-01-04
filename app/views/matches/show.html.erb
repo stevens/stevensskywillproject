@@ -1,3 +1,31 @@
+<div id="match_<%= @match.id %>_wrapper" class="content_block">
+	
+	<div id="match_<%= @match.id %>_header" class="block_header">
+		<div class="block_header_link">	
+			<% if @match.user == @current_user %>
+				<%= link_to EDIT_CN, :action => 'edit' %><!-- | -->
+			<% end %>
+			<!-- <%= link_to "#{BACK_CN}#{MATCH_CN}", :action => 'profile' %> -->
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
 
-<%= link_to 'Edit', edit_match_path(@match) %> |
-<%= link_to 'Back', matches_path %>
+	<div id="match_<%= @match.id %>_detail" class="block_main">
+		<div id="match_prev_next_bar" class="prev_next_bar">
+			<%= render :partial => "/layouts/prev_next", 
+								 :locals => { :items_set => @matches_set, 
+								 							:current_index => @match_index } %>
+		</div>
+		
+		<div id="match_<%= @match.id %>_self" class="sub_block">
+				<%= render :partial => "/matches/match",
+									 :locals => { :item => @match, 
+									 						  :photos_set => @photos_set, 
+									 						  :show_todo => true, 
+									 						  :show_favorite => true, 
+									 						  :show_manage => true } %>
+		</div>
+	</div>
+	
+</div>
+

@@ -1,0 +1,9 @@
+<% if @current_user %>
+	<% if player = item.match_actors.find_by_user_id_and_roles(@current_user.id, '1') %>
+		<%= link_to_remote "退出#{MATCH_CN}", :url => { :match_id => item.id, :controller => 'match_actors', :action => 'destroy', :id => player.id }, :confirm => "确定要退出这#{unit_for('Match')}#{MATCH_CN}吗?", :method => :delete %>
+	<% else %>
+		<em><%= link_to_remote '我要报名', :url => { :match_id => item.id, :controller => 'match_actors', :action => 'create', :match_actor_role => 'player' }, :confirm => "确定要报名参加这#{unit_for('Match')}#{MATCH_CN}吗?" %></em>
+	<% end %>
+<% else %>
+	<em><%= link_to '我要报名', { :match_id => item.id, :controller => 'match_actors', :action => 'new', :match_actor_role => 'player' } %></em>
+<% end %>

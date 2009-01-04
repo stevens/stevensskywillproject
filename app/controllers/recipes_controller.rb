@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
 	before_filter :load_current_filter, :only => [:index, :mine]
-	before_filter :set_system_notice, :only => [:show, :new, :edit]
+	# before_filter :set_system_notice, :only => [:show, :new, :edit]
 	
 	def change_from_type
   	respond_to do |format|
@@ -44,8 +44,7 @@ class RecipesController < ApplicationController
       	format.html # index.html.erb
       end
       # format.xml  { render :xml => @recipes_set }
-    end   
-
+    end
   end
 
   # GET /recipes/1
@@ -71,7 +70,7 @@ class RecipesController < ApplicationController
 
     log_count(@recipe)												
 		
-		@show_sidebar = true
+		show_sidebar
 		
 		info = "#{RECIPE_CN} - #{@recipe.title}"
 		set_page_title(info)

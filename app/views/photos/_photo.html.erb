@@ -19,11 +19,15 @@
 			</li>
 		<% end %>
 		<% if show_parent %>
+			<% photoable_type = photo.photoable_type %>
+			<% photoable_name = name_for(photoable_type) %>
+			<% photo_type = code_title("#{photoable_type.downcase}_photo_type", photo.photo_type) %>
+			<% photo_info = "这#{unit_for('Photo')}#{PHOTO_CN}是#{photoable_name}的#{photo_type}图" %>
 			<li>
 				<% if photo.is_cover?(photo.photoable) %>
-					<%= "这#{UNIT_PHOTO_CN}#{PHOTO_CN}是#{name_for(photo.photoable_type)}的#{code_title('photo_type', photo.photo_type)}图, 也是#{name_for(photo.photoable_type)}封面" %>
+					<%= photo_info + ", 也是#{photoable_name}封面" %>
 				<% else %>
-					<%= "这#{UNIT_PHOTO_CN}#{PHOTO_CN}是#{name_for(photo.photoable_type)}的#{code_title('photo_type', photo.photo_type)}图" %>
+					<%= photo_info %>
 				<% end %>
 			</li>
 		<% end %>
@@ -37,8 +41,8 @@
 <% if show_todo %>
 	<div id="photo_<%= photo.id %>_todo" class="todo_right">
 		<% if photo.user == @current_user %>
-			<%= link_to "#{EDIT_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", [photo.photoable, photo, :edit] %> |
-			<%= link_to "#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}", [photo.photoable, photo], :confirm => "确定要#{DELETE_CN}这#{UNIT_PHOTO_CN}#{PHOTO_CN}吗?", :method => :delete %>
+			<%= link_to "#{EDIT_CN}", [photo.photoable, photo, :edit] %> |
+			<%= link_to "#{DELETE_CN}", [photo.photoable, photo], :confirm => "确定要#{DELETE_CN}这#{unit_for('Photo')}#{PHOTO_CN}吗?", :method => :delete %>
 		<% end %>
 	</div>
 <% end %>

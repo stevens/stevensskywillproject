@@ -159,9 +159,9 @@ class PhotosController < ApplicationController
 	      if @photo.save
 			    if params[:is_cover]
 						if @parent_obj.update_attribute('cover_photo_id', @photo.id)
-							after_update_ok
+							after_create_ok
 						else
-							after_update_error
+							after_create_error
 			      end
 					else
 						after_create_ok
@@ -172,14 +172,25 @@ class PhotosController < ApplicationController
 			else
 	      if @photo.save
 	      	@parent_obj.cover_photo_id = @photo.id
-	      	@parent_obj.published_at = @parent_obj.get_published_at
-					if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
-						after_create_ok
-					else
-						@photo.destroy
-						
-						after_create_error
-	      	end        
+	      	
+	      	if @parent_type == 'Recipe'
+		      	@parent_obj.published_at = @parent_obj.get_published_at
+						if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
+							after_create_ok
+						else
+							@photo.destroy
+							
+							after_create_error
+		      	end
+		      else
+		      	if @parent_obj.update_attribute('cover_photo_id', @parent_obj.cover_photo_id)
+		      		after_create_ok
+		      	else
+							@photo.destroy
+							
+							after_create_error
+		      	end
+		      end
 	      else
 					after_create_error
 	      end
@@ -228,13 +239,22 @@ class PhotosController < ApplicationController
 				end
     	end
     	@parent_obj.cover_photo_id = cover_photo_id
-    	@parent_obj.is_draft = @parent_obj.get_is_draft
-    	@parent_obj.published_at = @parent_obj.get_published_at
-			if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :is_draft => @parent_obj.is_draft, :published_at => @parent_obj.published_at })
-    		@photo.destroy
-	   
-				after_destroy_ok 
-    	end
+    	
+    	if @parent_type == 'Recipe'
+	    	@parent_obj.is_draft = @parent_obj.get_is_draft
+	    	@parent_obj.published_at = @parent_obj.get_published_at
+				if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :is_draft => @parent_obj.is_draft, :published_at => @parent_obj.published_at })
+	    		@photo.destroy
+		   
+					after_destroy_ok 
+	    	end
+	    else
+	    	if @parent_obj.update_attribute('cover_photo_id', @parent_obj.cover_photo_id)
+	    		@photo.destroy
+	    		
+	    		after_destroy_ok
+	    	end
+	    end
 		else
 	    @photo.destroy
 	
@@ -246,10 +266,7 @@ class PhotosController < ApplicationController
 	
 	def check_photoable_accessible
 		if @parent_obj
-			case @parent_type
-			when 'Recipe'
-				@photoable_accessible = recipe_accessible?(@parent_obj)
-			end
+			@photoable_accessible = photoable_accessible?(@parent_obj)
 		end
 	end
 	

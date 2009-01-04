@@ -1,85 +1,81 @@
 class MatchActorsController < ApplicationController
-  # GET /match_actors
-  # GET /match_actors.xml
+	
+	before_filter :protect, :except => [:index]
+	before_filter :store_location_if_logged_in, :only => [:index]
+	before_filter :clear_location_unless_logged_in, :only => [:index]
+  before_filter :load_current_filter, :only => [:index]
+  
   def index
-    @match_actors = MatchActor.find(:all)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @match_actors }
-    end
   end
-
-  # GET /match_actors/1
-  # GET /match_actors/1.xml
-  def show
-    @match_actor = MatchActor.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @match_actor }
-    end
-  end
-
-  # GET /match_actors/new
-  # GET /match_actors/new.xml
+  
   def new
-    @match_actor = MatchActor.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @match_actor }
-    end
+  	redirect_to match_profile_path(@parent_obj)
   end
-
-  # GET /match_actors/1/edit
-  def edit
-    @match_actor = MatchActor.find(params[:id])
-  end
-
-  # POST /match_actors
-  # POST /match_actors.xml
+  
   def create
-    @match_actor = MatchActor.new(params[:match_actor])
-
-    respond_to do |format|
-      if @match_actor.save
-        flash[:notice] = 'MatchActor was successfully created.'
-        format.html { redirect_to(@match_actor) }
-        format.xml  { render :xml => @match_actor, :status => :created, :location => @match_actor }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @match_actor.errors, :status => :unprocessable_entity }
-      end
-    end
+  	load_match_actor_role
+  	
+    @match_actor = @parent_obj.match_actors.build
+		@match_actor.user_id = @current_user.id
+		@match_actor.roles = @match_actor_role
+		
+		unless @parent_obj.match_actors.find_by_user_id_and_roles(@current_user.id, @match_actor_role)
+			respond_to do |format|
+				format.js do
+					render :update do |page|
+						if @match_actor.save
+							if @match_actor_role == '1'
+								@notice = "你已经报名参加了这#{unit_for('Match')}#{MATCH_CN}!"
+								page.replace_html "flash_wrapper", 
+																	:partial => "/layouts/flash",
+														 			:locals => { :notice => @notice }
+								page.show "flash_wrapper"
+								page.replace_html "match_enroll_bar", 
+																	:partial => "/matches/match_enroll_bar", 
+																  :locals => { :item => @parent_obj }
+							end
+						end
+					end
+				end
+			end
+		end
   end
-
-  # PUT /match_actors/1
-  # PUT /match_actors/1.xml
-  def update
-    @match_actor = MatchActor.find(params[:id])
-
-    respond_to do |format|
-      if @match_actor.update_attributes(params[:match_actor])
-        flash[:notice] = 'MatchActor was successfully updated.'
-        format.html { redirect_to(@match_actor) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @match_actor.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /match_actors/1
-  # DELETE /match_actors/1.xml
+  
   def destroy
-    @match_actor = MatchActor.find(params[:id])
-    @match_actor.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(match_actors_url) }
-      format.xml  { head :ok }
-    end
+  	load_match_actor
+  	
+  	if @match_actor
+  		@match_actor_role = @match_actor.roles
+  		respond_to do |format|
+				format.js do
+					render :update do |page|
+  					if @match_actor.destroy
+  						if @match_actor_role == '1'
+								@notice = "你已经退出了这#{unit_for('Match')}#{MATCH_CN}!"
+								page.replace_html "flash_wrapper", 
+																	:partial => "/layouts/flash",
+														 			:locals => { :notice => @notice }
+								page.show "flash_wrapper"
+								page.replace_html "match_enroll_bar", 
+																	:partial => "/matches/match_enroll_bar", 
+																  :locals => { :item => @parent_obj }
+							end
+						end
+					end
+				end
+			end
+		end
   end
+  
+  private
+  
+  def load_match_actor_role
+  	@match_actor_role = Code.find_by_codeable_type_and_name('match_actor_role', params[:match_actor_role]).code
+  end
+  
+  def load_match_actor
+  	@match_actor = MatchActor.find(@self_id)
+  end
+  
 end

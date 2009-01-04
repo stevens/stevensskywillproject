@@ -74,22 +74,25 @@
 				<% end %>
 			</td>
 		</tr>
-		<tr>
-			<td class="label">
-				<label class="required" for="photo_type"><%= "#{TYPE_CN}:" %></label>
-			</td>
-			<td class="input">
-				<div class="text">
-					<%= "#{PHOTO_CN}上面是什么?" %>
-				</div>
-				<div class="radio">
-					<% for c in Code.find(:all, :conditions => {:codeable_type => 'photo_type'}, :order => 'code') %>
-						<%= f.radio_button :photo_type, c.code, :class => "radio_button" %><%= c.title %>&nbsp;&nbsp;
-					<% end %>
-				</div>
-				<%= error_message_on "photo", "photo_type" %>
-			</td>
-		</tr>
+		<% photo_type_codes = Code.find(:all, :conditions => { :codeable_type => "#{type_for(photoable).downcase}_photo_type" }, :order => 'code') %>
+		<% if photo_type_codes.size > 0 %>
+			<tr>
+				<td class="label">
+					<label class="required" for="photo_type"><%= "#{TYPE_CN}:" %></label>
+				</td>
+				<td class="input">
+					<div class="text">
+						<%= "#{PHOTO_CN}上面是什么?" %>
+					</div>
+					<div class="radio">
+						<% for c in photo_type_codes %>
+							<%= f.radio_button :photo_type, c.code, :class => "radio_button" %><%= c.title %>&nbsp;&nbsp;
+						<% end %>
+					</div>
+					<%= error_message_on "photo", "photo_type" %>
+				</td>
+			</tr>
+		<% end %>
 		<tr>
 			<td class="label">
 			</td>

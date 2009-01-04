@@ -1,9 +1,9 @@
 <% user = item.user %>
 
-<div id="recipe_<%= item.id %>_basic">
+<div id="match_<%= item.id %>_basic">
 	<div class="basic">
 		<h2>
-			<div id="recipe_<%= item.id %>_title">
+			<div id="match_<%= item.id %>_title">
 				<%= render :partial => '/layouts/item_basic', 
 									 :locals => { :item => item,
 									 							:show_icon => true,
@@ -31,13 +31,13 @@
 				</li>
 			<% end %>
 			<li>
-				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Recipe')}#{RECIPE_CN}" %>
+				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Match')}#{MATCH_CN}" %>
 			</li>
 			<li>
 				<%= "#{TAG_CN}: " %>
 				<% if item.tag_list.size > 0 %>
 	    		<% for tag in item.tag_list %>
-		    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
+		    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'match'} %>
 		    	<% end %>
 				<% else %>
 		    	<%= "还没有#{TAG_CN}" %>
@@ -51,47 +51,23 @@
 	
 	<div class="main">
 		<ul>
-			<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
-			<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.cost)}" %></li>
-			<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
-			<li><%= "#{COOK_TIME_CN}: #{code_title('recipe_time', item.cook_time)}" %></li>
-			<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
-			<li>
-				<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
-				<% if item.from_type == '1' %>
-					<% remark = "这个#{RECIPE_CN}的文字和#{PHOTO_CN}都是#{strip_tags(user_username(user))}的辛苦原创, 未经许可, 请勿转载!" %>
-					<%= "<em class='more'>#{add_brackets(remark)}</em>" %>
-				<% elsif !item.from_where.nil? && !item.from_where.blank? %>
-					<%= "[#{h item.from_where}]" %>
-				<% end %>
-			</li>
+			<li><%= "发起者: #{SITE_NAME_CN}" %></li>
+			<li><%= "作品类型: #{name_for(item.entriable_type)}" %></li>
+			<li><%= "主题: #{strip_tags(item.subject)}" %></li>
+			<li><%= "口号: #{strip_tags(item.slogan)}" %></li>
 		</ul>
 	</div>
 </div>
 
 <% if show_todo %>
-	<div id="recipe_<%= item.id %>_todo" class="todo_right">
-		<% if show_favorite %>
-			<div id="recipe_<%= item.id %>_favorite" class="favorite_bar">
-				<%= render :partial => '/favorites/favorite_bar', 
-									 :locals => { :favorable => item, 
-									 							:ref => nil,
-									 							:favoriter_id => nil } %>
-			</div>
-		<% end %>
-		
+	<div id="match_<%= item.id %>_todo" class="todo_right">
 		<% if show_manage %>
-			<div id="recipe_<%= item.id %>_manage">
-				<%= render :partial => '/recipes/recipe_manage', 
-									 :locals => { :item => item, 
-									 							:ref => 'show', 
-									 							:delete_remote => false } %>
-			</div>
+
 		<% end %>
 	</div>
 <% end %>
 
-<div id="recipe_<%= item.id %>_photos" class="photos">
+<div id="match_<%= item.id %>_photos" class="photos">
 	<% if cover_photo = cover_photo(item) %>
 		<div id="photos_filter_bar">
 			<%= render :partial => "/photos/photos_filter_bar", 
@@ -136,57 +112,71 @@
 	</div>
 </div>
 
-<div id="recipe_<%= item.id %>_video" class="video">
-	<% if item.video_url && !item.video_url.blank? %>
-		<%= item.video_url %>
-	<% else %>
-		<%= "还没有#{VIDEO_CN}" %>
-		<% if @current_user && user == @current_user %>
-			<div id="video_todo_bar">
-				<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
-			</div>
-		<% end %>
-	<% end %>
-</div>
-
-<div id="recipe_<%= item.id %>_main" class="item_detail">
+<div id="match_<%= item.id %>_main" class="item_detail">
 	<div class="main">
 		<h3><%= "#{DESCRIPTION_CN}:" %></h3>
 		<ul><%= paragraphs(item.description, true, true) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "#{INGREDIENT_CN}:" %></h3>
-		<ul class="wide_space"><%= paragraphs(item.ingredients) %></ul>
+		<h3><%= "赛程时间:" %></h3>
+		<ul>
+			<li>
+				<span class='text'><%= "启动时间: #{time_iso_format(item.start_at, false, true)}" %></span>
+			</li>
+			<% match_times = [['报名', 'enrolling_'], ['征集', 'collecting_'], ['投票', 'voting_']] %>
+			<% for t in match_times %>
+				<% if (start_at = item["#{t[1]}start_at".to_sym]) && (end_at = item["#{t[1]}end_at".to_sym]) %>
+					<li>
+						<span class='text'><%= "#{t[0]}时间: #{time_iso_format(start_at, false, true)} -- #{time_iso_format(end_at, false, true)}" %></span>
+					</li>
+				<% end %>
+			<% end %>
+			<li>
+				<span class='text'><%= "揭晓时间: #{time_iso_format(item.end_at, false, true)}" %></span>
+			</li>
+		</ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "#{DIRECTION_CN}:" %></h3>
-		<ol><%= paragraphs(item.directions) %></ol>
+		<h3><%= "奖项奖品:" %></h3>
+		<ul>
+			<% for award in item.awards %>
+				<li style="padding-left: 24px">
+					<span class='subtitle'><%= "#{award.title} (#{award.quota}名)" %></span>
+					<span class='text'><%= "奖品 - #{award.prize_title}" %></span><br />
+					<span class='text'><%= "价值 - #{award.prize_value}元" %></span>
+				</li>
+			<% end %>
+		</ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "#{TIP_CN}:" %></h3>
-		<ol><%= paragraphs(item.tips) %></ol>
+		<h3><%= "规则:" %></h3>
+		<!-- <ul>
+			<li>
+				<span class='text'><%= "每位选手最多可以有#{item.entries_per_player}个作品参赛" %></span>
+			</li>
+			<li>
+				<span class='text'><%= "每个作品至少要包括#{item.chars_per_entry}个文字, #{item.photos_per_entry}#{unit_for('Photo')}#{PHOTO_CN}, #{item.tags_per_entry}个#{TAG_CN}" %></span>
+			</li>
+			<br />
+			<li>
+				<span class='text'><%= "每位投票者最多可以为#{item.entries_per_voter}个作品投票" %></span>
+			</li>
+			<li>
+				<span class='text'><%= "每位投票者最多可以为每个作品投#{item.votes_per_entry}票" %></span>
+			</li>
+		</ul> -->
 	</div>
 	
 	<div class="main">
-		<h3><%= "闲话:" %></h3>
+		<h3><%= "其他:" %></h3>
 		<ul><%= paragraphs(item.any_else, true, true) %></ul>
 	</div>
 	
 	<div class="main">
 		<h3><%= "相关链接:" %></h3>
-		<ul>
-			<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
-				<li>
-					<span class='text'>
-						<%= "更多#{RECIPE_CN}, 请访问" %>
-						<%= link_to "#{user_username(user, true, true)}的blog", url_with_protocol(blog), :target => "_blank" %>
-						<span class="source"><%= "[#{blog}]" %></span>
-					</span>
-				</li>
-			<% end %>
-		</ul>
+		<ur/><%=  %></ul>
 	</div>
 </div>
