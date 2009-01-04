@@ -81,6 +81,36 @@ class UsersController < ApplicationController
     redirect_back_or_default('/')
   end
   
+  def lost_activation
+  	info = "重发激活#{EMAIL_CN}"
+		set_page_title(info)
+		set_block_title(info)
+  end
+  
+  def resend_activation
+		info = "重发激活#{EMAIL_CN}"
+		set_page_title(info)
+		set_block_title(info)
+		
+		if params[:email] =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i	
+			@user = User.find_by_email(params[:email])
+			if @user && !@user.activated_at
+				UserMailer.deliver_signup_notification(@user)
+	      flash[:notice] = "#{@user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收<em>#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}</em>!<br /><br/>
+	      								 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."				
+				redirect_to login_url
+			else
+				flash[:notice] = "#{SORRY_CN}, 这个#{EMAIL_ADDRESS_CN}还没有#{SIGN_UP_CN}#{ACCOUNT_CN} 或者 用这个#{EMAIL_ADDRESS_CN}#{SIGN_UP_CN}的#{ACCOUNT_CN}已经激活!"
+				render :action => 'lost_activation'
+				clear_notice			    	
+			end
+		elsif params[:email]
+			flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
+			render :action => 'lost_activation'
+			clear_notice
+		end  	
+  end
+  
   def overview
 	  load_users_set
 	  load_brains_set
@@ -193,7 +223,7 @@ class UsersController < ApplicationController
 	      								 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."				
 				redirect_to root_path
 			end
-			format.xml  { render :xml => @user, :status => :created, :location => @user }
+			# format.xml  { render :xml => @user, :status => :created, :location => @user }
 		end
   end
   
@@ -209,7 +239,7 @@ class UsersController < ApplicationController
 				render :action => "new"
 				clear_notice
 			end
-			format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+			# format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
 		end
   end
   

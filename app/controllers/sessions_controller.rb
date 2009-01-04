@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   before_filter :set_title
 
   def new
-  	
+  	show_sidebar
   end
 
   def create

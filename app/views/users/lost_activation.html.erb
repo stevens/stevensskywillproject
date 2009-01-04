@@ -1,0 +1,37 @@
+<div class="content_block">
+	<div class="block_header">
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
+	
+	<div class="block_main">
+		<% form_tag resend_activation_url do %>
+			<div class="sub_block_tb">
+			<table class="content">
+				<tr>
+					<td class="label">
+						<label for="email"><%= "#{EMAIL_ADDRESS_CN}:" %></label>
+					</td>
+					<td class="input">
+						<div class="text">
+							<%= "请#{INPUT_CN}#{SIGN_UP_CN}#{ACCOUNT_CN}时用的#{EMAIL_ADDRESS_CN}" %>
+						</div>
+						<div class="input">
+							<%= text_field_tag "email", params[:email], :class => "text_s" %>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="submit">
+						<div class="submit">
+							<%= submit_tag "重发激活#{EMAIL_CN}", :class => "submit" %>
+							&nbsp;&nbsp;
+							<%= link_to "&raquo;#{CANCLE_CN}", login_url %>
+						</div>
+					</td>
+				</tr>
+			</table>
+			</div>
+		<% end %>
+	</div>
+</div>

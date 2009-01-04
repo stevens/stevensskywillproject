@@ -1,0 +1,12 @@
+<div class="sidebar_block">
+	<div class="sidebar_block_header">
+		<h1><%= "重发激活#{EMAIL_CN}" %></h1>
+	</div>
+	
+	<div class="sidebar_block_main">
+		<%= "当你未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}或者忘记了#{ACCOUNT_CN}激活码时, 可以重发激活#{EMAIL_CN}..." %><br />
+		<div class="todo_right">
+			<%= link_to "重发激活#{EMAIL_CN}", lost_activation_url %>
+		</div>
+	</div>
+</div>
