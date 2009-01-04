@@ -5,26 +5,26 @@ class UserMailer < ActionMailer::Base
 	
   def signup_notification(user)
     setup_email(user)
-    @subject    += "请激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}"
-    @body[:url]  = "#{root_url}activate/#{user.activation_code}"
+    @subject += "请激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}"
+    @body[:url] = "#{root_url}activate/#{user.activation_code}"
   end
   
   def activation(user)
     setup_email(user)
-    @subject    += "恭喜你加入#{SITE_NAME_CN}"
-    @body[:url]  = user_first_link(user, false)
+    @subject += "恭喜你加入#{SITE_NAME_CN}"
+    @body[:url] = user_first_link(user, false)
   end
 
 	def forgot_password(user)
 		setup_email(user)
-    @subject    += "请重新设置你的#{ACCOUNT_CN}#{PASSWORD_CN}"
-    @body[:url]  = "#{root_url}reset_password/#{user.password_reset_code}" 
+    @subject += "请重新设置你的#{ACCOUNT_CN}#{PASSWORD_CN}"
+    @body[:url] = "#{root_url}reset_password/#{user.password_reset_code}" 
 	end
 
 	def reset_password(user)
 		setup_email(user)
-    @subject    += "你已经重新设置了#{ACCOUNT_CN}#{PASSWORD_CN}"
-    @body[:url]  = user_first_link(user, false)
+    @subject += "你已经重新设置了#{ACCOUNT_CN}#{PASSWORD_CN}"
+    @body[:url] = user_first_link(user, false)
 	end
         
         #重发激活邮件代码start
@@ -56,10 +56,10 @@ class UserMailer < ActionMailer::Base
   protected
   
 	def setup_email(user)
-	  @recipients  = "#{user.email}"
-	  @from        = "#{SITE_NAME_EN} <#{SITE_EMAIL}>"
-	  @subject     = "[#{SITE_NAME_CN}] "
-	  @sent_on     = Time.now
+	  @recipients = "#{user.email}"
+	  @from = "#{SITE_NAME_EN} <#{SITE_EMAIL}>"
+	  @subject = "[#{SITE_NAME_CN}] "
+	  @sent_on = Time.now
 	  @content_type = "text/html"
 	  @body[:user] = user
 	end
