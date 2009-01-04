@@ -4,6 +4,7 @@ class MatchesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :profile]
 	before_filter :load_current_filter, :only => [:index, :mine]
+  before_filter :set_system_notice, :only => [:show, :index, :overview]
   
   def index
     respond_to do |format|

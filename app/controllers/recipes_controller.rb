@@ -254,7 +254,7 @@ class RecipesController < ApplicationController
   private
   
 	def set_system_notice
-		@system_notice = "号外: 提供食谱的<em>蜂友的blog</em>可以<em>自动加入</em>食谱的<em>相关链接</em>啦!"
+		# @system_notice = "号外: 提供食谱的<em>蜂友的blog</em>可以<em>自动加入</em>食谱的<em>相关链接</em>啦!"
 	end
   
   def load_recipe(user = nil)
