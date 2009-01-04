@@ -16,7 +16,15 @@
 	<%= "0#{unit_for('Review')}#{REVIEW_CN}" %> |
 <% end %>
 
-<% if (views_count = item.counter.total_view_count - item.counter.self_view_count) > 0 %>
+<% if counter = item.counter %>
+	<% tvc = counter.total_view_count || 0 %>
+	<% svc = counter.self_view_count || 0 %>
+<% else %>
+	<% tvc = 0 %>
+	<5 svc = 0 %>
+<% end %>
+
+<% if (views_count = tvc - svc) > 0 %>
 	<%= link_to "#{views_count}次#{SEE_CN}", item %> |
 <% else %>
 	<%= "0次#{SEE_CN}" %> |
