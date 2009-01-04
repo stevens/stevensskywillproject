@@ -3,6 +3,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'homepages/import', :controller => 'homepages', :action => 'import'
 	map.connect ':controller/overview', :action => 'overview'
 	
+	map.connect 'matches/:id/profile', :controller => 'matches', :action => 'profile'
+	map.connect 'mine/matches', :controller => 'matches', :action => 'mine'
+	
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
 	map.connect 'users/:id/profile', :controller => 'users', :action => 'profile'
 
@@ -39,6 +42,19 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :recipes, 
 								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries], 
 								:has_one => [:counter]
+        
+  map.resources :matches, 
+  							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :entries, :awards, :votes, :winners, :match_actors], 
+  							:has_one => [:profile, :counter]
+  map.resources :entries, 
+  							:has_many => [:votes, :winners], 
+  							:has_one => [:counter]
+  map.resources :votes
+  map.resources :awards, 
+  							:has_many => [:photos, :reviews, :favorites, :winners]
+  map.resources :winners
+  map.resources :match_actors
+  
 	map.resources :photos, 
 								:has_many => [:reviews, :taggings, :tags], 
 								:has_one => [:counter]
@@ -51,18 +67,6 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :contacts
 	map.resources :profiles
 	map.resources :stories
-        
-  map.resources :matches, 
-  							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :entries, :awards, :votes, :winners, :match_actors], 
-  							:has_one => [:counter]
-  map.resources :entries, 
-  							:has_many => [:votes, :winners], 
-  							:has_one => [:counter]
-  map.resources :votes
-  map.resources :awards, 
-  							:has_many => [:photos, :reviews, :favorites, :winners]
-  map.resources :winners
-  map.resources :match_actors
   
 	map.resources :keepers, :member => { :enable => :put } #后台管理用
 	map.resources :newsletters, :member => { :sendmails => :put } #后台管理用
@@ -113,18 +117,19 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect ':controller/:id/:action'
   # map.connect ':namespace/:controller/:action/:id'
   
-  #easier routes for restful_authentication
+  # easier routes for restful_authentication
 	map.signup '/signup', :controller => 'users', :action => 'new'
 	map.login '/login', :controller => 'sessions', :action => 'new'
 	map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 	map.activate '/activate/:id', :controller => 'users', :action => 'activate'
-        map.sendmail '/sendmail/:id', :controller => 'keepers', :action => 'sendnewsletter'
 	map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
 	map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
+	map.lost_activation '/lost_activation', :controller => 'users', :action => 'lost_activation'
+	map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation'
 	map.search '/search', :controller => 'searchings', :action => 'search'
 	map.feedback '/feedback', :controller => 'feedbacks', :action => 'new'
 	map.sitemap 'sitemap.xml' , :controller => 'sitemap' , :action => 'sitemap'
-        #重发激活邮件代码start
-        map.resend_activemail '/resend_activemail', :controller =>'activemails', :action => 'new'
-        #重发激活邮件代码end
+	
+	# for newsletter
+	map.sendmail '/sendmail/:id', :controller => 'keepers', :action => 'sendnewsletter'
 end
