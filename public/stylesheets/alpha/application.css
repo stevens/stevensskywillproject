@@ -13,7 +13,7 @@
 	word-break: break-all;
 }
 body, a, p, ol, ul, td, input, textarea, select, option, button {
-  font-family: Verdana;
+  font-family: Verdana, Arial, sans-serif;
 	font-size:   12px;
   line-height: 16px;
 }
@@ -22,12 +22,13 @@ body, a, p, ol, ul, td, input, textarea, select, option, button {
 }
 img {
 	border: none;
-	background-color: #ffffff;
+	/* background-color: #ffffff; */
+	background-color: transparent !important;
 }
 img.icon {
 	margin-bottom: -2px;
 	margin-right: 0px;
-	background-color: transparent;
+	background-color: transparent !important;
 	width: 12px;
 	height: 12px;
 }
@@ -123,6 +124,12 @@ span.text {
 }
 span.text a {
 	font-weight: normal;
+}
+span.pop_tips {
+	background-color: transparent !important;
+}
+span.pop_tips a {
+	background-color: transparent !important;
 }
 label {
 	white-space: nowrap;
@@ -253,10 +260,10 @@ div.tag {
 	padding-left: 10px;
 }
 #logo img {
-	background-color: transparent;
+	background-color: transparent !important;
 }
 #logo a:hover {
-	background-color: transparent;
+	background-color: transparent !important;
 }
 
 /* Help */
@@ -1544,4 +1551,27 @@ div.welcome_todo_button a:hover {
 	padding-left: 13px;
 	padding-right: 13px;
 	color: #b8b9a7;
+}
+
+/* Favorite */
+.favorite_bar {
+	margin-bottom: 5px;
+}
+
+/* Match */
+#match_intro_detail td.right_column_lined {
+	border: none;
+}
+#match_intro_detail .sub_block_tb {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+#match_enroll_bar {
+	margin: 0px 10px 10px 10px;
+}
+#match_collect_bar {
+	margin: 0px 10px 10px 10px;
+}
+#match_vote_bar {
+	margin: 0px 10px 10px 10px;
 }

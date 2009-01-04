@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
 	include FavoritesHelper
 	include FeedbacksHelper
 	include HomepagesHelper
+	include MatchesHelper
 	include MineHelper
 	include PasswordsHelper
 	include PhotosHelper
@@ -58,7 +59,7 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'site'
 		elsif c == 'mine' || a == 'mine'
 			@current_tab_type = 'mine'
-		elsif (c == 'users' && a != 'new') || params[:user_id] || c == 'contacts'
+		elsif (c == 'users' && a != 'lost_activation' && a != 'resend_activation') || params[:user_id] || c == 'contacts'
 			@current_tab_type = 'user'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
@@ -111,6 +112,8 @@ class ApplicationController < ActionController::Base
 	def load_parent
 		if params[:recipe_id]
 			@parent_type = 'Recipe'
+		elsif params[:match_id]
+			@parent_type = 'Match'
 		elsif params[:photo_id]
 			@parent_type = 'Photo'
 		end

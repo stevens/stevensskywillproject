@@ -102,6 +102,14 @@ module ApplicationHelper
 		end
 	end
 	
+	def item_first_link(item, include_profile = false, only_path = false)
+		if item
+			suffix = '/profile' if include_profile
+			prefix = root_url if !only_path
+			"#{prefix}#{controller_name(type_for(item))}/#{item.id}#{suffix}"
+		end
+	end
+	
 	def items_html_id(item_type, itemable_type = nil, itemable_id = nil)
 		if itemable_type
 			"#{item_html_id(itemable_type, itemable_id)}_#{controller_name(item_type)}"
@@ -179,7 +187,7 @@ module ApplicationHelper
 		end
 	end
 	
-	def time_iso_format(time, better = false)
+	def time_iso_format(time, better = false, only_date = false, include_second = true)
 		if better
 			i = Time.now - time
 			case 
@@ -194,12 +202,16 @@ module ApplicationHelper
 			else
 				time.strftime("%Y-%m-%d")
 			end
+		elsif only_date
+			time.strftime("%Y-%m-%d")
 		else
-			time.strftime("%Y-%m-%d %H:%M:%S")
+			if include_second
+				time.strftime("%Y-%m-%d %H:%M:%S")
+			else
+				time.strftime("%Y-%m-%d %H:%M")
+			end
 		end
 	end
-	
-	
 	
 	def items_rows_count(items_count, items_count_per_row)
 		rc = items_count/items_count_per_row
