@@ -3,7 +3,7 @@
 		<% for p in document %>
 			<div class="main">
 				<% if !p[0].blank? %>
-					<h3><%= "#{p[0]}:" %></h3>
+					<h3><%= p[0] %></h3>
 				<% end %>
 				<ul><%= paragraphs(p[1], true, true) %></ul>
 			</div>

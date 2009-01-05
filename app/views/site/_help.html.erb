@@ -1,265 +1,90 @@
-<div class="sub_block">
-<div class="item_detail">
+<% document = [] %>
+<% document << ["为什么要注册？", 
+								"注册为#{SITE_NAME_CN}成员可以享受到#{SITE_NAME_CN}提供的更多更好的服务，包括只对#{SITE_NAME_CN}成员开放的食谱，参加美食比赛，为喜爱的食谱投票、发表评论，结识志同道合的蜂友等等，而且服务还在不断的改善，增加中…
+								"] %>
+<% document << ["为什么要用邮箱注册，并且需要激活？", 
+								"这样做的目的一是为防止非正常的注册行为，二是确认你注册时的所用的邮箱为有效的邮箱，#{SITE_NAME_CN}将发送一封激活邮件到你邮箱（如下图），必须通过激活邮件中的激活链接才能激活帐号，完成注册。
+								这个电子邮箱将作为你今后遗忘密码时找回密码的重要手段，同时也能帮助我们更好的联系你，以便在#{SITE_NAME_CN}有了重要活动或者重要改进时通知你，并且当需要向你发放奖品或者纪念品时，你的电子邮箱也是我们确认、联系你的重要方式。
+								<img alt='' src='/images/help/help2.JPG' title='激活邮件!' />
+								"] %>
+<% document << ["如何在#{SITE_NAME_CN}注册?", 
+								"注册#{SITE_NAME_CN}，只需两步：
+								1.点击“注册”链接进入注册页面，按要求填写相关的注册信息，并点击“注册”按钮提交。
+								2.进入你注册所用的Email邮箱，查收来自#{SITE_NAME_CN}的激活邮件，并在激活邮件中点击激活链接进入#{SITE_NAME_CN}即可完成注册。 
+								<a href='#{signup_url}'>现在就注册...</a>
+								"] %>
+<% document << ["我注册后，马上使用正确的注册邮箱和密码登录为什么不成功？", 
+							  "这表示你注册的帐号暂时没有被激活。提交了注册内容后，#{SITE_NAME_CN}会发送一封激活邮件到你的邮箱，以便确认你的唯一身份，你需要通过激活邮件的链接地址激活帐号（如下图），完成注册。此后你使用注册邮箱和密码，就能够正常登录#{SITE_NAME_CN}了。
+								<img alt='' src='/images/help/help1.JPG' title='激活链接!' />
+								"] %>
+<% document << ["注册时，一直没有收到激活邮件怎么办？", 
+							  "首先确认你注册的电子邮箱是否拼写正确，可以通过用你的注册电子邮箱登录，看看系统提示的信息，如果提示你这个邮箱并未注册，表明你可能注册时错误拼写了电子邮箱地址。
+								或者请到你邮箱的垃圾夹中找找激活邮件，一些邮件服务商常会把正常的邮件误判为垃圾邮件。
+								你还可以在登录页面中点击<a href='#{lost_activation_url}'>“重发激活邮件”</a>（如下图），填入你注册时的邮箱，系统会向你的邮箱重新再发送一封激活邮件。
+								个别邮箱会误屏蔽#{SITE_NAME_CN}的激活邮件。如果你也碰到类似问题，请尝试使用由另一个邮件服务商的邮箱重新注册。
+								<img alt='' src='/images/help/help4.JPG' title='重发激活邮件!' />
+								如果还有问题，请发送邮件到 #{SITE_EMAIL} 联系#{SITE_NAME_CN}。
+								"] %>
+<% document << ["忘记了密码怎么办？", 
+							  "请在登录页面点击“<a href='#{forgot_password_url}'>我忘记了密码?</a>”链接（如下图），根据提示的步骤，重新设置你的密码。
+							  <img alt='' src='/images/help/help3.JPG' title='忘记密码!' />
+							  "] %>
+<% document << ["如何修改我的默认头像？", 
+							  "可以在登录后点击“设置”，再点击“更改头像”，按照提示的步骤就能上传你喜欢的图片作为你的头像了。
+							  "] %>
+<% document << ["如何修改我的昵称？", 
+							  "登录后点击“设置”，然后点击“更改昵称”。
+							  "] %>
+<% document << ["如何添加我的博客地址？", 
+							  "可以在登录后点击“设置”，在blog栏里填写你的博客地址点击“保存”即可。
+							  "] %>
+<% document << ["为什么我发的食谱没有显示在食谱首页的最新食谱里？", 
+							  "默认状态下，食谱会被保存为“草稿”，你可以在该食谱的显示页面中点击“发布这个食谱”，或者在“我的食谱”页面点击“草稿”，找到你想发布的食谱，点击该食谱后的“发布”链接（如下图），这样就会将这个食谱发布出去，同时也会显示在最新食谱里面了。
+							  <img alt='' src='/images/help/help6.JPG' title='发布食谱!' />
+							  "] %>
+<% document << ["为什么我刚创建的食谱里面无法看到并点击“发布这个食谱”链接？", 
+							  "这是因为你所创建的食谱的信息还不完整，比如没有上传相关的食谱图片，没有选择“成本”，“准备时间”，“制作时间”，没有填写标签、出品量等食谱的相关信息，你在将上述信息都填写完整后，就能看到“发布这个食谱”的链接，并正常发布你的食谱了。
+							  "] %>
+<% document << ["如何编辑已经创建的食谱？", 
+							  "点击你所想编辑的食谱，然后你会看到“编辑”的链接（如下图），点击该链接就可以编辑并保存你的食谱了。
+							  <img alt='' src='/images/help/help7.JPG' title='编辑食谱!' />
+							  "] %>
+<% document << ["为什么我的朋友看不到我发布的食谱？", 
+							  "你把你的食谱进行了隐私设置，因此不满足条件的用户将无法看到这些设置了隐私权限的食谱。
+							  "] %>
+<% document << ["如何设置我所发布的食谱的隐私权限？", 
+							  "你在发布食谱时，在食谱信息最下方会有一个选框选择供你选择你期望发布的食谱的隐私（如下图），例如是对“任何人”，还是对#{SITE_NAME_CN}成员”，亦或是“只有我”，今后我们会根据需要增加更多的可供选择的选项。已经发布的食谱可以通过编辑功能来进行隐私设置的修改。
+							  <img alt='' src='/images/help/help5.JPG' title='食谱隐私设置!' />
+							  "] %>
+<% document << ["如何上传食谱图片？", 
+							  "点击你想上传图片的食谱，会看到“添加新图片”的链接（如下图），点击该链接，按照系统提示就能上传你食谱的相关图片了，如果你的该食谱图片不止一张，在上传完一张图片后，点击“新食谱图片”（如下图）或者“添加新图片”链接，就能继续添加下一张该食谱的相关图片。
+							  <img alt='' src='/images/help/help8.JPG' title='添加图片!' />
+							  继续添加图片
+							  <img alt='' src='/images/help/help10.JPG' title='继续添加图片!' />
+							  "] %>
+<% document << ["如何选定食谱封面图片？", 
+							  "如果食谱只有一张图片，默认该图片为封面图片，如果有多张图片，可以通过选择“用它作为食谱封面”选项（如下图）来选择喜欢的图片作为封面图片。
+							  <img alt='' src='/images/help/help9.JPG' title='选择封面图片!' />
+							  "] %>
+<% document << ["如何收尝我喜欢的食谱？", 
+							  "点击你想收尝的食谱，进入该食谱显示页面后，点击“收尝”链接（如下图），按照系统提示即可收尝你喜欢的食谱了。
+							  <img alt='' src='/images/help/help11.JPG' title='食谱收尝!' />
+							  "] %>
+<% document << ["如何给我喜欢的食谱打分？", 
+							  "点击你想进行打分的食谱，进入该食谱页面后，将鼠标放在打分器上（如下图），系统会根据鼠标位置显示相应分值，滑动鼠标，选中你想评定的分数，点击鼠标右键即可完成打分。
+							  <img alt='' src='/images/help/help12.JPG' title='食谱打分!' />
+							  "] %>
+<% document << ["如何添加志同道合的蜂友？", 
+							  "点击你希望添加的蜂友，点击“加为伙伴”链接（如下图）即可，但需要等待对方的确认。
+							  <img alt='' src='/images/help/help13.JPG' title='添加好友!' />
+							  "] %>
+<% document << ["", 
+							  "如果你在使用中遇到帮助中没有提到的问题，欢迎你通过“<a href='#{feedback_url}'>问题反馈</a>”或者直接发送邮件到 #{SITE_EMAIL} ，我们会尽快做出解答。
+							  "] %>
+<% document << ["", 
+							  "
+							  #{SITE_NAME_CN} (#{SITE_NAME_EN}.com)
+							  "] %>
 
-<div class="main">
-<h3>为什么要注册？</h3>
-<ul>
-<li><span class='text'>
-注册为蜂厨成员可以享受到蜂厨提供的更多更好的服务，包括只对蜂厨成员开放的食谱，参加美食比赛，为喜爱的食谱投票、发表评论，结识志同道合的蜂友等等，而且服务还在不断的改善，增加中…
-</span></li>
-</ul>
-</div>
-
-
-<div class="main">
-<h3>为什么要用邮箱注册，并且需要激活？</h3>
-<ul>
-<li><span class='text'>
-这样做的目的一是为防止非正常的注册行为，二是确认你注册时的所用的邮箱为有效的邮箱，<%="#{SITE_NAME_CN}"%>将发送一封激活邮件到你邮箱（如下图），必须通过激活邮件中的激活链接才能激活帐号，完成注册。
-</span></li>
-<li><span class='text'>
-这个电子邮箱将作为你今后遗忘密码时找回密码的重要手段，同时也能帮助我们更好的联系你，以便在<%="#{SITE_NAME_CN}"%>有了重要活动或者重要改进时通知你，并且当需要向你发放奖品或者纪念品时，你的电子邮箱也是我们确认、联系你的重要方式。
-</span></li>
-<li>
-<img alt="" src="/images/help/help2.JPG" title="激活邮件!" />
-</li>
-</ul>
-</div>
-    
-<div class="main">
-<h3>如何在<%="#{SITE_NAME_CN}"%>注册?</h3>
-<ul>
-<li><span class='text'>
-注册<%="#{SITE_NAME_CN}"%>，只需两步：
-</span></li>
-</ul>
-<ol>
-<li><span class='text'>
-点击“注册”链接进入注册页面，按要求填写相关的注册信息，并点击“注册”按钮提交。
-</span></li>
-<li><span class='text'>
-进入你注册所用的Email邮箱，查收来自<%="#{SITE_NAME_CN}"%>的激活邮件，并在激活邮件中点击激活链接进入<%="#{SITE_NAME_CN}"%>即可完成注册。 
-</span></li>
-</ol>
-<ul>
-<li><span class='text'>
-<a href="http://www.beecook.com/signup">现在就注册..</a>
-</span></li>
-</ul>
-</div>
-
-<div class="main">
-<h3>我注册后，马上使用正确的注册邮箱和密码登录为什么不成功？</h3>
-<ul>
-<li><span class='text'>
-这表示你注册的帐号暂时没有被激活。提交了注册内容后，<%="#{SITE_NAME_CN}"%>会发送一封激活邮件到你的邮箱，以便确认你的唯一身份，你需要通过激活邮件的链接地址激活帐号（如下图），完成注册。此后你使用注册邮箱和密码，就能够正常登录<%="#{SITE_NAME_CN}"%>了。 
-</span></li>
-<li>
-<img alt="" src="/images/help/help1.JPG" title="激活链接!" />
-</li>
-</ul>
-</div>
-
-<div class="main">
-<h3>注册时，一直没有收到激活邮件怎么办？</h3>
-<ol>
-<li><span class='text'>
-首先确认你注册的电子邮箱是否拼写正确，可以通过用你的注册电子邮箱登录，看看系统提示的信息，如果提示你这个邮箱并未注册，表明你可能注册时错误拼写了电子邮箱地址。
-</span></li>
-<li><span class='text'>
-或者请到你邮箱的垃圾夹中找找激活邮件，一些邮件服务商常会把正常的邮件误判为垃圾邮件。
-</span></li>
-<li><span class='text'>
-你还可以在登录页面中点击<a href="http://www.beecook.com/lost_activation">“重发激活邮件”</a>（如下图），填入你注册时的邮箱，系统会向你的邮箱重新再发送一封激活邮件。
-</span></li>
-<li><span class='text'>
-个别邮箱会误屏蔽<%="#{SITE_NAME_CN}"%>的激活邮件。如果你也碰到类似问题，请尝试使用由另一个邮件服务商的邮箱重新注册。
-</span></li>
-</ol>
-<ul>
-<li>
-<img alt="" src="/images/help/help4.JPG" title="重发激活邮件!" />
-</li>
-<li><span class='text'>
-如果还有问题，给我们发送邮件<a href="mailto:<%="#{SITE_EMAIL}"%>"><%="#{SITE_EMAIL}"%></a> 。
-</span></li>
-</ul>
-</div>
-
-<div class="main">
-<h3>忘记了密码怎么办？</h3>
-<ul>
-<li><span class='text'>
-请在登录页面点击“<a href="http://www.beecook.com/forgot_password">我忘记了密码?</a>”链接（如下图），根据提示的步骤，重新设置你的密码。
-</span></li>
-<li>
-<span id ="help_image">
-<img alt="" src="/images/help/help3.JPG" title="忘记密码!" />
-</span>
-</li>
-</ul>
-</div>
-
-<div class="main">
-<h3>如何修改我的默认头像？</h3>
-<ul>
-<li><span class='text'>
-可以在登录后点击“设置”，再点击“更改头像”，按照提示的步骤就能上传你喜欢的图片作为你的头像了。
-</span></li>
-</ul>
-</div>
-    
-<div class="main">
-<h3>如何修改我的昵称？</h3>
-<ul>
-<li><span class='text'>
-登录后点击“设置”，然后点击“更改昵称”。
-</span></li>
-</ul>
-</div>
-
-<div class="main">
-<h3>如何添加我的博客地址？</h3>
-<ul>
-<li><span class='text'>
-可以在登录后点击“设置”，在blog栏里填写你的博客地址点击“保存”即可。
-</span></li>
-</ul>
-</div>
-
-<div class="main">
-<h3>为什么我发的食谱没有显示在食谱首页的最新食谱里？</h3>
-<ul>
-<li><span class='text'>
-默认状态下，食谱会被保存为“草稿”，你可以在该食谱的显示页面中点击“发布这个食谱”，或者在“我的食谱”页面点击“草稿”，找到你想发布的食谱，点击该食谱后的“发布”链接（如下图），这样就会将这个食谱发布出去，同时也会显示在最新食谱里面了。
-</span></li>
-<li>
-<img alt="" src="/images/help/help6.JPG" title="发布食谱!" />
-</li>
-</ul>
-</div>
-
-<div class="main">
-<h3>为什么我刚创建的食谱里面无法看到并点击“发布这个食谱”链接？</h3>
-<ul>
-<li><span class='text'>
-这是因为你所创建的食谱的信息还不完整，比如没有上传相关的食谱图片，没有选择“成本”，“准备时间”，“制作时间”，没有填写标签、出品量等食谱的相关信息，你在将上述信息都填写完整后，就能看到“发布这个食谱”的链接，并正常发布你的食谱了。
-</span></li>
-</ul>
-</div>
-
-<div class="main">
-<h3>如何编辑已经创建的食谱？</h3>
-<ul>
-<li><span class='text'>
-点击你所想编辑的食谱，然后你会看到“编辑”的链接（如下图），点击该链接就可以编辑并保存你的食谱了。
-</span></li>
-<li>
-<img alt="" src="/images/help/help7.JPG" title="编辑食谱!" />
-</li>
-</ul>
-</div>
-
-<div class="main">
-<h3>为什么我的朋友看不到我发布的食谱？</h3>
-<ul>
-<li><span class='text'>
-你把你的食谱进行了隐私设置，因此不满足条件的用户将无法看到这些设置了隐私权限的食谱。
-</span></li>
-</ul>
-</div>
-    
-<div class="main">
-<h3>如何设置我所发布的食谱的隐私权限？</h3>
-<ul>
-<li><span class='text'>
-你在发布食谱时，在食谱信息最下方会有一个选框选择供你选择你期望发布的食谱的隐私（如下图），例如是对“任何人”，还是对“<%="#{SITE_NAME_CN}"%>成员”，亦或是“只有我”，今后我们会根据需要增加更多的可供选择的选项。已经发布的食谱可以通过编辑功能来进行隐私设置的修改。
-</span></li>
-<li>
-<img alt="" src="/images/help/help5.JPG" title="食谱隐私设置!" />
-</li>
-</ul>
-</div>
-
-<div class="main">
-<h3>如何上传食谱图片？</h3>
-<ul>
-<li><span class='text'>
-点击你想上传图片的食谱，会看到“添加新图片”的链接（如下图），点击该链接，按照系统提示就能上传你食谱的相关图片了，如果你的该食谱图片不止一张，在上传完一张图片后，点击“新食谱图片”（如下图）或者“添加新图片”链接，就能继续添加下一张该食谱的相关图片。
-</span></li>
-<li>
-<img alt="" src="/images/help/help8.JPG" title="添加图片!" />
-</li>
-<li><span class='text'>
-继续添加图片
-</span></li>
-<li>
-<img alt="" src="/images/help/help10.JPG" title="继续添加图片!" />
-</li>
-</ul>
-</div>
-
-<div class="main">
-<h3>如何选定食谱封面图片？</h3>
-<ul>
-<li><span class='text'>
-如果食谱只有一张图片，默认该图片为封面图片，如果有多张图片，可以通过选择“用它作为食谱封面”选项（如下图）来选择喜欢的图片作为封面图片。
-</span></li>
-<li>
-<img alt="" src="/images/help/help9.JPG" title="选择封面图片!" />
-</li>
-</ul>
-</div>
-
-    
-<div class="main">
-<h3>如何收尝我喜欢的食谱？</h3>
-<ul>
-<li><span class='text'>
-点击你想收尝的食谱，进入该食谱显示页面后，点击“收尝”链接（如下图），按照系统提示即可收尝你喜欢的食谱了。
-</span></li>
-<li>
-<img alt="" src="/images/help/help11.JPG" title="食谱收尝!" />
-</li>
-</ul>
-</div>
-    
-<div class="main">
-<h3>如何给我喜欢的食谱打分？</h3>
-<ul>
-<li><span class='text'>
-点击你想进行打分的食谱，进入该食谱页面后，将鼠标放在打分器上（如下图），系统会根据鼠标位置显示相应分值，滑动鼠标，选中你想评定的分数，点击鼠标右键即可完成打分。
-</span></li>
-<li>
-<img alt="" src="/images/help/help12.JPG" title="食谱打分!" />
-</li>
-</ul>
-</div>
-    
-<div class="main">
-<h3>如何添加志同道合的蜂友？</h3>
-<ul>
-<li><span class='text'>
-点击你希望添加的蜂友，点击“加为伙伴”链接（如下图）即可，但需要等待对方的确认。
-</span></li>
-<li>
-<img alt="" src="/images/help/help13.JPG" title="添加好友!" />
-</li>
-</ul>
-</div>
-
-<div class="main">
-<ul>
-<li><span class='text'>
-如果你在使用中遇到帮助中没有提到的问题，欢迎你通过“<a href="http://www.beecook.com/feedback">问题反馈</a>”或者直接发送邮件到<a href="mailto:<%="#{SITE_EMAIL}"%>"><%="#{SITE_EMAIL}"%></a> ，我们会尽快做出解答。
-</span></li>
-</ul>
-</div>
-
-<div class="main">
-<ul><li><span class='text'>&nbsp;</span></li><li><span class='text'><%="#{SITE_NAME_CN}"%>(<%="#{SITE_NAME_EN}"%>.com)</span></li></ul>
-			</div>
-
-
-</div>
-</div>
+<%= render :partial => '/site/document', 
+					 :locals => { :document => document } %>

@@ -260,7 +260,7 @@ module ApplicationHelper
 		if text && !text.blank?
 			ps = auto_link(text, :all, :target => "_blank").split(/\n/)
 			for p in ps
-				p = sanitize(p.strip, :tags => %w[a], :attributes => %w[href target])
+				p = sanitize(p.strip, :tags => %w[a img], :attributes => %w[href target src title alt])
 				if keep_blank_line
 					p = '&nbsp;' if p.blank?
 					if p.starts_with?('[') && p.ends_with?(']')
