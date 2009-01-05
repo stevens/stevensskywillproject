@@ -1577,7 +1577,10 @@ div.welcome_todo_button a:hover {
 }
 
 /* Document */
-#ducument_main img {
+#document_content li {
+	margin-bottom: 3px;
+}
+#document_main img {
 	margin-top: 10px;
 	border: solid 1px #f1f1f1;
 }
