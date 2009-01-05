@@ -12,7 +12,6 @@
 		<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
 			<%= link_to_remote "发布", :url => { :action => 'publish', :id => item.id, :to_publish => true, :ref => ref } %> |
 		<% elsif item.is_draft != '1' %>
-			<%= link_to "参赛", { :controller => 'entries', :action => 'new', :entriable_type => 'recipe', :entriable_id => item.id } %> |
 			<%= link_to_remote "置为草稿", :url => { :action => 'publish', :id => item.id, :to_publish => false, :ref => ref } %> |
 		<% end %>
 		<%= link_to "#{EDIT_CN}", { :action => 'edit', :id => item.id, :ref => ref } %> |
@@ -21,7 +20,6 @@
 		<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
 			<%= link_to "发布", :action => 'publish', :id => item.id, :to_publish => true, :ref => ref, :filter => @current_filter %> |
 		<% elsif item.is_draft != '1' %>
-			<%= link_to "参赛", { :controller => 'entries', :action => 'new', :entriable_type => 'recipe', :entriable_id => item.id } %> |
 			<%= link_to "置为草稿", :action => 'publish', :id => item.id, :to_publish => false, :ref => ref, :filter => @current_filter %> |
 		<% end %>
 		<%= link_to EDIT_CN, { :action => 'edit', :id => item.id, :ref => ref, :filter => @current_filter } %> | 
