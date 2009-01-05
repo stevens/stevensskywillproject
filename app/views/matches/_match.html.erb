@@ -143,9 +143,13 @@
 		<ul>
 			<% for award in item.awards %>
 				<li style="padding-left: 24px">
-					<span class='subtitle'><%= "#{award.title} (#{award.quota}名)" %></span>
+					<% if !award.quota.blank? %>
+						<% quota = "#{award.quota}名" %>
+					<% else %>
+						<% quota = '名额待定' %>
+					<% end %>
+					<span class='subtitle'><%= "#{award.title} (#{quota})" %></span>
 					<span class='text'><%= "奖品 - #{award.prize_title}" %></span><br />
-					<span class='text'><%= "价值 - #{award.prize_value}元" %></span>
 				</li>
 			<% end %>
 		</ul>
