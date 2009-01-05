@@ -1,0 +1,12 @@
+<div class="sub_block">
+	<div id="ducument_main" class="item_detail">
+		<% for p in document %>
+			<div class="main">
+				<% if !p[0].blank? %>
+					<h3><%= "#{p[0]}:" %></h3>
+				<% end %>
+				<ul><%= paragraphs(p[1], true, true) %></ul>
+			</div>
+		<% end %>
+	</div>
+</div>
