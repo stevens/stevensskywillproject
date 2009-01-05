@@ -119,7 +119,7 @@
 	</div>
 	
 	<div class="main">
-		<h3><%= "赛程时间:" %></h3>
+		<h3><%= "赛程安排:" %></h3>
 		<ul>
 			<li>
 				<span class='text'><%= "启动时间: #{time_iso_format(item.start_at, false, true)}" %></span>
@@ -139,7 +139,7 @@
 	</div>
 	
 	<div class="main">
-		<h3><%= "奖项奖品:" %></h3>
+		<h3><%= "奖项设置:" %></h3>
 		<ul>
 			<% for award in item.awards %>
 				<li style="padding-left: 24px">

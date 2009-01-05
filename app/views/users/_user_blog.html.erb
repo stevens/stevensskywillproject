@@ -1,6 +1,6 @@
 blog:
 <% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
-	<%= link_to truncate(blog, 40), url_with_protocol(blog), :target => "_blank" %>
+	<%= link_to truncate(blog, 40), url_with_protocol(blog), :target => "_blank", :title => blog %>
 <% elsif show_add && user == @current_user %>
 	&nbsp;
 	<span><%= link_to "#{ADD_CN}blog", :controller => 'settings', :action => 'account' %></span>
