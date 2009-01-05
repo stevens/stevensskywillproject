@@ -1,0 +1,14 @@
+<div id="privacy_wrapper" class="content_block">
+	
+	<div id="privacy_header" class="block_header">
+		<%= render :partial => "/layouts/index_header", 
+							 :locals => {:show_header_link => false, 
+							 						 :show_new_link => false, 
+							 						 :block_title => @block_title} %>
+	</div>
+	
+	<div id="privacy_detail" class="block_main">
+		<%= render :partial => '/site/privacy' %>
+	</div>
+
+</div>

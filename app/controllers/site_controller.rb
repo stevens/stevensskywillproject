@@ -8,7 +8,32 @@ class SiteController < ApplicationController
 		
 		load_notifications if @current_user
 		
-		set_page_title(SLOGAN_CN)
+		info = SLOGAN_CN
+		set_page_title(info)
+	end
+	
+	def about
+		info = "#{ABOUT_CN}#{SITE_NAME_CN}"
+		set_page_title(info)
+		set_block_title(info)
+	end
+	
+	def help
+		info = HELP_CN
+		set_page_title(info)
+		set_block_title(info)
+	end
+	
+	def privacy
+		info = PRIVACY_POLICY_CN
+		set_page_title(info)
+		set_block_title(info)
+	end
+	
+	def terms
+		info = TERMS_OF_SERVICE_CN
+		set_page_title(info)
+		set_block_title(info)
 	end
 	
 	private

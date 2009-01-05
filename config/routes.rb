@@ -128,6 +128,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation'
 	map.search '/search', :controller => 'searchings', :action => 'search'
 	map.feedback '/feedback', :controller => 'feedbacks', :action => 'new'
+	map.about '/about', :controller => 'site', :action => 'about'
+	map.help '/help', :controller => 'site', :action => 'help'
+	map.privacy '/privacy', :controller => 'site', :action => 'privacy'
+	map.terms '/terms', :controller => 'site', :action => 'terms'
 	map.sitemap 'sitemap.xml' , :controller => 'sitemap' , :action => 'sitemap'
 	
 	# for newsletter
