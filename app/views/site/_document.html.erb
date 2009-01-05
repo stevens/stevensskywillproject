@@ -1,7 +1,17 @@
 <div class="sub_block">
-	<div id="ducument_main" class="item_detail">
-		<% for p in document %>
-			<div class="main">
+	<div id="document_content">
+		<ul>
+			<% 1.upto(document.size) do |i| %>
+				<% p = document[i-1] %>
+				<li><%= link_to p[0], "\#d#{i}" %></li>
+			<% end %>
+		</ul>
+	</div>
+	<br />
+	<div id="document_main" class="item_detail">
+		<% 1.upto(document.size) do |i| %>
+			<% p = document[i-1] %>
+			<div id="d<%= i %>" class="main">
 				<% if !p[0].blank? %>
 					<h3><%= p[0] %></h3>
 				<% end %>
