@@ -186,7 +186,7 @@
 					  	<%= render :partial => "/sessions/login_sideblock" %>
 					  <% end %>
 					  
-						<% if current_user && ((params[:controller] == 'site' && params[:action] == 'index') || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
+						<% if current_user && (@current_tab_type == 'site' || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
 					  	<%= render :partial => '/stories/notification_sideblock', 
 					  						 :locals => { :notifications => @notifications } %>
 					  <% end %>
@@ -195,7 +195,7 @@
 							<%= render :partial => "/searchings/search_sideblock" %>
 						<% end %>
 						
-						<% if ['site'].include?(params[:controller]) %>
+						<% if @current_tab_type == 'site' %>
 							<%= render :partial => "/site/partner_sideblock" %>
 						<% end %>
 						

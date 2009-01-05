@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
 	def set_current_tab
 		c = params[:controller]
 		a = params[:action]
-		if c == 'site'
+		if c == 'site' && a == 'index'
 			@current_tab_type = 'site'
 		elsif c == 'mine' || a == 'mine'
 			@current_tab_type = 'mine'
