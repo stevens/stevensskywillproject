@@ -1,28 +1,35 @@
 <% document = [] %>
 <% document << ["", 
 								"#{SITE_NAME_CN}非常重视你的隐私权利，请阅读下面的隐私政策。
-								"] %>
+								", 
+								false] %>
 <% document << ["信息收集和使用", 
 							  "当你注册#{SITE_NAME_CN}帐户时，当你使用#{SITE_NAME_CN}的产品和服务时，要求你输入的信息中可能会包括你的个人信息（比如，姓名或名称、Email地址、通讯地址、邮政编码、电话号码等）。
 								#{SITE_NAME_CN}收集信息的主要用途是：为你提供产品和服务；识别和验证你的身份；与你联系；改进和提升产品和服务；从事相关研究；经过你的要求或许可的其他用途。
-								"] %>
+								", 
+								true] %>
 <% document << ["信息共享和披露", 
 							  "#{SITE_NAME_CN}严格确保包括你的Email地址在内的非公开个人信息的隐私安全：不在网站的任何页面公开显示；不向任何外部个人和组织出租、出售、共享和透漏。
 								两种情况例外：经过你的明确要求或许可的；政府执法部门或监管机构依法有权要求的。
-								"] %>
+								", 
+								true] %>
 <% document << ["Cookies", 
 							  "#{SITE_NAME_CN}会根据你的选择使用Cookies来记录你登录的会话信息，但不会使用永久性的Cookies，以保护你的帐户免受其他意外访问的干扰。
-							  "] %>
+							  ", 
+							  true] %>
 <% document << ["变化和更新", 
 							  "随着#{SITE_NAME_CN}的产品和服务的不断扩展，#{SITE_NAME_CN}会不定期更新这个隐私政策。
-							  "] %>
+							  ", 
+							  true] %>
 <% document << ["问题和建议", 
 							  "如果你对这个隐私政策有任何问题或建议，请发邮件到 #{SITE_EMAIL} 与#{SITE_NAME_CN}联系。
-							  "] %>
+							  ", 
+							  true] %>
 <% document << ["", 
 							  "
 							  #{SITE_NAME_CN} (#{SITE_NAME_EN}.com)
-							  "] %>
+							  ", 
+							  false] %>
 
 <%= render :partial => '/site/document', 
 					 :locals => { :document => document } %>

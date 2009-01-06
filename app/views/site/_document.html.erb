@@ -3,7 +3,7 @@
 		<ul>
 			<% 1.upto(document.size) do |i| %>
 				<% p = document[i-1] %>
-				<li><%= link_to p[0], "\#s#{i}" %></li>
+				<li><%= link_to p[0], "#s#{i}" %></li>
 			<% end %>
 		</ul>
 	</div>
@@ -15,7 +15,12 @@
 				<% if !p[0].blank? %>
 					<h3><%= p[0] %></h3>
 				<% end %>
-				<ul><%= paragraphs(p[1], true, true) %></ul>
+				<ul>
+					<%= paragraphs(p[1], true, true) %>
+				</ul>
+				<% if p[2] %>
+					<div class="todo_right"><%= link_to "#{BACK_CN}目录", "#header_wrapper" %></div>
+				<% end %>
 			</div>
 		<% end %>
 	</div>
