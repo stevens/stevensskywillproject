@@ -3,7 +3,7 @@
 		<ul>
 			<% 1.upto(document.size) do |i| %>
 				<% p = document[i-1] %>
-				<li><%= link_to p[0], "\#d#{i}" %></li>
+				<li><%= link_to p[0], "\#s#{i}" %></li>
 			<% end %>
 		</ul>
 	</div>
@@ -11,7 +11,7 @@
 	<div id="document_main" class="item_detail">
 		<% 1.upto(document.size) do |i| %>
 			<% p = document[i-1] %>
-			<div id="d<%= i %>" class="main">
+			<div id="s<%= i %>" class="main">
 				<% if !p[0].blank? %>
 					<h3><%= p[0] %></h3>
 				<% end %>
