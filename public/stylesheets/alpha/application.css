@@ -82,8 +82,16 @@ em.highlight a {
 em.highlight a:hover {
 	background-color: #428cbb !important;
 }
+em.most {
+	color: #78b36d;
+	font-weight: normal;
+}
 em.more {
 	color: #e42300;
+	font-weight: normal;
+}
+em.normal {
+	color: #373737;
 	font-weight: normal;
 }
 em.none {
@@ -98,6 +106,21 @@ em.white {
 em.s {
 	font-size: 12px;
 	color: #695245;
+}
+em.vote a {
+	padding: 1px 0px;
+	display: inline-block;
+	width: 18px;
+	background-color: #78b36d !important;
+}
+em.vote a:hover {
+	background-color: #428cbb !important;
+}
+span.vote {
+	padding: 1px 0px;
+	display: inline-block;
+	width: 18px;
+	background-color: #f1f1f1 !important;
 }
 span.highlight {
 	color: #78b36d;
@@ -520,7 +543,7 @@ td {
 	vertical-align: top;
 }
 td.left_column {
-
+	padding-top: 3px;
 }
 td.left_column_lined {
 	border-bottom: 1px dashed #f1f1f1;
@@ -922,6 +945,9 @@ div.basic h2 a:hover {
 	background-color: #ff8159 !important;
 	color: #ffffff !important;
 }
+div.basic h2.normal a {
+	font-size: 12px;
+}
 div.basic li {
 	margin-bottom: 3px;
 }
@@ -1302,16 +1328,15 @@ div.welcome_content .sub_block_tb {
 	padding: 0px !important;
 }
 div.welcome_todo_button {
-	background-color: #428cbb;
 	margin: 0px auto;
-	width: 160px;
 	color: #ffffff;
 	font-weight: bold;
 	font-size: 18px;
 }
 div.welcome_todo_button a, div.welcome_todo_button a:link, div.welcome_todo_button a:visited {
-	display: block;
-	padding: 10px;
+	display: inline-block;
+	padding: 10px 40px;
+	background-color: #428cbb;
 	color: #ffffff !important;
 	font-weight: bold;
 	font-size: 18px;
@@ -1575,6 +1600,54 @@ div.welcome_todo_button a:hover {
 #match_vote_bar {
 	margin: 0px 10px 10px 10px;
 }
+#match_select_list {
+	margin-left: 0px;
+}
+#match_select_list div.select {
+	
+}
+#match_select_list td.left_column a:hover {
+	background-color: transparent !important;
+}
+#match_select_list td.right_column h2 a {
+	font-size: 12px;
+}
+.entriable_match_block {
+	width: 660px;
+	padding: 10px 8px 0px 10px;
+	margin: 10px -10px 0px -10px;
+	border-top: #f1f1f1 solid 1px;
+	border-bottom: #f1f1f1 solid 1px;
+	background-color: #eceff5;
+}
+* html .entriable_match_block {
+	width: 656px;
+	padding-right: 9px;
+	margin-left: -8px;
+	margin-right: -12px;
+}
+.entriable_match_block table {
+	margin-top: 10px;
+	margin-left: 0px;
+}
+.entriable_match_block td.right_column {
+	width: 500px;
+}
+.entriable_match_block td.right_column h2 a {
+	font-size: 12px !important;
+}
+.entriable_match_block td.vote_column {
+	text-align: center;
+}
+div.vote_zone {
+	width: 80px;
+	height: 60px;
+	padding-top: 2px;
+	background-color: #ffffff;
+	border: dashed 1px #f1f1f1;
+	text-align: center;
+	vertical-align: middle;
+}
 
 /* Document */
 #document_content li {
@@ -1583,4 +1656,31 @@ div.welcome_todo_button a:hover {
 #document_main img {
 	margin-top: 10px;
 	border: solid 1px #f1f1f1;
+}
+
+/* System & Admin */
+.admin_bar {
+	width: 660px;
+	padding: 3px 10px;
+	padding-right: 8px;
+	margin: 10px -10px 0px -10px;
+	border-top: #f1f1f1 solid 1px;
+	border-bottom: #f1f1f1 solid 1px;
+	color: #b8b9a7;
+	background-color: #ffffcc;
+	text-align: right;
+}
+* html .admin_bar {
+	width: 656px;
+	padding-right: 9px;
+	margin-left: -8px;
+	margin-right: -12px;
+}
+.info_bar {
+	background-color: #f5f5f5;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 13px;
+	padding-right: 13px;
+	color: #b8b9a7;
 }
