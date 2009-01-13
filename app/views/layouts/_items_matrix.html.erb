@@ -31,10 +31,19 @@
 							<% if show_below_photo %>
 								<div class="below_photo">
 									<%= render :partial => "/layouts/below_item_photo", 
-														 :locals => {:item => items[i-1], 
-														 						 :show_title => show_title, 
-														 						 :show_user => show_user, 
-														 						 :show_photo_todo => show_photo_todo} %>
+														 :locals => { :item => items[i-1], 
+														 						  :show_title => show_title, 
+														 						  :show_user => show_user, 
+														 						  :show_photo_todo => show_photo_todo } %>
+									
+									<!-- 显示投票统计信息 -->
+									<%= render :partial => "/entries/entry_vote_bar_m", 
+														 :locals => { :item => items[i-1] } %>
+									
+									<!-- 显示选手的作品统计信息 -->					 
+									<%= render :partial => "/match_actors/player_entries_bar_m", 
+														 :locals => { :item => items[i-1] } %>
+									
 								</div>
 							<% end %>
 							

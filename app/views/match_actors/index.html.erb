@@ -1,18 +1,27 @@
-<h1>Listing match_actors</h1>
+<div id="match_actors_wrapper" class="content_block">
+	
+	<div id="match_actors_header" class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "#{BACK_CN}#{MATCH_CN}", item_first_link(@parent_obj, true) %>
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
+	
+	<div id="match_actors_detail" class="block_main">	
+		<div id="match_actors_list">
+			<%= render :partial => "/layouts/items_matrix",
+								 :locals => {:show_paginate => true,
+								 						 :items_set => @match_actor_users_set, 
+								 						 :limit => nil,
+								 						 :items_count_per_row => count_per_row, 
+								 						 :items_count_per_page => 36, 
+								 						 :show_photo => true, 
+								 						 :show_below_photo => true,  
+								 						 :show_title => true, 
+								 						 :show_user => false, 
+								 						 :show_photo_todo => false, 
+								 						 :photo_style => 'matrix'} %>
+		</div>
+	</div>
 
-<table>
-  <tr>
-  </tr>
-
-<% for match_actor in @match_actors %>
-  <tr>
-    <td><%= link_to 'Show', match_actor %></td>
-    <td><%= link_to 'Edit', edit_match_actor_path(match_actor) %></td>
-    <td><%= link_to 'Destroy', match_actor, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New match_actor', new_match_actor_path %>
+</div>

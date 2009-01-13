@@ -1,0 +1,22 @@
+<% if type_for(item) != 'User' %>
+	<% if params[:controller] == 'matches' && params[:action] == 'profile' %>
+		<% show_vote_stats = true %>
+		<% show_vote_todo = false %>
+	<% elsif params[:match_id] && params[:controller] == 'entries' %>
+		<% show_vote_stats = true %>
+		<% show_vote_todo = true %>
+	<% end %>
+<% else %>
+	<% show_vote_stats = false %>
+<% end %>
+
+<% if show_vote_stats %>
+	<% if entry = @match.find_entry(item) %>
+		<div id="entry_<%= entry.id %>_vote_bar">
+			<%= render :partial => '/votes/vote_bar', 
+								 :locals => { :voteable => entry, 
+								 							:votein => @match, 
+								 							:show_vote_todo => show_vote_todo } %>
+		</div>
+	<% end %>
+<% end %>

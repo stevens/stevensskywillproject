@@ -17,7 +17,7 @@
 	<% photoable_type = item_type %>
 	<% title = item_title(item) %>
 	<% if item_type == 'Match' %>
-		<% item_link_url = item_first_link(item) %>
+		<% item_link_url = item_first_link(item, true) %>
 	<% else %>
 		<% item_link_url = item %>
 	<% end %>

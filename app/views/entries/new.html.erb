@@ -1,11 +1,19 @@
-<h1>New entry</h1>
+<div class="content_block">
 
-<%= error_messages_for :entry %>
+	<div class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{BACK_CN}#{@parent_name}", @parent_obj %>
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
 
-<% form_for(@entry) do |f| %>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
-<% end %>
+	<div class="block_main">
+		<% if @entry && @matches_set_count > 0 %>
+			<%= render :partial => "/entries/entry_input", 
+								 :locals => { :entry => @entry,
+								 							:is_new => true,
+								 							:matches_set => @matches_set } %>
+		<% end %>
+	</div>
 
-<%= link_to 'Back', entries_path %>
+</div>

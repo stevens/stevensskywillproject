@@ -10,7 +10,7 @@
 			<% end %>
 		<% end %>
 		<% if @parent_obj %>
-			<%= link_to strip_tags("#{BACK_CN}#{@parent_name}"), @parent_url %>
+			<%= link_to strip_tags("#{BACK_CN}#{@parent_name}"), item_first_link(@parent_obj) %>
 		<% end %>
 	</div>
 <% end %>

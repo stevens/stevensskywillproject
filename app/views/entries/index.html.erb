@@ -1,18 +1,31 @@
-<h1>Listing entries</h1>
+<div id="entries_wrapper" class="content_block">
+	
+	<div id="entries_header" class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "#{BACK_CN}#{MATCH_CN}", item_first_link(@parent_obj, true) %>
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
+	
+	<div id="entries_detail" class="block_main">
+		<div id="entries_filter_bar" class="filter_bar">
+			<%= render :partial => "/entries/entries_filter_bar" %>
+		</div>
+		
+		<div id="entries_list">	
+			<%= render :partial => "/layouts/items_matrix",
+								 :locals => { :show_paginate => true,
+								 						  :items_set => @entriables_set, 
+								 						  :limit => nil,
+								 						  :items_count_per_row => count_per_row, 
+								 						  :items_count_per_page => 36, 
+								 						  :show_photo => true, 
+								 						  :show_below_photo => true,  
+								 						  :show_title => true, 
+								 						  :show_user => true, 
+								 						  :show_photo_todo => false, 
+								 						  :photo_style => 'matrix' } %>
+		</div>
+	</div>
 
-<table>
-  <tr>
-  </tr>
-
-<% for entry in @entries %>
-  <tr>
-    <td><%= link_to 'Show', entry %></td>
-    <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
-    <td><%= link_to 'Destroy', entry, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New entry', new_entry_path %>
+</div>

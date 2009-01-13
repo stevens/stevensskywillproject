@@ -1,0 +1,11 @@
+<% codeable_type = "#{params[:controller].singularize}_filter" %>
+<% items_set_count = @entries_set_count %>
+
+<% if @current_user %>
+	<% codeable_type += "_my" %>
+<% end %>
+
+<%= render :partial => "/layouts/items_filter_bar", 
+					 :locals => { :user => nil, 
+					 							:codeable_type => codeable_type, 
+					 							:items_set_count => items_set_count } %>

@@ -1,0 +1,7 @@
+<% codeable_type = "#{params[:controller].singularize}_filter" %>
+<% items_set_count = @match_actors_set_count %>
+
+<%= render :partial => "/layouts/items_filter_bar", 
+					 :locals => { :user => nil, 
+					 							:codeable_type => codeable_type, 
+					 							:items_set_count => items_set_count } %>

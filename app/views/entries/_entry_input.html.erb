@@ -1,0 +1,78 @@
+<% entriable = entry.entriable %>
+<% entriable_type = type_for(entriable) %>
+
+<% if is_new %>
+	<% button_name = "提交新#{ENTRY_CN}" %>
+	<% cancle_url = entriable %>
+<% else %>
+	<% button_name = SAVE_CHANGES_CN %>
+	<% cancle_url = [entriable, entry] %>
+<% end %>
+
+<% form_for [entriable, entry] do |f| %>
+	<div class="sub_block_tb">
+	<table class="content">
+		<tr>
+			<td class="label">
+				<label class="required"><%= "参赛#{name_for(entriable_type)}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= render :partial => '/layouts/item_basic', 
+										 :locals => { :item => entriable,
+										 							:show_icon => true,
+										 							:show_title => true,
+										 							:show_link => true } %>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label class="required" for="title"><%= "选择#{MATCH_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "请选择要参加的#{MATCH_CN}" %>
+				</div>
+				<div class="radio">
+					<table id="match_select_list" class="content">
+						<% for match in matches_set %>
+							<tr>
+								<td>
+									<div class="select">
+										<%= f.radio_button :match_id, match.id, :class => "radio_button" %>
+									</div>
+								</td>
+								<td class="left_column">
+									<div class="sub_block_lr">
+					    			<%= render :partial => "/layouts/item_photo",
+					    								 :locals => { :item => match, 
+					    								 						  :photo_style => 'sign' } %>
+									</div>
+								</td>
+								<td class="right_column">
+									<div class="sub_block_lr">
+										<%= render :partial => '/matches/match_xs', 
+															 :locals => { :item => match } %>
+									</div>
+								</td>
+							</tr>
+						<% end %>
+					</table>
+				</div>
+				<%= error_message_on "entry", "match_id" %>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="input">
+				<div class="submit">
+					<%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+					&nbsp;&nbsp;
+					<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+<% end %>
