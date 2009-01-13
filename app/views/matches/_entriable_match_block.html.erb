@@ -1,0 +1,37 @@
+<% entriable = entry.entriable %>
+<% entriable_type = type_for(entriable) %>
+
+<% if item_manageable?(entry) %>
+	<span style="float: right">
+		<% delete_message = "确定要#{CANCLE_CN}这#{unit_for(entriable_type)}#{name_for(entriable_type)}继续参赛吗?" %>
+		<%= link_to "#{CANCLE_CN}参赛", { :match_id => match.id, :controller => 'entries', :action => 'destroy', :id => entry.id, :ref => ref, :filter => params[:filter] }, :confirm => delete_message, :method => :delete %>
+	</span>
+<% end %>
+
+<em class="more"><%= "这#{unit_for(entriable_type)}#{name_for(entriable_type)}正在参赛, 快来#{VOTE_CN}吧..." %></em>
+
+<table class="content">
+	<tr>
+		<td class="left_column">
+			<div class="sub_block_lr">
+			<%= render :partial => "/layouts/item_photo",
+								 :locals => { :item => match, 
+								 						  :photo_style => 'sign' } %>
+			</div>
+		</td>
+		<td class="right_column">
+			<div class="sub_block_lr">
+				<%= render :partial => '/matches/match_xs', 
+									 :locals => { :item => match } %>
+			</div>
+		</td>
+		<td class="vote_column">
+			<div id="entry_<%= entry.id %>_vote_bar" class="vote_zone">
+				<%= render :partial => '/votes/vote_bar', 
+									 :locals => { :voteable => entry, 
+									 							:votein => match, 
+									 							:show_vote_todo => true } %>
+			</div>		
+		</td>
+	</tr>
+</table>

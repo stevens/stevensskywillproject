@@ -1,0 +1,7 @@
+<% current = Time.now %>
+<% match_time_status = item.match_time_status(current) %>
+<% if item.doing?(current) %>
+	<%= "状态: #{match_time_status[2]} <em class='most'>[报名#{item.enroll_time_status(current)[2]} · 征集#{item.collect_time_status(current)[2]} · 投票#{item.vote_time_status(current)[2]}]</em>" %>
+<% else %>
+	<%= "状态: #{match_time_status[2]}" %>
+<% end %>

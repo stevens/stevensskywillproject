@@ -32,12 +32,13 @@
 			<p><em class="l"><%= slogan %></em></p><br />
 		<% end %>
 		<p>
+			<span>
 			<table style="margin: auto">
-				<% subjects = [['mslg', '记录美食灵感'], ['sfsp', '分享私房食谱'], ['txcy', '结交天下厨友'], ['jhcd', '切磋江湖厨道']] %>
+				<% subjects = [ [ 'mslg', '记录美食灵感', url_for(:controller => 'recipes', :action => 'overview') ], [ 'sfsp', '分享私房食谱', url_for(:controller => 'recipes', :action => 'overview') ], ['txcy', '结交天下厨友', url_for(:controller => 'users', :action => 'overview') ], [ 'jhcd', '切磋江湖厨道', matches_path ] ] %>
 				<tr>
 					<% for subject in subjects %>
 						<td style="width: 150px">
-							<%= image_tag "site/#{subject[0]}.png", :title => subject[1], :alt => '' %>
+							<%= link_to image_tag("site/#{subject[0]}.png", :title => subject[1], :alt => ''), subject[2] %>
 						</td>
 					<% end %>
 				</tr>
@@ -49,13 +50,18 @@
 					<% end %>
 				</tr>
 			</table>
+			</span>
 		</p>
 		<br />
 		<div class="welcome_todo_button">
 			<% if @current_user %>
-				<%= link_to "进入我的#{MAIN_PAGE_CN}", user_first_link(@current_user) %>
+				<%= link_to "我的#{MAIN_PAGE_CN}", user_first_link(@current_user) %>
+				&nbsp;&nbsp;
+				<%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %>
 			<% else %>
 				<%= link_to "加入#{SITE_NAME_CN}", signup_url %>
+				&nbsp;&nbsp;
+				<%= link_to "随便逛逛", :controller => 'recipes', :action => 'overview' %>
 			<% end %>
 		</div>
 

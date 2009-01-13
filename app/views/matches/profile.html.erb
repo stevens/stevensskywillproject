@@ -1,0 +1,153 @@
+<div id="match_intro_wrapper" class="content_block">
+	<div id="match_intro_header" class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "#{SEE_CN}详情", :controller => 'matches', :action => 'show', :id => @match.id %>	
+		</div>
+		<h1><%= "#{MATCH_CN}介绍" %></h1>
+	</div>
+	
+	<div id="match_intro_detail" class="block_main">
+		<div id="match_intro_info">
+			<%= render :partial => "/layouts/items_list",
+								 :locals => { :show_paginate => true,
+								 						  :items_set => [@match], 
+								 						  :limit => nil,
+								 						  :itemable_sym => nil, 
+								 						  :show_photo => true,
+								 						  :photo_style => 'portrait',  
+								 						  :show_below_photo => true, 
+								 						  :show_title => false, 
+								 						  :show_user => false, 
+								 						  :show_photo_todo => true, 
+								 						  :show_parent => false,
+								 						  :show_todo => true, 
+								 						  :show_favorite => false, 
+								 						  :show_manage => true, 
+								 						  :delete_remote => false} %>
+		</div>
+		<div id="match_enroll_bar" class="todo_right">
+			<%= render :partial => "/matches/match_enroll_bar", 
+								 :locals => { :item => @match, 
+								 							:ref => 'match_profile' } %>
+		</div>
+	</div>
+</div>
+
+<% if @current_user %>
+	<% if @player %>
+		<div id="submitted_match_entries_wrapper" class="content_block">
+			<div id="submitted_match_entries_header" class="block_header">
+				<div class="block_header_link">
+					<%= link_to "我的#{MORE_CN}作品", :match_id => @match.id, :controller => 'entries', :action => 'index', :filter => 'submitted' %>
+				</div>
+				<h1><%= "我的作品" %></h1>
+			</div>
+			
+			<div id="submitted_match_entries_detail" class="block_main">
+				<%= render :partial => '/layouts/items_matrix', 
+									 :locals => { :show_paginate => false,
+								 						    :items_set => @submitted_entriables_set, 
+								 						    :limit => 12,
+								 						    :items_count_per_row => 6, 
+								 						    :show_photo => true, 
+								 						    :show_below_photo => true,  
+								 						    :show_title => true, 
+								 						    :show_user => true, 
+								 						    :show_photo_todo => false, 
+								 						    :photo_style => 'matrix' } %>
+				<div id="match_collect_bar" class="todo_right">
+					<%= render :partial => "/matches/match_collect_bar", 
+										 :locals => { :item => @match, 
+										 							:ref => 'match_profile' } %>
+				</div>
+			</div>
+		</div>
+	<% end %>
+	
+	<div id="voted_match_entries_wrapper" class="content_block">
+		<div id="voted_match_entries_header" class="block_header">
+			<div class="block_header_link">
+				<%= link_to "我的#{MORE_CN}#{VOTE_CN}", :match_id => @match.id, :controller => 'entries', :action => 'index', :filter => 'voted' %>
+			</div>
+			<h1><%= "我的#{VOTE_CN}" %></h1>
+		</div>
+		
+		<div id="voted_match_entries_detail" class="block_main">
+			<%= render :partial => '/layouts/items_matrix', 
+								 :locals => { :show_paginate => false,
+							 						    :items_set => @voted_entriables_set, 
+							 						    :limit => 12,
+							 						    :items_count_per_row => 6, 
+							 						    :show_photo => true, 
+							 						    :show_below_photo => true,  
+							 						    :show_title => true, 
+							 						    :show_user => true, 
+							 						    :show_photo_todo => false, 
+							 						    :photo_style => 'matrix' } %>
+			<div id="match_vote_bar" class="todo_right">
+				<%= render :partial => "/matches/match_vote_bar", 
+									 :locals => { :item => @match, 
+									 							:ref => 'match_profile' } %>
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<div id="match_entries_wrapper" class="content_block">
+	<div id="match_entries_header" class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{MORE_CN}#{ENTRY_CN}", :match_id => @match.id, :controller => 'entries', :action => 'index' %>	
+		</div>
+		<h1><%= ENTRY_CN %></h1>
+	</div>
+	
+	<div id="match_entries_detail" class="block_main">
+		<%= render :partial => '/layouts/items_matrix', 
+							 :locals => { :show_paginate => false,
+						 						    :items_set => @entriables_set, 
+						 						    :limit => 12,
+						 						    :items_count_per_row => 6, 
+						 						    :show_photo => true, 
+						 						    :show_below_photo => true,  
+						 						    :show_title => true, 
+						 						    :show_user => true, 
+						 						    :show_photo_todo => false, 
+						 						    :photo_style => 'matrix' } %>
+	</div>
+</div>
+
+<div id="match_players_wrapper" class="content_block">
+	<div id="match_players_header" class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{MORE_CN}参赛选手", :match_id => @match.id, :controller => 'match_actors', :action => 'index', :match_actor_role => 'player' %>	
+		</div>
+		<h1><%= "参赛选手" %></h1>
+	</div>
+	
+	<div id="match_players_detail" class="block_main">
+		<%= render :partial => '/layouts/items_matrix', 
+							 :locals => { :show_paginate => false,
+						 						    :items_set => @player_users_set, 
+						 						    :limit => 12,
+						 						    :items_count_per_row => 6, 
+						 						    :show_photo => true, 
+						 						    :show_below_photo => true,  
+						 						    :show_title => true, 
+						 						    :show_user => false, 
+						 						    :show_photo_todo => false, 
+						 						    :photo_style => 'matrix' } %>
+	</div>
+</div>
+
+<!-- <div id="reviews_wrapper" class="content_block">
+	<div id="reviews_header" class="block_header">
+		<div class="block_header_link">	
+			<%= link_to "#{MORE_CN}#{MATCH_CN}#{REVIEW_CN}", :match_id => @match.id, :controller => 'reviews', :action => 'index' %>	
+		</div>
+		<h1><%= "#{MATCH_CN}#{REVIEW_CN}" %></h1>
+	</div>
+	
+	<div id="reviews_detail" class="block_main">
+		<br />
+	</div>
+</div> -->

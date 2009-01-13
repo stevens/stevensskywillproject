@@ -1,0 +1,34 @@
+<% current = Time.now %>
+
+<% if item.doing?(current) %>
+	<% buttons = [] %>
+
+	<% collect_time_status = item.collect_time_status(current) %>
+	<% buttons << [ [ 'collect_status' ], 
+									[ "征集#{collect_time_status[2]}" ]
+								] %>
+	<% if @current_user && collect_time_status[1] == 'doing' && item.find_actor(@current_user, '1') %>
+		<% epp = item.entries_per_player %>
+		<% submitted_count = item.find_player_entries(@current_user).size %>
+		
+		<% if epp && epp > 0 %>	
+			<% remain_epp = epp - submitted_count %>
+			<% buttons << [ [ 'collect_count', false, true, 'more' ], 
+											[ "可提交#{epp}个 · 已提交#{submitted_count}个 · 剩余#{remain_epp}个" ]
+										] %>
+		<% else %>
+			<% buttons << [ [ 'collect_count', false, true, 'more' ], 
+											[ "已提交#{submitted_count}个" ]
+										] %>
+		<% end %>
+		
+		<% if epp.nil? || (epp > 0 && remain_epp > 0) %>
+			<% buttons << [ [ 'collect_todo', false, true ], 
+											[ '提交作品', url_for(:controller => controller_name(item.entriable_type), :action => 'mine', :ref => ref) ]
+										] %>
+		<% end %>
+	<% end %>
+	
+	<%= render :partial => '/layouts/todo_bar', 
+						 :locals => { :buttons => buttons } %>
+<% end %>

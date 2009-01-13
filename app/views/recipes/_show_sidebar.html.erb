@@ -23,3 +23,11 @@
 					 							:block_title => "谁#{FAVORITE_CN}了这#{unit_for('Recipe')}#{RECIPE_CN}?", 
 					 							:block_header_link => nil, 
 					 							:items_set => @favorite_users_set } %>
+
+<% if @entried_matches_set.size > 0 %>					 							
+	<%= render :partial => '/layouts/items_sideblock', 
+						 :locals => { :id => 'entried_matches', 
+						 							:block_title => "参赛情况", 
+						 							:block_header_link => nil, 
+						 							:items_set => @entried_matches_set } %>
+<% end %>

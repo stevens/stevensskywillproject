@@ -1,0 +1,32 @@
+<% current = Time.now %>
+
+<% if item.doing?(current) %>
+	<% buttons = [] %>
+
+	<% vote_time_status = item.vote_time_status(current) %>
+	<% buttons << [ [ 'vote_status' ], 
+									[ "#{VOTE_CN}#{vote_time_status[2]}" ]
+								] %>
+	<% if @current_user && vote_time_status[1] == 'doing' %>
+		<% epv = item.entries_per_voter %>
+		<% voted_count = item.find_voter_entries(@current_user).size %>
+		
+		<% if epv && epv > 0 %>	
+			<% remain_epv = epv - voted_count %>
+			<% buttons << [ [ 'vote_count', false, true, 'more' ], 
+											[ "可#{VOTE_CN}#{epv}个 · 已#{VOTE_CN}#{voted_count}个 · 剩余#{remain_epv}个" ]
+										] %>
+		<% else %>
+			<% buttons << [ [ 'vote_count', false, true, 'more' ], 
+											[ "已#{VOTE_CN}#{voted_count}个" ]
+										] %>
+		<% end %>
+		
+		<% buttons << [ [ 'vote_todo', false, true ], 
+										[ "我要#{VOTE_CN}", url_for(:match_id => item.id, :controller => 'entries', :action => 'index', :ref => ref) ]
+									] %>
+	<% end %>
+	
+	<%= render :partial => '/layouts/todo_bar', 
+						 :locals => { :buttons => buttons } %>
+<% end %>

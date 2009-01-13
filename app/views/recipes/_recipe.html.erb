@@ -91,6 +91,23 @@
 	</div>
 <% end %>
 
+<% if @current_user && @current_user.is_role_of?('admin') %>
+	<div id="recipe_<%= item.id %>_admin" class="admin_bar">
+		<%= render :partial => '/system/item_admin_bar', 
+							 :locals => { :item => item,
+							 							:ref => 'show' } %>
+	</div>
+<% end %>
+
+<% if @match && @entry %>
+	<div id="recipe_<%= item.id %>_match_block" class="entriable_match_block">
+		<%= render :partial => '/matches/entriable_match_block', 
+							 :locals => { :match => @match,
+							 							:entry => @entry,
+							 							:ref => 'show' } %>
+	</div>
+<% end %>
+
 <div id="recipe_<%= item.id %>_photos" class="photos">
 	<% if cover_photo = cover_photo(item) %>
 		<div id="photos_filter_bar">

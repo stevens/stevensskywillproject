@@ -16,7 +16,7 @@
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{RECIPE_CN} (#{@recipes_set_count})"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{RECIPE_CN}"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
 	</div>
@@ -39,7 +39,7 @@
 <div id="favorite_recipes_wrapper" class="content_block">
 	<div id="favorite_recipes_header" class="block_header">
 		<div class="block_header_link">
-			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{FAVORITE_CN} (#{@favorites_set_count})"), :user_id => @user.id, :controller => 'favorites', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{FAVORITE_CN}"), :user_id => @user.id, :controller => 'favorites', :action => 'index' %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{FAVORITE_CN}" %></h1>
 	</div>
@@ -62,7 +62,7 @@
 <div id="reviews_wrapper" class="content_block">
 	<div id="reviews_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{REVIEW_CN} (#{@reviews_set_count})"), :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{REVIEW_CN}"), :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
 	</div>

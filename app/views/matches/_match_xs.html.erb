@@ -1,0 +1,19 @@
+<div id="match_<%= item.id %>_basic" class="basic">
+	<h2 class="normal">
+		<%= render :partial => '/layouts/item_basic', 
+							 :locals => { :item => item,
+							 							:show_icon => true,
+							 							:show_title => true,
+							 							:show_link => true } %>
+	</h2>
+</div>
+
+<div id="match_<%= item.id %>_main" class="main">
+	<ul>
+		<li><%= "时间: #{time_iso_format(item.start_at, false, true)} -- #{time_iso_format(item.end_at, false, true)}" %></li>
+		<li>
+			<%= render :partial => '/matches/match_status', 
+								 :locals => { :item => item } %>
+		</li>
+	</ul>
+</div>

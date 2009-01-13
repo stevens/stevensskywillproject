@@ -1,0 +1,53 @@
+<% voteable_id_sym = item_id(voteable).to_sym %>
+
+<ul id="<%= type_for(voteable).downcase %>_<%= voteable.id %>_vote_data">
+	<% total_votes = voteable.total_votes ? voteable.total_votes : 0 %>
+	<li>
+		<em class="normal"><%= "共#{total_votes}票" %></em>
+	</li>
+	<% if @current_user %>
+		<% if vote = voteable.votes.find(:first, :conditions => { :user_id => @current_user.id, :votein_type => type_for(votein), :votein_id => votein.id }) %>
+			<li>
+				<% votes_per_entry = votein.votes_per_entry %>
+				<% if votes_per_entry && votes_per_entry > 0 %>
+					<em class="most"><%= "我投#{vote.votes}/#{votein.votes_per_entry}票" %></em>
+				<% else %>
+					<em class="most"><%= "我投#{vote.votes}票" %></em>
+				<% end %>
+			</li>
+		<% else %>
+			<br />
+		<% end %>
+	<% else %>
+		<br />
+	<% end %>
+</ul>
+
+<% todo_style = "display: block; margin-top: 5px;" %>
+<% if @current_user %>
+	<% if vote && show_vote_todo %>
+		<em class="vote" style="<%= todo_style %>">
+			<% delete_message = "确定要撤销你给这#{unit_for(type_for(voteable))}#{name_for(type_for(voteable))}的所有#{VOTE_CN}吗?" %>
+			<% if !votes_per_entry || (votes_per_entry && votes_per_entry > vote.votes) %>
+				<%= link_to_remote '+', :url => { :controller => 'votes', :action => 'vote', :id => vote.id, :vote_type => 'ic', :filter => params[:filter] }, :html => { :title => '加票' } %>
+			<% else %>
+				<span class="vote">+</span>
+			<% end %>
+			<% if vote.votes > 1 %>
+				<%= link_to_remote '-', :url => { :controller => 'votes', :action => 'vote', :id => vote.id, :vote_type => 'dc', :filter => params[:filter] }, :html => { :title => '减票' } %>
+			<% else %>
+				<span class="vote">-</span>
+			<% end %>
+			<%= link_to_remote 'x', :url => { :controller => 'votes', :action => 'destroy', :id => vote.id, :filter => params[:filter] }, :confirm => delete_message, :method => :delete, :html => { :title => '撤票' } %>
+		</em>
+	<% elsif show_vote_todo %>
+		<em style="<%= todo_style %>">
+			<% create_message = "确定要给这#{unit_for(type_for(voteable))}#{name_for(type_for(voteable))}#{VOTE_CN}吗?" %>
+			<%= link_to_remote VOTE_CN, :url => { voteable_id_sym  => voteable.id, :controller => 'votes', :action => 'create', :votein_type => type_for(votein).downcase, :votein_id => votein.id, :filter => params[:filter] }, :confirm => create_message, :html => { :title => '投票' } %>
+		</em>
+	<% end %>
+<% elsif show_vote_todo %>
+	<em style="<%= todo_style %>">
+		<%= link_to VOTE_CN, { voteable_id_sym  => voteable.id, :controller => 'votes', :action => 'new', :votein_type => type_for(votein).downcase, :votein_id => votein.id, :filter => params[:filter], :title => '投票' } %>
+	</em>
+<% end %>

@@ -1,9 +1,32 @@
-<% if @current_user %>
-	<% if player = item.match_actors.find_by_user_id_and_roles(@current_user.id, '1') %>
-		<%= link_to_remote "退出#{MATCH_CN}", :url => { :match_id => item.id, :controller => 'match_actors', :action => 'destroy', :id => player.id }, :confirm => "确定要退出这#{unit_for('Match')}#{MATCH_CN}吗?", :method => :delete %>
+<% current = Time.now %>
+
+<% if item.doing?(current) %>
+	<% buttons = [] %>
+
+	<% enroll_time_status = item.enroll_time_status(current) %>
+	<% buttons << [ [ 'enroll_status' ], 
+									[ "报名#{enroll_time_status[2]}" ]
+								] %>
+	<% if @current_user && player = item.find_actor(@current_user, '1') %>
+		<% delete_message = "确定要退出这#{unit_for('Match')}#{MATCH_CN}吗?" %>
+		<% buttons << [ [ 'enroll_todo', true ], 
+										[ "退出#{MATCH_CN}", url_for(:match_id => item.id, :controller => 'match_actors', :action => 'destroy', :id => player.id, :ref => ref, :filter => params[:filter]), delete_message, 'delete' ]
+									] %>
 	<% else %>
-		<em><%= link_to_remote '我要报名', :url => { :match_id => item.id, :controller => 'match_actors', :action => 'create', :match_actor_role => 'player' }, :confirm => "确定要报名参加这#{unit_for('Match')}#{MATCH_CN}吗?" %></em>
+		<% if enroll_time_status[1] == 'doing' %>
+			<% create_message = "确定要报名参加这#{unit_for('Match')}#{MATCH_CN}吗?" %>
+			<% if @current_user %>
+				<% buttons << [ [ 'enroll_todo', true, true ], 
+												[ '我要报名', url_for(:match_id => item.id, :controller => 'match_actors', :action => 'create', :match_actor_role => 'player', :ref => ref, :filter => params[:filter]), create_message ]
+											] %>
+			<% else %>
+				<% buttons << [ [ 'enroll_todo', false, true ], 
+												[ '我要报名', url_for(:match_id => item.id, :controller => 'match_actors', :action => 'new', :match_actor_role => 'player', :ref => ref, :filter => params[:filter]) ]
+											] %>
+			<% end %>
+		<% end %>
 	<% end %>
-<% else %>
-	<em><%= link_to '我要报名', { :match_id => item.id, :controller => 'match_actors', :action => 'new', :match_actor_role => 'player' } %></em>
+	
+	<%= render :partial => '/layouts/todo_bar', 
+						 :locals => { :buttons => buttons } %>
 <% end %>

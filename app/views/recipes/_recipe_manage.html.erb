@@ -1,40 +1,41 @@
-<% if @current_user && item.user == @current_user %>
-	<% if @current_user.is_role_of?('admin') && ref == 'show' %>
-		<% if item.roles && item.roles.include?('11') %>
-			<%= link_to_remote "#{DELETE_CN}精选", :url => { :action => 'choice', :id => item.id, :to_choice => false, :ref => ref }, :confirm => "确定要#{DELETE_CN}这#{unit_for('Recipe')}精选#{RECIPE_CN}吗?" %> |
-		<% else %>
-			<%= link_to_remote '加为精选', :url => { :action => 'choice', :id => item.id, :to_choice => true, :ref => ref } %> |
+<% if item_manageable?(item) %>
+	<% buttons = [] %>
+	
+	<% if item.entrying? %>
+		<% buttons << [ [ 'entry', false, true, 'highlight' ], 
+										[ '参赛中', url_for(:controller => 'matches', :action => 'profile', :id => item.match_id, :ref => ref) ]
+									] %>
+		<% hide_delete = true %>
+	<% else %>
+		<% if item.entriable? %>
+			<% buttons << [ [ 'entry', false, true ], 
+											[ '参赛', url_for(:recipe_id => item.id, :controller => 'entries', :action => 'new', :ref => ref, :filter => params[:filter]) ]
+										] %>
+		<% end %>
+		
+		<% if item.publishable? %>
+			<% buttons << [ [ 'publish', true ], 
+											[ '发布', url_for(:action => 'publish', :id => item.id, :to_publish => true, :ref => ref, :filter => params[:filter]) ] 
+										] %>
+		<% elsif item.published? %>
+			<% buttons << [ [ 'publish', true ], 
+											[ '置为草稿', url_for(:action => 'publish', :id => item.id, :to_publish => false, :ref => ref, :filter => params[:filter]) ]
+										] %>
 		<% end %>
 	<% end %>
 	
-	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
-	<% if ref == 'show' %>
-		<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
-			<%= link_to_remote "发布", :url => { :action => 'publish', :id => item.id, :to_publish => true, :ref => ref } %> |
-		<% elsif item.is_draft != '1' %>
-			<%= link_to_remote "置为草稿", :url => { :action => 'publish', :id => item.id, :to_publish => false, :ref => ref } %> |
-		<% end %>
-		<%= link_to "#{EDIT_CN}", { :action => 'edit', :id => item.id, :ref => ref } %> |
-		<%= link_to "#{DELETE_CN}", { :action => 'destroy', :id => item.id, :ref => ref }, :confirm => delete_message, :method => :delete %>
-	<% elsif ref == 'index' %>
-		<% if item.is_draft == '1' && item.cover_photo_id && item.status.to_i >= 1 %>
-			<%= link_to "发布", :action => 'publish', :id => item.id, :to_publish => true, :ref => ref, :filter => @current_filter %> |
-		<% elsif item.is_draft != '1' %>
-			<%= link_to "置为草稿", :action => 'publish', :id => item.id, :to_publish => false, :ref => ref, :filter => @current_filter %> |
-		<% end %>
-		<%= link_to EDIT_CN, { :action => 'edit', :id => item.id, :ref => ref, :filter => @current_filter } %> | 
-		<% if delete_remote %>
-			<%= link_to_remote DELETE_CN, :url => { :action => 'destroy', :id => item.id, :ref => ref, :filter => @current_filter }, :confirm => delete_message, :method => :delete %>
-		<% else %>
-			<%= link_to DELETE_CN, { :action => 'destroy', :id => item.id, :ref => ref, :filter => @current_filter }, :confirm => delete_message, :method => :delete %>
-		<% end %>
+	<% buttons << [ [ 'edit' ], 
+									[ EDIT_CN, url_for(:action => 'edit', :id => item.id, :ref => ref, :filter => params[:filter]) ]
+								] %>
+	
+	<% unless hide_delete %>
+		<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
+		<% buttons << [ [ 'delete' ], 
+										[ DELETE_CN, url_for(:action => 'destroy', :id => item.id, :ref => ref, :filter => params[:filter]), delete_message, 'delete' ] 
+									] %>
 	<% end %>
-<% elsif @current_user %>
-	<% if @current_user.is_role_of?('admin') && ref == 'show' %>
-		<% if item.roles && item.roles.include?('11') %>
-			<%= link_to_remote "#{DELETE_CN}精选", :url => { :action => 'choice', :id => item.id, :to_choice => false, :ref => ref }, :confirm => "确定要#{DELETE_CN}这#{unit_for('Recipe')}精选#{RECIPE_CN}吗?" %>
-		<% else %>
-			<%= link_to_remote '加为精选', :url => { :action => 'choice', :id => item.id, :to_choice => true, :ref => ref } %>
-		<% end %>
-	<% end %>
+	
+	<%= render :partial => '/layouts/todo_bar', 
+						 :locals => { :buttons => buttons } %>
+	
 <% end %>

@@ -3,9 +3,9 @@
 	<div id="match_<%= @match.id %>_header" class="block_header">
 		<div class="block_header_link">	
 			<% if @match.user == @current_user %>
-				<%= link_to EDIT_CN, :action => 'edit' %><!-- | -->
+				<%= link_to EDIT_CN, :action => 'edit' %> |
 			<% end %>
-			<!-- <%= link_to "#{BACK_CN}#{MATCH_CN}", :action => 'profile' %> -->
+			<%= link_to "#{BACK_CN}#{MATCH_CN}", :action => 'profile' %>
 		</div>
 		<h1><%= strip_tags @block_title %></h1>
 	</div>
