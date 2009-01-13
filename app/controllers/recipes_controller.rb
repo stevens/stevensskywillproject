@@ -62,12 +62,18 @@ class RecipesController < ApplicationController
 		related_recipes_conditions = recipes_conditions
 		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe
 		same_title_recipes_conditions = [recipes_conditions]
-		same_title_recipes_conditions << "recipes.title = '#{@recipe.title}'"
+		same_title_recipes_conditions << "recipes.title LIKE '%#{@recipe.title}%'"
 		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions.join(' AND '), nil, 'RAND()') - recipe
 		@same_title_recipes_set_count = @same_title_recipes_set.size
 		@favorite_users_set = favorite_users(@recipe.favorites.find(:all, :limit => 12, :order => 'RAND()'))
 		@favorite_users_set_count = @favorite_users_set.size
-
+		@entried_matches_set = entried_matches(@recipe.entries.find(:all, :limit => 12, :order => 'RAND()'))
+		
+		current = Time.now
+		if @recipe.match_id && (@match = Match.find_by_id_and_entriable_type(@recipe.match_id, 'Recipe')) && @match.doing?(current)
+			@entry = @match.find_entry(@recipe)
+		end
+		
     log_count(@recipe)												
 		
 		show_sidebar
@@ -161,27 +167,31 @@ class RecipesController < ApplicationController
   # DELETE /recipes/1.xml
   def destroy
     load_recipe(@current_user)
-
-		@recipe.destroy
-		reg_homepage(@recipe, 'destroy')
-		after_destroy_ok
+		
+		if !@recipe.entrying?
+			@recipe.destroy
+			reg_homepage(@recipe, 'destroy')
+			after_destroy_ok
+		end
   end
   
   # 发布
   def publish
   	load_recipe(@current_user)
-    if params[:to_publish]
-	    @recipe.is_draft = '0'
-	    @recipe.published_at = @recipe.get_published_at
-			@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
-	  else
-	  	@recipe.is_draft = '1'
-			@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
-	  end
-  	
-		if Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
-			reg_homepage(@recipe, 'update')
-			after_publish_ok
+  	if !@recipe.entrying?
+	    if params[:to_publish]
+		    @recipe.is_draft = '0'
+		    @recipe.published_at = @recipe.get_published_at
+				@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+		  else
+		  	@recipe.is_draft = '1'
+				@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
+		  end
+	  	
+			if Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
+				reg_homepage(@recipe, 'update')
+				after_publish_ok
+			end
 		end
   end
   
@@ -194,15 +204,16 @@ class RecipesController < ApplicationController
 					current_roles = @recipe.roles || ''
 					
 			    if params[:to_choice]
-						@recipe.roles = current_roles + ' 11'
+						new_roles = current_roles + ' 11'
 						@notice = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
 				  else
-				  	@recipe.roles = current_roles.gsub('11', '').strip.gsub(/\s+/, ' ')
-						@notice = "你已经#{DELETE_CN}了1#{@self_unit}精选#{@self_name}!"
+				  	new_roles = current_roles.gsub('11', '')
+						@notice = "你已经将1#{@self_unit}#{@self_name}从精选#{@self_name}中#{DELETE_CN}了!"
 				  end
+				  
+				  new_roles = new_roles.strip.gsub(/\s+/, ' ')
 					
-					if Recipe.update(@recipe.id, { :roles => @recipe.roles })
-						# redirect_to @recipe
+					if @recipe.update_attribute(:roles, new_roles)
 						after_choice_ok
 					end
 				end
@@ -385,8 +396,8 @@ class RecipesController < ApplicationController
 										 											 :ref => 'show', 
 										 											 :delete_remote => false }
 					when 'index'
-		  			# flash[:notice] = @notice	
-		  			# page.redirect_to ''
+		  			flash[:notice] = @notice	
+		  			page.redirect_to :action => 'mine', :filter => params[:filter]
 					end
 				end
 			end
@@ -406,11 +417,10 @@ class RecipesController < ApplicationController
 								 												 :show_icon => true,
 								 												 :show_title => true,
 								 												 :show_link => true }
-					page.replace_html "recipe_#{@recipe.id}_manage",
-														:partial => "/recipes/recipe_manage", 
+					page.replace_html "recipe_#{@recipe.id}_admin",
+														:partial => "/system/item_admin_bar", 
 														:locals => { :item => @recipe, 
-									 											 :ref => 'show', 
-									 											 :delete_remote => false }
+									 											 :ref => 'show' }
   			end
   		end
   	end

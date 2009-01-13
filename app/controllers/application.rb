@@ -6,12 +6,15 @@ class ApplicationController < ActionController::Base
   include LoginSystem #后台管理用
 	
 	include ApplicationHelper
+	include AwardsHelper
 	include CodesHelper
 	include ContactsHelper
 	include CountersHelper
+	include EntriesHelper
 	include FavoritesHelper
 	include FeedbacksHelper
 	include HomepagesHelper
+	include MatchActorsHelper
 	include MatchesHelper
 	include MineHelper
 	include PasswordsHelper
@@ -29,6 +32,8 @@ class ApplicationController < ActionController::Base
 	include SystemHelper
 	include TaggingsHelper
 	include UsersHelper
+	include VotesHelper
+	include WinnersHelper
   
   helper :all # include all helpers, all the time
 	
@@ -67,7 +72,9 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = params[:reviewable_type] || params[:taggable_type] || params[:searchable_type]
 		elsif c == 'photos'
 			@current_tab_type = params[:photoable_type] || @parent_type.downcase
-		elsif c == 'recipes' || c == 'matches'
+		elsif c == 'matches' || c == 'entries'
+			@current_tab_type = 'match'
+		elsif c == 'recipes'
 			@current_tab_type = c.singularize
 		end
 	end
@@ -117,6 +124,8 @@ class ApplicationController < ActionController::Base
 			@parent_type = 'Match'
 		elsif params[:photo_id]
 			@parent_type = 'Photo'
+		elsif params[:entry_id]
+			@parent_type = 'Entry'
 		end
 		
 		if @parent_type

@@ -15,16 +15,16 @@ class User < ActiveRecord::Base
 					 :conditions => "contact_type = 1", 
 					 :order => "accepted_at DESC, created_at DESC"
   has_many :stories, :order => "created_at DESC"
-  has_many :matches, :order => "created_at DESC"
+  has_many :matches, :order => "start_at DESC, end_at DESC"
   has_many :org_matches, 
   				 :class_name => "Match", 
   				 :dependent => :destroy, 
   				 :as => :organiger, 
   				 :foreign_key => :organiger_id, 
-  				 :order => "created_at DESC"
+  				 :order => "start_at DESC, end_at DESC"
  	has_many :entries, :order => "created_at DESC"
  	has_many :votes, :order => "created_at DESC"
- 	has_many :get_votes, 
+ 	has_many :get_votes, #获得的投票
   				 :class_name => "Vote", 
   				 :dependent => :destroy, 
   				 :as => :voteable, 

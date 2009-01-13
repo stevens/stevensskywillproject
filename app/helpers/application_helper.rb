@@ -61,6 +61,10 @@ module ApplicationHelper
 		obj.class.to_s
 	end
 	
+	def item_manageable?(item)
+		(@current_user && item.user == @current_user) ? true : false
+	end
+	
 	def item_id(item)
 		id_for(type_for(item))
 	end
@@ -136,6 +140,18 @@ module ApplicationHelper
 			end
 		end
 		random_items
+	end
+	
+	#比较当前时间与起止时间获得相应的时间状态参数
+	def time_status(current, start_at, end_at)
+		case
+		when current < start_at
+			[ 10, 'todo', '未开始' ]
+		when current >= start_at && current <= end_at
+			[ 20, 'doing', '进行中' ]
+		when current > end_at
+			[ 30, 'done', '已结束' ]
+		end
 	end
 
 	def second_to_hms(second)

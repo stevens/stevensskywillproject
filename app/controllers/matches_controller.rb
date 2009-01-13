@@ -51,10 +51,18 @@ class MatchesController < ApplicationController
   def profile
   	load_match
   	
-  	load_matches_set
+  	if @current_user
+  		if  @player = @match.find_actor(@current_user, '1')
+  			@submitted_entriables_set = entriables_for(@match.find_player_entries(@current_user))
+  		end
+  		@voted_entriables_set = entriables_for(voteables_for(@match.find_voter_entries(@current_user)))
+  	end
+  	
+  	@entriables_set = entriables_for(@match.entries.find(:all, :limit => 12, :order => 'RAND()'))
+		@player_users_set = match_actor_users(@match.players.find(:all, :limit => 12, :order => 'RAND()'))
   	
     respond_to do |format|
-		 	# log_count(@user)
+		 	log_count(@match)
 		 	
 		 	info = "#{MATCH_CN} - #{@match.title}"
 			set_page_title(info)
@@ -90,16 +98,13 @@ class MatchesController < ApplicationController
   
   def load_matches_set(user = nil)
   	if user
-  		created_matches_set = user.matches.find(:all)
-  		match_actors = MatchActor.find(:all, :conditions => { :user_id => user.id, :roles => '1' })
-  		enrolled_matches_set = []
-  		for match_actor in match_actors
-  			enrolled_matches_set << match_actor.match
-  		end
-  		@matches_set = created_matches_set | enrolled_matches_set
+  		match_actors = user.match_actors.find(:all)
+  		joined_matches_set = joined_matches(match_actors)
   	else
-  		@matches_set = Match.find(:all)
+  		joined_matches_set = []
   	end
+  	created_matches_set = matches_for(user)
+  	@matches_set = created_matches_set | joined_matches_set
   	@matches_set_count = @matches_set.size
   end
   

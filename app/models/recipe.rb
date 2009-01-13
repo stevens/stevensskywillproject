@@ -12,7 +12,7 @@ class Recipe < ActiveRecord::Base
 	has_many :photos, :dependent => :destroy, :as => :photoable, :foreign_key => :photoable_id, :order => "created_at"
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "created_at DESC"	
 	has_many :favorites, :dependent => :destroy, :as => :favorable, :foreign_key => :favorable_id, :order => "created_at DESC"
-	# has_many :entries, :dependent => :destroy, :as => :entriable, :foreign_key => :entriable_id, :order => "created_at DESC"
+	has_many :entries, :dependent => :destroy, :as => :entriable, :foreign_key => :entriable_id, :order => "created_at DESC"
 	
 	validates_presence_of     :title, :difficulty, :description, :from_type, :privacy, 
   													:message => "这一项是#{REQUIRED_CN}"
@@ -38,6 +38,36 @@ class Recipe < ActiveRecord::Base
   validates_length_of       :video_url, :from_where, 
   													:maximum => TEXT_MAX_LENGTH_S,
   													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
+  
+  def publishable?
+  	(is_draft == '1' && cover_photo_id && status.to_i >= 1) ? true : false
+  end
+  
+  def published?
+  	(is_draft == '0' && !published_at.nil?) ? true : false
+  end
+  
+  def entriable?
+  	(is_draft == '0' && privacy == '10') ? true : false
+  end
+  
+  def entrying?
+  	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
+  		!match.is_status_of?('done') ? true : false
+  	end
+  end
+  
+  def accessible?(someuser = nil)
+  	if someuser
+  		if someuser == user
+  			true
+  		else
+  			(is_draft == '0' && privacy <= '11') ? true : false
+  		end
+  	else
+  		(is_draft == '0' && privacy == '10') ? true : false
+  	end
+  end
   
   def description_summary
   	text_summary(description)
