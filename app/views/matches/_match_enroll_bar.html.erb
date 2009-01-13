@@ -1,8 +1,7 @@
 <% current = Time.now %>
+<% buttons = [] %>
 
 <% if item.doing?(current) %>
-	<% buttons = [] %>
-
 	<% enroll_time_status = item.enroll_time_status(current) %>
 	<% buttons << [ [ 'enroll_status' ], 
 									[ "报名#{enroll_time_status[2]}" ]
@@ -26,7 +25,11 @@
 			<% end %>
 		<% end %>
 	<% end %>
-	
-	<%= render :partial => '/layouts/todo_bar', 
-						 :locals => { :buttons => buttons } %>
 <% end %>
+
+<% buttons << [ [ 'detail', false, true, 'highlight' ], 
+								[ "#{SEE_CN}详情", match_path(item) ]
+							] %>
+
+<%= render :partial => '/layouts/todo_bar', 
+					 :locals => { :buttons => buttons } %>

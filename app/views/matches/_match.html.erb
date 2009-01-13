@@ -159,22 +159,23 @@
 		<h3><%= "规则:" %></h3>
 		<ul>
 			<em class="more">
+				<% entry_unit = unit_for('Entry') %>
 				<% if item.entries_per_player %>
 					<li>
-						<span class='text'><%= "每位选手最多可以提交#{item.entries_per_player}个#{ENTRY_CN}" %></span>
+						<span class='text'><%= "每位选手最多可以提交#{item.entries_per_player}#{entry_unit}#{ENTRY_CN}" %></span>
 					</li>
 				<% end %>
 				<!-- <li>
-					<span class='text'><%= "每#{unit_for('Entry')}#{ENTRY_CN}至少要包括#{item.chars_per_entry}个文字, #{item.photos_per_entry}#{unit_for('Photo')}#{PHOTO_CN}, #{item.tags_per_entry}个#{TAG_CN}" %></span>
+					<span class='text'><%= "每#{entry_unit}#{ENTRY_CN}至少要包括#{item.chars_per_entry}个文字, #{item.photos_per_entry}#{unit_for('Photo')}#{PHOTO_CN}, #{item.tags_per_entry}个#{TAG_CN}" %></span>
 				</li> -->
 				<% if item.entries_per_voter %>
 					<li>
-						<span class='text'><%= "每位投票者最多可以给#{item.entries_per_voter}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}" %></span>
+						<span class='text'><%= "每位投票者最多可以给#{item.entries_per_voter}#{entry_unit}#{ENTRY_CN}#{VOTE_CN}" %></span>
 					</li>
 				<% end %>
 				<% if item.votes_per_entry %>
 					<li>
-						<span class='text'><%= "每位投票者最多可以给每#{unit_for('Entry')}#{ENTRY_CN}投#{item.votes_per_entry}票" %></span>
+						<span class='text'><%= "每位投票者最多可以给每#{entry_unit}#{ENTRY_CN}投#{item.votes_per_entry}票" %></span>
 					</li>
 				<% end %>
 				<% if item.self_vote == '1' %>
@@ -184,7 +185,7 @@
 				<% end %>
 				<% if item.awards_per_entry %>
 					<li>
-						<span class='text'><%= "每#{unit_for('Entry')}#{ENTRY_CN}最多可以获得#{item.awards_per_entry}个奖项" %></span>
+						<span class='text'><%= "每#{entry_unit}#{ENTRY_CN}最多可以获得#{item.awards_per_entry}个奖项" %></span>
 					</li>
 				<% end %>
 				<% if item.awards_per_player %>

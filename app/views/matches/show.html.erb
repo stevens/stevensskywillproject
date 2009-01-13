@@ -11,11 +11,6 @@
 	</div>
 
 	<div id="match_<%= @match.id %>_detail" class="block_main">
-		<div id="match_prev_next_bar" class="prev_next_bar">
-			<%= render :partial => "/layouts/prev_next", 
-								 :locals => { :items_set => @matches_set, 
-								 							:current_index => @match_index } %>
-		</div>
 		
 		<div id="match_<%= @match.id %>_self" class="sub_block">
 				<%= render :partial => "/matches/match",

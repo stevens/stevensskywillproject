@@ -16,7 +16,8 @@ module MatchesHelper
   								"matches.description IS NOT NULL", 
   								"matches.description <> ''", 
   								"matches.start_at IS NOT NULL", 
-  								"matches.end_at IS NOT NULL"]
+  								"matches.end_at IS NOT NULL", 
+  								"matches.id <> 999"]
   	conditions << "matches.status = #{status}" if status
   	conditions << "matches.privacy <= #{privacy}" if privacy
 		conditions << "matches.created_at >= '#{time_iso_format(created_at_from)}'" if created_at_from

@@ -48,6 +48,6 @@
 	<% end %>
 <% elsif show_vote_todo %>
 	<em style="<%= todo_style %>">
-		<%= link_to VOTE_CN, { voteable_id_sym  => voteable.id, :controller => 'votes', :action => 'new', :votein_type => type_for(votein).downcase, :votein_id => votein.id, :filter => params[:filter], :title => '投票' } %>
+		<%= link_to VOTE_CN, { voteable_id_sym  => voteable.id, :controller => 'votes', :action => 'new', :votein_type => type_for(votein).downcase, :votein_id => votein.id, :filter => params[:filter] }, :title => '投票' %>
 	</em>
 <% end %>

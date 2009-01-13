@@ -1294,9 +1294,7 @@ div.welcome {
 }
 div.welcome_content {
 	padding: 0px;
-	padding-top: 30px;
-	/*border: 1px #f1f1f1 solid;
-	border-top: none;*/
+	padding-top: 20px;
 }
 div.welcome_content em {
 	font-weight: bold;
@@ -1336,13 +1334,13 @@ div.welcome_todo_button {
 div.welcome_todo_button a, div.welcome_todo_button a:link, div.welcome_todo_button a:visited {
 	display: inline-block;
 	padding: 10px 40px;
-	background-color: #428cbb;
+	background-color: #ff8159;
 	color: #ffffff !important;
 	font-weight: bold;
 	font-size: 18px;
 }
 div.welcome_todo_button a:hover {
-	background-color: #ff8159 !important;
+	background-color: #428cbb !important;
 }
 
 /* User Bar */
