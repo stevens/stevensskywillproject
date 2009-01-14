@@ -11,8 +11,8 @@
 		<%= stylesheet_link_tag "alpha/application.css" %>
 		<%= stylesheet_link_tag "alpha/admin.css" %>
 		
+		<%= javascript_include_tag "prototype.js" %>
 		<%= javascript_include_tag :defaults %>
-		<%= javascript_include_tag 'prototype.js' %>
 		
 		<%= calendar_date_select_includes "silver" %>
 
@@ -229,7 +229,7 @@
 						<% end %>
 
 						<%= yield %>
-				
+						
 					</div>
 				</div>		
 			</div>
@@ -238,7 +238,7 @@
 			<!-- FOOTER -->			
 			<div id="footer_wrapper">
 				<div id="footer_content">
-					<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %></span>
+					<span class="copyright"><%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN} [京ICP备09001447号]" %></span>
 					<%= link_to "#{ABOUT_CN}#{SITE_NAME_CN}", about_path %>
 					<%= link_to CONTACT_US_CN, feedback_path %>
 					<%= link_to PRIVACY_POLICY_CN, privacy_path %>
