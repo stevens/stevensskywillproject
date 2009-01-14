@@ -14,6 +14,10 @@
 				<label class="required" for="title"><%= "#{RECIPE_CN}#{TITLE_CN}:" %></label>
 			</td>
 			<td class="input">
+				<div class="text">
+					<%= "这个#{TITLE_CN}你可以起得很个性" %><br />
+					<%= "如：\"小米椒爱上小公鸡\"" %>
+				</div>
 				<div class="input">
 					<%= f.text_field :title, :class => "text" %>
 				</div>
@@ -22,7 +26,22 @@
 		</tr>
 		<tr>
 			<td class="label">
-				<label for="tags"><%= "#{TAG_CN}:" %></label>
+				<label for="common_title"><%= "常用#{TITLE_CN}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "为了让大伙儿更容易发现你的#{RECIPE_CN}, 这个常用#{TITLE_CN}就别太个性了" %><br />
+					<%= "如:上面\"小米椒爱上小公鸡\"的常用#{TITLE_CN}或许就叫\"尖椒鸡块\"" %>
+				</div>
+				<div class="input">
+					<%= f.text_field :common_title, :class => "text" %>
+				</div>
+				<%= error_message_on "recipe", "common_title" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
+				<label class="required" for="tags"><%= "#{TAG_CN}:" %></label>
 			</td>
 			<td class="input">
 				<div class="text">

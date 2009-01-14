@@ -51,6 +51,9 @@
 	
 	<div class="main">
 		<ul>
+			<% if !item.common_title.blank? %>
+				<li><%= strip_tags "常用#{TITLE_CN}: #{item.common_title}" %></li>
+			<% end %>
 			<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
 			<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.cost)}" %></li>
 			<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
