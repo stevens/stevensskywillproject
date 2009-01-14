@@ -55,7 +55,7 @@ class MatchActorsController < ApplicationController
 				render :update do |page|
 			  	if @match_actor
 			  		if @parent_obj.player_has_entries?(@current_user)
-			  			@notice = "#{SORRY_CN}, 由于你还有作品正在参赛, 目前还不能退出这#{unit_for('Match')}#{MATCH_CN}!<br />
+			  			@notice = "#{SORRY_CN}, 由于你还有作品正在参赛, 所以目前还不能退出这#{unit_for('Match')}#{MATCH_CN}!<br />
 			  								 如果你打算退出#{MATCH_CN}, 请先#{CANCLE_CN}你的所有#{ENTRY_CN}..."
 							page.replace_html "flash_wrapper", 
 																:partial => "/layouts/flash",

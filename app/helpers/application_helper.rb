@@ -65,6 +65,22 @@ module ApplicationHelper
 		(@current_user && item.user == @current_user) ? true : false
 	end
 	
+	def item_published?(item)
+		item.published?
+		rescue NoMethodError
+			false
+	end
+	
+	def item_entrying?(item)
+		item.entrying?
+		rescue NoMethodError
+			false
+	end
+	
+	def item_draftable?(item)
+		item.attribute_present?('is_draft') ? true : false
+	end
+	
 	def item_id(item)
 		id_for(type_for(item))
 	end

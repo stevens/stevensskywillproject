@@ -175,7 +175,7 @@ class PhotosController < ApplicationController
 	      	
 	      	if @parent_type == 'Recipe'
 		      	@parent_obj.published_at = @parent_obj.get_published_at
-						if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
+						if @parent_obj.update_attributes({:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
 							after_create_ok
 						else
 							@photo.destroy
@@ -222,44 +222,70 @@ class PhotosController < ApplicationController
 		  end
 		end
   end
-
-  # DELETE /photos/1
-  # DELETE /photos/1.xml
-  def destroy
-    load_photo(@current_user)
-  	
-    if @photo.is_cover?(@parent_obj)
-    	if @photos_set_count == 1
-    		cover_photo_id = nil
-    	elsif @photos_set_count > 1
-    		if @photo == @photos_set[0]
-    			cover_photo_id = @photos_set[1].id
-    		else
-    			cover_photo_id = @photos_set[0].id
+  
+	def destroy
+		load_photo(@current_user)
+		
+		if @photos_set_count == 1
+			if item_published?(@parent_obj)
+				@notice = "#{SORRY_CN}, 由于已发布的#{name_for(@parent_type)}至少需要有1#{unit_for('Photo')}#{PHOTO_CN}, 所以目前还不能#{DELETE_CN}这#{unit_for('Photo')}#{PHOTO_CN}!"
+			else
+				do_destroy = true
+				change_cover = true
+				new_cover_id = nil
+				set_draft = true if @parent_obj.read_attribute('is_draft') == '0'
+			end
+		elsif @photos_set_count > 1
+			do_destroy = true
+			if @photo.is_cover?(@parent_obj)
+				change_cover = true
+				if @photo == @photos_set[0]
+					new_cover_id = @photos_set[1].id
+				else
+					new_cover_id = @photos_set[0].id
 				end
-    	end
-    	@parent_obj.cover_photo_id = cover_photo_id
-    	
-    	if @parent_type == 'Recipe'
-	    	@parent_obj.is_draft = @parent_obj.get_is_draft
-	    	@parent_obj.published_at = @parent_obj.get_published_at
-				if model_for(@parent_type).update(@parent_id, {:cover_photo_id => @parent_obj.cover_photo_id, :is_draft => @parent_obj.is_draft, :published_at => @parent_obj.published_at })
-	    		@photo.destroy
-		   
-					after_destroy_ok 
-	    	end
-	    else
-	    	if @parent_obj.update_attribute('cover_photo_id', @parent_obj.cover_photo_id)
-	    		@photo.destroy
-	    		
-	    		after_destroy_ok
-	    	end
-	    end
+			end
+		end
+		
+		if do_destroy
+			ActiveRecord::Base.transaction do
+				if @photo.destroy
+					if change_cover
+						if set_draft
+							new_attrs = { :cover_photo_id => new_cover_id, :is_draft => '1' }
+						else
+							new_attrs = { :cover_photo_id => new_cover_id }
+						end
+						if @parent_obj.update_attributes(new_attrs)
+							after_destroy_ok
+						else
+							after_destroy_error
+						end
+					else
+						after_destroy_ok
+					end
+				else
+					after_destroy_error
+				end
+			end
 		else
-	    @photo.destroy
-	
-			after_destroy_ok
-    end
+			after_destroy_error
+		end
+  end
+  
+  def set_cover
+  	load_photo(@current_user)
+  	
+  	if @parent_obj.update_attribute(:cover_photo_id, @photo.id)
+			respond_to do |format|
+	  		format.js do
+	  			render :update do |page|
+	  				flash[:notice] = "你已经将这#{unit_for('Photo')}#{PHOTO_CN}设置为#{name_for(@parent_type)}封面!"
+	  				page.redirect_to [@parent_obj, @photo]
+	  			end
+				end
+			end
+		end
   end
   
 	private
@@ -311,7 +337,7 @@ class PhotosController < ApplicationController
 				flash[:notice] = "你已经成功#{ADD_CN}了1#{@self_unit}新#{@self_name}!"
 				redirect_to :action => 'index'
 			end
-			format.xml  { render :xml => @photo, :status => :created, :location => @photo }
+			# format.xml  { render :xml => @photo, :status => :created, :location => @photo }
 		end
 	end
 	
@@ -329,7 +355,7 @@ class PhotosController < ApplicationController
 				render :action => "new"
 				clear_notice
 			end
-			format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
+			# format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
 		end
 	end
 	
@@ -339,7 +365,7 @@ class PhotosController < ApplicationController
 				flash[:notice] = "你已经成功#{UPDATE_CN}了1#{@self_unit}#{@self_name}!"
 				redirect_to [@parent_obj, @photo]
 			end
-			format.xml  { head :ok }
+			# format.xml  { head :ok }
 		end
 	end
 
@@ -357,7 +383,7 @@ class PhotosController < ApplicationController
 				render :action => "edit"
 				clear_notice
 			end
-			format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
+			# format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
 		end
 		
 	end
@@ -368,7 +394,20 @@ class PhotosController < ApplicationController
 				flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"
 				redirect_to :action => 'index'
 			end
-			format.xml  { head :ok }
+			# format.xml  { head :ok }
+		end
+	end
+	
+	def after_destroy_error
+		respond_to do |format|
+			format.html do
+				if @notice
+					flash[:notice] = @notice
+				else
+					flash[:notice] = "#{SORRY_CN}, #{DELETE_CN}#{PHOTO_CN}没有成功, 请重新#{DELETE_CN}!"
+				end
+				redirect_back_or_default('/')
+			end
 		end
 	end
 	

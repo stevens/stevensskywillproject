@@ -40,9 +40,10 @@
 
 <% if show_todo %>
 	<div id="photo_<%= photo.id %>_todo" class="todo_right">
-		<% if photo.user == @current_user %>
-			<%= link_to "#{EDIT_CN}", [photo.photoable, photo, :edit] %> |
-			<%= link_to "#{DELETE_CN}", [photo.photoable, photo], :confirm => "确定要#{DELETE_CN}这#{unit_for('Photo')}#{PHOTO_CN}吗?", :method => :delete %>
-		<% end %>
+		<div id="photo_<%= photo.id %>_manage">
+			<%= render :partial => '/photos/photo_manage', 
+								 :locals => { :item => photo, 
+								 							:ref => 'show' } %>
+		</div>
 	</div>
 <% end %>

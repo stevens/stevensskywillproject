@@ -1,0 +1,25 @@
+<% if item_manageable?(item) %>
+	<% buttons = [] %>
+	
+	<% photoable_id_sym = id_for(item.photoable_type).to_sym %>
+	
+	<% if !item.is_cover?(item.photoable) %>
+		<% set_cover_message = "确定要将这#{unit_for('Photo')}#{PHOTO_CN}设置为#{name_for(@parent_type)}封面吗?" %>
+		<% buttons << [ [ 'set_cover', true ], 
+										[ '置为封面', url_for(photoable_id_sym => item.photoable_id, :controller => 'photos', :action => 'set_cover', :id => item.id, :ref => ref, :filter => params[:filter]), set_cover_message ]
+									] %>
+	<% end %>
+	
+	<% buttons << [ [ 'edit' ], 
+									[ EDIT_CN, url_for(photoable_id_sym => item.photoable_id, :controller => 'photos', :action => 'edit', :id => item.id, :ref => ref, :filter => params[:filter]) ]
+								] %>
+	
+	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Photo')}#{PHOTO_CN}吗?" %>
+	<% buttons << [ [ 'delete' ], 
+									[ DELETE_CN, url_for(photoable_id_sym => item.photoable_id, :controller => 'photos', :action => 'destroy', :id => item.id, :ref => ref, :filter => params[:filter]), delete_message, 'delete' ] 
+								] %>
+	
+	<%= render :partial => '/layouts/todo_bar', 
+						 :locals => { :buttons => buttons } %>
+	
+<% end %>
