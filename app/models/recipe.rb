@@ -14,7 +14,7 @@ class Recipe < ActiveRecord::Base
 	has_many :favorites, :dependent => :destroy, :as => :favorable, :foreign_key => :favorable_id, :order => "created_at DESC"
 	has_many :entries, :dependent => :destroy, :as => :entriable, :foreign_key => :entriable_id, :order => "created_at DESC"
 	
-	validates_presence_of     :title, :difficulty, :description, :from_type, :privacy, 
+	validates_presence_of     :title, :difficulty, :description, :ingredients, :directions, :from_type, :privacy,
   													:message => "这一项是#{REQUIRED_CN}"
 	validates_presence_of     :from_where, :if => :from_where_required?, 
   													:message => "请#{INPUT_CN}#{RECIPE_CN}的#{FROM_WHERE_CN}"
@@ -29,7 +29,11 @@ class Recipe < ActiveRecord::Base
   													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_S,
   													:too_short => "字数太短，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
   													:too_long => "字数太长，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位"
-  validates_length_of       :ingredients, :directions, :tips, :any_else,     
+  validates_length_of       :ingredients, :directions, 
+  													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_L,
+  													:too_short => "字数太短，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位",
+  													:too_long => "字数太长，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位"
+  validates_length_of       :tips, :any_else,     
   													:maximum => TEXT_MAX_LENGTH_L,
   													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_L}位"
   validates_length_of       :yield, 
@@ -53,8 +57,12 @@ class Recipe < ActiveRecord::Base
   
   def entrying?
   	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
-  		!match.is_status_of?('done') ? true : false
+  		match.doing?(Time.now) ? true : false
   	end
+  end
+  
+  def draft_selectable?
+  	(cover_photo_id && !entrying?) ? true : false
   end
   
   def accessible?(someuser = nil)

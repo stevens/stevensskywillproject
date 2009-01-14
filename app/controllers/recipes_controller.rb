@@ -305,7 +305,7 @@ class RecipesController < ApplicationController
   def after_create_ok
   	respond_to do |format|
 			format.html do
-				flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}!"	
+				flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}, 快去#{ADD_CN}几#{unit_for('Photo')}漂亮的#{PHOTO_CN}吧!"	
 				redirect_to @recipe
 			end
 			format.xml  { render :xml => @recipe, :status => :created, :location => @recipe }

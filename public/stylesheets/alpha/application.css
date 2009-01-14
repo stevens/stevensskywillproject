@@ -107,6 +107,10 @@ em.s {
 	font-size: 12px;
 	color: #695245;
 }
+em.vote {
+	color: #b8b9a7;
+	font-weight: normal;
+}
 em.vote a {
 	padding: 1px 0px;
 	display: inline-block;
@@ -120,6 +124,7 @@ span.vote {
 	padding: 1px 0px;
 	display: inline-block;
 	width: 18px;
+	color: #b8b9a7;
 	background-color: #f1f1f1 !important;
 }
 span.highlight {
@@ -1644,7 +1649,6 @@ div.vote_zone {
 	background-color: #ffffff;
 	border: dashed 1px #f1f1f1;
 	text-align: center;
-	vertical-align: middle;
 }
 
 /* Document */

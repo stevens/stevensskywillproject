@@ -18,7 +18,7 @@ module EntriesHelper
   def entriables_for(entries)
   	entriables = []
   	for entry in entries
-  		entriables << entry.entriable
+  		entriables << entry.entriable if entry.entriable.entriable?
   	end
   	entriables
   end

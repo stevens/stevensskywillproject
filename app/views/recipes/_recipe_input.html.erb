@@ -114,7 +114,7 @@
 		</tr>
 		<tr>
 			<td class="label">
-				<label for="ingredients"><%= "#{INGREDIENT_CN}:" %></label>
+				<label class="required" for="ingredients"><%= "#{INGREDIENT_CN}:" %></label>
 			</td>
 			<td class="input">
 				<div class="text">
@@ -133,7 +133,7 @@
 		</tr>
 		<tr>
 			<td class="label">
-				<label for="directions"><%= "#{DIRECTION_CN}:" %></label>
+				<label class="required" for="directions"><%= "#{DIRECTION_CN}:" %></label>
 			</td>
 			<td class="input">
 				<div class="text">
@@ -247,7 +247,7 @@
 					<%= "<em class='more'>信息不够完整或者没有#{PHOTO_CN}的#{RECIPE_CN}, 会自动保存为草稿</em>" %>
 				</div>
 				<div class="input">
-					<%= f.check_box :is_draft, :disabled => recipe.cover_photo_id ? false : true %><%= " 保存为草稿" %>
+					<%= f.check_box :is_draft, :disabled => recipe.draft_selectable? ? false : true %><%= " 保存为草稿" %>
 				</div>
 				<%= error_message_on "recipe", "is_draft" %>
 			</td>
