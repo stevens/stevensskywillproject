@@ -5,7 +5,7 @@
 		<% show_vote_todo = false %>
 	<% elsif params[:match_id] && params[:controller] == 'entries' %>
 		<% show_vote_stats = true %>
-		<% show_vote_todo = true if (@match.doing?(current) && @match.vote_time_status(current) == 'doing') %>
+		<% show_vote_todo = true if (@match.doing?(current) && @match.vote_time_status(current)[1] == 'doing') %>
 	<% end %>
 <% else %>
 	<% show_vote_stats = false %>
