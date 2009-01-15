@@ -1,10 +1,11 @@
+<% current = Time.now %>
 <% if type_for(item) != 'User' %>
 	<% if params[:controller] == 'matches' && params[:action] == 'profile' %>
 		<% show_vote_stats = true %>
 		<% show_vote_todo = false %>
 	<% elsif params[:match_id] && params[:controller] == 'entries' %>
 		<% show_vote_stats = true %>
-		<% show_vote_todo = true %>
+		<% show_vote_todo = true if (@match.doing?(current) && @match.vote_time_status(current) == 'doing') %>
 	<% end %>
 <% else %>
 	<% show_vote_stats = false %>

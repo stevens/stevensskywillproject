@@ -36,7 +36,7 @@ class VotesController < ApplicationController
 				end
 			end
 		else
-			@notice = "#{SORRY_CN}, 这#{unit_for(@vote.votein_type)}#{name_for(@vote.votein_type)}已经结束或者#{VOTE_CN}已经结束!"
+			@notice = "#{SORRY_CN}, 这#{unit_for(@vote.votein_type)}#{name_for(@vote.votein_type)}的#{VOTE_CN}没有开始或者已经结束!"
 			after_save_error
 		end
 	end
