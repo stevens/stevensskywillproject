@@ -6,6 +6,12 @@ class MatchesController < ApplicationController
 	before_filter :load_current_filter, :only => [:index, :mine]
   before_filter :set_system_notice, :only => [:show, :index, :overview, :profile]
   
+  def help
+		info = "#{MATCH_CN}指南"
+		set_page_title(info)
+		set_block_title(info)
+  end
+  
   def set_status
   	load_match(@current_user)
   	
