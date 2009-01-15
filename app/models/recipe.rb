@@ -22,9 +22,12 @@ class Recipe < ActiveRecord::Base
 														:in => %w( ), 
 														:message => "请不要#{INPUT_CN}#{RECIPE_CN}的#{FROM_WHERE_CN}"
   validates_length_of       :title,    
-  													:within => STRING_MIN_LENGTH_S..STRING_MAX_LENGTH_M,
-  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_M}位",
-  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_M}位"
+  													:within => 2..STRING_MAX_LENGTH_M,
+  													:too_short => "字数太短，应该是2到#{STRING_MAX_LENGTH_M}位",
+  													:too_long => "字数太长，应该是2到#{STRING_MAX_LENGTH_M}位"
+  validates_length_of       :common_title, 
+  													:maximum => STRING_MAX_LENGTH_M,
+  													:too_long => "字数太长，最多不应该超过#{STRING_MAX_LENGTH_M}位"
   validates_length_of       :description,    
   													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_S,
   													:too_short => "字数太短，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
