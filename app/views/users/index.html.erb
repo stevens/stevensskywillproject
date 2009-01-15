@@ -10,7 +10,7 @@
 		<% if params[:category] == 'brain' %>
 			<%= render :partial => "/layouts/items_list",
 								 :locals => {:show_paginate => true,
-								 						 :items_set => @users_set, 
+								 						 :items_set => @users_set.sort_by{ rand }, 
 								 						 :limit => nil,
 								 						 :itemable_sym => nil, 
 								 						 :show_photo => true,
