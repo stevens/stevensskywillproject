@@ -92,7 +92,8 @@ class ApplicationController < ActionController::Base
 		#  									号外2: 大家可以到<em>帐户设置</em>里添加<em>自己的blog</em>啦！"
 		# @system_notice = "号外: <em>“蜂厨”</em>与新浪著名美食圈子<em>“美食·人生”</em>结成<em>友情合作伙伴</em>!"
 		# @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 即将开锅喽, 请密切关注比赛动态喔!</em>"
-		@system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 明天凌晨零点正式开锅!</em>"
+		# @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 明天凌晨零点正式开锅!</em>"
+		@system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 正式开锅啦! 大伙儿快来参赛呵!</em>"
 	end
 	
 	# def param_posted?(symbol)

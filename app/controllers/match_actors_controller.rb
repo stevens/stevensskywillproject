@@ -38,6 +38,10 @@ class MatchActorsController < ApplicationController
 						format.js do
 							render :update do |page|
 								flash[:notice] = @notice
+								page.replace_html "flash_wrapper", 
+																	:partial => "/layouts/flash",
+														 			:locals => { :notice => @notice }
+								page.show "flash_wrapper"
 								page.redirect_to item_first_link(@parent_obj, true)
 							end
 						end
@@ -67,6 +71,10 @@ class MatchActorsController < ApplicationController
 								if match_actor_role == '1'
 									@notice = "你已经退出了这#{unit_for('Match')}#{MATCH_CN}!"
 									flash[:notice] = @notice
+									page.replace_html "flash_wrapper", 
+																		:partial => "/layouts/flash",
+															 			:locals => { :notice => @notice }
+									page.show "flash_wrapper"
 									page.redirect_to item_first_link(@parent_obj, true)
 								end
 							end
