@@ -2,7 +2,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
 	include CodesHelper
 
-  has_many :recipes, :order => "published_at DESC, created_at DESC"
+  has_many :recipes, :order => "created_at DESC, published_at DESC"
   has_many :photos, :order => "created_at"
   has_many :reviews, :order => "created_at DESC"
   has_many :ratings, :order => "updated_at DESC"

@@ -1,6 +1,6 @@
 <% if is_new %>
 	<% button_name = "#{CREATE_CN}新#{RECIPE_CN}" %>
-	<% cancle_url = {:action => 'mine'} %>
+	<% cancle_url = url_for(:action => 'mine') %>
 <% else %>
 	<% button_name = SAVE_CHANGES_CN %>
 	<% cancle_url = recipe %>
@@ -261,14 +261,20 @@
 			<td class="input">
 				<br />
 				<div class="text">
-					<%= "当你还来不及完成#{RECIPE_CN}的时候, 可以先#{SAVE_CN}为草稿" %><br />
-					<%= "<em class='more'>想跟大伙儿分享你的#{RECIPE_CN}, 请输入更完整的#{RECIPE_CN}信息并且#{ADD_CN}#{PHOTO_CN}</em>" %><br />
-					<%= "<em class='more'>信息不够完整或者没有#{PHOTO_CN}的#{RECIPE_CN}, 会自动保存为草稿</em>" %>
+					<% if recipe.publishable? %>
+						<%= "<em class='more'>这#{unit_for('Recipe')}#{RECIPE_CN}是草稿, 还没有发布</em>" %>
+					<% elsif recipe.published? %>
+						<%= "<em class='more'>这#{unit_for('Recipe')}#{RECIPE_CN}已经发布</em>" %>
+					<% else %>
+						<%= "<em class='more'>这#{unit_for('Recipe')}#{RECIPE_CN}还没有#{PHOTO_CN}, 只能保存为草稿, 目前不能发布</em>" %>
+					<% end %>
 				</div>
-				<div class="input">
-					<%= f.check_box :is_draft, :disabled => recipe.draft_selectable? ? false : true %><%= " 保存为草稿" %>
-				</div>
-				<%= error_message_on "recipe", "is_draft" %>
+				<% if is_new %>
+					<div class="input">
+						<%= hidden_field_tag "recipe[is_draft]", '1' %>
+					</div>
+					<%= error_message_on "recipe", "is_draft" %>
+				<% end %>
 			</td>
 		</tr>
 		<tr>

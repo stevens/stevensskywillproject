@@ -126,8 +126,9 @@ class RecipesController < ApplicationController
   def create
     @recipe = @current_user.recipes.build(params[:recipe])
     @recipe.status = @recipe.get_status
-    @recipe.is_draft = @recipe.get_is_draft
-    @recipe.published_at = @recipe.get_published_at
+    # @recipe.is_draft = params[:is_draft]
+    # @recipe.is_draft = @recipe.get_is_draft
+    # @recipe.published_at = @recipe.get_published_at
     
 		if @recipe.save
 			@recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
@@ -143,16 +144,17 @@ class RecipesController < ApplicationController
   def update
     load_recipe(@current_user)
     new_recipe = @current_user.recipes.build(params[:recipe])
-    new_recipe.cover_photo_id = @recipe.cover_photo_id
-    new_recipe.published_at = @recipe.published_at
-    new_recipe.status = new_recipe.get_status
-    new_recipe.is_draft = new_recipe.get_is_draft
-    new_recipe.published_at = new_recipe.get_published_at
+    # new_recipe.cover_photo_id = @recipe.cover_photo_id
+    # new_recipe.published_at = @recipe.published_at
+    # new_recipe.status = new_recipe.get_status
+    # new_recipe.is_draft = new_recipe.get_is_draft
+    # new_recipe.published_at = new_recipe.get_published_at
     
-    params[:recipe][:status] = new_recipe.status
-    params[:recipe][:is_draft] = new_recipe.is_draft
-    params[:recipe][:published_at] = new_recipe.published_at
+    # params[:recipe][:status] = new_recipe.status
+    # params[:recipe][:is_draft] = new_recipe.is_draft
+    # params[:recipe][:published_at] = new_recipe.published_at
     params[:recipe][:original_updated_at] = Time.now
+    params[:recipe][:status] = new_recipe.get_status
     
 	  if @recipe.update_attributes(params[:recipe])
 	  	@recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
@@ -178,17 +180,24 @@ class RecipesController < ApplicationController
   # 发布
   def publish
   	load_recipe(@current_user)
-  	if !@recipe.entrying?
-	    if params[:to_publish]
-		    @recipe.is_draft = '0'
-		    @recipe.published_at = @recipe.get_published_at
-				@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
-		  else
-		  	@recipe.is_draft = '1'
-				@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
-		  end
+  	# if !@recipe.entrying?
+	  #   if params[:to_publish]
+		#     @recipe.is_draft = '0'
+		#     @recipe.published_at = @recipe.get_published_at
+		# 		@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+		#   else
+		#   	@recipe.is_draft = '1'
+		# 		@notice = "你已经将1#{@self_unit}#{@self_name}设置为草稿!"
+		#   end
 	  	
-			if Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
+		# 	if Recipe.update(@recipe.id, { :is_draft => @recipe.is_draft, :published_at => @recipe.published_at, :original_updated_at => Time.now })
+		
+		if @recipe.publishable?
+			current = Time.now
+			new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
+			@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+			
+			if @recipe.update_attributes(new_attrs)
 				reg_homepage(@recipe, 'update')
 				after_publish_ok
 			end
@@ -308,7 +317,7 @@ class RecipesController < ApplicationController
 				flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}, 快去#{ADD_CN}几#{unit_for('Photo')}漂亮的#{PHOTO_CN}吧!"	
 				redirect_to @recipe
 			end
-			format.xml  { render :xml => @recipe, :status => :created, :location => @recipe }
+			# format.xml  { render :xml => @recipe, :status => :created, :location => @recipe }
 			format.js do
 				render @recipe
 			end
@@ -329,7 +338,7 @@ class RecipesController < ApplicationController
 				render :action => "new"
 				clear_notice
 			end
-			format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
+			# format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
 		end
   end
   
@@ -339,7 +348,7 @@ class RecipesController < ApplicationController
 				flash[:notice] = "你已经成功#{UPDATE_CN}了1#{@self_unit}#{@self_name}!"	
 				redirect_to @recipe
 			end
-			format.xml  { head :ok }
+			# format.xml  { head :ok }
 		end
   end
   
@@ -357,7 +366,7 @@ class RecipesController < ApplicationController
 				render :action => "edit"
 				clear_notice
 			end
-			format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
+			# format.xml  { render :xml => @recipe.errors, :status => :unprocessable_entity }
 		end
   end
   
@@ -365,9 +374,10 @@ class RecipesController < ApplicationController
 		respond_to do |format|
 		  format.html do
 		  	flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"	
-		  	redirect_back_or_default('mine')
+		  	# redirect_back_or_default('mine')
+		  	redirect_to :action => 'mine'
 		  end
-		  format.xml  { head :ok }
+		  # format.xml  { head :ok }
 		end
   end
   

@@ -14,12 +14,9 @@
 		<% end %>
 		
 		<% if item.publishable? %>
-			<% buttons << [ [ 'publish', true ], 
-											[ '发布', url_for(:action => 'publish', :id => item.id, :to_publish => true, :ref => ref, :filter => params[:filter]) ] 
-										] %>
-		<% elsif item.published? %>
-			<% buttons << [ [ 'publish', true ], 
-											[ '置为草稿', url_for(:action => 'publish', :id => item.id, :to_publish => false, :ref => ref, :filter => params[:filter]) ]
+			<% publish_message = "确定要发布这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
+			<% buttons << [ [ 'publish', true, true ], 
+											[ '发布', url_for(:action => 'publish', :id => item.id, :to_publish => true, :ref => ref, :filter => params[:filter]), publish_message ] 
 										] %>
 		<% end %>
 	<% end %>

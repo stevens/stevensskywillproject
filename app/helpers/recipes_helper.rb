@@ -1,6 +1,6 @@
 module RecipesHelper
   
-	def filtered_recipes(user = nil, filter = nil, limit = nil, order = 'published_at DESC, created_at DESC')
+	def filtered_recipes(user = nil, filter = nil, limit = nil, order = 'created_at DESC, published_at DESC')
  		case filter
  		when 'published'
  			is_draft_cond = '0'
@@ -28,7 +28,7 @@ module RecipesHelper
  		recipes_for(user, recipe_conditions.join(' AND '), limit, order)	
 	end
 	
-	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'published_at DESC, created_at DESC')
+	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'created_at DESC, published_at DESC')
 		if user
 			user.recipes.find(:all, :limit => limit, :order => order, 
 												:conditions => recipe_conditions)

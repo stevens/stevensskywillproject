@@ -155,42 +155,18 @@ class PhotosController < ApplicationController
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
 			after_create_error
 		else
-			if @photos_set_count > 0
+			ActiveRecord::Base.transaction do
 	      if @photo.save
-			    if params[:is_cover]
-						if @parent_obj.update_attribute('cover_photo_id', @photo.id)
+			    if params[:is_cover] || !@parent_obj.cover_photo_id
+						if @parent_obj.update_attribute(:cover_photo_id, @photo.id)
 							after_create_ok
 						else
+							@photo.destroy
 							after_create_error
 			      end
 					else
 						after_create_ok
 					end
-	      else
-					after_create_error
-	      end
-			else
-	      if @photo.save
-	      	@parent_obj.cover_photo_id = @photo.id
-	      	
-	      	if @parent_type == 'Recipe'
-		      	@parent_obj.published_at = @parent_obj.get_published_at
-						if @parent_obj.update_attributes({:cover_photo_id => @parent_obj.cover_photo_id, :published_at => @parent_obj.published_at})
-							after_create_ok
-						else
-							@photo.destroy
-							
-							after_create_error
-		      	end
-		      else
-		      	if @parent_obj.update_attribute('cover_photo_id', @parent_obj.cover_photo_id)
-		      		after_create_ok
-		      	else
-							@photo.destroy
-							
-							after_create_error
-		      	end
-		      end
 	      else
 					after_create_error
 	      end
@@ -207,18 +183,20 @@ class PhotosController < ApplicationController
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
 			after_update_error
 		else
-		  if @photo.update_attributes(params[:photo])
-		    if params[:is_cover]
-					if @parent_obj.update_attribute('cover_photo_id', @photo.id)
-						after_update_ok
+			ActiveRecord::Base.transaction do
+			  if @photo.update_attributes(params[:photo])
+			    if params[:is_cover]
+						if @parent_obj.update_attribute(:cover_photo_id, @photo.id)
+							after_update_ok
+						else
+							after_update_error
+			      end
 					else
-						after_update_error
-		      end
-				else
-					after_update_ok
-	   		end
-		  else
-				after_update_error
+						after_update_ok
+		   		end
+			  else
+					after_update_error
+			  end
 		  end
 		end
   end
