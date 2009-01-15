@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
 	before_filter :load_current_filter, :only => [:index, :mine]
-	# before_filter :set_system_notice, :only => [:show, :new, :edit]
+	before_filter :set_system_notice, :only => [:overview]
 	
 	def change_from_type
   	respond_to do |format|
@@ -273,9 +273,9 @@ class RecipesController < ApplicationController
   
   private
   
-	def set_system_notice
+	# def set_system_notice
 		# @system_notice = "号外: 提供食谱的<em>蜂友的blog</em>可以<em>自动加入</em>食谱的<em>相关链接</em>啦!"
-	end
+	# end
   
   def load_recipe(user = nil)
   	if user
