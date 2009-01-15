@@ -15,23 +15,29 @@ class VotesController < ApplicationController
 		@vote.votein_id = params[:votein_id]
 		
 		load_votein
-		unless @votein.find_vote(@current_user, @parent_obj)
-			@remain_epv = @votein.voter_remain_entries_count(@current_user)
-			if !@remain_epv || @remain_epv > 0
-				ActiveRecord::Base.transaction do
-					@vote.save
-					load_voteable
-					voteable_total_votes = @voteable.total_votes + 1
-					voteable_votes_count = @voteable.votes_count + 1
-					if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count })
-						# @notice = "你还可以给#{@remain_epv - 1}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
-						after_save_ok
+		current = Time.now
+		if @votein.doing?(current) && (@votein.vote_time_status(current)[1] == 'doing')
+			unless @votein.find_vote(@current_user, @parent_obj)
+				@remain_epv = @votein.voter_remain_entries_count(@current_user)
+				if !@remain_epv || @remain_epv > 0
+					ActiveRecord::Base.transaction do
+						@vote.save
+						load_voteable
+						voteable_total_votes = @voteable.total_votes + 1
+						voteable_votes_count = @voteable.votes_count + 1
+						if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count })
+							# @notice = "你还可以给#{@remain_epv - 1}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
+							after_save_ok
+						end
 					end
+				else
+					@notice = "#{SORRY_CN}, 你最多只能#{VOTE_CN}给#{@votein.entries_per_voter}#{unit_for('Entry')}#{ENTRY_CN}!"
+					after_save_error
 				end
-			else
-				@notice = "#{SORRY_CN}, 你最多只能#{VOTE_CN}给#{@votein.entries_per_voter}#{unit_for('Entry')}#{ENTRY_CN}!"
-				after_save_error
 			end
+		else
+			@notice = "#{SORRY_CN}, 这#{unit_for(@vote.votein_type)}#{name_for(@vote.votein_type)}已经结束或者#{VOTE_CN}已经结束!"
+			after_save_error
 		end
 	end
 	
