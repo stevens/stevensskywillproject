@@ -21,7 +21,7 @@ class MatchesController < ApplicationController
 	  	
 	  	respond_to do |format|
 	  		format.html do
-	  			flash[:notcie] = @notice
+	  			flash[:notice] = @notice
 	  			redirect_to @match
 	  		end
 	  	end
