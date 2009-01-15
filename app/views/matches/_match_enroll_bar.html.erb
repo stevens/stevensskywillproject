@@ -30,6 +30,10 @@
 <% buttons << [ [ 'detail', false, true, 'highlight' ], 
 								[ "#{SEE_CN}详情", match_path(item) ]
 							] %>
+							
+<% buttons << [ [ 'help', false, true ], 
+								[ "#{MATCH_CN}指南", url_for(:action => 'help') ]
+							] %>
 
 <%= render :partial => '/layouts/todo_bar', 
 					 :locals => { :buttons => buttons } %>
