@@ -165,7 +165,7 @@ class UsersController < ApplicationController
   end
   
   def load_brains_set
-  	@brains_set = users_for(user_conditions(user_role_code('brain')), 8, 'RAND()')
+  	@brains_set = users_for(user_conditions(user_role_code('brain')), 4, 'RAND()')
   	@brains_set_count = @brains_set.size
   end
   
