@@ -1,10 +1,5 @@
 <% user = item.contactor %>
 
-<%= render :partial => '/users/user_s', 
-					 :locals => { :item => item.contactor, 
-					 							:show_todo => show_todo,
-					 							:show_manage => show_manage } %>
-
 <div id="contact_<%= item.id %>_basic" class="basic">
 	<h2>
 		<%= render :partial => '/users/user_basic', 
