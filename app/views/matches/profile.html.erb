@@ -22,7 +22,7 @@
 								 						  :show_parent => false,
 								 						  :show_todo => true, 
 								 						  :show_favorite => false, 
-								 						  :show_manage => true, 
+								 						  :show_manage => false, 
 								 						  :delete_remote => false} %>
 		</div>
 		<div id="match_enroll_bar" class="todo_right">
@@ -139,7 +139,7 @@
 	</div>
 </div>
 
-<!-- <div id="reviews_wrapper" class="content_block">
+<div id="reviews_wrapper" class="content_block">
 	<div id="reviews_header" class="block_header">
 		<div class="block_header_link">	
 			<%= link_to "#{MORE_CN}#{MATCH_CN}#{REVIEW_CN}", :match_id => @match.id, :controller => 'reviews', :action => 'index' %>	
@@ -150,4 +150,4 @@
 	<div id="reviews_detail" class="block_main">
 		<br />
 	</div>
-</div> -->
+</div>

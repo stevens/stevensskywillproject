@@ -6,6 +6,28 @@ class MatchesController < ApplicationController
 	before_filter :load_current_filter, :only => [:index, :mine]
   before_filter :set_system_notice, :only => [:show, :index, :overview, :profile]
   
+  def set_status
+  	load_match(@current_user)
+  	
+  	status = Code.find_by_codeable_type_and_name('match_status', params[:status]).code
+  	
+  	if @match.update_attribute(:status, status)
+	  	case params[:status]
+	  	when 'doing'
+	  		@notice = "你已经启动了这#{unit_for('Match')}#{MATCH_CN}!"
+	  	when 'done'
+	  		@notice = "你已经关闭了这#{unit_for('Match')}#{MATCH_CN}!"
+	  	end
+	  	
+	  	respond_to do |format|
+	  		format.html do
+	  			flash[:notcie] = @notice
+	  			redirect_to @match
+	  		end
+	  	end
+	  end
+  end
+  
   def index
     respond_to do |format|
       if @user && @user == @current_user
@@ -92,8 +114,12 @@ class MatchesController < ApplicationController
   
   private
   
-  def load_match
-		@match = Match.find(@self_id)
+  def load_match(user = nil)
+  	if user
+			@match = user.matches.find(@self_id)
+		else
+			@match = Match.find(@self_id)
+		end
   end
   
   def load_matches_set(user = nil)
