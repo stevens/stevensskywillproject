@@ -13,16 +13,16 @@
 		
 		<% if epv && epv > 0 %>	
 			<% remain_epv = epv - voted_count %>
-			<% buttons << [ [ 'vote_count', false, true, 'more' ], 
+			<% buttons << [ [ 'vote_count', false, true, 'l3' ], 
 											[ "可#{VOTE_CN}#{epv}个 · 已#{VOTE_CN}#{voted_count}个 · 剩余#{remain_epv}个" ]
 										] %>
 		<% else %>
-			<% buttons << [ [ 'vote_count', false, true, 'more' ], 
+			<% buttons << [ [ 'vote_count', false, true, 'l3' ], 
 											[ "已#{VOTE_CN}#{voted_count}个" ]
 										] %>
 		<% end %>
 		
-		<% buttons << [ [ 'vote_todo', false, true ], 
+		<% buttons << [ [ 'vote_todo', false, true, 'l1' ], 
 										[ "我要#{VOTE_CN}", url_for(:match_id => item.id, :controller => 'entries', :action => 'index', :ref => ref) ]
 									] %>
 	<% end %>

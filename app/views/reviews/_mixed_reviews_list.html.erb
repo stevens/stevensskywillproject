@@ -1,0 +1,42 @@
+<% reviews = limit ? reviews_set[0..limit-1] : reviews_set %>
+<% reviews = show_paginate ? items_paginate(reviews, 50) : reviews %>
+
+<% if show_paginate %>
+	<%= render :partial => 'layouts/items_paginate',
+						 :locals => { :items => reviews } %>
+<% end %>
+
+<% gb_date_reviews_set = reviews.group_by { |review| (review.created_at.to_date) }.sort { |a, b| b[0] <=> a[0] } %>
+
+<div class="sub_block_b">
+<table id="mixed_reviews_list_content" class="content">
+	
+	<% gb_date_reviews_set.each do |date, gb_date_reviews| %>
+		<tr>
+			<td class="left_column">
+				<div class="group_by">
+					<em class="group_by"><%= date %></em>
+				</div>
+			</td>
+		</tr>
+			
+		<% gb_reviewable_reviews_set = gb_date_reviews.group_by { |review| (review.reviewable) }.sort { |a, b| b[1][0].created_at <=> a[1][0].created_at } %>
+		
+		<%= render :partial => 'reviews/gb_reviewable_reviews_line', 
+							 :locals => { :gb_reviewable_reviews_set => gb_reviewable_reviews_set,
+							 							:show_reviewer_photo => show_reviewer_photo, 
+							 							:reviewer_photo_style => reviewer_photo_style,
+							 							:show_below_reviewer_photo => show_below_reviewer_photo,
+							 							:show_review_title => show_review_title,
+							 							:show_review_todo => show_review_todo,
+							 							:ref => ref } %>
+
+	<% end %>
+	
+</table>
+</div>
+
+<% if show_paginate %>
+	<%= render :partial => 'layouts/items_paginate',
+						 :locals => { :items => reviews } %>
+<% end %>

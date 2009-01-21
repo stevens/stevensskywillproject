@@ -15,11 +15,11 @@
 		<% if enroll_time_status[1] == 'doing' %>
 			<% create_message = "确定要报名参加这#{unit_for('Match')}#{MATCH_CN}吗?" %>
 			<% if @current_user %>
-				<% buttons << [ [ 'enroll_todo', true, true ], 
+				<% buttons << [ [ 'enroll_todo', true, true, 'l1' ], 
 												[ '我要报名', url_for(:match_id => item.id, :controller => 'match_actors', :action => 'create', :match_actor_role => 'player', :ref => ref, :filter => params[:filter]), create_message ]
 											] %>
 			<% else %>
-				<% buttons << [ [ 'enroll_todo', false, true ], 
+				<% buttons << [ [ 'enroll_todo', false, true, 'l1' ], 
 												[ '我要报名', url_for(:match_id => item.id, :controller => 'match_actors', :action => 'new', :match_actor_role => 'player', :ref => ref, :filter => params[:filter]) ]
 											] %>
 			<% end %>
@@ -27,11 +27,11 @@
 	<% end %>
 <% end %>
 
-<% buttons << [ [ 'detail', false, true, 'highlight' ], 
-								[ "#{SEE_CN}详情", match_path(item) ]
+<% buttons << [ [ 'detail', false, true, 'l2' ], 
+								[ "#{MATCH_CN}详情", match_path(item) ]
 							] %>
 							
-<% buttons << [ [ 'help', false, true ], 
+<% buttons << [ [ 'help', false, true, 'l3' ], 
 								[ "#{MATCH_CN}指南", url_for(:action => 'help') ]
 							] %>
 

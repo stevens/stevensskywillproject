@@ -1,0 +1,29 @@
+<% reviews = limit ? reviews_set[0..limit-1] : reviews_set %>
+<% reviews = show_paginate ? items_paginate(reviews, 50) : reviews %>
+
+<% if show_paginate %>
+	<%= render :partial => 'layouts/items_paginate',
+						 :locals => { :items => reviews } %>
+<% end %>
+
+<div class="sub_block_tb">
+<table id="reviewable_reviews_list_content" class="content">
+	
+	<% for review in reviews %>
+		<%= render :partial => 'reviews/review_line', 
+							 :locals => { :review => review,
+							 							:show_reviewer_photo => show_reviewer_photo, 
+							 							:reviewer_photo_style => reviewer_photo_style,
+							 							:show_below_reviewer_photo => show_below_reviewer_photo,
+							 							:show_review_title => show_review_title,
+							 							:show_review_todo => show_review_todo,
+							 							:ref => ref } %>
+	<% end %>
+	
+</table>
+</div>
+
+<% if show_paginate %>
+	<%= render :partial => 'layouts/items_paginate',
+						 :locals => { :items => reviews } %>
+<% end %>

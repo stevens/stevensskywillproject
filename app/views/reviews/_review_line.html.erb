@@ -1,0 +1,30 @@
+<tr id="<%= "review_#{review.id}_line" %>">
+	<td class="left_column">
+		<div class="sub_block">
+			<% if show_reviewer_photo %>
+				<div class="list_photo">
+    			<%= render :partial => 'layouts/item_photo',
+    								 :locals => { :item => review.user, 
+    								 						  :photo_style => reviewer_photo_style } %>
+				</div>
+			<% end %>
+			
+			<% if show_below_reviewer_photo %>
+				<div class="below_photo">
+
+				</div>
+			<% end %>
+
+		</div>
+	</td>
+    
+	<td class="right_column_lined">
+		<div class="sub_block">
+			<%= render :partial => 'reviews/review_for_list', 
+								 :locals => { :review => review,
+								 							:show_title => show_review_title, 
+								 							:show_todo => show_review_todo,
+								 							:ref => ref } %>
+		</div>
+	</td>
+</tr>

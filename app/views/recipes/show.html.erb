@@ -29,63 +29,42 @@
 									 						  :show_favorite => true, 
 									 						  :show_manage => true } %>
 		</div>
-		
-		<div id="recipe_<%= @recipe.id %>_reviews">    	
-			<div id="reviews_header" class="sub_block_header">
-				<%= render :partial => "/layouts/index_header", 
-									 :locals => {:show_header_link => false, 
-									 						 :show_new_link => false, 
-									 						 :block_title => "#{RECIPE_CN}#{REVIEW_CN} (#{@recipe.reviews.size})"} %>
-			</div>
-			
-			<div id="reviews_detail" class="sub_block">			
-				<%= render :partial => "/layouts/items_list",
-									 :locals => {:show_paginate => false,
-									 						 :items_set => @recipe.reviews, 
-									 						 :limit => nil,
-									 						 :itemable_sym => 'reviewable', 
-									 						 :show_photo => true, 
-									 						 :photo_style => 'sign', 
-									 						 :show_below_photo => false, 
-									 						 :show_title => false, 
-									 						 :show_user => false, 
-									 						 :show_photo_todo => false, 
-									 						 :show_parent => false,
-									 						 :show_todo => true, 
-									 						 :show_favorite => false, 
-								 							 :show_manage => true, 
-									 						 :delete_remote => true} %>
-			</div>
-		</div>
-		
-		<div id="recipe_<%= @recipe.id %>_new_review" class="sub_block_o">
-			<div id="notice_for_new_review">
-				<%= render :partial => "/layouts/notice",
-									 :locals => {:notice => nil} %>
-			</div>
-			
-			<% if @current_user %>
-				<div id="input_form_for_new_review">
-					<%= render :partial => "/reviews/review_input", 
-										 :locals => { :reviewable => @recipe,
-										 						  :review => @recipe.reviews.build, 
-										 						  :is_new => true, 
-										 						  :review_error => false, 
-										 						  :review_text => '', 
-										 						  :quotation_submitter_id => nil, 
-						 										  :quotation => nil } %>
-				</div>
-				<% if @recipe.user != @current_user %>
-					<div class="todo_right">
-						<em><%= link_to "我要#{RATE_CN}", "#recipe_#{@recipe.id}_wrapper" %></em>
-					</div>
-				<% end %>
-			<% else %>
-				<div class="todo">
-					<em><%= link_to "#{ADD_CN}新#{REVIEW_CN}", new_recipe_review_path(@recipe) %></em>
-				</div>
-			<% end %>
-		</div>
 	</div>
 	
+</div>
+
+<% reviewable = @recipe %>
+<% reviewable_type = type_for(reviewable) %>
+<% reviewable_id_sym = id_for(reviewable_type).to_sym %>
+<% reviewable_name = name_for(reviewable_type) %>
+<% reviews_set = reviewable.reviews[0..19] %>
+
+<div id="reviewable_reviews_wrapper" class="content_block">
+	<div id="reviewable_reviews_header" class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{MORE_CN}#{reviewable_name}#{REVIEW_CN}", url_for(reviewable_id_sym => reviewable.id, :controller => 'reviews', :action => 'index') %>	
+		</div>
+		<h1><%= "#{reviewable_name}#{REVIEW_CN}" %></h1>
+	</div>
+	
+	<div id="reviewable_reviews_detail" class="block_main">
+		<div id="reviewable_reviews_list">
+			<%= render :partial => 'reviews/reviewable_reviews_list', 
+								 :locals => { :reviews_set => reviews_set,
+								 							:limit => nil, 
+								 							:show_paginate => false,
+								 							:show_reviewer_photo => true, 
+							 								:reviewer_photo_style => 'sign',
+							 								:show_below_reviewer_photo => false,
+							 								:show_review_title => false,
+							 								:show_review_todo => true,
+							 								:ref => 'reviewable' } %>
+		</div>
+		
+		<div id="reviewable_new_review" class="sub_block_o">
+			<%= render :partial => 'reviews/new_review', 
+								 :locals => { :reviewable => reviewable,
+								 							:ref => 'reviewable' } %>
+		</div>
+	</div>
 </div>

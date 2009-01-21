@@ -1,27 +1,73 @@
-<div id="reviews_wrapper" class="content_block">
+<% reviews_set = @reviews_set %>
+<% if reviewable = @reviewable %>
+	<% reviewable_type = type_for(reviewable) %>
+	<% reviewable_id_sym = id_for(reviewable_type).to_sym %>
+	<% reviewable_name = name_for(reviewable_type) %>
 	
-	<div id="reviews_header" class="block_header">
-		<%= render :partial => "/layouts/index_header", 
-							 :locals => {:show_header_link => true, 
-							 						 :show_new_link => false, 
-							 						 :block_title => @block_title} %>
-	</div>
-	
-	<div id="reviews_detail" class="block_main">
-		<% if @user || params[:action] == 'mine' %>	
-			<div id="reviews_filter_bar" class="filter_bar">
-				<%= render :partial => "/reviews/reviews_filter_bar" %>
-			</div>
-		<% end %>
+	<div id="reviewable_reviews_wrapper" class="content_block">
+		<div id="reviewable_reviews_header" class="block_header">
+			<%= render :partial => 'reviews/reviewable_reviews_header', 
+								 :locals => { :reviewable => @reviewable,
+								 							:reviews_set_count => @reviews_set_count } %>
+		</div>
 		
-		<div id="reviews_list">
-			<%= render :partial => "/reviews/reviews_list", 
-								 :locals => { :reviews_set => @reviews_set, 
-								 							:show_paginate => true, 
-								 							:limit => nil, 
-								 							:show_todo => @show_todo, 
-								 							:delete_remote => false } %>
+		<div id="reviewable_reviews_detail" class="block_main">
+			<% if @show_filter_bar %>
+				<div id="reviewable_reviews_filter_bar" class="filter_bar">
+				
+				</div>
+			<% end %>
+			
+			<div id="reviewable_reviews_list">
+				<%= render :partial => 'reviews/reviewable_reviews_list', 
+									 :locals => { :reviews_set => reviews_set,
+									 							:limit => nil, 
+									 							:show_paginate => true,
+									 							:show_reviewer_photo => true, 
+								 								:reviewer_photo_style => 'sign',
+								 								:show_below_reviewer_photo => false,
+								 								:show_review_title => false,
+								 								:show_review_todo => true,
+								 								:ref => 'reviewable_reviews_list' } %>
+			</div>
+			
+			<div id="reviewable_new_review" class="sub_block_o">
+				<%= render :partial => 'reviews/new_review', 
+									 :locals => { :reviewable => reviewable,
+									 							:ref => 'reviewable_reviews_list' } %>
+			</div>
 		</div>
 	</div>
-	
-</div>
+<% else %>
+	<% show_review_todo = params[:action] == 'mine' ? true : false %>
+	<% ref = params[:action] == 'mine' ? 'user_reviews_list' : nil %>
+	<div id="mixed_reviews_wrapper" class="content_block">
+		<div id="mixed_reviews_header" class="block_header">
+			<div class="block_header_link">
+
+			</div>
+			<h1><%= @block_title %></h1>
+		</div>
+		
+		<div id="mixed_reviews_detail" class="block_main">
+			<% if @show_filter_bar %>
+				<div id="mixed_reviews_filter_bar" class="filter_bar">
+					<%= render :partial => 'reviews/reviews_filter_bar' %>
+				</div>
+			<% end %>
+			
+			<div id="mixed_reviews_list">
+				<%= render :partial => 'reviews/mixed_reviews_list', 
+									 :locals => { :reviews_set => reviews_set, 
+									 							:limit => nil, 
+									 							:show_paginate => true,
+									 							:show_reviewer_photo => true, 
+								 								:reviewer_photo_style => 'mini',
+								 								:show_below_reviewer_photo => false,
+								 								:show_review_title => false,
+								 								:show_review_todo => show_review_todo,
+								 								:ref => ref } %>
+			</div>
+		</div>
+	</div>
+<% end %>

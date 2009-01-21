@@ -139,15 +139,38 @@
 	</div>
 </div>
 
-<div id="reviews_wrapper" class="content_block">
-	<div id="reviews_header" class="block_header">
-		<div class="block_header_link">	
-			<%= link_to "#{MORE_CN}#{MATCH_CN}#{REVIEW_CN}", :match_id => @match.id, :controller => 'reviews', :action => 'index' %>	
+<% reviewable = @match %>
+<% reviewable_type = type_for(reviewable) %>
+<% reviewable_id_sym = id_for(reviewable_type).to_sym %>
+<% reviewable_name = name_for(reviewable_type) %>
+<% reviews_set = reviewable.reviews[0..19] %>
+
+<div id="reviewable_reviews_wrapper" class="content_block">
+	<div id="reviewable_reviews_header" class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{MORE_CN}#{reviewable_name}#{REVIEW_CN}", url_for(reviewable_id_sym => reviewable.id, :controller => 'reviews', :action => 'index') %>	
 		</div>
-		<h1><%= "#{MATCH_CN}#{REVIEW_CN}" %></h1>
+		<h1><%= "#{reviewable_name}#{REVIEW_CN}" %></h1>
 	</div>
 	
-	<div id="reviews_detail" class="block_main">
-		<br />
+	<div id="reviewable_reviews_detail" class="block_main">		
+		<div id="reviewable_reviews_list">
+			<%= render :partial => 'reviews/reviewable_reviews_list', 
+								 :locals => { :reviews_set => reviews_set,
+								 							:limit => nil, 
+								 							:show_paginate => false,
+								 							:show_reviewer_photo => true, 
+							 								:reviewer_photo_style => 'sign',
+							 								:show_below_reviewer_photo => false,
+							 								:show_review_title => false,
+							 								:show_review_todo => true,
+							 								:ref => 'reviewable' } %>
+		</div>
+		
+		<div id="reviewable_new_review" class="sub_block_o">
+			<%= render :partial => 'reviews/new_review', 
+								 :locals => { :reviewable => reviewable,
+								 							:ref => 'reviewable' } %>
+		</div>
 	</div>
 </div>

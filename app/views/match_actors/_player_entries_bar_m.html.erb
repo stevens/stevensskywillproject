@@ -3,7 +3,9 @@
 				(params[:match_id] && params[:controller] == 'match_actors' && params[:match_actor_role] == 'player') %>
 		<% if player = @match.find_actor(item, '1') %>
 			<div id="player_<%= player.id %>_entries_bar" style="margin-top: 3px">
-				<em class="normal"><%= "#{@match.find_player_entries(item).size}#{unit_for('Entry')}作品" %></em>
+				<ul>
+					<li><em class="normal"><%= "#{@match.find_player_entries(item).size}#{unit_for('Entry')}作品" %></em></li>
+				</ul>
 			</div>
 		<% end %>
 	<% end %>

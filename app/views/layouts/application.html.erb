@@ -175,6 +175,7 @@
 								<%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
 							<% end %>
 							<%= link_to "#{MATCH_CN}浏览", :controller => 'matches', :action => 'index' %>
+							<%= link_to "#{MATCH_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'match' %>
 						<% else %>
 							<%= SLOGAN_CN %>
 						<% end %>

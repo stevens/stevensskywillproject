@@ -59,20 +59,27 @@
 	</div>
 </div>
 
-<div id="reviews_wrapper" class="content_block">
-	<div id="reviews_header" class="block_header">
-		<div class="block_header_link">	
-			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{REVIEW_CN}"), :user_id => @user.id, :controller => 'reviews', :action => 'index' %>	
+<% reviews_set = @reviews_set %>
+<div id="mixed_reviews_wrapper" class="content_block">
+	<div id="mixed_reviews_header" class="block_header">
+		<div class="block_header_link">
+			<%= link_to "#{username_prefix(@user)}#{MORE_CN}#{REVIEW_CN}", url_for(:user_id => @user.id, :controller => 'reviews', :action => 'index') %>	
 		</div>
 		<h1><%= strip_tags "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
 	</div>
 	
-	<div id="reviews_detail" class="block_main">
-		<%= render :partial => "/reviews/reviews_list", 
-							 :locals => { :reviews_set => @reviews_set, 
-							 							:show_paginate => false, 
-							 							:limit => 2,
-							 							:show_todo => false, 
-							 							:delete_remote => false } %>
+	<div id="mixed_reviews_detail" class="block_main">
+		<div id="mixed_reviews_list">
+			<%= render :partial => 'reviews/mixed_reviews_list', 
+								 :locals => { :reviews_set => reviews_set, 
+								 							:limit => nil, 
+								 							:show_paginate => false,
+								 							:show_reviewer_photo => true, 
+							 								:reviewer_photo_style => 'mini',
+							 								:show_below_reviewer_photo => false,
+							 								:show_review_title => false,
+							 								:show_review_todo => false,
+							 								:ref => nil } %>
+		</div>
 	</div>
 </div>

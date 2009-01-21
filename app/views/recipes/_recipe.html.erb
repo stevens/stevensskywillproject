@@ -24,12 +24,15 @@
 			</li>
 			<li>
 				<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
-			</li>
-			<% if item.original_updated_at && item.created_at != item.original_updated_at %>
-				<li>
+				<% if item.original_updated_at && item.created_at != item.original_updated_at %>
+					&nbsp;
 					<%= "#{time_iso_format(item.original_updated_at, true)} #{UPDATE_CN}" %>
-				</li>
-			<% end %>
+				<% end %>
+				<% if item.published_at %>
+					&nbsp;
+					<%= "#{time_iso_format(item.published_at, true)} 发布" %>
+				<% end %>
+			</li>
 			<li>
 				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Recipe')}#{RECIPE_CN}" %>
 			</li>
@@ -170,38 +173,44 @@
 
 <div id="recipe_<%= item.id %>_main" class="item_detail">
 	<div class="main">
-		<h3><%= "#{DESCRIPTION_CN}:" %></h3>
+		<h3><%= DESCRIPTION_CN %></h3>
 		<ul><%= paragraphs(item.description, true, true) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "#{INGREDIENT_CN}:" %></h3>
+		<h3><%= INGREDIENT_CN %></h3>
 		<ul class="wide_space"><%= paragraphs(item.ingredients) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "#{DIRECTION_CN}:" %></h3>
+		<h3><%= DIRECTION_CN %></h3>
 		<ol><%= paragraphs(item.directions) %></ol>
 	</div>
 	
 	<div class="main">
-		<h3><%= "#{TIP_CN}:" %></h3>
+		<h3><%= TIP_CN %></h3>
 		<ol><%= paragraphs(item.tips) %></ol>
 	</div>
 	
 	<div class="main">
-		<h3><%= "闲话:" %></h3>
+		<h3><%= "闲话" %></h3>
 		<ul><%= paragraphs(item.any_else, true, true) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "相关链接:" %></h3>
+		<h3><%= "链接" %></h3>
 		<ul>
+			<li>
+				<span class='text'>
+					<%= "URL地址: <span class='source'>#{url_without_protocol(recipe_url(item))}</span>" %>
+				</span>
+			</li>
 			<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
 				<li>
 					<span class='text'>
+						<% blog_url = url_with_protocol(blog) %>
 						<%= "更多#{RECIPE_CN}, 请访问" %>
-						<%= link_to "#{user_username(user, true, true)}的blog", url_with_protocol(blog), :target => "_blank" %>
+						<%= link_to "#{user_username(user, true, true)}的blog", blog_url, :target => "_blank" %>
 						<span class="source"><%= "[#{blog}]" %></span>
 					</span>
 				</li>

@@ -1,0 +1,5 @@
+<% reviewable_name = name_for(type_for(reviewable)) %>
+<div class="block_header_link">
+	<%= link_to "#{BACK_CN}#{reviewable_name}", item_link_url(reviewable) %>	
+</div>
+<h1><%= strip_tags "#{reviewable_name}#{REVIEW_CN} (#{reviews_set_count}) #{itemname_suffix(reviewable)}" %></h1>

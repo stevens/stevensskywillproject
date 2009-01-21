@@ -3,12 +3,12 @@
 	
 	<% if item.todo? || item.done? %>
 		<% status_message = "确定要启动这#{unit_for('Match')}#{MATCH_CN}吗?" %>
-		<% buttons << [ [ 'set_status', false, true ], 
+		<% buttons << [ [ 'set_status', false, true, 'l1' ], 
 										[ '启动', url_for(:action => 'set_status', :id => item.id, :status => 'doing', :ref => ref, :filter => params[:filter]), status_message ]
 									] %>
 	<% else !item.done? %>
 		<% status_message = "确定要关闭这#{unit_for('Match')}#{MATCH_CN}吗?" %>
-		<% buttons << [ [ 'set_status', false, true ], 
+		<% buttons << [ [ 'set_status', false, true, 'l2' ], 
 										[ '关闭', url_for(:action => 'set_status', :id => item.id, :status => 'done', :ref => ref, :filter => params[:filter]), status_message ]
 									] %>
 	<% end %>

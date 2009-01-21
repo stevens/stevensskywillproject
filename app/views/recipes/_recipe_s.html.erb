@@ -17,7 +17,11 @@
 								 							:show_username => true,
 								 							:show_myname => false } %>
 			&nbsp;
-			<%= time_iso_format(item.created_at, true) %>
+			<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
+			<% if item.published_at %>
+				&nbsp;
+				<%= "#{time_iso_format(item.published_at, true)} 发布" %>
+			<% end %>
 		</li>
 		<li>
 			<%= "#{TAG_CN}: " %>

@@ -1,0 +1,35 @@
+<% gb_reviewable_reviews_set.each do |reviewable, gb_reviewable_reviews| %>
+	<tr>
+		<td class="left_column">
+			<div class="sub_block_tb">
+			<div class="list_photo">
+			<%= render :partial => 'layouts/item_photo',
+								 :locals => { :item => reviewable, 
+								 						  :photo_style => 'list' } %>
+			</div>
+			
+			<div class="below_photo" style="width: 96px;">
+				<%= render :partial => 'layouts/below_item_photo', 
+									 :locals => { :item => reviewable, 
+									 						  :show_title => true, 
+									 						  :show_user => false, 
+									 						  :show_photo_todo => false } %>
+			</div>
+			</div>
+		</td>
+		<td class="right_column_lined">
+			<div id="reviews_list_content">
+				<%= render :partial => 'reviews/reviewable_reviews_list', 
+									 :locals => { :reviews_set => gb_reviewable_reviews,
+									 							:limit => nil, 
+									 							:show_paginate => false,
+									 							:show_reviewer_photo => show_reviewer_photo, 
+								 								:reviewer_photo_style => reviewer_photo_style,
+								 								:show_below_reviewer_photo => show_below_reviewer_photo,
+								 								:show_review_title => show_review_title,
+								 								:show_review_todo => show_review_todo,
+								 								:ref => ref } %>
+			</div>
+		</td>
+	</tr>
+<% end %>

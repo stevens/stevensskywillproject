@@ -1,21 +1,22 @@
+<% buttons = [] %>
+
 <% if item_manageable?(item) %>
-	<% buttons = [] %>
-	
+
 	<% if item.entrying? %>
-		<% buttons << [ [ 'entry', false, true, 'highlight' ], 
+		<% buttons << [ [ 'entry', false, true, 'l2' ], 
 										[ '参赛中', url_for(:controller => 'matches', :action => 'profile', :id => item.match_id, :ref => ref) ]
 									] %>
 		<% hide_delete = true %>
 	<% else %>
 		<% if item.entriable? %>
-			<% buttons << [ [ 'entry', false, true ], 
+			<% buttons << [ [ 'entry', false, true, 'l1' ], 
 											[ '参赛', url_for(:recipe_id => item.id, :controller => 'entries', :action => 'new', :ref => ref, :filter => params[:filter]) ]
 										] %>
 		<% end %>
 		
 		<% if item.publishable? %>
 			<% publish_message = "确定要发布这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
-			<% buttons << [ [ 'publish', true, true ], 
+			<% buttons << [ [ 'publish', true, true, 'l1' ], 
 											[ '发布', url_for(:action => 'publish', :id => item.id, :to_publish => true, :ref => ref, :filter => params[:filter]), publish_message ] 
 										] %>
 		<% end %>
@@ -32,7 +33,13 @@
 									] %>
 	<% end %>
 	
-	<%= render :partial => '/layouts/todo_bar', 
-						 :locals => { :buttons => buttons } %>
-	
 <% end %>
+
+<% if item.published? %>
+	<% buttons << [ [ 'share', false, true, 'l3' ], 
+									[ '分享', url_for(:action => 'share', :id => item.id, :ref => ref, :filter => params[:filter]) ]
+								] %>
+<% end %>
+
+<%= render :partial => '/layouts/todo_bar', 
+					 :locals => { :buttons => buttons } %>

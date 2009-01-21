@@ -1,0 +1,52 @@
+<div id="review_<%= review.id %>_basic" class="basic">
+	<% if show_title %>
+		<h2>
+			<%= render :partial => 'layouts/item_basic', 
+								 :locals => { :item => review,
+								 							:show_icon => true,
+								 							:show_title => true,
+								 							:show_link => true } %>
+		</h2>
+	<% end %>
+	<ul>
+		<li>
+			<%= render :partial => 'users/user_basic', 
+								 :locals => { :user => review.user, 
+								 							:show_come_from => false, 
+								 							:show_icon => true,
+								 							:show_name => true, 
+								 							:show_link => true, 
+								 							:show_username => true,
+								 							:show_myname => false } %>
+			&nbsp;
+			<%= render :partial => 'layouts/item_time', 
+								 :locals => { :item => review } %>
+		</li>
+	</ul>
+</div>
+
+<div id="notice_for_review_<%= review.id %>">
+</div>
+
+<div id="review_<%= review.id %>_quotation">
+	<%= render :partial => 'reviews/review_quotation', 
+						 :locals => { :is_new => false, 
+						 							:quotation_submitter_id => review.quotation_submitter_id, 
+						 							:quotation => review.quotation } %>
+</div>
+
+<div id="input_form_for_review_<%= review.id %>">
+</div>
+
+<div id="review_<%= review.id %>_main" class="main">
+	<%= render :partial => 'reviews/review_main', 
+						 :locals => { :review => review } %>
+</div>
+
+<% if show_todo %>
+	<div id="review_<%= review.id %>_todo" class="todo_right">
+		<%= render :partial => 'reviews/review_todo', 
+							 :locals => { :item => review,
+							 							:ref => ref } %>
+	</div>
+<% end %>

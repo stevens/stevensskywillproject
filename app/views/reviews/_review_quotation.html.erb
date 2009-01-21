@@ -5,7 +5,7 @@
 				<%= link_to_function("x") do |page|
 					page.hide "new_review_quotation"
 					page.replace_html "new_review_quotation", 
-														:partial => "/reviews/review_quotation", 
+														:partial => 'reviews/review_quotation', 
 													  :locals => { :is_new => false, 
 													 							 :quotation_submitter_id => nil, 
 										 										 :quotation => nil }
@@ -21,7 +21,5 @@
 			<%= paragraphs(quotation) %>
 			<%= hidden_field_tag 'review[quotation]', quotation %>
 		</ul>
-		
-
 	</div>
 <% end %>

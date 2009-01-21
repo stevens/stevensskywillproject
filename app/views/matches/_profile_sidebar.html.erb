@@ -1,0 +1,7 @@
+<% if @player_contactors_set && @player_contactors_set.size > 0 %>
+	<%= render :partial => '/layouts/items_sideblock', 
+						 :locals => { :id => 'player_contactors', 
+						 							:block_title => "伙伴们在参赛", 
+						 							:block_header_link => nil, 
+						 							:items_set => @player_contactors_set } %>
+<% end %>

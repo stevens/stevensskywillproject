@@ -25,13 +25,15 @@
 									 :locals => { :item => match } %>
 			</div>
 		</td>
-		<td class="vote_column">
-			<div id="entry_<%= entry.id %>_vote_bar" class="vote_zone">
-				<%= render :partial => '/votes/vote_bar', 
-									 :locals => { :voteable => entry, 
-									 							:votein => match, 
-									 							:show_vote_todo => true } %>
-			</div>		
-		</td>
+		<% if match.vote_time_status(Time.now)[1] == 'doing' %>
+			<td class="vote_column">
+				<div id="entry_<%= entry.id %>_vote_bar" class="vote_zone">
+					<%= render :partial => '/votes/vote_bar', 
+										 :locals => { :voteable => entry, 
+										 							:votein => match, 
+										 							:show_vote_todo => true } %>
+				</div>		
+			</td>
+		<% end %>
 	</tr>
 </table>
