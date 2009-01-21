@@ -98,7 +98,7 @@ module ApplicationHelper
 		when 'User'
 			user_username(item)
 		else
-			item.title
+			item.title.strip
 		end
 	end
 	
@@ -127,6 +127,15 @@ module ApplicationHelper
 			suffix = '/profile' if include_profile
 			prefix = root_url if !only_path
 			"#{prefix}#{controller_name(type_for(item))}/#{item.id}#{suffix}"
+		end
+	end
+	
+	def item_link_url(item)
+		case type_for(item)
+		when 'Match'
+			item_first_link(item, true)
+		else
+			item
 		end
 	end
 	
@@ -267,10 +276,14 @@ module ApplicationHelper
 		text.chars.length > min_length ? text.to(min_length-1) + '...' : text
 	end
 	
-	def str_squish(str, space_count = 1)
+	def str_squish(str, space_count = 1, convert_space = true)
 		space = ''
 		1.upto(space_count) do
-			space += '&nbsp;'
+			if convert_space
+				space += '&nbsp;'
+			else
+				space += ' '
+			end
 		end
 		if str && !str.blank?
 			str.strip.gsub(/\s+/, space)

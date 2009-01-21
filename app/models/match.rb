@@ -27,7 +27,7 @@ class Match < ActiveRecord::Base
   				 :dependent => :destroy, 
   				 :order => "created_at DESC"
 	
-	def accessible?
+	def accessible?(someuser = nil)
 		true
 	end
 	

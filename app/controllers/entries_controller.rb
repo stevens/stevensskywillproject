@@ -23,7 +23,8 @@ class EntriesController < ApplicationController
 			if @matches_set_count > 0
 				@entry = @parent_obj.entries.build
 			else
-				@notice = "#{SORRY_CN}, 目前还没有你可以参加的#{MATCH_CN}!"
+				@notice = "#{SORRY_CN}, 目前还没有你可以参加的#{MATCH_CN}!<br />
+									 原因可能是你还没有报名参赛, 或者比赛的作品征集已结束！"
 			end
 		else
 			@notice = "#{SORRY_CN}, 这#{unit_for(@parent_type)}#{name_for(@parent_type)}目前还不能参加#{MATCH_CN}!"

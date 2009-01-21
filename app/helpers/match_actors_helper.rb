@@ -1,9 +1,13 @@
 module MatchActorsHelper
 
-  def joined_matches(match_actors)
+  def joined_matches(match_actors, match_status = nil)
   	matches = []
   	for ma in match_actors
-  		matches << ma.match
+  		if match_status
+  			matches << ma.match if ma.match.status == match_status
+  		else
+  			matches << ma.match
+  		end
   	end
   	matches
   end

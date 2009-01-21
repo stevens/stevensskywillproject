@@ -68,11 +68,13 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'user'
 		elsif c == 'settings' || c == 'accounts'
 			@current_tab_type = 'setting'
+		elsif @parent_obj && c == 'reviews'
+			@current_tab_type = @parent_type.downcase
 		elsif c == 'reviews' || c == 'taggings' || c == 'searchings' 
 			@current_tab_type = params[:reviewable_type] || params[:taggable_type] || params[:searchable_type]
 		elsif c == 'photos'
 			@current_tab_type = params[:photoable_type] || @parent_type.downcase
-		elsif c == 'matches' || c == 'entries'
+		elsif c == 'matches' || c == 'entries' || c == 'match_actors'
 			@current_tab_type = 'match'
 		elsif c == 'recipes'
 			@current_tab_type = c.singularize
@@ -93,7 +95,9 @@ class ApplicationController < ActionController::Base
 		# @system_notice = "号外: <em>“蜂厨”</em>与新浪著名美食圈子<em>“美食·人生”</em>结成<em>友情合作伙伴</em>!"
 		# @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 即将开锅喽, 请密切关注比赛动态喔!</em>"
 		# @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 明天凌晨零点正式开锅!</em>"
-		@system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 正式开锅啦! 大伙儿快来参赛呵!</em>"
+		@system_notice = "<span class='bold'>金蜂·美食人生 大赛 (第一季) 正式开锅, 大伙儿快来参赛呵! （报名和作品征集截止时间是2月9日）<br /><br />
+											请要参赛的蜂友前往 <em class='l0'><a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>比赛页面</a></em> 报名参赛, 
+											并且查看 <em class='l2'><a href='#{url_for(:controller => 'matches', :action => 'show', :id => 1)}'>比赛详情</a></em> 和 <em class='l3'><a href='#{url_for(:controller => 'matches', :action => 'help')}'>比赛指南</a></em></span>"
 	end
 	
 	# def param_posted?(symbol)
@@ -168,7 +172,7 @@ class ApplicationController < ActionController::Base
 			@user_bar = @user
 		elsif %w[mine].include?(params[:controller]) || (%w[mine new edit].include?(params[:action]) && !%w[settings accounts].include?(params[:controller]))
 			@user_bar = @current_user
-		elsif @parent_obj && @parent_obj.user
+		elsif @parent_obj && @parent_obj.user && !%w[Match].include?(@parent_type)
 			@user_bar = @parent_obj.user
 		elsif params[:controller] == 'recipes' && params[:action] == 'show'
 			@user_bar = @self_model.find(@self_id).user
@@ -258,5 +262,53 @@ class ApplicationController < ActionController::Base
 			end
 		end
 	end
+	
+  def load_notifications(user = @current_user)
+  	@notifications = []
+  	
+  	# 提示需要处理的伙伴请求
+  	contacts_set = contacts_for(user, contact_conditions('1', '1'))
+  	if contacts_set.size > 0
+  		requested_contacts_url = url_for(:controller => 'contacts', :action => 'mine', :filter => 'requested')
+  		@notifications << [ "你有#{contacts_set.size}个#{FRIEND_CN}请求", requested_contacts_url ]
+  	end
+  	
+  	# 提示未发布的食谱草稿
+  	draft_recipes_set = user.recipes.find(:all, :conditions => { :is_draft => '1' })
+  	dr_count = draft_recipes_set.size
+  	publishable_recipes_set = []
+  	for recipe in draft_recipes_set
+  		publishable_recipes_set << recipe if recipe.publishable?
+  	end
+  	pr_count = publishable_recipes_set.size
+		if dr_count > 0
+			draft_recipes_url = url_for(:controller => 'recipes', :action => 'mine', :filter => 'draft')
+			if pr_count > 0
+				if pr_count == dr_count
+					@notifications << [ "你有#{pr_count}#{unit_for('Recipe')}草稿#{RECIPE_CN}等待发布", draft_recipes_url ]
+				else
+					@notifications << [ "你有#{dr_count}#{unit_for('Recipe')}草稿#{RECIPE_CN}, 其中#{pr_count}#{unit_for('Recipe')}等待发布", draft_recipes_url ]
+				end
+			else
+				@notifications << [ "你有#{dr_count}#{unit_for('Recipe')}草稿#{RECIPE_CN}", draft_recipes_url ]
+			end
+		end
+		
+		# 提示未提交作品的比赛
+		if @matches_set.nil? && @matches_set_count.nil?
+			players = user.match_actors.find(:all, :order => 'RAND()', 
+																			 :conditions => { :roles => '1' })
+			@matches_set = joined_matches(players, '20')
+			@matches_set_count = @matches_set.size
+		end
+		no_entry_matches_count = 0
+		for match in @matches_set
+			no_entry_matches_count += 1 if !match.player_has_entries?(user)
+		end
+		if no_entry_matches_count > 0
+			no_entry_matches_url = url_for(:controller => 'matches', :action => 'mine')
+			@notifications << [ "你在#{no_entry_matches_count}#{unit_for('Match')}正在参加的#{MATCH_CN}中还没有提交#{ENTRY_CN}", no_entry_matches_url ]
+		end
+  end
 	
 end

@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
   
-  before_filter :protect, :except => [:index, :show, :overview, :profile]
+  before_filter :protect, :except => [:index, :show, :overview, :profile, :help]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :profile]
 	before_filter :load_current_filter, :only => [:index, :mine]
@@ -86,8 +86,16 @@ class MatchesController < ApplicationController
   		@voted_entriables_set = entriables_for(voteables_for(@match.find_voter_entries(@current_user)))
   	end
   	
-  	@entriables_set = entriables_for(@match.entries.find(:all, :limit => 12, :order => 'RAND()'))
-		@player_users_set = match_actor_users(@match.players.find(:all, :limit => 12, :order => 'RAND()'))
+  	@entriables_set = entriables_for(@match.entries.find(:all, :limit => 18, :order => 'RAND()'))
+		@player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
+  	
+  	# 获得也在参赛的伙伴们
+  	if @current_user
+	  	load_contactors_set
+	  	if @contactors_set_count > 0
+	  		@player_contactors_set = @player_users_set & @contactors_set
+	  	end
+  	end
   	
     respond_to do |format|
 		 	log_count(@match)
@@ -95,7 +103,7 @@ class MatchesController < ApplicationController
 		 	info = "#{MATCH_CN} - #{@match.title}"
 			set_page_title(info)
 			
-			# show_sidebar
+			show_sidebar
 			
   		format.html # profile.html.erb
     end
@@ -139,5 +147,10 @@ class MatchesController < ApplicationController
   	@matches_set = created_matches_set | joined_matches_set
   	@matches_set_count = @matches_set.size
   end
+  
+	def load_contactors_set(user = @current_user)
+		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), nil, 'RAND()'))
+		@contactors_set_count = @contactors_set.size
+	end
   
 end

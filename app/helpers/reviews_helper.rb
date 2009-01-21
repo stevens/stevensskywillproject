@@ -1,5 +1,57 @@
 module ReviewsHelper
 
+	def by_reviews_set(user, reviewable_type = nil)
+		by_reviews_set = []
+		if reviewable_type.blank?
+			reviews_set = user.reviews.find(:all)
+		else
+			reviews_set = user.reviews.find(:all, :conditions => { :reviewable_type => reviewable_type })
+		end
+		for review in reviews_set
+			by_reviews_set << review if review.reviewable.accessible?(@current_user)
+		end
+		by_reviews_set
+	end
+	
+	def to_reviews_set(user, reviewable_type = nil)
+		to_reviews_set = []
+		if reviewable_type.blank?
+			for reviewable_type in %w[ Recipe ]
+				reviewables_set = model_for(reviewable_type).find(:all, :conditions => { :user_id => user.id })
+				for reviewable in reviewables_set
+					to_reviews_set += reviewable.reviews.find(:all, :conditions => "reviews.user_id <> '#{user.id}'") if reviewable.accessible?(@current_user)
+				end				
+			end
+		else
+			reviewables_set = model_for(reviewable_type).find(:all, :conditions => { :user_id => user.id })
+			for reviewable in reviewables_set
+				to_reviews_set += reviewable.reviews.find(:all, :conditions => "reviews.user_id <> '#{user.id}'") if reviewable.accessible?(@current_user)
+			end
+		end
+		to_reviews_set
+	end
+	
+	def filtered_reviews_set(user, reviewable_type = nil, filter = nil)
+		case filter
+		when 'by'
+			reviews_set = by_reviews_set(user, reviewable_type)
+		when 'to'
+			reviews_set = to_reviews_set(user, reviewable_type)
+		else
+			reviews_set = by_reviews_set(user, reviewable_type) | to_reviews_set(user, reviewable_type)
+		end
+		reviews_set.sort { |a, b| b.created_at <=> a.created_at }
+	end
+	
+	def reviewable_type_reviews(reviewable_type)
+		reviewable_type_reviews = []
+		reviews_set = Review.find(:all, :conditions => { :reviewable_type => reviewable_type })
+		for review in reviews_set
+			reviewable_type_reviews << review if review.reviewable.accessible?(@current_user)
+		end
+		reviewable_type_reviews
+	end
+
 	def filtered_reviews(user = nil, reviewable_type = nil, filter = nil, limit = nil, order = 'created_at DESC')
 		review_conditions = review_conditions(reviewable_type)
 		

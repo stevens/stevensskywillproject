@@ -90,6 +90,46 @@ em.more {
 	color: #e42300;
 	font-weight: normal;
 }
+em.l0 {
+	color: #428cbb;
+	font-weight: normal;		
+}
+em.l0 a {
+	background-color: #428cbb !important;
+}
+em.l0 a:hover {
+	background-color: #428cbb !important;
+}
+em.l1 {
+	color: #ff8159;
+	font-weight: normal;	
+}
+em.l1 a {
+	background-color: #ff8159 !important;
+}
+em.l1 a:hover {
+	background-color: #428cbb !important;
+}
+em.l2 {
+	color: #78b36d;
+	font-weight: normal;
+}
+em.l2 a {
+	background-color: #78b36d !important;
+}
+em.l2 a:hover {
+	background-color: #428cbb !important;
+}
+em.l3 {
+	color: #e42300;
+	font-weight: normal;
+}
+em.l3 a {
+	background-color: #e42300 !important;
+}
+em.l3 a:hover {
+	background-color: #428cbb !important;
+}
 em.normal {
 	color: #373737;
 	font-weight: normal;
@@ -119,6 +159,12 @@ em.vote a {
 }
 em.vote a:hover {
 	background-color: #428cbb !important;
+}
+span.bold {
+	font-weight: bold;
+}
+span.bold a {
+	font-weight: bold;
 }
 span.vote {
 	padding: 1px 0px;
@@ -499,7 +545,7 @@ div.tag {
 	color: #ffffff;
 }
 
-/* Reviews */
+/* Review */
 #reviews_list_content {
 	text-align: left;
 }
@@ -511,6 +557,17 @@ div.tag {
 }
 #reviews_list_content .sub_block_tb {
 	padding: 0px;
+}
+div.group_by {
+	padding: 10px;
+	padding-bottom: 0px;
+	white-space: nowrap;
+}
+em.group_by {
+	padding: 0px 2px;
+	display: block;
+	background-color: #d4ccbf;
+	color: #695245;	
 }
 .group_by_title {
 	padding: 10px;
@@ -805,6 +862,14 @@ td.photo_item_cell {
 .sub_block_tb {
 	margin: auto;
 	padding: 10px 0px;
+}
+.sub_block_t {
+	margin: auto;
+	padding-top: 10px;
+}
+.sub_block_b {
+	margin: auto;
+	padding-bottom: 10px;
 }
 .sub_block_header {
 	padding-top: 3px;
@@ -1422,7 +1487,7 @@ div.welcome_todo_button a:hover {
 	font-size: 12px;
 }
 #rank_list_wrapper span.rank_top3 {
-	margin-top: 1px;
+	margin-top: 4px;
 	display: block;
 	padding: 1px;
 	background-color: #ff8159;
@@ -1432,7 +1497,7 @@ div.welcome_todo_button a:hover {
 	text-align: center;
 }
 #rank_list_wrapper span.rank {
-	margin-top: 1px;
+	margin-top: 4px;
 	display: block;
 	padding: 1px;
 	background-color: #428cbb;
@@ -1583,7 +1648,7 @@ div.welcome_todo_button a:hover {
 
 /* Favorite */
 .favorite_bar {
-	margin-bottom: 5px;
+	margin-bottom: 8px;
 }
 
 /* Match */
@@ -1685,4 +1750,17 @@ div.vote_zone {
 	padding-left: 13px;
 	padding-right: 13px;
 	color: #b8b9a7;
+}
+
+/* Share */
+.share_code {
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #eceff5;
+}
+.share_preview {
+	text-align: center;
+}
+.share_preview a:hover {
+	background-color: transparent !important;
 }

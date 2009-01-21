@@ -138,6 +138,7 @@ class UsersController < ApplicationController
 		  	# classify_favorite_statuses
 			 	load_user_tags(@user)
 			 	load_user_contactors(@user)
+			 	load_user_matches(@user)
 			 	
 			 	log_count(@user)
 			 	
@@ -179,9 +180,8 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_reviews(user = nil)
-  	reviewable_type = @reviewable_type || 'Recipe'
- 		@reviews_set = filtered_reviews(user, reviewable_type)
-  	@reviews_set_count = @reviews_set.size
+		@reviews_set = filtered_reviews_set(user)[0..19]
+		@reviews_set_count = @reviews_set.size
 	end
 	
 	def load_user_favorites(user = nil)
@@ -204,6 +204,13 @@ class UsersController < ApplicationController
 			@contactors_set -= @mutual_contactors_set
 		end
 		@contactors_set_count = @contactors_set.size
+	end
+	
+	def load_user_matches(user)
+		players = user.match_actors.find(:all, :limit => 12, :order => 'RAND()', 
+																		 :conditions => { :roles => '1' })
+		@matches_set = joined_matches(players, '20')
+		@matches_set_count = @matches_set.size
 	end
 	
 	def classify_recipes

@@ -11,8 +11,6 @@ class MineController < ApplicationController
 	def profile
 		@user = @current_user
 		
-		load_notifications if @current_user
-		
   	load_recipes_set
   	# classify_recipes
   	load_reviews_set
@@ -20,6 +18,9 @@ class MineController < ApplicationController
   	# classify_favorite_statuses
 	 	load_tags_set
 	 	load_contactors_set
+	 	load_matches_set
+	 	
+	 	load_notifications if @current_user
 	 	
 	 	info = "#{username_prefix(@current_user)}#{MAIN_PAGE_CN}"
 		set_page_title(info)
@@ -33,22 +34,13 @@ class MineController < ApplicationController
 	
 	private
 	
-  def load_notifications(user = @current_user)
-  	@notifications = []
-  	contacts_set = contacts_for(user, contact_conditions('1', '1'))
-  	if contacts_set.size > 0
-  		@notifications << "你有#{contacts_set.size}个#{FRIEND_CN}请求"
-  	end
-  end
-	
 	def load_recipes_set(user = @current_user)
 		@recipes_set = recipes_for(user)
 		@recipes_set_count = @recipes_set.size
 	end
 	
 	def load_reviews_set(user = @current_user)
-		reviewable_type = @reviewable_type || 'Recipe'
-		@reviews_set = filtered_reviews(user, reviewable_type)
+		@reviews_set = filtered_reviews_set(user)[0..19]
 		@reviews_set_count = @reviews_set.size
 	end
 	
@@ -66,6 +58,13 @@ class MineController < ApplicationController
 	def load_contactors_set(user = @current_user)
 		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), 12, 'RAND()'))
 		@contactors_set_count = @contactors_set.size
+	end
+	
+	def load_matches_set(user = @current_user)
+		players = user.match_actors.find(:all, :order => 'RAND()', 
+																		 :conditions => { :roles => '1' })
+		@matches_set = joined_matches(players, '20')
+		@matches_set_count = @matches_set.size
 	end
 	
 	def classify_recipes

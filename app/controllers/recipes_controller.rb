@@ -229,6 +229,15 @@ class RecipesController < ApplicationController
 			end
 		end
 	end
+	
+	#分享
+	def share
+    load_recipe
+    
+ 		info = "分享#{RECIPE_CN} - #{@recipe.title}"
+		set_page_title(info)
+		set_block_title(info)
+	end
   
   # /recipes/overview
   def overview
@@ -255,6 +264,7 @@ class RecipesController < ApplicationController
   end
   
   def mine
+  	@order = 'created_at DESC, published_at DESC'
     load_recipes_set(@current_user)
     
   	@show_photo_todo = true
@@ -289,7 +299,8 @@ class RecipesController < ApplicationController
   end
   
   def load_recipes_set(user = nil)
-  	@recipes_set = filtered_recipes(user, @current_filter)
+  	order = @order? @order : 'published_at DESC, created_at DESC'
+  	@recipes_set = filtered_recipes(user, @current_filter, nil, order)
   	@recipes_set_count = @recipes_set.size
   end
   
@@ -302,7 +313,8 @@ class RecipesController < ApplicationController
   end
   
   def load_reviews_set(user = nil)
-  	@reviews_set = reviews_for(user, 'Recipe', review_conditions('Recipe', @self_id), recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
+  	# @reviews_set = reviews_for(user, 'Recipe', review_conditions('Recipe', @self_id), recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
+  	@reviews_set = reviewable_type_reviews('Recipe')[0..19]
   	@reviews_set_count = @reviews_set.size
   end
   
