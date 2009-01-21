@@ -49,7 +49,7 @@ module ReviewsHelper
 		for review in reviews_set
 			reviewable_type_reviews << review if review.reviewable.accessible?(@current_user)
 		end
-		reviewable_type_reviews
+		reviewable_type_reviews.sort { |a, b| b.created_at <=> a.created_at }
 	end
 
 	def filtered_reviews(user = nil, reviewable_type = nil, filter = nil, limit = nil, order = 'created_at DESC')

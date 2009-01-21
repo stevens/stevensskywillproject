@@ -16,5 +16,22 @@ module TaggingsHelper
 																							:exclude => exclude, :match_all => match_all, 
 																							:conditions => conditions.join(" AND "))
 	end
+	
+	def formatted_tags(tags)
+		' ' + tags.strip + ' '
+	end
+	
+	def clean_tags(tags)
+		tags = formatted_tags(tags)
+		if !tags.strip.blank?
+			tags_black_list = %w[ 美食 饮食 食物 吃 ]
+			for bt in tags_black_list
+				tags = tags.gsub(" #{bt} ", ' ')
+			end
+		else
+			tags = ''
+		end
+		tags
+	end
 
 end

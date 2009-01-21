@@ -124,14 +124,18 @@ class RecipesController < ApplicationController
   # POST /recipes
   # POST /recipes.xml
   def create
+    if !params[:recipe][:tag_list].strip.blank?
+    	params[:recipe][:tag_list] = clean_tags(params[:recipe][:tag_list])
+    end
+
     @recipe = @current_user.recipes.build(params[:recipe])
     @recipe.status = @recipe.get_status
     # @recipe.is_draft = params[:is_draft]
     # @recipe.is_draft = @recipe.get_is_draft
     # @recipe.published_at = @recipe.get_published_at
-    
+        
 		if @recipe.save
-			@recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
+			# @recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
 			reg_homepage(@recipe)
 			after_create_ok
 		else
@@ -155,9 +159,12 @@ class RecipesController < ApplicationController
     # params[:recipe][:published_at] = new_recipe.published_at
     params[:recipe][:original_updated_at] = Time.now
     params[:recipe][:status] = new_recipe.get_status
+    if !params[:recipe][:tag_list].strip.blank?
+    	params[:recipe][:tag_list] = clean_tags(params[:recipe][:tag_list])
+    end
     
 	  if @recipe.update_attributes(params[:recipe])
-	  	@recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
+	  	# @recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
 			reg_homepage(@recipe, 'update')
 			after_update_ok
 	  else

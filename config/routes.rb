@@ -20,9 +20,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
 	
 	map.connect 'mine/reviews', :controller => 'reviews', :action => 'mine'
-	# map.connect ':reviewable_type/reviews', :controller => 'reviews', :action => 'index'
-	# map.connect 'mine/:reviewable_type/reviews', :controller => 'reviews', :action => 'mine'
-	# map.connect 'users/:user_id/:reviewable_type/reviews', :controller => 'reviews', :action => 'index'
+	map.connect ':reviewable_type/reviews', :controller => 'reviews', :action => 'index'
+	map.connect 'mine/:reviewable_type/reviews', :controller => 'reviews', :action => 'mine'
+	map.connect 'users/:user_id/:reviewable_type/reviews', :controller => 'reviews', :action => 'index'
 
 	map.connect 'mine/favorites', :controller => 'favorites', :action => 'mine'
 	map.connect ':favorable_type/favorites', :controller => 'favorites', :action => 'index'

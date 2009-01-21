@@ -32,7 +32,11 @@ class ReviewsController < ApplicationController
 			reviewable_type = params[:reviewable_type].camelize if !params[:reviewable_type].blank?
       if @user && @user == @current_user
       	format.html do
-      		redirect_to url_for(:controller => 'reviews', :action => 'mine', :reviewable_type => params[:reviewable_type], :filter => params[:filter])
+      		if params[:reviewable_type]
+      			redirect_to url_for(:controller => 'reviews', :action => 'mine', :reviewable_type => params[:reviewable_type], :filter => params[:filter])
+      		else
+      			redirect_to url_for(:controller => 'reviews', :action => 'mine', :filter => params[:filter])
+      		end
       	end
       else
       	if @user

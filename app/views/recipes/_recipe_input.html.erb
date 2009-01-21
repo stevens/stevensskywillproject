@@ -48,7 +48,8 @@
 					<%= "为了让大伙儿更容易发现你的#{RECIPE_CN}, 请准确#{INPUT_CN}与#{RECIPE_CN}有关的关键字作为#{TAG_CN}" %><br />
 					<%= "<em class='more'>可以从\"主料 / 口味 / 类型 / 菜系 / 地域 / 场合 / 节日 / 功效\"等多个角度设置#{TAG_CN}</em>" %><br />
 					<%= "<em class='more'>#{TAG_CN}之间请用\"空格\"分隔</em>" %><br />
-					<%= "如: \"鱼肉&nbsp;&nbsp;咖喱&nbsp;&nbsp;东南亚&nbsp;&nbsp;生日\"" %>
+					<%= "如: \"鱼肉&nbsp;&nbsp;咖喱&nbsp;&nbsp;东南亚&nbsp;&nbsp;生日\"" %><br />
+					<%= "<em class='more'>请尽量避免使用\"美食&nbsp;&nbsp;饮食\"等这样不能反映#{RECIPE_CN}个性特色和内涵的词汇</em>" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :tag_list, :class => "text" %>
