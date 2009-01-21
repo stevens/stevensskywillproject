@@ -21,6 +21,8 @@
 			&nbsp;
 			<%= render :partial => 'layouts/item_time', 
 								 :locals => { :item => review } %>
+			&nbsp;
+			<%= "发表#{name_for(review.reviewable_type)}#{REVIEW_CN}" %>
 		</li>
 	</ul>
 </div>
