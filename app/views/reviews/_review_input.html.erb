@@ -12,9 +12,6 @@
 
 <% remote_form_for :review, review, :url => submit_url, :method => method do |f| %>
 	<% if is_new %>
-		<div class="label">
-			<label class="left" for="review"><%= "#{ADD_CN}新#{REVIEW_CN}:" %></label>
-		</div>
 		<div id="new_review_quotation">
 			<%= render :partial => "/reviews/review_quotation", 
 								 :locals => { :is_new => true, 
