@@ -11,24 +11,24 @@
 
 <% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
 
-<% html_content << "<div style='margin-bottom: 2px;'>
+<% html_content << "<div>
 											<a href='#{item_url}' target='_blank'><img alt='' src='#{photo_url}' title='#{item_title}' /></a>
 										</div>
-										<div style='margin-bottom: 2px;'>
+										<div>
 											<a href='#{item_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #ff8159; font-family: Verdana; word-break: break-all;'>#{item_title}</a>
 										</div>" %>
 
-<% html_content << "<div style='margin-bottom: 2px;'>
+<% html_content << "<div>
 											<a href='#{user_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana; word-break: break-all;'>#{item.user.login}的#{MAIN_PAGE_CN}</a>
 										</div>" %>
 
 <% if !blog_url.blank? %>
-	<% html_content << "<div style='margin-bottom: 3px;'>
+	<% html_content << "<div>
 												<a href='#{blog_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana;'>Blog</a>
 											</div>" %>
 <% end %>
 
-<% html_content << "<div>
+<% html_content << "<div style='margin-top: 3px;'>
 										 	<a href='#{root_url}' target='_blank'><img alt='', src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 80px;'/></a>
 										</div>" %>
 										
