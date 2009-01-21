@@ -158,18 +158,18 @@
 	</div>
 </div>
 
-<div id="recipe_<%= item.id %>_video" class="video">
-	<% if item.video_url && !item.video_url.blank? %>
-		<%= item.video_url %>
-	<% else %>
+<% if !item.video_url.blank? %>
+	<div id="recipe_<%= item.id %>_video" class="video">
+			<%= item.video_url %>
+	</div>
+<% elsif item_manageable?(item) %>
+	<div id="recipe_<%= item.id %>_video" class="video">
 		<%= "还没有#{VIDEO_CN}" %>
-		<% if @current_user && user == @current_user %>
-			<div id="video_todo_bar">
-				<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
-			</div>
-		<% end %>
-	<% end %>
-</div>
+		<div id="video_todo_bar">
+			<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
+		</div>
+	</div>
+<% end %>
 
 <div id="recipe_<%= item.id %>_main" class="item_detail">
 	<div class="main">

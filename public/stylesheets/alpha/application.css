@@ -562,12 +562,14 @@ div.group_by {
 	padding: 10px;
 	padding-bottom: 0px;
 	white-space: nowrap;
+	text-align: center;
 }
 em.group_by {
 	padding: 0px 2px;
 	display: block;
 	background-color: #d4ccbf;
 	color: #695245;	
+	text-align: center;
 }
 .group_by_title {
 	padding: 10px;

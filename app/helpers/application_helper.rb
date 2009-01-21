@@ -254,6 +254,19 @@ module ApplicationHelper
 		end
 	end
 	
+	def better_date(date)
+		case
+		when date == Date.today
+			'今天'
+		when date == Date.yesterday
+			'昨天'
+		when date == Date.yesterday - 1
+			'前天'
+		else
+			date
+		end
+	end
+	
 	def items_rows_count(items_count, items_count_per_row)
 		rc = items_count/items_count_per_row
 		rc = items_count%items_count_per_row == 0 ? rc : rc+1
