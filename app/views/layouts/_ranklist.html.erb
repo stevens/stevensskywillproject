@@ -21,7 +21,9 @@
 	    <td class="rank">
 	    	<div class="sub_block_lr">
 	    		<% if i <= 3 %>
-	    			<span class="rank_top3"><%= i.to_s %></span>
+	    			<span class="rank" style="background-color: #e42300;"><%= i.to_s %></span>
+	    		<% elsif i > 3 && i <= 10 %>
+	    			<span class="rank" style="background-color: #ff8159;"><%= i.to_s %></span>
 	    		<% else %>
 	    			<span class="rank"><%= i.to_s %></span>
 	    		<% end %>

@@ -25,7 +25,7 @@
 <% end %>
 
 <% if show_delete || item_manageable?(item.reviewable) %>
-	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Review')}#{REVIEW_CN}吗?" %>
+	<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Review')}#{name_for(item.reviewable_type)}#{REVIEW_CN}吗?" %>
 	<% buttons << [ [ 'delete', true ], 
 									[ DELETE_CN, url_for(:controller => 'reviews', :action => 'destroy', :id => item.id, :ref => ref, :filter => params[:filter], :page => params[:page]), delete_message, 'delete' ] 
 								] %>

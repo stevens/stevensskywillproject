@@ -1,7 +1,7 @@
 <% reviewable_type = type_for(reviewable) %>
 <% reviewable_id_sym = id_for(reviewable_type).to_sym %>
 <% if is_new %>
-	<% button_name = "#{ADD_CN}新#{REVIEW_CN}" %>
+	<% button_name = "发表#{REVIEW_CN}" %>
 	<% submit_url = url_for(reviewable_id_sym => reviewable.id, :controller => 'reviews', :action => 'create', :ref => ref) %>
 	<% method = 'post' %>
 <% else %>

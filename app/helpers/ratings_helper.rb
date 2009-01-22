@@ -17,16 +17,16 @@ module RatingsHelper
 	def average_rating_value(rateable)
 		if rateable.ratings.size > 0
 			r = rateable.ratings.average('rating') / 10.0
-			r == r.round ? r.round : f(r)
+			r == r.round ? r.round : f(r, 2)
 		else
 			0
 		end
 	end
 	
 	def highest_rated_items(items_set)
-		min_rating = 0
+		min_rating = 8
 		max_rating = 10
-		min_ratings_count = 1
+		min_ratings_count = 5
 		
 		items = []
 		for item in items_set

@@ -65,7 +65,7 @@ class ReviewsController < ApplicationController
   end  
 
   def new
-		redirect_to @parent_obj if @parent_obj
+		redirect_to item_link_url(@parent_obj) if @parent_obj
   end
 
   def edit
@@ -177,7 +177,7 @@ class ReviewsController < ApplicationController
 					page.redirect_to "#reviewable_reviews_wrapper"
 					page.replace_html "notice_for_new_review", 
 														:partial => 'layouts/notice', 
-														:locals => { :notice => "你已经成功#{ADD_CN}了1#{@self_unit}新#{@self_name}!" }
+														:locals => { :notice => "你已经发表了1#{@self_unit}#{name_for(@review.reviewable_type)}#{@self_name}!" }
 					page.show "notice_for_new_review"
 					if params[:ref] == 'reviewable_reviews_list'
 						page.replace_html "reviewable_reviews_header", 
@@ -255,7 +255,7 @@ class ReviewsController < ApplicationController
 				render :update do |page|
 					page.replace_html "notice_for_review_#{@review.id}", 
 														:partial => 'layouts/notice', 
-														:locals => { :notice => "你已经成功#{UPDATE_CN}了1#{@self_unit}#{@self_name}!" }
+														:locals => { :notice => "你已经#{UPDATE_CN}了1#{@self_unit}#{name_for(@review.reviewable_type)}#{@self_name}!" }
 					page.show "notice_for_review_#{@review.id}"
 					page.hide "input_form_for_review_#{@review.id}"
 					page.replace_html "review_#{@review.id}_main",
@@ -297,7 +297,7 @@ class ReviewsController < ApplicationController
 	def after_destroy_ok
 		respond_to do |format|
 			format.html do
-				flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"
+				flash[:notice] = "你已经#{DELETE_CN}了1#{@self_unit}#{name_for(type_for(@reviewable))}#{@self_name}!"
     
     		if @parent_obj
     			load_reviews_set
@@ -321,7 +321,8 @@ class ReviewsController < ApplicationController
 			end
 			format.js do
 				render :update do |page|
-					@notice = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"
+					# reviewable_type = type_for(@reviewable)
+					@notice = "你已经#{DELETE_CN}了1#{@self_unit}#{name_for(type_for(@reviewable))}#{@self_name}!"
 					page.replace_html "flash_wrapper", 
 														:partial => "/layouts/flash",
 											 			:locals => { :notice => @notice }

@@ -1,6 +1,6 @@
 <div id="recipe_<%= item.id %>_basic" class="basic">
 	<h2>
-		<%= render :partial => '/layouts/item_basic', 
+		<%= render :partial => 'layouts/item_basic', 
 							 :locals => { :item => item,
 							 							:show_icon => true,
 							 							:show_title => true,
@@ -8,7 +8,7 @@
 	</h2>
 	<ul>
 		<li>
-			<%= render :partial => '/users/user_basic', 
+			<%= render :partial => 'users/user_basic', 
 								 :locals => { :user => item.user, 
 								 							:show_come_from => false, 
 								 							:show_icon => true,
@@ -19,15 +19,15 @@
 		</li>
 		<li>
 			<% if (ratings_count = item.ratings.size) > 0 %>
-				<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count}票)" %></span> |
+				<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count})" %></span> ·
 			<% else %>
-				<%= "0票" %> |
+				<%= "0票" %> ·
 			<% end %>
 			
 			<% if (favorites_count = item.favorites.size) > 0 %>
-				<%= link_to "#{favorites_count}尝", item %> |
+				<%= link_to "#{favorites_count}尝", item %> ·
 			<% else %>
-				<%= "0尝" %> |
+				<%= "0尝" %> ·
 			<% end %>
 			
 			<% if (reviews_count = item.reviews.size) > 0 %>
@@ -35,6 +35,7 @@
 			<% else %>
 				<%= "0评" %>
 			<% end %>
+			
 		</li>
 	</ul>
 </div>

@@ -260,7 +260,7 @@ class RecipesController < ApplicationController
 	  	if @highlighted_recipe_rank = ranked_recipes_set.index(@highlighted_recipe)
 	  		@highlighted_recipe_rank += 1
 	  	end
-	  	@highest_rated_recipes = ranked_recipes_set[0..9]
+	  	@highest_rated_recipes = ranked_recipes_set[0..19]
 	  end
   	# @random_recipes = random_items(@recipes_set, 12)
 	  

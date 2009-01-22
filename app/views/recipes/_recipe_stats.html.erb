@@ -1,33 +1,25 @@
 <% if (ratings_count = item.ratings.size) > 0 %>
-	<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count}票)" %></span> |
+	<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count}票)" %></span> ·
 <% else %>
-	<%= "0票#{RATE_CN}" %> |
+	<%= "0票#{RATE_CN}" %> ·
 <% end %>
 
 <% if (favorites_count = item.favorites.size) > 0 %>
-	<%= link_to "#{favorites_count}人#{FAVORITE_CN}", item %> |
+	<%= link_to "#{favorites_count}人#{FAVORITE_CN}", item %> ·
 <% else %>
-	<%= "0人#{FAVORITE_CN}" %> |
+	<%= "0人#{FAVORITE_CN}" %> ·
 <% end %>
 
 <% if (reviews_count = item.reviews.size) > 0 %>
-	<%= link_to "#{reviews_count}#{unit_for('Review')}#{REVIEW_CN}", item %> |
+	<%= link_to "#{reviews_count}#{unit_for('Review')}#{REVIEW_CN}", item %> ·
 <% else %>
-	<%= "0#{unit_for('Review')}#{REVIEW_CN}" %> |
+	<%= "0#{unit_for('Review')}#{REVIEW_CN}" %> ·
 <% end %>
 
-<% if counter = item.counter %>
-	<% tvc = counter.total_view_count || 0 %>
-	<% svc = counter.self_view_count || 0 %>
+<% if (views_count = views_count(item)) > 0 %>
+	<%= link_to "#{views_count}次#{SEE_CN}", item %> ·
 <% else %>
-	<% tvc = 0 %>
-	<5 svc = 0 %>
-<% end %>
-
-<% if (views_count = tvc - svc) > 0 %>
-	<%= link_to "#{views_count}次#{SEE_CN}", item %> |
-<% else %>
-	<%= "0次#{SEE_CN}" %> |
+	<%= "0次#{SEE_CN}" %> ·
 <% end %>
 
 <% if (photos_count = item.photos.size) > 0 %>
