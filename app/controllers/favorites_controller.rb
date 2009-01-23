@@ -256,13 +256,13 @@ class FavoritesController < ApplicationController
 																	 						   :show_user => false, 
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
-									page.replace_html "stats_entry_of_favorite",
-																		:partial => "layouts/stats_entry", 
-												 						:locals => { :stats_entry => [ 'favorite', @parent_obj.favorites.size, '人', FAVORITE_CN ] }
+									page.replace "stats_entry_of_favorite",
+															 :partial => 'layouts/stats_entry', 
+												 			 :locals => { :stats_entry => [ 'favorite', @parent_obj.favorites.size, '人', FAVORITE_CN ] }
 								else
-									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
-												 						:locals => { :item => @parent_obj }
+									page.replace "stats_entry_of_#{@parent_type.downcase}_#{@parent_id}_favorite_s",
+															 :partial => 'layouts/stats_entry_s', 
+															 :locals => { :stats_entry => [ [ 'favorite', @parent_type, @parent_id ], [ @parent_obj.favorites.size, '人', FAVORITE_CN ] ] }
 								end
 
 								# page_update_favorite_bar
@@ -314,13 +314,13 @@ class FavoritesController < ApplicationController
 																	 						   :show_user => false, 
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
-									page.replace_html "stats_entry_of_favorite",
-																		:partial => "layouts/stats_entry", 
-												 						:locals => { :stats_entry => [ 'favorite', @parent_obj.favorites.size, '人', FAVORITE_CN ] }
+									page.replace "stats_entry_of_favorite",
+															 :partial => 'layouts/stats_entry', 
+									 						 :locals => { :stats_entry => [ 'favorite', @parent_obj.favorites.size, '人', FAVORITE_CN ] }
 								else
-									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
-												 						:locals => { :item => @parent_obj }
+									page.replace "stats_entry_of_#{@parent_type.downcase}_#{@parent_id}_favorite_s",
+															 :partial => 'layouts/stats_entry_s', 
+															 :locals => { :stats_entry => [ [ 'favorite', @parent_type, @parent_id ], [ @parent_obj.favorites.size, '人', FAVORITE_CN ] ] }
 								end
 								# page_update_favorite_bar
 								# page_update_favorable_stats

@@ -1,5 +1,5 @@
 <% se = stats_entry %>
-<% id = "stats_entry_of_#{se[0][1]}_#{se[0][2]}_#{se[0][0]}_s" %>
+<% id = "stats_entry_of_#{se[0][1].downcase}_#{se[0][2]}_#{se[0][0]}_s" %>
 <% if se[0][0] == 'rate' %>
 	<% if se[1][0] > 0 %>
 		<span id="<%= id %>" style="color: #78b36d;"><%= "#{se[1][3]} (#{se[1][0]}#{se[1][1]})" %></span>

@@ -209,9 +209,9 @@ class ReviewsController < ApplicationController
 														 							 :ref => params[:ref] }
 					end
 					if params[:ref] == 'reviewable' && @review.reviewable_type == 'Recipe'
-						page.replace_html "stats_entry_of_review",
-															:partial => "layouts/stats_entry", 
-									 						:locals => { :stats_entry => [ 'review', @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] }
+						page.replace "stats_entry_of_review",
+												 :partial => 'layouts/stats_entry', 
+									 			 :locals => { :stats_entry => [ 'review', @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] }
 					end
 					page.replace_html "input_form_for_new_review",
 														:partial => 'reviews/review_input',
@@ -345,9 +345,9 @@ class ReviewsController < ApplicationController
 														 							 :show_review_todo => true,
 														 							 :ref => params[:ref] }
 					if @review.reviewable_type == 'Recipe'
-						page.replace_html "stats_entry_of_review",
-															:partial => "layouts/stats_entry", 
-									 						:locals => { :stats_entry => [ 'review', @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] }
+						page.replace "stats_entry_of_review",
+												 :partial => 'layouts/stats_entry', 
+									 			 :locals => { :stats_entry => [ 'review', @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] }
 					end
 					elsif params[:ref] == 'reviewable_reviews_list'
 						flash[:notice] = @notice
