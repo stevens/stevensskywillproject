@@ -1315,10 +1315,10 @@ div.item_rating span.rating_rank {
 }
 div.stats_data {
 	float: right;
-	padding: 3px 15px;
+	padding: 3px 13px;
 	border: solid 1px #f1f1f1;
 	border-left: none;
-	width: 98px;
+	width: 102px;
 	height: 64px;
 }
 div.stats_data span.stats_entry {
