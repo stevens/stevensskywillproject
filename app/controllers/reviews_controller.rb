@@ -208,6 +208,11 @@ class ReviewsController < ApplicationController
 														 							 :show_review_todo => true,
 														 							 :ref => params[:ref] }
 					end
+					if params[:ref] == 'reviewable' && @review.reviewable_type == 'Recipe'
+						page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+															:partial => "#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+									 						:locals => { :item => @parent_obj }
+					end
 					page.replace_html "input_form_for_new_review",
 														:partial => 'reviews/review_input',
 													  :locals => { :reviewable => @parent_obj,
@@ -321,8 +326,8 @@ class ReviewsController < ApplicationController
 			end
 			format.js do
 				render :update do |page|
-					# reviewable_type = type_for(@reviewable)
-					@notice = "你已经#{DELETE_CN}了1#{@self_unit}#{name_for(type_for(@reviewable))}#{@self_name}!"
+					reviewable_type = type_for(@reviewable)
+					@notice = "你已经#{DELETE_CN}了1#{@self_unit}#{name_for(reviewable_type)}#{@self_name}!"
 					page.replace_html "flash_wrapper", 
 														:partial => "/layouts/flash",
 											 			:locals => { :notice => @notice }
@@ -339,9 +344,14 @@ class ReviewsController < ApplicationController
 														 							 :show_review_title => false,
 														 							 :show_review_todo => true,
 														 							 :ref => params[:ref] }
+					if @review.reviewable_type == 'Recipe'
+						page.replace_html "#{reviewable_type.downcase}_#{@reviewable.id}_stats",
+															:partial => "#{controller_name(reviewable_type)}/#{reviewable_type.downcase}_stats", 
+									 						:locals => { :item => @reviewable }
+					end
 					elsif params[:ref] == 'reviewable_reviews_list'
 						flash[:notice] = @notice
-						reviewable_id_sym = id_for(type_for(@reviewable)).to_sym
+						reviewable_id_sym = id_for(reviewable_type).to_sym
 						page.redirect_to url_for(reviewable_id_sym => @reviewable.id, :controller => 'reviews', :action => 'index', :ref => params[:ref], :filter => params[:filter], :page => params[:page])
 					elsif params[:ref] == 'user_reviews_list'
 						flash[:notice] = @notice
