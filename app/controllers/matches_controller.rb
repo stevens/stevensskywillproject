@@ -86,7 +86,9 @@ class MatchesController < ApplicationController
   		@voted_entriables_set = entriables_for(voteables_for(@match.find_voter_entries(@current_user)))
   	end
   	
-  	@entriables_set = entriables_for(@match.entries.find(:all, :limit => 18, :order => 'RAND()'))
+  	@entries_set = @match.entries.find(:all, :order => 'RAND()')
+  	@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
+  	@entriables_set = entriables_for(@entries_set[0..17])
 		@player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
   	
   	# 获得也在参赛的伙伴们

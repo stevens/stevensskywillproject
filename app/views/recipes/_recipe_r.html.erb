@@ -18,24 +18,21 @@
 								 							:show_myname => false } %>
 		</li>
 		<li>
-			<% if (ratings_count = item.ratings.size) > 0 %>
-				<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count})" %></span> ·
-			<% else %>
-				<%= "0票" %> ·
-			<% end %>
+			<% item_type = type_for(item).downcase %>
 			
-			<% if (favorites_count = item.favorites.size) > 0 %>
-				<%= link_to "#{favorites_count}尝", item %> ·
-			<% else %>
-				<%= "0尝" %> ·
-			<% end %>
+			<% stats_entries = [] %>
+			<% stats_entries << [ [ 'rate', item_type, item.id ], 
+														[ item.ratings.size, '', '', average_rating_value(item) ]
+													] %>
+			<% stats_entries << [ [ 'favorite', item_type, item.id ], 
+														[ item.favorites.size, '', '尝' ] 
+													]	%>
+			<% stats_entries << [ [ 'review', item_type, item.id ], 
+														[ item.reviews.size, '', '评' ]
+													] %>
 			
-			<% if (reviews_count = item.reviews.size) > 0 %>
-				<%= link_to "#{reviews_count}评", item %>
-			<% else %>
-				<%= "0评" %>
-			<% end %>
-			
+			<%= render :partial => 'layouts/stats_entries_s', 
+								 :locals => { :stats_entries => stats_entries } %>
 		</li>
 	</ul>
 </div>

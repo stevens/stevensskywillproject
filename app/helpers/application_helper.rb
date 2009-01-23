@@ -130,6 +130,15 @@ module ApplicationHelper
 		end
 	end
 	
+	def real_item(item)
+		case type_for(item)
+		when 'Entry'
+			item.entriable
+		else
+			item
+		end
+	end
+	
 	def item_link_url(item)
 		case type_for(item)
 		when 'Match'

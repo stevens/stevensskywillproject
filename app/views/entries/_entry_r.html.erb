@@ -1,0 +1,26 @@
+<% entriable = item.entriable %>
+
+<div id="entry_<%= item.id %>_basic" class="basic">
+	<h2>
+		<%= render :partial => 'layouts/item_basic', 
+							 :locals => { :item => entriable,
+							 							:show_icon => true,
+							 							:show_title => true,
+							 							:show_link => true } %>
+	</h2>
+	<ul>
+		<li>
+			<%= render :partial => 'users/user_basic', 
+								 :locals => { :user => entriable.user, 
+								 							:show_come_from => false, 
+								 							:show_icon => true,
+								 							:show_name => true, 
+								 							:show_link => true, 
+								 							:show_username => true,
+								 							:show_myname => false } %>
+		</li>
+		<li>
+			<span style="color: #78b36d;"><%= "#{item.total_votes}票 (#{item.votes_count}人投票)" %></span>
+		</li>
+	</ul>
+</div>

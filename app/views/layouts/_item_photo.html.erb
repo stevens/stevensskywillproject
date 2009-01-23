@@ -13,14 +13,10 @@
 	<% title = user_username(user) %>
 	<% item_link_url = user_first_link(user) %>
 <% else %>
-	<% photo = cover_photo(item) %>
-	<% photoable_type = item_type %>
-	<% title = item_title(item) %>
-	<% if item_type == 'Match' %>
-		<% item_link_url = item_first_link(item, true) %>
-	<% else %>
-		<% item_link_url = item %>
-	<% end %>
+	<% photo = cover_photo(real_item(item)) %>
+	<% photoable_type = type_for(real_item(item)) %>
+	<% title = item_title(real_item(item)) %>
+	<% item_link_url = item_link_url(real_item(item)) %>
 <% end %>
 
 <% if photo_style == 'full' %>
