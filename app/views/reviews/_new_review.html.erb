@@ -16,7 +16,7 @@
 			 										  :ref => ref } %>
 	</div>
 <% else %>
-	<div class="todo">
+	<div class="todo_right">
 		<% reviewable_id_sym = id_for(type_for(reviewable)).to_sym %>
 		<em class='l1'><%= link_to "我要#{REVIEW_CN}", url_for(reviewable_id_sym => reviewable.id, :controller => 'reviews', :action => 'new') %></em>
 	</div>

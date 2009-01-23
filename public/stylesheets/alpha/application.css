@@ -1282,29 +1282,35 @@ div.item_stats {
 }
 div.item_rating {
 	width: 70px;
-	height: 54px;
+	height: 60px;
 	border: solid 1px #f1f1f1;
 	text-align: center;
-	vertical-align: middle;
-	padding: 8px 0px;
+	padding: 5px 0px;
+}
+* html div.item_rating {
+	margin-top: -72px;
+}
+* +html div.item_rating {
+	margin-top: -72px;
 }
 div.item_rating span.rating_value {
 	display: block;
 	font-size: 20px;
 	font-weight: bold;
+	line-height: 24px;
 	color: #e42300;
 }
 div.item_rating span.ratings_count {
 	display: block;
-	margin-top: 3px;
+	margin-top: 2px;
 }
 div.item_rating span.rating_rank {
 	display: block;
-	margin-top: 3px;
+	margin-top: 2px;
 	color: #e42300;
 	font-weight: bold;
 }
-div.stats_date {
+div.stats_data {
 	float: right;
 	padding: 3px 15px;
 	border: solid 1px #f1f1f1;
@@ -1312,7 +1318,7 @@ div.stats_date {
 	width: 98px;
 	height: 64px;
 }
-div.stats_date span.stats_entry {
+div.stats_data span.stats_entry {
 	display: block;
 	color: #78b36d;
 }
