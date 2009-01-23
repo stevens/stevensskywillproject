@@ -1,12 +1,12 @@
 <% item_type = type_for(item).downcase %>
 
 <% stats_entries = [] %>
-<% stats_entries << [ [ 'rate', item_type, item.id ], 
-											[ item.ratings.size, '票', RATE_CN, average_rating_value(item) ]
+<% stats_entries << [ [ 'player', item_type, item.id ], 
+											[ item.players.size, '位', '选手' ]
 										] %>
-<% stats_entries << [ [ 'favorite', item_type, item.id ], 
-											[ item.favorites.size, '人', FAVORITE_CN ] 
-										]	%>
+<% stats_entries << [ [ 'entry', item_type, item.id ], 
+											[ item.entries.size, unit_for('Entry'), '作品' ]
+										] %>
 <% stats_entries << [ [ 'review', item_type, item.id ], 
 											[ item.reviews.size, unit_for('Review'), REVIEW_CN ]
 										] %>
