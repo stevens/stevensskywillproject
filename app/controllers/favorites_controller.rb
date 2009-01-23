@@ -88,7 +88,7 @@ class FavoritesController < ApplicationController
 				@favorite.status = params[:status].values.join(' ')
 				
 				if @favorite.save
-					@notice = "你已经成功#{ADD_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
+					@notice = "你已经#{ADD_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
 					after_todo_ok('create')
 				else
 					after_todo_error('create')
@@ -103,7 +103,7 @@ class FavoritesController < ApplicationController
 			params[:favorite][:status] = params[:status].values.join(' ')
 			
 			if @favorite.update_attributes(params[:favorite])
-				@notice = "你已经成功#{UPDATE_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
+				@notice = "你已经#{UPDATE_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
 				after_todo_ok('update')
 			else
 				after_todo_error('update')
@@ -116,7 +116,7 @@ class FavoritesController < ApplicationController
 			load_favorite
 			
 			if @favorite.destroy
-				@notice = "你已经成功#{DELETE_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
+				@notice = "你已经#{DELETE_CN}了1个#{@parent_name}#{FAVORITE_CN}!"
 				after_todo_ok('destroy')
 			end
 		end
@@ -245,7 +245,7 @@ class FavoritesController < ApplicationController
 																							 :favoriter_id => params[:favoriter_id] }
 								if params[:ref] != 'favorable_show'
 									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
 												 						:locals => { :item => @parent_obj }
 								end
 								if params[:ref] == 'favorable_show'
@@ -300,7 +300,7 @@ class FavoritesController < ApplicationController
 																							 :favoriter_id => params[:favoriter_id] }
 								if params[:ref] != 'favorable_show'
 									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
 												 						:locals => { :item => @parent_obj }
 								end
 								if params[:ref] == 'favorable_show'

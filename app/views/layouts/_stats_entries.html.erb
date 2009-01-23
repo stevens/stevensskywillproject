@@ -1,0 +1,13 @@
+<% for se in stats_entries %>
+	<% if se[1] > 0 %>
+		<span class="stats_entry">
+			<span style="float: right;"><%= "#{se[3]}" %></span>
+			<%= "#{se[1]} #{se[2]}" %>
+		</span>
+	<% else %>
+		<span class="stats_entry" style="color: #b8b9a7;">
+			<span style="float: right;"><%= "#{se[3]}" %></span>
+			<%= "0 #{se[2]}" %>
+		</span>
+	<% end %>
+<% end %>

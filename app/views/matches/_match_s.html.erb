@@ -20,14 +20,8 @@
 			<%= time_iso_format(item.created_at, true) %>
 		</li>
 		<li>
-			<%= "#{TAG_CN}: " %>
-			<% if item.tag_list.size > 0 %>
-    		<% for tag in item.tag_list %>
-	    		<%= link_to strip_tags(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'match'} %>
-	    	<% end %>
-			<% else %>
-	    	<%= "还没有#{TAG_CN}" %>
-			<% end %>
+			<%= render :partial => 'taggings/item_tag_list', 
+								 :locals => { :item => item } %>
 		</li>
 		<li id="match_<%= item.id %>_stats">
 			<%= render :partial => '/matches/match_stats', 

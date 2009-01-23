@@ -1,29 +1,10 @@
-<% if (ratings_count = item.ratings.size) > 0 %>
-	<span class="rating"><%= "#{average_rating_value(item)} (#{ratings_count}票)" %></span> ·
-<% else %>
-	<%= "0票#{RATE_CN}" %> ·
-<% end %>
+<% stats_entries = [] %>
+<% stats_entries << [ 'rate', item.ratings.size, '票', RATE_CN, average_rating_value(item) ] %>
+<% stats_entries << [ 'favorite', item.favorites.size, '人', FAVORITE_CN ] %>
+<% stats_entries << [ 'review', item.reviews.size, unit_for('Review'), REVIEW_CN ] %>
+<% stats_entries << [ 'view', views_count(item), '次', SEE_CN ] %>
+<% stats_entries << [ 'photo', item.photos.size, unit_for('Photo'), PHOTO_CN ] %>
+<% stats_entries << [ 'tag', item.tag_list.size, '个', TAG_CN ] %>
 
-<% if (favorites_count = item.favorites.size) > 0 %>
-	<%= link_to "#{favorites_count}人#{FAVORITE_CN}", item %> ·
-<% else %>
-	<%= "0人#{FAVORITE_CN}" %> ·
-<% end %>
-
-<% if (reviews_count = item.reviews.size) > 0 %>
-	<%= link_to "#{reviews_count}#{unit_for('Review')}#{REVIEW_CN}", item %> ·
-<% else %>
-	<%= "0#{unit_for('Review')}#{REVIEW_CN}" %> ·
-<% end %>
-
-<% if (views_count = views_count(item)) > 0 %>
-	<%= link_to "#{views_count}次#{SEE_CN}", item %> ·
-<% else %>
-	<%= "0次#{SEE_CN}" %> ·
-<% end %>
-
-<% if (photos_count = item.photos.size) > 0 %>
-	<%= link_to "#{photos_count}#{unit_for('Photo')}#{PHOTO_CN}", item %>
-<% else %>
-	<%= "0#{unit_for('Photo')}#{PHOTO_CN}" %>
-<% end %>
+<%= render :partial => 'layouts/stats_entries_s', 
+					 :locals => { :stats_entries => stats_entries } %>

@@ -1288,13 +1288,13 @@ div.item_rating {
 	height: 60px;
 	border: solid 1px #f1f1f1;
 	text-align: center;
-	padding: 5px 0px;
+	padding: 14px 0px;
 }
 * html div.item_rating {
-	margin-top: -72px;
+	margin-top: -90px;
 }
 * +html div.item_rating {
-	margin-top: -72px;
+	margin-top: -90px;
 }
 div.item_rating span.rating_value {
 	display: block;
@@ -1319,7 +1319,7 @@ div.stats_data {
 	border: solid 1px #f1f1f1;
 	border-left: none;
 	width: 102px;
-	height: 64px;
+	height: 82px;
 }
 div.stats_data span.stats_entry {
 	display: block;

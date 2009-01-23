@@ -24,14 +24,8 @@
 			<% end %>
 		</li>
 		<li>
-			<%= "#{TAG_CN}: " %>
-			<% if item.tag_list.size > 0 %>
-    		<% for tag in item.tag_list %>
-	    		<%= link_to strip_tags(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'recipe'} %>
-	    	<% end %>
-			<% else %>
-	    	<%= "还没有#{TAG_CN}" %>
-			<% end %>
+			<%= render :partial => 'taggings/item_tag_list', 
+								 :locals => { :item => item } %>
 		</li>
 		<li id="recipe_<%= item.id %>_stats">
 			<%= render :partial => 'recipes/recipe_stats_s', 

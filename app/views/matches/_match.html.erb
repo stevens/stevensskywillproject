@@ -34,17 +34,11 @@
 				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Match')}#{MATCH_CN}" %>
 			</li>
 			<li>
-				<%= "#{TAG_CN}: " %>
-				<% if item.tag_list.size > 0 %>
-	    		<% for tag in item.tag_list %>
-		    		<%= link_to h(tag), {:controller => 'taggings', :action => 'show', :id => tag, :taggable_type => 'match'} %>
-		    	<% end %>
-				<% else %>
-		    	<%= "还没有#{TAG_CN}" %>
-		    	<% if @current_user && user == @current_user %>
-		    		<%= link_to "[#{ADD_CN}#{TAG_CN}]", [item, :edit] %>
-		    	<% end %>
-				<% end %>
+				<%= render :partial => 'taggings/item_tag_list', 
+									 :locals => { :item => item } %>
+	    	<% if item_manageable?(item) %>
+	    		<%= link_to "[#{EDIT_CN}#{TAG_CN}]", [item, :edit] %>
+	    	<% end %>
 			</li>
 		</ul>
 	</div>

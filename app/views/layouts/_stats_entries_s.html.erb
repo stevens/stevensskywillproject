@@ -1,0 +1,18 @@
+<% for se in stats_entries %>
+	<% if se[0] == 'rate' %>
+		<% if se[1] > 0 %>
+			<span style="color: #78b36d;"><%= "#{se[4]} (#{se[1]}#{se[2]})" %></span>
+		<% else %>
+			<%= "0#{se[2]}#{se[3]}" %>
+		<% end %>	
+	<% else %>
+		<% if se[1] > 0 %>
+			<span style="color: #78b36d;"><%= "#{se[1]}#{se[2]}#{se[3]}" %></span>
+		<% else %>
+			<%= "0#{se[2]}#{se[3]}" %>
+		<% end %>
+	<% end %>
+	<% if se != stats_entries.last %>
+		·
+	<% end %>
+<% end %>
