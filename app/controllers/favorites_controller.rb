@@ -243,11 +243,6 @@ class FavoritesController < ApplicationController
 																	:locals => { :favorable => @parent_obj,
 																							 :ref => params[:ref], 
 																							 :favoriter_id => params[:favoriter_id] }
-								if params[:ref] != 'favorable_show'
-									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
-												 						:locals => { :item => @parent_obj }
-								end
 								if params[:ref] == 'favorable_show'
 									page.replace_html "favorite_users_detail", 
 																		:partial => "/layouts/items_matrix",
@@ -261,7 +256,15 @@ class FavoritesController < ApplicationController
 																	 						   :show_user => false, 
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
+									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+												 						:locals => { :item => @parent_obj }
+								else
+									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
+												 						:locals => { :item => @parent_obj }
 								end
+
 								# page_update_favorite_bar
 								# page_update_favorable_stats
 								# page_update_favorite_users if params[:ref] == 'favorable_show'
@@ -298,11 +301,6 @@ class FavoritesController < ApplicationController
 																	:locals => { :favorable => @parent_obj,
 																							 :ref => params[:ref], 
 																							 :favoriter_id => params[:favoriter_id] }
-								if params[:ref] != 'favorable_show'
-									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
-												 						:locals => { :item => @parent_obj }
-								end
 								if params[:ref] == 'favorable_show'
 									page.replace_html "favorite_users_detail", 
 																		:partial => "/layouts/items_matrix",
@@ -316,6 +314,13 @@ class FavoritesController < ApplicationController
 																	 						   :show_user => false, 
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
+									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
+												 						:locals => { :item => @parent_obj }
+								else
+									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
+																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
+												 						:locals => { :item => @parent_obj }
 								end
 								# page_update_favorite_bar
 								# page_update_favorable_stats
