@@ -208,10 +208,17 @@ class ReviewsController < ApplicationController
 														 							 :show_review_todo => true,
 														 							 :ref => params[:ref] }
 					end
-					if params[:ref] == 'reviewable' && @review.reviewable_type == 'Recipe'
-						page.replace "stats_entry_of_review",
-												 :partial => 'layouts/stats_entry', 
-									 			 :locals => { :stats_entry => [ 'review', @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] }
+					if params[:ref] == 'reviewable'
+						case @review.reviewable_type
+						when 'Recipe'
+							page.replace "stats_entry_of_review",
+													 :partial => 'layouts/stats_entry', 
+										 			 :locals => { :stats_entry => [ 'review', @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] }
+						when 'Match'
+							page.replace "stats_entry_of_match_#{@parent_id}_review_s",
+													 :partial => 'layouts/stats_entry_s', 
+													 :locals => { :stats_entry => [ [ 'review', @parent_type, @parent_id ], [ @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] ] }
+						end
 					end
 					page.replace_html "input_form_for_new_review",
 														:partial => 'reviews/review_input',
@@ -344,11 +351,16 @@ class ReviewsController < ApplicationController
 														 							 :show_review_title => false,
 														 							 :show_review_todo => true,
 														 							 :ref => params[:ref] }
-					if @review.reviewable_type == 'Recipe'
-						page.replace "stats_entry_of_review",
-												 :partial => 'layouts/stats_entry', 
-									 			 :locals => { :stats_entry => [ 'review', @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] }
-					end
+						case @review.reviewable_type
+						when 'Recipe'
+							page.replace "stats_entry_of_review",
+													 :partial => 'layouts/stats_entry', 
+										 			 :locals => { :stats_entry => [ 'review', @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] }
+						when 'Match'
+							page.replace "stats_entry_of_match_#{@reviewable.id}_review_s",
+													 :partial => 'layouts/stats_entry_s', 
+													 :locals => { :stats_entry => [ [ 'review', type_for(@reviewable), @reviewable.id ], [ @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] ] }
+						end
 					elsif params[:ref] == 'reviewable_reviews_list'
 						flash[:notice] = @notice
 						reviewable_id_sym = id_for(reviewable_type).to_sym
