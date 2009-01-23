@@ -95,10 +95,10 @@ class ApplicationController < ActionController::Base
 		# @system_notice = "号外: <em>“蜂厨”</em>与新浪著名美食圈子<em>“美食·人生”</em>结成<em>友情合作伙伴</em>!"
 		# @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 即将开锅喽, 请密切关注比赛动态喔!</em>"
 		# @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 明天凌晨零点正式开锅!</em>"
-		@system_notice = "<span class='bold'>金蜂·美食人生 大赛 (第一季) 正式开锅, 大伙儿快来参赛呵! （报名和作品征集截止时间是2月9日）<br /><br />
+		@system_notice = "<span class='bold'>金蜂·美食人生 大赛 (第一季) 正式开锅, 大伙儿快来参赛呵! <em class='l3' style='font-weight: bold;'>(报名和作品征集截止时间是2月9日)</em><br /><br />
 											请要参赛的蜂友前往 <em class='l0'><a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>比赛页面</a></em> 报名参赛, 
 											并且查看 <em class='l2'><a href='#{url_for(:controller => 'matches', :action => 'show', :id => 1)}'>比赛详情</a></em> 和 <em class='l3'><a href='#{url_for(:controller => 'matches', :action => 'help')}'>比赛指南</a></em><br /><br />
-											<em class='l1'><a href='#{url_for(:match_id => 1, :controller => 'entries', :action => 'index')}'>年三十(明天)凌晨零点开始投票啦!</a></em> 参赛的蜂友们快来使用<em class='l3' style='font-weight: bold;'> 食谱分享 </em>为自己的作品拉票呵！</span>"
+											<em class='l1'><a href='#{url_for(:match_id => 1, :controller => 'entries', :action => 'index')}'>年三十(明天)凌晨零点开始投票啦! 投票也有幸运奖呵!</a></em> 参赛的蜂友们快使用<em class='l3' style='font-weight: bold;'> 食谱分享 </em>为自己的作品拉票呵！</span>"
 	end
 	
 	# def param_posted?(symbol)
