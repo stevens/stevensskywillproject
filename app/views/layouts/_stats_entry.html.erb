@@ -1,0 +1,13 @@
+<% se = stats_entry %>
+<% id = "stats_entry_of_#{se[0]}" %>
+<% if se[1] > 0 %>
+	<span id="<%= id %>" class="stats_entry">
+		<span style="float: right;"><%= "#{se[3]}" %></span>
+		<%= "#{se[1]} #{se[2]}" %>
+	</span>
+<% else %>
+	<span id="<%= id %>" class="stats_entry" style="color: #b8b9a7;">
+		<span style="float: right;"><%= "#{se[3]}" %></span>
+		<%= "0 #{se[2]}" %>
+	</span>
+<% end %>

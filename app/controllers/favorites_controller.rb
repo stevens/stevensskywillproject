@@ -256,9 +256,9 @@ class FavoritesController < ApplicationController
 																	 						   :show_user => false, 
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
-									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
-												 						:locals => { :item => @parent_obj }
+									page.replace_html "stats_entry_of_favorite",
+																		:partial => "layouts/stats_entry", 
+												 						:locals => { :stats_entry => [ 'favorite', @parent_obj.favorites.size, '人', FAVORITE_CN ] }
 								else
 									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
 																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
@@ -314,9 +314,9 @@ class FavoritesController < ApplicationController
 																	 						   :show_user => false, 
 																	 						   :show_photo_todo => false, 
 																	 						   :photo_style => 'sign' }
-									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
-																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats", 
-												 						:locals => { :item => @parent_obj }
+									page.replace_html "stats_entry_of_favorite",
+																		:partial => "layouts/stats_entry", 
+												 						:locals => { :stats_entry => [ 'favorite', @parent_obj.favorites.size, '人', FAVORITE_CN ] }
 								else
 									page.replace_html "#{@parent_type.downcase}_#{@parent_id}_stats",
 																		:partial => "/#{controller_name(@parent_type)}/#{@parent_type.downcase}_stats_s", 
