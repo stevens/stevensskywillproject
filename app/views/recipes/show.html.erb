@@ -61,6 +61,13 @@
 							 								:ref => 'reviewable' } %>
 		</div>
 		
+		<% if !item_manageable?(@recipe) %>
+			<div id="my_recipe_rating_at_review" class="my_rating_at_review">
+				<%= render :partial => 'ratings/my_rating', 
+									 :locals => { :item => @recipe } %>
+			</div>
+		<% end %>
+		
 		<div id="reviewable_new_review" class="sub_block">
 			<%= render :partial => 'reviews/new_review', 
 								 :locals => { :reviewable => reviewable,

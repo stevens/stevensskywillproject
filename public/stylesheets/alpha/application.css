@@ -1331,13 +1331,17 @@ div.my_rating {
 	border-top: none;
 	padding: 3px 14px;
 }
-div.my_rating span.my_rating_value {
+div.my_rating_at_review {
+	padding: 5px 10px 0px 10px;
+	color: #b8b9a7;
+}
+div.my_rating span.my_rating_value, div.my_rating_at_review span.my_rating_value {
 	color: #e42300;
 }
-div.my_rating span.my_rating_rank {
+div.my_rating span.my_rating_rank, div.my_rating_at_review span.my_rating_rank {
 	color: #e42300;
 }
-div.my_rating #rating {
+div.my_rating #rating, div.my_rating_at_review #rating {
 	margin-top: 3px;
 }
 

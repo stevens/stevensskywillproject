@@ -50,6 +50,9 @@ class RatingsController < ApplicationController
 					page.replace_html "my_#{@rateable_type.downcase}_rating",
 														:partial => 'ratings/my_rating', 
 														:locals => { :item => @rateable }
+					page.replace_html "my_#{@rateable_type.downcase}_rating_at_review",
+														:partial => 'ratings/my_rating', 
+														:locals => { :item => @rateable }
 				end
 			end
 		end
