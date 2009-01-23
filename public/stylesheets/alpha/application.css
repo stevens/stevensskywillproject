@@ -457,6 +457,9 @@ div.tag {
 * html #navigation li a, * html #navigation li a:link, * html #navigation li a:visited {
 	height: auto;
 }
+* +html #navigation li a, * +html #navigation li a:link, * +html #navigation li a:visited {
+	line-height: 18px;
+}
 #navigation li a:hover {
 	background-color: #ff8159;
 	color: #ffffff;
