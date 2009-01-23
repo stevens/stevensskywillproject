@@ -1,0 +1,12 @@
+<% rank = %w[水到家 很糟糕 不咋样 有点逊 一般般 还不错 赞一个 非常好 棒极了 超完美] %>
+
+<% if (ratings_count = item.ratings.size) > 0 %>
+	<% rating_value = average_rating_value(item) %>
+	<span class="rating_value"><%= "#{rating_value}" %></span>
+	<span class="ratings_count"><%= "#{ratings_count}票" %></span>
+	<span class="rating_rank"><%= "#{rank[rating_value.ceil-1]}" %></span>
+<% else %>
+	<span class="rating_value" style="color: #b8b9a7;"><%= 'N/A' %></span>
+	<span class="ratings_count" style="color: #b8b9a7;"><%= "0票" %></span>
+	<span class="rating_rank" style="color: #b8b9a7;"><%= 'n/a' %></span>
+<% end %>

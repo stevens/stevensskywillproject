@@ -1,0 +1,16 @@
+<% rank = %w[水到家 很糟糕 不咋样 有点逊 一般般 还不错 赞一个 非常好 棒极了 超完美] %>
+
+<ul id="rating">
+	<li class="current_rating" style="width: <%= rating_value*17 %>px;"></li>
+	<% 1.upto(20) do |i| %>
+		<li id="r<%= 5*i %>">
+			<% if @current_user %>
+				<%= link_to_remote '', 
+													 :url => {:controller => 'ratings', :action => 'rate', :id => 5*i, :rateable_type => type_for(rateable), :rateable_id => rateable.id}, 
+													 :html => {:title => ""} %>
+			<% else %>
+				<%= link_to '', id_for(type_for(rateable)).to_sym => rateable.id, :controller => 'ratings', :action => 'new' %>
+			<% end %>
+		</li>
+	<% end %>
+</ul>

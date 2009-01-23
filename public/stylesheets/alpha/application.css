@@ -1272,27 +1272,87 @@ div.radio .fieldWithErrors {
 	margin-top: -5px;
 }
 
+/* Stats */
+div.item_stats {
+	float: right;
+	margin-top: 10px;
+	padding-right: 10px;
+	color: #b8b9a7;
+	width: 200px;
+}
+div.item_rating {
+	width: 70px;
+	height: 54px;
+	border: solid 1px #f1f1f1;
+	text-align: center;
+	vertical-align: middle;
+	padding: 8px 0px;
+}
+div.item_rating span.rating_value {
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	color: #e42300;
+}
+div.item_rating span.ratings_count {
+	display: block;
+	margin-top: 3px;
+}
+div.item_rating span.rating_rank {
+	display: block;
+	margin-top: 3px;
+	color: #e42300;
+	font-weight: bold;
+}
+div.stats_date {
+	float: right;
+	padding: 3px 15px;
+	border: solid 1px #f1f1f1;
+	border-left: none;
+	width: 98px;
+	height: 64px;
+}
+div.stats_date span.stats_entry {
+	display: block;
+	color: #78b36d;
+}
+div.my_rating {
+	height: 40px;
+	border: solid 1px #f1f1f1;
+	border-top: none;
+	padding: 3px 14px;
+}
+div.my_rating span.my_rating_value {
+	color: #e42300;
+}
+div.my_rating span.my_rating_rank {
+	color: #e42300;
+}
+div.my_rating #rating {
+	margin-top: 3px;
+}
+
 /* Rating */
 #rating {
 	width: 170px;
-	height: 50px;
+	height: 18px;
 	list-style: none;
 	position: relative;
 	overflow:visible;
-	background:url(/images/rating/rating.png) 0px 0px no-repeat;
+	background:url(/images/rating/rating.png) 0px -32px no-repeat;
 	margin-bottom: 5px;
 }
 #rating li {
 	position: absolute;
 	display: block;
-	height: 50px;
+	height: 18px;
 	line-height: 12px;
 	font-size: 115%;
 	font-weight:bold;
 }
 #rating li a {
 	display: block;
-	height: 50px;
+	height: 18px;
 	width: 100%;
 	text-decoration:none;
 }
@@ -1319,7 +1379,7 @@ div.radio .fieldWithErrors {
 #r100{width: 170px;z-index: 105;}
 
 #rating li a:hover {
-	background:url(/images/rating/rating.png) 0px -100px;
+	background:url(/images/rating/rating.png) 0px -132px;
 }
 #rating li a span {
 	display: none; 
@@ -1330,14 +1390,14 @@ div.radio .fieldWithErrors {
 	color: #373737;
 	font-weight: bold;
 	position: absolute;
-	top: 55px;
+	top: 23px;
 	width: 170px;
 	text-align:center;
 }
 .current_rating {
-	background:url(/images/rating/rating.png) 0px -50px no-repeat;
+	background:url(/images/rating/rating.png) 0px -82px no-repeat;
 	position: absolute;
-	height: 50px;
+	height: 18px;
 	display: block;
 	text-indent: -9999px; /* Hide the current rating text */
 	overflow: hidden;

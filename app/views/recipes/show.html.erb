@@ -11,18 +11,18 @@
 
 	<div id="recipe_<%= @recipe.id %>_detail" class="block_main">
 		<div id="recipe_prev_next_bar" class="prev_next_bar">
-			<%= render :partial => "/layouts/prev_next", 
+			<%= render :partial => 'layouts/prev_next', 
 								 :locals => { :items_set => @recipes_set, 
 								 							:current_index => @recipe_index } %>
 		</div>
 
-		<div id="recipe_<%= @recipe.id %>_rating" class="rating">
-			<%= render :partial => "/ratings/rate",
-								 :locals => {:rateable => @recipe} %>
+		<div id="recipe_<%= @recipe.id %>_stats" class="item_stats">
+			<%= render :partial => 'recipes/recipe_stats', 
+								 :locals => { :item => @recipe } %>
 		</div>
 		
 		<div id="recipe_<%= @recipe.id %>_self" class="sub_block">
-				<%= render :partial => "/recipes/recipe",
+				<%= render :partial => 'recipes/recipe',
 									 :locals => { :item => @recipe, 
 									 						  :photos_set => @photos_set, 
 									 						  :show_todo => true, 

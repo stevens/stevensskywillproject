@@ -1,0 +1,14 @@
+<% rank = %w[水到家 很糟糕 不咋样 有点逊 一般般 还不错 赞一个 非常好 棒极了 超完美] %>
+<% rating_value = user_rating_value(@current_user, item) %>
+
+<%= "我的#{RATE_CN}: " %>
+<% if rating_value > 0 %>
+	<span class="my_rating_value"><%= "#{rating_value}/10" %></span> ·
+	<span class="my_rating_rank"><%= "#{rank[rating_value.ceil-1]}" %></span>
+<% else %>
+	<%= "还没有#{RATE_CN}" %>
+<% end %>
+
+<%= render :partial => 'ratings/rate_bar', 
+					 :locals => { :rateable => item,
+					 							:rating_value => rating_value } %>
