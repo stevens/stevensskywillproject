@@ -21,17 +21,18 @@ class VotesController < ApplicationController
 				@remain_epv = @votein.voter_remain_entries_count(@current_user)
 				if !@remain_epv || @remain_epv > 0
 					ActiveRecord::Base.transaction do
-						@vote.save
-						load_voteable
-						voteable_total_votes = @voteable.total_votes + 1
-						voteable_votes_count = @voteable.votes_count + 1
-						if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count })
-							# @notice = "你还可以给#{@remain_epv - 1}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
-							after_save_ok
+						if @vote.save
+							load_voteable
+							voteable_total_votes = @voteable.total_votes + 1
+							voteable_votes_count = @voteable.votes_count + 1
+							if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count })
+								# @notice = "你还可以给#{@remain_epv - 1}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
+								after_save_ok
+							end
 						end
 					end
 				else
-					@notice = "#{SORRY_CN}, 你最多只能#{VOTE_CN}给#{@votein.entries_per_voter}#{unit_for('Entry')}#{ENTRY_CN}!"
+					@notice = "#{SORRY_CN}, 你最多只能给#{@votein.entries_per_voter}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
 					after_save_error
 				end
 			end
@@ -61,9 +62,10 @@ class VotesController < ApplicationController
 					end
 				end
 				ActiveRecord::Base.transaction do
-					@vote.update_attribute(:votes, new_votes)
-					if @voteable.update_attribute(:total_votes, voteable_total_votes)
-						after_save_ok
+					if @vote.update_attribute(:votes, new_votes)
+						if @voteable.update_attribute(:total_votes, voteable_total_votes)
+							after_save_ok
+						end
 					end
 				end
 			end
@@ -77,10 +79,11 @@ class VotesController < ApplicationController
 		voteable_total_votes = @voteable.total_votes - @vote.votes
 		voteable_votes_count = @voteable.votes_count - 1
 		ActiveRecord::Base.transaction do
-			@vote.destroy
-			if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count})
-				@redirect = true if params[:filter] == 'voted'
-				after_save_ok
+			if @vote.destroy
+				if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count})
+					@redirect = true if params[:filter] == 'voted'
+					after_save_ok
+				end
 			end
 		end
 		
