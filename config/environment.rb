@@ -206,7 +206,7 @@ Rails::Initializer.run do |config|
 
 	RECIPE_EN = 'recipe'
 	RECIPE_CN = '食谱'
-	MENU_CN = '餐单'
+	MENU_CN = '食单'
 	KITCHEN_CN = '厨房'
 	PREP_TIME_CN = '准备时间'
 	COOK_TIME_CN = '制作时间'
@@ -292,10 +292,6 @@ Rails::Initializer.run do |config|
 	
 	REQUIRED_CN = '必填项'
 	OPTIONAL_CN = '选填项'
-        #重发激活邮件代码start
-	RESEND_CN = '重发'
-        ACTIVATE_CN = '激活'
-        #重发激活邮件代码end
 	
 	#OBJECT constants
 	CODE_USER_CN = '0'
@@ -314,6 +310,7 @@ Rails::Initializer.run do |config|
 	UNIT_VOTE_CN = '票'
 	UNIT_RATE_CN = '次'
 	UNIT_AWARD_CN = '个'
+	UNIT_MENU_CN = '份'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 20
