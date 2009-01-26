@@ -91,6 +91,9 @@
 						<li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
 							<%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
 						</li>
+						<li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
+							<%= link_to "食单<span class='script'>Cooking...</span>", root_path, :style => 'background-color: #b8b9a7;'  %>
+						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'match') %>>
 							<%= link_to "#{MATCH_CN}<span class='script'>GoldenBee!</span>", { :controller => 'matches', :action => 'profile', :id => 1 } %>
 						</li>
