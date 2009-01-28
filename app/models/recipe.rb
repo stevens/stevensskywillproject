@@ -60,7 +60,7 @@ class Recipe < ActiveRecord::Base
   
   def entrying?
   	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
-  		match.doing?(Time.now) ? true : false
+  		(match.doing?(Time.now) && match.find_entry(self)) ? true : false
   	end
   end
   

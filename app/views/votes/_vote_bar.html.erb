@@ -39,7 +39,7 @@
 	<% elsif show_vote_todo %>
 		<em style="<%= todo_style %>">
 			<% create_message = "确定要给这#{unit_for(type_for(voteable))}#{name_for(type_for(voteable))}#{VOTE_CN}吗?" %>
-			<%= link_to_remote VOTE_CN, :url => { voteable_id_sym  => voteable.id, :controller => 'votes', :action => 'create', :votein_type => type_for(votein).downcase, :votein_id => votein.id, :filter => params[:filter] }, :confirm => create_message, :html => { :title => '投票' } %>
+			<%= link_to_remote VOTE_CN, :url => { voteable_id_sym  => voteable.id, :controller => 'votes', :action => 'create', :votein_type => type_for(votein).downcase, :votein_id => votein.id, :filter => params[:filter] }, :confirm => create_message, :method => :post, :html => { :title => '投票' } %>
 		</em>
 	<% end %>
 <% elsif show_vote_todo %>

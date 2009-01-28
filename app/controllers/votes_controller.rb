@@ -16,18 +16,22 @@ class VotesController < ApplicationController
 		
 		load_votein
 		current = Time.now
-		if @votein.doing?(current) && (@votein.vote_time_status(current)[1] == 'doing')
+		if @vote.votes == 1 && @votein.doing?(current) && @votein.vote_time_status(current)[1] == 'doing'
 			unless @votein.find_vote(@current_user, @parent_obj)
 				@remain_epv = @votein.voter_remain_entries_count(@current_user)
-				if !@remain_epv || @remain_epv > 0
+				if @remain_epv.nil? || @remain_epv > 0
 					ActiveRecord::Base.transaction do
 						if @vote.save
-							load_voteable
+							@vote.update_attribute(:votes, 1)
+							# load_voteable
+							@voteable = @vote.voteable
 							voteable_total_votes = @voteable.total_votes + 1
 							voteable_votes_count = @voteable.votes_count + 1
-							if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count })
-								# @notice = "你还可以给#{@remain_epv - 1}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
-								after_save_ok
+							if voteable_total_votes > 0 && voteable_votes_count > 0
+								if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count })
+									# @notice = "你还可以给#{@remain_epv - 1}#{unit_for('Entry')}#{ENTRY_CN}#{VOTE_CN}!"
+									after_save_ok
+								end
 							end
 						end
 					end
@@ -61,10 +65,12 @@ class VotesController < ApplicationController
 						voteable_total_votes = @voteable.total_votes - 1
 					end
 				end
-				ActiveRecord::Base.transaction do
-					if @vote.update_attribute(:votes, new_votes)
-						if @voteable.update_attribute(:total_votes, voteable_total_votes)
-							after_save_ok
+				if new_votes >= 0 && voteable_total_votes >= 0
+					ActiveRecord::Base.transaction do
+						if @vote.update_attribute(:votes, new_votes)
+							if @voteable.update_attribute(:total_votes, voteable_total_votes)
+								after_save_ok
+							end
 						end
 					end
 				end
@@ -78,11 +84,13 @@ class VotesController < ApplicationController
 		load_votein
 		voteable_total_votes = @voteable.total_votes - @vote.votes
 		voteable_votes_count = @voteable.votes_count - 1
-		ActiveRecord::Base.transaction do
-			if @vote.destroy
-				if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count})
-					@redirect = true if params[:filter] == 'voted'
-					after_save_ok
+		if voteable_total_votes >= 0 && voteable_votes_count >= 0
+			ActiveRecord::Base.transaction do
+				if @vote.destroy
+					if @voteable.update_attributes({ :total_votes => voteable_total_votes, :votes_count => voteable_votes_count})
+						@redirect = true if params[:filter] == 'voted'
+						after_save_ok
+					end
 				end
 			end
 		end
@@ -109,7 +117,7 @@ class VotesController < ApplicationController
 				render :update do |page|
 					page.hide "flash_wrapper"
 					page.replace_html "#{type_for(@voteable).downcase}_#{@voteable.id}_vote_bar", 
-														:partial => "/votes/vote_bar", 
+														:partial => 'votes/vote_bar', 
 							 							:locals => { :voteable => @voteable, 
 							 													 :votein => @votein, 
 							 													 :show_vote_todo => true }
@@ -128,7 +136,7 @@ class VotesController < ApplicationController
 			format.js do
 				render :update do |page|
 					page.replace_html "flash_wrapper", 
-														:partial => "/layouts/flash",
+														:partial => 'layouts/flash',
 											 			:locals => { :notice => @notice }
 					page.show "flash_wrapper"
 				end
