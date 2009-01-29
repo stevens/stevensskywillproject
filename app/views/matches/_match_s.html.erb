@@ -31,17 +31,8 @@
 </div>
 
 <div id="match_<%= item.id %>_main" class="main">
-	<ul>
-		<li><%= "发起者: #{SITE_NAME_CN}" %></li>
-		<li><%= "作品类型: #{name_for(item.entriable_type)}" %></li>
-		<li><%= "主题: #{strip_tags(item.subject)}" %></li>
-		<li><%= "口号: #{strip_tags(item.slogan)}" %></li>
-		<li><%= "时间: #{time_iso_format(item.start_at, false, true)} -- #{time_iso_format(item.end_at, false, true)}" %></li>
-		<li>
-			<%= render :partial => '/matches/match_status', 
-								 :locals => { :item => item } %>
-		</li>
-	</ul>
+	<%= render :partial => 'matches/match_summary', 
+						 :locals => { :item => item } %>
 </div>
 
 <% if show_todo %>

@@ -1,12 +1,16 @@
-<h1>Editing match</h1>
+<div class="content_block">
+	
+	<div class="block_header">
+		<div class="block_header_link">
+			<%= link_to SEE_CN, :action => 'show' %>
+		</div>
+		<h1><%= strip_tags @block_title %></h1>
+	</div>
+	
+	<div class="block_main">
+		<%= render :partial => 'matches/match_input', 
+							 :locals => { :match => @match, 
+							 						  :is_new => false } %>
+	</div>
 
-<%= error_messages_for :match %>
-
-<% form_for(@match) do |f| %>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
-
-<%= link_to 'Show', @match %> |
-<%= link_to 'Back', matches_path %>
+</div>

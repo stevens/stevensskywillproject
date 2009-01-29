@@ -24,12 +24,11 @@
 			</li>
 			<li>
 				<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
-			</li>
-			<% if item.original_updated_at && item.created_at != item.original_updated_at %>
-				<li>
+				<% if item.original_updated_at && item.created_at != item.original_updated_at %>
+					&nbsp;
 					<%= "#{time_iso_format(item.original_updated_at, true)} #{UPDATE_CN}" %>
-				</li>
-			<% end %>
+				<% end %>
+			</li>
 			<li>
 				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Match')}#{MATCH_CN}" %>
 			</li>
@@ -44,16 +43,8 @@
 	</div>
 	
 	<div class="main">
-		<ul>
-			<li><%= "发起者: #{SITE_NAME_CN}" %></li>
-			<li><%= "作品类型: #{name_for(item.entriable_type)}" %></li>
-			<li><%= "主题: #{strip_tags(item.subject)}" %></li>
-			<li><%= "口号: #{strip_tags(item.slogan)}" %></li>
-			<li>
-				<%= render :partial => '/matches/match_status', 
-									 :locals => { :item => item } %>
-			</li>
-		</ul>
+		<%= render :partial => 'matches/match_summary', 
+							 :locals => { :item => item } %>
 	</div>
 </div>
 
@@ -116,12 +107,12 @@
 
 <div id="match_<%= item.id %>_main" class="item_detail">
 	<div class="main">
-		<h3><%= "#{DESCRIPTION_CN}:" %></h3>
+		<h3><%= DESCRIPTION_CN %></h3>
 		<ul><%= paragraphs(item.description, true, true) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "赛程安排:" %></h3>
+		<h3><%= "赛程安排" %></h3>
 		<ul>
 			<li>
 				<span class='text'><%= "启动时间: #{time_iso_format(item.start_at, false, true)}" %></span>
@@ -141,7 +132,7 @@
 	</div>
 	
 	<div class="main">
-		<h3><%= "奖项设置:" %></h3>
+		<h3><%= "奖项设置" %></h3>
 		<ul>
 			<% for award in item.awards %>
 				<li style="padding-left: 24px">
@@ -154,54 +145,91 @@
 	</div>
 	
 	<div class="main">
-		<h3><%= "规则:" %></h3>
+		<h3><%= "规则" %></h3>
 		<ul>
 			<em class="more">
 				<% entry_unit = unit_for('Entry') %>
-				<% if item.entries_per_player %>
+				
+				<% if epp = item.entries_per_player %>
 					<li>
-						<span class='text'><%= "每位选手最多可以提交#{item.entries_per_player}#{entry_unit}#{ENTRY_CN}" %></span>
+						<span class='text'>
+							<% if epp > 0 %>
+								<%= "每位选手最多可以提交 #{epp} #{entry_unit}#{ENTRY_CN}" %>
+							<% elsif epp == -1 %>
+								<%= "每位选手可以提交不限数量的#{ENTRY_CN}" %>
+							<% end %>
+						</span>
 					</li>
 				<% end %>
-				<!-- <li>
-					<span class='text'><%= "每#{entry_unit}#{ENTRY_CN}至少要包括#{item.chars_per_entry}个文字, #{item.photos_per_entry}#{unit_for('Photo')}#{PHOTO_CN}, #{item.tags_per_entry}个#{TAG_CN}" %></span>
-				</li> -->
-				<% if item.entries_per_voter %>
+				
+				<% if epv = item.entries_per_voter %>
 					<li>
-						<span class='text'><%= "每位投票者最多可以给#{item.entries_per_voter}#{entry_unit}#{ENTRY_CN}#{VOTE_CN}" %></span>
+						<span class='text'>
+							<% if epv > 0 %>
+								<%= "每位投票者最多可以给 #{epv} #{entry_unit}#{ENTRY_CN}#{VOTE_CN}" %>
+							<% elsif epv == -1 %>
+								<%= "每位投票者可以给不限数量的#{ENTRY_CN}#{VOTE_CN}" %>
+							<% end %>
+						</span>
 					</li>
 				<% end %>
-				<% if item.votes_per_entry %>
+				
+				<% if vpe = item.votes_per_entry %>
 					<li>
-						<span class='text'><%= "每位投票者最多可以给每#{entry_unit}#{ENTRY_CN}投#{item.votes_per_entry}票" %></span>
+						<span class='text'>
+							<% if vpe > 0 %>
+								<%= "每位投票者最多可以给每#{entry_unit}#{ENTRY_CN}投 #{vpe} 票" %>
+							<% end %>
+						</span>
 					</li>
 				<% end %>
-				<% if item.self_vote == '1' %>
+
+				<% if vll = item.votes_lower_limit %>
 					<li>
-						<span class='text'><%= "允许选手给自己的#{ENTRY_CN}#{VOTE_CN}" %></span>
+						<span class='text'>
+							<% if vll > 0 %>
+								<%= "每#{entry_unit}#{ENTRY_CN}至少需要 #{vll} 位投票者#{VOTE_CN}才能参与奖项评选" %>
+							<% end %>
+						</span>
 					</li>
 				<% end %>
-				<% if item.awards_per_entry %>
+
+				<% if ape = item.awards_per_entry %>
 					<li>
-						<span class='text'><%= "每#{entry_unit}#{ENTRY_CN}最多可以获得#{item.awards_per_entry}个奖项" %></span>
+						<span class='text'>
+							<% if ape > 0 %>
+								<%= "每#{entry_unit}#{ENTRY_CN}最多可以获得 #{ape} 个奖项" %>
+							<% elsif ape == -1 %>
+								<%= "每#{entry_unit}#{ENTRY_CN}可以获得不限数量的奖项" %>
+							<% end %>
+						</span>
 					</li>
 				<% end %>
-				<% if item.awards_per_player %>
+
+				<% if app = item.awards_per_player %>
 					<li>
-						<span class='text'><%= "每位选手最多可以获得#{item.awards_per_entry}个奖项" %></span>
+						<span class='text'>
+							<% if app > 0 %>
+								<%= "每位选手最多可以获得 #{app} 个奖项" %>
+							<% elsif app == -1 %>
+								<%= "每位选手可以获得不限数量的奖项" %>
+							<% end %>
+						</span>
 					</li>
 				<% end %>
 			</em>
 		</ul>
+		
+		<ul><%= paragraphs(item.rules, true, true) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "其他:" %></h3>
+		<h3><%= "其他" %></h3>
 		<ul><%= paragraphs(item.any_else, true, true) %></ul>
 	</div>
 	
 	<div class="main">
-		<h3><%= "相关链接:" %></h3>
+		<h3><%= "相关链接" %></h3>
 		<ur/><%=  %></ul>
 	</div>
 </div>

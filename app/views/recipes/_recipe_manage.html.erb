@@ -29,7 +29,7 @@
 	<% unless hide_delete %>
 		<% delete_message = "确定要#{DELETE_CN}这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
 		<% buttons << [ [ 'delete' ], 
-										[ DELETE_CN, url_for(:action => 'destroy', :id => item.id, :ref => ref, :filter => params[:filter]), delete_message, 'delete' ] 
+										[ DELETE_CN, url_for(:action => 'destroy', :id => item.id, :ref => ref, :filter => params[:filter], :page => params[:page]), delete_message, 'delete' ] 
 									] %>
 	<% end %>
 	

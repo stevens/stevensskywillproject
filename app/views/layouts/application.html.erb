@@ -4,8 +4,8 @@
 	<head>
 		<meta name="verify-v1" content="hUX0qOnC9Aij4Hhvz5697CDY7m57cxWmkQFOAGbm+yU=" />
 		<title><%= strip_tags @page_title %></title>
-		<% default_meta_description = "蜂厨(BeeCook)——用心与爱打造最棒最有味的以美食和厨艺为主题的新概念社区化网络平台……" %>
-		<% default_meta_keywords = %w[蜂厨 BeeCook 美食 美味 味道 厨艺 厨道 厨房 厨师 厨友 吃 私房 私房菜 食谱 菜谱 餐单 菜单 餐厅 餐馆 餐饮 社区 社区化 图片 视频 评论 评分 收藏 收尝 标签 food recipe kichen cook chef menu delicious] %>
+		<% default_meta_description = "蜂厨(BeeCook)——用心与爱打造最棒最有味的以美食和厨艺为主题的新概念社区化网络平台..." %>
+		<% default_meta_keywords = %w[蜂厨 BeeCook 美食 美味 味道 厨艺 厨道 厨房 厨师 厨友 吃 私房 私房菜 食谱 菜谱 餐单 食单 菜单 餐厅 餐馆 餐饮 社区 社区化 图片 视频 评论 评分 收藏 收尝 标签 food recipe kichen cook chef menu delicious] %>
 		<meta name="description" content="<%= strip_tags(@meta_description ? @meta_description : default_meta_description) %>" />
 		<meta name="keywords" content="<%= strip_tags(@meta_keywords ? (@meta_keywords + default_meta_keywords).join(',') : default_meta_keywords.join(',')) %>" />
 		<%= stylesheet_link_tag "alpha/application.css" %>
@@ -14,7 +14,7 @@
 		<%= javascript_include_tag "prototype.js" %>
 		<%= javascript_include_tag :defaults %>
 		
-		<%= calendar_date_select_includes "silver" %>
+		<%= calendar_date_select_includes 'silver', :locale=>'zh' %>
 
 		<!-- tips显示代码start -->
 		<%= javascript_include_tag 'beecook.js' %>
@@ -140,6 +140,9 @@
 						<div id="shotcut_bar">
 							<% if ['site', 'mine', 'recipe'].include?(@current_tab_type) %>
 								<em><%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %></em>
+							<% end %>
+							<% if @current_user && @current_user.is_role_of?('admin') && (['match'].include?(@current_tab_type) || (['mine'].include?(@current_tab_type) && ['matches'].include?(params[:controller]))) %>
+								<em><%= link_to "#{CREATE_CN}#{MATCH_CN}", new_match_path %></em>
 							<% end %>
 							<!-- <% if ['mine', 'user'].include?(@current_tab_type) %>
 								<em><%= link_to "邀请#{FRIEND_CN}", '' %></em>

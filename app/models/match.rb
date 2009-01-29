@@ -28,7 +28,7 @@ class Match < ActiveRecord::Base
   				 :order => "created_at DESC"
 	
 	def accessible?(someuser = nil)
-		true
+		self.id != '999' ? true : false
 	end
 	
 	#判断比赛是否处于某个状态

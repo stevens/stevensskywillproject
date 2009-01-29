@@ -251,12 +251,12 @@ Rails::Initializer.run do |config|
 	
 	MATCH_CN = '比赛'
 	ENTRY_CN = '参赛作品'
-	PLAYER_CN = '参赛人'
+	PLAYER_CN = '选手'
 	VOTE_CN = '投票'
-	VOTER_CN = '投票人'
+	VOTER_CN = '投票者'
 	AWARD_CN = '奖项'
 	WINNING_CN = '获奖作品'
-	WINNER_CN = '获奖人'
+	WINNER_CN = '获奖者'
 	
 	ABOUT_CN = '关于'
 	CONTACT_US_CN = '联系我们'
@@ -379,3 +379,5 @@ end
 	
 	TagList.delimiter = " "
 	Tag.destroy_unused = true
+	
+	CalendarDateSelect.format = :iso_date

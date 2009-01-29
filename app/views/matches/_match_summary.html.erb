@@ -1,0 +1,13 @@
+<ul>
+	<li><%= "发起者: " %><%= link_to item_title(item.organiger), item_link_url(item.organiger) %></li>
+	<li><%= "作品类型: #{name_for(item.entriable_type)}" %></li>
+	<li><%= "主题: #{strip_tags(item.subject)}" %></li>
+	<% if !item.slogan.blank? %>
+		<li><%= "口号: #{strip_tags(item.slogan)}" %></li>
+	<% end %>
+	<li><%= "时间: #{time_iso_format(item.start_at, false, true)} -- #{time_iso_format(item.end_at, false, true)}" %></li>
+	<li>
+		<%= render :partial => 'matches/match_status', 
+							 :locals => { :item => item } %>
+	</li>
+</ul>

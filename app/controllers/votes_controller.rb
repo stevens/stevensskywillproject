@@ -8,11 +8,16 @@ class VotesController < ApplicationController
 	end
 	
 	def create
-		@vote = @parent_obj.votes.build
-		@vote.user_id = @current_user.id
-		@vote.votes = 1
-		@vote.votein_type = params[:votein_type].camelize
-		@vote.votein_id = params[:votein_id]
+		params[:vote] = {}
+		params[:vote][:user_id] = @current_user.id
+		params[:vote][:votes] = 1
+		params[:vote][:votein_type] = params[:votein_type].camelize
+		params[:vote][:votein_id] = params[:votein_id]
+		@vote = @parent_obj.votes.build(params[:vote])
+		# @vote.user_id = @current_user.id
+		# @vote.votes = 1
+		# @vote.votein_type = params[:votein_type].camelize
+		# @vote.votein_id = params[:votein_id]
 		
 		load_votein
 		current = Time.now

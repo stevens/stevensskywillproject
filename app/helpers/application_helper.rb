@@ -141,6 +141,8 @@ module ApplicationHelper
 	
 	def item_link_url(item)
 		case type_for(item)
+		when 'User'
+			user_first_link(item, true)
 		when 'Match'
 			item_first_link(item, true)
 		else

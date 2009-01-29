@@ -3,7 +3,6 @@ class MatchesController < ApplicationController
   before_filter :protect, :except => [:index, :show, :overview, :profile, :help]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :profile]
-	before_filter :load_current_filter, :only => [:index, :mine]
   before_filter :set_system_notice, :only => [:show, :index, :overview, :profile]
   
   def help
@@ -37,7 +36,7 @@ class MatchesController < ApplicationController
   def index
     respond_to do |format|
       if @user && @user == @current_user
-      	format.html { redirect_to :action => 'mine', :filter => @current_filter }
+      	format.html { redirect_to :action => 'mine', :filter => params[:filter] }
       else
 		    load_matches_set(@user)
 		  	
@@ -48,9 +47,8 @@ class MatchesController < ApplicationController
 		  	# @show_todo = true
 		  	# @show_favorite = true
 				
-      	format.html # index.html.erb
+      	format.html
       end
-      # format.xml  { render :xml => @matches_set }
     end
   end
   
@@ -63,17 +61,97 @@ class MatchesController < ApplicationController
 		
 		# show_sidebar
 		
-		info = "#{MATCH_CN}详情 - #{@match.title}"
+		match_title = item_title(@match)
+		match_username = user_username(@match.user, true, true)
+		match_link_url = item_first_link(@match)
+		
+		info = "#{MATCH_CN}详情 - #{match_title}"
 		set_page_title(info)
 		set_block_title(info)
-		# @meta_description = "这是#{@recipe.title}的#{RECIPE_CN}（菜谱）信息, 来自#{@recipe.user.login}. "
-		# @meta_keywords = [@recipe.title, @recipe.user.login, DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
-		# @meta_keywords << @recipe.tag_list
+		@meta_description = "这是#{match_title}的#{MATCH_CN}详情信息, 来自#{match_username}. "
+		set_meta_keywords
+		@meta_keywords = [ match_title, match_username, match_link_url ] + @meta_keywords
+		@meta_keywords << @match.tag_list if !@match.tag_list.blank?
 
     respond_to do |format|
-      format.html # show.html.erb
-      # format.xml  { render :xml => @match }
+      format.html
     end
+  end
+  
+  def new
+    @match = @current_user.matches.build
+    
+    info = "新#{MATCH_CN}"
+		set_page_title(info)
+		set_block_title(info)
+    
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def edit
+    load_match(@current_user)
+    
+ 		match_title = item_title(@match)
+    
+ 		info = "#{EDIT_CN}#{MATCH_CN} - #{match_title}"
+		set_page_title(info)
+		set_block_title(info)
+		
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def create
+    set_time
+    set_tag_list
+
+    @match = @current_user.matches.build(params[:match])
+    @match.status = '10'
+    @match.is_draft = '0'
+    @match.self_vote = '1'
+    @match.privacy = '10'
+		@match.organiger_type = 'User'
+		@match.organiger_id = @current_user.id
+		
+    ActiveRecord::Base.transaction do    
+			if @match.save
+				reg_homepage(@match)
+				after_create_ok
+			else
+				after_create_error
+			end
+		end
+  end
+  
+  def update
+    load_match(@current_user)
+    params[:match][:original_updated_at] = Time.now
+
+    set_time
+    set_tag_list
+    
+    ActiveRecord::Base.transaction do
+		  if @match.update_attributes(params[:match])
+				reg_homepage(@match, 'update')
+				after_update_ok
+		  else
+				after_update_error
+		  end
+	  end
+  end
+  
+  def destroy
+    load_match(@current_user)
+		
+		ActiveRecord::Base.transaction do
+			if @match.destroy
+				reg_homepage(@match, 'destroy')
+				after_destroy_ok
+			end
+		end
   end
   
   def profile
@@ -99,15 +177,23 @@ class MatchesController < ApplicationController
 	  	end
   	end
   	
+  	show_sidebar
+  	
+		match_title = item_title(@match)
+		match_username = user_username(@match.user, true, true)
+		match_link_url = item_first_link(@match, true)
+		
+		info = "#{MATCH_CN} - #{match_title}"
+		set_page_title(info)
+		@meta_description = "这是#{match_title}的#{MATCH_CN}信息, 来自#{match_username}. "
+		set_meta_keywords
+		@meta_keywords = [ match_title, match_username, match_link_url ] + @meta_keywords
+		@meta_keywords << @match.tag_list if !@match.tag_list.blank?
+  	
     respond_to do |format|
-		 	log_count(@match)
-		 	
-		 	info = "#{MATCH_CN} - #{@match.title}"
-			set_page_title(info)
-			
-			show_sidebar
-			
-  		format.html # profile.html.erb
+  		format.html do
+  			log_count(@match)
+  		end
     end
   end
   
@@ -123,12 +209,43 @@ class MatchesController < ApplicationController
 		set_block_title(info)
 		
     respond_to do |format|
-      format.html { render :template => "matches/index" }
-      # format.xml  { render :xml => @matches_set }
+      format.html { render :template => 'matches/index' }
     end
   end
   
   private
+  
+	def set_meta_keywords
+		@meta_keywords = [ '比赛', '大奖赛', '美食大赛', '美食大奖赛', DESCRIPTION_CN, '介绍', '时间', '赛程', '赛程时间', '赛程安排', '奖项', '奖品', '奖项设置', '规则', '选手', '作品', '投票', '获奖', '获奖名单' ]
+	end
+  
+  def set_tag_list
+    if !params[:match][:tag_list].strip.blank?
+    	params[:match][:tag_list] = clean_tags(params[:match][:tag_list])
+    end
+  end
+  
+  def set_time
+    params[:match][:enrolling_start_at] = params[:match][:start_at] if params[:match][:enrolling_start_at].blank?
+    params[:match][:collecting_start_at] = params[:match][:start_at] if params[:match][:collecting_start_at].blank?
+    params[:match][:voting_start_at] = params[:match][:start_at] if params[:match][:voting_start_at].blank?
+    params[:match][:end_at] = params[:match][:end_at].to_time.end_of_day if !params[:match][:end_at].blank?
+    if params[:match][:enrolling_end_at].blank?
+    	params[:match][:enrolling_end_at] = params[:match][:end_at]
+    else
+    	params[:match][:enrolling_end_at] = params[:match][:enrolling_end_at].to_time.end_of_day
+    end
+    if params[:match][:collecting_end_at].blank?
+    	params[:match][:collecting_end_at] = params[:match][:end_at]
+    else
+    	params[:match][:collecting_end_at] = params[:match][:collecting_end_at].to_time.end_of_day
+    end
+    if params[:match][:voting_end_at].blank?
+    	params[:match][:voting_end_at] = params[:match][:end_at]
+    else
+    	params[:match][:voting_end_at] = params[:match][:voting_end_at].to_time.end_of_day
+    end
+  end
   
   def load_match(user = nil)
   	if user
@@ -139,14 +256,7 @@ class MatchesController < ApplicationController
   end
   
   def load_matches_set(user = nil)
-  	if user
-  		match_actors = user.match_actors.find(:all)
-  		joined_matches_set = joined_matches(match_actors)
-  	else
-  		joined_matches_set = []
-  	end
-  	created_matches_set = matches_for(user)
-  	@matches_set = created_matches_set | joined_matches_set
+  	@matches_set = filtered_matches_set(user, params[:filter])
   	@matches_set_count = @matches_set.size
   end
   
@@ -154,5 +264,62 @@ class MatchesController < ApplicationController
 		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), nil, 'RAND()'))
 		@contactors_set_count = @contactors_set.size
 	end
+	
+  def after_create_ok
+  	respond_to do |format|
+			format.html do
+				flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}, 快去#{ADD_CN}几#{unit_for('Photo')}漂亮的#{PHOTO_CN}吧!"	
+				redirect_to @match
+			end
+		end
+  end
+  
+  def after_create_error
+  	respond_to do |format|
+			format.html do
+				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+				
+				info = "新#{MATCH_CN}"	
+				set_page_title(info)
+				set_block_title(info)
+				
+				render :action => "new"
+				clear_notice
+			end
+		end
+  end
+  
+  def after_update_ok
+  	respond_to do |format|
+			format.html do 
+				flash[:notice] = "你已经成功#{UPDATE_CN}了1#{@self_unit}#{@self_name}!"	
+				redirect_to @match
+			end
+		end
+  end
+  
+  def after_update_error
+  	respond_to do |format|
+			format.html do
+				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+				
+				info = "#{EDIT_CN}#{MATCH_CN} - #{@match.title}"
+				set_page_title(info)
+				set_block_title(info)
+				
+				render :action => "edit"
+				clear_notice
+			end
+		end
+  end
+  
+  def after_destroy_ok
+		respond_to do |format|
+		  format.html do
+		  	flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"	
+		  	redirect_to url_for(:controller => 'matches', :action => 'mine', :filter => params[:filter], :page => params[:page])
+		  end
+		end
+  end
   
 end

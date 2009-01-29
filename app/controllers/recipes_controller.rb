@@ -3,7 +3,6 @@ class RecipesController < ApplicationController
 	before_filter :protect, :except => [:index, :show, :overview]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
-	before_filter :load_current_filter, :only => [:index, :mine]
 	before_filter :set_system_notice, :only => [:overview]
 	
 	def change_from_type
@@ -30,7 +29,7 @@ class RecipesController < ApplicationController
   def index
     respond_to do |format|
       if @user && @user == @current_user
-      	format.html { redirect_to :action => 'mine', :filter => @current_filter }
+      	format.html { redirect_to :action => 'mine', :filter => params[:filter] }
       else
 		    load_recipes_set(@user)
 		  	
@@ -41,7 +40,7 @@ class RecipesController < ApplicationController
 		  	@show_todo = true
 		  	@show_favorite = true
 				
-      	format.html # index.html.erb
+      	format.html
       end
       # format.xml  { render :xml => @recipes_set }
     end
@@ -72,21 +71,28 @@ class RecipesController < ApplicationController
 		current = Time.now
 		if @recipe.match_id && (@match = Match.find_by_id_and_entriable_type(@recipe.match_id, 'Recipe')) && @match.doing?(current)
 			@entry = @match.find_entry(@recipe)
-		end
-		
-    log_count(@recipe)												
+		end											
 		
 		show_sidebar
 		
-		info = "#{RECIPE_CN} - #{@recipe.title}"
+		recipe_title = item_title(@recipe)
+		recipe_common_title = @recipe.common_title.strip if !@recipe.common_title.blank?
+		recipe_username = user_username(@recipe.user, true, true)
+		recipe_link_url = item_first_link(@recipe)
+		
+		info = "#{RECIPE_CN} - #{recipe_title}"
 		set_page_title(info)
 		set_block_title(info)
-		@meta_description = "这是#{@recipe.title}的#{RECIPE_CN}（菜谱）信息, 来自#{@recipe.user.login}. "
-		@meta_keywords = [@recipe.title, @recipe.user.login, DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
-		@meta_keywords << @recipe.tag_list
+		@meta_description = "这是#{recipe_title}的#{RECIPE_CN}信息, 来自#{recipe_username}. "
+		set_meta_keywords
+		@meta_keywords = [recipe_common_title] + @meta_keywords if !recipe_common_title.blank?
+		@meta_keywords = [ recipe_title, recipe_username, recipe_link_url ] + @meta_keywords
+		@meta_keywords << @recipe.tag_list if !@recipe.tag_list.blank?
 																							 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+      	log_count(@recipe)
+      end
       # format.xml  { render :xml => @recipe }
     end
   end
@@ -104,7 +110,7 @@ class RecipesController < ApplicationController
 		set_block_title(info)
     
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       # format.xml  { render :xml => @recipe }
     end
     
@@ -116,30 +122,36 @@ class RecipesController < ApplicationController
     
     # load_recipes_set(@current_user)
     
- 		info = "#{EDIT_CN}#{RECIPE_CN} - #{@recipe.title}"
+    recipe_title = item_title(@recipe)
+    
+ 		info = "#{EDIT_CN}#{RECIPE_CN} - #{recipe_title}"
 		set_page_title(info)
 		set_block_title(info)
+		
+		respond_to do |format|
+			format.html
+		end
   end
 
   # POST /recipes
   # POST /recipes.xml
   def create
-    if !params[:recipe][:tag_list].strip.blank?
-    	params[:recipe][:tag_list] = clean_tags(params[:recipe][:tag_list])
-    end
+  	set_tag_list
 
     @recipe = @current_user.recipes.build(params[:recipe])
     @recipe.status = @recipe.get_status
     # @recipe.is_draft = params[:is_draft]
     # @recipe.is_draft = @recipe.get_is_draft
     # @recipe.published_at = @recipe.get_published_at
-        
-		if @recipe.save
-			# @recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
-			reg_homepage(@recipe)
-			after_create_ok
-		else
-			after_create_error
+    
+    ActiveRecord::Base.transaction do    
+			if @recipe.save
+				# @recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
+				reg_homepage(@recipe)
+				after_create_ok
+			else
+				after_create_error
+			end
 		end
   end
 
@@ -159,16 +171,17 @@ class RecipesController < ApplicationController
     # params[:recipe][:published_at] = new_recipe.published_at
     params[:recipe][:original_updated_at] = Time.now
     params[:recipe][:status] = new_recipe.get_status
-    if !params[:recipe][:tag_list].strip.blank?
-    	params[:recipe][:tag_list] = clean_tags(params[:recipe][:tag_list])
-    end
+		
+		set_tag_list
     
-	  if @recipe.update_attributes(params[:recipe])
-	  	# @recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
-			reg_homepage(@recipe, 'update')
-			after_update_ok
-	  else
-			after_update_error
+    ActiveRecord::Base.transaction do
+		  if @recipe.update_attributes(params[:recipe])
+		  	# @recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
+				reg_homepage(@recipe, 'update')
+				after_update_ok
+		  else
+				after_update_error
+		  end
 	  end
   end
 
@@ -178,9 +191,12 @@ class RecipesController < ApplicationController
     load_recipe(@current_user)
 		
 		if !@recipe.entrying?
-			@recipe.destroy
-			reg_homepage(@recipe, 'destroy')
-			after_destroy_ok
+			ActiveRecord::Base.transaction do
+				if @recipe.destroy
+					reg_homepage(@recipe, 'destroy')
+					after_destroy_ok
+				end
+			end
 		end
   end
   
@@ -246,7 +262,6 @@ class RecipesController < ApplicationController
 		set_block_title(info)
 	end
   
-  # /recipes/overview
   def overview
 	  load_recipes_set
 	  load_random_recipes
@@ -293,6 +308,16 @@ class RecipesController < ApplicationController
 	# def set_system_notice
 		# @system_notice = "号外: 提供食谱的<em>蜂友的blog</em>可以<em>自动加入</em>食谱的<em>相关链接</em>啦!"
 	# end
+	
+	def set_meta_keywords
+		@meta_keywords = [ DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN ]
+	end
+  
+  def set_tag_list
+    if !params[:recipe][:tag_list].strip.blank?
+    	params[:recipe][:tag_list] = clean_tags(params[:recipe][:tag_list])
+    end
+  end
   
   def load_recipe(user = nil)
   	if user
@@ -307,7 +332,7 @@ class RecipesController < ApplicationController
   
   def load_recipes_set(user = nil)
   	order = @order? @order : 'published_at DESC, created_at DESC'
-  	@recipes_set = filtered_recipes(user, @current_filter, nil, order)
+  	@recipes_set = filtered_recipes(user, params[:filter], nil, order)
   	@recipes_set_count = @recipes_set.size
   end
   
@@ -394,7 +419,7 @@ class RecipesController < ApplicationController
 		  format.html do
 		  	flash[:notice] = "你已经成功#{DELETE_CN}了1#{@self_unit}#{@self_name}!"	
 		  	# redirect_back_or_default('mine')
-		  	redirect_to :action => 'mine'
+		  	redirect_to url_for(:controller => 'recipes', :action => 'mine', :filter => params[:filter], :page => params[:page])
 		  end
 		  # format.xml  { head :ok }
 		end

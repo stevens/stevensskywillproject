@@ -1,41 +1,41 @@
 <div id="matches_wrapper" class="content_block">
 	
 	<div id="matches_header" class="block_header">
-		<%= render :partial => "/layouts/index_header", 
-							 :locals => {:show_header_link => true, 
-							 						 :show_new_link => false, 
-							 						 :block_title => @block_title} %>
+		<%= render :partial => 'layouts/index_header', 
+							 :locals => { :show_header_link => true, 
+							 						  :show_new_link => false, 
+							 						  :block_title => @block_title } %>
 	</div>
 	
 	<div id="matches_detail" class="block_main">
 		<% if params[:controller] == 'matches' %>
-			<!-- <div id="matches_filter_bar" class="filter_bar">
-				<%= render :partial => "/matches/matches_filter_bar" %>
-			</div> -->
+			<div id="matches_filter_bar" class="filter_bar">
+				<%= render :partial => 'matches/matches_filter_bar' %>
+			</div>
 		<% elsif params[:controller] == 'favorites' %>
 			<div id="favorites_filter_bar" class="filter_bar">
-				<%= render :partial => "/favorites/favorites_filter_bar", 
+				<%= render :partial => 'favorites/favorites_filter_bar', 
 									 :locals => { :favorable_type => 'Match' } %>
 			</div>			
 		<% end %>
 		
 		<div id="matches_list">
-			<%= render :partial => "/layouts/items_list",
-								 :locals => {:show_paginate => true,
-								 						 :items_set => @matches_set || @taggables_set || @searchables_set, 
-								 						 :limit => nil,
-								 						 :itemable_sym => nil, 
-								 						 :show_photo => true,
-								 						 :photo_style => 'portrait',  
-								 						 :show_below_photo => true, 
-								 						 :show_title => false, 
-								 						 :show_user => false, 
-								 						 :show_photo_todo => @show_photo_todo, 
-								 						 :show_parent => false,
-								 						 :show_todo => @show_todo, 
-								 						 :show_favorite => @show_favorite, 
-								 						 :show_manage => @show_manage, 
-								 						 :delete_remote => false} %>
+			<%= render :partial => 'layouts/items_list',
+								 :locals => { :show_paginate => true,
+								 						  :items_set => @matches_set || @taggables_set || @searchables_set, 
+								 						  :limit => nil,
+								 						  :itemable_sym => nil, 
+								 						  :show_photo => true,
+								 						  :photo_style => 'portrait',  
+								 						  :show_below_photo => true, 
+								 						  :show_title => false, 
+								 						  :show_user => false, 
+								 						  :show_photo_todo => @show_photo_todo, 
+								 						  :show_parent => false,
+								 						  :show_todo => @show_todo, 
+								 						  :show_favorite => @show_favorite, 
+								 						  :show_manage => @show_manage, 
+								 						  :delete_remote => false } %>
 		</div>
 	</div>
 

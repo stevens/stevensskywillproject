@@ -10,6 +10,8 @@ class AddMatchFields2 < ActiveRecord::Migration
   	add_column :matches, :collecting_end_at, :datetime
   	add_column :matches, :original_updated_at, :datetime
   	add_column :matches, :published_at, :datetime
+  	add_column :matches, :rules, :text
+  	add_column :matches, :is_draft, :string
   end
 
   def self.down
@@ -23,5 +25,7 @@ class AddMatchFields2 < ActiveRecord::Migration
   	remove_column :matches, :collecting_end_at
   	remove_column :matches, :original_updated_at
   	remove_column :matches, :published_at
+  	remove_column :matches, :rules
+  	remove_column :matches, :is_draft
   end
 end
