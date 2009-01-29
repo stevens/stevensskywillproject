@@ -26,7 +26,7 @@ module EntriesHelper
   def entried_matches(entries)
   	matches = []
   	for entry in entries
-  		matches << entry.match
+  		matches << entry.match if (entry.match && entry.match.accessible?)
   	end
   	matches
   end

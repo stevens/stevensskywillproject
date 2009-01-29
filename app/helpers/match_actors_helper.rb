@@ -4,7 +4,7 @@ module MatchActorsHelper
   	matches = []
   	for ma in match_actors
   		if match_status
-  			matches << ma.match if ma.match.status == match_status
+  			matches << ma.match if (ma.match && ma.match.accessible? && ma.match.status == match_status)
   		else
   			matches << ma.match
   		end

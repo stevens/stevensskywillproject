@@ -115,6 +115,7 @@ class MatchesController < ApplicationController
     @match.privacy = '10'
 		@match.organiger_type = 'User'
 		@match.organiger_id = @current_user.id
+		@match.published_at = Time.now
 		
     ActiveRecord::Base.transaction do    
 			if @match.save

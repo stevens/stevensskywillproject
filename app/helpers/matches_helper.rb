@@ -18,7 +18,7 @@ module MatchesHelper
 		else
 			match_actors = user.match_actors.find(:all, :conditions => { :roles => actor_role })
 		end
-		accessible_matches(joined_matches(match_actors))
+		joined_matches(match_actors)
 	end
 	
 	def filtered_matches_set(user, filter = nil)
@@ -50,7 +50,7 @@ module MatchesHelper
 				end
 			end
 		else
-			matches_set = Match.find(:all)
+			matches_set = accessible_matches(Match.find(:all))
 			if filter.blank?
 				matches = matches_set
 			else
