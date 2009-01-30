@@ -201,9 +201,9 @@ class MatchesController < ApplicationController
   def mine
     load_matches_set(@current_user)
     
-  	# @show_photo_todo = true
-  	# @show_todo = true
-  	# @show_manage = true
+  	@show_photo_todo = true
+  	@show_todo = true
+  	@show_manage = true
 		
 		info = "#{username_prefix(@current_user)}#{MATCH_CN}"
 		set_page_title(info)

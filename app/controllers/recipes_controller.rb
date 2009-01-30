@@ -83,7 +83,7 @@ class RecipesController < ApplicationController
 		info = "#{RECIPE_CN} - #{recipe_title}"
 		set_page_title(info)
 		set_block_title(info)
-		@meta_description = "这是#{recipe_title}的#{RECIPE_CN}信息, 来自#{recipe_username}. "
+		@meta_description = "这是#{recipe_title}#{add_brackets(recipe_common_title, '(', ')')}的#{RECIPE_CN}信息, 来自#{recipe_username}. "
 		set_meta_keywords
 		@meta_keywords = [recipe_common_title] + @meta_keywords if !recipe_common_title.blank?
 		@meta_keywords = [ recipe_title, recipe_username, recipe_link_url ] + @meta_keywords

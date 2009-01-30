@@ -1,6 +1,6 @@
 <div id="match_<%= item.id %>_basic" class="basic">
 	<h2>
-		<%= render :partial => '/layouts/item_basic', 
+		<%= render :partial => 'layouts/item_basic', 
 							 :locals => { :item => item,
 							 							:show_icon => true,
 							 							:show_title => true,
@@ -8,7 +8,7 @@
 	</h2>
 	<ul>
 		<li>
-			<%= render :partial => '/users/user_basic', 
+			<%= render :partial => 'users/user_basic', 
 								 :locals => { :user => item.user, 
 								 							:show_come_from => false, 
 								 							:show_icon => true,
@@ -24,7 +24,7 @@
 								 :locals => { :item => item } %>
 		</li>
 		<li id="match_<%= item.id %>_stats">
-			<%= render :partial => '/matches/match_stats_s', 
+			<%= render :partial => 'matches/match_stats_s', 
 								 :locals => { :item => item } %>
 		</li>
 	</ul>
@@ -39,7 +39,7 @@
 	<div id="match_<%= item.id %>_todo" class="todo_right">
 		<% if show_favorite %>
 			<div id="match_<%= item.id %>_favorite" class="favorite_bar">
-				<%= render :partial => '/favorites/favorite_bar', 
+				<%= render :partial => 'favorites/favorite_bar', 
 									 :locals => { :favorable => item, 
 									 							:ref => nil,
 									 							:favoriter_id => @user ? @user.id : nil } %>
@@ -48,10 +48,9 @@
 		
 		<% if show_manage %>
 			<div id="match_<%= item.id %>_manage">
-				<%= render :partial => '/matches/match_manage', 
+				<%= render :partial => 'matches/match_manage', 
 									 :locals => { :item => item, 
-									 							:ref => nil, 
-									 							:delete_remote => delete_remote } %>
+									 							:ref => 'index' } %>
 			</div>
 		<% end %>	
 	</div>
