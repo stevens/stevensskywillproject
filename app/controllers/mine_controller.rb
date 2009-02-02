@@ -18,7 +18,7 @@ class MineController < ApplicationController
   	# classify_favorite_statuses
 	 	load_tags_set
 	 	load_contactors_set
-	 	load_matches_set
+	 	load_user_matches(@user)
 	 	
 	 	load_notifications if @current_user
 	 	
@@ -58,13 +58,6 @@ class MineController < ApplicationController
 	def load_contactors_set(user = @current_user)
 		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), 12, 'RAND()'))
 		@contactors_set_count = @contactors_set.size
-	end
-	
-	def load_matches_set(user = @current_user)
-		players = user.match_actors.find(:all, :order => 'RAND()', 
-																		 :conditions => { :roles => '1' })
-		@matches_set = joined_matches(players, '20')
-		@matches_set_count = @matches_set.size
 	end
 	
 	def classify_recipes
