@@ -1,11 +1,35 @@
 module MatchesHelper
 
+	def default_matches_order
+		'status, start_at DESC, end_at DESC, created_at DESC'
+	end
+
+	def match_accessible_conditions
+		"matches.id <> 999"
+	end
+	
+	def match_status_conditions(status, current = nil)
+		status_code = Code.find_by_codeable_type_and_name('match_status', status).code
+		conditions_list = [ "matches.status = '#{status_code}'" ]
+		if status == 'doing'
+			conditions_list += [ "matches.start_at <= '#{time_iso_format(current)}'", "matches.end_at >= '#{time_iso_format(current)}'" ]
+		end
+		conditions_list.join(' AND ')
+	end
+
 	def accessible_matches(matches_set)
 		matches = []
 		for match in matches_set
 			matches << match if match.accessible?
 		end
 		matches
+	end
+	
+	def user_joined_matches(user, match_actors_conditions, match_conditions, limit = nil, order = nil)
+		match_actors = user.match_actors.find(:all, :limit => limit, :order => order, 
+													 								:joins => "JOIN matches ON match_actors.match_id = matches.id", 
+													 								:conditions => "#{match_actors_conditions} AND #{match_conditions}")
+		joined_matches(match_actors)
 	end
 
 	def created_matches_set(user)

@@ -1,0 +1,36 @@
+<div id="<%= id %>_wrapper" class="sidebar_block">
+	<div id="<%= id %>_header" class="sidebar_block_header">
+		<div class="sidebar_block_header_link">
+			<% if block_header_links && block_header_links.size > 0 %>
+				<%= render :partial => 'layouts/todo_bar', 
+									 :locals => { :buttons => block_header_links } %>
+			<% end %>
+		</div>
+		<h1><%= strip_tags block_title %></h1>
+	</div>
+	
+	<div id="<%= id %>_detail" class="sidebar_block_main">
+		<% if item_groups && item_groups.size > 0 %>
+			<% for group in item_groups %>
+				<div id="<%= group[0] %>">
+					<div>
+						<em class="l2"><%= group[1] %></em>
+					</div>
+					<div id="<%= group[0] %>_matrix">
+						<%= render :partial => 'layouts/items_matrix',
+											 :locals => {:show_paginate => false,
+											 						 :items_set => group[2], 
+											 						 :limit => 8,
+											 						 :items_count_per_row => 4,  
+											 						 :show_photo => true, 
+											 						 :show_below_photo => false,  
+											 						 :show_title => false, 
+											 						 :show_user => false, 
+											 						 :show_photo_todo => false, 
+											 						 :photo_style => 'sign'} %>
+					</div>
+				</div>	
+			<% end %>
+		<% end %>
+	</div>
+</div>

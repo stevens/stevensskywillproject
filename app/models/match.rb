@@ -27,6 +27,10 @@ class Match < ActiveRecord::Base
   				 :dependent => :destroy, 
   				 :order => "created_at DESC"
 	
+	def self.default_order
+		'status, start_at DESC, end_at DESC, created_at DESC'
+	end
+	
 	def accessible?(someuser = nil)
 		id != 999 ? true : false
 	end

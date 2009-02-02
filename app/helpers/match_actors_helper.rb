@@ -1,4 +1,9 @@
 module MatchActorsHelper
+	
+	def match_actor_role_conditions(actor_role)
+		actor_role_code = Code.find_by_codeable_type_and_name('match_actor_role', actor_role).code
+		"match_actors.roles = #{actor_role_code}"
+	end
 
   def joined_matches(match_actors, match_status = nil)
   	matches = []

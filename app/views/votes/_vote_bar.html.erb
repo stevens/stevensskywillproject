@@ -1,18 +1,20 @@
 <% voteable_id_sym = item_id(voteable).to_sym %>
 
 <ul id="<%= type_for(voteable).downcase %>_<%= voteable.id %>_vote_data">
-	<% total_votes = voteable.total_votes ? voteable.total_votes : 0 %>
 	<li>
-		<em class="normal"><%= "共#{total_votes}票" %></em>
+		<% total_votes = voteable.total_votes ? voteable.total_votes : 0 %>
+		<% votes_count = voteable.votes_count ? voteable.votes_count : 0 %>
+		<% cls = total_votes > 0 ? 'l3' : 'n0' %>
+		<em class="<%= cls %>"><%= "#{total_votes}票 (#{votes_count}投)" %></em>
 	</li>
 	<% if @current_user %>
 		<% if vote = voteable.votes.find(:first, :conditions => { :user_id => @current_user.id, :votein_type => type_for(votein), :votein_id => votein.id }) %>
 			<li>
 				<% votes_per_entry = votein.votes_per_entry %>
 				<% if votes_per_entry && votes_per_entry > 0 %>
-					<em class="most"><%= "我投#{vote.votes}/#{votein.votes_per_entry}票" %></em>
+					<em class="l2"><%= "我投#{vote.votes}/#{votein.votes_per_entry}票" %></em>
 				<% else %>
-					<em class="most"><%= "我投#{vote.votes}票" %></em>
+					<em class="l2"><%= "我投#{vote.votes}票" %></em>
 				<% end %>
 			</li>
 		<% end %>

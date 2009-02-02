@@ -1,26 +1,30 @@
 <% if @mutual_contactors_set && @mutual_contactors_set_count > 0 %>
-	<%= render :partial => '/layouts/items_sideblock', 
+	<%= render :partial => 'layouts/items_sideblock', 
 						 :locals => { :id => 'mutual_friends', 
 						 							:block_title => "共同的#{FRIEND_CN}", 
 						 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@user) }, 
 						 							:items_set => @mutual_contactors_set } %>
 <% end %>
 
-<%= render :partial => '/layouts/items_sideblock', 
+<%= render :partial => 'layouts/items_sideblock', 
 					 :locals => { :id => 'user_friends', 
 					 							:block_title => "#{FRIEND_CN}", 
 					 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@user) }, 
 					 							:items_set => @contactors_set } %>
 
-<% if @matches_set_count > 0 %>
-	<%= render :partial => '/layouts/items_sideblock', 
-						 :locals => { :id => 'user_matches', 
-						 							:block_title => "正在参加的#{MATCH_CN}", 
-						 							:block_header_link => { :title => MORE_CN, :url => user_matches_path(@user) }, 
-						 							:items_set => @matches_set } %>
+<% if @match_groups_count > 0 %>
+	<% block_header_links = [] %>
+	<% block_header_links << [ [ 'more', false ], 
+														 [ MORE_CN, user_matches_path(@user) ]
+													 ] %>
+	<%= render :partial => 'layouts/item_groups_sideblock', 
+						 :locals => { :id => 'user_matches',
+						 							:block_title => "进行中的#{MATCH_CN}",
+						 							:block_header_links => block_header_links,
+						 							:item_groups => @match_groups } %>
 <% end %>
 
-<%= render :partial => "/taggings/tags_sideblock",
+<%= render :partial => "taggings/tags_sideblock",
 					 :locals => { :user => @user, 
 					 						  :custom_tags_set => @tags_set, 
 					 						  :limit => nil, 

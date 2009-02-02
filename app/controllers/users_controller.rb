@@ -207,10 +207,18 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_matches(user)
-		players = user.match_actors.find(:all, :limit => 12, :order => 'RAND()', 
-																		 :conditions => { :roles => '1' })
-		@matches_set = joined_matches(players, '20')
-		@matches_set_count = @matches_set.size
+		match_conditions = "#{match_accessible_conditions} AND #{match_status_conditions('doing', Time.now)}"
+		@created_matches = user.matches.find(:all, :limit => 8, :order => 'RAND()', 
+																				 :conditions => match_conditions)
+		@created_matches_count = @created_matches.size
+		match_actors_conditions = match_actor_role_conditions('player')
+		@enrolled_matches = user_joined_matches(user, match_actors_conditions, match_conditions, 8, 'RAND()')
+		@enrolled_matches_count = @enrolled_matches.size
+		@match_groups = []
+		username = user_username(user, false)
+		@match_groups << [ 'user_created_matches', "#{username}创建的...", @created_matches ] if @created_matches_count > 0
+		@match_groups << [ 'user_enrolled_matches', "#{username}参加的...", @enrolled_matches ] if @enrolled_matches_count > 0
+		@match_groups_count = @match_groups.size
 	end
 	
 	def classify_recipes

@@ -4,7 +4,11 @@
 		<% if player = @match.find_actor(item, '1') %>
 			<div id="player_<%= player.id %>_entries_bar" style="margin-top: 3px">
 				<ul>
-					<li><em class="normal"><%= "#{@match.find_player_entries(item).size}#{unit_for('Entry')}作品" %></em></li>
+					<li>
+						<% entries_count = @match.find_player_entries(item).size %>
+						<% cls = entries_count > 0 ? 'l3' : 'n0' %>
+						<em class="<%= cls %>"><%= "#{entries_count}#{unit_for('Entry')}作品" %></em>
+					</li>
 				</ul>
 			</div>
 		<% end %>

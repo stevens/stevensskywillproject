@@ -90,6 +90,14 @@ em.more {
 	color: #e42300;
 	font-weight: normal;
 }
+em.n0 {
+	color: #b8b9a7;
+	font-weight: normal;
+}
+em.n1 {
+	color: #373737;
+	font-weight: normal;
+}
 em.l0 {
 	color: #428cbb;
 	font-weight: normal;		
@@ -214,6 +222,10 @@ select {
 input {
 	height: 18px;
 	vertical-align: middle;
+}
+input.file {
+	height: 24px;
+	width: 450px;
 }
 input.submit {
 	height: 24px;
@@ -1783,7 +1795,7 @@ div.welcome_todo_button a:hover {
 	text-align: center;
 }
 div.vote_zone {
-	width: 80px;
+	width: 100px;
 	height: 60px;
 	padding-top: 2px;
 	background-color: #ffffff;
