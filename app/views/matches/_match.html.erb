@@ -136,17 +136,19 @@
 		<ul>
 			<% for award in item.awards %>
 				<li style="padding-left: 24px">
-					<% award_type = award.award_type.blank? ? nil : Code.find_by_codeable_type_and_code('award_type', award.award_type).title %>
 					<% awardable_type = Code.find_by_codeable_type_and_name('awardable_type', award.awardable_type).title %>
 					<% quota = (award.quota.blank? ? '名额待定' : "#{award.quota}名") %>
 					<% decide_mode = Code.find_by_codeable_type_and_code('award_decide_mode', award.decide_mode).title %>
-					<span class='subtitle'><%= award.title %><em class="l2">
-						<% if award_type.blank? %>
-							<%= "[#{awardable_type} · #{quota} · #{decide_mode}]" %>
-						<% else %>
-							<%= "[#{award_type} · #{awardable_type} · #{quota} · #{decide_mode}]" %>
+					<% award_type_code = award.award_type.blank? ? nil : Code.find_by_codeable_type_and_code('award_type', award.award_type) %>
+					<span class='subtitle'>
+						<% if award_type_code %>
+							<%= image_tag "icon/award/#{award_type_code.name}.png", :title => award_type_code.title, :alt => '', :class => "icon" %>
 						<% end %>
-					</em></span>
+						<%= award.title %>
+						<em class="l2">
+							<%= "[#{awardable_type} · #{quota} · #{decide_mode}]" %>
+						</em>
+					</span>
 					<span class='text'><%= "奖品 - #{award.prize_title}" %></span><br />
 				</li>
 			<% end %>
