@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 47) do
+ActiveRecord::Schema.define(:version => 49) do
 
   create_table "awards", :force => true do |t|
     t.integer  "match_id"
     t.string   "title"
     t.text     "description"
-    t.integer  "order"
+    t.integer  "level"
     t.string   "quota"
     t.string   "prize_title"
     t.text     "prize_description"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 47) do
     t.datetime "updated_at"
     t.string   "awardable_type"
     t.integer  "winners_count"
+    t.string   "decide_mode"
   end
 
   add_index "awards", ["match_id"], :name => "fk_match"
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(:version => 47) do
     t.string   "submitter_type"
     t.string   "submitter_name"
     t.string   "submitter_email"
+    t.string   "client_ip"
   end
 
   add_index "feedbacks", ["user_id"], :name => "fk_user"
@@ -210,6 +212,12 @@ ActiveRecord::Schema.define(:version => 47) do
     t.datetime "collecting_start_at"
     t.datetime "collecting_end_at"
     t.datetime "original_updated_at"
+    t.string   "slogan"
+    t.datetime "published_at"
+    t.text     "rules"
+    t.string   "is_draft"
+    t.string   "client_ip"
+    t.text     "awards_description"
   end
 
   add_index "matches", ["user_id"], :name => "fk_user"
@@ -241,6 +249,7 @@ ActiveRecord::Schema.define(:version => 47) do
     t.integer  "width"
     t.integer  "height"
     t.string   "photo_type"
+    t.string   "client_ip"
   end
 
   add_index "photos", ["user_id"], :name => "fk_user"
@@ -263,6 +272,7 @@ ActiveRecord::Schema.define(:version => 47) do
     t.string   "privacy"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "client_ip"
   end
 
   add_index "profiles", ["user_id"], :name => "fk_user"
@@ -306,6 +316,9 @@ ActiveRecord::Schema.define(:version => 47) do
     t.string   "is_draft"
     t.string   "roles"
     t.datetime "original_updated_at"
+    t.integer  "match_id"
+    t.string   "common_title"
+    t.string   "client_ip"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_user"
@@ -320,6 +333,7 @@ ActiveRecord::Schema.define(:version => 47) do
     t.datetime "updated_at"
     t.text     "quotation"
     t.integer  "quotation_submitter_id"
+    t.string   "client_ip"
   end
 
   add_index "reviews", ["reviewable_type", "reviewable_id"], :name => "pi_reviewable"
@@ -379,6 +393,7 @@ ActiveRecord::Schema.define(:version => 47) do
     t.datetime "latest_loggedin_at"
     t.integer  "login_count"
     t.string   "roles"
+    t.string   "client_ip"
   end
 
   create_table "votes", :force => true do |t|

@@ -4,6 +4,7 @@ class ProfilesController < ApplicationController
     @profile = Profile.new(params[:profile])
 		@profile.user = @current_user
 		@profile.blog = url_without_protocol(params[:profile][:blog])
+		item_client_ip(@profile)
 		
     respond_to do |format|
       if @profile.save

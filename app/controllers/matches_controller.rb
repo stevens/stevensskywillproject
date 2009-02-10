@@ -79,7 +79,9 @@ class MatchesController < ApplicationController
   end
   
   def new
-    @match = @current_user.matches.build
+  	if @current_user.is_role_of?('admin')
+	    @match = @current_user.matches.build
+		end
     
     info = "新#{MATCH_CN}"
 		set_page_title(info)
@@ -116,6 +118,7 @@ class MatchesController < ApplicationController
 		@match.organiger_type = 'User'
 		@match.organiger_id = @current_user.id
 		@match.published_at = Time.now
+		item_client_ip(@match)
 		
     ActiveRecord::Base.transaction do    
 			if @match.save
@@ -166,7 +169,13 @@ class MatchesController < ApplicationController
   	end
   	
   	@entries_set = @match.entries.find(:all, :order => 'RAND()')
-  	@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
+  	vll = @match.votes_lower_limit
+  	if vll && vll > 0
+	  	@highest_voted_entries = @match.entries.find(:all, :limit => 20, :order => 'total_votes DESC, votes_count DESC', 
+	  																							 :conditions => "entries.votes_count > #{vll}")
+	  else
+  		@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
+  	end
   	@entriables_set = entriables_for(@entries_set[0..17])
 		@player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
   	

@@ -185,28 +185,6 @@
 							 						  			:name => 'match[votes_lower_limit]' } %>
 				<div>
 				<%= error_message_on "match", "votes_lower_limit" %>
-				<div class="input">
-					<%= "每#{entry_unit}#{ENTRY_CN}最多可以获得几个奖项? " %>
-					<%= render :partial => 'layouts/number_input', 
-							 			 :locals => { :min => 1, 
-							 						  			:max => 20, 
-							 						  			:include_blank => false, 
-							 						  			:include_no_limit => true, 
-							 						  			:selected => match.awards_per_entry || 1, 
-							 						  			:name => 'match[awards_per_entry]' } %>
-				<div>
-				<%= error_message_on "match", "awards_per_entry" %>
-				<div class="input">
-					<%= "每位选手最多可以获得几个奖项? " %>
-					<%= render :partial => 'layouts/number_input', 
-							 			 :locals => { :min => 1, 
-							 						  			:max => 20, 
-							 						  			:include_blank => false, 
-							 						  			:include_no_limit => true, 
-							 						  			:selected => match.awards_per_player || 1, 
-							 						  			:name => 'match[awards_per_player]' } %>
-				<div>
-				<%= error_message_on "match", "awards_per_player" %>
 				<div class="text">
 					<%= "请#{INPUT_CN}#{MATCH_CN}的规则说明" %>
 				</div>

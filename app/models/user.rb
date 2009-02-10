@@ -193,6 +193,11 @@ class User < ActiveRecord::Base
 			false
 		end
 	end
+	
+	#判断用户的可访问性
+	def accessible?(someuser = nil)
+		activated_at.nil? ? false : true
+	end
 
   protected
 	

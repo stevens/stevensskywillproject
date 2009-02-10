@@ -16,7 +16,8 @@ class SessionsController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token, :expires => self.current_user.remember_token_expires_at }
       end
-      @current_user.log_loggedin #此行为新增
+      # @current_user.log_loggedin #此行为新增
+      log_user_logged_data #此行为新增
       flash[:notice] = "#{@current_user.login}, 你已经#{LOGIN_CN}#{SITE_NAME_CN}, 希望你在这里玩得开心!"
       redirect_back_or_default('/')
     else
@@ -43,6 +44,14 @@ class SessionsController < ApplicationController
 	 	info = "#{LOGIN_CN}#{SITE_NAME_CN}"
 		set_page_title(info)
 		set_block_title(info)
+	end
+	
+	def log_user_logged_data
+		@current_user.latest_loggedin_at = Time.now
+		current_login_count = @current_user.login_count ? @current_user.login_count : 0
+		@current_user.login_count = current_login_count + 1
+		item_client_ip(@current_user)
+		@current_user.save(false)
 	end
 
 end

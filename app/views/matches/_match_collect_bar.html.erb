@@ -8,6 +8,13 @@
 									[ "征集#{collect_time_status[2]}" ]
 								] %>
 	<% if @current_user && collect_time_status[1] == 'doing' && item.find_actor(@current_user, '1') %>
+		<% vll = item.votes_lower_limit %>
+		<% if vll && vll > 0 %>
+			<% buttons << [ [ 'votes_lower_limit', false, true, 'l3' ], 
+											[ "每#{unit_for('Entry')}作品至少需要#{vll}位投票者#{VOTE_CN}才能参与奖项评选" ]
+										] %>
+		<% end %>
+		
 		<% epp = item.entries_per_player %>
 		<% submitted_count = item.find_player_entries(@current_user).size %>
 		

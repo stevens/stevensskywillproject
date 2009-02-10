@@ -95,6 +95,7 @@ class ReviewsController < ApplicationController
   def create
     @review = @parent_obj.reviews.build(params[:review])
 		@review.user_id = @current_user.id
+		item_client_ip(@review)
 		
 		unless review_duplicate?(@review)
 			if @review.save

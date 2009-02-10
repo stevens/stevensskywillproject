@@ -3,17 +3,29 @@
 					 							:block_title => "#{FRIEND_CN}", 
 					 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@current_user) }, 
 					 							:items_set => @contactors_set} %>
-					 							
-<% if @match_groups_count > 0 %>
+
+<% if @created_matches_count > 0 %>
 	<% block_header_links = [] %>
 	<% block_header_links << [ [ 'more', false ], 
-														 [ MORE_CN, user_matches_path(@user) ]
+														 [ MORE_CN, url_for(:user_id => @user.id, :controller => 'matches', :action => 'index', :filter => 'created') ]
 													 ] %>
-	<%= render :partial => 'layouts/item_groups_sideblock', 
-						 :locals => { :id => 'user_matches',
-						 							:block_title => "进行中的#{MATCH_CN}",
+	<%= render :partial => 'layouts/items_matrix_sideblock', 
+						 :locals => { :id => 'user_created_matches',
+						 							:block_title => "#{CREATE_CN}的#{MATCH_CN}",
 						 							:block_header_links => block_header_links,
-						 							:item_groups => @match_groups } %>
+						 							:items_set => @created_matches } %>
+<% end %>
+
+<% if @enrolled_matches_count > 0 %>
+	<% block_header_links = [] %>
+	<% block_header_links << [ [ 'more', false ], 
+														 [ MORE_CN, url_for(:user_id => @user.id, :controller => 'matches', :action => 'index', :filter => 'enrolled') ]
+													 ] %>
+	<%= render :partial => 'layouts/items_matrix_sideblock', 
+						 :locals => { :id => 'user_enrolled_matches',
+						 							:block_title => "正在参加的#{MATCH_CN}",
+						 							:block_header_links => block_header_links,
+						 							:items_set => @enrolled_matches } %>
 <% end %>
 
 <%= render :partial => 'taggings/tags_sideblock',

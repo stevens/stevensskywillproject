@@ -8,6 +8,13 @@
 									[ "#{VOTE_CN}#{vote_time_status[2]}" ]
 								] %>
 	<% if @current_user && vote_time_status[1] == 'doing' %>
+		<% vpe = item.votes_per_entry %>
+		<% if vpe && vpe > 0 %>
+			<% buttons << [ [ 'votes_per_entry', false, true, 'l3' ], 
+											[ "最多可以给每个作品投#{vpe}票" ]
+										] %>
+		<% end %>
+		
 		<% epv = item.entries_per_voter %>
 		<% voted_count = item.find_voter_entries(@current_user).size %>
 		
@@ -19,13 +26,6 @@
 		<% else %>
 			<% buttons << [ [ 'vote_count', false, true, 'l3' ], 
 											[ "已#{VOTE_CN}#{voted_count}个" ]
-										] %>
-		<% end %>
-		
-		<% vpe = item.votes_per_entry %>
-		<% if vpe && vpe > 0 %>
-			<% buttons << [ [ 'votes_per_entry', false, true, 'l3' ], 
-											[ "最多可以给每个作品投#{vpe}票" ]
 										] %>
 		<% end %>
 		

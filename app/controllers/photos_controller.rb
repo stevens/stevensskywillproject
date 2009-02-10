@@ -150,6 +150,7 @@ class PhotosController < ApplicationController
   def create
     @photo = @parent_obj.photos.build(params[:photo])
     @photo.user_id = @current_user.id
+    item_client_ip(@photo)
 		
 		if !@photo.caption.blank? && @photo.caption.chars.length > TEXT_MAX_LENGTH_S
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"

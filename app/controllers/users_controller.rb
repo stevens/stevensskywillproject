@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     # reset_session
     @user = User.new(params[:user])
     @user.login = str_squish(@user.login)
+    item_client_ip(@user)
 		
 		if @user.save
 			after_create_ok
@@ -127,29 +128,31 @@ class UsersController < ApplicationController
   end
   
   def profile
-    respond_to do |format|
-      if @user && @user == @current_user
-      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
-      elsif @user
-		  	load_user_recipes(@user)
-		  	# classify_recipes
-		  	load_user_reviews(@user)
-		  	load_user_favorites(@user)
-		  	# classify_favorite_statuses
-			 	load_user_tags(@user)
-			 	load_user_contactors(@user)
-			 	load_user_matches(@user)
-			 	
-			 	log_count(@user)
-			 	
-			 	info = "#{username_prefix(@user)}#{MAIN_PAGE_CN}"
-				set_page_title(info)
-				
-				show_sidebar
-				
-      	format.html # profile.html.erb
-      end
-    end
+  	if @user && @user.accessible?
+	    respond_to do |format|
+	      if @user == @current_user
+	      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
+	      else
+			  	load_user_recipes(@user)
+			  	# classify_recipes
+			  	load_user_reviews(@user)
+			  	load_user_favorites(@user)
+			  	# classify_favorite_statuses
+				 	load_user_tags(@user)
+				 	load_user_contactors(@user)
+				 	load_user_matches(@user)
+				 	
+				 	log_count(@user)
+				 	
+				 	info = "#{username_prefix(@user)}#{MAIN_PAGE_CN}"
+					set_page_title(info)
+					
+					show_sidebar
+					
+	      	format.html # profile.html.erb
+				end
+			end
+		end
   end
 	
 	private

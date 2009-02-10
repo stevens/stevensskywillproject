@@ -60,9 +60,9 @@ class RecipesController < ApplicationController
 		recipes_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
 		related_recipes_conditions = recipes_conditions
 		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe
-		same_title_recipes_conditions_list = [ "recipes.title LIKE '%#{@recipe.title}%'" ]
+		same_title_recipes_conditions_list = [ "recipes.title = '#{@recipe.title}'", "recipes.common_title = '#{@recipe.title}'" ]
 		if (common_title = @recipe.common_title) && !common_title.blank?
-			same_title_recipes_conditions_list += [ "recipes.common_title LIKE '%#{common_title}%'", "recipes.title LIKE '%#{common_title}%'", "recipes.common_title LIKE '%#{@recipe.title}%'" ]
+			same_title_recipes_conditions_list += [ "recipes.common_title = '#{common_title}'", "recipes.title = '#{common_title}'" ]
 		end
 		same_title_recipes_conditions = "#{recipes_conditions} AND (#{same_title_recipes_conditions_list.join(' OR ')})"
 		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions, nil, 'RAND()') - recipe
@@ -143,6 +143,7 @@ class RecipesController < ApplicationController
 
     @recipe = @current_user.recipes.build(params[:recipe])
     @recipe.status = @recipe.get_status
+    item_client_ip(@recipe)
     # @recipe.is_draft = params[:is_draft]
     # @recipe.is_draft = @recipe.get_is_draft
     # @recipe.published_at = @recipe.get_published_at

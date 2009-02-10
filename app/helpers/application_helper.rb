@@ -442,5 +442,10 @@ module ApplicationHelper
 	  	(i*y).floor/(y*1.0)   
 	  end   
 	end 
+	
+	# 获得用户的ip地址
+	def item_client_ip(item)
+		item.client_ip = request.env["HTTP_X_FORWARDED_FOR"]
+	end
 		
 end

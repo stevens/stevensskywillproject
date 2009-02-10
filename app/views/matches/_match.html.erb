@@ -136,8 +136,17 @@
 		<ul>
 			<% for award in item.awards %>
 				<li style="padding-left: 24px">
+					<% award_type = award.award_type.blank? ? nil : Code.find_by_codeable_type_and_code('award_type', award.award_type).title %>
+					<% awardable_type = Code.find_by_codeable_type_and_name('awardable_type', award.awardable_type).title %>
 					<% quota = (award.quota.blank? ? '名额待定' : "#{award.quota}名") %>
-					<span class='subtitle'><%= "#{award.title} (#{quota})" %></span>
+					<% decide_mode = Code.find_by_codeable_type_and_code('award_decide_mode', award.decide_mode).title %>
+					<span class='subtitle'><%= award.title %><em class="l2">
+						<% if award_type.blank? %>
+							<%= "[#{awardable_type} · #{quota} · #{decide_mode}]" %>
+						<% else %>
+							<%= "[#{award_type} · #{awardable_type} · #{quota} · #{decide_mode}]" %>
+						<% end %>
+					</em></span>
 					<span class='text'><%= "奖品 - #{award.prize_title}" %></span><br />
 				</li>
 			<% end %>
@@ -189,30 +198,6 @@
 						<span class='text'>
 							<% if vll > 0 %>
 								<%= "每#{entry_unit}#{ENTRY_CN}至少需要 #{vll} 位投票者#{VOTE_CN}才能参与奖项评选" %>
-							<% end %>
-						</span>
-					</li>
-				<% end %>
-
-				<% if ape = item.awards_per_entry %>
-					<li>
-						<span class='text'>
-							<% if ape > 0 %>
-								<%= "每#{entry_unit}#{ENTRY_CN}最多可以获得 #{ape} 个奖项" %>
-							<% elsif ape == -1 %>
-								<%= "每#{entry_unit}#{ENTRY_CN}可以获得不限数量的奖项" %>
-							<% end %>
-						</span>
-					</li>
-				<% end %>
-
-				<% if app = item.awards_per_player %>
-					<li>
-						<span class='text'>
-							<% if app > 0 %>
-								<%= "每位选手最多可以获得 #{app} 个奖项" %>
-							<% elsif app == -1 %>
-								<%= "每位选手可以获得不限数量的奖项" %>
 							<% end %>
 						</span>
 					</li>

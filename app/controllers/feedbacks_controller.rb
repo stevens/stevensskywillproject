@@ -25,6 +25,7 @@ class FeedbacksController < ApplicationController
     	@feedback = Feedback.new(params[:feedback])
     	@feedback.submitter_type = '1'
     end
+    item_client_ip(@feedback)
     
 		if @feedback.save
 			after_create_ok
