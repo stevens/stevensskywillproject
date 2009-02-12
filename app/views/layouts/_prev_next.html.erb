@@ -12,10 +12,12 @@
 	<% end %> 
 </span>
 
-<%= "#{PREV_ONE_CN}#{item_unit} " %>
-<% if prev_index == items_set.size %>
-	无
-<% else %>
-	<% prev_item = items_set[prev_index] %>
-	<%= link_to strip_tags(item_title(prev_item)), prev_item %>
-<% end %>
+<div>
+  <%= "#{PREV_ONE_CN}#{item_unit} " %>
+  <% if prev_index == items_set.size %>
+    无
+  <% else %>
+    <% prev_item = items_set[prev_index] %>
+    <%= link_to strip_tags(item_title(prev_item)), prev_item %>
+  <% end %>
+</div>

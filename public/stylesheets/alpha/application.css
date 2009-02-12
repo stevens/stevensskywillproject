@@ -9,13 +9,13 @@
 
 /* Common */
 * { 
-	margin: 0; padding: 0;
+    margin: 0; padding: 0;
 	word-break: break-all;
 }
 body, a, p, ol, ul, td, input, textarea, select, option, button {
-  font-family: Verdana, Arial, sans-serif;
-	font-size:   12px;
-  line-height: 16px;
+    font-family: Verdana, Arial, sans-serif;
+    font-size:   12px;
+    line-height: 16px;
 }
 * html body {
 	height: 100%;	
@@ -414,6 +414,9 @@ div.tag {
 #footer_content span.copyright {
 	color: #b8b9a7;
 	float: right;
+    white-space: nowrap;
+    width: 600px;
+    text-align: right;
 }
 #footer_content .seo_link {
 	margin: 0px -15px;
@@ -715,6 +718,7 @@ td.photo_item_cell {
 	font-size: 14px;
 	font-weight: bold;
 	color: #695245;
+    white-space: nowrap;
 }
 .block_header_link {
 	float: right;
@@ -1248,6 +1252,7 @@ div.radio .fieldWithErrors {
 	/*border-top: 4px solid #ff8159;*/
 	/*border-bottom: 4px solid #ff8159;*/
 	color: #373737;
+    white-space: nowrap;
 }
 #system_notice {
 	margin-bottom: 10px;
@@ -1260,6 +1265,7 @@ div.radio .fieldWithErrors {
 	/*border-top: 4px solid #78b36d;*/
 	/*border-bottom: 4px solid #78b36d;*/
 	color: #373737;
+    white-space: nowrap;
 }
 .notice {
 	margin-top: 10px;

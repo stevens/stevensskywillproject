@@ -1,10 +1,12 @@
 <% if notice %>
-	<div id="system_notice">
-		<div class="close">
-			<%= link_to_function("x") do |page|
-				page.hide "system_notice"
-		  end %>
-		</div>
-		<%= notice %>
-	</div>
+  <div id="system_notice">
+    <div class="close">
+      <%= link_to_function("x") do |page|
+          page.hide "system_notice"
+      end %>
+    </div>
+    <div>
+      <%= notice %>
+    </div>
+  </div>
 <% end %>

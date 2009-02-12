@@ -1,10 +1,12 @@
+<% username = user_username(@user) %>
+<% username_pron = user_username(@user, false) %>
 <!-- <% if @user != @current_user %>
 	<div id="same_tastes_wrapper" class="content_block">
 		<div id="same_tastes_header" class="block_header">
 			<div class="block_header_link">	
 				<%= link_to "#{MORE_CN}的口味相投点", '' %>
 			</div>
-			<h1><%= strip_tags "我和#{username_prefix(@user)}口味相投点" %></h1>
+			<h1><%= strip_tags "我和#{username}的口味相投点" %></h1>
 		</div>
 		
 		<div id="same_tastes_detail" class="block_main">
@@ -16,9 +18,9 @@
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{RECIPE_CN}"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_pron}的#{MORE_CN}#{RECIPE_CN}"), :user_id => @user.id, :controller => 'recipes', :action => 'index' %>
 		</div>
-		<h1><%= strip_tags "#{username_prefix(@user)}#{RECIPE_CN}" %></h1>
+		<h1><%= strip_tags "#{username}的#{RECIPE_CN}" %></h1>
 	</div>
 	
 	<div id="recipes_detail" class="block_main">
@@ -39,9 +41,9 @@
 <div id="favorite_recipes_wrapper" class="content_block">
 	<div id="favorite_recipes_header" class="block_header">
 		<div class="block_header_link">
-			<%= link_to strip_tags("#{username_prefix(@user)}#{MORE_CN}#{FAVORITE_CN}"), :user_id => @user.id, :controller => 'favorites', :action => 'index' %>	
+			<%= link_to strip_tags("#{username_pron}的#{MORE_CN}#{FAVORITE_CN}"), :user_id => @user.id, :controller => 'favorites', :action => 'index' %>
 		</div>
-		<h1><%= strip_tags "#{username_prefix(@user)}#{FAVORITE_CN}" %></h1>
+		<h1><%= strip_tags "#{username}的#{FAVORITE_CN}" %></h1>
 	</div>
 	
 	<div id="favorite_recipes_detail" class="block_main">
@@ -63,9 +65,9 @@
 <div id="mixed_reviews_wrapper" class="content_block">
 	<div id="mixed_reviews_header" class="block_header">
 		<div class="block_header_link">
-			<%= link_to "#{username_prefix(@user)}#{MORE_CN}#{REVIEW_CN}", url_for(:user_id => @user.id, :controller => 'reviews', :action => 'index') %>	
+			<%= link_to "#{username_pron}的#{MORE_CN}#{REVIEW_CN}", url_for(:user_id => @user.id, :controller => 'reviews', :action => 'index') %>
 		</div>
-		<h1><%= strip_tags "#{username_prefix(@user)}#{REVIEW_CN}" %></h1>
+		<h1><%= strip_tags "#{username}的#{REVIEW_CN}" %></h1>
 	</div>
 	
 	<div id="mixed_reviews_detail" class="block_main">

@@ -1,6 +1,6 @@
 <%= render :partial => '/layouts/items_sideblock', 
 					 :locals => { :id => 'other_recipes', 
-					 							:block_title => "#{username_prefix(@recipe.user)}其他#{RECIPE_CN}", 
+					 							:block_title => "#{user_username(@recipe.user, false)}的其他#{RECIPE_CN}",
 					 							:block_header_link => { :title => MORE_CN, :url => user_recipes_path(@recipe.user) }, 
 					 							:items_set => @other_recipes_set } %>
 

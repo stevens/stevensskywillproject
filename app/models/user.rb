@@ -69,8 +69,13 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email, :case_sensitive => false,
   													:message => "#{EMAIL_ADDRESS_CN}已经存在"	
 	validates_exclusion_of 		:login, 										 :if => :login_required?, 
-	 													:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks fengchu fengchus 蜂厨), 
-	 													:message => "这个#{NICKNAME_CN}不可用"	
+	 													:in => %w( admin admins administrator administrators superuser superusers sys system systems beecook beecooks fengchu fengchus ta
+                                       Admin Admins Administrator Administrators Superuser Superusers Sys System Systems Beecook Beecooks Fengchu Fengchus Ta
+                                       ADMIN ADMINS ADMINISTRATOR ADMINISTRATORS SUPERUSER SUPERUSERS SYS SYSTEM SYSTEMS BEECOOK BEECOOKS FENGCHU FENGCHUS TA
+                                       SuperUser SuperUsers BeeCook BeeCooks FengChu FengChus 
+                                       蜂厨 管理员 超级用户 超级管理员 蜂厨管理员 蜂厨超级用户 蜂厨超级管理员 超级蜂厨用户 超级蜂厨管理员
+                                       蜂廚 管理員 超級用戶 超級管理員 蜂廚管理員 蜂廚超級用戶 蜂廚超級管理員 超級蜂廚用戶 超級蜂廚管理員),
+	 													:message => "这个#{NICKNAME_CN}不可用"
 	# admin admins administrator administrators superuser superusers sys system systems beecook beecooks skywill yogaskywill haakaa cookcat cookcats cookie cookies sunjin sunjins sunjinn sunjinns fengchu fengchus nickchow zhouying yingzhou 蜂厨 疯厨 周颖
 	
   before_save :encrypt_password

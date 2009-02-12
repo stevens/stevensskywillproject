@@ -59,13 +59,13 @@
 						<% if current_user = User.find_by_id(session[:user_id]) %> 
 							<%= "#{HELLO_CN}, " %>
 							<%= render :partial => '/users/user_basic', 
-												 :locals => { :user => current_user, 
-												 							:show_come_from => false, 
-												 							:show_icon => true,
-												 							:show_name => true, 
-												 							:show_link => true, 
-												 							:show_username => true,
-												 							:show_myname => true } %>
+                                        :locals => { :user => current_user,
+                                                    :show_come_from => false,
+                                                    :show_icon => true,
+                                                    :show_name => true,
+                                                    :show_link => true,
+                                                    :show_username => true,
+                                                    :show_myname => true } %>
 							<%= link_to LOGOUT_CN, "#{root_url}logout" %>
 						<% else %>
 							<%= link_to LOGIN_CN, "#{root_url}login" %>
