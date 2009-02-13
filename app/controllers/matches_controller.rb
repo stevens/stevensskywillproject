@@ -170,12 +170,13 @@ class MatchesController < ApplicationController
   	
   	@entries_set = @match.entries.find(:all, :order => 'RAND()')
   	vll = @match.votes_lower_limit
-  	if vll && vll > 0
-	  	@highest_voted_entries = @match.entries.find(:all, :limit => 20, :order => 'total_votes DESC, votes_count DESC', 
-	  																							 :conditions => "entries.votes_count > #{vll}")
-	  else
-  		@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
-  	end
+#  	if vll && vll > 0
+#	  	@highest_voted_entries = @match.entries.find(:all, :limit => 20, :order => 'total_votes DESC, votes_count DESC',
+#	  																							 :conditions => "entries.votes_count > #{vll}")
+#	  else
+#  		@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
+#  	end
+    @highest_voted_entries = highest_voted_items(@entries_set, vll)[0..19]
   	@entriables_set = entriables_for(@entries_set[0..17])
 		@player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
   	
