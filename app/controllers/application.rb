@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = params[:reviewable_type] || params[:taggable_type] || params[:searchable_type]
 		elsif c == 'photos'
 			@current_tab_type = params[:photoable_type] || @parent_type.downcase
-		elsif c == 'matches' || c == 'entries' || c == 'match_actors'
+		elsif c == 'matches' || c == 'entries' || c == 'match_actors' || c == 'winners'
 			@current_tab_type = 'match'
 		elsif c == 'recipes'
 			@current_tab_type = c.singularize

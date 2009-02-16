@@ -1,0 +1,39 @@
+<div id="winners_wrapper" class="content_block">
+
+  <div id="winners_header" class="block_header">
+    <div class="block_header_link">
+      <%= link_to "#{BACK_CN}#{MATCH_CN}", item_first_link(@match, true) %>
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div id="winners_detail" class="block_main">
+    <div id="winners_main" class="sub_block">
+      <% for winners in @winners_set %>
+        <div class="main">
+          <% award = @match.awards.find_by_id(winners[0]) %>
+          <h3>
+            <%= render :partial => 'awards/award_icon',
+                         :locals => { :award => award } %>
+            <%= item_title(award) %>
+            <em class="l2" style="font-size: 12px;">
+                <%= add_brackets(award_basic_info(award)) %>
+            </em>
+          </h3>
+          <%= render :partial => 'layouts/items_matrix',
+                      :locals => { :show_paginate => false,
+                                  :items_set => winnerables_for(winners[1]),
+                                  :limit => nil,
+                                  :items_count_per_row => 6,
+                                  :show_photo => true,
+                                  :show_below_photo => true,
+                                  :show_title => true,
+                                  :show_user => true,
+                                  :show_photo_todo => false,
+                                  :photo_style => 'matrix' } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

@@ -33,28 +33,35 @@
 	</div>
 </div>
 
-<div id="match_winners_wrapper" class="content_block">
-  <div id="match_winners_header" class="block_header">
-    <div class="block_header_link">
+<% if @show_winners %>
+  <div id="match_winners_wrapper" class="content_block">
+    <div id="match_winners_header" class="block_header">
+      <div class="block_header_link">
+        <% buttons = [] %>
+        <% buttons << [ [ 'more' ],
+                        [ '完整获奖名单', match_winners_path(@match) ]] %>
 
+        <%= render :partial => 'layouts/todo_bar',
+                    :locals => { :buttons => buttons } %>
+      </div>
+      <h1><%= "获奖作品" %></h1>
     </div>
-    <h1><%= "获奖作品" %></h1>
-  </div>
 
-  <div id="match_winners_detail" class="block_main">
-    <%= render :partial => 'layouts/items_matrix',
-                :locals => { :show_paginate => false,
-                            :items_set => @winnerables_set,
-                            :limit => 18,
-                            :items_count_per_row => 6,
-                            :show_photo => true,
-                            :show_below_photo => true,
-                            :show_title => true,
-                            :show_user => true,
-                            :show_photo_todo => false,
-                            :photo_style => 'matrix' } %>
+    <div id="match_winners_detail" class="block_main">
+      <%= render :partial => 'layouts/items_matrix',
+                  :locals => { :show_paginate => false,
+                              :items_set => @winnerables_set,
+                              :limit => 12,
+                              :items_count_per_row => 6,
+                              :show_photo => true,
+                              :show_below_photo => true,
+                              :show_title => true,
+                              :show_user => true,
+                              :show_photo_todo => false,
+                              :photo_style => 'matrix' } %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <% if @current_user %>
 	<% if @player %>

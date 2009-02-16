@@ -1,0 +1,4 @@
+<% award_type_code = award.award_type.blank? ? nil : Code.find_by_codeable_type_and_code('award_type', award.award_type) %>
+<% if award_type_code %>
+    <%= image_tag "icon/award/#{award_type_code.name}.png", :title => award_type_code.title, :alt => '', :class => "icon" %>
+<% end %>
