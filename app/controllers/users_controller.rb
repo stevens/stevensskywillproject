@@ -48,12 +48,30 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.login = str_squish(@user.login)
     item_client_ip(@user)
-		
-		if @user.save
-			after_create_ok
-		else
-			after_create_error
-		end
+    current = Time.now
+    if !@user.client_ip.blank?
+      same_ip_conditions_list = [ "users.client_ip = '#{@user.client_ip}'",
+                                  "users.created_at >= '#{time_iso_format(current.beginning_of_day)}'",
+                                  "users.created_at <= '#{time_iso_format(current.end_of_day)}'" ]
+      same_ip_users = User.find(:all, :limit => 20,
+                                :conditions => same_ip_conditions_list.join(' AND '))
+      if same_ip_users.size < 20
+        if @user.save
+          after_create_ok
+        else
+          after_create_error
+        end
+      else
+        @exceed_same_ip_limit = true
+        after_create_error
+      end
+    else
+      if @user.save
+        after_create_ok
+      else
+        after_create_error
+      end
+    end
   end
 
 	def edit
@@ -97,8 +115,8 @@ class UsersController < ApplicationController
 			@user = User.find_by_email(params[:email])
 			if @user && !@user.activated_at
 				UserMailer.deliver_signup_notification(@user)
-	      flash[:notice] = "#{@user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收<em>#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}</em>!<br /><br/>
-	      								 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."				
+	      flash[:notice] = "#{@user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br /><br/>
+	      								 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
 				redirect_to login_url
 			else
 				flash[:notice] = "#{SORRY_CN}, 这个#{EMAIL_ADDRESS_CN}还没有#{SIGN_UP_CN}#{ACCOUNT_CN} 或者 用这个#{EMAIL_ADDRESS_CN}#{SIGN_UP_CN}的#{ACCOUNT_CN}已经激活!"
@@ -222,8 +240,8 @@ class UsersController < ApplicationController
   	session[:user_id] = nil
   	respond_to do |format|
 			format.html do
-	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收<em>#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}</em>!<br /><br/>
-	      								 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."				
+	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br /><br/>
+	      								 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
 				redirect_to root_path
 			end
 			# format.xml  { render :xml => @user, :status => :created, :location => @user }
@@ -232,8 +250,12 @@ class UsersController < ApplicationController
   
   def after_create_error
   	respond_to do |format|
-			format.html do 
-	      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+			format.html do
+        if @exceed_same_ip_limit
+          flash[:notice] = "#{SORRY_CN}, 今天你已经超过了注册#{ACCOUNT_CN}的数量上限!"
+        else
+          flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{ACCOUNT_CN}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
+        end
 				
 				info = "加入#{SITE_NAME_CN}"	
 				set_page_title(info)

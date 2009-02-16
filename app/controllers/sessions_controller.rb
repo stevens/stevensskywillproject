@@ -22,8 +22,8 @@ class SessionsController < ApplicationController
       redirect_back_or_default('/')
     else
     	flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!<br /><br />
-    									 <em>如果你已经用这个#{EMAIL_ADDRESS_CN}注册过, 请核实是否收到#{ACCOUNT_CN}激活#{EMAIL_CN}并激活了你的#{ACCOUNT_CN}?</em><br />
-    									 <em>如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}</em>, 请发#{EMAIL_CN}到 #{SITE_EMAIL} 及时与我们联系..."
+    									 如果你已经用这个#{EMAIL_ADDRESS_CN}注册过, 请核实是否收到#{ACCOUNT_CN}激活#{EMAIL_CN}并激活了你的#{ACCOUNT_CN}?<br />
+    									 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
       show_sidebar
       render :action => 'new'
       clear_notice
