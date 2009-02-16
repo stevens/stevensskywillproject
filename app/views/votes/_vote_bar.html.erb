@@ -2,8 +2,13 @@
 
 <ul id="<%= type_for(voteable).downcase %>_<%= voteable.id %>_vote_data">
 	<li>
-		<% total_votes = voteable.total_votes ? voteable.total_votes : 0 %>
-		<% votes_count = voteable.votes_count ? voteable.votes_count : 0 %>
+        <% if votein.doing?(Time.now) %>
+          <% total_votes = total_votes(voteable) ? total_votes(voteable) : 0 %>
+          <% votes_count = voteable.votes_count ? voteable.votes_count : 0 %>
+        <% else votein.done? %>
+          <% total_votes = voteable.valid_total_votes %>
+          <% votes_count = voteable.valid_votes_count %>
+        <% end %>
 		<% cls = total_votes > 0 ? 'l3' : 'n0' %>
 		<em class="<%= cls %>"><%= "#{total_votes}票 (#{votes_count}投)" %></em>
 	</li>

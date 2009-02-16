@@ -2,7 +2,43 @@ class EntriesController < ApplicationController
 	
   before_filter :protect, :except => [:index, :show]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show]
-	
+
+  def calculate_valid_votes
+    load_match
+    if item_manageable?(@match)
+      same_ip_voters_limit = 10
+      if params[:batch] == 'true'
+        load_entries_set
+        for entry in @entries_set
+          valid_votes = valid_votes(entry, same_ip_voters_limit)
+          entry.update_attributes({ :valid_total_votes => valid_votes[0], :valid_votes_count => valid_votes[1] })
+        end
+      else
+        load_entry
+        valid_votes = valid_votes(@entry, same_ip_voters_limit)
+        @entry.update_attributes({ :valid_total_votes => valid_votes[0], :valid_votes_count => valid_votes[1] })
+      end
+      redirect_to url_for(:match_id => @match, :controller => 'entries', :action => 'manage')
+    end
+  end
+
+  def manage
+    load_match
+    if item_manageable?(@match)
+      load_entries_set
+#      @same_ip_voters_limit = 10
+      @entries_set = @entries_set.sort { |a, b| [ b.valid_total_votes, b.valid_votes_count ]  <=> [ a.valid_total_votes, a.valid_votes_count ] }
+
+      respond_to do |format|
+        format.html do
+          info = "管理#{ENTRY_CN} #{itemname_suffix(@parent_obj)}"
+          set_page_title(info)
+          set_block_title(info)
+        end
+      end
+    end
+  end
+
 	def index
 		load_match
 		load_entries_set
@@ -12,7 +48,7 @@ class EntriesController < ApplicationController
     	format.html do
 		  	info = "#{ENTRY_CN} #{itemname_suffix(@parent_obj)}"
 				set_page_title(info)
-				set_block_title(info)    	
+				set_block_title(info)
     	end
     end 
 	end
@@ -106,7 +142,7 @@ class EntriesController < ApplicationController
 	end
 	
   def load_entries_set(user = @current_user)
-		@entries_set = filtered_entries(@parent_obj, user, params[:filter])
+		@entries_set = filtered_entries(@match, user, params[:filter])
   	@entries_set_count = @entries_set.size
   end
 	

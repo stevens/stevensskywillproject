@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 49) do
+ActiveRecord::Schema.define(:version => 50) do
 
   create_table "awards", :force => true do |t|
     t.integer  "match_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 49) do
     t.string   "awardable_type"
     t.integer  "winners_count"
     t.string   "decide_mode"
+    t.string   "award_type"
   end
 
   add_index "awards", ["match_id"], :name => "fk_match"
@@ -96,6 +97,8 @@ ActiveRecord::Schema.define(:version => 49) do
     t.integer  "votes_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "valid_total_votes"
+    t.integer  "valid_votes_count"
   end
 
   add_index "entries", ["user_id"], :name => "fk_user"

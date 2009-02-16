@@ -1,13 +1,13 @@
 <% if @player_contactors_set && @player_contactors_set.size > 0 %>
 	<%= render :partial => 'layouts/items_sideblock', 
 						 :locals => { :id => 'player_contactors', 
-						 							:block_title => "伙伴们在参赛", 
-						 							:block_header_link => nil, 
-						 							:items_set => @player_contactors_set } %>
+                                      :block_title => "参赛的伙伴们",
+                                      :block_header_link => nil,
+                                      :items_set => @player_contactors_set } %>
 <% end %>
 
 <% if @highest_voted_entries && @highest_voted_entries.size > 0 %>
 	<%= render :partial => 'layouts/ranklist_sideblock',
-						 :locals => { :rank_list_title => "作品排行榜 TOP20", 
-						 						  :items_set => @highest_voted_entries } %>
+						 :locals => { :rank_list_title => @rank_list_title,
+                                      :items_set => @highest_voted_entries } %>
 <% end %>

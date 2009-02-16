@@ -7,7 +7,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'matches/:id/profile', :controller => 'matches', :action => 'profile'
 	map.connect 'mine/matches', :controller => 'matches', :action => 'mine'
 	map.connect 'matches/help', :controller => 'matches', :action => 'help'
-	
+
+  map.connect 'matches/:match_id/entry/manage', :controller => 'entries', :action => 'manage'
+	map.connect 'matches/:match_id/entry/calculate_valid_votes', :controller => 'entries', :action => 'calculate_valid_votes'
+
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
 	map.connect 'users/:id/profile', :controller => 'users', :action => 'profile'
 

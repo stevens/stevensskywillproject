@@ -1,0 +1,59 @@
+<div id="entries_wrapper" class="content_block">
+
+  <div id="entries_header" class="block_header">
+    <div class="block_header_link">
+      <%= link_to "#{BACK_CN}#{MATCH_CN}", item_first_link(@match, true) %>
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div id="entries_detail" class="block_main">
+    <div class="sub_block">
+      <div class="todo_right">
+        <em class="l1">
+          <%= link_to "计算所有有效#{VOTE_CN}", "calculate_valid_votes?batch=true" %>
+        </em>
+      </div>
+    </div>
+    <div id="entries_list" class="sub_block_tb">
+      <table class="content">
+        <% for entry in @entries_set %>
+          <% entriable = entry.entriable %>
+          <tr>
+            <td class="left_column">
+              <div class="sub_block" style="width: 50px;">
+                <%= @entries_set.index(entry) + 1 %>
+              </div>
+            </td>
+            <td class="right_column_lined">
+              <div class="sub_block">
+                <%= link_to item_title(entriable), item_link_url(entriable) %>
+                来自
+                <%= link_to user_username(entriable.user, true, true), user_first_link(entriable.user) %>
+                <br /><br />
+                <em class="l3"><%= "#{total_votes(entry)}票 (#{entry.votes.length}人#{VOTE_CN})" %></em><br />
+                <em class="l3"><%= "有效票: #{entry.valid_total_votes}票 (#{entry.valid_votes_count}人#{VOTE_CN})" %></em><br />
+                <div class="todo_right">
+                  <em class="l1">
+                    <%= link_to "计算有效#{VOTE_CN}", url_for(:match_id => @match.id, :controller => 'entries', :action => 'calculate_valid_votes', :id => entry.id) %>
+                  </em>
+                </div>
+                <% voters = voters_for(entry.votes) %>
+                <% same_ip_voters_set = voters.group_by { |voter| (voter.client_ip) }.sort { |a, b| b[1].size <=> a[1].size } %>
+                <% for same_ip_voters in same_ip_voters_set %>
+                  <br />
+                  <em class="l2"><%= "IP: #{same_ip_voters[0]} (#{same_ip_voters[1].size})" %></em><br />
+                  <% for same_ip_voter in same_ip_voters[1] %>
+                    <% voter_votes = entry.votes.find_by_user_id(same_ip_voter.id).votes %>
+                    <%= link_to "#{user_username(same_ip_voter, true, true)} (#{voter_votes})", user_first_link(same_ip_voter) %>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+</div>

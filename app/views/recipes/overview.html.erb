@@ -20,7 +20,7 @@
 <div id="choice_recipes_wrapper" class="content_block">
 	<div id="choice_recipes_header" class="block_header">
 		<div class="block_header_link">	
-			
+			<%= link_to "#{MORE_CN}精选#{RECIPE_CN}", url_for(:action => 'index', :filter => 'choiced') %>
 		</div>
 		<h1><%= "精选#{RECIPE_CN}" %></h1>
 	</div>

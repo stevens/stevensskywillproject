@@ -176,7 +176,15 @@ class MatchesController < ApplicationController
 #	  else
 #  		@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
 #  	end
-    @highest_voted_entries = highest_voted_items(@entries_set, vll)[0..19]
+    if @match.doing?(Time.now)
+      @match_status = 'doing'
+      @rank_list_title = "作品排行榜 TOP20"
+      @highest_voted_entries = highest_voted_items(@entries_set, vll)[0..19]
+    elsif @match.done?
+      @match_status = 'done'
+      @rank_list_title = "作品排行榜 (有效#{VOTE_CN})"
+      @highest_voted_entries = @entries_set.sort { |a,b| [ b.valid_total_votes, b.valid_votes_count ] <=> [ a.valid_total_votes, a.valid_votes_count ] }
+    end
   	@entriables_set = entriables_for(@entries_set[0..17])
 		@player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
   	

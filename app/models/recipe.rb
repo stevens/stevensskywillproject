@@ -63,6 +63,12 @@ class Recipe < ActiveRecord::Base
   		(match.doing?(Time.now) && match.find_entry(self)) ? true : false
   	end
   end
+
+  def entried?
+  	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
+  		match.find_entry(self) ? true : false
+  	end
+  end
   
   def draft_selectable?
   	(cover_photo_id && !entrying?) ? true : false

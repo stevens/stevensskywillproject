@@ -20,7 +20,16 @@
 								 							:show_myname => false } %>
 		</li>
 		<li>
-			<span style="color: #78b36d;"><%= "#{total_votes(item)}票 (#{item.votes_count}人投票)" %></span>
+			<span style="color: #78b36d;">
+              <% if @match_status == 'doing' %>
+                <% total_votes = total_votes(item) %>
+                <% votes_count = item.votes_count %>
+              <% elsif @match_status == 'done' %>
+                <% total_votes = item.valid_total_votes %>
+                <% votes_count = item.valid_votes_count %>
+              <% end %>
+              <%= "#{total_votes}票 (#{votes_count}人投票)" %>
+            </span>
 		</li>
 	</ul>
 </div>
