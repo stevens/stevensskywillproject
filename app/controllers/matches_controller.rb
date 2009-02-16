@@ -167,7 +167,7 @@ class MatchesController < ApplicationController
   		end
   		@voted_entriables_set = entriables_for(voteables_for(@match.find_voter_entries(@current_user)))
   	end
-  	
+  	@winners_set = awardable_type_winners(@match, 'entry')
   	@entries_set = @match.entries.find(:all, :order => 'RAND()')
   	vll = @match.votes_lower_limit
 #  	if vll && vll > 0
@@ -185,6 +185,7 @@ class MatchesController < ApplicationController
       @rank_list_title = "作品排行榜 (有效#{VOTE_CN})"
       @highest_voted_entries = @entries_set.sort { |a,b| [ b.valid_total_votes, b.valid_votes_count ] <=> [ a.valid_total_votes, a.valid_votes_count ] }
     end
+    @winnerables_set = winnerables_for(@winners_set[0..17])
   	@entriables_set = entriables_for(@entries_set[0..17])
 		@player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
   	

@@ -11,7 +11,7 @@
 		<% vll = item.votes_lower_limit %>
 		<% if vll && vll > 0 %>
 			<% buttons << [ [ 'votes_lower_limit', false, true, 'l3' ], 
-											[ "每#{unit_for('Entry')}作品至少需要#{vll}位投票者#{VOTE_CN}才能参与奖项评选" ]
+											[ "每#{unit_for('Entry')}作品至少需要#{vll}位投票者#{VOTE_CN}才能参与作品奖评选" ]
 										] %>
 		<% end %>
 		
@@ -36,6 +36,8 @@
 		<% end %>
 	<% end %>
 	
-	<%= render :partial => '/layouts/todo_bar', 
-						 :locals => { :buttons => buttons } %>
+  <div class="todo_right" style="margin: 0px 10px 10px 10px;">
+    <%= render :partial => '/layouts/todo_bar',
+                :locals => { :buttons => buttons } %>
+  </div>
 <% end %>

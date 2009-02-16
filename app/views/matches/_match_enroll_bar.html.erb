@@ -35,5 +35,7 @@
 								[ "#{MATCH_CN}指南", url_for(:action => 'help') ]
 							] %>
 
-<%= render :partial => '/layouts/todo_bar', 
-					 :locals => { :buttons => buttons } %>
+<div class="todo_right" style="margin: 0px 10px 10px 10px;">
+  <%= render :partial => '/layouts/todo_bar',
+              :locals => { :buttons => buttons } %>
+</div>

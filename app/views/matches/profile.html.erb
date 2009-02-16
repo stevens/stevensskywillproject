@@ -25,12 +25,35 @@
 								 						  :show_manage => false, 
 								 						  :delete_remote => false} %>
 		</div>
-		<div id="match_enroll_bar" class="todo_right">
+		<div id="match_enroll_bar">
 			<%= render :partial => "/matches/match_enroll_bar", 
 								 :locals => { :item => @match, 
 								 							:ref => 'match_profile' } %>
 		</div>
 	</div>
+</div>
+
+<div id="match_winners_wrapper" class="content_block">
+  <div id="match_winners_header" class="block_header">
+    <div class="block_header_link">
+
+    </div>
+    <h1><%= "获奖作品" %></h1>
+  </div>
+
+  <div id="match_winners_detail" class="block_main">
+    <%= render :partial => 'layouts/items_matrix',
+                :locals => { :show_paginate => false,
+                            :items_set => @winnerables_set,
+                            :limit => 18,
+                            :items_count_per_row => 6,
+                            :show_photo => true,
+                            :show_below_photo => true,
+                            :show_title => true,
+                            :show_user => true,
+                            :show_photo_todo => false,
+                            :photo_style => 'matrix' } %>
+  </div>
 </div>
 
 <% if @current_user %>
@@ -55,7 +78,7 @@
 								 						    :show_user => true, 
 								 						    :show_photo_todo => false, 
 								 						    :photo_style => 'matrix' } %>
-				<div id="match_collect_bar" class="todo_right">
+				<div id="match_collect_bar">
 					<%= render :partial => "/matches/match_collect_bar", 
 										 :locals => { :item => @match, 
 										 							:ref => 'match_profile' } %>
@@ -84,7 +107,7 @@
 							 						    :show_user => true, 
 							 						    :show_photo_todo => false, 
 							 						    :photo_style => 'matrix' } %>
-			<div id="match_vote_bar" class="todo_right">
+			<div id="match_vote_bar">
 				<%= render :partial => "/matches/match_vote_bar", 
 									 :locals => { :item => @match, 
 									 							:ref => 'match_profile' } %>
