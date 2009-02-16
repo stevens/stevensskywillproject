@@ -8,7 +8,7 @@ module WinnersHelper
   def winnerables_for(winners)
   	winnerables = []
   	for winner in winners
-  		winnerables << winner.winnerable if winner.winnerable.entriable?
+  		winnerables << winner.winnerable
   	end
   	winnerables
   end

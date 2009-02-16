@@ -27,11 +27,15 @@
 	<% end %>
 <% end %>
 
+<% buttons << [ [ 'winner', false, true, 'l3' ],
+								[ "获奖名单", match_winners_path(item) ]
+							] %>
+
 <% buttons << [ [ 'detail', false, true, 'l2' ], 
 								[ "#{MATCH_CN}详情", match_path(item) ]
 							] %>
 							
-<% buttons << [ [ 'help', false, true, 'l3' ], 
+<% buttons << [ [ 'help', false, true, 'l2' ],
 								[ "#{MATCH_CN}指南", url_for(:action => 'help') ]
 							] %>
 

@@ -16,7 +16,7 @@ class WinnersController < ApplicationController
   private
 
   def load_winners
-    @winners_set = @match.winners.group_by { |winner| winner.award_id }.sort_by { |winners| winners[0] }
+    @winners_set = @match.winners.group_by { |winner| winner.award_id }.sort_by { |winners| @match.awards.find_by_id(winners[0]).level }
   end
 
   def load_awards

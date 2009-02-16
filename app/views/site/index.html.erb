@@ -5,50 +5,67 @@
 		<p>是的, 人人皆可成为厨师!</p><br />
 		
 		<% match = Match.find_by_id(1) %>
-		
-		<% if match %>
-			<% slogan = match.slogan %>
-		<% else %>
-			<% if Date.today > 2009-02-01 %>
-				<% signup_image_url = 'day/2008/2008-12-24_xmas.jpg' %>
-				<% slogan = '过节我做煮, 新年更蜂狂!' %>
-			<% else %>
-				<% signup_image_url = 'default/bee/default_bee_mcube.png' %>
-				<% slogan = SLOGAN_CN %>
-			<% end %>
-		<% end %>
-		
-		<% if @current_user %>
-			<p>
-				<span>
-					<% if match %>
-						<%= render :partial => "/layouts/item_photo",
-						 :locals => { :item => match, 
-						 						  :photo_style => 'full' } %>
-					<% else %>
-						<%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'User', 'matrix'), :title => "进入我的#{SITE_NAME_CN}", :alt => ''), 
-												user_first_link(@current_user) %>
-					<% end %>
-				</span>
-			</p>
-			<br />
-			<p><em class="l"><%= "#{strip_tags(@current_user.login)} - #{slogan}" %></em></p><br />			
-		<% else %>
-			<p>
-				<span>
-					<% if match %>
-						<%= render :partial => "/layouts/item_photo",
-											 :locals => { :item => match, 
-											 						  :photo_style => 'full' } %>
-					<% else %>
-						<%= link_to image_tag(signup_image_url, :title => "加入#{SITE_NAME_CN}", :alt => ''), 
-												signup_url %>
-					<% end %>
-				</span>
-			</p>
-			<br />
-			<p><em class="l"><%= slogan %></em></p><br />
-		<% end %>
+        <% winnerable = awardable_type_winners(match, 'entry', limit = 1, order = 'RAND()')[0].winnerable %>
+
+        <% if winnerable %>
+          <% slogan = "金蜂食单: #{item_title(winnerable)}" %>
+        <% else %>
+          <% if match %>
+              <% slogan = match.slogan %>
+          <% else %>
+              <% if Date.today > 2009-02-01 %>
+                  <% signup_image_url = 'day/2008/2008-12-24_xmas.jpg' %>
+                  <% slogan = '过节我做煮, 新年更蜂狂!' %>
+              <% else %>
+                  <% signup_image_url = 'default/bee/default_bee_mcube.png' %>
+                  <% slogan = SLOGAN_CN %>
+              <% end %>
+          <% end %>
+        <% end %>
+
+        <% if winnerable %>
+          <p>
+            <span>
+              <%= render :partial => "layouts/item_photo",
+                          :locals => { :item => winnerable,
+                                       :photo_style => 'full' } %>
+            </span>
+          </p>
+          <br />
+          <p><em class="l"><%= slogan %></em></p><br />
+        <% else %>
+          <% if @current_user %>
+              <p>
+                  <span>
+                      <% if match %>
+                          <%= render :partial => "/layouts/item_photo",
+                           :locals => { :item => match,
+                                                    :photo_style => 'full' } %>
+                      <% else %>
+                          <%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'User', 'matrix'), :title => "进入我的#{SITE_NAME_CN}", :alt => ''),
+                                                  user_first_link(@current_user) %>
+                      <% end %>
+                  </span>
+              </p>
+              <br />
+              <p><em class="l"><%= "#{strip_tags(@current_user.login)} - #{slogan}" %></em></p><br />
+          <% else %>
+              <p>
+                  <span>
+                      <% if match %>
+                          <%= render :partial => "/layouts/item_photo",
+                                               :locals => { :item => match,
+                                                                        :photo_style => 'full' } %>
+                      <% else %>
+                          <%= link_to image_tag(signup_image_url, :title => "加入#{SITE_NAME_CN}", :alt => ''),
+                                                  signup_url %>
+                      <% end %>
+                  </span>
+              </p>
+              <br />
+              <p><em class="l"><%= slogan %></em></p><br />
+          <% end %>
+        <% end %>
 		<p>
 			<span>
 			<table style="margin: auto">

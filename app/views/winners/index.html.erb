@@ -20,6 +20,7 @@
                 <%= add_brackets(award_basic_info(award)) %>
             </em>
           </h3>
+          <% show_user = (winners[1][0].winnerable_type != 'User') ? true : false %>
           <%= render :partial => 'layouts/items_matrix',
                       :locals => { :show_paginate => false,
                                   :items_set => winnerables_for(winners[1]),
@@ -28,7 +29,7 @@
                                   :show_photo => true,
                                   :show_below_photo => true,
                                   :show_title => true,
-                                  :show_user => true,
+                                  :show_user => show_user,
                                   :show_photo_todo => false,
                                   :photo_style => 'matrix' } %>
         </div>
