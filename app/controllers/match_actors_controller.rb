@@ -11,8 +11,8 @@ class MatchActorsController < ApplicationController
   	
     respond_to do |format|
     	format.html do
-    		actor_title = Code.find_by_codeable_type_and_code('match_actor_role', @match_actor_role).title
-		  	info = "#{actor_title} (#{@match_actors_set_count})#{itemname_suffix(@parent_obj)}"
+    		actor_role_title = Code.find_by_codeable_type_and_code('match_actor_role', @match_actor_role).title
+		  	info = "#{actor_role_title} #{itemname_suffix(@parent_obj)}"
 				set_page_title(info)
 				set_block_title(info)    	
     	end
