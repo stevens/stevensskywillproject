@@ -12,12 +12,16 @@ module RecipesHelper
  		when 'repaste'
  			is_draft_cond = recipe_is_draft_cond(user)
  			from_type_cond = '2'
+    when 'choiced'
+      is_draft_cond = recipe_is_draft_cond(user)
+      role_cond = '11'
  		else
  			is_draft_cond = recipe_is_draft_cond(user)
  		end
  		recipe_conditions = []
  		recipe_conditions << recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), is_draft_cond)
  		recipe_conditions << "recipes.from_type = #{from_type_cond}" if from_type_cond
+    recipe_conditions << "recipes.roles LIKE '%#{role_cond}%'" if role_cond
  		recipes_for(user, recipe_conditions.join(' AND '), limit, order)
 	end
 	

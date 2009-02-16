@@ -251,7 +251,8 @@
 					<%= "谁可以看见这个#{RECIPE_CN}?" %>
 				</div>
 				<div class="input">
-					<%= f.select :privacy, Code.find(:all, :conditions => {:codeable_type => 'privacy'}).collect {|c| [ c.title, c.code ] } %>
+                    <% disabled = true if recipe.entried? %>
+					<%= f.select :privacy, Code.find(:all, :conditions => {:codeable_type => 'privacy'}).collect {|c| [ c.title, c.code ] }, { }, { :disabled => disabled } %>
 				</div>
 				<%= error_message_on "recipe", "privacy" %>
 			</td>
