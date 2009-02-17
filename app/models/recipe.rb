@@ -47,6 +47,7 @@ class Recipe < ActiveRecord::Base
   													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
   
   def publishable?
+#    cover_photo = self.photos.find_by_id(cover_photo_id) if cover_photo_id
   	(is_draft == '1' && cover_photo_id && status.to_i >= 1) ? true : false
   end
   

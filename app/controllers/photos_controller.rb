@@ -204,19 +204,20 @@ class PhotosController < ApplicationController
   
 	def destroy
 		load_photo(@current_user)
+    @photoable = @photo.photoable
 		
 		if @photos_set_count == 1
-			if item_published?(@parent_obj)
+			if item_published?(@photoable)
 				@notice = "#{SORRY_CN}, 由于已发布的#{name_for(@parent_type)}至少需要有1#{unit_for('Photo')}#{PHOTO_CN}, 所以目前还不能#{DELETE_CN}这#{unit_for('Photo')}#{PHOTO_CN}!"
 			else
 				do_destroy = true
 				change_cover = true
 				new_cover_id = nil
-				set_draft = true if @parent_obj.read_attribute('is_draft') == '0'
+#				set_draft = true if @photoable.read_attribute('is_draft') == '0'
 			end
 		elsif @photos_set_count > 1
 			do_destroy = true
-			if @photo.is_cover?(@parent_obj)
+			if @photo.is_cover?(@photoable)
 				change_cover = true
 				if @photo == @photos_set[0]
 					new_cover_id = @photos_set[1].id
@@ -230,12 +231,12 @@ class PhotosController < ApplicationController
 			ActiveRecord::Base.transaction do
 				if @photo.destroy
 					if change_cover
-						if set_draft
-							new_attrs = { :cover_photo_id => new_cover_id, :is_draft => '1' }
-						else
-							new_attrs = { :cover_photo_id => new_cover_id }
-						end
-						if @parent_obj.update_attributes(new_attrs)
+#						if set_draft
+#							new_attrs = { :cover_photo_id => new_cover_id, :is_draft => '1' }
+#						else
+#							new_attrs = { :cover_photo_id => new_cover_id }
+#						end
+						if @photoable.update_attribute(:cover_photo_id, new_cover_id)
 							after_destroy_ok
 						else
 							after_destroy_error
