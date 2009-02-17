@@ -1,7 +1,8 @@
 <% current = Time.now %>
-<% buttons = [] %>
 
 <% if item.doing?(current) %>
+    <% buttons = [] %>
+
 	<% enroll_time_status = item.enroll_time_status(current) %>
 	<% buttons << [ [ 'enroll_status' ], 
 									[ "报名#{enroll_time_status[2]}" ]
@@ -25,21 +26,9 @@
 			<% end %>
 		<% end %>
 	<% end %>
+
+  <div class="todo_right" style="margin: 0px 10px 10px 10px;">
+    <%= render :partial => '/layouts/todo_bar',
+                :locals => { :buttons => buttons } %>
+  </div>
 <% end %>
-
-<% buttons << [ [ 'winner', false, true, 'l3' ],
-								[ "获奖名单", match_winners_path(item) ]
-							] %>
-
-<% buttons << [ [ 'detail', false, true, 'l2' ], 
-								[ "#{MATCH_CN}详情", match_path(item) ]
-							] %>
-							
-<% buttons << [ [ 'help', false, true, 'l2' ],
-								[ "#{MATCH_CN}指南", url_for(:action => 'help') ]
-							] %>
-
-<div class="todo_right" style="margin: 0px 10px 10px 10px;">
-  <%= render :partial => '/layouts/todo_bar',
-              :locals => { :buttons => buttons } %>
-</div>

@@ -1,10 +1,17 @@
 <div id="match_intro_wrapper" class="content_block">
-	<div id="match_intro_header" class="block_header">
-		<div class="block_header_link">	
-			<%= link_to "#{SEE_CN}详情", :controller => 'matches', :action => 'show', :id => @match.id %>	
-		</div>
-		<h1><%= "#{MATCH_CN}介绍" %></h1>
-	</div>
+  <div id="match_intro_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% buttons << [ [ 'match_detail' ],
+                      [ "#{MATCH_CN}详情", @match ] ] %>
+      <% buttons << [ [ 'match_help' ],
+                      [ "#{MATCH_CN}指南", url_for(:action => 'help') ] ] %>
+
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1><%= "#{MATCH_CN}介绍" %></h1>
+  </div>
 	
 	<div id="match_intro_detail" class="block_main">
 		<div id="match_intro_info">
@@ -38,8 +45,8 @@
     <div id="match_winners_header" class="block_header">
       <div class="block_header_link">
         <% buttons = [] %>
-        <% buttons << [ [ 'more' ],
-                        [ '完全获奖名单', match_winners_path(@match) ]] %>
+        <% buttons << [ [ 'more_winners' ],
+                        [ '获奖名单', match_winners_path(@match) ] ] %>
 
         <%= render :partial => 'layouts/todo_bar',
                     :locals => { :buttons => buttons } %>
