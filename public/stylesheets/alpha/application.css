@@ -1466,11 +1466,11 @@ div.welcome_content em {
 	color: #428cbb;
 	padding: 5px 10px;
 }
-div.welcome_content em.l {
-	font-weight: bold;
-	font-size: 18px;
-	font-style: normal;
-	color: #ff8159;
+div.welcome_content div.slogan {
+    font-weight: bold;
+    font-size: 18px;
+    font-style: normal;
+    color: #ff8159;
 }
 div.welcome_content table {
 	margin: auto;

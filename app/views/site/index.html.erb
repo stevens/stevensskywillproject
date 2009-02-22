@@ -8,8 +8,8 @@
         <% winnerable = awardable_type_winners(match, 'entry', limit = 1, order = 'RAND()')[0].winnerable %>
 
         <% if winnerable %>
-            <% slogan = "金蜂食单: #{strip_tags(item_title(winnerable))}<br />
-                        <div style='font-size: 12px;'>来自 #{strip_tags(user_username(winnerable.user, true, true))}</div>" %>
+            <% slogan = "金蜂食单: #{strip_tags(item_title(winnerable))}" %>
+            <% winnerable_username = "来自 #{strip_tags(user_username(winnerable.user, true, true))}" %>
         <% else %>
           <% if match %>
               <% slogan = match.slogan %>
@@ -33,7 +33,11 @@
             </span>
           </p>
           <br />
-          <p><em class="l"><%= slogan %></em></p><br />
+          <p>
+            <div class="slogan"><%= slogan %></div>
+            <div style="margin-top: 3px; color: #ff8159;"><%= strip_tags "来自 #{user_username(winnerable.user, true, true)}" %></div>
+          </p>
+          <br />
         <% else %>
           <% if @current_user %>
               <p>
@@ -49,7 +53,10 @@
                   </span>
               </p>
               <br />
-              <p><em class="l"><%= strip_tags "#{user_username(@current_user, true, true)} - #{slogan}" %></em></p><br />
+              <p>
+                <div class="slogan"><%= strip_tags "#{user_username(@current_user, true, true)} - #{slogan}" %></div>
+              </p>
+              <br />
           <% else %>
               <p>
                   <span>
@@ -64,7 +71,10 @@
                   </span>
               </p>
               <br />
-              <p><em class="l"><%= strip_tags slogan %></em></p><br />
+              <p>
+                <div class="slogan"><%= strip_tags slogan %></div>
+              </p>
+              <br />
           <% end %>
         <% end %>
 		<p>

@@ -69,7 +69,7 @@ Rails::Initializer.run do |config|
 	SITE_DOMAIN_EN = 'www.beecook.com'
 	SITE_DOMAIN_CN = 'www.蜂厨.com'
 	SITE_EMAIL = 'beecook2007@gmail.com' #TBD
-	YEAR_BEGIN = '2007'
+	YEAR_BEGIN = '2008'
 	YEAR_NOW = '2008'
 	
 	# WHO constants
