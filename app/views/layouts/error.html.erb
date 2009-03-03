@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title><%= "#{SITE_NAME_CN} | #{SORRY_CN}, 出错啦!" %></title>
+    <%= stylesheet_link_tag "alpha/application.css" %>
+  </head>
+
+  <body>
+    <div class="dialog">
+        <%= link_to image_tag('default/bee/default_bee_mcube.png', :title => SITE_NAME_CN, :alt => '', :class => 'logo'), root_url %>
+        <br /><br />
+        <%= yield %>
+    </div>
+  </body>
+</html>

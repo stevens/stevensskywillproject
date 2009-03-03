@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  
   map.resources :documents
 
 	map.connect 'homepages/import', :controller => 'homepages', :action => 'import'
@@ -140,4 +141,6 @@ ActionController::Routing::Routes.draw do |map|
 	
 	# for newsletter
 	map.sendmail '/sendmail/:id', :controller => 'keepers', :action => 'sendnewsletter'
+
+#  map.connect '*path', :controller => 'application', :action => 'rescue_errors' unless ::ActionController::Base.consider_all_requests_local
 end

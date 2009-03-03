@@ -1240,6 +1240,29 @@ div.radio .fieldWithErrors {
 	margin-left: 10px;
 }
 
+/* Dialog */
+div.dialog {
+    width: 480px;
+    padding: 20px;
+    margin: 100px auto;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    text-align: center;
+    background-color: #ffffdd;
+}
+div.dialog h1 { 
+    font-size: 14px;
+    color: #ff0000;
+    line-height: 16px;
+}
+div.dialog p a {
+	color: #428cbb;
+}
+div.dialog p a:hover {
+	background-color: #428cbb;
+	color: #ffffff;
+}
+
 /* Notice */
 #flash {
 	margin-bottom: 10px;
