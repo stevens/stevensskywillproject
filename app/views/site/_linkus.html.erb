@@ -1,0 +1,54 @@
+<% logo_url = "#{root_url}images/logo/bc_logo_web.png" %>
+
+<% html_content = [] %>
+
+<% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
+
+<% html_content << "<div>
+                        <a href='#{root_url}' target='_blank'><img alt='' src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 110px;' /></a>
+                    </div>
+                    <div>
+                        <a href='#{root_url}' target='_blank' style='text-decoration: none; font-weight: bold !important; font-size: 12px; font-weight: normal; color: #ff8159; font-family: Verdana; word-break: break-all;'>#{SITE_DOMAIN_EN}</a>
+                    </div>
+                    <div>
+                        <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana; word-break: break-all;'>美食革命根据地</a>
+                    </div>" %>
+
+<% html_content << "</div>" %>
+
+<div class="sub_block_lr">
+
+	<div class="main">
+		<h3><%= "链接代码" %></h3>
+		<div class="sub_block_lr">
+			<em class="l2"><%= "在你的网站或Blog上显示#{SITE_NAME_CN}的图文链接, 只需要将这段代码粘贴到你的网站或Blog的HTML代码中..." %></em>
+			<div id="share_code" class="share_code" value="<%= h str_squish(html_content.to_s, 1, false) %>">
+				<%= h html_content %>
+			</div>
+
+			<SCRIPT LANGUAGE="JavaScript">
+			function fCopyToClicp(id){
+			        var a = document.getElementById(id);
+			        window.clipboardData.setData('text',a.value);
+			        alert("已经复制到剪贴板了");
+			}
+			</SCRIPT>
+			<div class="submit">
+				<input type="button" value="复制到剪贴板" class="submit" onClick="fCopyToClicp('share_code');" />
+				<em class="l2"><%= "如果你的浏览器不支持自动复制到剪贴板, 请选中代码文本用键盘 [Ctrl+C] 复制" %></em>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="main">
+		<h3><%= "效果预览" %></h3>
+		<div class="sub_block_lr">
+			<div class="share_preview">
+				<%= html_content %>
+			</div>
+		</div>
+	</div>
+
+</div>

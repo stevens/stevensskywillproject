@@ -12,34 +12,34 @@
 <% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
 
 <% html_content << "<div>
-											<a href='#{item_url}' target='_blank'><img alt='' src='#{photo_url}' title='#{item_title}' /></a>
-										</div>
-										<div>
-											<a href='#{item_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #ff8159; font-family: Verdana; word-break: break-all;'>#{item_title}</a>
-										</div>" %>
+                        <a href='#{item_url}' target='_blank'><img alt='' src='#{photo_url}' title='#{item_title}' /></a>
+                    </div>
+                    <div>
+                        <a href='#{item_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #ff8159; font-family: Verdana; word-break: break-all;'>#{item_title}</a>
+                    </div>" %>
 
 <% html_content << "<div>
-											<a href='#{user_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana; word-break: break-all;'>#{item.user.login}的#{MAIN_PAGE_CN}</a>
-										</div>" %>
+                        <a href='#{user_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana; word-break: break-all;'>#{item.user.login}的#{MAIN_PAGE_CN}</a>
+                    </div>" %>
 
 <% if !blog_url.blank? %>
 	<% html_content << "<div>
-												<a href='#{blog_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana;'>Blog</a>
-											</div>" %>
+                            <a href='#{blog_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal; color: #428cbb; font-family: Verdana;'>Blog</a>
+                        </div>" %>
 <% end %>
 
 <% html_content << "<div style='margin-top: 3px;'>
-										 	<a href='#{root_url}' target='_blank'><img alt='', src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 80px;'/></a>
-										</div>" %>
+                        <a href='#{root_url}' target='_blank'><img alt='', src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 80px;'/></a>
+                    </div>" %>
 										
 <% html_content << "</div>" %>
 
 <div class="sub_block_lr">
 
 	<div class="main">
-		<h3><%= "分享代码" %></h3>
+		<h3><%= "链接代码" %></h3>
 		<div class="sub_block_lr">
-			<em class="l2"><%= "在你的Blog上显示这#{unit_for('Recipe')}#{RECIPE_CN}的图文链接, 只需要将这段代码粘贴到你的Blog的HTML代码中..." %></em>
+			<em class="l2"><%= "在你的网站或Blog上显示这#{unit_for('Recipe')}#{RECIPE_CN}的图文链接, 只需要将这段代码粘贴到你的网站或Blog的HTML代码中..." %></em>
 			<div id="share_code" class="share_code" value="<%= h str_squish(html_content.to_s, 1, false) %>">
 				<%= h html_content %>
 			</div>

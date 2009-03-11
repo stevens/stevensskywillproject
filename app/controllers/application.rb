@@ -121,8 +121,8 @@ class ApplicationController < ActionController::Base
 #                      请还没有提交参赛作品的选手们抓紧时间提交，<em class='l3'>报名并提交参赛作品的选手都有机会获得“参赛幸运奖”！</em><br />
 #                      <em class='l3'>如果参赛作品有至少3位投票者投票，还可以参与“主奖项（金蜂奖、银蜂奖、铜蜂奖）”和“金蜂食单入围奖”的评选！</em><br />
 #                      请蜂友们抓紧时间为你喜爱的作品投票，<em class='l3'>投票的蜂友都有机会获得“投票幸运奖”！</em>"
-    @system_notice = "<a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>金蜂·美食人生 大赛（第一季）</a> <em class='l3'><a href='#{url_for(:match_id => 1, :controller => 'winners', :action => 'index')}'>获奖名单</a></em> 和 <em class='l3'><a href='http://beecook2008.blogspot.com/2009/02/blog-post.html' target='_blank'>金蜂食单</a></em> 揭晓啦，恭喜获奖的作品和蜂友们！<br /><br />
-                      蜂厨服务生已经给获奖的蜂友发出了奖品，请各位注意查收喔！"
+#    @system_notice = "<a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>金蜂·美食人生 大赛（第一季）</a> <em class='l3'><a href='#{url_for(:match_id => 1, :controller => 'winners', :action => 'index')}'>获奖名单</a></em> 和 <em class='l3'><a href='http://beecook2008.blogspot.com/2009/02/blog-post.html' target='_blank'>金蜂食单</a></em> 揭晓啦，恭喜获奖的作品和蜂友们！<br /><br />
+#                      蜂厨服务生已经给获奖的蜂友发出了奖品，请各位注意查收喔！"
 	end
 	
 	# def param_posted?(symbol)

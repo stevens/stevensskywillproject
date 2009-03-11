@@ -137,6 +137,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.help '/help', :controller => 'site', :action => 'help'
 	map.privacy '/privacy', :controller => 'site', :action => 'privacy'
 	map.terms '/terms', :controller => 'site', :action => 'terms'
+  map.linkus '/linkus', :controller => 'site', :action => 'linkus'
 	map.sitemap 'sitemap.xml' , :controller => 'sitemap' , :action => 'sitemap'
 	
 	# for newsletter

@@ -35,6 +35,12 @@ class SiteController < ApplicationController
 		set_page_title(info)
 		set_block_title(info)
 	end
+
+  def linkus
+    info = "链接#{SITE_NAME_CN}"
+    set_page_title(info)
+		set_block_title(info)
+  end
 	
 	private
 	
