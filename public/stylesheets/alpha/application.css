@@ -1734,6 +1734,7 @@ div.welcome_todo_button a:hover {
 /* Partner */
 .partner_photo {
 	padding-right: 10px;
+    text-align: center;
 }
 #partner_list_wrapper h2 a, #partner_list_wrapper h2 a:link, #partner_list_wrapper h2 a:visited {
 	font-size: 12px;

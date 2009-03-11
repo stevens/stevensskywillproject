@@ -95,7 +95,7 @@
 							<%= link_to "食单<span class='script'>Cooking...</span>", root_path, :style => 'background-color: #b8b9a7;'  %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'match') %>>
-							<%= link_to "#{MATCH_CN}<span class='script'>GoldenBee!</span>", { :controller => 'matches', :action => 'profile', :id => 1 } %>
+							<%= link_to "#{MATCH_CN}", { :controller => 'matches', :action => 'profile', :id => 1 } %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'user') %>>
 							<%= link_to PEOPLE_CN, "#{users_path}/overview" %>
@@ -255,6 +255,7 @@
 					<div class="seo_link">
 						<%= link_to 'FLVCD', 'http://www.flvcd.com/', :target => '_blank' %>
 						<%= link_to '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', :target => '_blank' %>
+                        <%= link_to '生活绿皮书', 'http://q.blog.sina.com.cn/yryg', :target => '_blank' %>
 					</div>
 				</div>
 			</div>
