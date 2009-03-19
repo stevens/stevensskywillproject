@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  
+  caches_page :new
 	before_filter :clear_location_unless_logged_in
 	before_filter :load_category, :only => [:index, :overview]
 

@@ -110,6 +110,7 @@ class ReviewsController < ApplicationController
 				end
 				@reviews_set_count = @reviews_set.size
 				@insert_line = true if @reviews_set_count <= limit
+                                expire_reviews_cache()
 				after_create_ok
 			else
 				after_create_error
@@ -122,6 +123,7 @@ class ReviewsController < ApplicationController
 
 		if @review.update_attributes(params[:review])
 			after_update_ok
+                        expire_reviews_cache()
 		else
 			after_update_error
 		end
@@ -137,7 +139,7 @@ class ReviewsController < ApplicationController
 				@reviews_set = @reviewable.reviews.find(:all, :limit => 20)
 				@reviews_set_count = @reviews_set.size
 			end
-			 		
+		expire_reviews_cache()	 		
   		after_destroy_ok
   	end
   end
@@ -157,7 +159,9 @@ class ReviewsController < ApplicationController
   end
   
 	private
-	
+  def expire_reviews_cache()
+    expire_fragment(%r{recipes/overview.part=overview_reviews.*})
+  end	
   def load_review(user = nil)
  		if user
  			@review = user.reviews.find(@self_id)

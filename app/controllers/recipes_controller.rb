@@ -4,7 +4,6 @@ class RecipesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
 	before_filter :set_system_notice, :only => [:overview]
-	
 	def change_from_type
   	respond_to do |format|
 			format.js do
@@ -152,6 +151,7 @@ class RecipesController < ApplicationController
 			if @recipe.save
 				# @recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
 				reg_homepage(@recipe)
+                                expire_tag_cache()
 				after_create_ok
 			else
 				after_create_error
@@ -226,6 +226,7 @@ class RecipesController < ApplicationController
 			
 			if @recipe.update_attributes(new_attrs)
 				reg_homepage(@recipe, 'update')
+                                expire_publish_recipe_fragment_cache()
 				after_publish_ok
 			end
 		end
@@ -267,12 +268,23 @@ class RecipesController < ApplicationController
 	end
   
   def overview
+      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_new")
 	  load_recipes_set
+      end
+      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_random")
 	  load_random_recipes
+      end
+      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_choice")
 	  load_choice_recipes
+      end
+      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_reviews")
 	  load_reviews_set
+      end
+      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_tags")
 	  load_tags_set
-	  
+      end
+
+      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_highest")
   	ranked_recipes_set = highest_rated_items(@recipes_set)[0..99]
   	if ranked_recipes_set
 	  	@highlighted_recipe = ranked_recipes_set.rand
@@ -281,6 +293,7 @@ class RecipesController < ApplicationController
 	  	end
 	  	@highest_rated_recipes = ranked_recipes_set[0..19]
 	  end
+      end
   	# @random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN
@@ -309,6 +322,27 @@ class RecipesController < ApplicationController
   
   private
   
+  #expire the publish recipe assocciated cache
+  def expire_publish_recipe_fragment_cache()
+    expire_fragment("index/random_recipes")
+    expire_fragment(%r{recipes/overview.part=overview_new.*})
+    expire_fragment(%r{recipes/overview.part=overview_random.*})
+    
+  end
+  
+  #expire the assocciated cache when recipe destroy
+  def expire_destroy_recipe_fragment_cache()
+    expire_fragment("index/random_recipes")
+    expire_fragment(%r{recipes/overview.part=overview_new.*})
+    expire_fragment(%r{recipes/overview.part=overview_random.*})
+    expire_fragment(%r{recipes/overview.part=overview_choice.*})
+    expire_fragment(%r{recipes/overview.part=overview_highest.*})
+    expire_fragment(%r{recipes/overview.part=overview_highest_s.*})
+  end
+  #expire the tag cache
+  def expire_tag_cache()
+    expire_fragment(%r{recipes/overview.part=overview_tags.*})
+  end
 	# def set_system_notice
 		# @system_notice = "号外: 提供食谱的<em>蜂友的blog</em>可以<em>自动加入</em>食谱的<em>相关链接</em>啦!"
 	# end

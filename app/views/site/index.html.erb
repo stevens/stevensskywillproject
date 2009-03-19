@@ -3,7 +3,6 @@
 		<p>记得<%= link_to '《料理鼠王》', 'http://www.douban.com/subject/1793491/', :target => "_blank" %>里小鼠雷米那句惊世名言吗?</p><br />
 		<p>"Every people can be a cook. —— Remy"</p><br />
 		<p>是的, 人人皆可成为厨师!</p><br />
-		
 		<% match = Match.find_by_id(1) %>
         <% winnerable = awardable_type_winners(match, 'entry', limit = 1, order = 'RAND()')[0].winnerable %>
 
@@ -110,7 +109,7 @@
 				<%= link_to "随便逛逛", :controller => 'recipes', :action => 'overview' %>
 			<% end %>
 		</div>
-
+                <%  cache("index/random_recipes") do%>
 		<div id="random_items_bar" class="block_main">
 			<%= render :partial => "/layouts/items_matrix",
 								 :locals => {:show_paginate => false,
@@ -124,5 +123,6 @@
 								 						 :show_photo_todo => false, 
 								 						 :photo_style => 'sign'} %>
 		</div>
+                <% end %>
 	</div>
 </div>
