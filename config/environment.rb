@@ -30,8 +30,7 @@ Rails::Initializer.run do |config|
   #config.load_paths += %W( #{RAILS_ROOT}/app/sweepers )
   
   #configuration of the default cache dir
-  config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/" 
-
+  config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
@@ -377,7 +376,9 @@ end
 	
 	# ActionMailer::Base.delivery_method = :smtp
 	# ActionMailer::Base.smtp_settings = { }
-	
+	#specify the cache dir
+        ActionController::Base.fragment_cache_store = :file_store, RAILS_ROOT + "/tmp/caches/"
+        
 	require 'will_paginate'
   # require 'action_mailer/ar_mailer' #后台管理用
 	
