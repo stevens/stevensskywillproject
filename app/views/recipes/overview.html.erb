@@ -1,4 +1,3 @@
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_highest") do %>
 <% if @highlighted_recipe %>
 	<div id="highlighted_item" class="content_block">
 		<div class="block_header">
@@ -16,7 +15,6 @@
 			</div>
 		</div>
 	</div>
-<% end %>
 <% end %>
 
 <% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_choice") do %>

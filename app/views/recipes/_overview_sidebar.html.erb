@@ -1,9 +1,7 @@
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_highest_s") do %>
 <% if @highest_rated_recipes && @highest_rated_recipes.size > 0 %>
 	<%= render :partial => 'layouts/ranklist_sideblock',
 						 :locals => { :rank_list_title => "#{RECIPE_CN}<em class='red'>红</em>榜 TOP20", 
 						 						  :items_set => @highest_rated_recipes } %>
-<% end %>
 <% end %>
 
 <% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_random") do %>

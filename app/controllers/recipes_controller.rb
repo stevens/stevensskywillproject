@@ -251,6 +251,7 @@ class RecipesController < ApplicationController
 				  new_roles = new_roles.strip.gsub(/\s+/, ' ')
 					
 					if @recipe.update_attribute(:roles, new_roles)
+                                                expire_choice_cache()
 						after_choice_ok
 					end
 				end
@@ -268,9 +269,10 @@ class RecipesController < ApplicationController
 	end
   
   def overview
-      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_new")
+      #need the sql handle
+      #unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_new")
 	  load_recipes_set
-      end
+      #end
       unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_random")
 	  load_random_recipes
       end
@@ -284,7 +286,7 @@ class RecipesController < ApplicationController
 	  load_tags_set
       end
 
-      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_highest")
+      #unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_highest")
   	ranked_recipes_set = highest_rated_items(@recipes_set)[0..99]
   	if ranked_recipes_set
 	  	@highlighted_recipe = ranked_recipes_set.rand
@@ -293,7 +295,7 @@ class RecipesController < ApplicationController
 	  	end
 	  	@highest_rated_recipes = ranked_recipes_set[0..19]
 	  end
-      end
+      #end
   	# @random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN
@@ -330,14 +332,20 @@ class RecipesController < ApplicationController
     
   end
   
+  #expire choice recipe cache
+  def expire_choice_cache()
+    expire_fragment(%r{recipes/overview.part=overview_new.*})
+    expire_fragment(%r{recipes/overview.part=overview_choice.*})
+  end
+  
   #expire the assocciated cache when recipe destroy
   def expire_destroy_recipe_fragment_cache()
     expire_fragment("index/random_recipes")
     expire_fragment(%r{recipes/overview.part=overview_new.*})
     expire_fragment(%r{recipes/overview.part=overview_random.*})
     expire_fragment(%r{recipes/overview.part=overview_choice.*})
-    expire_fragment(%r{recipes/overview.part=overview_highest.*})
-    expire_fragment(%r{recipes/overview.part=overview_highest_s.*})
+    expire_fragment(%r{recipes/overview.part=overview_reviews.*})
+    expire_fragment(%r{recipes/overview.part=overview_tags.*})
   end
   #expire the tag cache
   def expire_tag_cache()
