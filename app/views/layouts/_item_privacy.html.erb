@@ -1,0 +1,4 @@
+<% privacy_code = Code.find_by_codeable_type_and_code('privacy', item.privacy) %>
+<% item_type = type_for(item) %>
+
+<%= "#{privacy_code.title}可以看到这#{unit_for(item_type)}#{name_for(item_type)}" %>

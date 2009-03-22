@@ -1,0 +1,18 @@
+<div class="content_block">
+	
+  <div class="block_header">
+    <div class="block_header_link">
+      <!-- <%= link_to SEE_CN, @self_url %> | -->
+      <%= link_to strip_tags("#{BACK_CN}#{COURSE_CN}列表"), @selfs_url %> |
+      <%= link_to strip_tags("#{BACK_CN}#{@parent_name}"), @parent_url %>
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div class="block_main">
+    <%= render :partial => "courses/course_input",
+                :locals => { :course => @course,
+                            :is_new => false } %>
+  </div>
+	
+</div>

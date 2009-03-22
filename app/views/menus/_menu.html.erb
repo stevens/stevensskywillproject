@@ -1,0 +1,146 @@
+<% area_code = item.place_area %>
+<% subarea_code = item.place_subarea %>
+<% area_title = area_title(area_code) %>
+<% subarea_title = subarea_title(area_code, subarea_code) %>
+<% place_type = code_title('meal_place_type', item.place_type) %>
+<% place_area = "#{area_title} · #{subarea_title}" %>
+
+<div id="menu_<%= item.id %>_basic">
+  <div class="basic">
+    <%= render :partial => 'layouts/item_basic_block',
+                :locals => { :item => item } %>
+  </div>
+
+  <div class="main">
+    <ul>
+      <li>
+        <em class="l2"><%= "类型: " %></em>
+        <%= code_title('meal_duration', item.meal_duration) %> ·
+        <%= code_title('meal_kind', item.meal_kind) %> ·
+        <%= code_title('meal_system', item.meal_system) %>
+      </li>
+      <li>
+        <em class="l2"><%= "人数: " %></em>
+        <% nop = item.number_of_persons %>
+        <% if nop && nop > 0 %>
+          <%= "#{nop}#{unit_for('number_of_persons')}" %>
+        <% end %>
+      </li>
+      <li>
+        <em class="l2"><%= "费用: " %></em>
+        <% ttp = item.total_to_pay %>
+        <% if ttp && ttp > 0 %>
+          <%= "共计 #{ttp}#{unit_for('currency')}" %>
+          <% if nop && nop > 0 %>
+            <%= "· 人均 #{f(ttp/nop, 2).round}#{unit_for('currency')}" %>
+          <% end %>
+        <% end %>
+      </li>
+      <li>
+        <em class="l2"><%= "时间: " %></em>
+        <% if !item.meal_date.blank? %>
+          <%= item.meal_date %>
+        <% end %>
+        <% if !item.meal_time.blank? %>
+          <% if !item.meal_date.blank? %>
+            ·
+          <% end %>
+          <%= code_title('meal_time', item.meal_time) %>
+        <% end %>
+      </li>
+      <li>
+        <em class="l2"><%= "地点: " %></em>
+        <%= "#{area_title(area_code)} · #{subarea_title(area_code, subarea_code)} · #{place_type}" %>
+      </li>
+      <li>
+        <%= render :partial => 'layouts/item_origin',
+                    :locals => { :item => item } %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<% if show_todo %>
+  <div id="menu_<%= item.id %>_todo" class="todo_right">
+    <% if show_favorite %>
+      <div id="menu_<%= item.id %>_favorite" class="favorite_bar">
+        <%= render :partial => 'favorites/favorite_bar',
+                   :locals => { :favorable => item,
+                                :ref => nil,
+                                :favoriter_id => nil } %>
+      </div>
+    <% end %>
+
+    <% if show_manage %>
+      <div id="menu_<%= item.id %>_manage">
+        <%= render :partial => 'menus/menu_manage',
+                   :locals => { :item => item,
+                                :ref => 'show' } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @current_user && @current_user.is_role_of?('admin') %>
+  <div id="menu_<%= item.id %>_admin" class="admin_bar">
+    <%= render :partial => 'system/item_admin_bar',
+               :locals => { :item => item,
+                            :ref => 'show' } %>
+  </div>
+<% end %>
+
+<% if @match && @entry %>
+  <div id="menu_<%= item.id %>_match_block" class="entriable_match_block">
+    <%= render :partial => 'matches/entriable_match_block',
+               :locals => { :match => @match,
+                            :entry => @entry,
+                            :ref => 'show' } %>
+  </div>
+<% end %>
+
+<div id="menu_<%= item.id %>_photos" class="photos">
+  <%= render :partial => 'layouts/item_photos_block',
+              :locals => { :item => item } %>
+</div>
+
+<div id="menu_<%= item.id %>_main" class="item_detail">
+  <div class="main">
+    <h3><%= "地点" %></h3>
+    <ul>
+      <li>
+        <span class="text">
+          <em class="l2"><%= add_brackets(place_area) %></em>
+          <% if !item.place_area_detail.blank? %>
+            <%= strip_tags item.place_area_detail %>
+          <% end %>
+        </span>
+      </li>
+      <li>
+        <span class="text">
+          <em class="l2"><%= add_brackets(place_type) %></em>
+          <% if !item.place_title.blank? %>
+            <%= strip_tags item.place_title %>
+          <% end %>
+        </span>
+      </li>
+      <% if !item.place_notes.blank? %>
+        <%= paragraphs(item.place_notes) %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="main">
+    <h3><%= DESCRIPTION_CN %></h3>
+    <ul><%= paragraphs(item.description, true, true) %></ul>
+  </div>
+
+  <div class="main">
+    <h3><%= "闲话" %></h3>
+    <ul><%= paragraphs(item.any_else, true, true) %></ul>
+  </div>
+
+  <div class="main">
+    <%= render :partial => 'layouts/item_links_block',
+                :locals => { :item => item } %>
+  </div>
+</div>

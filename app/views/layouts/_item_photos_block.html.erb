@@ -1,0 +1,42 @@
+<% if cover_photo = cover_photo(item) %>
+  <div id="photos_filter_bar">
+    <%= render :partial => "photos/photos_filter_bar",
+               :locals => { :photoable => item,
+                            :current_filter => @current_filter,
+                            :filter_type => 'photo_type' } %>
+  </div>
+  <div id="main_photo" class="cover_photo">
+    <%= render :partial => "photos/photo_photo",
+               :locals => { :photo => cover_photo,
+                            :show_cover => false,
+                            :focus_photo => nil,
+                            :photo_style => 'full',
+                            :show_photo_link => false,
+                            :photo_link_url => nil,
+                            :photo_link_remote => false,
+                            :photo_filtered => false,
+                            :filter_type => 'photo_type' } %>
+  </div>
+  <div id="photos_nav" >
+    <%= render :partial => "photos/photos_matrix",
+               :locals => { :show_paginate => false,
+                            :photos_set => item.photos,
+                            :limit => nil,
+                            :show_photo => true,
+                            :focus_photo => nil,
+                            :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M,
+                            :photo_style => 'matrix',
+                            :photo_link_remote => true,
+                            :show_below_photo => false,
+                            :show_cover => true,
+                            :show_photo_todo => false,
+                            :photo_filtered => false,
+                            :filter_type => 'photo_type' } %>
+  </div>
+<% else %>
+  <%= "还没有#{PHOTO_CN}" %>
+<% end %>
+<div id="photos_todo_bar" class="below_photo">
+  <%= render :partial => "photos/photos_todo_bar",
+             :locals => { :photoable => item } %>
+</div>

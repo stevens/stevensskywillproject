@@ -1,0 +1,40 @@
+<% item_type_downcase = type_for(item).downcase %>
+
+<h2>
+  <div id="<%= item_type_downcase %>_<%= item.id %>_title">
+    <%= render :partial => 'layouts/item_basic',
+                :locals => { :item => item,
+                            :show_icon => true,
+                            :show_title => true,
+                            :show_link => true } %>
+  </div>
+</h2>
+<ul>
+  <li>
+    <%= render :partial => 'users/user_basic',
+                :locals => { :user => item.user,
+                            :show_come_from => true,
+                            :show_icon => true,
+                            :show_name => true,
+                            :show_link => true,
+                            :show_username => true,
+                            :show_myname => false } %>
+  </li>
+  <li>
+    <%= render :partial => 'layouts/item_timestamp',
+                :locals => { :item => item,
+                            :show_updated_at => true,
+                            :show_published_at => true } %>
+  </li>
+  <li>
+    <%= render :partial => 'layouts/item_privacy',
+                :locals => { :item => item } %>
+  </li>
+  <li>
+    <%= render :partial => 'taggings/item_tag_list',
+               :locals => { :item => item } %>
+    <% if item_manageable?(item) %>
+      <%= link_to "[#{EDIT_CN}#{TAG_CN}]", [item, :edit] %>
+    <% end %>
+  </li>
+</ul>

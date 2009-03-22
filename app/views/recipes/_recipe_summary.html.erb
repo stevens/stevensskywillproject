@@ -1,0 +1,22 @@
+<table class="item_summary">
+  <tr>
+    <td>
+      <em class="l2"><%= "#{DIFFICULTY_CN}: " %></em><%= code_title('difficulty', item.difficulty) %>
+    </td>
+    <td>
+      <em class="l2"><%= "#{PREP_TIME_CN}: " %></em><%= code_title('recipe_time', item.prep_time) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <em class="l2"><%= "#{COST_CN}: " %></em><%= code_title('recipe_cost', item.cost) %>
+    </td>
+    <td>
+      <em class="l2"><%= "#{COOK_TIME_CN}: " %></em><%= code_title('recipe_time', item.cook_time) %>
+    </td>
+  </tr>
+</table>
+
+<ul>
+  <%= paragraphs(truncate(item.description, 200), false, true, 5) %>
+</ul>

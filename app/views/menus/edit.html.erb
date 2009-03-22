@@ -1,0 +1,16 @@
+<div class="content_block">
+	
+  <div class="block_header">
+    <div class="block_header_link">
+      <%= link_to SEE_CN, :action => 'show' %>
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+	
+  <div class="block_main">
+    <%= render :partial => 'menus/menu_input',
+                :locals => { :menu => @menu,
+                            :is_new => false } %>
+  </div>
+
+</div>

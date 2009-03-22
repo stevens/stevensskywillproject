@@ -1,0 +1,12 @@
+<% if score = item.score %>
+  <% subscores = [ [ '味道', score.taste ], [ '外形', score.shape ], [ '创意', score.creative ], [ '营养', score.nutrition ], [ '性价比', score.cost_performance ] ] %>
+  <%= "评价: " %>
+  <% for subscore in subscores %>
+    <em class="l2"><%= "#{subscore[0]}-#{code_title('score_level',subscore[1])}" %></em>
+    <% if subscore != subscores.last %>
+      ·
+    <% end %>
+  <% end %>
+<% else %>
+  <%= "评价: 还没有评价" %>
+<% end %>

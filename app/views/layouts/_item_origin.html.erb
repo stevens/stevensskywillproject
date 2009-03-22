@@ -1,0 +1,10 @@
+<% origin_code = Code.find_by_codeable_type_and_code('from_type', item.from_type) %>
+<% item_type = type_for(item) %>
+
+<em class="l2"><%= "#{FROM_WHERE_CN}: " %></em><%=  origin_code.title %>
+<% if item.from_type == '1' %>
+  <% remark = "这#{unit_for(item_type)}#{name_for(item_type)}的文字和#{PHOTO_CN}都是#{user_username(item.user)}的辛苦原创, 未经许可, 请勿转载!" %>
+  <em class="l3"><%= strip_tags add_brackets(remark) %></em>
+<% elsif !item.from_where.nil? && !item.from_where.blank? %>
+  <%= strip_tags add_brackets(item.from_where) %>
+<% end %>

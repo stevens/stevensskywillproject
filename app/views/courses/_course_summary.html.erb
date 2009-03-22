@@ -1,0 +1,50 @@
+<table class="item_summary">
+  <tr>
+    <td>
+      <em class="l2"><%= "价格: " %></em>
+      <% list_price = item.list_price %>
+      <% course_unit = item.course_unit %>
+      <% if !list_price.blank? %>
+        <%= "#{list_price}#{unit_for('currency')}" %>
+        <% if !course_unit.blank? %>
+          <%= "/ #{course_unit}" %>
+        <% end %>
+      <% end %>
+    </td>
+
+    <% if (recipe_id = item.recipe_id) && !recipe_id.blank? %>
+      <% if (recipe = item.user.recipes.find_by_id(recipe_id)) && recipe.accessible?(@current_user) %>
+        <td>
+          <em class="l2"><%= "对应#{RECIPE_CN}: " %></em>
+          <%= link_to strip_tags(truncate(recipe.title, 30)), recipe %>
+        </td>
+      <% end %>
+    <% end %>
+  </tr>
+</table>
+
+<ul>
+  <div  id="course_<%= item.id %>_desc">
+    <%= paragraphs(truncate(item.description, 200), false, true, 5) %>
+  </div>
+  <div id="course_<%= item.id %>_desc_to_unfold">
+    <%= link_to_function('展开&dArr;') do |page|
+      page.replace_html "course_#{item.id}_desc",
+                        :partial => 'layouts/item_desc',
+                        :locals => { :item => item,
+                                    :status => 'unfold'}
+      page.hide "course_#{item.id}_desc_to_unfold"
+      page.show "course_#{item.id}_desc_to_fold"
+    end %>
+  </div>
+  <div id="course_<%= item.id %>_desc_to_fold" style="display: none;">
+    <%= link_to_function('收起&uArr;') do |page|
+      page.replace_html "course_#{item.id}_desc",
+                        :partial => 'layouts/item_desc',
+                        :locals => { :item => item,
+                                    :status => 'fold'}
+      page.hide "course_#{item.id}_desc_to_fold"
+      page.show "course_#{item.id}_desc_to_unfold"
+    end %>
+  </div>
+</ul>

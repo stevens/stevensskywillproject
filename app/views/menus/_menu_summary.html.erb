@@ -1,0 +1,59 @@
+<table class="item_summary">
+  <tr>
+    <td>
+      <em class="l2"><%= "类型: " %></em>
+      <%= code_title('meal_duration', item.meal_duration) %> ·
+      <%= code_title('meal_kind', item.meal_kind) %> ·
+      <%= code_title('meal_system', item.meal_system) %>
+    </td>
+    <td>
+      <em class="l2"><%= "人数: " %></em>
+      <% nop = item.number_of_persons %>
+      <% if nop && nop > 0 %>
+        <%= "#{nop}#{unit_for('number_of_persons')}" %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <em class="l2"><%= "时间: " %></em>
+      <% if !item.meal_date.blank? %>
+        <%= item.meal_date %>
+      <% end %>
+      <% if !item.meal_time.blank? %>
+        <% if !item.meal_date.blank? %>
+          ·
+        <% end %>
+        <%= code_title('meal_time', item.meal_time) %>
+      <% end %>
+    </td>
+    <td>
+      <em class="l2"><%= "共计: " %></em>
+      <% ttp = item.total_to_pay %>
+      <% if ttp && ttp > 0 %>
+        <%= "#{ttp}#{unit_for('currency')}" %>
+        <% if nop && nop > 0 %>
+          <% tpp = f(ttp/nop, 2).round %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <em class="l2"><%= "地点: " %></em>
+      <% area_code = item.place_area %>
+      <% subarea_code = item.place_subarea %>
+      <%= "#{area_title(area_code)} · #{subarea_title(area_code, subarea_code)} · #{code_title('meal_place_type', item.place_type)}" %>
+    </td>
+    <td>
+      <em class="l2"><%= "人均: " %></em>
+      <% if tpp && tpp >= 0 %>
+        <%= "#{tpp}#{unit_for('currency')}" %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<ul>
+  <%= paragraphs(truncate(item.description, 200), false, true, 5) %>
+</ul>

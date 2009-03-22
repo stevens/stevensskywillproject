@@ -1,0 +1,12 @@
+<% if !item.video_url.blank? %>
+  <div id="recipe_<%= item.id %>_video" class="video">
+    <%= item.video_url %>
+  </div>
+<% elsif item_manageable?(item) %>
+  <div id="recipe_<%= item.id %>_video" class="video">
+    <%= "还没有#{VIDEO_CN}" %>
+    <div id="video_todo_bar">
+      <%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,260 @@
+<% if is_new %>
+  <% button_name = "#{CREATE_CN}新#{MENU_CN}" %>
+  <% cancle_url = url_for(:action => 'mine') %>
+<% else %>
+  <% button_name = SAVE_CHANGES_CN %>
+  <% cancle_url = menu %>
+<% end %>
+
+<% form_for menu do |f| %>
+  <div class="sub_block_tb">
+  <table class="content">
+    <tr>
+      <td class="label">
+        <label class="required" for="title"><%= "#{MENU_CN}#{TITLE_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :title, :class => "text" %>
+        </div>
+        <%= error_message_on "menu", "title" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="tag_list"><%= "#{TAG_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "为了让大伙儿更容易发现这#{unit_for('Menu')}#{MENU_CN}, 请准确#{INPUT_CN}与#{MENU_CN}有关的关键词作为#{TAG_CN}" %><br />
+          <%= "<em class='more'>#{TAG_CN}之间请用\"空格\"分隔</em>" %><br />
+          <%= "如: \"春节&nbsp;&nbsp;家宴&nbsp;&nbsp;粤菜\"" %><br />
+          <%= "<em class='more'>请尽量避免使用\"美食&nbsp;&nbsp;饮食\"等这样不能反映#{MENU_CN}个性特色和内涵的词汇</em>" %>
+        </div>
+        <div class="input">
+          <%= f.text_field :tag_list, :class => "text" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="meal_type"><%= "类型:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请#{INPUT_CN}用餐时段/用餐性质/用餐结构等类型" %>
+        </div>
+        <div class="input">
+          <%= f.select :meal_duration, Code.find(:all, :conditions => {:codeable_type => 'meal_duration'}, :order => 'code').collect {|c| [ c.title, c.code ] }, { :include_blank => true } %>
+          <%= f.select :meal_kind, Code.find(:all, :conditions => {:codeable_type => 'meal_kind'}, :order => 'code').collect {|c| [ "#{c.title} (#{c.description})", c.code ] }, { :include_blank => true } %>
+          <%= f.select :meal_system, Code.find(:all, :conditions => {:codeable_type => 'meal_system'}, :order => 'code').collect {|c| [ c.title, c.code ] }, { :include_blank => true } %>
+        </div>
+        <div class="inline_errors">
+          <%= error_message_on "menu", "meal_duration" %>
+          <%= error_message_on "menu", "meal_kind" %>
+          <%= error_message_on "menu", "meal_system" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="meal_cost"><%= "人数:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :number_of_persons, :class => "text", :style => "width: 80px;" %>
+          <%= unit_for('number_of_persons') %>
+        </div>
+        <%= error_message_on "menu", "number_of_persons" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="meal_bill"><%= "费用:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :total_to_pay, :class => "text", :style => "width: 80px;" %>
+          <%= unit_for('currency') %>
+        </div>
+        <%= error_message_on "menu", "total_to_pay" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="meal_date"><%= "时间:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请#{INPUT_CN}用餐日期(格式\"yyyy-mm-dd\")和用餐时长" %>
+        </div>
+        <div class="input">
+          <% if menu.errors.on("meal_date")  %>
+            <div class="fieldWithErrors">
+              <%= calendar_date_select_tag "menu[meal_date]", menu.meal_date, :class=> 'calendar' %>
+            </div>
+          <% else %>
+            <%= calendar_date_select_tag "menu[meal_date]", menu.meal_date, :class=> 'calendar' %>
+          <% end %>
+          <%= f.select :meal_time, Code.find(:all, :conditions => {:codeable_type => 'meal_time'}).collect {|c| [ c.title, c.code ] }, { :include_blank => true } %>
+        </div>
+        <div class="inline_errors">
+          <%= error_message_on "menu", "meal_date" %>
+          <%= error_message_on "menu", "meal_time" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="meal_place"><%= "地点:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请#{INPUT_CN}用餐地点的所在区域(如: 国家或地区/城市等)" %>
+        </div>
+        <div class="input">
+          <% if menu.errors.on("place_area")  %>
+            <div class="fieldWithErrors">
+              <%= select_tag "menu[place_area]", grouped_options_for_select(grouped_options_of_area, menu.place_area, '请选择'), { :id => 'menu_place_area', :onchange => remote_function(:url => { :controller => 'system', :action => 'update_options_of_subarea', :area_for => 'menu' }, :with => "'area='+value") } %>
+            </div>
+          <% else %>
+            <%= select_tag "menu[place_area]", grouped_options_for_select(grouped_options_of_area, menu.place_area, '请选择'), { :id => 'menu_place_area', :onchange => remote_function(:url => { :controller => 'system', :action => 'update_options_of_subarea', :area_for => 'menu' }, :with => "'area='+value") } %>
+          <% end %>
+          <%= f.select :place_subarea, options_of_subarea(menu.place_area) %>
+        </div>
+        <div class="inline_errors">
+          <%= error_message_on "menu", "place_area" %>
+          <%= error_message_on "menu", "place_subarea" %>
+        </div>
+        <div class="input">
+          <%= f.text_field :place_area_detail, :class => "text" %>
+        </div>
+        <%= error_message_on "menu", "place_area_detail" %>
+        <div class="text">
+          <%= "请#{INPUT_CN}用餐地点的类型和名称(如: 餐馆名称等)" %>
+        </div>
+        <div class="input">
+          <%= f.select :place_type, Code.find(:all, :conditions => {:codeable_type => 'meal_place_type'}, :order => 'code').collect {|c| [ c.title, c.code ] }, { :include_blank => true } %>
+        </div>
+        <%= error_message_on "menu", "place_type" %>
+        <div class="input">
+          <%= f.text_field :place_title, :class => "text" %>
+        </div>
+        <%= error_message_on "menu", "place_title" %>
+        <div class="text">
+          <%= "可以在这里#{INPUT_CN}关于用餐地点的其他注释信息" %>
+        </div>
+        <div class="input">
+          <%= f.text_area :place_notes, :class => 'ss' %>
+        </div>
+        <%= error_message_on "menu", "place_notes" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="description"><%= "#{DESCRIPTION_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请#{INPUT_CN}#{MENU_CN}的简介和特色, 以及你的感受和评价" %>
+        </div>
+        <div class="input">
+          <%= f.text_area :description %>
+        </div>
+        <%= error_message_on "menu", "description" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="any_else"><%= "闲话:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "可以在这里#{INPUT_CN}其他任何的内容" %>
+        </div>
+        <div class="input">
+          <%= f.text_area :any_else %>
+        </div>
+        <%= error_message_on "menu", "any_else" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="from_type"><%= "#{FROM_WHERE_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "这是原创的#{MENU_CN}吗?" %>
+        </div>
+        <div id="from_type" class="input">
+          <%= f.select :from_type, Code.find(:all, :conditions => { :codeable_type => 'from_type' }).collect {|c| [ c.title, c.code ]}, {}, { :onchange => remote_function(:url => { :controller => 'system', :action => 'change_from_type', :item_type => 'menu' }, :with => "'from_type='+value") } %>
+        </div>
+        <div id="from_where_wrapper">
+          <% from_type = !menu.from_type ? '1' : menu.from_type %>
+          <% if from_type == '1' %>
+            <%= f.hidden_field :from_where %>
+          <% else %>
+            <div id="from_where_prompt" class="text">
+              <%= "如果是转载的, 请#{INPUT_CN}转载的\"报刊 / 书籍 / 网址\"等" %>
+            </div>
+            <div id="from_where" class="input">
+              <%= f.text_field :from_where, :class => "text" %>
+            </div>
+          <% end %>
+        </div>
+        <%= error_message_on "menu", "from_type" %>
+        <div id="from_where_errors">
+          <%= error_message_on "menu", "from_where" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="privacy"><%= "#{PRIVACY_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "谁可以看见这#{unit_for('Menu')}#{MENU_CN}?" %>
+        </div>
+        <div class="input">
+          <% disabled = true if item_entried?(menu) %>
+          <%= f.select :privacy, Code.find(:all, :conditions => {:codeable_type => 'privacy'}).collect {|c| [ c.title, c.code ] }, { }, { :disabled => disabled } %>
+        </div>
+        <%= error_message_on "menu", "privacy" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+      </td>
+      <td class="input">
+        <br />
+        <div class="text">
+          <% if menu.publishable? %>
+              <%= "<em class='l3'>这#{unit_for('Menu')}#{MENU_CN}是草稿, 还没有发布</em>" %>
+          <% elsif item_published?(menu) %>
+              <%= "<em class='l3'>这#{unit_for('Menu')}#{MENU_CN}已经发布</em>" %>
+          <% else %>
+              <%= "<em class='l3'>这#{unit_for('Menu')}#{MENU_CN}还没有#{PHOTO_CN}和#{COURSE_CN}, 只能保存为草稿, 暂时不能发布</em>" %>
+          <% end %>
+        </div>
+        <% if is_new %>
+          <div class="input">
+            <%= hidden_field_tag "menu[is_draft]", '1' %>
+          </div>
+          <%= error_message_on "menu", "is_draft" %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
+        </div>
+      </td>
+    </tr>
+  </table>
+  </div>
+<% end %>

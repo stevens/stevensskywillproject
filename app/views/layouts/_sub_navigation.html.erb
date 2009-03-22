@@ -1,0 +1,40 @@
+<% if current_tab_type == 'mine' %>
+  <%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
+  <%= link_to "我的#{MENU_CN}", :controller => 'menus', :action => 'mine' %>
+  <%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
+  <%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
+  <%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
+  <%= link_to "我的#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
+  <%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
+<% elsif current_tab_type == 'setting' %>
+  <%= link_to "#{ACCOUNT_CN}#{SETTING_CN}", :controller => 'settings', :action => 'account' %>
+<% elsif current_tab_type == 'recipe' %>
+  <% if @current_user %>
+    <%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
+  <% end %>
+  <%= link_to "#{RECIPE_CN}浏览", recipes_path %>
+  <%= link_to "#{RECIPE_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>
+  <%= link_to "#{RECIPE_CN}#{TAG_CN}", :controller => 'taggings', :action => 'index', :taggable_type => 'recipe' %>
+<% elsif current_tab_type == 'menu' %>
+  <% if @current_user %>
+    <%= link_to "我的#{MENU_CN}", :controller => 'menus', :action => 'mine' %>
+  <% end %>
+  <%= link_to "#{MENU_CN}浏览", menus_path %>
+  <%= link_to "#{MENU_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'menu' %>
+<% elsif current_tab_type == 'user' %>
+  <% if @current_user %>
+    <%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
+    <!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
+  <% end %>
+  <%= link_to "#{PEOPLE_CN}浏览", users_path %>
+  <%= link_to "#{BRAIN_CN}团", :controller => 'users', :action => 'index', :category => 'brain' %>
+  <!-- <%= link_to "#{PEOPLE_CN}动向", '' %> -->
+<% elsif current_tab_type == 'match' %>
+  <% if @current_user %>
+    <%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
+  <% end %>
+  <%= link_to "#{MATCH_CN}浏览", :controller => 'matches', :action => 'index' %>
+  <%= link_to "#{MATCH_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'match' %>
+<% else %>
+  <%= SLOGAN_CN %>
+<% end %>

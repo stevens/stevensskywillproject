@@ -1,0 +1,135 @@
+<% menu = course.menu %>
+<% if is_new %>
+  <% button_name = "#{ADD_CN}新#{COURSE_CN}" %>
+  <% cancle_url = url_for(:action => 'index') %>
+<% else %>
+  <% button_name = SAVE_CHANGES_CN %>
+  <% cancle_url = url_for(:action => 'index') %>
+<% end %>
+
+<% form_for [menu, course] do |f| %>
+  <div class="sub_block_tb">
+  <table class="content">
+    <tr>
+      <td class="label">
+        <label class="required" for="title"><%= "#{COURSE_CN}#{TITLE_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :title, :class => "text" %>
+        </div>
+        <%= error_message_on "course", "title" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="common_title"><%= "常用#{TITLE_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :common_title, :class => "text" %>
+        </div>
+        <%= error_message_on "course", "common_title" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="tag_list"><%= "#{TAG_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "为了让大伙儿更容易发现这#{unit_for('Course')}#{COURSE_CN}, 请准确#{INPUT_CN}与#{COURSE_CN}有关的关键词作为#{TAG_CN}" %><br />
+          <%= "<em class='more'>#{TAG_CN}之间请用\"空格\"分隔</em>" %><br />
+          <%= "如: \"螃蟹&nbsp;&nbsp;咖喱&nbsp;&nbsp;泰国\"" %><br />
+          <%= "<em class='more'>请尽量避免使用\"美食&nbsp;&nbsp;饮食\"等这样不能反映#{COURSE_CN}个性特色和内涵的词汇</em>" %>
+        </div>
+        <div class="input">
+          <%= f.text_field :tag_list, :class => "text" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="course_type"><%= "类型:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.select :course_type, Code.find(:all, :conditions => {:codeable_type => 'course_type'}).collect {|c| [ c.title, c.code ] }, { :include_blank => true } %>
+        </div>
+        <%= error_message_on "course", "course_type" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="list_price"><%= "价格:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :list_price, :class => "text", :style => "width: 80px;" %>
+          <%= "#{unit_for('currency')} / " %>
+          <%= f.text_field :course_unit, :class => "text", :style => "width: 60px;" %>
+          <%= "(单位)" %>
+        </div>
+        <div class="inline_errors">
+          <%= error_message_on "course", "list_price" %>
+          <%= error_message_on "course", "course_unit" %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="list_price"><%= "评价:" %></label>
+      </td>
+      <td class="input">
+        <div class="text" >
+          <%= "请对#{COURSE_CN}作出评价" %>
+        </div>
+        <div class="input">
+          <%= select_tag 'score_taste', options_for_select(Code.find(:all, :conditions => {:codeable_type => 'score_level'}).collect {|c| [ "味道-#{c.title}", c.code ] }, params[:score_taste] ? params[:score_taste] : '30') %>
+          <%= select_tag 'score_shape', options_for_select(Code.find(:all, :conditions => {:codeable_type => 'score_level'}).collect {|c| [ "外形-#{c.title}", c.code ] }, params[:score_shape] ? params[:score_shape] : '30') %>
+          <%= select_tag 'score_creative', options_for_select(Code.find(:all, :conditions => {:codeable_type => 'score_level'}).collect {|c| [ "创意-#{c.title}", c.code ] }, params[:score_creative] ? params[:score_creative] : '30') %>
+          <%= select_tag 'score_nutrition', options_for_select(Code.find(:all, :conditions => {:codeable_type => 'score_level'}).collect {|c| [ "营养-#{c.title}", c.code ] }, params[:score_nutrition] ? params[:score_nutrition] : '30') %>
+          <%= select_tag 'score_cost_performance', options_for_select(Code.find(:all, :conditions => {:codeable_type => 'score_level'}).collect {|c| [ "性价比-#{c.title}", c.code ] }, params[:score_cost_performance] ? params[:score_cost_performance] : '30') %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="related_recipe"><%= "对应#{RECIPE_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text" >
+          <%= "下面列出了你已发布的#{RECIPE_CN}, 可以选择#{COURSE_CN}对应的#{RECIPE_CN}" %>
+        </div>
+        <div class="input">
+          <%= f.select :recipe_id, @current_user.recipes.find(:all, :conditions => { :is_draft => '0' }).collect {|c| [ truncate(c.title, 30), c.id ] }, { :include_blank => true } %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label class="required" for="description"><%= "#{DESCRIPTION_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请#{INPUT_CN}#{COURSE_CN}的简介和特色, 以及你的感受和评价" %>
+        </div>
+        <div class="input">
+          <%= f.text_area :description %>
+        </div>
+        <%= error_message_on "course", "description" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
+        </div>
+      </td>
+    </tr>
+  </table>
+  </div>
+<% end %>

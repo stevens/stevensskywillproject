@@ -1,0 +1,5 @@
+<% if status == 'unfold' %>
+  <%= paragraphs(item.description, true, true) %>
+<% elsif status == 'fold' %>
+  <%= paragraphs(truncate(item.description, 200), false, true, 5) %>
+<% end %>

@@ -1,0 +1,43 @@
+<div id="course_<%= item.id %>_basic" class="basic">
+  <h2>
+    <%= render :partial => 'layouts/item_basic',
+               :locals => { :item => item,
+                            :show_icon => true,
+                            :show_title => true,
+                            :show_link => true } %>
+  </h2>
+  <ul>
+    <li>
+      <%= "#{time_iso_format(item.created_at, true)} #{ADD_CN}" %>
+    </li>
+    <li>
+      <%= render :partial => 'taggings/item_tag_list',
+                 :locals => { :item => item } %>
+    </li>
+    <li>
+      <%= render :partial => 'layouts/item_score',
+                 :locals => { :item => item } %>
+    </li>
+  </ul>
+</div>
+
+<div id="course_<%= item.id %>_summary" class="main">
+  <%= render :partial => 'courses/course_summary',
+             :locals => { :item => item } %>
+</div>
+
+<% if show_todo %>
+  <div id="course_<%= item.id %>_todo" class="todo_right">
+    <% if show_favorite %>
+
+    <% end %>
+
+    <% if show_manage %>
+      <div id="course_<%= item.id %>_manage">
+        <%= render :partial => 'courses/course_manage',
+                   :locals => { :item => item,
+                                :ref => 'index' } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,30 @@
+<% buttons = [] %>
+<% hide_delete = false %>
+
+<% if item_manageable?(item) %>
+  <% buttons << [ [ 'add_course', false, true, 'l1' ],
+                  [ "#{ADD_CN}新#{COURSE_CN}", url_for(:menu_id => item.id, :controller => 'courses', :action => 'new', :ref => ref, :filter => params[:filter]) ]
+                ] %>
+
+  <% if item.publishable? %>
+    <% publish_message = "确定要发布这#{unit_for('Menu')}#{MENU_CN}吗?" %>
+    <% buttons << [ [ 'publish', true, true, 'l1' ],
+                    [ '发布', url_for(:controller => 'system', :action => 'publish', :publishable_type => 'menu', :publishable_id => item.id, :to_publish => true, :ref => ref, :filter => params[:filter]), publish_message ]
+                  ] %>
+  <% end %>
+
+  <% buttons << [ [ 'edit' ],
+                  [ EDIT_CN, url_for(:controller => 'menus', :action => 'edit', :id => item.id, :ref => ref, :filter => params[:filter]) ]
+                ] %>
+
+  <% unless hide_delete %>
+    <% delete_message = "确定要#{DELETE_CN}这#{unit_for('Menu')}#{MENU_CN}吗?" %>
+    <% buttons << [ [ 'delete' ],
+                    [ DELETE_CN, url_for(:controller => 'menus', :action => 'destroy', :id => item.id, :ref => ref, :filter => params[:filter], :page => params[:page]), delete_message, 'delete' ]
+                  ] %>
+  <% end %>
+
+<% end %>
+
+<%= render :partial => 'layouts/todo_bar',
+           :locals => { :buttons => buttons } %>

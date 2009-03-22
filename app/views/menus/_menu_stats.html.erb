@@ -1,0 +1,20 @@
+<div id="menu_stats_wrapper">
+
+  <div id="menu_stats_data" class="stats_data">
+    <%= render :partial => 'menus/menu_stats_data',
+               :locals => { :item => item } %>
+  </div>
+
+  <div id="menu_rating" class="item_rating">
+    <%= render :partial => 'ratings/item_rating',
+               :locals => { :item => item } %>
+  </div>
+
+  <% if !item_manageable?(item) %>
+    <div id="my_menu_rating" class="my_rating">
+      <%= render :partial => 'ratings/my_rating',
+                 :locals => { :item => item } %>
+    </div>
+  <% end %>
+
+</div>

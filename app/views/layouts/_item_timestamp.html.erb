@@ -1,0 +1,15 @@
+<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
+
+<% if show_updated_at %>
+  <% if item.original_updated_at && item.created_at != item.original_updated_at %>
+    &nbsp;
+    <%= "#{time_iso_format(item.original_updated_at, true)} #{UPDATE_CN}" %>
+  <% end %>
+<% end %>
+
+<% if show_published_at %>
+  <% if item.published_at %>
+    &nbsp;
+    <%= "#{time_iso_format(item.published_at, true)} 发布" %>
+  <% end %>
+<% end %>

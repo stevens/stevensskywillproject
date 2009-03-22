@@ -1,0 +1,27 @@
+<% item_type = type_for(item).downcase %>
+
+<% stats_entries = [] %>
+<% stats_entries << [ [ 'rate', item_type, item.id ],
+                      [ item.ratings.size, unit_for('rate_stats'), RATE_CN, average_rating_value(item) ]
+                    ] %>
+<% stats_entries << [ [ 'favorite', item_type, item.id ],
+                      [ item.favorites.size, unit_for('favorite_stats'), FAVORITE_CN ]
+                    ] %>
+<% stats_entries << [ [ 'review', item_type, item.id ],
+                      [ item.reviews.size, unit_for('Review'), REVIEW_CN ]
+                    ] %>
+<% stats_entries << [ [ 'view', item_type, item.id ],
+                      [ views_count(item), unit_for('See'), SEE_CN ]
+                    ] %>
+<% stats_entries << [ [ 'course', item_type, item.id ],
+                      [ item.courses.size, unit_for('Course'), COURSE_CN ]
+                    ] %>
+<% stats_entries << [ [ 'photo', item_type, item.id ],
+                      [ item.photos.size, unit_for('Photo'), PHOTO_CN ]
+                    ] %>
+<% stats_entries << [ [ 'tag', item_type, item.id ],
+                      [ item.tag_list.size, unit_for('Tag'), TAG_CN ]
+                    ] %>
+
+<%= render :partial => 'layouts/stats_entries_s',
+           :locals => { :stats_entries => stats_entries } %>

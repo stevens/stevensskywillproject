@@ -1,0 +1,11 @@
+<% item_type = type_for(item) %>
+<% item_type_downcase = item_type.downcase %>
+<% file_ext = photo_file_ext(item_type, 'icon') %>
+
+<% if item_roles = item.roles %>
+  <% for role_code_code in item_roles.split(' ') %>
+    <% if role_code = codes_for(code_conditions("#{item_type_downcase}_role", role_code_code))[0] %>
+      <%= image_tag "icon/#{item_type_downcase}/#{role_code.name}.#{file_ext}", :title => role_code.title, :alt => '', :class => "icon" %>
+    <% end %>
+  <% end %>
+<% end %>
