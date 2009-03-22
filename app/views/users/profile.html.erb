@@ -27,7 +27,7 @@
 		<%= render :partial => "/layouts/items_matrix",
 							 :locals => {:show_paginate => false,
 							 						 :items_set => @recipes_set, 
-							 						 :limit => 18, 
+							 						 :limit => 12,
 							 						 :items_count_per_row => 6, 
 							 						 :show_photo => true, 
 							 						 :show_below_photo => true,  
@@ -35,6 +35,29 @@
 							 						 :show_user => false, 
 							 						 :show_photo_todo => false, 
 							 						 :photo_style => 'matrix'} %>
+	</div>
+</div>
+
+<div id="menus_wrapper" class="content_block">
+	<div id="menus_header" class="block_header">
+		<div class="block_header_link">
+			<%= link_to strip_tags("#{username_pron}的#{MORE_CN}#{MENU_CN}"), :user_id => @user.id, :controller => 'menus', :action => 'index' %>
+		</div>
+		<h1><%= strip_tags "#{username}的#{MENU_CN}" %></h1>
+	</div>
+
+	<div id="menus_detail" class="block_main">
+		<%= render :partial => "layouts/items_matrix",
+                   :locals => { :show_paginate => false,
+                               :items_set => @menus_set,
+                               :limit => 12,
+                               :items_count_per_row => 6,
+                               :show_photo => true,
+                               :show_below_photo => true,
+                               :show_title => true,
+                               :show_user => false,
+                               :show_photo_todo => false,
+                               :photo_style => 'matrix' } %>
 	</div>
 </div>
 
@@ -50,7 +73,7 @@
 		<%= render :partial => '/layouts/items_matrix', 
 							 :locals => { :show_paginate => false,
 						 						    :items_set => favorite_favorables(@favorites_set), 
-						 						    :limit => 18,
+						 						    :limit => 12,
 						 						    :items_count_per_row => 6, 
 						 						    :show_photo => true, 
 						 						    :show_below_photo => true,  

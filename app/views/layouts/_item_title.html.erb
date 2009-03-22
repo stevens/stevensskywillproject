@@ -1,12 +1,5 @@
 <% if show_link %>
-	<% item_type = type_for(item) %>
-	<% case item_type 
-		 when 'Match'
-		 	 item_link_url = item_first_link(item, true)
-		 else
-		 	 item_link_url = item
-		 end %>
-	<%= link_to strip_tags(item.title), item_link_url %>
+  <%= link_to strip_tags(item.title), item_link_url(item) %>
 <% else %>
-	<%= strip_tags(item.title) %>
+  <%= strip_tags item.title %>
 <% end %>

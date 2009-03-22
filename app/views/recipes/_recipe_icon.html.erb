@@ -1,21 +1,2 @@
-<% if recipe_roles = item.roles %>
-	<% for role_code_code in recipe_roles.split(' ') %>
-		<% if role_code = codes_for(code_conditions('recipe_role', role_code_code))[0] %>
-			<%= image_tag "icon/recipe/#{role_code.name}.png", :title => role_code.title, :alt => '', :class => "icon" %>
-		<% end %>
-	<% end %>
-<% end %>
-
-<% from_type_code_code = item.from_type %>
-<% if from_type_code_code == '1' %>
-	<% if from_type_code = codes_for(code_conditions('from_type', from_type_code_code))[0] %>
-		<%= image_tag "icon/recipe/#{from_type_code.name}.png", :title => from_type_code.title, :alt => '', :class => "icon" %>
-	<% end %>
-<% end %>
-
-<% is_draft_code_code = item.is_draft %>
-<% if is_draft_code_code == '1' %>
-	<% if is_draft_code = codes_for(code_conditions('is_draft', is_draft_code_code))[0] %>
-		<%= add_brackets(is_draft_code.title) %>
-	<% end %>
-<% end %>
+<%= render :partial => 'layouts/item_icon',
+            :locals => { :item => item } %>

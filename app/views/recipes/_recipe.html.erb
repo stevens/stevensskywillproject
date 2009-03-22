@@ -1,214 +1,98 @@
-<% user = item.user %>
-
 <div id="recipe_<%= item.id %>_basic">
-	<div class="basic">
-		<h2>
-			<div id="recipe_<%= item.id %>_title">
-				<%= render :partial => '/layouts/item_basic', 
-									 :locals => { :item => item,
-									 							:show_icon => true,
-									 							:show_title => true,
-									 							:show_link => true } %>
-			</div>
-		</h2>
-		<ul>
-			<li>
-				<%= render :partial => '/users/user_basic', 
-									 :locals => { :user => user, 
-									 							:show_come_from => true, 
-									 							:show_icon => true,
-									 							:show_name => true, 
-									 							:show_link => true, 
-									 							:show_username => true,
-									 							:show_myname => false } %>
-			</li>
-			<li>
-				<%= "#{time_iso_format(item.created_at, true)} #{CREATE_CN}" %>
-				<% if item.original_updated_at && item.created_at != item.original_updated_at %>
-					&nbsp;
-					<%= "#{time_iso_format(item.original_updated_at, true)} #{UPDATE_CN}" %>
-				<% end %>
-				<% if item.published_at %>
-					&nbsp;
-					<%= "#{time_iso_format(item.published_at, true)} 发布" %>
-				<% end %>
-			</li>
-			<li>
-				<%= "#{code_title('privacy', item.privacy)}可以看到这#{unit_for('Recipe')}#{RECIPE_CN}" %>
-			</li>
-			<li>
-				<%= render :partial => 'taggings/item_tag_list', 
-									 :locals => { :item => item } %>
-	    	<% if item_manageable?(item) %>
-	    		<%= link_to "[#{EDIT_CN}#{TAG_CN}]", [item, :edit] %>
-	    	<% end %>
-			</li>
-		</ul>
-	</div>
-	
-	<div class="main">
-		<ul>
-			<% if !item.common_title.blank? %>
-				<li><%= strip_tags "常用#{TITLE_CN}: #{item.common_title}" %></li>
-			<% end %>
-			<li><%= "#{DIFFICULTY_CN}: #{code_title('difficulty', item.difficulty)}" %></li>
-			<li><%= "#{COST_CN}: #{code_title('recipe_cost', item.cost)}" %></li>
-			<li><%= "#{PREP_TIME_CN}: #{code_title('recipe_time', item.prep_time)}" %></li>
-			<li><%= "#{COOK_TIME_CN}: #{code_title('recipe_time', item.cook_time)}" %></li>
-			<li><%= "#{YIELD_CN}: #{h item.yield}" %></li>
-			<li>
-				<%= "#{FROM_WHERE_CN}: #{code_title('from_type', item.from_type)}" %>
-				<% if item.from_type == '1' %>
-					<% remark = "这个#{RECIPE_CN}的文字和#{PHOTO_CN}都是#{strip_tags(user_username(user))}的辛苦原创, 未经许可, 请勿转载!" %>
-					<%= "<em class='more'>#{add_brackets(remark)}</em>" %>
-				<% elsif !item.from_where.nil? && !item.from_where.blank? %>
-					<%= "[#{h item.from_where}]" %>
-				<% end %>
-			</li>
-		</ul>
-	</div>
+  <div class="basic">
+    <%= render :partial => 'layouts/item_basic_block',
+                :locals => { :item => item } %>
+  </div>
+
+  <div class="main">
+    <ul>
+      <% if !item.common_title.blank? %>
+        <li><em class="l2"><%= "常用#{TITLE_CN}: " %></em><%=  strip_tags item.common_title %></li>
+      <% end %>
+      <li><em class="l2"><%= "#{DIFFICULTY_CN}: " %></em><%= code_title('difficulty', item.difficulty) %></li>
+      <li><em class="l2"><%= "#{COST_CN}: " %></em><%= code_title('recipe_cost', item.cost) %></li>
+      <li><em class="l2"><%= "#{PREP_TIME_CN}: " %></em><%= code_title('recipe_time', item.prep_time) %></li>
+      <li><em class="l2"><%= "#{COOK_TIME_CN}: " %></em><%= code_title('recipe_time', item.cook_time) %></li>
+      <li><em class="l2"><%= "#{YIELD_CN}: " %></em><%= strip_tags item.yield %></li>
+      <li>
+        <%= render :partial => 'layouts/item_origin',
+                    :locals => { :item => item } %>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <% if show_todo %>
-	<div id="recipe_<%= item.id %>_todo" class="todo_right">
-		<% if show_favorite %>
-			<div id="recipe_<%= item.id %>_favorite" class="favorite_bar">
-				<%= render :partial => '/favorites/favorite_bar', 
-									 :locals => { :favorable => item, 
-									 							:ref => nil,
-									 							:favoriter_id => nil } %>
-			</div>
-		<% end %>
-		
-		<% if show_manage %>
-			<div id="recipe_<%= item.id %>_manage">
-				<%= render :partial => '/recipes/recipe_manage', 
-									 :locals => { :item => item, 
-									 							:ref => 'show' } %>
-			</div>
-		<% end %>
-	</div>
+  <div id="recipe_<%= item.id %>_todo" class="todo_right">
+    <% if show_favorite %>
+      <div id="recipe_<%= item.id %>_favorite" class="favorite_bar">
+        <%= render :partial => 'favorites/favorite_bar',
+                   :locals => { :favorable => item,
+                                :ref => nil,
+                                :favoriter_id => nil } %>
+      </div>
+    <% end %>
+
+    <% if show_manage %>
+      <div id="recipe_<%= item.id %>_manage">
+        <%= render :partial => 'recipes/recipe_manage',
+                   :locals => { :item => item,
+                                :ref => 'show' } %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
 
 <% if @current_user && @current_user.is_role_of?('admin') %>
-	<div id="recipe_<%= item.id %>_admin" class="admin_bar">
-		<%= render :partial => '/system/item_admin_bar', 
-							 :locals => { :item => item,
-							 							:ref => 'show' } %>
-	</div>
+  <div id="recipe_<%= item.id %>_admin" class="admin_bar">
+    <%= render :partial => 'system/item_admin_bar',
+               :locals => { :item => item,
+                            :ref => 'show' } %>
+  </div>
 <% end %>
 
 <% if @match && @entry %>
-	<div id="recipe_<%= item.id %>_match_block" class="entriable_match_block">
-		<%= render :partial => '/matches/entriable_match_block', 
-							 :locals => { :match => @match,
-							 							:entry => @entry,
-							 							:ref => 'show' } %>
-	</div>
+  <div id="recipe_<%= item.id %>_match_block" class="entriable_match_block">
+    <%= render :partial => 'matches/entriable_match_block',
+               :locals => { :match => @match,
+                            :entry => @entry,
+                            :ref => 'show' } %>
+  </div>
 <% end %>
 
 <div id="recipe_<%= item.id %>_photos" class="photos">
-	<% if cover_photo = cover_photo(item) %>
-		<div id="photos_filter_bar">
-			<%= render :partial => "/photos/photos_filter_bar", 
-								 :locals => { :photoable => item, 
-								 							:current_filter => @current_filter, 
-								 							:filter_type => 'photo_type' } %>
-		</div>
-		<div id="main_photo" class="cover_photo">
-			<%= render :partial => "/photos/photo_photo",
-								 :locals => { :photo => cover_photo, 
-								 						  :show_cover => false, 
-								 						  :focus_photo => nil, 
-								 						  :photo_style => 'full', 
-								 						  :show_photo_link => false, 
-								 						  :photo_link_url => nil, 
-								 						  :photo_link_remote => false, 
-								 						  :photo_filtered => false, 
-								 						  :filter_type => 'photo_type' } %>
-		</div>
-		<div id="photos_nav" >
-			<%= render :partial => "/photos/photos_matrix",
-								 :locals => { :show_paginate => false,
-								 						  :photos_set => item.photos,
-								 						  :limit => nil, 
-								 						  :show_photo => true, 
-								 						  :focus_photo => nil, 
-								 						  :photos_count_per_row => MATRIX_ITEMS_COUNT_PER_ROW_M, 
-								 						  :photo_style => 'matrix', 
-								 						  :photo_link_remote => true, 
-								 						  :show_below_photo => false,
-								 						  :show_cover => true, 
-								 						  :show_photo_todo => false, 
-								 						  :photo_filtered => false, 
-								 						  :filter_type => 'photo_type' } %>
-		</div>
-	<% else %>
-		<%= "还没有#{PHOTO_CN}" %>
-	<% end %>		
-	<div id="photos_todo_bar" class="below_photo">
-		<%= render :partial => "/photos/photos_todo_bar", 
-							 :locals => { :photoable => item } %>
-	</div>
+  <%= render :partial => 'layouts/item_photos_block',
+              :locals => { :item => item } %>
 </div>
 
-<% if !item.video_url.blank? %>
-	<div id="recipe_<%= item.id %>_video" class="video">
-			<%= item.video_url %>
-	</div>
-<% elsif item_manageable?(item) %>
-	<div id="recipe_<%= item.id %>_video" class="video">
-		<%= "还没有#{VIDEO_CN}" %>
-		<div id="video_todo_bar">
-			<%= link_to "#{ADD_CN}#{VIDEO_CN}", [item, :edit] %>
-		</div>
-	</div>
-<% end %>
-
 <div id="recipe_<%= item.id %>_main" class="item_detail">
-	<div class="main">
-		<h3><%= DESCRIPTION_CN %></h3>
-		<ul><%= paragraphs(item.description, true, true) %></ul>
-	</div>
-	
-	<div class="main">
-		<h3><%= INGREDIENT_CN %></h3>
-		<ul class="wide_space"><%= paragraphs(item.ingredients) %></ul>
-	</div>
-	
-	<div class="main">
-		<h3><%= DIRECTION_CN %></h3>
-		<ol><%= paragraphs(item.directions) %></ol>
-	</div>
-	
-	<div class="main">
-		<h3><%= TIP_CN %></h3>
-		<ol><%= paragraphs(item.tips) %></ol>
-	</div>
-	
-	<div class="main">
-		<h3><%= "闲话" %></h3>
-		<ul><%= paragraphs(item.any_else, true, true) %></ul>
-	</div>
-	
-	<div class="main">
-		<h3><%= "链接" %></h3>
-		<ul>
-			<li>
-				<span class='text'>
-					<%= "URL地址: <span class='source'>#{url_without_protocol(recipe_url(item))}</span>" %>
-				</span>
-			</li>
-			<% if (profile = user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
-				<li>
-					<span class='text'>
-						<% blog_url = url_with_protocol(blog) %>
-						<%= "更多#{RECIPE_CN}, 请访问" %>
-						<%= link_to "#{user_username(user, true, true)}的blog", blog_url, :target => "_blank" %>
-						<span class="source"><%= "[#{blog}]" %></span>
-					</span>
-				</li>
-			<% end %>
-		</ul>
-	</div>
+  <div class="main">
+    <h3><%= DESCRIPTION_CN %></h3>
+    <ul><%= paragraphs(item.description, true, true) %></ul>
+  </div>
+
+  <div class="main">
+    <h3><%= INGREDIENT_CN %></h3>
+    <ul class="wide_space"><%= paragraphs(item.ingredients) %></ul>
+  </div>
+
+  <div class="main">
+    <h3><%= DIRECTION_CN %></h3>
+    <ol><%= paragraphs(item.directions) %></ol>
+  </div>
+
+  <div class="main">
+    <h3><%= TIP_CN %></h3>
+    <ol><%= paragraphs(item.tips) %></ol>
+  </div>
+
+  <div class="main">
+    <h3><%= "闲话" %></h3>
+    <ul><%= paragraphs(item.any_else, true, true) %></ul>
+  </div>
+
+  <div class="main">
+    <%= render :partial => 'layouts/item_links_block',
+                :locals => { :item => item } %>
+  </div>
 </div>

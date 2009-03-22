@@ -1,9 +1,9 @@
 <% stats_entries = [] %>
-<% stats_entries << [ 'favorite', item.favorites.size, '人', FAVORITE_CN ] %>
+<% stats_entries << [ 'favorite', item.favorites.size, unit_for('favorite_stats'), FAVORITE_CN ] %>
 <% stats_entries << [ 'review', item.reviews.size, unit_for('Review'), REVIEW_CN ] %>
-<% stats_entries << [ 'view', views_count(item), '次', SEE_CN ] %>
+<% stats_entries << [ 'view', views_count(item), unit_for('See'), SEE_CN ] %>
 <% stats_entries << [ 'photo', item.photos.size, unit_for('Photo'), PHOTO_CN ] %>
-<% stats_entries << [ 'tag', item.tag_list.size, '个', TAG_CN ] %>
+<% stats_entries << [ 'tag', item.tag_list.size, unit_for('Tag'), TAG_CN ] %>
 
 <%= render :partial => 'layouts/stats_entries', 
-					 :locals => { :stats_entries => stats_entries } %>
+           :locals => { :stats_entries => stats_entries } %>

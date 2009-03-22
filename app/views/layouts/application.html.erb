@@ -92,10 +92,10 @@
 							<%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
-							<%= link_to "食单<span class='script'>Cooking...</span>", root_path, :style => 'background-color: #b8b9a7;'  %>
+							<%= link_to "#{MENU_CN}<span class='script'>Fresh!</span>", "#{menus_path}"  %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'match') %>>
-							<%= link_to "#{MATCH_CN}", { :controller => 'matches', :action => 'profile', :id => 1 } %>
+							<%= link_to MATCH_CN, { :controller => 'matches', :action => 'profile', :id => 1 } %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'user') %>>
 							<%= link_to PEOPLE_CN, "#{users_path}/overview" %>
@@ -139,52 +139,24 @@
 					<div id="sub_navigation">
 						<div id="shotcut_bar">
 							<% if ['site', 'mine', 'recipe'].include?(@current_tab_type) %>
-								<em><%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %></em>
+								<em class="l1"><%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %></em>
+							<% end %>
+							<% if ['site', 'mine', 'menu'].include?(@current_tab_type) %>
+								<em class="l1"><%= link_to "#{CREATE_CN}#{MENU_CN}", new_menu_path %></em>
 							<% end %>
 							<% if @current_user && @current_user.is_role_of?('admin') && (['match'].include?(@current_tab_type) || (['mine'].include?(@current_tab_type) && ['matches'].include?(params[:controller]))) %>
-								<em><%= link_to "#{CREATE_CN}#{MATCH_CN}", new_match_path %></em>
+								<em class="l1"><%= link_to "#{CREATE_CN}#{MATCH_CN}", new_match_path %></em>
 							<% end %>
 							<!-- <% if ['mine', 'user'].include?(@current_tab_type) %>
-								<em><%= link_to "邀请#{FRIEND_CN}", '' %></em>
+								<em class="l1"><%= link_to "邀请#{FRIEND_CN}", '' %></em>
 							<% end %> -->
 							<% if ['site', 'mine'].include?(@current_tab_type) %>
-								<em><%= link_to FEEDBACK_CN, feedback_path %></em>
+								<em class="l1"><%= link_to FEEDBACK_CN, feedback_path %></em>
 							<% end %>
 						</div>
-						
-						<% if @current_tab_type == 'mine' %>
-							<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
-							<%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
-							<%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
-							<%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
-							<%= link_to "我的#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
-							<%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
-						<% elsif @current_tab_type == 'setting' %>
-							<%= link_to "#{ACCOUNT_CN}#{SETTING_CN}", :controller => 'settings', :action => 'account' %>
-						<% elsif @current_tab_type == 'recipe' %>
-							<% if @current_user %>
-								<%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
-							<% end %>
-							<%= link_to "#{RECIPE_CN}浏览", recipes_path %>
-							<%= link_to "#{RECIPE_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'recipe' %>
-							<%= link_to "#{RECIPE_CN}#{TAG_CN}", :controller => 'taggings', :action => 'index', :taggable_type => 'recipe' %>
-						<% elsif @current_tab_type == 'user' %>
-							<% if @current_user %>
-								<%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
-								<!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
-							<% end %>
-							<%= link_to "#{PEOPLE_CN}浏览", users_path %>
-							<%= link_to "#{BRAIN_CN}团", :controller => 'users', :action => 'index', :category => 'brain' %>
-							<!-- <%= link_to "#{PEOPLE_CN}动向", '' %> -->
-						<% elsif @current_tab_type == 'match' %>
-							<% if @current_user %>
-								<%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
-							<% end %>
-							<%= link_to "#{MATCH_CN}浏览", :controller => 'matches', :action => 'index' %>
-							<%= link_to "#{MATCH_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'match' %>
-						<% else %>
-							<%= SLOGAN_CN %>
-						<% end %>
+
+                      <%= render :partial => 'layouts/sub_navigation',
+                                  :locals => { :current_tab_type => @current_tab_type } %>
 					</div>
 					
 					<!-- sidebar colmun  -->

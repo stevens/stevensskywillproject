@@ -1,135 +1,161 @@
 <% if is_new %>
-	<% button_name = "#{ADD_CN}新#{PHOTO_CN}" %>
-	<% cancle_url = {:action => 'index'} %>
+  <% button_name = "#{ADD_CN}新#{PHOTO_CN}" %>
+  <% cancle_url = {:action => 'index'} %>
 <% else %>
-	<% button_name = SAVE_CHANGES_CN %>
-	<% cancle_url = [photoable, photo] %>
+  <% button_name = SAVE_CHANGES_CN %>
+  <% cancle_url = [photoable, photo] %>
 <% end %>
 
 <% if !is_new %>
-	<div id="photo_<%= photo.id %>_photo" class="full_photo">
-		<%= render :partial => "/photos/photo_photo",
-							 :locals => { :photo => photo, 
-							 						  :show_cover => false, 
-							 						  :focus_photo => nil, 
-							 						  :photo_style => 'full',  
-							 						  :show_photo_link => false, 
-							 						  :photo_link_url => nil, 
-							 						  :photo_link_remote => false, 
-							 						  :photo_filtered => false, 
-							 						  :filter_type => 'photo_type' } %>
-	</div>
+  <div id="photo_<%= photo.id %>_photo" class="full_photo">
+    <%= render :partial => "photos/photo_photo",
+               :locals => { :photo => photo,
+                            :show_cover => false,
+                            :focus_photo => nil,
+                            :photo_style => 'full',
+                            :show_photo_link => false,
+                            :photo_link_url => nil,
+                            :photo_link_remote => false,
+                            :photo_filtered => false,
+                            :filter_type => 'photo_type' } %>
+  </div>
 <% end %>
 
 <% form_for([photoable, photo], :html => { :multipart => true }) do |f| %>
-	<div class="sub_block_tb">
-	<table class="content">
-		<% if is_new %>
-			<tr>
-				<td class="label">
-					<label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label>
-				</td>
-				<td class="input">
-					<div class="text">
-						<%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于640K" %>
-					</div>
-					<div class="input">
-						<% if photo.errors_on_file %>
-							<div class="fieldWithErrors">
-								<%= f.file_field :uploaded_data, :class => "file", :size => 63 %>
-							</div>
-						<% else %>
-							<%= f.file_field :uploaded_data, :class => "file", :size => 63 %>
-						<% end %>
-					</div>
-					<% if photo.errors_on_file %>
-						<div class="formError">	
-							<%= photo.errors_on_file %>
-						</div>
-					<% end %>
-				</td>
-			</tr>
-		<% end %>
-		<tr>
-			<td class="label">
-				<label for="caption"><%= "#{CAPTION_CN}:" %></label>
-			</td>
-			<td class="input">
-				<div class="text">
-					<%= "给#{PHOTO_CN}加点文字标注吧" %>
-				</div>
-				<div class="input">
-					<% if photo.errors_on_caption %>
-						<div class="fieldWithErrors">
-							<%= f.text_area :caption, :class => 's' %>
-						</div>
-					<% else %>
-						<%= f.text_area :caption, :class => 's' %>
-					<% end %>
-				</div>
-				<% if photo.errors_on_caption %>
-					<div class="formError">	
-						<%= photo.errors_on_caption %>
-					</div>
-				<% end %>
-			</td>
-		</tr>
-		<% photo_type_codes = Code.find(:all, :conditions => { :codeable_type => "#{type_for(photoable).downcase}_photo_type" }, :order => 'code') %>
-		<% if photo_type_codes.size > 0 %>
-			<tr>
-				<td class="label">
-					<label class="required" for="photo_type"><%= "#{TYPE_CN}:" %></label>
-				</td>
-				<td class="input">
-					<div class="text">
-						<%= "#{PHOTO_CN}上面是什么?" %>
-					</div>
-					<div class="radio">
-						<% for c in photo_type_codes %>
-							<%= f.radio_button :photo_type, c.code, :class => "radio_button" %><%= c.title %>&nbsp;&nbsp;
-						<% end %>
-					</div>
-					<%= error_message_on "photo", "photo_type" %>
-				</td>
-			</tr>
-		<% end %>
-		<tr>
-			<td class="label">
-			</td>
-			<td class="input">
-				<div class="text">
-					<%= "当#{name_for(photo.photoable_type)}只有一#{UNIT_PHOTO_CN}#{PHOTO_CN}时, 会用它自动作为封面" %><br />
-					<%= "当#{DELETE_CN}封面#{PHOTO_CN}时, 会用#{name_for(photo.photoable_type)}的第一#{UNIT_PHOTO_CN}#{PHOTO_CN}自动作为封面" %>
-				</div>
-				<div class="input">
-					<% if is_new %>
-						<% if photoable.cover_photo_id %>
-							<%= check_box_tag :is_cover %>
-						<% else %>
-							<%= check_box_tag :is_cover, '1', true, :disabled => true %>
-						<% end %>
-						<%= " 用它作为#{name_for(photo.photoable_type)}封面" %>
-					<% else %>
-						<% if photo.is_cover?(photoable) %>
-							<%= "这是#{name_for(photo.photoable_type)}封面" %>
-						<% else %>
-							<%= check_box_tag :is_cover %>
-							<%= " 用它作为#{name_for(photo.photoable_type)}封面" %>
-						<% end %>
-					<% end %>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td class="input">
-				<div class="submit">
-					<%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
-					&nbsp;&nbsp;
-					<%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
-				</div>
-			</td>
-		</tr>
-	</table>
-	</div>
+  <div class="sub_block_tb">
+  <table class="content">
+    <% if is_new %>
+      <tr>
+        <td class="label">
+          <label class="required" for="uploaded_data"><%= "#{PHOTO_CN}#{FILE_CN}:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "#{PHOTO_CN}#{FILE_CN}的大小应该小于640K" %>
+          </div>
+          <div class="input">
+            <% if photo.errors_on_file %>
+              <div class="fieldWithErrors">
+                <%= f.file_field :uploaded_data, :class => "file", :size => 63 %>
+              </div>
+            <% else %>
+              <%= f.file_field :uploaded_data, :class => "file", :size => 63 %>
+            <% end %>
+          </div>
+          <% if photo.errors_on_file %>
+            <div class="formError">
+              <%= photo.errors_on_file %>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% photoable_type = photo.photoable_type %>
+    <% photoable_type_downcase = photoable_type.downcase %>
+    <% photoable_name = name_for(photoable_type) %>
+    <% photoable_unit = unit_for(photoable_type) %>
+
+    <% photo_type_codes = Code.find(:all, :conditions => { :codeable_type => "#{photoable_type_downcase}_photo_type" }, :order => 'code') %>
+    <% if photo_type_codes.size > 0 %>
+      <tr>
+        <td class="label">
+          <label class="required" for="photo_type"><%= "#{TYPE_CN}:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "#{PHOTO_CN}上面是什么?" %>
+          </div>
+          <% if photoable_type == 'Menu' %>
+            <% subitem_type = subitem_type(photoable_type) %>
+            <% subitem_type_downcase = subitem_type.downcase %>
+            <% subitem_name = name_for(subitem_type) %>
+
+            <div class="radio">
+              <% for c in photo_type_codes %>
+                <%= f.radio_button :photo_type, c.code, :class => "radio_button", :onchange => remote_function(:url => { :controller => 'system', :action => 'photo_relating_subitem', :photoable_type => photoable_type_downcase }, :with => "'photo_type='+value") %><%= c.title %>&nbsp;&nbsp;
+              <% end %>
+            </div>
+            <% related_subitem_style = 'display: none;' if photo.photo_type != '11' %>
+            <div id="photo_related_subitem_text" class="text" style="<%= related_subitem_style %>" >
+              <%= "可以选择#{PHOTO_CN}对应的#{subitem_name}" %>
+            </div>
+            <div id="photo_related_subitem_input" class="input" style="<%= related_subitem_style %>">
+              <%= f.select :related_subitem_id, model_for(subitem_type).find(:all, :conditions => { id_for(photoable_type).to_sym => photoable.id }).collect {|c| [ truncate(c.title, 30), c.id ] }, { :include_blank => true } %>
+            </div>
+          <% else %>
+            <div class="radio">
+              <% for c in photo_type_codes %>
+                <%= f.radio_button :photo_type, c.code, :class => "radio_button" %><%= c.title %>&nbsp;&nbsp;
+              <% end %>
+            </div>
+          <% end %>
+          <%= error_message_on "photo", "photo_type" %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td class="label">
+        <label for="caption"><%= "#{CAPTION_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "给#{PHOTO_CN}加点文字标注吧" %>
+        </div>
+        <div class="input">
+          <% if photo.errors_on_caption %>
+            <div class="fieldWithErrors">
+              <%= f.text_area :caption, :class => 's' %>
+            </div>
+          <% else %>
+            <%= f.text_area :caption, :class => 's' %>
+          <% end %>
+        </div>
+        <% if photo.errors_on_caption %>
+          <div class="formError">
+            <%= photo.errors_on_caption %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "当#{photoable_name}只有一#{unit_for('Photo')}#{PHOTO_CN}时, 会用它自动作为封面" %><br />
+          <%= "当#{DELETE_CN}封面#{PHOTO_CN}时, 会用#{photoable_name}其余#{PHOTO_CN}的第一#{unit_for('Photo')}自动作为封面" %>
+        </div>
+        <div class="input">
+          <% checked = (params[:is_cover] && params[:is_cover] == 1) ? true : false %>
+          <% if is_new %>
+            <% if photoable.cover_photo_id %>
+              <%= check_box_tag :is_cover, params[:is_cover], checked, :class => 'check_box' %>
+            <% else %>
+              <%= check_box_tag :is_cover, '1', true, { :disabled => true, :class => 'check_box' } %>
+            <% end %>
+            <%= " 用它作为#{photoable_name}封面" %>
+          <% else %>
+            <% if photo.is_cover?(photoable) %>
+              <%= "这是#{photoable_name}封面" %>
+            <% else %>
+              <%= check_box_tag :is_cover, params[:is_cover], checked, :class => 'check_box' %>
+              <%= " 用它作为#{photoable_name}封面" %>
+            <% end %>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit button_name, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to "&raquo;#{CANCLE_CN}", cancle_url %>
+        </div>
+      </td>
+    </tr>
+  </table>
+  </div>
 <% end %>

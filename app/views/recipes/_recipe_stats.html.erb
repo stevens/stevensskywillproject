@@ -1,20 +1,20 @@
 <div id="recipe_stats_wrapper">
 
-	<div id="recipe_stats_data" class="stats_data">
-		<%= render :partial => 'recipes/recipe_stats_data', 
-							 :locals => { :item => item } %>
-	</div>
+  <div id="recipe_stats_data" class="stats_data">
+    <%= render :partial => 'recipes/recipe_stats_data',
+               :locals => { :item => item } %>
+  </div>
 
-	<div id="recipe_rating" class="item_rating">
-		<%= render :partial => 'ratings/item_rating', 
-							 :locals => { :item => item } %>
-	</div>
-	
-	<% if !item_manageable?(item) %>
-		<div id="my_recipe_rating" class="my_rating">
-			<%= render :partial => 'ratings/my_rating', 
-								 :locals => { :item => item } %>
-		</div>
-	<% end %>
+  <div id="recipe_rating" class="item_rating">
+    <%= render :partial => 'ratings/item_rating',
+               :locals => { :item => item } %>
+  </div>
+
+  <% if !item_manageable?(item) %>
+    <div id="my_recipe_rating" class="my_rating">
+      <%= render :partial => 'ratings/my_rating',
+                 :locals => { :item => item } %>
+    </div>
+  <% end %>
 
 </div>

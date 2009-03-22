@@ -7,14 +7,13 @@
 	<div id="reviewable_reviews_wrapper" class="content_block">
 		<div id="reviewable_reviews_header" class="block_header">
 			<%= render :partial => 'reviews/reviewable_reviews_header', 
-								 :locals => { :reviewable => @reviewable,
-								 							:reviews_set_count => @reviews_set_count } %>
+								 :locals => { :reviewable => @reviewable } %>
 		</div>
 		
 		<div id="reviewable_reviews_detail" class="block_main">
 			<% if @show_filter_bar %>
 				<div id="reviewable_reviews_filter_bar" class="filter_bar">
-				
+                    <%= render :partial => 'reviews/reviews_filter_bar' %>
 				</div>
 			<% end %>
 			

@@ -2,7 +2,7 @@
 
 <% stats_entries = [] %>
 <% stats_entries << [ [ 'player', item_type, item.id ], 
-											[ item.players.size, '位', '选手' ]
+											[ item.players.size, unit_for('Player'), '选手' ]
 										] %>
 <% stats_entries << [ [ 'entry', item_type, item.id ], 
 											[ item.entries.size, unit_for('Entry'), '作品' ]
@@ -11,13 +11,13 @@
 											[ item.reviews.size, unit_for('Review'), REVIEW_CN ]
 										] %>
 <% stats_entries << [ [ 'view', item_type, item.id ], 
-											[ views_count(item), '次', SEE_CN ] 
+											[ views_count(item), unit_for('See'), SEE_CN ]
 										] %>
 <% stats_entries << [ [ 'photo', item_type, item.id ], 
 											[ item.photos.size, unit_for('Photo'), PHOTO_CN ] 
 										] %>
 <% stats_entries << [ [ 'tag', item_type, item.id ], 
-											[ item.tag_list.size, '个', TAG_CN ] 
+											[ item.tag_list.size, unit_for('Tag'), TAG_CN ]
 										] %>
 
 <%= render :partial => 'layouts/stats_entries_s', 

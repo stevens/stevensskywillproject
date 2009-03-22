@@ -12,6 +12,11 @@
 	<% photoable_type = 'User' %>
 	<% title = user_username(user) %>
 	<% item_link_url = user_first_link(user) %>
+<% elsif item_type == 'Course' %>
+    <% photo = item.menu.photos.find(:first, :conditions => { :related_subitem_type => item_type, :related_subitem_id => item.id }) %>
+    <% photoable_type = photo ? type_for(item.menu) : item_type %>
+	<% title = item_title(real_item(item)) %>
+	<% item_link_url = item_link_url(real_item(item)) %>
 <% else %>
 	<% photo = cover_photo(real_item(item)) %>
 	<% photoable_type = type_for(real_item(item)) %>
