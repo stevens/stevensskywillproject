@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 50) do
+ActiveRecord::Schema.define(:version => 54) do
 
   create_table "awards", :force => true do |t|
     t.integer  "match_id"
@@ -75,6 +75,35 @@ ActiveRecord::Schema.define(:version => 50) do
 
   add_index "counters", ["countable_type", "countable_id"], :name => "pi_countable"
   add_index "counters", ["countable_type"], :name => "pi_countable_type"
+
+  create_table "courses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "menu_id"
+    t.integer  "recipe_id"
+    t.integer  "cover_photo_id"
+    t.string   "title"
+    t.string   "common_title"
+    t.text     "description"
+    t.text     "any_else"
+    t.integer  "sequence"
+    t.string   "roles"
+    t.string   "status"
+    t.string   "privacy"
+    t.datetime "original_updated_at"
+    t.string   "client_ip"
+    t.string   "course_type"
+    t.integer  "quantity"
+    t.string   "course_unit"
+    t.integer  "list_price"
+    t.string   "currency"
+    t.text     "price_notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "courses", ["user_id"], :name => "fk_user"
+  add_index "courses", ["menu_id"], :name => "fk_menu"
+  add_index "courses", ["recipe_id"], :name => "fk_recipe"
 
   create_table "emails", :force => true do |t|
     t.string   "from"
@@ -228,6 +257,53 @@ ActiveRecord::Schema.define(:version => 50) do
   add_index "matches", ["organiger_type"], :name => "i_organiger_type"
   add_index "matches", ["organiger_type", "organiger_id"], :name => "i_organiger"
 
+  create_table "menus", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "match_id"
+    t.integer  "cover_photo_id"
+    t.string   "title"
+    t.text     "description"
+    t.text     "any_else"
+    t.string   "from_type"
+    t.string   "from_where"
+    t.string   "is_draft"
+    t.datetime "published_at"
+    t.string   "roles"
+    t.string   "status"
+    t.string   "privacy"
+    t.datetime "original_updated_at"
+    t.string   "client_ip"
+    t.string   "meal_duration"
+    t.string   "meal_kind"
+    t.string   "meal_system"
+    t.string   "meal_date"
+    t.string   "meal_time"
+    t.string   "meal_time_notes"
+    t.integer  "place_id"
+    t.string   "place_area"
+    t.string   "place_subarea"
+    t.string   "place_area_detail"
+    t.string   "place_type"
+    t.string   "place_title"
+    t.text     "place_notes"
+    t.integer  "number_of_persons"
+    t.integer  "number_of_adults"
+    t.integer  "number_of_children"
+    t.text     "person_notes"
+    t.integer  "total_amount"
+    t.integer  "discount_amount"
+    t.integer  "tip_amount"
+    t.integer  "total_to_pay"
+    t.integer  "total_per_person"
+    t.string   "currency"
+    t.text     "bill_notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "menus", ["user_id"], :name => "fk_user"
+  add_index "menus", ["match_id"], :name => "fk_match"
+
   create_table "newsletters", :force => true do |t|
     t.string   "subject"
     t.text     "body"
@@ -243,7 +319,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.integer  "photoable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "content_type",   :limit => 100
+    t.string   "content_type",         :limit => 100
     t.string   "filename"
     t.string   "path"
     t.integer  "parent_id"
@@ -253,6 +329,8 @@ ActiveRecord::Schema.define(:version => 50) do
     t.integer  "height"
     t.string   "photo_type"
     t.string   "client_ip"
+    t.string   "related_subitem_type"
+    t.integer  "related_subitem_id"
   end
 
   add_index "photos", ["user_id"], :name => "fk_user"
@@ -261,6 +339,9 @@ ActiveRecord::Schema.define(:version => 50) do
   add_index "photos", ["user_id", "photoable_type", "photoable_id"], :name => "i_user_photoable"
   add_index "photos", ["parent_id"], :name => "i_parent_photo"
   add_index "photos", ["photoable_type", "photoable_id"], :name => "pi_photoable"
+  add_index "photos", ["related_subitem_type", "related_subitem_id"], :name => "i_subitem"
+  add_index "photos", ["photoable_type", "photoable_id", "related_subitem_type"], :name => "i_photoable_subitem_type"
+  add_index "photos", ["photoable_type", "photoable_id", "related_subitem_type", "related_subitem_id"], :name => "i_photoable_subitem"
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
@@ -348,6 +429,23 @@ ActiveRecord::Schema.define(:version => 50) do
   create_table "roles", :force => true do |t|
     t.string "name"
   end
+
+  create_table "scores", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "scoreable_type"
+    t.integer  "scoreable_id"
+    t.string   "taste"
+    t.string   "shape"
+    t.string   "creative"
+    t.string   "nutrition"
+    t.string   "cost_performance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "scores", ["user_id"], :name => "fk_user"
+  add_index "scores", ["scoreable_type", "scoreable_id"], :name => "i_scoreable"
+  add_index "scores", ["user_id", "scoreable_type", "scoreable_id"], :name => "i_user_scoreable"
 
   create_table "stories", :force => true do |t|
     t.integer  "user_id"
