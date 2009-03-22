@@ -12,11 +12,12 @@ iframe.ie6_blocker {
 }
 
 .calendar_date_select thead th {
-  font-weight:bold;
+  /*font-weight:bold;*/
   background-color: #000;
   border-top:1px solid #777;
   border-bottom:2px solid #333;
   color: white !important;
+  font-size: 12px;
 }
 
 .calendar_date_select .cds_buttons {
@@ -45,12 +46,12 @@ iframe.ie6_blocker {
 }
 
 .calendar_date_select .cds_header span {
-  font-size:15px;
+  font-size:12px;
   color: black;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
-.calendar_date_select select { font-size:11px;}
+.calendar_date_select select { font-size:12px;}
 
 .calendar_date_select .cds_header a:hover {
   color: white;
@@ -59,7 +60,7 @@ iframe.ie6_blocker {
   width:22px;
   height:20px;
   text-decoration: none;
-  font-size:14px;
+  font-size:12px;
   color:black !important;
 }
 
@@ -75,16 +76,16 @@ iframe.ie6_blocker {
 }
 
 .calendar_date_select .cds_header select.month {
-  width:90px;
+  width:80px;
 }
 
 .calendar_date_select .cds_header select.year {
-  width:61px;
+  width:60px;
 }
 
 .calendar_date_select .cds_buttons a {
   color: white;
-  font-size: 9px;
+  font-size: 12px;
 }
 .calendar_date_select td {
   font-size:12px;

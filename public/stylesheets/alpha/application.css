@@ -1,11 +1,19 @@
-/* For IE6 */
+/* For IE6 
 * html {
 
-}
-/* For IE7 */
+} */
+/* For IE7 
 * +html {
 
-}
+} */
+/* For Safari & FireFox
+html > body {
+    
+} */
+/* For FireFox Only
+#hackme, x:-moz-any-link {styles for Firefox 2.0 here}
+#hackme, x:-moz-any-link, x:default {restore styles for Firefox 3.0 and newer}
+*/
 
 /* Common */
 * { 
@@ -221,7 +229,6 @@ select {
 }
 input {
 	height: 18px;
-	vertical-align: middle;
 }
 input.file {
 	height: 24px;
@@ -230,10 +237,12 @@ input.file {
 input.submit {
 	height: 24px;
 	width: 100px;
+    vertical-align: middle;
 }
 input.submit_s {
 	height: 24px;
 	width: auto;
+    vertical-align: middle;
 }
 input.search {
 	width: 200px;
@@ -244,30 +253,36 @@ input.search_button {
 }
 input.text {
 	width: 450px;
-	min-height: 20px;
+	/*min-height: 20px;*/
 }
 input.text_s {
 	width: 190px;
 }
-input.check_box {
-	margin-right: 4px;
+input.check_box, input.radio_button {
+    margin-right: 4px;
+    vertical-align: middle;
 }
-
-/** +html input.check_box {
-	margin-top: 3px;
-}*/
-input.radio_button {
-	margin-right: 4px;
+* html input.check_box, * html input.radio_button {
+    margin-left: -4px;
+	margin-right: 2px;
 }
-/** +html input.radio_button {
-	margin-top: 3px;
-}*/
+* +html input.check_box, * +html input.radio_button {
+    margin-left: -4px;
+	margin-right: 2px;
+    vertical-align: top;
+}
+input.calendar {
+    vertical-align: bottom;
+}
 textarea {
 	width: 450px;
 	height: 300px;
 }
 textarea.s {
 	height: 150px;
+}
+textarea.ss {
+	height: 60px;
 }
 textarea.xs {
 	height: 60px;
@@ -670,11 +685,11 @@ td.input div.radio {
 	margin-top: 7px;
 	margin-right: 10px;
 	margin-left: 0px;
-	margin-bottom: 0px;	
+	margin-bottom: 0px;
 }
-* +html td.input div.radio {
+/** +html td.input div.radio {
 	margin-top: 5px;
-}
+}*/
 td.input div.text {
 	margin-top: 7px;
 	margin-right: 10px;
@@ -718,7 +733,7 @@ td.photo_item_cell {
 	font-size: 14px;
 	font-weight: bold;
 	color: #695245;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 .block_header_link {
 	float: right;
@@ -1189,6 +1204,15 @@ div.prev_next {
 	padding: 10px;
 	color: #b8b9a7;
 }
+table.item_summary {
+    margin-left: 0px;
+    margin-bottom: 5px;
+    background-color: #eceff5;
+}
+table.item_summary td {
+    padding-left: 3px;
+    padding-right: 20px;
+}
 
 /* Pagination */
 div.pagination {
@@ -1230,7 +1254,7 @@ div.pagination a, div.pagination span {
 	background-color: #ffffdd;
 	border: 2px solid #ff0000;
 }
-div.radio .fieldWithErrors {
+.fieldWithErrors {
 	display: inline;
 }
 .formError {
@@ -1238,6 +1262,12 @@ div.radio .fieldWithErrors {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 10px;
+}
+div.inline_errors {
+    margin-top: 5px;
+}
+div.inline_errors .formError {
+    display: inline;
 }
 
 /* Dialog */
@@ -1326,16 +1356,16 @@ div.item_stats {
 }
 div.item_rating {
 	width: 70px;
-	height: 60px;
+	height: 75px;
 	border: solid 1px #f1f1f1;
 	text-align: center;
 	padding: 14px 0px;
 }
 * html div.item_rating {
-	margin-top: -90px;
+	margin-top: -105px;
 }
 * +html div.item_rating {
-	margin-top: -90px;
+	margin-top: -105px;
 }
 div.item_rating span.rating_value {
 	display: block;
@@ -1360,7 +1390,7 @@ div.stats_data {
 	border: solid 1px #f1f1f1;
 	border-left: none;
 	width: 102px;
-	height: 82px;
+	height: 97px;
 }
 div.stats_data span.stats_entry {
 	display: block;
