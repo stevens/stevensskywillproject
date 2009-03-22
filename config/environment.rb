@@ -27,10 +27,7 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  #config.load_paths += %W( #{RAILS_ROOT}/app/sweepers )
-  
-  #configuration of the default cache dir
-  config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"
+
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
@@ -209,7 +206,6 @@ Rails::Initializer.run do |config|
 
 	RECIPE_EN = 'recipe'
 	RECIPE_CN = '食谱'
-	MENU_CN = '食单'
 	KITCHEN_CN = '厨房'
 	PREP_TIME_CN = '准备时间'
 	COOK_TIME_CN = '制作时间'
@@ -260,6 +256,9 @@ Rails::Initializer.run do |config|
 	AWARD_CN = '奖项'
 	WINNING_CN = '获奖作品'
 	WINNER_CN = '获奖者'
+
+  MENU_CN = '餐单'
+  COURSE_CN = '菜品'
 	
 	ABOUT_CN = '关于'
 	CONTACT_US_CN = '联系我们'
@@ -309,11 +308,15 @@ Rails::Initializer.run do |config|
 	UNIT_REVIEW_CN = '条'
 	UNIT_FAVORITE_CN = '个'
 	UNIT_MATCH_CN = '个'
-	UNIT_ENTRY_CN = '项'
+	UNIT_ENTRY_CN = '件'
 	UNIT_VOTE_CN = '票'
 	UNIT_RATE_CN = '次'
 	UNIT_AWARD_CN = '个'
 	UNIT_MENU_CN = '份'
+  UNIT_COURSE_CN = '道'
+  UNIT_PLAYER_CN = '位'
+  UNIT_TAG_CN = '个'
+  UNIT_SEE_CN = '次'
 	
 	#SIZE constants
 	LIST_ITEMS_COUNT_PER_PAGE_S = 20
@@ -376,9 +379,7 @@ end
 	
 	# ActionMailer::Base.delivery_method = :smtp
 	# ActionMailer::Base.smtp_settings = { }
-	#specify the cache dir
-        ActionController::Base.fragment_cache_store = :file_store, RAILS_ROOT + "/tmp/caches/"
-        
+	
 	require 'will_paginate'
   # require 'action_mailer/ar_mailer' #后台管理用
 	

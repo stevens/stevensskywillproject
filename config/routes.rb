@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect 'users/:user_id/friends', :controller => 'contacts', :action => 'index', :contact_type => 'friend'
 	
 	map.connect 'mine/recipes', :controller => 'recipes', :action => 'mine'
+
+  map.connect 'mine/menus', :controller => 'menus', :action => 'mine'
 	
 	map.connect 'mine/reviews', :controller => 'reviews', :action => 'mine'
 	map.connect ':reviewable_type/reviews', :controller => 'reviews', :action => 'index'
@@ -43,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
 	map.resources :users, 
-								:has_many => [:recipes, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :winners, :match_actors, :players, :admins], 
+								:has_many => [:recipes, :menus, :courses, :scores, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :winners, :match_actors, :players, :admins],
 								:has_one => [:profile, :counter]
 	map.resources :recipes, 
 								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries], 
@@ -59,6 +61,14 @@ ActionController::Routing::Routes.draw do |map|
   							:has_many => [:photos, :reviews, :favorites, :winners]
   map.resources :winners
   map.resources :match_actors
+
+  map.resources :menus,
+                :has_many => [:courses, :photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries],
+                :has_one => [:counter]
+  map.resources :courses,
+                :has_many => [:photos, :reviews, :taggings, :tags],
+                :has_one => [:score]
+  map.resources :scores
 	map.resources :photos, 
 								:has_many => [:reviews, :taggings, :tags], 
 								:has_one => [:counter]
