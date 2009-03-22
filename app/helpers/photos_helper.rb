@@ -25,14 +25,30 @@ module PhotosHelper
 		items_rows_count(photos_count, photos_count_per_row)
 	end
 	
+	def photo_file_ext(photoable_type, photo_file_type)
+		case photo_file_type
+		when 'icon'
+			'jpg'
+		when 'default'
+			case photoable_type
+			when 'User'
+				'png'
+			else
+				'jpg'
+			end
+		end
+	end
+	
 	def default_photo_file_url(photoable_type, photo_style)
 		url_common = "\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
 
-		if %w[Recipe].include?(photoable_type)
-			file_ext = 'gif'
-		else
-			file_ext = 'png'
-		end
+#		if %w[User].include?(photoable_type)
+#			file_ext = 'png'
+#		else
+#			file_ext = 'jpg'
+#		end
+		
+		file_ext = photo_file_ext(photoable_type, 'default')
 		
 		if photo_style == 'full'
 			"#{url_common}.#{file_ext}"
@@ -120,7 +136,7 @@ module PhotosHelper
   	if type_for(photoable) == 'Recipe'
   		recipe_accessible?(photoable)
   	else
-  		photoable.accessible?
+  		photoable.accessible?(@current_user)
   	end
   end
 

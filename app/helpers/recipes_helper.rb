@@ -12,7 +12,7 @@ module RecipesHelper
  		when 'repaste'
  			is_draft_cond = recipe_is_draft_cond(user)
  			from_type_cond = '2'
-    when 'choiced'
+    when 'choice'
       is_draft_cond = recipe_is_draft_cond(user)
       role_cond = '11'
  		else
