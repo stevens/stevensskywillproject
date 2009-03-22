@@ -12,6 +12,7 @@ class MineController < ApplicationController
 		@user = @current_user
 		
   	load_recipes_set
+    load_menus_set
   	# classify_recipes
   	load_reviews_set
   	load_favorites_set
@@ -37,6 +38,11 @@ class MineController < ApplicationController
 	def load_recipes_set(user = @current_user)
 		@recipes_set = recipes_for(user)
 		@recipes_set_count = @recipes_set.size
+	end
+
+	def load_menus_set(user = @current_user)
+    @menus_set = menus_for(user, nil, 12)
+  	@menus_set_count = @menus_set.size
 	end
 	
 	def load_reviews_set(user = @current_user)

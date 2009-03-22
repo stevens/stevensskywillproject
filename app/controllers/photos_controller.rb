@@ -6,7 +6,7 @@ class PhotosController < ApplicationController
 	before_filter :check_photoable_accessible
 	before_filter :load_current_filter
 	before_filter :load_photos_set, :except => [:new, :edit]
-  
+
   # GET /photos
   # GET /photos.xml
   def index
@@ -151,6 +151,8 @@ class PhotosController < ApplicationController
     @photo = @parent_obj.photos.build(params[:photo])
     @photo.user_id = @current_user.id
     item_client_ip(@photo)
+
+    set_related_subitem
 		
 		if !@photo.caption.blank? && @photo.caption.chars.length > TEXT_MAX_LENGTH_S
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
@@ -179,6 +181,8 @@ class PhotosController < ApplicationController
   # PUT /photos/1.xml
   def update
     load_photo(@current_user)
+
+    set_related_subitem
     
 		if !params[:photo][:caption].blank? && params[:photo][:caption].chars.length > TEXT_MAX_LENGTH_S
 			@photo.errors_on_caption = "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
@@ -269,7 +273,16 @@ class PhotosController < ApplicationController
   end
   
 	private
-	
+
+  def set_related_subitem
+    if @photo.photoable_type == 'Menu' && params[:photo][:photo_type] == '11'
+      @photo.related_subitem_type = 'Course'
+    else
+      @photo.related_subitem_type = nil
+      params[:photo][:related_subitem_id] = nil
+    end
+  end
+
 	def check_photoable_accessible
 		if @parent_obj
 			@photoable_accessible = photoable_accessible?(@parent_obj)
@@ -296,10 +309,10 @@ class PhotosController < ApplicationController
 	end
 	
   def load_photo(user = nil)
- 		if user
- 			@photo = user.photos.find(@self_id)
+  	if user
+ 			@photo = @parent_obj.photos.find_by_user_id_and_id(user.id, @self_id)
  		else
- 			@photo = Photo.find(@self_id)
+ 			@photo = @parent_obj.photos.find_by_id(@self_id)
  		end
   end
   

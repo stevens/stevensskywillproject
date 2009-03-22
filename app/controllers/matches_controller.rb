@@ -3,7 +3,7 @@ class MatchesController < ApplicationController
   before_filter :protect, :except => [:index, :show, :overview, :profile, :help]
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview, :profile]
-  before_filter :set_system_notice, :only => [:show, :index, :overview, :profile]
+#  before_filter :set_system_notice, :only => [:show, :index, :overview, :profile]
   
   def help
 		info = "#{MATCH_CN}指南"

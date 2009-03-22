@@ -10,10 +10,12 @@ class ApplicationController < ActionController::Base
 	include CodesHelper
 	include ContactsHelper
 	include CountersHelper
+  include CoursesHelper
 	include EntriesHelper
 	include FavoritesHelper
 	include FeedbacksHelper
 	include HomepagesHelper
+  include MenusHelper
 	include MatchActorsHelper
 	include MatchesHelper
 	include MineHelper
@@ -61,6 +63,7 @@ class ApplicationController < ActionController::Base
 #    rescue_action_in_public CustomNotFoundError.new
 #  end
 
+  #出错时跳转到报错页面
   def rescue_action_in_public(exception)
     case exception
     when ActiveRecord::RecordNotFound, ActionController::RoutingError, NoMethodError, ActionController::UnknownController, ActionController::UnknownAction
@@ -71,16 +74,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def local_request?
-    return false
-  end
+#  def local_request?
+#    return false
+#  end
 
 	def set_current_tab
 		c = params[:controller]
 		a = params[:action]
 		if c == 'site' && a == 'index'
 			@current_tab_type = 'site'
-		elsif c == 'mine' || a == 'mine'
+		elsif c == 'mine' #|| a == 'mine'
 			@current_tab_type = 'mine'
 		elsif (c == 'users' && a != 'lost_activation' && a != 'resend_activation') || params[:user_id] || c == 'contacts'
 			@current_tab_type = 'user'
@@ -94,8 +97,10 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = params[:photoable_type] || @parent_type.downcase
 		elsif c == 'matches' || c == 'entries' || c == 'match_actors' || c == 'winners'
 			@current_tab_type = 'match'
+    elsif c == 'menus' || c == 'courses'
+      @current_tab_type = 'menu'
 		elsif c == 'recipes'
-			@current_tab_type = c.singularize
+			@current_tab_type = 'recipe'
 		end
 	end
 	
@@ -123,6 +128,7 @@ class ApplicationController < ActionController::Base
 #                      请蜂友们抓紧时间为你喜爱的作品投票，<em class='l3'>投票的蜂友都有机会获得“投票幸运奖”！</em>"
 #    @system_notice = "<a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>金蜂·美食人生 大赛（第一季）</a> <em class='l3'><a href='#{url_for(:match_id => 1, :controller => 'winners', :action => 'index')}'>获奖名单</a></em> 和 <em class='l3'><a href='http://beecook2008.blogspot.com/2009/02/blog-post.html' target='_blank'>金蜂食单</a></em> 揭晓啦，恭喜获奖的作品和蜂友们！<br /><br />
 #                      蜂厨服务生已经给获奖的蜂友发出了奖品，请各位注意查收喔！"
+    @system_notice = "<em class='l3'><a href='#{menus_path}'>餐单</a></em> 新鲜出炉啦！欢迎蜂友们抢先试用，快来跟大家分享你的美味餐单呵！"
 	end
 	
 	# def param_posted?(symbol)
@@ -157,6 +163,8 @@ class ApplicationController < ActionController::Base
 			@parent_type = 'Photo'
 		elsif params[:entry_id]
 			@parent_type = 'Entry'
+    elsif params[:menu_id]
+      @parent_type = 'Menu'
 		end
 		
 		if @parent_type
@@ -276,22 +284,45 @@ class ApplicationController < ActionController::Base
   	
   	# 提示未发布的食谱草稿
   	draft_recipes_set = user.recipes.find(:all, :conditions => { :is_draft => '1' })
-  	dr_count = draft_recipes_set.size
+  	draft_recipes_count = draft_recipes_set.size
   	publishable_recipes_set = []
   	for recipe in draft_recipes_set
   		publishable_recipes_set << recipe if recipe.publishable?
   	end
-  	pr_count = publishable_recipes_set.size
-		if dr_count > 0
+  	publishable_recipes_count = publishable_recipes_set.size
+    recipe_unit = unit_for('Recipe')
+		if draft_recipes_count > 0
 			draft_recipes_url = url_for(:controller => 'recipes', :action => 'mine', :filter => 'draft')
-			if pr_count > 0
-				if pr_count == dr_count
-					@notifications << [ "你有#{pr_count}#{unit_for('Recipe')}草稿#{RECIPE_CN}等待发布", draft_recipes_url ]
+			if publishable_recipes_count > 0
+				if publishable_recipes_count == draft_recipes_count
+					@notifications << [ "你有#{publishable_recipes_count}#{recipe_unit}草稿#{RECIPE_CN}等待发布", draft_recipes_url ]
 				else
-					@notifications << [ "你有#{dr_count}#{unit_for('Recipe')}草稿#{RECIPE_CN}, 其中#{pr_count}#{unit_for('Recipe')}等待发布", draft_recipes_url ]
+					@notifications << [ "你有#{draft_recipes_count}#{recipe_unit}草稿#{RECIPE_CN}, 其中#{publishable_recipes_count}#{recipe_unit}等待发布", draft_recipes_url ]
 				end
 			else
-				@notifications << [ "你有#{dr_count}#{unit_for('Recipe')}草稿#{RECIPE_CN}", draft_recipes_url ]
+				@notifications << [ "你有#{draft_recipes_count}#{recipe_unit}草稿#{RECIPE_CN}", draft_recipes_url ]
+			end
+		end
+
+  	# 提示未发布的餐单草稿
+  	draft_menus_set = user.menus.find(:all, :conditions => { :is_draft => '1' })
+  	draft_menus_count = draft_menus_set.size
+  	publishable_menus_set = []
+  	for menu in draft_menus_set
+  		publishable_menus_set << menu if menu.publishable?
+  	end
+  	publishable_menus_count = publishable_menus_set.size
+    menu_unit = unit_for('Menu')
+		if draft_menus_count > 0
+			draft_menus_url = url_for(:controller => 'menus', :action => 'mine', :filter => 'draft')
+			if publishable_menus_count > 0
+				if publishable_menus_count == draft_menus_count
+					@notifications << [ "你有#{publishable_menus_count}#{menu_unit}草稿#{MENU_CN}等待发布", draft_menus_url ]
+				else
+					@notifications << [ "你有#{draft_menus_count}#{menu_unit}草稿#{MENU_CN}, 其中#{publishable_menus_count}#{menu_unit}等待发布", draft_menus_url ]
+				end
+			else
+				@notifications << [ "你有#{draft_menus_count}#{menu_unit}草稿#{MENU_CN}", draft_menus_url ]
 			end
 		end
 		

@@ -43,12 +43,13 @@ class ReviewsController < ApplicationController
 					load_reviews_set(@user)
       		@show_filter_bar = true
       		info = "#{username_prefix(@user)}#{name_for(reviewable_type)}#{REVIEW_CN}"
-	      elsif @parent_obj && @parent_obj.accessible?(@current_user)
+	      elsif @parent_obj && item_accessible?(@parent_obj, @current_user)
 	      	@reviewable = @parent_obj
 	      	@reviews_set = @reviewable.reviews.find(:all)
 	      	@reviews_set_count = @reviews_set.size
-	      	info = "#{@parent_name}#{REVIEW_CN} (#{@reviews_set_count}) #{itemname_suffix(@parent_obj)}"
-	      else
+          @show_filter_bar = true
+	      	info = "#{@parent_name}#{REVIEW_CN} #{itemname_suffix(@parent_obj)}"
+        elsif reviewable_type
 	      	@reviews_set = reviewable_type_reviews(reviewable_type)
 	      	info = "#{name_for(reviewable_type)}#{REVIEW_CN}"
 	      end
@@ -110,7 +111,6 @@ class ReviewsController < ApplicationController
 				end
 				@reviews_set_count = @reviews_set.size
 				@insert_line = true if @reviews_set_count <= limit
-                                expire_reviews_cache()
 				after_create_ok
 			else
 				after_create_error
@@ -123,7 +123,6 @@ class ReviewsController < ApplicationController
 
 		if @review.update_attributes(params[:review])
 			after_update_ok
-                        expire_reviews_cache()
 		else
 			after_update_error
 		end
@@ -139,7 +138,7 @@ class ReviewsController < ApplicationController
 				@reviews_set = @reviewable.reviews.find(:all, :limit => 20)
 				@reviews_set_count = @reviews_set.size
 			end
-		expire_reviews_cache()	 		
+			 		
   		after_destroy_ok
   	end
   end
@@ -159,9 +158,7 @@ class ReviewsController < ApplicationController
   end
   
 	private
-  def expire_reviews_cache()
-    expire_fragment(%r{recipes/overview.part=overview_reviews.*})
-  end	
+	
   def load_review(user = nil)
  		if user
  			@review = user.reviews.find(@self_id)
@@ -185,10 +182,12 @@ class ReviewsController < ApplicationController
 														:locals => { :notice => "你已经发表了1#{@self_unit}#{name_for(@review.reviewable_type)}#{@self_name}!" }
 					page.show "notice_for_new_review"
 					if params[:ref] == 'reviewable_reviews_list'
-						page.replace_html "reviewable_reviews_header", 
-															:partial => 'reviews/reviewable_reviews_header', 
-															:locals => { :reviewable => @parent_obj,
-															 						 :reviews_set_count => @reviews_set_count }
+            page.replace_html "reviewable_reviews_filter_bar",
+                              :partial => 'reviews/reviews_filter_bar'
+#						page.replace_html "reviewable_reviews_header",
+#															:partial => 'reviews/reviewable_reviews_header',
+#															:locals => { :reviewable => @parent_obj,
+#															 						 :reviews_set_count => @reviews_set_count }
 					end
 					if @insert_line
 						page.insert_html :top, "reviewable_reviews_list_content", 
@@ -214,12 +213,13 @@ class ReviewsController < ApplicationController
 														 							 :ref => params[:ref] }
 					end
 					if params[:ref] == 'reviewable'
-						case @review.reviewable_type
-						when 'Recipe'
+            reviewable_type = @review.reviewable_type
+						case 
+						when [ 'Recipe', 'Menu' ].include?(reviewable_type)
 							page.replace "stats_entry_of_review",
 													 :partial => 'layouts/stats_entry', 
 										 			 :locals => { :stats_entry => [ 'review', @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] }
-						when 'Match'
+						when [ 'Match' ].include?(reviewable_type)
 							page.replace "stats_entry_of_match_#{@parent_id}_review_s",
 													 :partial => 'layouts/stats_entry_s', 
 													 :locals => { :stats_entry => [ [ 'review', @parent_type, @parent_id ], [ @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] ] }
@@ -356,12 +356,13 @@ class ReviewsController < ApplicationController
 														 							 :show_review_title => false,
 														 							 :show_review_todo => true,
 														 							 :ref => params[:ref] }
-						case @review.reviewable_type
-						when 'Recipe'
+						reviewable_type = @review.reviewable_type
+            case
+						when [ 'Recipe', 'Menu' ].include?(reviewable_type)
 							page.replace "stats_entry_of_review",
 													 :partial => 'layouts/stats_entry', 
 										 			 :locals => { :stats_entry => [ 'review', @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] }
-						when 'Match'
+						when [ 'Match' ].include?(reviewable_type)
 							page.replace "stats_entry_of_match_#{@reviewable.id}_review_s",
 													 :partial => 'layouts/stats_entry_s', 
 													 :locals => { :stats_entry => [ [ 'review', type_for(@reviewable), @reviewable.id ], [ @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] ] }

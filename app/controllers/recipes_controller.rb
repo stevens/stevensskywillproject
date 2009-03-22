@@ -4,24 +4,27 @@ class RecipesController < ApplicationController
 	before_filter :store_location_if_logged_in, :only => [:mine]
 	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
 	before_filter :set_system_notice, :only => [:overview]
-	def change_from_type
-  	respond_to do |format|
-			format.js do
-				render :update do |page|
-					if params[:from_type] == '1'
-						page.hide "from_where_wrapper"
-						page.hide "from_where_errors"
-						page.replace_html "from_where_wrapper",
-															:partial => '/recipes/recipe_from_where'
-					else
-						page.replace_html "from_where_wrapper",
-															:partial => '/recipes/recipe_from_where'
-						page.show "from_where_wrapper"
-					end
-				end
-			end
-  	end
-	end
+	
+#	def change_from_type
+#  	respond_to do |format|
+#			format.js do
+#				render :update do |page|
+#					if params[:from_type] == '1'
+#						page.hide "from_where_wrapper"
+#						page.hide "from_where_errors"
+#						page.replace_html "from_where_wrapper",
+#															:partial => 'layouts/item_from_where',
+#                              :locals => { :item_type => 'recipe' }
+#					else
+#						page.replace_html "from_where_wrapper",
+#															:partial => 'layouts/item_from_where',
+#                              :locals => { :item_type => 'recipe' }
+#						page.show "from_where_wrapper"
+#					end
+#				end
+#			end
+#  	end
+#	end
 	
   # GET /recipes
   # GET /recipes.xml
@@ -124,9 +127,7 @@ class RecipesController < ApplicationController
     
     # load_recipes_set(@current_user)
     
-    recipe_title = item_title(@recipe)
-    
- 		info = "#{EDIT_CN}#{RECIPE_CN} - #{recipe_title}"
+ 		info = "#{EDIT_CN}#{RECIPE_CN} - #{item_title(@recipe)}"
 		set_page_title(info)
 		set_block_title(info)
 		
@@ -151,7 +152,6 @@ class RecipesController < ApplicationController
 			if @recipe.save
 				# @recipe.tag_list = params[:tags].strip if params[:tags] && !params[:tags].strip.blank?
 				reg_homepage(@recipe)
-                                expire_tag_cache()
 				after_create_ok
 			else
 				after_create_error
@@ -226,38 +226,36 @@ class RecipesController < ApplicationController
 			
 			if @recipe.update_attributes(new_attrs)
 				reg_homepage(@recipe, 'update')
-                                expire_publish_recipe_fragment_cache()
 				after_publish_ok
 			end
 		end
   end
   
-  # 精选
-	def choice
-		if @current_user && @current_user.is_role_of?('admin')
-			load_recipe
-			respond_to do |format|
-				format.html do
-					current_roles = @recipe.roles || ''
-					
-			    if params[:to_choice]
-						new_roles = current_roles + ' 11'
-						@notice = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
-				  else
-				  	new_roles = current_roles.gsub('11', '')
-						@notice = "你已经将1#{@self_unit}#{@self_name}从精选#{@self_name}中#{DELETE_CN}了!"
-				  end
-				  
-				  new_roles = new_roles.strip.gsub(/\s+/, ' ')
-					
-					if @recipe.update_attribute(:roles, new_roles)
-                                                expire_choice_cache()
-						after_choice_ok
-					end
-				end
-			end
-		end
-	end
+#  # 精选
+#	def choice
+#		if @current_user && @current_user.is_role_of?('admin')
+#			load_recipe
+#			respond_to do |format|
+#				format.html do
+#					current_roles = @recipe.roles || ''
+#
+#			    if params[:to_choice]
+#						new_roles = current_roles + ' 11'
+#						@notice = "你已经#{ADD_CN}了1#{@self_unit}精选#{@self_name}!"
+#				  else
+#				  	new_roles = current_roles.gsub('11', '')
+#						@notice = "你已经将1#{@self_unit}#{@self_name}从精选#{@self_name}中#{DELETE_CN}了!"
+#				  end
+#
+#				  new_roles = new_roles.strip.gsub(/\s+/, ' ')
+#
+#					if @recipe.update_attribute(:roles, new_roles)
+#						after_choice_ok
+#					end
+#				end
+#			end
+#		end
+#	end
 	
 	#分享
 	def share
@@ -269,24 +267,12 @@ class RecipesController < ApplicationController
 	end
   
   def overview
-      #need the sql handle
-      #unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_new")
 	  load_recipes_set
-      #end
-      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_random")
 	  load_random_recipes
-      end
-      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_choice")
 	  load_choice_recipes
-      end
-      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_reviews")
 	  load_reviews_set
-      end
-      unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_tags")
 	  load_tags_set
-      end
-
-      #unless read_fragment(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_highest")
+	  
   	ranked_recipes_set = highest_rated_items(@recipes_set)[0..99]
   	if ranked_recipes_set
 	  	@highlighted_recipe = ranked_recipes_set.rand
@@ -295,7 +281,6 @@ class RecipesController < ApplicationController
 	  	end
 	  	@highest_rated_recipes = ranked_recipes_set[0..19]
 	  end
-      #end
   	# @random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN
@@ -323,37 +308,6 @@ class RecipesController < ApplicationController
   end
   
   private
-  
-  #expire the publish recipe assocciated cache
-  def expire_publish_recipe_fragment_cache()
-    expire_fragment("index/random_recipes")
-    expire_fragment(%r{recipes/overview.part=overview_new.*})
-    expire_fragment(%r{recipes/overview.part=overview_random.*})
-    
-  end
-  
-  #expire choice recipe cache
-  def expire_choice_cache()
-    expire_fragment(%r{recipes/overview.part=overview_new.*})
-    expire_fragment(%r{recipes/overview.part=overview_choice.*})
-  end
-  
-  #expire the assocciated cache when recipe destroy
-  def expire_destroy_recipe_fragment_cache()
-    expire_fragment("index/random_recipes")
-    expire_fragment(%r{recipes/overview.part=overview_new.*})
-    expire_fragment(%r{recipes/overview.part=overview_random.*})
-    expire_fragment(%r{recipes/overview.part=overview_choice.*})
-    expire_fragment(%r{recipes/overview.part=overview_reviews.*})
-    expire_fragment(%r{recipes/overview.part=overview_tags.*})
-  end
-  #expire the tag cache
-  def expire_tag_cache()
-    expire_fragment(%r{recipes/overview.part=overview_tags.*})
-  end
-	# def set_system_notice
-		# @system_notice = "号外: 提供食谱的<em>蜂友的blog</em>可以<em>自动加入</em>食谱的<em>相关链接</em>啦!"
-	# end
 	
 	def set_meta_keywords
 		@meta_keywords = [ DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN ]
@@ -377,7 +331,7 @@ class RecipesController < ApplicationController
   end
   
   def load_recipes_set(user = nil)
-  	order = @order? @order : 'published_at DESC, created_at DESC'
+  	order = @order ? @order : 'published_at DESC, created_at DESC'
   	@recipes_set = filtered_recipes(user, params[:filter], nil, order)
   	@recipes_set_count = @recipes_set.size
   end
@@ -404,7 +358,7 @@ class RecipesController < ApplicationController
   def after_create_ok
   	respond_to do |format|
 			format.html do
-				flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}, 快去#{ADD_CN}几#{unit_for('Photo')}漂亮的#{PHOTO_CN}吧!"	
+				flash[:notice] = "你已经成功#{CREATE_CN}了1#{@self_unit}新#{@self_name}, 快去#{ADD_CN}几#{unit_for('Photo')}#{PHOTO_CN}吧!"	
 				redirect_to @recipe
 			end
 			# format.xml  { render :xml => @recipe, :status => :created, :location => @recipe }
@@ -419,7 +373,7 @@ class RecipesController < ApplicationController
 			format.html do
 				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"
 				
-				load_recipes_set(@current_user)
+#				load_recipes_set(@current_user)
 				
 				info = "新#{RECIPE_CN}"	
 				set_page_title(info)
@@ -447,9 +401,9 @@ class RecipesController < ApplicationController
 			format.html do
 				flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{@self_name}信息有#{ERROR_CN}, 请重新#{INPUT_CN}!"			
 				
-				load_recipes_set(@current_user)
+#				load_recipes_set(@current_user)
 				
-				info = "#{EDIT_CN}#{RECIPE_CN} - #{@recipe.title}"
+				info = "#{EDIT_CN}#{RECIPE_CN} - #{item_title(@recipe)}"
 				set_page_title(info)
 				set_block_title(info)				
 				
@@ -504,26 +458,26 @@ class RecipesController < ApplicationController
   	end
   end
   
-  def after_choice_ok
-  	respond_to do |format|
-  		format.js do
-  			render :update do |page|
-					page.replace_html "flash_wrapper", 
-														:partial => "/layouts/flash", 
-														:locals => { :notice => @notice }
-					page.replace_html "recipe_#{@recipe.id}_title",
-														:partial => "/layouts/item_basic", 
-														:locals => { :item => @recipe,
-								 												 :show_icon => true,
-								 												 :show_title => true,
-								 												 :show_link => true }
-					page.replace_html "recipe_#{@recipe.id}_admin",
-														:partial => "/system/item_admin_bar", 
-														:locals => { :item => @recipe, 
-									 											 :ref => 'show' }
-  			end
-  		end
-  	end
-  end
+#  def after_choice_ok
+#  	respond_to do |format|
+#  		format.js do
+#  			render :update do |page|
+#					page.replace_html "flash_wrapper",
+#														:partial => "/layouts/flash",
+#														:locals => { :notice => @notice }
+#					page.replace_html "recipe_#{@recipe.id}_title",
+#														:partial => "/layouts/item_basic",
+#														:locals => { :item => @recipe,
+#								 												 :show_icon => true,
+#								 												 :show_title => true,
+#								 												 :show_link => true }
+#					page.replace_html "recipe_#{@recipe.id}_admin",
+#														:partial => "/system/item_admin_bar",
+#														:locals => { :item => @recipe,
+#									 											 :ref => 'show' }
+#  			end
+#  		end
+#  	end
+#  end
   
 end

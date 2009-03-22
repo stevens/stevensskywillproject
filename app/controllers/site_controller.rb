@@ -1,11 +1,10 @@
 class SiteController < ApplicationController
+
 	before_filter :clear_location_unless_logged_in, :only => [:index]
 	before_filter :set_system_notice, :only => [:index]
 	
 	def index
-                unless read_fragment("index/random_recipes")
-                  load_recipes_set
-                end
+		load_recipes_set
 		
 		load_notifications if @current_user
 		

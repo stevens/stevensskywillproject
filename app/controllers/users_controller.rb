@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  caches_page :new
+  
 	before_filter :clear_location_unless_logged_in
 	before_filter :load_category, :only => [:index, :overview]
 
@@ -152,6 +152,7 @@ class UsersController < ApplicationController
 	      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
 	      else
 			  	load_user_recipes(@user)
+          load_user_menus(@user)
 			  	# classify_recipes
 			  	load_user_reviews(@user)
 			  	load_user_favorites(@user)
@@ -198,6 +199,12 @@ class UsersController < ApplicationController
 	def load_user_recipes(user = nil)
 		@recipes_set = recipes_for(user)
 		@recipes_set_count = @recipes_set.size
+	end
+
+	def load_user_menus(user = nil)
+    menu_conditions = common_filter_conditions(nil, 'Menu', user)
+    @menus_set = menus_for(user, menu_conditions.join(' AND '), 12)
+  	@menus_set_count = @menus_set.size
 	end
 	
 	def load_user_reviews(user = nil)
