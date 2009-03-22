@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
 	include CodesHelper
 
   has_many :recipes, :order => "created_at DESC, published_at DESC"
+  has_many :menus, :order => "created_at DESC, published_at DESC"
+  has_many :scores
+  has_many :courses, :order => "created_at DESC"
   has_many :photos, :order => "created_at"
   has_many :reviews, :order => "created_at DESC"
   has_many :ratings, :order => "updated_at DESC"
@@ -46,16 +49,16 @@ class User < ActiveRecord::Base
   													:message => "请再次#{INPUT_CN}#{PASSWORD_CN}"
   validates_length_of       :login,    
   													:within => 2..STRING_MAX_LENGTH_S,
-  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位",
-  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位"
+  													:too_short => "字数太短, 应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位",
+  													:too_long => "字数太长, 应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_S}位"
   validates_length_of       :email,    
   													:within => STRING_MIN_LENGTH_M..STRING_MAX_LENGTH_L,
-  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位",
-  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位"
+  													:too_short => "字数太短, 应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位",
+  													:too_long => "字数太长, 应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_L}位"
 	validates_length_of       :password, :password_confirmation,
 														:within => STRING_MIN_LENGTH_M..STRING_MAX_LENGTH_M, 					 :if => :password_required?,
-  													:too_short => "字数太短，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位",
-  													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位"
+  													:too_short => "字数太短, 应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位",
+  													:too_long => "字数太长, 应该是#{STRING_MIN_LENGTH_M}到#{STRING_MAX_LENGTH_M}位"
 	validates_format_of 			:email,
 														:with => /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i,
 														:message => "#{EMAIL_ADDRESS_CN}格式不正确"

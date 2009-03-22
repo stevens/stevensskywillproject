@@ -1,6 +1,7 @@
 class Recipe < ActiveRecord::Base
 	include ApplicationHelper
 	include ReviewsHelper
+  include EntriesHelper
 	
 	acts_as_taggable
 	acts_as_rateable :average => true
@@ -23,52 +24,57 @@ class Recipe < ActiveRecord::Base
 														:message => "请不要#{INPUT_CN}#{RECIPE_CN}的#{FROM_WHERE_CN}"
   validates_length_of       :title,    
   													:within => 2..STRING_MAX_LENGTH_M,
-  													:too_short => "字数太短，应该是2到#{STRING_MAX_LENGTH_M}位",
-  													:too_long => "字数太长，应该是2到#{STRING_MAX_LENGTH_M}位"
+  													:too_short => "字数太短, 应该是2到#{STRING_MAX_LENGTH_M}位",
+  													:too_long => "字数太长, 应该是2到#{STRING_MAX_LENGTH_M}位"
   validates_length_of       :common_title, 
   													:maximum => STRING_MAX_LENGTH_M,
-  													:too_long => "字数太长，最多不应该超过#{STRING_MAX_LENGTH_M}位"
+  													:too_long => "字数太长, 最多不应该超过#{STRING_MAX_LENGTH_M}位"
   validates_length_of       :description,    
   													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_S,
-  													:too_short => "字数太短，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
-  													:too_long => "字数太长，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位"
+  													:too_short => "字数太短, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
+  													:too_long => "字数太长, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位"
   validates_length_of       :ingredients, :directions, 
   													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_L,
-  													:too_short => "字数太短，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位",
-  													:too_long => "字数太长，应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位"
+  													:too_short => "字数太短, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位",
+  													:too_long => "字数太长, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位"
   validates_length_of       :tips, :any_else,     
   													:maximum => TEXT_MAX_LENGTH_L,
-  													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_L}位"
+  													:too_long => "字数太长, 最多不应该超过#{TEXT_MAX_LENGTH_L}位"
   validates_length_of       :yield, 
   													:maximum => STRING_MAX_LENGTH_M,
-  													:too_long => "字数太长，最多不应该超过#{STRING_MAX_LENGTH_M}位"
-  validates_length_of       :video_url, :from_where, 
-  													:maximum => TEXT_MAX_LENGTH_S,
-  													:too_long => "字数太长，最多不应该超过#{TEXT_MAX_LENGTH_S}位"
+  													:too_long => "字数太长, 最多不应该超过#{STRING_MAX_LENGTH_M}位"
+  validates_length_of       :from_where, 
+  													:maximum => STRING_MAX_LENGTH_L,
+  													:too_long => "字数太长, 最多不应该超过#{STRING_MAX_LENGTH_L}位"
   
   def publishable?
+    item_publishable?(self)
 #    cover_photo = self.photos.find_by_id(cover_photo_id) if cover_photo_id
-  	(is_draft == '1' && cover_photo_id && status.to_i >= 1) ? true : false
+#  	(is_draft == '1' && cover_photo_id && status.to_i >= 1) ? true : false
   end
   
   def published?
-  	(is_draft == '0' && !published_at.nil?) ? true : false
+    item_published?(self)
+#  	(is_draft == '0' && !published_at.nil?) ? true : false
   end
   
   def entriable?
-  	(is_draft == '0' && privacy == '10') ? true : false
+    item_entriable?(self)
+#  	(is_draft == '0' && privacy == '10') ? true : false
   end
   
   def entrying?
-  	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
-  		(match.doing?(Time.now) && match.find_entry(self)) ? true : false
-  	end
+    item_entrying?(self)
+#  	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
+#  		(match.doing?(Time.now) && match.find_entry(self)) ? true : false
+#  	end
   end
 
   def entried?
-  	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
-  		match.find_entry(self) ? true : false
-  	end
+    item_entried?(self)
+#  	if entriable? && !match_id.nil? && (match = Match.find_by_id(match_id))
+#  		match.find_entry(self) ? true : false
+#  	end
   end
   
   def draft_selectable?
@@ -76,15 +82,16 @@ class Recipe < ActiveRecord::Base
   end
   
   def accessible?(someuser = nil)
-  	if someuser
-  		if someuser == user
-  			true
-  		else
-  			(is_draft == '0' && privacy <= '11') ? true : false
-  		end
-  	else
-  		(is_draft == '0' && privacy == '10') ? true : false
-  	end
+    item_accessible?(self, someuser)
+#  	if someuser
+#  		if someuser == user
+#  			true
+#  		else
+#  			(is_draft == '0' && privacy <= '11') ? true : false
+#  		end
+#  	else
+#  		(is_draft == '0' && privacy == '10') ? true : false
+#  	end
   end
   
   def description_summary

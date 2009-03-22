@@ -12,8 +12,8 @@ class Review < ActiveRecord::Base
   # 													:too_long => "字数太长，应该是#{STRING_MIN_LENGTH_S}到#{STRING_MAX_LENGTH_M}位"
   validates_length_of       :review,    
   													:within => 3..TEXT_MAX_LENGTH_L,
-  													:too_short => "字数太短，应该是3到#{TEXT_MAX_LENGTH_M}位",
-  													:too_long => "字数太长，应该是3到#{TEXT_MAX_LENGTH_M}位"
+  													:too_short => "字数太短, 应该是3到#{TEXT_MAX_LENGTH_M}位",
+  													:too_long => "字数太长, 应该是3到#{TEXT_MAX_LENGTH_M}位"
 
   def review_summary
   	text_summary(review, TEXT_SUMMARY_LENGTH_M)
