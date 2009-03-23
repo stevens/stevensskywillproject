@@ -25,8 +25,8 @@
                               :ref => 'reviewable' } %>
     </div>
 
-    <% if !item_manageable?(reviewable) %>
-      <div id="my_recipe_rating_at_review" class="my_rating_at_review">
+    <% if ['Recipe', 'Menu'].include?(reviewable_type) && !item_manageable?(reviewable) %>
+      <div id="my_<%= reviewable_type.downcase %>_rating_at_review" class="my_rating_at_review">
         <%= render :partial => 'ratings/my_rating',
                    :locals => { :item => reviewable } %>
       </div>
