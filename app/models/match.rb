@@ -11,11 +11,11 @@ class Match < ActiveRecord::Base
 	has_many :photos, :dependent => :destroy, :as => :photoable, :foreign_key => :photoable_id, :order => "created_at"
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "created_at DESC"
 	has_many :favorites, :dependent => :destroy, :as => :favorable, :foreign_key => :favorable_id, :order => "created_at DESC"
-	has_many :entries, :order => "created_at DESC"
-	has_many :awards, :order => "level, created_at"
+	has_many :entries, :dependent => :destroy, :order => "created_at DESC"
+	has_many :awards, :dependent => :destroy, :order => "level, created_at"
 	has_many :votes, :dependent => :destroy, :as => :votein, :foreign_key => :votein_id, :order => "created_at DESC"
-	has_many :winners, :order => "created_at"
-	has_many :match_actors, :order => "created_at DESC"
+	has_many :winners, :dependent => :destroy, :order => "created_at"
+	has_many :match_actors, :dependent => :destroy, :order => "created_at DESC"
  	has_many :players, 
   				 :class_name => "MatchActor", 
   				 :conditions => "roles = 1", 

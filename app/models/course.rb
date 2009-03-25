@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
 	has_many :photos, :dependent => :destroy, :as => :photoable, :foreign_key => :photoable_id, :order => "created_at"
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "created_at DESC"
 
-  validates_presence_of :title, :description, 
+  validates_presence_of :title, 
                           :message => "这一项是#{REQUIRED_CN}"
 	validates_presence_of :course_type,
                           :message => "请#{SELECT_CN}菜品类型"
@@ -19,10 +19,13 @@ class Course < ActiveRecord::Base
                         :within => 2..STRING_MAX_LENGTH_M,
                         :too_short => "字数太短, 应该是2到#{STRING_MAX_LENGTH_M}位",
                         :too_long => "字数太长, 应该是2到#{STRING_MAX_LENGTH_M}位"
+#  validates_length_of :description,
+#                        :within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_S,
+#                        :too_short => "字数太短, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
+#                        :too_long => "字数太长, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位"
   validates_length_of :description,
-                        :within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_S,
-                        :too_short => "字数太短, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
-                        :too_long => "字数太长, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位"
+                        :maximum => 500,
+                        :too_long => "字数太长, 最多不应该超过500位"
   validates_length_of :common_title,
                         :maximum => STRING_MAX_LENGTH_M,
                         :too_long => "字数太长, 最多不应该超过#{STRING_MAX_LENGTH_M}位"

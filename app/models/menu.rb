@@ -12,7 +12,7 @@ class Menu < ActiveRecord::Base
 	has_many :reviews, :dependent => :destroy, :as => :reviewable, :foreign_key => :reviewable_id, :order => "created_at DESC"
 	has_many :favorites, :dependent => :destroy, :as => :favorable, :foreign_key => :favorable_id, :order => "created_at DESC"
 	has_many :entries, :dependent => :destroy, :as => :entriable, :foreign_key => :entriable_id, :order => "created_at DESC"
-  has_many :courses, :order => "course_type, created_at"
+  has_many :courses, :dependent => :destroy, :order => "course_type, created_at"
 
   validates_presence_of :title, :description, :from_type, :privacy,
                           :message => "这一项是#{REQUIRED_CN}"

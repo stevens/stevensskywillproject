@@ -25,7 +25,7 @@
                             [ item.ratings.size, '', '', average_rating_value(item) ]
                           ] %>
       <% stats_entries << [ [ 'favorite', item_type, item.id ],
-                            [ item.favorites.size, '', unit_for('favoritie_s') ]
+                            [ item.favorites.size, '', unit_for('favorite_s') ]
                           ] %>
       <% stats_entries << [ [ 'review', item_type, item.id ],
                             [ item.reviews.size, '', unit_for('review_s') ]
