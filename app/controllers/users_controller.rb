@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  
-	before_filter :clear_location_unless_logged_in
+
+  before_filter :protect, :only => [:share]
+	before_filter :clear_location_unless_logged_in, :except => [:share]
 	before_filter :load_category, :only => [:index, :overview]
 
   def index
@@ -173,6 +174,15 @@ class UsersController < ApplicationController
 			end
 		end
   end
+
+	#分享
+	def share
+    if @user && @user.accessible?
+      info = "分享#{MAIN_PAGE_CN} - #{user_username(@user, true, true)}"
+      set_page_title(info)
+      set_block_title(info)
+    end
+	end
 	
 	private
 	

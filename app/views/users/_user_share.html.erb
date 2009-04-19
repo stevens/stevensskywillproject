@@ -1,0 +1,38 @@
+<% user = item %>
+<% user_username = strip_tags(str_squish(user_username(user, true, true))) %>
+<% user_url = user_first_link(user, false) %>
+<% photo_url = "#{root_url[0..root_url.size-2]}#{photo_file_url(user_portrait(user), 'User', 'matrix')}" %>
+<% logo_url = "#{root_url}images/logo/bc_logo_web.png" %>
+<% if (profile = user.profile) && !profile.blog.blank? %>
+  <% blog_url = "http://#{profile.blog}" %>
+<% end %>
+
+<% html_content = [] %>
+
+<% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
+
+<% html_content << "<div style='margin-bottom: 1px;'>
+                      <a href='#{user_url}' target='_blank'><img alt='' src='#{photo_url}' title='#{user_username}' /></a>
+                    </div>" %>
+
+<% html_content << "<div>
+                      <a href='#{user_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{user_username}的#{MAIN_PAGE_CN}</a>
+                    </div>" %>
+
+<% if !blog_url.blank? %>
+	<% html_content << "<div>
+                          <a href='#{blog_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; line-height: 16px;'>Blog</a>
+                        </div>" %>
+<% end %>
+
+<% html_content << "<div style='margin-top: 3px;'>
+                      <a href='#{root_url}' target='_blank'><img alt='', src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 80px;'/></a>
+                    </div>" %>
+
+<% html_content << "</div>" %>
+
+<div class="sub_block_lr">
+  <%= render :partial => 'layouts/item_share',
+              :locals => { :item_type => 'main_page',
+                           :html_content => html_content } %>
+</div>

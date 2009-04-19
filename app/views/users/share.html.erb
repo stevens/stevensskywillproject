@@ -1,0 +1,15 @@
+<div class="content_block">
+	
+  <div class="block_header">
+    <div class="block_header_link">
+      <%= link_to "#{BACK_CN}#{MAIN_PAGE_CN}", :action => 'profile' %>
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div class="block_main">
+    <%= render :partial => 'users/user_share',
+               :locals => { :item => @user } %>
+  </div>
+
+</div>

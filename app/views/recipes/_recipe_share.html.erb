@@ -4,7 +4,7 @@
 <% photo_url = "#{root_url[0..root_url.size-2]}#{photo_file_url(cover_photo(item), 'Recipe', 'matrix')}" %>
 <% logo_url = "#{root_url}images/logo/bc_logo_web.png" %>
 <% if (profile = item.user.profile) && !profile.blog.blank? %>
-	<% blog_url = "http://#{profile.blog}" %>
+  <% blog_url = "http://#{profile.blog}" %>
 <% end %>
 
 <% html_content = [] %>
@@ -12,61 +12,30 @@
 <% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
 
 <% html_content << "<div style='margin-bottom: 1px;'>
-                        <a href='#{item_url}' target='_blank'><img alt='' src='#{photo_url}' title='#{item_title}' /></a>
+                      <a href='#{item_url}' target='_blank'><img alt='' src='#{photo_url}' title='#{item_title}' /></a>
                     </div>
                     <div>
-                        <a href='#{item_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #ff8159; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{item_title}</a>
+                      <a href='#{item_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #ff8159; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{item_title}</a>
                     </div>" %>
 
 <% html_content << "<div>
-                        <a href='#{user_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{item.user.login}的#{MAIN_PAGE_CN}</a>
+                      <a href='#{user_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{item.user.login}的#{MAIN_PAGE_CN}</a>
                     </div>" %>
 
 <% if !blog_url.blank? %>
 	<% html_content << "<div>
-                            <a href='#{blog_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; line-height: 16px;'>Blog</a>
+                          <a href='#{blog_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; line-height: 16px;'>Blog</a>
                         </div>" %>
 <% end %>
 
 <% html_content << "<div style='margin-top: 3px;'>
-                        <a href='#{root_url}' target='_blank'><img alt='', src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 80px;'/></a>
+                      <a href='#{root_url}' target='_blank'><img alt='', src='#{logo_url}' title='#{SLOGAN_CN}' style='width: 80px;'/></a>
                     </div>" %>
 										
 <% html_content << "</div>" %>
 
 <div class="sub_block_lr">
-
-	<div class="main">
-		<h3><%= "链接代码" %></h3>
-		<div class="sub_block_lr">
-			<em class="l2"><%= "在你的网站或Blog上显示这#{unit_for('Recipe')}#{RECIPE_CN}的图文链接, 只需要将这段代码粘贴到你的网站或Blog的HTML代码中..." %></em>
-			<div id="share_code" class="share_code" value="<%= h str_squish(html_content.to_s, 1, false) %>">
-				<%= h html_content %>
-			</div>
-			
-			<SCRIPT LANGUAGE="JavaScript">
-			function fCopyToClicp(id){
-			        var a = document.getElementById(id);
-			        window.clipboardData.setData('text',a.value);
-			        alert("已经复制到剪贴板了");
-			}
-			</SCRIPT>
-			<div class="submit">
-				<input type="button" value="复制到剪贴板" class="submit" onClick="fCopyToClicp('share_code');" />
-				<em class="l2"><%= "如果你的浏览器不支持自动复制到剪贴板, 请选中代码文本用键盘 [Ctrl+C] 复制" %></em>
-			</div>
-		</div>
-	</div>
-	
-
-	
-	<div class="main">
-		<h3><%= "效果预览" %></h3>
-		<div class="sub_block_lr">
-			<div class="share_preview">
-				<%= html_content %>
-			</div>
-		</div>
-	</div>
-
+  <%= render :partial => 'layouts/item_share',
+              :locals => { :item_type => 'Recipe',
+                           :html_content => html_content } %>
 </div>

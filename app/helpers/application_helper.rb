@@ -51,7 +51,7 @@ module ApplicationHelper
     case
     when ['User', 'Player'].include?(item_type)
       '位'
-    when ['Recipe', 'Favorite', 'Match', 'Award', 'Tag'].include?(item_type)
+    when ['Recipe', 'Favorite', 'Match', 'Award', 'Tag', 'main_page'].include?(item_type)
       '个'
     when ['Rate', 'See'].include?(item_type)
       '次'

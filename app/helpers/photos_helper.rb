@@ -40,7 +40,7 @@ module PhotosHelper
 	end
 	
 	def default_photo_file_url(photoable_type, photo_style)
-		url_common = "\default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
+		url_common = "\/images\/default\/#{photoable_type.downcase}/\default_#{photoable_type.downcase}"
 
 #		if %w[User].include?(photoable_type)
 #			file_ext = 'png'
