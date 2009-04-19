@@ -1600,6 +1600,8 @@ div.welcome_todo_button a:hover {
 .todo_block {
 	float: right;
 	color: #78b36d;
+    padding-top: 1px;
+    padding-bottom: 8px;
 }
 .todo_block span {
 	margin-left: 5px;
