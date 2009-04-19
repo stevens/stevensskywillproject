@@ -17,11 +17,10 @@
 	</div>
 <% end %>
 
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_choice") do %>
 <div id="choice_recipes_wrapper" class="content_block">
 	<div id="choice_recipes_header" class="block_header">
 		<div class="block_header_link">	
-			<%= link_to "#{MORE_CN}精选#{RECIPE_CN}", url_for(:action => 'index', :filter => 'choiced') %>
+			<%= link_to "#{MORE_CN}精选#{RECIPE_CN}", url_for(:action => 'index', :filter => 'choice') %>
 		</div>
 		<h1><%= "精选#{RECIPE_CN}" %></h1>
 	</div>
@@ -40,9 +39,7 @@
 							 						 :photo_style => 'matrix'} %>
 	</div>
 </div>
-<% end %>
 
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_new") do %>
 <div id="recipes_wrapper" class="content_block">
 	<div id="recipes_header" class="block_header">
 		<div class="block_header_link">	
@@ -65,9 +62,7 @@
 							 						 :photo_style => 'matrix'} %>
 	</div>
 </div>
-<% end %>
 
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_reviews") do %>
 <% reviews_set = @reviews_set %>
 <div id="mixed_reviews_wrapper" class="content_block">
 	<div id="mixed_reviews_header" class="block_header">
@@ -92,4 +87,3 @@
 		</div>
 	</div>
 </div>
-<% end %>
