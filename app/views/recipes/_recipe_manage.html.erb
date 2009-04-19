@@ -39,7 +39,7 @@
 
 <% if item.published? %>
   <% buttons << [ [ 'share', false, true, 'l3' ],
-                  [ '分享', url_for(:action => 'share', :id => item.id, :ref => ref, :filter => params[:filter]) ]
+                  [ "分享#{RECIPE_CN}", url_for(:action => 'share', :id => item.id, :ref => ref, :filter => params[:filter]) ]
                 ] %>
 <% end %>
 

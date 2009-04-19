@@ -40,8 +40,9 @@
 				</div>
 			</td>
 			<td class="right_column">
+              <div class="todo_block">
 				<% if user != @current_user %>
-					<div id="friendship_status_with_user_<%= user.id %>" class="todo_block">
+					<div id="friendship_status_with_user_<%= user.id %>">
 						<% if @current_user %>
 							<% if contact = Contact.find_friendship(@current_user, user) %>
 								<% status = contact.status %>
@@ -56,6 +57,11 @@
 											 							:ref => 'user_bar' } %>
 					</div>
 				<% end %>
+                
+                <div class="todo_right">
+                  <em class="l3"><%= link_to "分享#{MAIN_PAGE_CN}", url_for(:controller => 'users', :action => 'share', :id => user.id) %></em>
+                </div>
+              </div>
 			</td>
 		</tr>
 	</table>
