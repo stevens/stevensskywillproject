@@ -201,20 +201,6 @@
 		</tr>
 		<tr>
 			<td class="label">
-				<label for="video_url"><%= "#{VIDEO_URL_CN}:" %></label>
-			</td>
-			<td class="input">
-				<div class="text">
-					<%= "如果有#{RECIPE_CN}的#{VIDEO_CN}, 请#{INPUT_CN}#{VIDEO_CN}的#{URL_CN}" %>
-				</div>
-				<div class="input">
-					<%= f.text_field :video_url, :class => "text" %>
-				</div>
-				<%= error_message_on "recipe", "video_url" %>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
 				<label class="required" for="from_type"><%= "#{FROM_WHERE_CN}:" %></label>
 			</td>
 			<td class="input">
