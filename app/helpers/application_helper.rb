@@ -1080,5 +1080,22 @@ module ApplicationHelper
   		condition = "privacy <= 10"
   	end
   end
+
+  # 页面的默认description
+  def default_meta_description
+    "蜂厨(BeeCook)——用心与爱打造最棒最有味的以美食和厨艺为主题的新概念社区化网络平台..."
+  end
+
+  # 页面的默认keywords
+  def default_meta_keywords(item_type = nil)
+#    蜂厨 BeeCook 美食 美味 味道 厨艺 厨道 厨房 厨师 厨友 吃 私房 私房菜 食谱 菜谱 餐单 食单 菜单 餐厅 餐馆 餐饮 社区 社区化 图片 视频 评论 评分 收藏 收尝 标签 food recipe kichen cook chef menu delicious
+    keywords = [SITE_NAME_CN, SITE_NAME_EN]
+    case item_type
+    when 'Recipe'
+      keywords += ['食谱', '菜谱', '私房菜', 'recipe', 'cookbook', DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
+    else
+      keywords += ['美食', '美味', '味道', '厨房', '厨师', '厨艺', '厨道', '食谱', '餐单', '菜肴', '料理', '社区', 'recipe', 'cookbook', 'menu', 'cook', 'cooking', 'chef', 'food', 'gourmet', 'delicious', 'cuisine', 'sns']
+    end
+  end
 		
 end
