@@ -1904,3 +1904,9 @@ div.vote_zone {
 .share_preview a:hover {
 	background-color: transparent !important;
 }
+
+/* ad */
+#ad_sideblock_wrapper {
+    padding-top: 50px;
+    text-align: center;
+}
