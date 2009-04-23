@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
 		a = params[:action]
 		if c == 'site' && a == 'index'
 			@current_tab_type = 'site'
-		elsif c == 'mine' #|| a == 'mine'
+		elsif c == 'mine' || (a == 'mine' && (c == 'reviews' || c == 'taggings' || c == 'favorites'))
 			@current_tab_type = 'mine'
 		elsif (c == 'users' && a != 'lost_activation' && a != 'resend_activation') || params[:user_id] || c == 'contacts'
 			@current_tab_type = 'user'

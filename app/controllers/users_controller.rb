@@ -234,12 +234,12 @@ class UsersController < ApplicationController
 	end
 	
 	def load_user_contactors(user)
-		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), 12, 'RAND()'))
+		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), nil, 'RAND()'))
 		if @current_user
-			current_user_contactors = contactors_for(contacts_for(@current_user, contact_conditions('1', '3'), 12, 'RAND()'))
+			current_user_contactors = contactors_for(contacts_for(@current_user, contact_conditions('1', '3'), nil, 'RAND()'))
 			@mutual_contactors_set = @contactors_set & current_user_contactors
-			@mutual_contactors_set_count = @mutual_contactors_set.size
 			@contactors_set -= @mutual_contactors_set
+      @mutual_contactors_set_count = @mutual_contactors_set.size
 		end
 		@contactors_set_count = @contactors_set.size
 	end

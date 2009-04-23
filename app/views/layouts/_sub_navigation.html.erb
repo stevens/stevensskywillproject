@@ -1,11 +1,11 @@
 <% if current_tab_type == 'mine' %>
-  <%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
-  <%= link_to "我的#{MENU_CN}", :controller => 'menus', :action => 'mine' %>
-  <%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
-  <%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
-  <%= link_to "我的#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
-  <%= link_to "我的#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
-  <%= link_to "我的#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
+  <%= link_to "#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
+  <%= link_to "#{MENU_CN}", :controller => 'menus', :action => 'mine' %>
+  <%= link_to "#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
+  <%= link_to "#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
+  <%= link_to "#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
+  <%= link_to "#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
+  <%= link_to "#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
 <% elsif current_tab_type == 'setting' %>
   <%= link_to "#{ACCOUNT_CN}#{SETTING_CN}", :controller => 'settings', :action => 'account' %>
 <% elsif current_tab_type == 'recipe' %>
