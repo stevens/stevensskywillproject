@@ -1,47 +1,35 @@
-<%= render :partial => '/layouts/items_sideblock', 
-					 :locals => { :id => 'other_recipes', 
-					 							:block_title => "#{user_username(@recipe.user, false)}的其他#{RECIPE_CN}",
-					 							:block_header_link => { :title => MORE_CN, :url => user_recipes_path(@recipe.user) }, 
-					 							:items_set => @other_recipes_set } %>
+<%= render :partial => 'layouts/items_sideblock', 
+            :locals => { :id => 'other_recipes',
+                        :block_title => "#{user_username(@recipe.user, false)}的其他#{RECIPE_CN}",
+                        :block_header_link => { :title => MORE_CN, :url => user_recipes_path(@recipe.user) },
+                        :items_set => @other_recipes_set } %>
 
 <% if @same_title_recipes_set.size > 0 %>
-	<%= render :partial => '/layouts/items_sideblock', 
-						 :locals => { :id => 'same_title_recipes', 
-						 							:block_title => "同名#{RECIPE_CN}", 
-						 							:block_header_link => nil, 
-						 							:items_set => @same_title_recipes_set } %>
+  <%= render :partial => 'layouts/items_sideblock',
+              :locals => { :id => 'same_title_recipes',
+                          :block_title => "同名#{RECIPE_CN}",
+                          :block_header_link => nil,
+                          :items_set => @same_title_recipes_set } %>
 <% end %>
 
-<%= render :partial => '/layouts/items_sideblock', 
-					 :locals => { :id => 'related_recipes', 
-					 							:block_title => "相关#{RECIPE_CN}", 
-					 							:block_header_link => nil, 
-					 							:items_set => @related_recipes_set } %>
+<%= render :partial => 'layouts/items_sideblock', 
+            :locals => { :id => 'related_recipes',
+                        :block_title => "相关#{RECIPE_CN}",
+                        :block_header_link => nil,
+                        :items_set => @related_recipes_set } %>
 
-<%= render :partial => '/layouts/items_sideblock', 
-					 :locals => { :id => 'favorite_users', 
-					 							:block_title => "谁#{FAVORITE_CN}了这#{unit_for('Recipe')}#{RECIPE_CN}?", 
-					 							:block_header_link => nil, 
-					 							:items_set => @favorite_users_set } %>
+<%= render :partial => 'layouts/items_sideblock', 
+            :locals => { :id => 'favorite_users',
+                        :block_title => "谁#{FAVORITE_CN}了这#{unit_for('Recipe')}#{RECIPE_CN}?",
+                        :block_header_link => nil,
+                        :items_set => @favorite_users_set } %>
 
 <% if @entried_matches_set.size > 0 %>					 							
-	<%= render :partial => '/layouts/items_sideblock', 
-						 :locals => { :id => 'entried_matches', 
-						 							:block_title => "参赛情况", 
-						 							:block_header_link => nil, 
-						 							:items_set => @entried_matches_set } %>
+  <%= render :partial => 'layouts/items_sideblock',
+              :locals => { :id => 'entried_matches',
+                          :block_title => "参赛情况",
+                          :block_header_link => nil,
+                          :items_set => @entried_matches_set } %>
 <% end %>
 
-<div id="ad_sideblock">
-  <script type="text/javascript"><!--
-  google_ad_client = "pub-1545644343401729";
-  /* 200x200, 创建于 09-4-22 */
-  google_ad_slot = "2453648852";
-  google_ad_width = 200;
-  google_ad_height = 200;
-  //-->
-  </script>
-  <script type="text/javascript"
-  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-  </script>
-</div>
+<%= render :partial => 'ad/ad_sideblock' %>

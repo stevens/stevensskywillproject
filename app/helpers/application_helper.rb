@@ -1092,9 +1092,11 @@ module ApplicationHelper
     keywords = [SITE_NAME_CN, SITE_NAME_EN]
     case item_type
     when 'Recipe'
-      keywords += ['食谱', '菜谱', '私房菜', 'recipe', 'cookbook', DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
+      keywords += ['食谱', '菜谱', '私房菜', DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
+      keywords += ['recipe', 'cookbook']
     else
-      keywords += ['美食', '美味', '味道', '厨房', '厨师', '厨艺', '厨道', '食谱', '餐单', '菜肴', '料理', '社区', 'recipe', 'cookbook', 'menu', 'cook', 'cooking', 'chef', 'food', 'gourmet', 'delicious', 'cuisine', 'sns']
+      keywords += ['美食', '美味', '味道', '厨房', '厨师', '厨艺', '厨道', '食谱', '餐单', '菜肴', '料理', '社区']
+      keywords += ['recipe', 'cookbook', 'menu', 'cook', 'cooking', 'chef', 'food', 'gourmet', 'delicious', 'cuisine', 'sns']
     end
   end
 		
