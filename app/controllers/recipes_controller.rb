@@ -165,7 +165,8 @@ class RecipesController < ApplicationController
   # PUT /recipes/1.xml
   def update
     load_recipe(@current_user)
-    new_recipe = @current_user.recipes.build(params[:recipe])
+#    new_recipe = @current_user.recipes.build(params[:recipe])
+    new_recipe = @recipe.user.recipes.build(params[:recipe])
     # new_recipe.cover_photo_id = @recipe.cover_photo_id
     # new_recipe.published_at = @recipe.published_at
     # new_recipe.status = new_recipe.get_status
@@ -175,7 +176,7 @@ class RecipesController < ApplicationController
     # params[:recipe][:status] = new_recipe.status
     # params[:recipe][:is_draft] = new_recipe.is_draft
     # params[:recipe][:published_at] = new_recipe.published_at
-    params[:recipe][:original_updated_at] = Time.now
+    params[:recipe][:original_updated_at] = Time.now if @recipe.user == @current_user
     params[:recipe][:status] = new_recipe.get_status
 		
 		set_tag_list
@@ -318,12 +319,13 @@ class RecipesController < ApplicationController
   end
   
   def load_recipe(user = nil)
-  	if user
+  	if user && !user.is_role_of?('admin')
  			recipe = user.recipes.find(@self_id)
  		else
  			recipe = Recipe.find(@self_id)
  		end
- 		if params[:action] == 'destroy' || recipe_accessible?(recipe)
+    if (user && user.is_role_of?('admin')) || params[:action] == 'destroy' || recipe_accessible?(recipe)
+#    if params[:action] == 'destroy' || recipe.accessible?(user)
  			@recipe = recipe
  		end
   end
