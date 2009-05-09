@@ -214,6 +214,7 @@ Rails::Initializer.run do |config|
 	YIELD_CN = '出品量'
 	DESCRIPTION_CN	= '描述'
 	INGREDIENT_CN= '用料'
+  TOOL_CN = '工具'
 	DIRECTION_CN = '做法'
 	TIP_CN = '小贴士'
 	PRIVATE_HOME_CN = '私房'

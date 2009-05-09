@@ -153,6 +153,23 @@
 		</tr>
 		<tr>
 			<td class="label">
+				<label for="tools"><%= "工具:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "<em class='more'>每一行请只#{INPUT_CN}一种工具或装备等</em>" %><br />
+					<%= "如: \"烤箱\", \"平底锅\", \"微波炉\", \"挖球器\"" %><br />
+					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
+					<%= "如: \"[锅类]\", \"[刀具]\", \"[其他]\"" %>
+				</div>
+				<div class="input">
+					<%= f.text_area :tools %>
+				</div>
+				<%= error_message_on "recipe", "tools" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">
 				<label class="required" for="directions"><%= "#{DIRECTION_CN}:" %></label>
 			</td>
 			<td class="input">

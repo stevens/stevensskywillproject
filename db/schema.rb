@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 54) do
+ActiveRecord::Schema.define(:version => 55) do
 
   create_table "awards", :force => true do |t|
     t.integer  "match_id"
@@ -403,6 +403,7 @@ ActiveRecord::Schema.define(:version => 54) do
     t.integer  "match_id"
     t.string   "common_title"
     t.string   "client_ip"
+    t.text     "tools"
   end
 
   add_index "recipes", ["user_id"], :name => "fk_user"

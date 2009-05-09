@@ -29,14 +29,17 @@ class Recipe < ActiveRecord::Base
   validates_length_of       :common_title, 
   													:maximum => STRING_MAX_LENGTH_M,
   													:too_long => "字数太长, 最多不应该超过#{STRING_MAX_LENGTH_M}位"
-  validates_length_of       :description,    
+  validates_length_of       :description, :ingredients,
   													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_S,
   													:too_short => "字数太短, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位",
   													:too_long => "字数太长, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_S}位"
-  validates_length_of       :ingredients, :directions, 
+  validates_length_of       :directions, 
   													:within => TEXT_MIN_LENGTH_S..TEXT_MAX_LENGTH_L,
   													:too_short => "字数太短, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位",
   													:too_long => "字数太长, 应该是#{TEXT_MIN_LENGTH_S}到#{TEXT_MAX_LENGTH_L}位"
+  validates_length_of       :tools,
+  													:maximum => TEXT_MAX_LENGTH_S,
+  													:too_long => "字数太长, 最多不应该超过#{TEXT_MAX_LENGTH_S}位"
   validates_length_of       :tips, :any_else,     
   													:maximum => TEXT_MAX_LENGTH_L,
   													:too_long => "字数太长, 最多不应该超过#{TEXT_MAX_LENGTH_L}位"
