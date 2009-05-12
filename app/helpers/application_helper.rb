@@ -1099,5 +1099,19 @@ module ApplicationHelper
       keywords += ['recipe', 'cookbook', 'menu', 'cook', 'cooking', 'chef', 'food', 'gourmet', 'delicious', 'cuisine', 'sns']
     end
   end
+
+  # 为文件名加前后缀（保留原有扩展名）
+  def add_pre_suf_to_filename(filename, pre, suf)
+    filename_temp = filename.split('.')
+    filename_self = filename_temp[0]
+    filename_ext = filename_temp[1]
+    if !pre.blank?
+      filename_self = pre + filename_self
+    end
+    if !suf.blank?
+      filename_self = filename_self + suf
+    end
+    filename = "#{filename_self}.#{filename_ext}"
+  end
 		
 end
