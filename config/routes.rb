@@ -82,6 +82,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :profiles
 	map.resources :stories
 	map.resources :votes
+
+  map.resources :wines
   
 	map.resources :keepers, :member => { :enable => :put } #后台管理用
 	map.resources :newsletters, :member => { :sendmails => :put } #后台管理用
