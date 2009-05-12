@@ -1,0 +1,35 @@
+<% item = Wine.find(:first, :order => 'RAND()') %>
+<% item_link_url = url_for(:controller => 'wines', :action => 'pop_content', :id => item.id) %>
+
+<div class="sidebar_block">
+  <div class="sidebar_block_header">
+    <h1><%= '美食 + 美酒' %></h1>
+  </div>
+
+  <div id="wine_list_wrapper" class="sidebar_block_main">
+    <table class="content">
+
+      <tr>
+        <td class="left_column">
+          <div class="sideblock_list_photo">
+            <% image_filename = add_pre_suf_to_filename(item.image_filename, nil, '_tiny') %>
+            <% image_file_url = "#{item.image_file_path}#{image_filename}" %>
+            <% image_title = "#{item.title}&#13;#{item.common_title}" %>
+            <%= link_to_remote image_tag(image_file_url, :title => image_title, :alt => ''), :url => item_link_url %>
+          </div>
+        </td>
+
+        <td class="right_column">
+          <div class="basic">
+            <h2>
+              <% item_title = "#{item.title}<br />#{item.common_title}" %>
+              <%= link_to_remote item_title, :url => item_link_url %>
+            </h2>
+            <ul><%= paragraphs(item.description, true, true) %></ul>
+          </div>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</div>
