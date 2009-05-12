@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 55) do
+ActiveRecord::Schema.define(:version => 56) do
 
   create_table "awards", :force => true do |t|
     t.integer  "match_id"
@@ -513,6 +513,36 @@ ActiveRecord::Schema.define(:version => 55) do
   add_index "votes", ["user_id"], :name => "fk_user"
   add_index "votes", ["voteable_type"], :name => "i_voteable_type"
   add_index "votes", ["voteable_type", "voteable_id"], :name => "i_voteable"
+
+  create_table "wines", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "common_title"
+    t.text     "description"
+    t.string   "wine_type"
+    t.string   "grape_type"
+    t.string   "grape_tree_age"
+    t.string   "soil_type"
+    t.string   "plant_amount"
+    t.string   "implantation_mode"
+    t.string   "output"
+    t.string   "ferment_mode"
+    t.string   "color"
+    t.string   "smell"
+    t.string   "storage_temperature"
+    t.string   "food_pairing"
+    t.string   "alcohol_level"
+    t.string   "pack_type"
+    t.string   "volume"
+    t.string   "country"
+    t.string   "region"
+    t.string   "vintage"
+    t.integer  "cover_photo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wines", ["user_id"], :name => "fk_user"
 
   create_table "winners", :force => true do |t|
     t.integer  "match_id"
