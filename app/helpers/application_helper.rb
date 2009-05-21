@@ -1083,7 +1083,8 @@ module ApplicationHelper
 
   # 页面的默认description
   def default_meta_description
-    "蜂厨(BeeCook)——用心与爱打造最棒最有味的以美食和厨艺为主题的新概念社区化网络平台..."
+#    "蜂厨(BeeCook)——用心与爱打造最棒最有味的以美食和厨艺为主题的新概念社区化网络平台..."
+    "一个新概念美食生活在线平台，一族风格派美食主义饕餮达人，用创意打造专家级美食根据地，以智能引领现代版美食大革命..."
   end
 
   # 页面的默认keywords
