@@ -428,7 +428,7 @@ div.tag {
 	color: #428cbb;
 }
 #footer_content a.highlight {
-    color: #ff8159;
+    color: #ff8159 !important;
 }
 #footer_content span.copyright {
 	color: #b8b9a7;
