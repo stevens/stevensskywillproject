@@ -441,8 +441,14 @@ div.tag {
 	text-align: center;
 	background-color: #b8b9a7;
 }
+
+/* seo_link */
 .seo_link a {
 	color: #ff8159 !important;
+}
+td.seo_link_cell {
+    padding-bottom: 2px;
+    padding-right: 10px;
 }
 
 /* Main Navigation */
