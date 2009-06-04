@@ -1,0 +1,19 @@
+<% items = [ [ 'FLVCD', 'http://www.flvcd.com', 'FLVCD' ], [ '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', '美食·人生' ], [ '生活绿皮书', 'http://q.blog.sina.com.cn/yryg', '生活绿皮书' ],
+            [ '都市圈圈', 'http://www.dsqq.cn', '都市圈圈' ], [ 'Onlylady.com女性网', 'http://www.onlylady.com', 'onlylady专业女性网' ], [ '走秀网', 'http://www.zoshow.com', '买得起的时尚' ] ] %>
+<% items_count = items.size %>
+<% items_count_per_row = 2 %>
+<table>
+  <% 1.upto(items_rows_count(items_count, items_count_per_row)) do |r| %>
+    <tr>
+      <% 1.upto(items_count_per_row) do |c| %>
+        <% if (i=c+(r-1)*items_count_per_row) <= items_count %>
+          <td class="seo_link_cell">
+            <%= link_to items[i-1][0], items[i-1][1], :title => items[i-1][2], :target => '_blank' %>
+          </td>
+        <% else %>
+          <% break %>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

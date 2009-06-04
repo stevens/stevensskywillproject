@@ -40,6 +40,8 @@ class SiteController < ApplicationController
     info = "链接#{SITE_NAME_CN}"
     set_page_title(info)
 		set_block_title(info)
+
+    show_sidebar
   end
 	
 	private
