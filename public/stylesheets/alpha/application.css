@@ -417,6 +417,7 @@ div.tag {
 	padding: 5px 15px;
 	border-top: 1px solid #b8b9a7;
 	background-color: #428cbb;
+    text-align: center;
 }
 #footer_content a, #footer a:link, #footer a:visited {
 	margin-right: 10px;
@@ -426,6 +427,9 @@ div.tag {
 	background-color: #ffffff;
 	color: #428cbb;
 }
+#footer_content a.highlight {
+    color: #ff8159;
+}
 #footer_content span.copyright {
 	color: #b8b9a7;
 	float: right;
@@ -433,19 +437,17 @@ div.tag {
     width: 500px;
     text-align: right;
 }
-#footer_content .seo_link {
+#footer_content .bottom {
 	margin: 0px -15px;
 	margin-bottom: -5px;
 	margin-top: 5px;
 	padding: 2px 15px;
 	text-align: center;
 	background-color: #b8b9a7;
+    color: #695245;
 }
 
 /* seo_link */
-.seo_link a {
-	color: #ff8159 !important;
-}
 td.seo_link_cell {
     padding-bottom: 2px;
     padding-right: 10px;
