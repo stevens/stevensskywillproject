@@ -1,21 +1,19 @@
 <% if @highest_rated_recipes && @highest_rated_recipes.size > 0 %>
-	<%= render :partial => 'layouts/ranklist_sideblock',
-						 :locals => { :rank_list_title => "#{RECIPE_CN}<em class='red'>红</em>榜 TOP20", 
-						 						  :items_set => @highest_rated_recipes } %>
+  <%= render :partial => 'layouts/ranklist_sideblock',
+              :locals => { :rank_list_title => "#{RECIPE_CN}<em class='red'>红</em>榜 TOP20",
+                          :items_set => @highest_rated_recipes } %>
 <% end %>
 
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_random") do %>
-<%= render :partial => 'layouts/items_sideblock', 
-					 :locals => { :id => 'random_recipes', 
-					 							:block_title => "#{RECIPE_CN}随机秀", 
-					 							:block_header_link => nil, 
-					 							:items_set => @random_recipes } %>
+<% if @random_recipes && @random_recipes.size > 0 %>
+  <%= render :partial => 'layouts/items_sideblock',
+              :locals => { :id => 'random_recipes',
+                          :block_title => "#{RECIPE_CN}随机秀",
+                          :block_header_link => nil,
+                          :items_set => @random_recipes } %>
 <% end %>
 
-<% cache(:controller => "recipes", :action => "overview", :user_id => session[:user_id], :part => "overview_tags") do %>					 						 
 <%= render :partial => 'taggings/tags_sideblock',
-					 :locals => { :user => nil, 
-					 						  :custom_tags_set => @tags_set,
-					 						  :limit => nil, 
-					 						  :taggable_type => 'Recipe' } %>
-<% end %>
+            :locals => { :user => nil,
+                        :custom_tags_set => @tags_set,
+                        :limit => nil,
+                        :taggable_type => 'Recipe' } %>
