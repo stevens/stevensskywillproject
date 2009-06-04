@@ -6,9 +6,9 @@
 		<div class="block_main">
 			<div class="full_photo">
 				<% photo = cover_photo(@highlighted_recipe) %>
-				<div class="rank" style="left: <%= (640-photo.width)/2+9 %>px">
-					<%= @highlighted_recipe_rank %>
-				</div>
+                <div class="rank" style="left: <%= (640-photo.width)/2+9 %>px">
+                  <%= "红" %>
+                </div>
 				<div class="ranked_photo">
 					<%= link_to image_tag(photo_file_url(photo, 'Recipe', 'full'), :title => strip_tags(str_squish(@highlighted_recipe.title)), :alt => ''), @highlighted_recipe %>
 				</div>

@@ -1,11 +1,13 @@
 <% if @highest_rated_users && @highest_rated_users.size > 0 %>
-	<%= render :partial => "/layouts/ranklist_sideblock",
-						 :locals => {:rank_list_title => "蜂神榜 TOP10", 
-						 						 :items_set => @highest_rated_users} %>
+  <%= render :partial => 'layouts/ranklist_sideblock',
+              :locals => { :rank_list_title => "蜂神榜 TOP20",
+                          :items_set => @highest_rated_users } %>
 <% end %>
 
-<%= render :partial => '/layouts/items_sideblock', 
-					 :locals => { :id => 'random_users', 
-					 							:block_title => "#{PEOPLE_CN}随机秀", 
-					 							:block_header_link => nil, 
-					 							:items_set => @random_users } %>
+<% if @random_users && @random_users.size > 0 %>
+  <%= render :partial => 'layouts/items_sideblock',
+              :locals => { :id => 'random_users',
+                          :block_title => "#{PEOPLE_CN}随机秀",
+                          :block_header_link => nil,
+                          :items_set => @random_users } %>
+<% end %>

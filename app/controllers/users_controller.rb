@@ -134,7 +134,7 @@ class UsersController < ApplicationController
   def overview
 	  load_users_set
 	  load_brains_set
-	  load_random_users
+#	  load_random_users
 	  
   	# @highlighted_user = 
   	# @highest_rated_users = 
@@ -202,9 +202,9 @@ class UsersController < ApplicationController
   	@brains_set_count = @brains_set.size
   end
   
-  def load_random_users
-  	@random_users = users_for(user_conditions, 12, 'RAND()')
-  end
+#  def load_random_users
+#  	@random_users = users_for(user_conditions, 12, 'RAND()')
+#  end
 
 	def load_user_recipes(user = nil)
 		@recipes_set = recipes_for(user)

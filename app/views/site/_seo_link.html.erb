@@ -1,0 +1,14 @@
+<% items = [ [ 'FLVCD', 'http://www.flvcd.com' ], [ '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs' ], [ '生活绿皮书', 'http://q.blog.sina.com.cn/yryg' ],
+            [ '都市圈圈', 'http://www.dsqq.cn' ] ] %>
+<% items_count = items.size %>
+<% items_count_per_row = 10 %>
+<% 1.upto(items_rows_count(items_count, items_count_per_row)) do |r| %>
+  <% 1.upto(items_count_per_row) do |c| %>
+    <% if (i=c+(r-1)*items_count_per_row) <= items_count %>
+      <%= link_to items[i-1][0], items[i-1][1], :target => '_blank' %>
+    <% else %>
+      <% break %>
+    <% end %>
+  <% end %>
+  <br />
+<% end %>

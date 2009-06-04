@@ -224,12 +224,11 @@
                     <%= link_to "#{SITE_NAME_CN}板报", 'http://blog.sina.com.cn/beecook2008', :target => '_blank', :style => 'color: #ff8159;' %>
 					<%= link_to PRIVACY_POLICY_CN, privacy_path %>
 					<%= link_to HELP_CN, help_path %>
-					<div class="seo_link">
-						<%= link_to 'FLVCD', 'http://www.flvcd.com/', :target => '_blank' %>
-						<%= link_to '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', :target => '_blank' %>
-                        <%= link_to '生活绿皮书', 'http://q.blog.sina.com.cn/yryg', :target => '_blank' %>
-                        <%= link_to '都市圈圈', 'http://www.dsqq.cn', :target => '_blank' %>
-					</div>
+					<% if @current_tab_type == 'site' %>
+                      <div class="seo_link">
+                        <%= render :partial => 'site/seo_link' %>
+                      </div>
+                    <% end %>
 				</div>
 			</div>
 			<!-- END FOOTER -->

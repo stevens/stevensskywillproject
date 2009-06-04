@@ -270,20 +270,24 @@ class RecipesController < ApplicationController
 	end
   
   def overview
+    @recipes_limit = 18
+    
 	  load_recipes_set
-	  load_random_recipes
+#	  load_random_recipes
 	  load_choice_recipes
 	  load_reviews_set
 	  load_tags_set
-	  
-  	ranked_recipes_set = highest_rated_items(@recipes_set)[0..99]
-  	if ranked_recipes_set
-	  	@highlighted_recipe = ranked_recipes_set.rand
-	  	if @highlighted_recipe_rank = ranked_recipes_set.index(@highlighted_recipe)
-	  		@highlighted_recipe_rank += 1
-	  	end
-	  	@highest_rated_recipes = ranked_recipes_set[0..19]
-	  end
+
+    @highlighted_recipe = @choice_recipes.rand
+
+#  	ranked_recipes_set = highest_rated_items(@recipes_set)[0..99]
+#  	if ranked_recipes_set
+#	  	@highlighted_recipe = ranked_recipes_set.rand
+#	  	if @highlighted_recipe_rank = ranked_recipes_set.index(@highlighted_recipe)
+#	  		@highlighted_recipe_rank += 1
+#	  	end
+#	  	@highest_rated_recipes = ranked_recipes_set[0..19]
+#	  end
   	# @random_recipes = random_items(@recipes_set, 12)
 	  
 	  info = RECIPE_CN
@@ -332,7 +336,7 @@ class RecipesController < ApplicationController
   
   def load_recipes_set(user = nil)
   	order = @order ? @order : 'published_at DESC, created_at DESC'
-  	@recipes_set = filtered_recipes(user, params[:filter], nil, order)
+  	@recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
   	@recipes_set_count = @recipes_set.size
   end
   
@@ -340,9 +344,9 @@ class RecipesController < ApplicationController
   	@choice_recipes = roles_recipes(user, '11', 12)
   end
   
-  def load_random_recipes(user = nil)
-  	@random_recipes = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 12, 'RAND()')
-  end
+#  def load_random_recipes(user = nil)
+#  	@random_recipes = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 12, 'RAND()')
+#  end
   
   def load_reviews_set(user = nil)
   	# @reviews_set = reviews_for(user, 'Recipe', review_conditions('Recipe', @self_id), recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
