@@ -166,6 +166,9 @@ class RecipesController < ApplicationController
   def update
     load_recipe(@current_user)
 #    new_recipe = @current_user.recipes.build(params[:recipe])
+    if params[:recipe][:privacy].nil?
+      params[:recipe][:privacy] = @recipe.privacy
+    end
     new_recipe = @recipe.user.recipes.build(params[:recipe])
     # new_recipe.cover_photo_id = @recipe.cover_photo_id
     # new_recipe.published_at = @recipe.published_at
