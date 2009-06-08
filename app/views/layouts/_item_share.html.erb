@@ -3,7 +3,7 @@
   <div class="sub_block_lr">
     <em class="l2"><%= "在你的网站或Blog上显示这#{unit_for(item_type)}#{name_for(item_type)}的图文链接, 只需要将这段代码粘贴到你的网站或Blog的HTML代码中..." %></em>
     <div id="share_code" class="share_code" value="<%= h str_squish(html_content.to_s, 1, false) %>">
-      <%= h html_content %>
+      <code><%= h html_content %></code>
     </div>
 
     <SCRIPT LANGUAGE="JavaScript">
