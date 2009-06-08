@@ -1913,6 +1913,7 @@ div.vote_zone {
 	margin-top: 10px;
 	padding: 10px;
 	background-color: #eceff5;
+    overflow: auto;
 }
 .share_preview {
 	text-align: center;
