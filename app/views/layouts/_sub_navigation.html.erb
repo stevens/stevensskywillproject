@@ -26,9 +26,8 @@
     <%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
     <!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
   <% end %>
-  <%= link_to "#{PEOPLE_CN}浏览", users_path %>
+  <!-- <%= link_to "#{PEOPLE_CN}浏览", users_path %> -->
   <%= link_to "#{BRAIN_CN}团", :controller => 'users', :action => 'index', :category => 'brain' %>
-  <!-- <%= link_to "#{PEOPLE_CN}动向", '' %> -->
 <% elsif current_tab_type == 'match' %>
   <% if @current_user %>
     <%= link_to "我的#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>

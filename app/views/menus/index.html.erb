@@ -15,28 +15,22 @@
     <% end %>
 
     <div id="menus_list">
-      <% if @menus_set_count > 0 %>
-        <%= render :partial => "layouts/items_list",
-                   :locals => { :show_paginate => true,
-                               :items_set => @menus_set || @taggables_set || @searchables_set,
-                               :limit => nil,
-                               :itemable_sym => nil,
-                               :show_photo => true,
-                               :photo_style => 'portrait',
-                               :show_below_photo => true,
-                               :show_title => false,
-                               :show_user => false,
-                               :show_photo_todo => @show_photo_todo,
-                               :show_parent => false,
-                               :show_todo => @show_todo,
-                               :show_favorite => @show_favorite,
-                               :show_manage => @show_manage,
-                               :delete_remote => false } %>
-      <% else %>
-        <div style="padding: 50px 20px; text-align: center;">
-          <em class="l3"><%= link_to "快来抢占#{SITE_NAME_CN}的第一个#{MENU_CN}沙发吧！", new_menu_path, :style => 'font-size: 14px;' %></em>
-        </div>
-      <% end %>
+      <%= render :partial => "layouts/items_list",
+                 :locals => { :show_paginate => true,
+                             :items_set => @menus_set || @taggables_set || @searchables_set,
+                             :limit => nil,
+                             :itemable_sym => nil,
+                             :show_photo => true,
+                             :photo_style => 'portrait',
+                             :show_below_photo => true,
+                             :show_title => false,
+                             :show_user => false,
+                             :show_photo_todo => @show_photo_todo,
+                             :show_parent => false,
+                             :show_todo => @show_todo,
+                             :show_favorite => @show_favorite,
+                             :show_manage => @show_manage,
+                             :delete_remote => false } %>
     </div>
   </div>
 
