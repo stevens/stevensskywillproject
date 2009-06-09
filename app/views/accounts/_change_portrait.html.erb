@@ -11,10 +11,10 @@
 				<div class="input">
 					<% if photo.errors_on_file %>
 						<div class="fieldWithErrors">
-							<%= f.file_field :uploaded_data, :class => "text" %>
+							<%= f.file_field :uploaded_data, :class => "file" %>
 						</div>
 					<% else %>
-						<%= f.file_field :uploaded_data, :class => "text" %>
+						<%= f.file_field :uploaded_data, :class => "file" %>
 					<% end %>
 				</div>
 				<% if photo.errors_on_file %>
