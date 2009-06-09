@@ -1,20 +1,28 @@
 <% item_type = type_for(item) %>
+<% item_unit = unit_for(item_type) %>
+<% item_name = name_for(item_type) %>
+<% controller_name = controller_name(item_type) %>
+<% user_username = user_username(item.user, true, true) %>
 
 <h3><%= "链接" %></h3>
 <ul>
   <li>
     <span class='text'>
-      <% item_url = url_for(:controller => item_type.downcase.pluralize, :action => 'show', :id => item.id, :only_path => false) %>
-      <%= "URL地址: <span class='source'>#{url_without_protocol(item_url)}</span>" %>
+      <% item_url = url_for(:controller => controller_name, :action => 'show', :id => item.id, :only_path => false) %>
+      <%= "这#{item_unit}#{item_name}的URL地址: <span class='source'>#{auto_link(item_url)}</span>" %>
+    </span>
+  </li>
+  <li>
+    <span class='text'>
+      <% mainpage_url = url_for(:user_id => item.user.id, :controller => controller_name, :action => 'index', :only_path => false) %>
+      <%= "#{user_username}的更多#{item_name}: <span class='source'>#{auto_link(mainpage_url)}</span>" %>
     </span>
   </li>
   <% if (profile = item.user.profile) && !(blog = url_without_protocol(strip_tags(profile.blog))).blank? %>
     <li>
       <span class='text'>
         <% blog_url = url_with_protocol(blog) %>
-        <%= "更多#{name_for(item_type)}, 请访问" %>
-        <%= link_to strip_tags("#{user_username(item.user, true, true)}的blog"), blog_url, :target => "_blank" %>
-        <span class="source"><%= add_brackets(blog) %></span>
+        <%= "#{user_username}的blog: <span class='source'>#{auto_link(blog_url, :all, :target => '_blank')}</span>" %>
       </span>
     </li>
   <% end %>
