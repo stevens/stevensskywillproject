@@ -1589,6 +1589,12 @@ div.welcome_todo_button a:hover {
 	border-top: 1px #ffffdd solid;
 	background-color: #ffffdd;
 }
+.user_bar div.friendship_status {
+    margin-bottom: 8px;
+}
+.user_bar div.share_mainpage div.todo_right {
+    margin-top: 0px;
+}
 .user_portrait {
 	margin-right: 10px;
 }
