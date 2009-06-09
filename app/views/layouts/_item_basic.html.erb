@@ -1,12 +1,12 @@
 <% item_type = type_for(item) %>
 
-<% if show_icon %>
-  <%= render :partial => "#{controller_name(item_type)}/#{item_type.downcase}_icon",
-             :locals => { :item => item } %>
-<% end %>
-
 <% if show_title %>
   <%= render :partial => "layouts/item_title",
              :locals => { :item => item,
                           :show_link => show_link } %>
+<% end %>
+
+<% if show_icon %>
+  <%= render :partial => "#{controller_name(item_type)}/#{item_type.downcase}_icon",
+             :locals => { :item => item } %>
 <% end %>

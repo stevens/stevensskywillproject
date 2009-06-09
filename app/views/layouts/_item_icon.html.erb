@@ -2,19 +2,21 @@
 <% item_type_downcase = item_type.downcase %>
 <% file_ext = photo_file_ext(item_type, 'icon') %>
 
-<%= render :partial => 'layouts/item_role_icon',
-            :locals => { :item => item } %>
+<span class="icon">
+  <%= render :partial => 'layouts/item_role_icon',
+              :locals => { :item => item } %>
 
-<% from_type_code_code = item.from_type %>
-<% if from_type_code_code == '1' %>
-  <% if from_type_code = codes_for(code_conditions('from_type', from_type_code_code))[0] %>
-    <%= image_tag "icon/#{item_type_downcase}/#{from_type_code.name}.#{file_ext}", :title => from_type_code.title, :alt => '', :class => "icon" %>
+  <% from_type_code_code = item.from_type %>
+  <% if from_type_code_code == '1' %>
+    <% if from_type_code = codes_for(code_conditions('from_type', from_type_code_code))[0] %>
+      <%= image_tag "icon/#{item_type_downcase}/#{from_type_code.name}.#{file_ext}", :title => from_type_code.title, :alt => '', :class => "icon" %>
+    <% end %>
   <% end %>
-<% end %>
 
-<% is_draft_code_code = item.is_draft %>
-<% if is_draft_code_code == '1' %>
-  <% if is_draft_code = codes_for(code_conditions('is_draft', is_draft_code_code))[0] %>
-    <%= add_brackets(is_draft_code.title) %>
+  <% is_draft_code_code = item.is_draft %>
+  <% if is_draft_code_code == '1' %>
+    <% if is_draft_code = codes_for(code_conditions('is_draft', is_draft_code_code))[0] %>
+      <%= image_tag "icon/#{item_type_downcase}/#{is_draft_code.name}.#{file_ext}", :title => is_draft_code.title, :alt => '', :class => "icon" %>
+    <% end %>
   <% end %>
-<% end %>
+</span>

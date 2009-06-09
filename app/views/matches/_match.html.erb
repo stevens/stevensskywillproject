@@ -137,9 +137,9 @@
 			<% for award in item.awards %>
 				<li style="padding-left: 24px">
 					<span class='subtitle'>
+						<%= item_title(award) %>
                         <%= render :partial => 'awards/award_icon',
                                     :locals => { :award => award } %>
-						<%= item_title(award) %>
 						<em class="l2">
                             <%= add_brackets(award_basic_info(award)) %>
 						</em>

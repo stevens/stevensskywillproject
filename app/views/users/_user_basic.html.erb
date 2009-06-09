@@ -2,15 +2,15 @@
   <%= '来自 ' %>
 <% end %>
 
-<% if show_icon %>
-  <%= render :partial => 'users/user_icon',
-             :locals => { :user => user } %>
-<% end %>
-
 <% if show_name %>
   <%= render :partial => 'users/user_username',
              :locals => { :user => user,
                           :show_link => show_link,
                           :show_username => show_username,
                           :show_myname => show_myname } %>
+<% end %>
+
+<% if show_icon %>
+  <%= render :partial => 'users/user_icon',
+             :locals => { :user => user } %>
 <% end %>

@@ -28,7 +28,7 @@ module PhotosHelper
 	def photo_file_ext(photoable_type, photo_file_type)
 		case photo_file_type
 		when 'icon'
-			'jpg'
+      'png'
 		when 'default'
 			case photoable_type
 			when 'User'
