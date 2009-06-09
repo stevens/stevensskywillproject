@@ -59,9 +59,8 @@
 		<td class="input">
 			<div class="info">
 				<% form_for profile do |f| %>
-					http://
-					<%= f.text_field :blog, :class => "text_s" %>
-					<%= f.submit SAVE_CN, :disable_with => "#{SAVE_CN}中...", :class => "submit_s" %>
+					<%= f.text_field :blog, :class => "text" %><br /><br />
+					<%= f.submit "#{SAVE_CN}blog", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
 				<% end %>
 				<br /><br />
 			</div>
