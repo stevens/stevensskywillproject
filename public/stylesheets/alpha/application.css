@@ -558,11 +558,13 @@ td.seo_link_cell {
 	background-color: #695245;
 	color: #ffffff;
 }
-#shotcut_bar {
+#shortcut_bar {
 	float: right;
 	font-size: 12px;
+    padding-top: 1px;
+    padding-bottom: 3px;
 }
-#shotcut_bar a, #shotcut_bar a:link, #shotcut_bar a:visited {
+#shortcut_bar a, #shortcut_bar a:link, #shortcut_bar a:visited {
 	margin-right: 0px;
 	margin-left: 3px;
 	font-size: 12px;
