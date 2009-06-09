@@ -216,7 +216,7 @@ Rails::Initializer.run do |config|
 	INGREDIENT_CN= '用料'
   TOOL_CN = '工具'
 	DIRECTION_CN = '做法'
-	TIP_CN = '小贴士'
+	TIP_CN = '贴士'
 	PRIVATE_HOME_CN = '私房'
 	
 	FILE_CN = '文件'	
