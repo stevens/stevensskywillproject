@@ -203,6 +203,9 @@ span.source {
 	font-size: 9px !important;
 	color: #b8b9a7;
 }
+span.source a {
+    font-size: 9px !important;
+}
 span.subtitle {
 	font-weight: bold;
 	display: block;
