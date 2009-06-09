@@ -60,15 +60,18 @@ class RecipesController < ApplicationController
 		recipe = [@recipe]
 		@other_recipes_set = @recipes_set - recipe
 		recipes_conditions = recipe_conditions(recipe_photo_required_cond, recipe_status_cond, recipe_privacy_cond, recipe_is_draft_cond)
-		related_recipes_conditions = recipes_conditions
-		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe
-		same_title_recipes_conditions_list = [ "recipes.title = '#{@recipe.title}'", "recipes.common_title = '#{@recipe.title}'" ]
+
+    same_title_recipes_conditions_list = [ "recipes.title = '#{@recipe.title}'", "recipes.common_title = '#{@recipe.title}'" ]
 		if (common_title = @recipe.common_title) && !common_title.blank?
 			same_title_recipes_conditions_list += [ "recipes.common_title = '#{common_title}'", "recipes.title = '#{common_title}'" ]
 		end
 		same_title_recipes_conditions = "#{recipes_conditions} AND (#{same_title_recipes_conditions_list.join(' OR ')})"
 		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions, nil, 'RAND()') - recipe
 		@same_title_recipes_set_count = @same_title_recipes_set.size
+
+    related_recipes_conditions = recipes_conditions
+		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe - @same_title_recipes_set
+		
 		@favorite_users_set = favorite_users(@recipe.favorites.find(:all, :limit => 12, :order => 'RAND()'))
 		@favorite_users_set_count = @favorite_users_set.size
 		@entried_matches_set = entried_matches(@recipe.entries.find(:all, :limit => 12, :order => 'RAND()'))
