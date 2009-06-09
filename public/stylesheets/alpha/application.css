@@ -740,7 +740,7 @@ td.photo_item_cell {
 	padding-bottom: 5px;
 	padding-left: 13px;
 	padding-right: 13px;
-	background-color: #99ccff;
+	background-color: rgb(209, 226, 246);
 }
 .block_header h1 {
 	font-size: 14px;
