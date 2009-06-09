@@ -1,69 +1,63 @@
 <br />
 <table class="content">
-	<tr>
-		<td class="label"><label><%= "#{NICKNAME_CN}:" %></label></td>
-		<td class="input">
-			<div class="info">
-				<%= strip_tags account.login %>
-				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{NICKNAME_CN}", :controller => 'accounts', :action => 'edit', :id => 'nickname' %>
-				<br /><br />
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td class="label"><label><%= "#{PORTRAIT_CN}:" %></label></td>
-		<td class="input">
-			<div class="info">
-				<span class="normal_photo">
-					<%= render :partial => "/layouts/item_photo",
-										 :locals => {:item_type => 'user', 
-										 						 :item => @current_user,
-										 						 :photo_style => 'matrix'} %>
-				</span>
-				&nbsp;&nbsp;
-				<% if current_portrait %>
-					<%= link_to "#{CHANGE_CN}#{PORTRAIT_CN}", {:controller => 'accounts', :action => 'edit', :id => 'portrait'} %> |
-					<%= link_to "#{DELETE_CN}#{PORTRAIT_CN}", {:controller => 'accounts', :action => 'delete', :id => 'portrait'}, :confirm => "确定要#{DELETE_CN}这个#{PORTRAIT_CN}吗?" %>
-				<% else %>
-					<%= link_to "#{UPLOAD_CN}#{PORTRAIT_CN}", {:controller => 'accounts', :action => 'edit', :id => 'portrait'} %>
-				<% end %>
-				<br /><br />
-			</div>
-		</td>
-	</tr>
-	<!-- <tr>
-		<td class="label"><label><%= "#{EMAIL_ADDRESS_CN}:" %></label></td>
-		<td class="input">
-			<div class="info">
-				<%= account.email %>
-				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{EMAIL_ADDRESS_CN}", :controller => 'accounts', :action => 'edit', :id => 'email_address' %>
-				<br /><br />
-			</div>
-		</td>
-	</tr> -->
-	<tr>
-		<td class="label"><label><%= "#{PASSWORD_CN}:" %></label></td>
-		<td class="input">
-			<div class="info">
-				<%= '**********' %>
-				&nbsp;&nbsp;
-				<%= link_to "#{CHANGE_CN}#{PASSWORD_CN}", :controller => 'accounts', :action => 'edit', :id => 'password' %>
-				<br /><br />
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td class="label"><label><%= "blog:" %></label></td>
-		<td class="input">
-			<div class="info">
-				<% form_for profile do |f| %>
-					<%= f.text_field :blog, :class => "text" %><br /><br />
-					<%= f.submit "#{SAVE_CN}blog", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
-				<% end %>
-				<br /><br />
-			</div>
-		</td>
-	</tr>
+  <tr>
+    <td class="label"><label><%= "#{NICKNAME_CN}:" %></label></td>
+    <td class="input">
+      <div class="info">
+        <%= strip_tags account.login %>
+        &nbsp;&nbsp;
+        <%= link_to "#{CHANGE_CN}#{NICKNAME_CN}", :controller => 'accounts', :action => 'edit', :id => 'nickname' %>
+      </div>
+      <br />
+    </td>
+  </tr>
+
+  <tr>
+    <td class="label"><label><%= "#{PORTRAIT_CN}:" %></label></td>
+    <td class="input">
+      <div class="info">
+        <span class="normal_photo">
+          <%= render :partial => 'layouts/item_photo',
+                      :locals => { :item_type => 'user',
+                                  :item => @current_user,
+                                  :photo_style => 'matrix' } %>
+        </span>
+        &nbsp;&nbsp;
+        <% if current_portrait %>
+          <%= link_to "#{CHANGE_CN}#{PORTRAIT_CN}", {:controller => 'accounts', :action => 'edit', :id => 'portrait'} %> |
+          <%= link_to "#{DELETE_CN}#{PORTRAIT_CN}", {:controller => 'accounts', :action => 'delete', :id => 'portrait'}, :confirm => "确定要#{DELETE_CN}这个#{PORTRAIT_CN}吗?" %>
+        <% else %>
+          <%= link_to "#{UPLOAD_CN}#{PORTRAIT_CN}", {:controller => 'accounts', :action => 'edit', :id => 'portrait'} %>
+        <% end %>
+      </div>
+      <br />
+    </td>
+  </tr>
+
+  <tr>
+    <td class="label"><label><%= "#{PASSWORD_CN}:" %></label></td>
+    <td class="input">
+      <div class="info">
+        <%= '**********' %>
+        &nbsp;&nbsp;
+        <%= link_to "#{CHANGE_CN}#{PASSWORD_CN}", :controller => 'accounts', :action => 'edit', :id => 'password' %>
+      </div>
+      <br />
+    </td>
+  </tr>
+
+  <tr>
+    <td class="label"><label><%= "blog:" %></label></td>
+    <td class="input">
+      <% form_for profile do |f| %>
+        <div class="input">
+          <%= f.text_field :blog, :class => "text" %>
+        </div>
+        <div id="blog_submit" class="submit">
+          <%= f.submit "#{SAVE_CN}blog", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+        </div>
+      <% end %>
+      <br />
+    </td>
+  </tr>
 </table>

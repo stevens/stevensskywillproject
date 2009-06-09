@@ -725,6 +725,9 @@ td.input div.submit {
 	margin-left: 0px;
 	margin-right: 10px;
 }
+td.input #blog_submit {
+    margin-top: 10px;
+}
 td.photo_item_cell {
 	text-align: center;
 }
