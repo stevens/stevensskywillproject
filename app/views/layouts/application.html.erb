@@ -92,7 +92,7 @@
 							<%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'menu') %>>
-							<%= link_to "#{MENU_CN}<span class='script'>Fresh!</span>", "#{menus_path}"  %>
+							<%= link_to "#{MENU_CN}<span class='script'></span>", "#{menus_path}"  %>
 						</li>
 						<li class=<%= tab_css_class(@current_tab_type, 'match') %>>
 							<%= link_to MATCH_CN, { :controller => 'matches', :action => 'profile', :id => 1 } %>

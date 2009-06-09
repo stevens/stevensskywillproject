@@ -15,8 +15,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "这个#{TITLE_CN}你可以起得很个性, 不过也要言之有物, 反映出#{RECIPE_CN}本身的特性和特色" %><br />
-					<%= "如：\"小米椒爱上小公鸡\"" %>
+					<%= "这个#{TITLE_CN}可以起得很个性, 不过也要言之有物, 反映出#{RECIPE_CN}本身的特性和特色" %><br />
+					<%= "如：小米椒爱上小公鸡" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :title, :class => "text" %>
@@ -45,10 +45,10 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "为了让大伙儿更容易发现这#{unit_for('Recipe')}#{RECIPE_CN}, 请准确#{INPUT_CN}与#{RECIPE_CN}有关的关键字作为#{TAG_CN}" %><br />
+					<%= "为了让大伙儿更容易发现这#{unit_for('Recipe')}#{RECIPE_CN}, 请准确#{INPUT_CN}与#{RECIPE_CN}有关的关键词作为#{TAG_CN}" %><br />
 					<%= "<em class='more'>可以从\"主料 / 口味 / 类型 / 菜系 / 地域 / 场合 / 节日 / 功效\"等多个角度设置#{TAG_CN}</em>" %><br />
 					<%= "<em class='more'>#{TAG_CN}之间请用\"空格\"分隔</em>" %><br />
-					<%= "如: \"鱼肉&nbsp;&nbsp;咖喱&nbsp;&nbsp;东南亚&nbsp;&nbsp;生日\"" %><br />
+					<%= "如: 鱼肉&nbsp;&nbsp;咖喱&nbsp;&nbsp;东南亚&nbsp;&nbsp;生日" %><br />
 					<%= "<em class='more'>请尽量避免使用\"美食&nbsp;&nbsp;饮食\"等这样不能反映#{RECIPE_CN}个性特色和内涵的词汇</em>" %>
 				</div>
 				<div class="input">
@@ -110,7 +110,7 @@
 				<div class="text">
 					<%= "请根据相关#{INGREDIENT_CN}的使用量确定#{YIELD_CN}" %><br />
 					<%= "<em class='more'>数字请使用\"阿拉伯数字(0-9)\", 非整数请使用\"小数\"或\"分数\", 单位请使用\"标准单位\"</em>" %><br />
-					<%= "如: \"4人份\", \"18-20个\", \"9寸左右\"(Pizza)" %>
+					<%= "如: 4人份, 18-20个, 9寸左右(Pizza)" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :yield, :class => "text" %>
@@ -141,9 +141,9 @@
 					<%= "<em class='more'>每一行请只#{INPUT_CN}一种#{INGREDIENT_CN}</em>" %><br />
 					<%= "<em class='more'>每种#{INGREDIENT_CN}请按照\"用料名称&nbsp;&nbsp;使用量&nbsp;&nbsp;补充说明\"的格式, 各部分之间请用\"空格\"分隔</em>" %><br />
 					<%= "<em class='more'>数字请使用\"阿拉伯数字(0-9)\", 非整数请使用\"小数\"或\"分数\", 单位请使用\"标准单位\"</em>" %><br />
-					<%= "如: \"猪里脊肉&nbsp;&nbsp;500g\", \"八角&nbsp;&nbsp;2-4颗\"" %><br />
+					<%= "如: 猪里脊肉&nbsp;&nbsp;500g, 八角&nbsp;&nbsp;2-4颗" %><br />
 					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
-					<%= "如: \"[主料]\", \"[配料]\", \"[调料]\"" %>
+					<%= "如: [主料], [配料], [调料]" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :ingredients %>
@@ -158,9 +158,9 @@
 			<td class="input">
 				<div class="text">
 					<%= "<em class='more'>每一行请只#{INPUT_CN}一种工具或装备等</em>" %><br />
-					<%= "如: \"烤箱\", \"平底锅\", \"微波炉\", \"挖球器\"" %><br />
+					<%= "如: 烤箱, 平底锅, 微波炉, 挖球器" %><br />
 					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
-					<%= "如: \"[锅类]\", \"[刀具]\", \"[其他]\"" %>
+					<%= "如: [锅类], [刀具], [其他]" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :tools %>
@@ -177,7 +177,7 @@
 					<%= "请#{INPUT_CN}#{DIRECTION_CN}和步骤等" %><br />
 					<%= "<em class='more'>每个段落会自动编号, 不需要自己再加编号了</em>" %><br />
 					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
-					<%= "如: \"[酱料的做法]\", \"[烘烤的步骤]\"" %>
+					<%= "如: [酱料的做法], [烘烤的步骤]" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :directions %>
@@ -194,7 +194,7 @@
 					<%= "请#{INPUT_CN}有关的注意事项" %><br />
 					<%= "<em class='more'>每个段落会自动编号, 不需要自己再加编号了</em>" %><br />
 					<%= "<em class='more'>如果需要分组, 请为\"分组名称\"加上方括号\"[&nbsp;&nbsp;]\"</em>" %><br />
-					<%= "如: \"[制作酱料的窍门]\", \"[烘烤的注意事项]\"" %>
+					<%= "如: [制作酱料的窍门], [烘烤的注意事项]" %>
 				</div>
 				<div class="input">
 					<%= f.text_area :tips %>
@@ -233,7 +233,7 @@
 						<%= f.hidden_field :from_where %>
 					<% else %>
 						<div id="from_where_prompt" class="text">
-							<%= "如果是转载的, 请#{INPUT_CN}转载的\"报刊 / 书籍 / 网址\"等" %>
+							<%= "如果是转载的, 请#{INPUT_CN}转载的报刊/书籍/网址等" %>
 						</div>
 						<div id="from_where" class="input">
 							<%= f.text_field :from_where, :class => "text" %>

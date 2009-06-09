@@ -28,7 +28,7 @@
         <div class="text">
           <%= "为了让大伙儿更容易发现这#{unit_for('Menu')}#{MENU_CN}, 请准确#{INPUT_CN}与#{MENU_CN}有关的关键词作为#{TAG_CN}" %><br />
           <%= "<em class='more'>#{TAG_CN}之间请用\"空格\"分隔</em>" %><br />
-          <%= "如: \"春节&nbsp;&nbsp;家宴&nbsp;&nbsp;粤菜\"" %><br />
+          <%= "如: 春节&nbsp;&nbsp;家宴&nbsp;&nbsp;粤菜" %><br />
           <%= "<em class='more'>请尽量避免使用\"美食&nbsp;&nbsp;饮食\"等这样不能反映#{MENU_CN}个性特色和内涵的词汇</em>" %>
         </div>
         <div class="input">
@@ -195,7 +195,7 @@
             <%= f.hidden_field :from_where %>
           <% else %>
             <div id="from_where_prompt" class="text">
-              <%= "如果是转载的, 请#{INPUT_CN}转载的\"报刊 / 书籍 / 网址\"等" %>
+              <%= "如果是转载的, 请#{INPUT_CN}转载的报刊/书籍/网址等" %>
             </div>
             <div id="from_where" class="input">
               <%= f.text_field :from_where, :class => "text" %>
