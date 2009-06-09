@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       # @current_user.log_loggedin #此行为新增
       log_user_logged_data #此行为新增
       flash[:notice] = "#{@current_user.login}, 你已经#{LOGIN_CN}#{SITE_NAME_CN}, 希望你在这里玩得开心!"
-      redirect_back_or_default('/')
+      redirect_back_or_default('/mine/profile')
     else
     	flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}和#{PASSWORD_CN}有#{ERROR_CN}, 请重新#{INPUT_CN}!<br /><br />
     									 如果你已经用这个#{EMAIL_ADDRESS_CN}注册过, 请核实是否收到#{ACCOUNT_CN}激活#{EMAIL_CN}并激活了你的#{ACCOUNT_CN}?<br />
