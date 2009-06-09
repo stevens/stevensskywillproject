@@ -37,8 +37,8 @@ img.icon {
 	margin-bottom: -2px;
 	margin-right: 0px;
 	background-color: transparent !important;
-	width: 12px;
-	height: 12px;
+	/* width: 12px;
+	height: 12px; */
 }
 img.logo {
 	background-color: transparent !important;
@@ -393,12 +393,12 @@ div.tag {
 #current_user {
 	float: right;
 	margin-top: 10px;
-	padding-right: 13px;
+	padding-right: 23px;
 	z-index: 200;
-	color: #f1f1f1;
+	color: #b8b9a7;
 }
 #current_user a, #current_user a:link, #current_user a:visited {
-	margin-right: 10px;
+	/* margin-right: 10px; */
 	color: #f1f1f1;
 }
 #current_user a:hover {
@@ -1045,6 +1045,9 @@ div.matrix_block div.below_photo {
 }
 div.below_photo li {
 	margin-bottom: 3px;
+}
+div.below_photo span.icon {
+    display: block;
 }
 
 /* Other Div */
