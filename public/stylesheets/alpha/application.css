@@ -876,6 +876,9 @@ td.photo_item_cell {
 .sidebar_panel_main .sub_block_tb, .sidebar_block_main .sub_block_tb {
 	padding: 0px;
 }
+.sidebar_panel_main .sub_block_b, .sidebar_block_main .sub_block_b {
+	padding: 0px;
+}
 .sidebar_panel_main li {
 	margin-bottom: 3px;
 }
@@ -1537,7 +1540,6 @@ span.rating {
     padding: 10px 0px;
 }
 #welcome_random_items .matrix_block {
-    padding: 0px;
     width: 202px;
 }
 #welcome_random_items .matrix_photo {
