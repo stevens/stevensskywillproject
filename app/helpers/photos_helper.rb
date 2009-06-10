@@ -18,6 +18,8 @@ module PhotosHelper
 			'scube'
 		when 'mini'
 			'tcube'
+    when 'highlight'
+      'lcube'
 		end
 	end
 	

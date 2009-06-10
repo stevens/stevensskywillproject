@@ -47,8 +47,18 @@ class SiteController < ApplicationController
 	private
 	
   def load_recipes_set(user = nil)
- 		@recipes_set = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 10, 'RAND()')
-  	@recipes_set_count = @recipes_set.size
+#    @recipes_set = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 10, 'RAND()')
+#    @recipes_set_count = @recipes_set.size
+    recipes_set = roles_recipes(user, '11', 30)
+    @recipes_set = []
+    for recipe in recipes_set
+      if time_iso_format(recipe.created_at) > '2008-10-21 00:00:00'
+        @recipes_set << recipe
+        if @recipes_set.size >= 3
+          break
+        end
+      end
+    end
   end
 	
 end

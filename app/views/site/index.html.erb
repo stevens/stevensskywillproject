@@ -1,128 +1,48 @@
-<div class="welcome">	
-	<div class="welcome_content">	
-		<p>记得<%= link_to '《料理鼠王》', 'http://www.douban.com/subject/1793491/', :target => "_blank" %>里小鼠雷米那句惊世名言吗?</p><br />
-		<p>"Every people can be a cook. —— Remy"</p><br />
-		<p>是的, 人人皆可成为厨师!</p><br />
-		<% match = Match.find_by_id(1) %>
-        <% winnerable = awardable_type_winners(match, 'entry', limit = 1, order = 'RAND()')[0].winnerable %>
-
-        <% if winnerable %>
-            <% slogan = "金蜂食单: #{strip_tags(item_title(winnerable))}" %>
-            <% winnerable_username = "来自 #{strip_tags(user_username(winnerable.user, true, true))}" %>
-        <% else %>
-          <% if match %>
-              <% slogan = match.slogan %>
-          <% else %>
-              <% if Date.today > 2009-02-01 %>
-                  <% signup_image_url = 'day/2008/2008-12-24_xmas.jpg' %>
-                  <% slogan = '过节我做煮, 新年更蜂狂!' %>
-              <% else %>
-                  <% signup_image_url = 'default/bee/default_bee_mcube.png' %>
-                  <% slogan = SLOGAN_CN %>
-              <% end %>
+<div class="welcome_wrapper">	
+  <div class="welcome_content">
+    <div id="welcome_random_items" class="block_main">
+      <%= render :partial => 'layouts/items_matrix',
+                  :locals => { :show_paginate => false,
+                              :items_set => @recipes_set,
+                              :limit => 3,
+                              :items_count_per_row => 3,
+                              :show_photo => true,
+                              :show_below_photo => false,
+                              :show_title => false,
+                              :show_user => false,
+                              :show_photo_todo => false,
+                              :photo_style => 'highlight' } %>
+    </div>
+    <div id="welcome_site_brief">
+      <table>
+        <% common_link_url = url_for(:controller => 'recipes', :action => 'overview') %>
+        <% subjects = [ [ 'mslg', '记录美食灵感', common_link_url ], [ 'sfsp', '分享私房食谱', common_link_url ], ['txcy', '结交天下厨友', common_link_url ], [ 'jhcd', '切磋江湖厨道', common_link_url ] ] %>
+        <tr>
+          <% for subject in subjects %>
+            <td class="site_brief_photo">
+              <%= link_to image_tag("site/#{subject[0]}.png", :title => subject[1], :alt => ''), subject[2] %>
+            </td>
           <% end %>
-        <% end %>
-
-        <% if winnerable %>
-          <p>
-            <span>
-              <%= render :partial => "layouts/item_photo",
-                          :locals => { :item => winnerable,
-                                       :photo_style => 'full' } %>
-            </span>
-          </p>
-          <br />
-          <p>
-            <div class="slogan"><%= slogan %></div>
-            <div style="margin-top: 3px; color: #ff8159;"><%= strip_tags "来自 #{user_username(winnerable.user, true, true)}" %></div>
-          </p>
-          <br />
-        <% else %>
-          <% if @current_user %>
-              <p>
-                  <span>
-                      <% if match %>
-                          <%= render :partial => "/layouts/item_photo",
-                           :locals => { :item => match,
-                                                    :photo_style => 'full' } %>
-                      <% else %>
-                          <%= link_to image_tag(photo_file_url(user_portrait(@current_user), 'User', 'matrix'), :title => "进入我的#{SITE_NAME_CN}", :alt => ''),
-                                                  user_first_link(@current_user) %>
-                      <% end %>
-                  </span>
-              </p>
-              <br />
-              <p>
-                <div class="slogan"><%= strip_tags "#{user_username(@current_user, true, true)} - #{slogan}" %></div>
-              </p>
-              <br />
-          <% else %>
-              <p>
-                  <span>
-                      <% if match %>
-                          <%= render :partial => "/layouts/item_photo",
-                                               :locals => { :item => match,
-                                                                        :photo_style => 'full' } %>
-                      <% else %>
-                          <%= link_to image_tag(signup_image_url, :title => "加入#{SITE_NAME_CN}", :alt => ''),
-                                                  signup_url %>
-                      <% end %>
-                  </span>
-              </p>
-              <br />
-              <p>
-                <div class="slogan"><%= strip_tags slogan %></div>
-              </p>
-              <br />
+        </tr>
+        <tr>
+          <% for subject in subjects %>
+            <td class="site_brief_title">
+              <%= subject[1] %>
+            </td>
           <% end %>
-        <% end %>
-		<p>
-			<span>
-			<table style="margin: auto">
-				<% subjects = [ [ 'mslg', '记录美食灵感', url_for(:controller => 'recipes', :action => 'overview') ], [ 'sfsp', '分享私房食谱', url_for(:controller => 'recipes', :action => 'overview') ], ['txcy', '结交天下厨友', url_for(:controller => 'users', :action => 'overview') ], [ 'jhcd', '切磋江湖厨道', matches_path ] ] %>
-				<tr>
-					<% for subject in subjects %>
-						<td style="width: 150px">
-							<%= link_to image_tag("site/#{subject[0]}.png", :title => subject[1], :alt => ''), subject[2] %>
-						</td>
-					<% end %>
-				</tr>
-				<tr>
-					<% for subject in subjects %>
-						<td>
-							<em><%= subject[1] %></em>
-						</td>
-					<% end %>
-				</tr>
-			</table>
-			</span>
-		</p>
-		<br />
-		<div class="welcome_todo_button">
-			<% if @current_user %>
-				<%= link_to "我的#{MAIN_PAGE_CN}", user_first_link(@current_user) %>
-				&nbsp;&nbsp;
-				<%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %>
-			<% else %>
-				<%= link_to "加入#{SITE_NAME_CN}", signup_url %>
-				&nbsp;&nbsp;
-				<%= link_to "随便逛逛", :controller => 'recipes', :action => 'overview' %>
-			<% end %>
-		</div>
-                <%  cache("index/random_recipes") do%>
-		<div id="random_items_bar" class="block_main">
-			<%= render :partial => "/layouts/items_matrix",
-								 :locals => {:show_paginate => false,
-								 						 :items_set => @recipes_set, 
-								 						 :limit => nil,
-								 						 :items_count_per_row => 10,  
-								 						 :show_photo => true, 
-								 						 :show_below_photo => false,  
-								 						 :show_title => false, 
-								 						 :show_user => false, 
-								 						 :show_photo_todo => false, 
-								 						 :photo_style => 'sign'} %>
-		</div>
-                <% end %>
-	</div>
+        </tr>
+      </table>
+    </div>
+    <div id="welcome_quicklink">
+      <% if @current_user %>
+        <%= link_to "我的#{MAIN_PAGE_CN}", user_first_link(@current_user) %>
+        &nbsp;&nbsp;
+        <%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %>
+      <% else %>
+        <%= link_to "加入#{SITE_NAME_CN}", signup_url %>
+        &nbsp;&nbsp;
+        <%= link_to "随便逛逛", url_for(:controller => 'recipes', :action => 'overview') %>
+      <% end %>
+    </div>
+  </div>
 </div>
