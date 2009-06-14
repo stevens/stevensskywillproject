@@ -166,27 +166,23 @@
                         <%= render :partial => 'sessions/login_sideblock' %>
 					  <% end %>
 					  
-						<% if current_user && (@current_tab_type == 'site' || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
-					  	<%= render :partial => '/stories/notification_sideblock', 
-					  						 :locals => { :notifications => @notifications } %>
+                      <% if current_user && (@current_tab_type == 'site' || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
+					  	<%= render :partial => 'stories/notification_sideblock', 
+                                    :locals => { :notifications => @notifications } %>
 					  <% end %>
 					  
-					  <% if ['user', 'recipe'].include?(@current_tab_type) && params[:action] != 'profile' %>
-							<%= render :partial => "/searchings/search_sideblock" %>
-						<% end %>
-						
-						<% if @current_tab_type == 'site' %>
-							<%= render :partial => "/site/partner_sideblock" %>
-						<% end %>
-						
-						<% if @show_sidebar %>
-							<%= render :partial => "/#{params[:controller]}/#{params[:action]}_sidebar" %>
-						<% end %>
-						
-						<!-- 后台管理 -->
-						<% if is_admin_logged_in? %>
-							<%=render :partial => "/layouts/admin" %>
-						<% end %>
+                      <% if ['user', 'recipe'].include?(@current_tab_type) && params[:action] != 'profile' %>
+                        <%= render :partial => 'searchings/search_sideblock' %>
+                      <% end %>
+
+                      <% if @show_sidebar %>
+                        <%= render :partial => "#{params[:controller]}/#{params[:action]}_sidebar" %>
+                      <% end %>
+
+                      <!-- 后台管理 -->
+                      <% if is_admin_logged_in? %>
+                        <%=  render :partial => 'layouts/admin' %>
+                      <% end %>
 						
 				  </div>
 					

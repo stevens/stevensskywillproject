@@ -74,9 +74,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def local_request?
-    return false
-  end
+#  def local_request?
+#    return false
+#  end
 
 	def set_current_tab
 		c = params[:controller]
