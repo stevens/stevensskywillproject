@@ -1661,10 +1661,10 @@ div.welcome_todo_button a:hover {
     list-style-type: disc;
     list-style-position: inside;
 }
+*/
 #rss_items_detail li {
     padding: 1px 0px;
 }
-*/
 #rss_items_detail span.timestamp {
     font-size: 9px;
     color: #78b36d;
