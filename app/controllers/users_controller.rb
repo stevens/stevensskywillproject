@@ -161,6 +161,9 @@ class UsersController < ApplicationController
 				 	load_user_tags(@user)
 				 	load_user_contactors(@user)
 				 	load_user_matches(@user)
+
+          feed = rss_feed(profile_blog(@user))
+          read_rss_items(feed, 5)
 				 	
 				 	log_count(@user)
 				 	

@@ -8,7 +8,7 @@ class SiteController < ApplicationController
 		
 		load_notifications if @current_user
 
-    feed= "http://blog.sina.com.cn/rss/beecook2008.xml"
+    feed = rss_feed
     read_rss_items(feed, 5)
 
     show_sidebar
@@ -79,12 +79,6 @@ class SiteController < ApplicationController
         end
       end
     end
-  end
-
-  def read_rss_items(feed, limit)
-    rss = rss_parser(feed)
-    @rss_channel = rss.channel
-    @rss_items = rss.items[0..limit-1] # rss.channel.items亦可
   end
 	
 end

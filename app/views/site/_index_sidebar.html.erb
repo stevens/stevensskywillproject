@@ -1,5 +1,5 @@
 <%= render :partial => 'layouts/rss_items_sideblock',
-            :locals => { :block_title => @rss_channel.title,
+            :locals => { :block_title => "#{SITE_NAME_CN}板报",
                         :channel => @rss_channel,
                         :items => @rss_items } %>
 

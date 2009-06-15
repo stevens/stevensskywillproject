@@ -24,6 +24,11 @@
 						 							:items_set => @created_matches } %>
 <% end %>
 
+<%= render :partial => 'layouts/rss_items_sideblock',
+            :locals => { :block_title => '博文',
+                        :channel => @rss_channel,
+                        :items => @rss_items } %>
+
 <% if @enrolled_matches_count > 0 %>
 	<% block_header_links = [] %>
 	<% block_header_links << [ [ 'more', false ], 

@@ -358,5 +358,13 @@ class ApplicationController < ActionController::Base
 		# @match_groups << [ 'user_enrolled_matches', "#{username}参加的...", @enrolled_matches ] if @enrolled_matches_count > 0
 		# @match_groups_count = @match_groups.size
 	end
+
+  # 读取RSS的Feed
+  def read_rss_items(feed, limit)
+    if rss = rss_parser(feed)
+      @rss_channel = rss.channel
+      @rss_items = rss.items[0..limit-1] # rss.channel.items亦可
+    end
+  end
 	
 end

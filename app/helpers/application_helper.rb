@@ -1135,6 +1135,20 @@ module ApplicationHelper
     end
 #    RSS::Parser.parse(content, false) # false表示不验证feed的合法性
     RSS::Parser.parse(content)
+		rescue URI::InvalidURIError
+			nil
+  end
+
+  # 根据url获取RSS的Feed
+  def rss_feed(url = 'blog.sina.com.cn/beecook2008')
+    if !url.nil? && !url.blank?
+      if url.start_with?('blog.sina.com.cn/')
+        provider = 'blog.sina.com.cn'
+        id = url.gsub('blog.sina.com.cn/', '').gsub('/', '')
+        feed = "#{provider}/rss/#{id}.xml"
+      end
+      url_with_protocol(feed)
+    end
   end
 		
 end
