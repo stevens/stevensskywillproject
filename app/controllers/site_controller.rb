@@ -9,7 +9,7 @@ class SiteController < ApplicationController
 		load_notifications if @current_user
 
     feed= "http://blog.sina.com.cn/rss/beecook2008.xml"
-    load_blog_items(feed, 6)
+    read_rss_items(feed, 5)
 
     show_sidebar
 
@@ -81,19 +81,10 @@ class SiteController < ApplicationController
     end
   end
 
-  def load_blog_items(feed, limit)
-    require 'rss/1.0'
-    require 'rss/2.0'
-    require 'open-uri'
-
-    content = ""
-    open(feed) do |s|
-      content = s.read
-    end
-    rss = RSS::Parser.parse(content, false) # false表示不验证feed的合法性
-
-    @channel = rss.channel
-    @blog_items = rss.items[0..limit-1] # rss.channel.items亦可
+  def read_rss_items(feed, limit)
+    rss = rss_parser(feed)
+    @rss_channel = rss.channel
+    @rss_items = rss.items[0..limit-1] # rss.channel.items亦可
   end
 	
 end

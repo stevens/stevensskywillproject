@@ -283,7 +283,7 @@ module ApplicationHelper
 		end
 	end
 	
-	def time_iso_format(time, better = false, only_date = false, include_second = true)
+	def time_iso_format(time, better = false, only_date = false, include_second = true, include_year = true)
 		if better
 			i = Time.now - time
 			case 
@@ -296,10 +296,18 @@ module ApplicationHelper
 			when i >= 60*60*24 && i < 60*60*24*7
 				"#{(i/(60*60*24)).floor}天前"
 			else
-				time.strftime("%Y-%m-%d")
+        if include_year
+          time.strftime("%Y-%m-%d")
+        else
+          time.strftime("%m-%d")
+        end
 			end
 		elsif only_date
-			time.strftime("%Y-%m-%d")
+      if include_year
+        time.strftime("%Y-%m-%d")
+      else
+        time.strftime("%m-%d")
+      end
 		else
 			if include_second
 				time.strftime("%Y-%m-%d %H:%M:%S")
@@ -1113,6 +1121,20 @@ module ApplicationHelper
       filename_self = filename_self + suf
     end
     filename = "#{filename_self}.#{filename_ext}"
+  end
+
+  # 解析RSS的Feed
+  def rss_parser(feed)
+    require 'rss/1.0'
+    require 'rss/2.0'
+    require 'open-uri'
+
+    content = ""
+    open(feed) do |s|
+      content = s.read
+    end
+#    RSS::Parser.parse(content, false) # false表示不验证feed的合法性
+    RSS::Parser.parse(content)
   end
 		
 end

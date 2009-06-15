@@ -1,16 +1,17 @@
 <% if channel && items && items != [] %>
-  <div id="blog_items_wrapper" class="sidebar_block">
-    <div id="blog_items_header" class="sidebar_block_header">
+  <div id="rss_items_wrapper" class="sidebar_block">
+    <div id="rss_items_header" class="sidebar_block_header">
       <div class="sidebar_block_header_link">
         <%= link_to '更多', channel.link, :target => '_blank' %>
       </div>
       <h1><%= block_title %></h1>
     </div>
 
-    <div id="blog_items_detail" class="sidebar_block_main">
+    <div id="rss_items_detail" class="sidebar_block_main">
       <ul>
         <% for item in items %>
           <li>
+            <span class="timestamp"><%= "[#{time_iso_format(item.date, true, true, false, false)}]" %></span>
             <%= link_to item.title, item.link, :target => '_blank' %>
           </li>
         <% end %>

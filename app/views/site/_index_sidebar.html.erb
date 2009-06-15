@@ -1,6 +1,6 @@
-<%= render :partial => 'layouts/blog_items_sideblock',
-            :locals => { :block_title => @channel.title,
-                        :channel => @channel,
-                        :items => @blog_items } %>
+<%= render :partial => 'layouts/rss_items_sideblock',
+            :locals => { :block_title => @rss_channel.title,
+                        :channel => @rss_channel,
+                        :items => @rss_items } %>
 
 <%= render :partial => 'site/partner_sideblock' %>
