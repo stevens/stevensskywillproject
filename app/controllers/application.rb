@@ -74,9 +74,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def local_request?
-    return false
-  end
+#  def local_request?
+#    return false
+#  end
 
 	def set_current_tab
 		c = params[:controller]
@@ -361,9 +361,13 @@ class ApplicationController < ActionController::Base
 
   # 读取RSS的Feed
   def read_rss_items(feed, limit)
-    if rss = rss_parser(feed)
+    if feed && rss = rss_parser(feed)
       @rss_channel = rss.channel
-      @rss_items = rss.items[0..limit-1] # rss.channel.items亦可
+      if limit && limit > 0
+        @rss_items = rss.items[0..limit-1] # rss.channel.items亦可
+      else
+        @rss_items = rss.items
+      end
     end
   end
 	
