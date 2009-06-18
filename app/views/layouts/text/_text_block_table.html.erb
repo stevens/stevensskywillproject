@@ -1,0 +1,13 @@
+<% if options[:auto_number] %>
+  <table>
+    <%= render :partial => 'layouts/text/text_block_table_items',
+                :locals => { :block_items => block_items,
+                            :options => options } %>
+  </table>
+<% else %>
+  <table>
+    <%= render :partial => 'layouts/text/text_block_table_items',
+                :locals => { :block_items => block_items,
+                            :options => options } %>
+  </table>
+<% end %>

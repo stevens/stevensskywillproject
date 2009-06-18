@@ -1,0 +1,11 @@
+<% if options[:atuo_link] %>
+  <% item = auto_link(block_item, :all, :target => "_blank") %>
+<% else %>
+  <% item = block_item %>
+<% end %>
+
+<td>
+  <span class='text'>
+    <%= item %>
+  </span>
+</td>

@@ -1,0 +1,20 @@
+<% if blocks && blocks.size > 0 %>
+  <% options[:block_id] = 0 %>
+  <% for block in blocks %>
+    <% block_title = block[0] %>
+    <% if !block_title.blank? %>
+      <span class='subtitle'><%= "[#{block_title}]" %></span>
+    <% end %>
+    <% block_items = block[1] %>
+    <% if options[:show_table] %>
+      <%= render :partial => 'layouts/text/text_block_table',
+                  :locals => { :block_items => block_items,
+                              :options => options } %>
+    <% else %>
+      <%= render :partial => 'layouts/text/text_block_list',
+                  :locals => { :block_items => block_items,
+                              :options => options } %>
+    <% end %>
+    <% options[:block_id] += 1 %>
+  <% end %>
+<% end %>

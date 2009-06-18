@@ -1,0 +1,47 @@
+<div class="shop_items_wrapper">
+  <table class="content">
+    <% i = 0 %>
+    <% for item in items %>
+      <% pic_path = item['pic_path'] %>
+      <% pic_ext = pic_path.split('.').last %>
+      <% pic_url = "#{pic_path}_sum.#{pic_ext}" %>
+      <% iid = item['iid'] %>
+      <% title = strip_tags(item['title'].strip) %>
+      <% price = "￥#{'%10.2f' % item['price']}" %>
+      <% link_url = "http://item.taobao.com/auction/item_detail--#{iid}.jhtml" %>
+      <% if i.even? %>
+        <tr>
+          <td class="pic_column">
+            <%= link_to image_tag(pic_url, :title => title, :alt => ''), link_url, :target => '_blank' %>
+          </td>
+          <td class="text_column">
+            <ul>
+              <li><%= link_to title, link_url, :target => '_blank' %></li>
+              <li><span class="price"><%= price %></span></li>
+            </ul>
+          </td>
+      <% else %>
+          <td class="pic_column">
+            <%= link_to image_tag(pic_url, :title => title, :alt => ''), link_url, :target => '_blank' %>
+          </td>
+          <td class="text_column">
+            <ul>
+              <li><%= link_to title, link_url, :target => '_blank' %></li>
+              <li><span class="price"><%= price %></span></li>
+            </ul>
+          </td>
+          <td>
+            <% if i == 1 %>
+              <div class="close">
+                <%= link_to_function("x") do |page|
+                  page.visual_effect :slide_up, options[:service_id]
+                end %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <% i += 1 %>
+    <% end %>
+  </table>
+</div>

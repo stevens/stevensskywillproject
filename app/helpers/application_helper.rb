@@ -392,7 +392,7 @@ module ApplicationHelper
 				elsif !p.blank?
 					if p.starts_with?('[') && p.ends_with?(']')
 						paragraphs << "<span class='subtitle'>#{p}</span>"
-					else
+          else
 						paragraphs << "<li><span class='text'>#{p}</span></li>"
 					end
 				end
@@ -404,6 +404,75 @@ module ApplicationHelper
 			paragraphs
 		end
 	end
+
+  #判断字符串是否是小标题
+  def is_text_block_title?(str)
+    identifiers = [['[', ']'], ['【', '】'], ['［', '］']]
+    flag = false
+    for i in identifiers
+      if str.starts_with?(i[0]) && str.ends_with?(i[1])
+        flag = true
+        break
+      end
+    end
+    flag
+  end
+
+  #从字符串中抽取小标题的内容
+  def text_block_title_content(str)
+    str.delete('[]【】［］') if is_text_block_title?(str)
+  end
+
+  #字符串清洁化
+  def cleaned_string(str, options = {}) #options {:strip_space, :squish_space, :keep_blank_line, :strip_tags, :include_img, :include_link}
+    if options[:strip_space]
+      str = str.strip
+    elsif options[:squish_space]
+      str = str.strip.gsub(/\s+/, ' ')
+    end
+    if options[:strip_tags]
+      str = strip_tags(str)
+    elsif options[:include_img] || options[:include_link]
+      include_tags = []
+      include_attributes = ['title']
+      if options[:include_img] && options[:include_link]
+        include_tags += ['a', 'img']
+        include_attributes += ['href', 'target', 'src', 'alt']
+      elsif options[:include_img]
+        include_tags += ['img']
+        include_attributes += ['src', 'alt']
+      elsif options[:include_link]
+        include_tags += ['a']
+        include_attributes += ['href', 'target']
+      end
+      str = sanitize(str, :tags => include_tags, :attributes => include_attributes)
+    end
+    str = '&nbsp;' if (str.blank? && options[:keep_blank_line])
+    str
+  end
+
+  #多段落文本结构化
+  def structured_text(text, options = {}, clean_options = { :squish_space => true, :include_link => true }) #options {:min_paragraphs_count}
+    blocks = []
+    if text && !text.blank?
+      paragraphs_count = 0
+      paragraphs = text.split(/\n/)
+      for p in paragraphs
+        p = cleaned_string(p, clean_options)
+        if !p.blank?
+          if is_text_block_title?(p)
+            blocks << [text_block_title_content(p), []]
+          else
+            blocks << ['', []] if blocks.size == 0
+            blocks.last[1] << p
+          end
+          paragraphs_count += 1
+        end
+        break if options[:min_paragraphs_count] && paragraphs_count >= options[:min_paragraphs_count]
+      end
+    end
+    blocks
+  end
 	
 	def restfu_url_for(namespace, parent_obj, self_obj, action)
 		ns = "#{namespace}/" if namespace
@@ -1134,18 +1203,29 @@ module ApplicationHelper
       content = s.read
     end
 #    RSS::Parser.parse(content, false) # false表示不验证feed的合法性
-    RSS::Parser.parse(content)
-		rescue URI::InvalidURIError
-			nil
+    RSS::Parser.parse(content, false)
+#		rescue URI::InvalidURIError
+#			nil
+    rescue URI::InvalidURIError, RSS::NotWellFormedError
+      nil
   end
 
   # 根据url获取RSS的Feed
   def rss_feed(url = 'blog.sina.com.cn/beecook2008')
     if !url.nil? && !url.blank?
-      if url.start_with?('blog.sina.com.cn/')
-        provider = 'blog.sina.com.cn'
+      case
+      when url.start_with?('blog.sina.com.cn/u/')
+        provider_type = 'sina'
+        id = url.gsub('blog.sina.com.cn/u/', '').gsub('/', '')
+      when url.start_with?('blog.sina.com.cn/')
+        provider_type = 'sina'
         id = url.gsub('blog.sina.com.cn/', '').gsub('/', '')
-        feed = "#{provider}/rss/#{id}.xml"
+      end
+      case provider_type
+      when 'sina'
+        provider_url = 'blog.sina.com.cn'
+        feed_ext = 'xml'
+        feed = "#{provider_url}/rss/#{id}.#{feed_ext}"
       end
       url_with_protocol(feed)
     end

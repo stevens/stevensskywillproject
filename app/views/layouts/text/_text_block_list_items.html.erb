@@ -1,0 +1,7 @@
+<% options[:block_item_id] = 0 %>
+<% for block_item in block_items %>
+  <%= render :partial => 'layouts/text/text_block_list_item',
+              :locals => { :block_item => block_item,
+                          :options => options } %>
+  <% options[:block_item_id] += 1 %>
+<% end %>

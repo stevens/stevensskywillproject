@@ -1,0 +1,27 @@
+<li>
+  <span class='text'>
+    <% if options[:parse_item] %>
+      <% components = block_item.split(' ') %>
+      <% i = 0 %>
+      <% for component in components %>
+        <% if i == 0 && !component.start_with?('(') && !component.start_with?('（') %>
+          <% service_id = "service_for_#{options[:text_title]}_#{options[:block_id]}_#{options[:block_item_id]}" %>
+          <%= link_to_remote component, :url => url_for(:controller => 'searchings', :action => 'searching_shop_items', :q => component, :service_id => service_id) %>
+        <% else %>
+          <%= " #{component}" %>
+        <% end %>
+        <% i += 1 %>
+      <% end %>
+    <% else %>
+      <% if options[:auto_link] %>
+        <% item = auto_link(block_item, :all, :target => "_blank") %>
+      <% else %>
+        <% item = block_item %>
+      <% end %>
+      <%= item %>
+    <% end %>
+  </span>
+</li>
+<% if options[:show_service_zone]%>
+  <div id="<%= service_id %>"></div>
+<% end %>

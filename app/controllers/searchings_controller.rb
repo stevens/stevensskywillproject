@@ -58,6 +58,24 @@ class SearchingsController < ApplicationController
     end
     clear_notice
 	end
+
+  # 联通淘宝等网站搜索相关商品，将搜索结果展示在服务区
+  def searching_shop_items
+    shop_items_set = shop_items_searched('taobao', { :q => params[:q] }).sort_by {rand}
+    @shop_items = shop_items_set[0..3]
+    respond_to do |format|
+			format.js do
+				render :update do |page|
+          page.hide "#{params[:service_id]}"
+          page.replace_html "#{params[:service_id]}",
+                            :partial => 'searchings/shop_items_block',
+                            :locals => { :items => @shop_items,
+                                        :options => { :service_id => params[:service_id] }}
+          page.visual_effect :slide_down, "#{params[:service_id]}"
+				end
+			end
+  	end
+  end
 	
 	private
 	

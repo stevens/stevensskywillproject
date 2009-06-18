@@ -61,5 +61,41 @@ module SearchingsHelper
 		
 		searchables_set
 	end
+
+  # 搜索商品
+  def shop_items_searched(where, options = {})
+    case where
+    when 'taobao'
+      taobao_items_searched(options)
+    end
+  end
+
+  # 在淘宝搜索商品
+  def taobao_items_searched(options = {})
+    require 'rubygems'
+    require 'net/http'
+    require 'uri'
+    require 'md5'
+#    require 'json'
+
+    url = URI.parse('http://sip.alisoft.com/sip/rest')
+    params = { 'sip_appkey' => '19652',
+              'sip_appsecret' => '8e4b63f0ca9b11ddb671a3c295a1562b',
+              'sip_apiname' => 'taobao.items.get',
+              'sip_timestamp' => time_iso_format(Time.now),
+              'format' => 'json',
+              'v' => '1.0',
+              'q' => options[:q],
+              'cid' => options[:cid], 
+              'page_no' => '1',
+              'page_size' => '20',
+              'ww_status' => true, 
+              'fields' => 'iid,title,pic_path,price,cid,nick',
+              'order_by' => 'seller_credit:desc' }
+    params["sip_sign"] = MD5.hexdigest('8e4b63f0ca9b11ddb671a3c295a1562b' + params.sort.flatten.join).upcase
+    resp  = Net::HTTP.post_form(url, params)
+    items = ActiveSupport::JSON.decode(resp.body)['rsp']['items']
+#    result = JSON.parse(resp.body)
+  end
 	
 end

@@ -1,0 +1,7 @@
+<% for block_item in block_items %>
+  <tr>
+    <%= render :partial => 'layouts/text/text_block_table_item',
+                :locals => { :block_item => block_item,
+                            :options => options } %>
+  </tr>
+<% end %>

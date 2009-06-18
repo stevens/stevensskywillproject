@@ -68,32 +68,50 @@
 <div id="recipe_<%= item.id %>_main" class="item_detail">
   <div class="main">
     <h3><%= DESCRIPTION_CN %></h3>
-    <ul><%= paragraphs(item.description, true, true) %></ul>
+    <!-- <ul><= paragraphs(item.description, true, true) %></ul> -->
+    <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(item.description, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                            :options => { :auto_link => true } } %>
   </div>
 
   <div class="main">
     <h3><%= INGREDIENT_CN %></h3>
-    <ul class="wide_space"><%= paragraphs(item.ingredients) %></ul>
+    <!-- <ul class="wide_space"><= paragraphs(item.ingredients) %></ul> -->
+    <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(item.ingredients, {}, { :squish_space => true, :strip_tags => true }),
+                            :options => { :show_table => false, :parse_item => true, :wide_space => true, :show_service_zone => true, :text_title => 'ingredients' } } %>
   </div>
 
   <div class="main">
     <h3><%= TOOL_CN %></h3>
-    <ul><%= paragraphs(item.tools) %></ul>
+    <!-- <ul><= paragraphs(item.tools) %></ul> -->
+    <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(item.tools, {}, { :squish_space => true, :strip_tags => true }),
+                            :options => { :show_table => false, :parse_item => true, :wide_space => true, :show_service_zone => true, :text_title => 'tools' } } %>
   </div>
 
   <div class="main">
     <h3><%= DIRECTION_CN %></h3>
-    <ol><%= paragraphs(item.directions) %></ol>
+    <!-- <ol><= paragraphs(item.directions) %></ol> -->
+    <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(item.directions),
+                            :options => { :auto_link => true, :auto_number => true } } %>
   </div>
 
   <div class="main">
     <h3><%= TIP_CN %></h3>
-    <ol><%= paragraphs(item.tips) %></ol>
+    <!-- <ol><= paragraphs(item.tips) %></ol> -->
+    <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(item.tips),
+                            :options => { :auto_link => true, :auto_number => true } } %>
   </div>
 
   <div class="main">
     <h3><%= "闲话" %></h3>
-    <ul><%= paragraphs(item.any_else, true, true) %></ul>
+    <!-- <ul><= paragraphs(item.any_else, true, true) %></ul> -->
+    <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(item.any_else, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                            :options => { :auto_link => true } } %>
   </div>
 
   <div class="main">

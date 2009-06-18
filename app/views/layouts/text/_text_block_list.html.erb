@@ -1,0 +1,15 @@
+<% css_class = 'wide_space' if options[:wide_space] %>
+
+<% if options[:auto_number] %>
+  <ol class="<%= css_class %>">
+    <%= render :partial => 'layouts/text/text_block_list_items',
+                :locals => { :block_items => block_items,
+                            :options => options } %>
+  </ol>
+<% else %>
+  <ul class="<%= css_class %>">
+    <%= render :partial => 'layouts/text/text_block_list_items',
+                :locals => { :block_items => block_items,
+                            :options => options } %>
+  </ul>
+<% end %>
