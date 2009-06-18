@@ -152,6 +152,9 @@ class UsersController < ApplicationController
 	      if @user == @current_user
 	      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
 	      else
+#          feed = rss_feed(profile_blog(@user))
+#          read_rss_items(feed, 5)
+
 			  	load_user_recipes(@user)
           load_user_menus(@user)
 			  	# classify_recipes
@@ -161,9 +164,6 @@ class UsersController < ApplicationController
 				 	load_user_tags(@user)
 				 	load_user_contactors(@user)
 				 	load_user_matches(@user)
-
-          feed = rss_feed(profile_blog(@user))
-          read_rss_items(feed, 5)
 				 	
 				 	log_count(@user)
 				 	
