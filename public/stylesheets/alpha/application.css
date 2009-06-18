@@ -2031,3 +2031,38 @@ div.vote_zone {
     padding-top: 50px;
     text-align: center;
 }
+
+/* Service Zone */
+.shop_items_wrapper {
+    padding-top: 2px;
+    padding-bottom: 5px;
+}
+.shop_items_wrapper table {
+    background-color: #ffffdd;
+    border-top: 1px #f1f1f1 solid;
+    border-bottom: 1px #f1f1f1 solid;
+}
+.shop_items_wrapper td.pic_column {
+    width: 80px;
+    text-align: center;
+    padding: 2px;
+}
+.shop_items_wrapper td.pic_column img {
+    border: 1px #f1f1f1 solid;
+}
+.shop_items_wrapper td.pic_column a:hover {
+    background-color: transparent !important;
+}
+.shop_items_wrapper td.text_column {
+    width: 200px;
+    padding: 2px;
+}
+.shop_items_wrapper span.price {
+    /* font-weight: bold; */
+    color: #e42300;
+}
+.shop_items_wrapper div.close {
+    margin-top: 0px;
+    margin-right: 5px;
+    margin-left: 10px;
+}
