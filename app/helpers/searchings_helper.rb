@@ -97,5 +97,15 @@ module SearchingsHelper
     items = ActiveSupport::JSON.decode(resp.body)['rsp']['items']
 #    result = JSON.parse(resp.body)
   end
+
+  # 根据搜索对象确定淘宝的商品种类
+  def cid_for(obj_type)
+    case obj_type
+    when 'ingredients'
+      '50002766'
+    when 'tools'
+      '21'
+    end
+  end
 	
 end

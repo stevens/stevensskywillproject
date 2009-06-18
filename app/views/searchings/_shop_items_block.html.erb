@@ -43,5 +43,16 @@
       <% end %>
       <% i += 1 %>
     <% end %>
+    <% if items.size == 1 %>
+      <td class="pic_column"></td>
+      <td class="text_column"></td>
+      <td>
+        <div class="close">
+          <%= link_to_function("x") do |page|
+            page.visual_effect :slide_up, options[:service_id]
+          end %>
+        </div>
+      </td>
+    <% end %>
   </table>
 </div>

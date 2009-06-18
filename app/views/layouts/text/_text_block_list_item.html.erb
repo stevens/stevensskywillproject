@@ -6,7 +6,7 @@
       <% for component in components %>
         <% if i == 0 && !component.start_with?('(') && !component.start_with?('（') %>
           <% service_id = "service_for_#{options[:text_title]}_#{options[:block_id]}_#{options[:block_item_id]}" %>
-          <% cid = "50002766" if options[:text_title] == 'ingredients' %>
+          <% cid = cid_for(options[:text_title]) %>
           <%= link_to_remote component, :url => url_for(:controller => 'searchings', :action => 'searching_shop_items', :q => component, :cid => cid, :service_id => service_id) %>
         <% else %>
           <%= " #{component}" %>
