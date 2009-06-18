@@ -61,7 +61,7 @@ class SearchingsController < ApplicationController
 
   # 联通淘宝等网站搜索相关商品，将搜索结果展示在服务区
   def searching_shop_items
-    shop_items_set = shop_items_searched('taobao', { :q => params[:q] }).sort_by {rand}
+    shop_items_set = shop_items_searched('taobao', { :q => params[:q], :cid => params[:cid] }).sort_by {rand}
     @shop_items = shop_items_set[0..3]
     respond_to do |format|
 			format.js do
