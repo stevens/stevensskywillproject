@@ -420,7 +420,7 @@ module ApplicationHelper
 
   #从字符串中抽取小标题的内容
   def text_block_title_content(str)
-    str.delete('[]【】［］') if is_text_block_title?(str)
+    str.chars[1..str.chars.size-2]
   end
 
   #字符串清洁化
