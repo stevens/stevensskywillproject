@@ -63,7 +63,8 @@ class SearchingsController < ApplicationController
   def searching_shop_items
     where = 'taobao'
     limit = 4
-    shop_items_set = shop_items_searched(where, { :q => params[:q], :cid => params[:cid] })
+    item_category = shop_item_category(where, params[:searchable_type], params[:q])
+    shop_items_set = shop_items_searched(where, { :q => params[:q], :cid => item_category })
     if shop_items_set && shop_items_set.size > 0
       shop_items_set = shop_items_set.sort_by {rand}
     else

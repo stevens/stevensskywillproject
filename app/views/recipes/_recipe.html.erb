@@ -79,7 +79,7 @@
     <!-- <ul class="wide_space"><= paragraphs(item.ingredients) %></ul> -->
     <%= render :partial => 'layouts/text/structured_text',
                 :locals => { :blocks => structured_text(item.ingredients, {}, { :squish_space => true, :strip_tags => true }),
-                            :options => { :show_table => false, :parse_item => true, :wide_space => true, :show_service_zone => true, :text_title => 'ingredients' } } %>
+                            :options => { :show_table => false, :parse_item => true, :wide_space => true, :show_service_zone => true, :text_title => 'ingredient' } } %>
   </div>
 
   <div class="main">
@@ -87,7 +87,7 @@
     <!-- <ul><= paragraphs(item.tools) %></ul> -->
     <%= render :partial => 'layouts/text/structured_text',
                 :locals => { :blocks => structured_text(item.tools, {}, { :squish_space => true, :strip_tags => true }),
-                            :options => { :show_table => false, :parse_item => true, :wide_space => true, :show_service_zone => true, :text_title => 'tools' } } %>
+                            :options => { :show_table => false, :parse_item => true, :wide_space => true, :show_service_zone => true, :text_title => 'tool' } } %>
   </div>
 
   <div class="main">
