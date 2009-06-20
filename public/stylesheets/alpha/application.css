@@ -2057,8 +2057,15 @@ div.vote_zone {
     width: 200px;
     padding: 2px;
 }
+.shop_items_wrapper td.text_column a {
+    color: #695245 !important;
+}
+.shop_items_wrapper td.text_column a:hover {
+    background-color: #695245 !important;
+    color: #ffffff !important;
+}
 .shop_items_wrapper span.price {
-    /* font-weight: bold; */
+    font-weight: bold;
     color: #e42300;
 }
 .shop_items_wrapper div.close {

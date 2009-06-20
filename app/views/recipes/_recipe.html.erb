@@ -73,9 +73,13 @@
                 :locals => { :blocks => structured_text(item.description, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
                             :options => { :auto_link => true } } %>
   </div>
-
+  <% taotao_photo_url = 'icon/other/taotao.png' %>
+  <% taotao_photo_title = '猛击链接, 我淘一淘...' %>
   <div class="main">
-    <h3><%= INGREDIENT_CN %></h3>
+    <h3>
+      <%= INGREDIENT_CN %>
+      <%= image_tag taotao_photo_url, :title => taotao_photo_title, :alt => '', :class => "icon" %>
+    </h3>
     <!-- <ul class="wide_space"><= paragraphs(item.ingredients) %></ul> -->
     <%= render :partial => 'layouts/text/structured_text',
                 :locals => { :blocks => structured_text(item.ingredients, {}, { :squish_space => true, :strip_tags => true }),
@@ -83,7 +87,10 @@
   </div>
 
   <div class="main">
-    <h3><%= TOOL_CN %></h3>
+    <h3>
+      <%= TOOL_CN %>
+      <%= image_tag taotao_photo_url, :title => taotao_photo_title, :alt => '', :class => "icon" %>
+    </h3>
     <!-- <ul><= paragraphs(item.tools) %></ul> -->
     <%= render :partial => 'layouts/text/structured_text',
                 :locals => { :blocks => structured_text(item.tools, {}, { :squish_space => true, :strip_tags => true }),
