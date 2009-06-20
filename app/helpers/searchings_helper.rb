@@ -86,11 +86,11 @@ module SearchingsHelper
               'format' => 'json',
               'v' => '1.0',
               'q' => options[:q],
-              'cid' => options[:cid], 
+              'cid' => options[:cid],
               'page_no' => '1',
               'page_size' => '20',
-              'ww_status' => true, 
-              'fields' => 'iid,title,pic_path,price,cid,nick',
+              'ww_status' => true,
+              'fields' => 'iid,title,pic_path,price,cid,nick', 
               'order_by' => 'seller_credit:desc' }
     params["sip_sign"] = MD5.hexdigest('8e4b63f0ca9b11ddb671a3c295a1562b' + params.sort.flatten.join).upcase
     resp  = Net::HTTP.post_form(url, params)
@@ -148,6 +148,23 @@ module SearchingsHelper
         end
       end
     end
+  end
+
+  #根据一定规则抽取字符串中的关键词，返回关键词信息和剩余信息
+  def q_info_from(text)
+    pattern = /[(（[【［]/
+    first = text.index(pattern)
+    if first
+      if first == 0
+        q_else = text
+      else
+        q = text[0..first-1]
+        q_else = text[first..text.length-1]
+      end
+    else
+      q = text
+    end
+    { :q => q, :q_else => q_else }
   end
   
 end

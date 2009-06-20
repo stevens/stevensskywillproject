@@ -4,10 +4,15 @@
       <% components = block_item.split(' ') %>
       <% i = 0 %>
       <% for component in components %>
-        <% if i == 0 && !component.start_with?('(') && !component.start_with?('（') %>
-          <% searchable_type = options[:text_title] %>
-          <% service_id = "service_for_#{searchable_type}_#{options[:block_id]}_#{options[:block_item_id]}" %>
-          <%= link_to_remote component, :url => url_for(:controller => 'searchings', :action => 'searching_shop_items', :q => component, :searchable_type => searchable_type, :service_id => service_id) %>
+        <% if i == 0 %>
+          <% q_info = q_info_from(component) %>
+          <% if q_info[:q] && !q_info[:q].blank? %>
+            <% searchable_type = options[:text_title] %>
+            <% service_id = "service_for_#{searchable_type}_#{options[:block_id]}_#{options[:block_item_id]}" %>
+            <%= link_to_remote q_info[:q], :url => url_for(:controller => 'searchings', :action => 'searching_shop_items', :q => q_info[:q], :searchable_type => searchable_type, :service_id => service_id) %><%= q_info[:q_else] if q_info[:q_else] && !q_info[:q_else].blank? %>
+          <% elsif q_info[:q_else] && !q_info[:q_else].blank? %>
+            <%= q_info[:q_else] %>
+          <% end %>
         <% else %>
           <%= " #{component}" %>
         <% end %>
