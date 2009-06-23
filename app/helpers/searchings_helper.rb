@@ -152,7 +152,7 @@ module SearchingsHelper
 
   #根据一定规则抽取字符串中的关键词，返回关键词信息和剩余信息
   def q_info_from(text)
-    pattern = /[(（[【［]/
+    pattern = /[(（\[【［]/
     first = text.index(pattern)
     if first
       if first == 0
