@@ -230,8 +230,18 @@ class RecipesController < ApplicationController
 		
 		if @recipe.publishable?
 			current = Time.now
-			new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
-			@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+                        ### the following code is for love recipe
+                        if(@recipe.from_type == '1')
+                          new_attrs = { :roles => ' 21', :is_draft => '0', :published_at => current, :original_updated_at => current }
+                          @notice = "你已经发布了1#{@self_unit}爱心#{@self_name}!"
+                        else
+                          new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
+			  @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+                        end
+                        ### love recipe code endded
+                        
+			#new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
+			#@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
 			
 			if @recipe.update_attributes(new_attrs)
 				reg_homepage(@recipe, 'update')
@@ -279,6 +289,7 @@ class RecipesController < ApplicationController
     @recipes_limit = 18
     
 	  load_recipes_set
+          load_love_recipe
 #	  load_random_recipes
 	  load_choice_recipes
 	  load_reviews_set
@@ -339,6 +350,13 @@ class RecipesController < ApplicationController
  			@recipe = recipe
  		end
   end
+  
+  #### load love recipes of the user
+  def load_love_recipe(user = nil)
+    @love_recipes_set = roles_recipes(user, '21')
+    @love_recipes_set_count = @love_recipes_set.size
+  end
+  ### end
   
   def load_recipes_set(user = nil)
   	order = @order ? @order : 'published_at DESC, created_at DESC'

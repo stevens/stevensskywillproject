@@ -2025,7 +2025,10 @@ div.vote_zone {
 .share_preview a:hover {
 	background-color: transparent !important;
 }
-
+/* love recipes */
+#notified_score { font-size: 14px;
+                    font-weight: bold;        
+                    color: #e42300;} 
 /* ad */
 #ad_sideblock_wrapper {
     padding-top: 50px;

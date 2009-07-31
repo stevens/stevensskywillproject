@@ -156,6 +156,7 @@ class UsersController < ApplicationController
 #          read_rss_items(feed, 5)
 
 			  	load_user_recipes(@user)
+                                load_user_love_recipes(@user)
           load_user_menus(@user)
 			  	# classify_recipes
 			  	load_user_reviews(@user)
@@ -213,6 +214,13 @@ class UsersController < ApplicationController
 		@recipes_set = recipes_for(user)
 		@recipes_set_count = @recipes_set.size
 	end
+        
+        #### load love recipes of the user
+        def load_user_love_recipes(user = nil)
+          @love_recipes_set = roles_recipes(user, '21')
+          @love_recipes_set_count = @love_recipes_set.size
+        end
+        ### end
 
 	def load_user_menus(user = nil)
     menu_conditions = common_filter_conditions(nil, 'Menu', user)

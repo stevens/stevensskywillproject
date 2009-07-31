@@ -1,3 +1,9 @@
+<%= render :partial => 'users/love_recipe_sideblock', 
+					 :locals => { :id => 'user_love_recipes', 
+					 							:block_title => "爱心食谱行动", 
+                                                                                                :user => @current_user,
+					 							:love_recipes_count =>  @love_recipes_set_count } %>
+
 <%= render :partial => 'layouts/items_sideblock', 
 					 :locals => { :id => 'my_friends', 
 					 							:block_title => "#{FRIEND_CN}", 

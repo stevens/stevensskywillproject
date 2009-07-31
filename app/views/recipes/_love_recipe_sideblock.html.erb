@@ -1,0 +1,17 @@
+<div id="<%= id %>_wrapper" class="sidebar_panel">
+  <div id="<%= id %>_header" class="sidebar_panel_header">
+    <div class="sidebar_block_header_link">
+      <a href='http://www.beecook.com/help#s28' target='blank'>如何参与？</a>	
+    </div>
+    <h1><%= strip_tags block_title %></h1>
+  </div>
+  
+  <div id="<%= id %>_detail" class="sidebar_panel_main">
+    <div class="<%= id %>">
+      蜂友们已贡献 <span id="notified_score"><%= love_recipes_count %> 个 </span>爱心食谱
+    </div>
+    <div class="<%= id %>">
+      蜂友们已贡献 <span id="notified_score"><%= love_recipes_count * 0.5 %> 元 </span>蜂厨慈善金
+    </div>
+  </div>
+</div>

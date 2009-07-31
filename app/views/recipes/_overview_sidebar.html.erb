@@ -1,3 +1,9 @@
+<%= render :partial => 'love_recipe_sideblock', 
+					 :locals => { :id => 'user_love_recipes', 
+					 							:block_title => "爱心食谱行动", 
+					 							:love_recipes_count =>  @love_recipes_set_count } %>
+
+
 <% if @highest_rated_recipes && @highest_rated_recipes.size > 0 %>
   <%= render :partial => 'layouts/ranklist_sideblock',
               :locals => { :rank_list_title => "#{RECIPE_CN}<em class='red'>红</em>榜 TOP20",

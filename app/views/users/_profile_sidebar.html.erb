@@ -1,3 +1,9 @@
+<%= render :partial => 'love_recipe_sideblock', 
+					 :locals => { :id => 'user_love_recipes', 
+					 							:block_title => "爱心食谱行动", 
+                                                                                                :user => @user,
+					 							:love_recipes_count =>  @love_recipes_set_count } %>
+
 <% if @mutual_contactors_set && @mutual_contactors_set_count > 0 %>
 	<%= render :partial => 'layouts/items_sideblock', 
 						 :locals => { :id => 'mutual_friends', 
