@@ -50,6 +50,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_self_urls
   before_filter :load_user_bar
 	before_filter :set_current_tab
+	before_filter :set_system_notice
   
   # Protect a page from unauthorized access.
 	def protect
@@ -74,9 +75,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-#  def local_request?
-#    return false
-#  end
+  def local_request?
+    return false
+  end
 
 	def set_current_tab
 		c = params[:controller]
@@ -129,6 +130,7 @@ class ApplicationController < ActionController::Base
 #    @system_notice = "<a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>金蜂·美食人生 大赛（第一季）</a> <em class='l3'><a href='#{url_for(:match_id => 1, :controller => 'winners', :action => 'index')}'>获奖名单</a></em> 和 <em class='l3'><a href='http://beecook2008.blogspot.com/2009/02/blog-post.html' target='_blank'>金蜂食单</a></em> 揭晓啦，恭喜获奖的作品和蜂友们！<br /><br />
 #                      蜂厨服务生已经给获奖的蜂友发出了奖品，请各位注意查收喔！"
 #    @system_notice = "<em class='l3'><a href='#{menus_path}'>餐单</a></em> 新鲜出炉啦！欢迎蜂友们抢先试用，快来跟大家分享你的美味餐单呵！"
+     @system_notice = "小力量网聚大爱心，蜂厨慈善创意活动—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季启动喽!"
 	end
 	
 	# def param_posted?(symbol)

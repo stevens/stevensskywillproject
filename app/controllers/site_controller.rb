@@ -5,7 +5,9 @@ class SiteController < ApplicationController
 	
 	def index
 		load_recipes_set
-		
+		### for love recipes function displaying
+                load_love_recipe
+                ### end
 		load_notifications if @current_user
 
     feed = rss_feed
@@ -80,5 +82,12 @@ class SiteController < ApplicationController
       end
     end
   end
+  
+  #### load love recipes of the user
+  def load_love_recipe(user = nil)
+    @love_recipes_set = roles_recipes(user, '21')
+    @love_recipes_set_count = @love_recipes_set.size
+  end
+  ### end
 	
 end

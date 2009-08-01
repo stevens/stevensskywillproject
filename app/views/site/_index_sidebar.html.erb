@@ -1,3 +1,9 @@
+<%= render :partial => 'recipes/love_recipe_sideblock', 
+					 :locals => { :id => 'user_love_recipes', 
+					 							:block_title => "爱心食谱行动", 
+					 							:love_recipes_count =>  @love_recipes_set_count } %>
+
+
 <%= render :partial => 'layouts/rss_items_sideblock',
             :locals => { :block_title => "#{SITE_NAME_CN}板报",
                         :channel => @rss_channel,
