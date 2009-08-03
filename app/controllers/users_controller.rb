@@ -217,7 +217,7 @@ class UsersController < ApplicationController
         
         #### load love recipes of the user
         def load_user_love_recipes(user = nil)
-          @love_recipes_set = roles_recipes(user, '21')
+          @love_recipes_set = love_recipes(user, '21')
           @love_recipes_set_count = @love_recipes_set.size
         end
         ### end
