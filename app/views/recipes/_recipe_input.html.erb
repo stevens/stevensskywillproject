@@ -222,7 +222,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "这是原创的私房#{RECIPE_CN}吗?" %>
+					<%= "这是原创的私房#{RECIPE_CN}吗?" %><br />
+                                        <%= "<em class='more'>“爱心食谱”需要是“原创”食谱！</em>" %><br />
 				</div>
 				<div id="from_type" class="input">
 					<%= f.select :from_type, Code.find(:all, :conditions => {:codeable_type => 'from_type'}).collect {|c| [ c.title, c.code ]}, {}, {:onchange => remote_function(:url => { :controller => 'system', :action => 'change_from_type', :item_type => 'recipe' }, :with => "'from_type='+value")} %>
@@ -252,7 +253,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "谁可以看见这个#{RECIPE_CN}?" %>
+					<%= "谁可以看见这个#{RECIPE_CN}?" %><br />
+                                        <%= "<em class='more'>“爱心食谱”需要选择“任何人”！</em>" %><br />
 				</div>
 				<div class="input">
                     <% disabled = true if recipe.entried? %>

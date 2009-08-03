@@ -172,6 +172,18 @@ class RecipesController < ApplicationController
     if params[:recipe][:privacy].nil?
       params[:recipe][:privacy] = @recipe.privacy
     end
+    ### for love recipes
+    current_roles = @recipe.roles || ''
+    if (params[:recipe][:privacy] == '10' && params[:recipe][:from_type] == '1' && time_iso_format(@recipe.published_at) >= '2009-08-01 00:00:00')
+      unless(current_roles.include?('21'))
+        params[:recipe][:roles] = '21' + current_roles 
+      end
+    else
+      if(current_roles.include?('21'))
+        params[:recipe][:roles] = current_roles.gsub('21', '')
+      end
+    end
+    ### end love recipes
     new_recipe = @recipe.user.recipes.build(params[:recipe])
     # new_recipe.cover_photo_id = @recipe.cover_photo_id
     # new_recipe.published_at = @recipe.published_at
@@ -231,7 +243,7 @@ class RecipesController < ApplicationController
 		if @recipe.publishable?
 			current = Time.now
                         ### the following code is for love recipe
-                        if(@recipe.from_type == '1')
+                        if(@recipe.from_type == '1' && @recipe.privacy == '10')
                           new_attrs = { :roles => ' 21', :is_draft => '0', :published_at => current, :original_updated_at => current }
                           @notice = "你已经发布了1#{@self_unit}爱心#{@self_name}!"
                         else
