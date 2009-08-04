@@ -4,6 +4,10 @@ module UsersHelper
 		User.find(:all, :limit => limit, :order => order, 
 							:conditions => conditions)
 	end
+        
+        def love_users(user = nil)
+          User.find_by_sql("select users.* from users,recipes where users.id = recipes.user_id and recipes.roles LIKE '%21%'  GROUP BY recipes.user_id  ORDER BY recipes.published_at ASC ")
+        end
   
   def user_conditions(role = nil, activated = true, created_at_from = nil, created_at_to = nil)
   	conditions = ["users.login IS NOT NULL", 

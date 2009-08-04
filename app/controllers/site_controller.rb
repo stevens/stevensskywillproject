@@ -7,6 +7,7 @@ class SiteController < ApplicationController
 		load_recipes_set
 		### for love recipes function displaying
                 load_love_recipe
+                load_love_users
                 ### end
 		load_notifications if @current_user
 
@@ -87,6 +88,11 @@ class SiteController < ApplicationController
   def load_love_recipe(user = nil)
     @love_recipes_set = love_recipes(user, '21')
     @love_recipes_set_count = @love_recipes_set.size
+  end
+  
+  def load_love_users(user = nil)
+    @love_users_set = love_users(user)
+    @love_users_set_count = @love_users_set.size
   end
   ### end
 	

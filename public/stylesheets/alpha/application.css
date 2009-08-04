@@ -2029,6 +2029,8 @@ div.vote_zone {
 #notified_score { font-size: 14px;
                     font-weight: bold;        
                     color: #e42300;} 
+
+.border_dashed_line {border-bottom : 1px dashed buttonface;}
 /* ad */
 #ad_sideblock_wrapper {
     padding-top: 50px;

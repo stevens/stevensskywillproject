@@ -1,6 +1,8 @@
 <%= render :partial => 'recipes/love_recipe_sideblock', 
 					 :locals => { :id => 'user_love_recipes', 
 					 							:block_title => "爱心食谱行动", 
+                                                                                                :love_users => @love_users_set,
+                                                                                                :love_users_count => @love_users_set_count,
 					 							:love_recipes_count =>  @love_recipes_set_count } %>
 
 

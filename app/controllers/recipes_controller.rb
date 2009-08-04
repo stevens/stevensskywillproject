@@ -176,7 +176,7 @@ class RecipesController < ApplicationController
     current_roles = @recipe.roles || ''
     if (params[:recipe][:privacy] == '10' && params[:recipe][:from_type] == '1' && time_iso_format(@recipe.published_at) >= '2009-08-01 00:00:00')
       unless(current_roles.include?('21'))
-        params[:recipe][:roles] = '21' + current_roles 
+        params[:recipe][:roles] = '21 ' + current_roles 
       end
     else
       if(current_roles.include?('21'))
@@ -302,6 +302,7 @@ class RecipesController < ApplicationController
     
 	  load_recipes_set
           load_love_recipe
+          load_love_users
 #	  load_random_recipes
 	  load_choice_recipes
 	  load_reviews_set
@@ -367,6 +368,11 @@ class RecipesController < ApplicationController
   def load_love_recipe(user = nil)
     @love_recipes_set = love_recipes(user, '21')
     @love_recipes_set_count = @love_recipes_set.size
+  end
+  
+  def load_love_users(user = nil)
+    @love_users_set = love_users(user)
+    @love_users_set_count = @love_users_set.size
   end
   ### end
   

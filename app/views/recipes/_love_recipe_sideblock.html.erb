@@ -10,8 +10,18 @@
     <div class="<%= id %>">
       蜂友们已贡献 <span id="notified_score"><%= love_recipes_count %> 个 </span>爱心食谱
     </div>
+    <div class="border_dashed_line" style="margin-top: 2px; margin-bottom: 2px;"></div>
     <div class="<%= id %>">
       蜂友们已贡献 <span id="notified_score"><%= love_recipes_count * 0.5 %> 元 </span>蜂厨慈善金
+    </div>
+    <div class="border_dashed_line" style="margin-top: 2px; margin-bottom: 2px;"></div>
+    <div class="<%= id %>">
+    已有 <span id="notified_score"><%= love_users_count %> 位 </span>蜂友奉献了爱心：
+    </div>
+    <div class="<%= id %>">
+      <% for user in love_users %>
+        <%= link_to h(user.login), {:controller => 'users', :action => 'profile', :id => user.id} %> 
+      <%end%>
     </div>
   </div>
 </div>
