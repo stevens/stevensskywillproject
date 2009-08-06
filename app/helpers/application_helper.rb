@@ -566,7 +566,7 @@ module ApplicationHelper
 	
 	# 获得用户的ip地址
 	def item_client_ip(item)
-		item.client_ip = request.env["HTTP_X_FORWARDED_FOR"]
+		item.client_ip = request.remote_ip #env["HTTP_X_FORWARDED_FOR"]
 	end
 
   # 判断item是否可以发布
