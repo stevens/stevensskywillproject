@@ -287,7 +287,7 @@ class RecipesController < ApplicationController
         @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
       end
       # end
-                        
+
 			#new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
 			#@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
 			
