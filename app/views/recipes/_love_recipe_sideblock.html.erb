@@ -1,27 +1,88 @@
 <div id="<%= id %>_wrapper" class="sidebar_panel">
   <div id="<%= id %>_header" class="sidebar_panel_header">
     <div class="sidebar_block_header_link">
-      <a href='http://www.beecook.com/help#s28' target='blank'>如何参与？</a>	
+      <a href="/help#s28" target="_blank">如何参与?</a>
     </div>
     <h1><%= strip_tags block_title %></h1>
   </div>
   
   <div id="<%= id %>_detail" class="sidebar_panel_main">
-    <div class="<%= id %>">
-      蜂友们已贡献 <span id="notified_score"><%= love_recipes_count %> 个 </span>爱心食谱
+    <div id="<%= id %>_total ">
+      <table>
+        <tr>
+          <td class="love_recipe_users_total">
+            <% if love_recipe_user %>
+              <span class="highlight_number"><%= strip_tags(user_username(love_recipe_user, false, false)) %></span> 已贡献
+            <% else %>
+              <span class="highlight_number"><%= love_recipe_users.size %> 位</span> 蜂友已贡献
+            <% end %>
+          </td>
+          <td class="love_recipes_money_total">
+            <span class="highlight_number"><%= love_recipes_count %> 个</span> 爱心食谱
+            <br />
+            <span class="highlight_number"><%= love_recipes_count * 0.5 %> 元</span> 蜂厨慈善金
+          </td>
+        </tr>
+      </table>
     </div>
-    <div class="border_dashed_line" style="margin-top: 2px; margin-bottom: 2px;"></div>
-    <div class="<%= id %>">
-      蜂友们已贡献 <span id="notified_score"><%= love_recipes_count * 0.5 %> 元 </span>蜂厨慈善金
-    </div>
-    <div class="border_dashed_line" style="margin-top: 2px; margin-bottom: 2px;"></div>
-    <div class="<%= id %>">
-    已有 <span id="notified_score"><%= love_users_count %> 位 </span>蜂友奉献了爱心：
-    </div>
-    <div class="<%= id %>">
-      <% for user in love_users %>
-        <%= link_to h(user.login), {:controller => 'users', :action => 'profile', :id => user.id} %> 
-      <%end%>
-    </div>
+
+    <% if show_stats %>
+      <% love_recipe_stats = love_recipe_stats_set(love_recipe_user) %>
+      <div id="<%= id %>_stats">
+        <table>
+          <tr>
+            <th>月度</th>
+            <th>贡献</th>
+            <th>奖励</th>
+          </tr>
+          <% i = 0 %>
+          <% for stat in love_recipe_stats %>
+            <% i += 1 %>
+            <tr class="<%= i >= love_recipe_stats.size ? 'current_month' : '' %>">
+              <td class="love_recipe_month">
+                <%= "第#{i}月<br />#{stat[0]}" %>
+              </td>
+              <td class="love_recipe_number">
+                <%= "#{stat[1]}<br />￥#{stat[1] * 0.5}" %>
+              </td>
+              <td class="love_recipe_award">
+                <% if love_recipe_user %>
+                  <% if stat[2] && stat[2][0] && love_recipe_user == stat[2][0] %>
+                    爱心贡献奖<br />
+                  <% end %>
+                  <% if stat[2] && stat[2][1] && love_recipe_user == stat[2][1] %>
+                    爱心参与奖
+                  <% end %>
+                <% else %>
+                  [贡]
+                  <% if stat[2] && stat[2][0] %>
+                    <% user_name = strip_tags(stat[2][0].login) %>
+                    <% link_title = "#{user_name} 获得了#{stat[0]}的爱心贡献奖!" %>
+                    <%= link_to user_name, { :controller => 'users', :action => 'profile', :id => stat[2][0].id }, :title => link_title %>
+                  <% end %>
+                  <br />
+                  [参]
+                  <% if stat[2] && stat[2][1] %>
+                    <% user_name = strip_tags(stat[2][1].login) %>
+                    <% link_title = "#{user_name} 获得了#{stat[0]}的爱心参与奖!" %>
+                    <%= link_to user_name, { :controller => 'users', :action => 'profile', :id => stat[2][1].id }, :title => link_title %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+
+    <% if show_users %>
+      <div id="<%= id %>_users">
+        [蜂友排名不分先后]
+        <br />
+        <% for user in love_recipe_users %>
+          <%= link_to strip_tags(user.login), { :controller => 'users', :action => 'profile', :id => user.id } %><span class="user_love_recipes_count"><%= "(#{user.love_recipes_count})" %></span>
+        <%end%>
+      </div>
+    <% end %>
   </div>
 </div>

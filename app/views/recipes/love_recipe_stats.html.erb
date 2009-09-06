@@ -1,0 +1,82 @@
+<div>
+  <table class="love_recipe_stats">
+    <tr>
+      <th>SN</th>
+      <th>User</th>
+      <% 1.upto(12) do |i| %>
+        <th>
+          <%= "M#{i}" %><br />
+          <%= "#{(@season_start + (i-1).months).strftime("%Y-%m")}" %>
+        </th>
+      <% end %>
+      <th>
+        Sum
+      </th>
+    </tr>
+    <% if @user_stats_group != [] %>
+      <% user_index = 1 %>
+      <% for user_stats in @user_stats_group %>
+        <tr>
+          <td class="sn">
+            <%= user_index %>
+          </td>
+          <td class="user">
+            <% user_id = user_stats[0] %>
+            <% user = User.find_by_id(user_id) %>
+            <% user_name = strip_tags user_username(user, true, true) %>
+            <% user_link = user_first_link(user) %>
+            <%= user_id %><br />
+            <%= link_to user_name, user_link, :target => "_blank", :title => user_name %>
+          </td>
+          <% 1.upto(user_stats.size-2) do |i| %>
+            <td class="data<%= user_stats[i][1] >= 5 ? ' more' : '' %><%= (params[:user_id].nil? && user_stats[i][3]) ? ' most' : '' %>">
+              <%= render :partial => 'recipes/love_recipe_stats_data',
+                          :locals => { :recipes_count => user_stats[i][1],
+                                      :choiced_recipes_count => user_stats[i][2],
+                                      :months_count => nil,
+                                      :more_recipes_users_count => nil,
+                                      :users_count => nil } %>
+            </td>
+          <% end %>
+          <% (user_stats.size-1).upto(12) do %>
+            <td></td>
+          <% end %>
+          <td class="sum data<%= (user_stats.last[1] >= 80) || (user_stats.last[3] >= 10) ? ' more' : '' %><%= (params[:user_id].nil? && user_stats.last[4]) ? ' most' : '' %>">
+            <%= render :partial => 'recipes/love_recipe_stats_data',
+                        :locals => { :recipes_count => user_stats.last[1],
+                                    :choiced_recipes_count => user_stats.last[2],
+                                    :months_count => user_stats.last[3],
+                                    :more_recipes_users_count => nil,
+                                    :users_count => nil } %>
+          </td>
+        </tr>
+        <% user_index += 1 %>
+      <% end %>
+      <tr>
+        <td class="total"></td>
+        <td class="total">Total</td>
+        <% 1.upto(@total_stats.size-2) do |i| %>
+          <td class="total data<%= @total_stats[i][1] >= 170 ? ' more' : '' %>">
+            <%= render :partial => 'recipes/love_recipe_stats_data',
+                        :locals => { :recipes_count => @total_stats[i][1],
+                                    :choiced_recipes_count => @total_stats[i][2],
+                                    :months_count => nil,
+                                    :more_recipes_users_count => @total_stats[i][3],
+                                    :users_count => @total_stats[i][4] } %>
+          </td>
+        <% end %>
+        <% (@total_stats.size-1).upto(12) do %>
+          <td class="total"></td>
+        <% end %>
+        <td class="total data<%= @total_stats.last[1] >= 2000 ? ' more' : '' %>">
+          <%= render :partial => 'recipes/love_recipe_stats_data',
+                      :locals => { :recipes_count => @total_stats.last[1],
+                                  :choiced_recipes_count => @total_stats.last[2],
+                                  :months_count => nil,
+                                  :more_recipes_users_count => @total_stats.last[3],
+                                  :users_count => @total_stats.last[4] } %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

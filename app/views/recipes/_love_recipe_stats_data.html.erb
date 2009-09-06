@@ -1,0 +1,16 @@
+<% if recipes_count > 0 %>
+  <span class="red"><%= recipes_count %></span>/<span class="green"><%= choiced_recipes_count %></span><br />
+  <%= "￥#{recipes_count * 0.5}" %>
+
+  <% if months_count && months_count >= 0 %>
+    <br />
+  <%= "(#{months_count})" %>
+  <% end %>
+
+  <% if users_count && users_count >= 0 && more_recipes_users_count && more_recipes_users_count >= 0 %>
+    <br />
+    <span class="red"><%= users_count %></span>/<span class="green"><%= more_recipes_users_count %></span>
+  <% end %>
+<% else %>
+  -
+<% end %>
