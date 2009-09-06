@@ -5,9 +5,18 @@ module UsersHelper
 							:conditions => conditions)
 	end
         
-        def love_users(user = nil)
-          User.find_by_sql("select users.* from users,recipes where users.id = recipes.user_id and recipes.roles LIKE '%21%'  GROUP BY recipes.user_id  ORDER BY recipes.published_at ASC ")
-        end
+  def love_users(user = nil)
+#    User.find_by_sql("select users.* from users,recipes where users.id = recipes.user_id and recipes.roles LIKE '%21%'  GROUP BY recipes.user_id  ORDER BY RAND() ")
+    User.find_by_sql("SELECT users.id, users.login, COUNT(recipes.id) AS love_recipes_count
+                      FROM recipes
+                      INNER JOIN users
+                      ON recipes.user_id = users.id
+                      WHERE recipes.published_at >=  '2009-08-01 00:00:00'
+                      AND recipes.published_at <=  '2010-07-31 23:59:59'
+                      AND recipes.roles LIKE  '%21%'
+                      GROUP BY recipes.user_id
+                      ORDER BY RAND()")
+  end
   
   def user_conditions(role = nil, activated = true, created_at_from = nil, created_at_to = nil)
   	conditions = ["users.login IS NOT NULL", 
