@@ -1,5 +1,5 @@
 class SignController < ApplicationController
-
+  
   def authenticate
     self.logged_in_keeper = Keeper.authenticate(params[:keeper][:username],
       params[:keeper][:password])
