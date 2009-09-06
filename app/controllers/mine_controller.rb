@@ -12,7 +12,7 @@ class MineController < ApplicationController
 		@user = @current_user
 		
   	load_recipes_set
-        load_user_love_recipes
+    load_user_love_recipes
     load_menus_set
   	# classify_recipes
   	load_reviews_set
@@ -24,8 +24,8 @@ class MineController < ApplicationController
 	 	
 	 	load_notifications if @current_user
 
-#    feed = rss_feed(profile_blog(@current_user))
-#    read_rss_items(feed, 5)
+    feed = rss_feed(profile_blog(@current_user))
+    read_rss_items(feed, 5)
 	 	
 	 	info = "#{username_prefix(@current_user)}#{MAIN_PAGE_CN}"
 		set_page_title(info)
@@ -44,12 +44,12 @@ class MineController < ApplicationController
 		@recipes_set_count = @recipes_set.size
 	end
         
-        #### load love recipes of the user
-        def load_user_love_recipes(user = @current_user)
-          @love_recipes_set = love_recipes(user, '21')
-          @love_recipes_set_count = @love_recipes_set.size
-        end
-        ### end
+  #### load love recipes of the user
+  def load_user_love_recipes(user = @current_user)
+    @love_recipes_set = love_recipes(user, '21')
+    @love_recipes_set_count = @love_recipes_set.size
+  end
+  ### end
 
 	def load_menus_set(user = @current_user)
     @menus_set = menus_for(user, nil, 12)
