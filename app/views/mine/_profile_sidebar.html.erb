@@ -1,25 +1,28 @@
-<%= render :partial => 'users/love_recipe_sideblock', 
-					 :locals => { :id => 'user_love_recipes', 
-					 							:block_title => "爱心食谱行动", 
-                                                                                                :user => @current_user,
-					 							:love_recipes_count =>  @love_recipes_set_count } %>
+<%= render :partial => 'recipes/love_recipe_sideblock',
+            :locals => { :id => 'love_recipe',
+                        :block_title => "爱心食谱行动（第一季）",
+                        :show_stats => true,
+                        :show_users => false,
+                        :love_recipe_user => @current_user,
+                        :love_recipe_users => [],
+                        :love_recipes_count =>  @love_recipes_set_count } %>
 
 <%= render :partial => 'layouts/items_sideblock', 
-					 :locals => { :id => 'my_friends', 
-					 							:block_title => "#{FRIEND_CN}", 
-					 							:block_header_link => { :title => MORE_CN, :url => user_contacts_path(@current_user) }, 
-					 							:items_set => @contactors_set} %>
+            :locals => { :id => 'my_friends',
+                        :block_title => "#{FRIEND_CN}",
+                        :block_header_link => { :title => MORE_CN, :url => user_contacts_path(@current_user) },
+                        :items_set => @contactors_set} %>
 
 <% if @created_matches_count > 0 %>
-	<% block_header_links = [] %>
-	<% block_header_links << [ [ 'more', false ], 
-														 [ MORE_CN, url_for(:user_id => @user.id, :controller => 'matches', :action => 'index', :filter => 'created') ]
-													 ] %>
-	<%= render :partial => 'layouts/items_matrix_sideblock', 
-						 :locals => { :id => 'user_created_matches',
-						 							:block_title => "#{CREATE_CN}的#{MATCH_CN}",
-						 							:block_header_links => block_header_links,
-						 							:items_set => @created_matches } %>
+  <% block_header_links = [] %>
+  <% block_header_links << [ [ 'more', false ],
+                            [ MORE_CN, url_for(:user_id => @user.id, :controller => 'matches', :action => 'index', :filter => 'created') ]
+                          ] %>
+  <%= render :partial => 'layouts/items_matrix_sideblock',
+              :locals => { :id => 'user_created_matches',
+                          :block_title => "#{CREATE_CN}的#{MATCH_CN}",
+                          :block_header_links => block_header_links,
+                          :items_set => @created_matches } %>
 <% end %>
 
 <%= render :partial => 'layouts/rss_items_sideblock',
@@ -28,19 +31,19 @@
                         :items => @rss_items } %>
 
 <% if @enrolled_matches_count > 0 %>
-	<% block_header_links = [] %>
-	<% block_header_links << [ [ 'more', false ], 
-														 [ MORE_CN, url_for(:user_id => @user.id, :controller => 'matches', :action => 'index', :filter => 'enrolled') ]
-													 ] %>
-	<%= render :partial => 'layouts/items_matrix_sideblock', 
-						 :locals => { :id => 'user_enrolled_matches',
-						 							:block_title => "正在参加的#{MATCH_CN}",
-						 							:block_header_links => block_header_links,
-						 							:items_set => @enrolled_matches } %>
+  <% block_header_links = [] %>
+  <% block_header_links << [ [ 'more', false ],
+                            [ MORE_CN, url_for(:user_id => @user.id, :controller => 'matches', :action => 'index', :filter => 'enrolled') ]
+                          ] %>
+  <%= render :partial => 'layouts/items_matrix_sideblock',
+              :locals => { :id => 'user_enrolled_matches',
+                          :block_title => "正在参加的#{MATCH_CN}",
+                          :block_header_links => block_header_links,
+                          :items_set => @enrolled_matches } %>
 <% end %>
 
 <%= render :partial => 'taggings/tags_sideblock',
-					 :locals => { :user => @current_user, 
-					 						  :custom_tags_set => @tags_set, 
-					 						  :limit => nil, 
-					 						  :taggable_type => 'Recipe' } %>
+            :locals => { :user => @current_user,
+                        :custom_tags_set => @tags_set,
+                        :limit => nil,
+                        :taggable_type => 'Recipe' } %>
