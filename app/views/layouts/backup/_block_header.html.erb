@@ -1,9 +1,0 @@
-<% if show_header_link %>
-	<div class="block_header_link">
-		<%= link_to h(header_links[0][:name]), header_links[0][:url] %>
-		<% 1.upto(header_links.size-1) do |i| %>	
-			| <%= link_to h(header_links[i][:name]), header_links[i][:url] %>
-		<% end %>
-	</div>
-<% end %>
-<h1><%= h block_title %></h1>
