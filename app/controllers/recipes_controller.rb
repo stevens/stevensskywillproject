@@ -1,10 +1,10 @@
 class RecipesController < ApplicationController
-	
-	before_filter :protect, :except => [:index, :show, :overview]
-	before_filter :store_location_if_logged_in, :only => [:mine]
-	before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
-	before_filter :set_system_notice, :only => [:overview]
-	
+####  before_filter :preload_models
+  before_filter :protect, :except => [:index, :show, :overview]
+  before_filter :store_location_if_logged_in, :only => [:mine]
+  before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
+  before_filter :set_system_notice, :only => [:overview]
+
 #	def change_from_type
 #  	respond_to do |format|
 #			format.js do
@@ -25,7 +25,14 @@ class RecipesController < ApplicationController
 #			end
 #  	end
 #	end
-	
+
+  ## MemCached 预加载Recipe和Review模型
+####  def preload_models()
+####    Review
+####    Recipe
+####  end
+  ## end
+
   # GET /recipes
   # GET /recipes.xml
   def index
@@ -172,18 +179,29 @@ class RecipesController < ApplicationController
     if params[:recipe][:privacy].nil?
       params[:recipe][:privacy] = @recipe.privacy
     end
-    ### for love recipes
+    # for love recipes
     current_roles = @recipe.roles || ''
-    if (params[:recipe][:privacy] == '10' && params[:recipe][:from_type] == '1' && time_iso_format(@recipe.published_at) >= '2009-08-01 00:00:00')
+    if (params[:recipe][:privacy] == '10' && params[:recipe][:from_type] == '1' && @recipe.is_draft == '0' && time_iso_format(@recipe.published_at) >= '2009-08-01 00:00:00')
       unless(current_roles.include?('21'))
-        params[:recipe][:roles] = '21 ' + current_roles 
+        params[:recipe][:roles] = '21 ' + current_roles
+####        begin
+####          CACHE.delete('overview_love_recipes_set')
+####          CACHE.delete('overview_love_users_set')
+####        rescue Memcached::NotFound
+####        end
       end
     else
       if(current_roles.include?('21'))
         params[:recipe][:roles] = current_roles.gsub('21', '')
+####        begin
+####          CACHE.delete('overview_love_recipes_set')
+####          CACHE.delete('overview_love_users_set')
+####        rescue Memcached::NotFound
+####        end
       end
     end
-    ### end love recipes
+    # end
+    
     new_recipe = @recipe.user.recipes.build(params[:recipe])
     # new_recipe.cover_photo_id = @recipe.cover_photo_id
     # new_recipe.published_at = @recipe.published_at
@@ -203,6 +221,11 @@ class RecipesController < ApplicationController
 		  if @recipe.update_attributes(params[:recipe])
 		  	# @recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
 				reg_homepage(@recipe, 'update')
+####        begin
+####          CACHE.delete('overview_recipes_set')
+####          CACHE.delete('overview_tags_set')
+####        rescue Memcached::NotFound
+####        end
 				after_update_ok
 		  else
 				after_update_error
@@ -219,6 +242,14 @@ class RecipesController < ApplicationController
 			ActiveRecord::Base.transaction do
 				if @recipe.destroy
 					reg_homepage(@recipe, 'destroy')
+####          begin
+####            CACHE.delete('overview_recipes_set')
+####            CACHE.delete('overview_love_recipes_set')
+####            CACHE.delete('overview_love_users_set')
+####            CACHE.delete('overview_tags_set')
+####            CACHE.delete('overview_reviews_set')
+####          rescue Memcached::NotFound
+####          end
 					after_destroy_ok
 				end
 			end
@@ -246,9 +277,14 @@ class RecipesController < ApplicationController
                         if(@recipe.from_type == '1' && @recipe.privacy == '10')
                           new_attrs = { :roles => ' 21', :is_draft => '0', :published_at => current, :original_updated_at => current }
                           @notice = "你已经发布了1#{@self_unit}爱心#{@self_name}!"
+####                          begin
+####                            CACHE.delete('overview_love_recipes_set')
+####                            CACHE.delete('overview_love_users_set')
+####                          rescue Memcached::NotFound
+####                          end
                         else
                           new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
-			  @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+                          @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
                         end
                         ### love recipe code endded
                         
@@ -257,6 +293,11 @@ class RecipesController < ApplicationController
 			
 			if @recipe.update_attributes(new_attrs)
 				reg_homepage(@recipe, 'update')
+####        begin
+####          CACHE.delete('overview_recipes_set')
+####          CACHE.delete('overview_tags_set')
+####        rescue Memcached::NotFound
+####        end
 				after_publish_ok
 			end
 		end
@@ -299,10 +340,12 @@ class RecipesController < ApplicationController
   
   def overview
     @recipes_limit = 18
-    
+####    @action_flag = 1
 	  load_recipes_set
-          load_love_recipe
-          load_love_users
+    # 加载爱心食谱
+    load_love_recipes
+    load_love_users
+    # end
 #	  load_random_recipes
 	  load_choice_recipes
 	  load_reviews_set
@@ -343,6 +386,146 @@ class RecipesController < ApplicationController
       # format.xml  { render :xml => @recipes_set }
     end
   end
+
+  # 爱心食谱行动数据统计
+  def love_recipe_stats
+    info = "爱心食谱行动数据统计"
+    set_page_title(info)
+		set_block_title(info)
+
+    case params[:season]
+    when '1'
+      @season_start = Time.local(2009, 8, 1).beginning_of_day
+      @season_end = (@season_start + 1.year - 1.day).end_of_day
+    end
+
+    if !params[:stat_at].blank?
+      stat_at = params[:stat_at].to_time.end_of_day
+    else
+      stat_at = @season_end
+    end
+
+    stat_from = @season_start
+    if stat_at > @season_start && stat_at < @season_end
+      stat_to = stat_at
+    else
+      stat_to = @season_end
+    end
+
+    user = User.find_by_id(params[:user_id].to_i) if !params[:user_id].blank?
+
+    @user_stats_group = []
+
+    recipes_set = love_recipes(user, '21', stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+
+    if recipes_set != []
+      @user_recipes_groups = recipes_set.group_by { |recipe| (recipe[:user_id]) }.sort { |a, b| a <=> b }
+
+      @total_stats = [nil]
+      user_index = 0
+      most_temp = [nil]
+
+      @user_recipes_groups.each do |user_id, user_recipes|
+        user_stats = [user_id]
+        phase_start = stat_from.beginning_of_month
+        user_recipes_count_sum = 0
+        user_choiced_recipes_count_sum = 0
+        user_more_recipes_months_count = 0
+        
+        1.upto(12) do |m|
+          phase_end = phase_start.end_of_month
+          user_recipes_count = 0
+          user_choiced_recipes_count = 0
+          users_count = 0
+          more_recipes_users_count = 0
+          more_recipes_users_count_total = 0
+
+          for user_recipe in user_recipes
+            user_recipe_published_at = user_recipe.published_at.to_time
+            if user_recipe_published_at >= phase_start && user_recipe_published_at <= phase_end
+              user_recipes_count += 1
+              user_recipes_count_sum += 1
+              if user_recipe.roles.include?('11')
+                user_choiced_recipes_count += 1
+                user_choiced_recipes_count_sum += 1
+              end
+            end
+          end
+
+          users_count = 1 if user_recipes_count > 0
+
+          if user_recipes_count >= 5
+            user_more_recipes_months_count += 1
+            more_recipes_users_count = 1
+          end
+
+          phase_month = phase_start.strftime("%Y-%m")
+          is_most = false
+
+          if user_index == 0
+            is_most = true if user_recipes_count > 0
+            most_temp << [ phase_month, 0 ]
+            @total_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, more_recipes_users_count, users_count ]
+          elsif user_index > 0 && user_recipes_count > 0
+            last_most_user_stats = @user_stats_group[most_temp[m][1]][m]
+            if user_recipes_count > last_most_user_stats[1] || (user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count > last_most_user_stats[2])
+              is_most = true
+              last_most_user_stats[3] = false
+              most_temp[m][1] = user_index
+            elsif user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count == last_most_user_stats[2]
+              is_most = true
+            end
+            @total_stats[m][1] += user_recipes_count
+            @total_stats[m][2] += user_choiced_recipes_count
+            @total_stats[m][3] += more_recipes_users_count
+            @total_stats[m][4] += users_count
+          end
+
+          user_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, is_most ]
+
+          if phase_month == stat_to.strftime("%Y-%m")
+            if (user_recipes_count_sum >= 80) || (user_more_recipes_months_count >= 10)
+              more_recipes_users_count_total = 1
+            end
+
+            is_most_sum = false
+
+            if user_index == 0
+              is_most_sum = true
+              most_temp << [ 'sum', 0 ]
+              @total_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, more_recipes_users_count_total ]
+            elsif user_index > 0
+              last_most_sum_stats = @user_stats_group[most_temp.last[1]].last
+              if user_recipes_count_sum > last_most_sum_stats[1] || (user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum > last_most_sum_stats[2])
+                is_most_sum = true
+                last_most_sum_stats[4] = false
+                most_temp.last[1] = user_index
+              elsif user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum == last_most_sum_stats[2]
+                is_most_sum = true
+              end
+              @total_stats.last[1] += user_recipes_count_sum
+              @total_stats.last[2] += user_choiced_recipes_count_sum
+              @total_stats.last[3] += more_recipes_users_count_total
+            end
+
+            user_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, user_more_recipes_months_count, is_most_sum ]
+
+            break
+          else
+            phase_start += 1.month
+          end
+        end
+        @user_stats_group << user_stats
+        user_index += 1
+      end
+      @total_stats.last[4] = @user_recipes_groups.size
+    else
+      flash[:notice] = "对不起, 没有得到统计数据!"
+    end
+#    [[111,['2009-08',25,10],['2009-09',25,10],['sum',50,20]],
+#     [222,['2009-08',25,10],['2009-09',25,10],['sum',50,20]],
+#     [nil,['2009-08',25,10],['2009-09',25,10],['sum',50,20]]
+  end
   
   private
   
@@ -364,26 +547,68 @@ class RecipesController < ApplicationController
  		end
   end
   
-  #### load love recipes of the user
-  def load_love_recipe(user = nil)
+  ## load love recipes of the user 加载爱心食谱数据
+  def load_love_recipes(user = nil)
+####    if (@action_flag == 1)
+####      begin
+####        @love_recipes_set = CACHE.get('overview_love_recipes_set')
+####      rescue Memcached::NotFound
+####        @love_recipes_set = love_recipes(user, '21')
+####        CACHE.set('overview_love_recipes_set',@love_recipes_set)
+####      end
+####    else
+####      @love_recipes_set = love_recipes(user, '21')
+####    end
     @love_recipes_set = love_recipes(user, '21')
     @love_recipes_set_count = @love_recipes_set.size
   end
   
   def load_love_users(user = nil)
+####    if (@action_flag == 1)
+####      begin
+####        @love_users_set = CACHE.get('overview_love_users_set')
+####      rescue Memcached::NotFound
+####        @love_users_set = love_users(user)
+####        CACHE.set('overview_love_users_set',@love_users_set)
+####      end
+####    else
+####      @love_users_set = love_users(user)
+####    end
     @love_users_set = love_users(user)
     @love_users_set_count = @love_users_set.size
   end
-  ### end
+  ## end
   
   def load_recipes_set(user = nil)
-  	order = @order ? @order : 'published_at DESC, created_at DESC'
-  	@recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
-  	@recipes_set_count = @recipes_set.size
+####    if (@action_flag == 1)
+####      begin
+####        @recipes_set = CACHE.get('overview_recipes_set')
+####      rescue Memcached::NotFound
+####        order = @order ? @order : 'published_at DESC, created_at DESC'
+####        @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+####        CACHE.set('overview_recipes_set',@recipes_set)
+####      end
+####    else
+####      order = @order ? @order : 'published_at DESC, created_at DESC'
+####      @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+####    end
+    order = @order ? @order : 'published_at DESC, created_at DESC'
+    @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+    @recipes_set_count = @recipes_set.size
   end
   
   def load_choice_recipes(user = nil)
-  	@choice_recipes = roles_recipes(user, '11', 12)
+####    if (@action_flag == 1)
+####      begin
+####        @choice_recipes = CACHE.get('overview_choice_recipes')
+####      rescue Memcached::NotFound
+####        @choice_recipes = roles_recipes(user, '11', 12)
+####        CACHE.set('overview_choice_recipes',@choice_recipes,1800)
+####      end
+####    else
+####      @choice_recipes = roles_recipes(user, '11', 12)
+####    end
+    @choice_recipes = roles_recipes(user, '11', 12)
   end
   
 #  def load_random_recipes(user = nil)
@@ -392,13 +617,33 @@ class RecipesController < ApplicationController
   
   def load_reviews_set(user = nil)
   	# @reviews_set = reviews_for(user, 'Recipe', review_conditions('Recipe', @self_id), recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)))
-  	@reviews_set = reviewable_type_reviews('Recipe')[0..19]
-  	@reviews_set_count = @reviews_set.size
+####  	if (@action_flag == 1)
+####      begin
+####        @reviews_set = CACHE.get('overview_reviews_set')
+####      rescue Memcached::NotFound
+####        @reviews_set = reviewable_type_reviews('Recipe')[0..19]
+####        CACHE.set('overview_reviews_set',@reviews_set)
+####      end
+####    else
+####      @reviews_set = reviewable_type_reviews('Recipe')[0..19]
+####    end
+    @reviews_set = reviewable_type_reviews('Recipe')[0..19]
+    @reviews_set_count = @reviews_set.size
   end
   
   def load_tags_set(user = nil)
-	  @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
-  	@tags_set_count = @tags_set.size
+####    if (@action_flag == 1)
+####      begin
+####        @tags_set = CACHE.get('overview_tags_set')
+####      rescue Memcached::NotFound
+####        @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
+####        CACHE.set('overview_tags_set',@tags_set)
+####      end
+####    else
+####      @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
+####    end
+    @tags_set = tags_for(user, 'Recipe', recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 100, 'count DESC, name')
+    @tags_set_count = @tags_set.size
   end
   
   def after_create_ok
