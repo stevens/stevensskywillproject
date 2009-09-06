@@ -2025,12 +2025,89 @@ div.vote_zone {
 .share_preview a:hover {
 	background-color: transparent !important;
 }
-/* love recipes */
-#notified_score { font-size: 14px;
-                    font-weight: bold;        
-                    color: #e42300;} 
+/* Love Recipe */ 
+#love_recipe_total {
 
-.border_dashed_line {border-bottom : 1px dashed buttonface;}
+}
+td.love_recipe_users_total {
+    vertical-align: middle;
+}
+.highlight_number {
+    font-size: 14px;
+    font-weight: bold;
+    color: #e42300;
+}
+#love_recipe_stats {
+    margin-top: 3px;
+    color: #78b36d;
+    text-align: center;
+}
+#love_recipe_stats th {
+    font-weight: normal;
+    background-color: #78b36d;
+}
+#love_recipe_stats td {
+    border-bottom: 1px dashed #f1f1f1;
+}
+#love_recipe_stats tr.current_month {
+    color: #e42300;
+}
+td.love_recipe_month {
+    text-align: center;
+    width: 65px;
+}
+td.love_recipe_number {
+    text-align: center;
+    width: 65px;
+}
+td.love_recipe_award {
+    text-align: left;
+    width: 140px;
+}
+#love_recipe_users {
+    margin-top: 3px;
+    color: #78b36d;
+}
+.user_love_recipes_count {
+    font-size: 10px;
+    margin-right: 5px;
+}
+table.love_recipe_stats th {
+    font-size: 9px;
+    text-align: center;
+    background-color: #428cbb;
+}
+table.love_recipe_stats td {
+    font-size: 9px;
+    border-bottom: 1px dashed #f1f1f1;
+    text-align: center;
+}
+table.love_recipes_stats td.data {
+    
+}
+table.love_recipe_stats td.sn, table.love_recipe_stats td.user {
+    background-color: #ffffdd;
+}
+table.love_recipe_stats td.sum, table.love_recipe_stats td.total {
+    font-weight: bold;
+    background-color: #ffffdd;
+}
+table.love_recipe_stats td.more {
+    background-color: #eceff5;
+}
+table.love_recipe_stats td.most {
+    background-color: #99ccff;
+}
+table.love_recipe_stats a {
+    font-size: 9px;
+}
+table.love_recipe_stats span.red {
+    color: #e42300;
+}
+table.love_recipe_stats span.green {
+    color: #78b36d;
+}
+
 /* ad */
 #ad_sideblock_wrapper {
     padding-top: 50px;
