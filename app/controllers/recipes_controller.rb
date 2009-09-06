@@ -273,20 +273,20 @@ class RecipesController < ApplicationController
 		
 		if @recipe.publishable?
 			current = Time.now
-                        ### the following code is for love recipe
-                        if(@recipe.from_type == '1' && @recipe.privacy == '10')
-                          new_attrs = { :roles => ' 21', :is_draft => '0', :published_at => current, :original_updated_at => current }
-                          @notice = "你已经发布了1#{@self_unit}爱心#{@self_name}!"
-####                          begin
-####                            CACHE.delete('overview_love_recipes_set')
-####                            CACHE.delete('overview_love_users_set')
-####                          rescue Memcached::NotFound
-####                          end
-                        else
-                          new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
-                          @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
-                        end
-                        ### love recipe code endded
+      # the following code is for love recipe
+      if(@recipe.from_type == '1' && @recipe.privacy == '10')
+        new_attrs = { :roles => ' 21', :is_draft => '0', :published_at => current, :original_updated_at => current }
+        @notice = "你已经发布了1#{@self_unit}爱心#{@self_name}!"
+####        begin
+####          CACHE.delete('overview_love_recipes_set')
+####          CACHE.delete('overview_love_users_set')
+####        rescue Memcached::NotFound
+####        end
+      else
+        new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
+        @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
+      end
+      # end
                         
 			#new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
 			#@notice = "你已经发布了1#{@self_unit}#{@self_name}!"
