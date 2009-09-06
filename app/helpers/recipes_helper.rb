@@ -32,12 +32,32 @@ module RecipesHelper
  		recipes_for(user, recipe_conditions.join(' AND '), limit, order)	
 	end
         
-        def love_recipes(user = nil, role_condition = nil, limit = nil, order = 'RAND()')
-                recipe_conditions = []
- 		#recipe_conditions << recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
- 		recipe_conditions << "recipes.roles LIKE '%#{role_condition}%'" if role_condition
- 		recipes_for(user, recipe_conditions.join(' AND '), limit, order)
+  def love_recipes(user = nil, role_condition = nil, published_at_from = '2009-08-01 00:00:00', published_at_to = '2010-07-31 23:59:59', limit = nil, order = 'RAND()')
+    recipe_conditions = []
+    #recipe_conditions << recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user))
+    recipe_conditions << "recipes.roles LIKE '%#{role_condition}%'" if role_condition
+    recipe_conditions << "recipes.published_at >= '#{published_at_from}'" if published_at_from
+    recipe_conditions << "recipes.published_at <= '#{published_at_to}'" if published_at_to
+    recipes_for(user, recipe_conditions.join(' AND '), limit, order)
+  end
+
+  def love_recipe_stats_set(user = nil, current = Time.now, start_at = '2009-08-01 00:00:00', end_at = '2010-07-31 23:59:59')
+    stats = []
+    if current >= start_at.to_time && current <= end_at.to_time
+      phase_start = start_at.to_time.at_beginning_of_month
+      awards = [ [User.find_by_id(1163), User.find_by_id(272)] ]
+      1.upto(12) do |i|
+        phase_end = phase_start.at_end_of_month          
+        stats << [ phase_start.strftime("%Y-%m"), love_recipes(user, '21', phase_start.strftime("%Y-%m-%d %H:%M:%S"), phase_end.strftime("%Y-%m-%d %H:%M:%S")).size, awards[i-1] ]
+        if phase_end.strftime("%Y-%m") == current.strftime("%Y-%m")
+          break
+        else
+          phase_start = phase_start + 1.month
         end
+      end
+    end
+    stats
+  end
 	
 	def recipes_for(user = nil, recipe_conditions = recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), limit = nil, order = 'created_at DESC, published_at DESC')
 		if user
