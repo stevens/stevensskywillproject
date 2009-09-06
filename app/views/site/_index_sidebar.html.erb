@@ -1,10 +1,11 @@
-<%= render :partial => 'recipes/love_recipe_sideblock', 
-					 :locals => { :id => 'user_love_recipes', 
-					 							:block_title => "爱心食谱行动", 
-                                                                                                :love_users => @love_users_set,
-                                                                                                :love_users_count => @love_users_set_count,
-					 							:love_recipes_count =>  @love_recipes_set_count } %>
-
+<%= render :partial => 'recipes/love_recipe_sideblock',
+            :locals => { :id => 'love_recipe',
+                        :block_title => "爱心食谱行动（第一季）",
+                        :show_stats => false,
+                        :show_users => false,
+                        :love_recipe_user => nil,
+                        :love_recipe_users => @love_users_set,
+                        :love_recipes_count =>  @love_recipes_set_count } %>
 
 <%= render :partial => 'layouts/rss_items_sideblock',
             :locals => { :block_title => "#{SITE_NAME_CN}板报",
