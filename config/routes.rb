@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :documents
 
   map.connect 'recipes/love_recipe_stats', :controller => 'recipes', :action => 'love_recipe_stats'
+  map.connect 'recipes/pk_game', :controller => 'recipes', :action => 'pk_game'
 
 	map.connect 'homepages/import', :controller => 'homepages', :action => 'import'
 	map.connect ':controller/overview', :action => 'overview'
