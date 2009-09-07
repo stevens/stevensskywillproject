@@ -11,7 +11,7 @@
       <ul>
         <% for item in items %>
           <li>
-            <span class="timestamp"><%= "[#{time_iso_format(item.date, true, true, false, false)}]" %></span>
+            <span class="timestamp"><%= "[#{time_iso_format(item.pubDate, true, true, false, false)}]" %></span>
             <%= link_to item.title, item.link, :target => '_blank' %>
           </li>
         <% end %>
