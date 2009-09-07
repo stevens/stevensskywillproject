@@ -527,6 +527,26 @@ class RecipesController < ApplicationController
 #     [nil,['2009-08',25,10],['2009-09',25,10],['sum',50,20]]
   end
   
+  # 食谱PK赛
+  def pk_game
+    case params[:game]
+    when '1'
+      game_title = "中西点心对对碰"
+      case params[:round]
+      when '1'
+        game_title = "#{game_title}(第一轮)"
+        @pk_groups = [ ['A', 890, 860], ['B', 900, 921], ['C', 980, 840], ['D', 953, 868],
+                       ['E', 931, 884], ['F', 994, 889], ['G', 1002,879], ['H', 996, 898],
+                       ['I', 878, 828], ['J', 893, 877], ['K', 895, 810], ['L', 817, 812],
+                       ['M', 998, 803], ['N', 954, 814], ['O', 970, 977], ['P', 786, 813] ]
+      end
+    end
+
+    info = "美味无敌快乐PK赛——#{game_title}"
+    set_page_title(info)
+		set_block_title(info)
+  end
+
   private
   
   def set_tag_list

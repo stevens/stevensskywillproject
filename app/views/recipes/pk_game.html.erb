@@ -1,0 +1,60 @@
+<div class="content_block">
+
+  <div class="block_header">
+    <div class="block_header_link">
+
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div class="block_main">
+    <br />
+    <table class="pk_game">
+      <% item_sn = 0 %>
+      <% for group in @pk_groups %>
+        <% item_left = Recipe.find_by_id(group[1]) %>
+        <% item_right = Recipe.find_by_id(group[2]) %>
+        <tr>
+          <% item_sn += 1 %>
+          <td class="pk_item_sn pk_package_left"><%= "#{item_sn}号" %></td>
+          <td class="pk_group_sn"><%= "#{group[0]}组" %></td>
+          <% item_sn += 1 %>
+          <td class="pk_item_sn pk_package_right"><%= "#{item_sn}号" %></td>
+        </tr>
+        <tr>
+          <td class="pk_item_content pk_package_left">
+            <div class="pk_item_photo matrix_photo">
+              <%= render :partial => 'layouts/item_photo',
+                          :locals => { :item => item_left,
+                                      :photo_style => 'highlight' } %>
+            </div>
+            <div class="pk_below_item_photo below_photo">
+              <%= render :partial => 'layouts/item_basic',
+                          :locals => { :item => item_left,
+                                      :show_icon => false,
+                                      :show_title => true,
+                                      :show_link => true } %>
+            </div>
+          </td>
+          <td class="pk_symbol">PK</td>
+          <td class="pk_item_content pk_package_right">
+            <div class="pk_item_photo matrix_photo">
+              <%= render :partial => 'layouts/item_photo',
+                          :locals => { :item => item_right,
+                                      :photo_style => 'highlight' } %>
+            </div>
+            <div class="pk_below_item_photo below_photo">
+              <%= render :partial => 'layouts/item_basic',
+                          :locals => { :item => item_right,
+                                      :show_icon => false,
+                                      :show_title => true,
+                                      :show_link => true } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <br />
+  </div>
+
+</div>
