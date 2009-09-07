@@ -46,26 +46,30 @@
                 <%= "#{stat[1]}<br />￥#{stat[1] * 0.5}" %>
               </td>
               <td class="love_recipe_award">
-                <% if love_recipe_user %>
-                  <% if stat[2] && stat[2][0] && love_recipe_user == stat[2][0] %>
-                    爱心贡献奖<br />
-                  <% end %>
-                  <% if stat[2] && stat[2][1] && love_recipe_user == stat[2][1] %>
-                    爱心参与奖
-                  <% end %>
-                <% else %>
-                  [贡]
-                  <% if stat[2] && stat[2][0] %>
-                    <% user_name = strip_tags(stat[2][0].login) %>
-                    <% link_title = "#{user_name} 获得了#{stat[0]}的爱心贡献奖!" %>
-                    <%= link_to user_name, { :controller => 'users', :action => 'profile', :id => stat[2][0].id }, :title => link_title %>
-                  <% end %>
-                  <br />
-                  [参]
-                  <% if stat[2] && stat[2][1] %>
-                    <% user_name = strip_tags(stat[2][1].login) %>
-                    <% link_title = "#{user_name} 获得了#{stat[0]}的爱心参与奖!" %>
-                    <%= link_to user_name, { :controller => 'users', :action => 'profile', :id => stat[2][1].id }, :title => link_title %>
+                <% award_names = [ '贡献', '成就', '行动' ] %>
+                <% if (award_user_ids = stat[2]) && award_user_ids != [] %>
+                  <% award_user_index = 0 %>
+                  <% if love_recipe_user %>
+                    <% for award_user_id in award_user_ids %>
+                      <% if (award_user = User.find_by_id(award_user_id)) && love_recipe_user == award_user %>
+                        <%= "爱心#{award_names[award_user_index]}奖" %>
+                        <% break %>
+                      <% end %>
+                      <% award_user_index += 1 %>
+                    <% end %>
+                  <% else %>
+                    <% for award_user_id in award_user_ids %>
+                      <% if award_user = User.find_by_id(award_user_id) %>
+                        <% award_user_name = strip_tags(award_user.login) %>
+                        <% award_name = award_names[award_user_index] %>
+                        <% link_title = "恭喜 #{award_user_name} 获得了#{stat[0]}的爱心#{award_name}奖!" %>
+                        <div>
+                          <%= "[#{award_name}]" %>
+                          <%= link_to award_user_name, user_first_link(award_user), :title => link_title %>
+                        </div>
+                      <% end %>
+                      <% award_user_index += 1 %>
+                    <% end %>
                   <% end %>
                 <% end %>
               </td>
