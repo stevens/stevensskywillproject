@@ -2098,6 +2098,9 @@ table.love_recipe_stats td.more {
 table.love_recipe_stats td.most {
     background-color: #99ccff;
 }
+table.love_recipe_stats td.most_choiced {
+    background-color: #ffcc99;
+}
 table.love_recipe_stats a {
     font-size: 9px;
 }

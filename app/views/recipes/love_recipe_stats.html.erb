@@ -29,7 +29,7 @@
             <%= link_to user_name, user_link, :target => "_blank", :title => user_name %>
           </td>
           <% 1.upto(user_stats.size-2) do |i| %>
-            <td class="data<%= user_stats[i][1] >= 5 ? ' more' : '' %><%= (params[:user_id].nil? && user_stats[i][3]) ? ' most' : '' %>">
+            <td class="data<%= user_stats[i][1] >= 5 ? ' more' : '' %><%= params[:user_id].nil? && user_stats[i][3] ? ' most' : '' %><%= params[:user_id].nil? && !user_stats[i][3] && user_stats[i][4] ? ' most_choiced' : '' %>">
               <%= render :partial => 'recipes/love_recipe_stats_data',
                           :locals => { :recipes_count => user_stats[i][1],
                                       :choiced_recipes_count => user_stats[i][2],
@@ -41,7 +41,7 @@
           <% (user_stats.size-1).upto(12) do %>
             <td></td>
           <% end %>
-          <td class="sum data<%= (user_stats.last[1] >= 80) || (user_stats.last[3] >= 10) ? ' more' : '' %><%= (params[:user_id].nil? && user_stats.last[4]) ? ' most' : '' %>">
+          <td class="sum data<%= (user_stats.last[1] >= 80) || (user_stats.last[3] >= 10) ? ' more' : '' %><%= params[:user_id].nil? && user_stats.last[4] ? ' most' : '' %><%= params[:user_id].nil? && !user_stats.last[4] && user_stats.last[5] ? ' most_choiced' : '' %>">
             <%= render :partial => 'recipes/love_recipe_stats_data',
                         :locals => { :recipes_count => user_stats.last[1],
                                     :choiced_recipes_count => user_stats.last[2],

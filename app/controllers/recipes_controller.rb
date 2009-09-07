@@ -424,6 +424,7 @@ class RecipesController < ApplicationController
       @total_stats = [nil]
       user_index = 0
       most_temp = [nil]
+      most_choiced_temp = [nil]
 
       @user_recipes_groups.each do |user_id, user_recipes|
         user_stats = [user_id]
@@ -431,7 +432,7 @@ class RecipesController < ApplicationController
         user_recipes_count_sum = 0
         user_choiced_recipes_count_sum = 0
         user_more_recipes_months_count = 0
-        
+
         1.upto(12) do |m|
           phase_end = phase_start.end_of_month
           user_recipes_count = 0
@@ -461,10 +462,12 @@ class RecipesController < ApplicationController
 
           phase_month = phase_start.strftime("%Y-%m")
           is_most = false
+          is_most_choiced = false
 
           if user_index == 0
             is_most = true if user_recipes_count > 0
             most_temp << [ phase_month, 0 ]
+            most_choiced_temp << [ phase_month, 0]
             @total_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, more_recipes_users_count, users_count ]
           elsif user_index > 0 && user_recipes_count > 0
             last_most_user_stats = @user_stats_group[most_temp[m][1]][m]
@@ -475,13 +478,23 @@ class RecipesController < ApplicationController
             elsif user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count == last_most_user_stats[2]
               is_most = true
             end
+
+            last_most_user_stats = @user_stats_group[most_choiced_temp[m][1]][m]
+            if user_choiced_recipes_count > last_most_user_stats[2] || (user_choiced_recipes_count == last_most_user_stats[2] && user_recipes_count > last_most_user_stats[1])
+              is_most_choiced = true
+              last_most_user_stats[4] = false
+              most_choiced_temp[m][1] = user_index
+            elsif user_choiced_recipes_count == last_most_user_stats[2] && user_recipes_count == last_most_user_stats[1]
+              is_most_choiced = true
+            end
+
             @total_stats[m][1] += user_recipes_count
             @total_stats[m][2] += user_choiced_recipes_count
             @total_stats[m][3] += more_recipes_users_count
             @total_stats[m][4] += users_count
           end
 
-          user_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, is_most ]
+          user_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, is_most, is_most_choiced ]
 
           if phase_month == stat_to.strftime("%Y-%m")
             if (user_recipes_count_sum >= 80) || (user_more_recipes_months_count >= 10)
@@ -489,10 +502,12 @@ class RecipesController < ApplicationController
             end
 
             is_most_sum = false
+            is_most_choiced_sum = false
 
             if user_index == 0
               is_most_sum = true
               most_temp << [ 'sum', 0 ]
+              most_choiced_temp << [ 'sum', 0]
               @total_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, more_recipes_users_count_total ]
             elsif user_index > 0
               last_most_sum_stats = @user_stats_group[most_temp.last[1]].last
@@ -503,12 +518,22 @@ class RecipesController < ApplicationController
               elsif user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum == last_most_sum_stats[2]
                 is_most_sum = true
               end
+
+              last_most_sum_stats = @user_stats_group[most_choiced_temp.last[1]].last
+              if user_choiced_recipes_count_sum > last_most_sum_stats[2] || (user_choiced_recipes_count_sum == last_most_sum_stats[2] && user_recipes_count_sum > last_most_sum_stats[1])
+                is_most_choiced_sum = true
+                last_most_sum_stats[5] = false
+                most_choiced_temp.last[1] = user_index
+              elsif user_choiced_recipes_count_sum == last_most_sum_stats[2] && user_recipes_count_sum == last_most_sum_stats[1]
+                is_most_choiced_sum = true
+              end
+
               @total_stats.last[1] += user_recipes_count_sum
               @total_stats.last[2] += user_choiced_recipes_count_sum
               @total_stats.last[3] += more_recipes_users_count_total
             end
 
-            user_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, user_more_recipes_months_count, is_most_sum ]
+            user_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, user_more_recipes_months_count, is_most_sum, is_most_choiced_sum ]
 
             break
           else
