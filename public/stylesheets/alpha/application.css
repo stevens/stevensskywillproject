@@ -2108,6 +2108,49 @@ table.love_recipe_stats span.green {
     color: #78b36d;
 }
 
+/* PK Game */
+table.pk_game td.pk_item_sn {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 3px 0px;
+}
+table.pk_game td.pk_group_sn {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 3px 10px;
+    background-color: #e42300;
+}
+table.pk_game td.pk_symbol {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #e42300;
+    padding-top: 80px;
+}
+table.pk_game td.pk_package_left {
+    background-color: #ff8159;
+}
+table.pk_game td.pk_package_right {
+    background-color: #428cbb;
+}
+table.pk_game td.pk_item_content {
+    width: 250px;
+    background-color: #ffffff;
+    border: 1px dashed #f1f1f1;
+    padding-bottom: 10px;
+}
+table.pk_game .matrix_photo {
+	height: 196px;
+}
+table.pk_game div.pk_below_item_photo a {
+    font-size: 14px;
+    font-weight: bold;
+}
+
 /* ad */
 #ad_sideblock_wrapper {
     padding-top: 50px;
