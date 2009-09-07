@@ -31,7 +31,9 @@
         <div class="user_bar_link">
           <%= link_to MAIN_PAGE_CN, url_for(:controller => 'users', :action => 'profile', :id => user.id) %> |
           <%= link_to RECIPE_CN, user_recipes_path(user) %> |
-          <%= link_to MENU_CN, user_menus_path(user) %> |
+          <!-- 屏蔽餐单
+          <= link_to MENU_CN, user_menus_path(user) > |
+          结束 -->
           <%= link_to MATCH_CN, user_matches_path(user) %> |
           <%= link_to PEOPLE_CN, user_contacts_path(user) %> |
           <%= link_to REVIEW_CN, user_reviews_path(user) %> |
