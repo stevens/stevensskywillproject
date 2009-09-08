@@ -17,6 +17,26 @@ module UsersHelper
                       GROUP BY recipes.user_id
                       ORDER BY RAND()")
   end
+
+  def week_user_stat(activated_at=nil, created_at=nil)
+    User.find_by_sql("select users.id from users where users.activated_at IS NOT NULL and users.activated_at>= '#{activated_at}' and users.created_at <='#{created_at}'")
+  end
+
+  def week_recipes_stat(published_at=nil, created_at=nil)
+    User.find_by_sql("select recipes.user_id from recipes where recipes.published_at IS NOT NULL and recipes.published_at>= '#{published_at}' and recipes.created_at <='#{created_at}'")
+  end
+
+  def week_reviews_stat(created_from=nil, created_to=nil)
+    User.find_by_sql("select reviews.user_id from reviews where reviews.created_at>= '#{created_from}' and reviews.created_at <='#{created_to}'")
+  end
+
+  def week_fav_stat(created_from=nil, created_to=nil)
+    User.find_by_sql("select favorites.user_id from favorites where favorites.created_at>= '#{created_from}' and favorites.created_at <='#{created_to}'")
+  end
+
+  def week_ratings_stat(created_from=nil, created_to=nil)
+    User.find_by_sql("select ratings.user_id from ratings where ratings.created_at>= '#{created_from}' and ratings.created_at <='#{created_to}'")
+  end
   
   def user_conditions(role = nil, activated = true, created_at_from = nil, created_at_to = nil)
   	conditions = ["users.login IS NOT NULL", 
