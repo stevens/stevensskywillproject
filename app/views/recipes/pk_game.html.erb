@@ -9,17 +9,33 @@
 
   <div class="block_main">
     <br />
+    <% group_titles = %w[A B C D E F G H I J K L M N O P Q R S T U V W X Y Z] %>
     <table class="pk_game">
       <% item_sn = 0 %>
+      <% group_sn = 0 %>
       <% for group in @pk_groups %>
-        <% item_left = Recipe.find_by_id(group[1]) %>
-        <% item_right = Recipe.find_by_id(group[2]) %>
+        <% item_left = Recipe.find_by_id(group[1][0]) %>
+        <% item_right = Recipe.find_by_id(group[1][1]) %>
+        <% if group[2] && group[2] != [] %>
+          <% show_votes = true %>
+          <% votes_sum = (group[2][0] + group[2][1])*1.0 %>
+          <% votes_left = (group[2][0] / votes_sum * 100).round %>
+          <% votes_right = 100 - votes_left %>
+          <% if votes_left > votes_right %>
+            <% win_left = true %>
+            <% win_right = false %>
+          <% else %>
+            <% win_left = false %>
+            <% win_right = true %>
+          <% end %>
+        <% end %>
         <tr>
           <% item_sn += 1 %>
           <td class="pk_item_sn pk_package_left"><%= "#{item_sn}号" %></td>
-          <td class="pk_group_sn"><%= "#{group[0]}组" %></td>
+          <td class="pk_group_sn"><%= "#{group_titles[group_sn]}组" %></td>
           <% item_sn += 1 %>
           <td class="pk_item_sn pk_package_right"><%= "#{item_sn}号" %></td>
+          <% group_sn += 1 %>
         </tr>
         <tr>
           <td class="pk_item_content pk_package_left">
@@ -52,6 +68,29 @@
             </div>
           </td>
         </tr>
+        <% if show_votes %>
+          <tr>
+            <td class="pk_item_votes<%= win_left ? ' pk_item_win' : ''%>">
+              <% bar_left_width = votes_left*1.0/100*190 %>
+              <div class="pk_item_votes_bar" style="width: <%= bar_left_width %>px;">
+                <%= "#{votes_left}%" %>
+              </div>
+              <div class="pk_item_votes_result">
+                <%= win_left ? 'WIN' : 'LOSE' %>
+              </div>
+            </td>
+            <td></td>
+            <td class="pk_item_votes<%= win_right ? ' pk_item_win' : ''%>">
+              <% bar_right_width = votes_right*1.0/100*190 %>
+              <div class="pk_item_votes_bar" style="width: <%= bar_right_width %>px;">
+                <%= "#{votes_right}%" %>
+              </div>
+              <div class="pk_item_votes_result">
+                <%= win_right ? 'WIN' : 'LOSE' %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </table>
     <br />
