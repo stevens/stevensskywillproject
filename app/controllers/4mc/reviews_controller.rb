@@ -30,34 +30,39 @@ class ReviewsController < ApplicationController
   def index
 		respond_to do |format|
 			reviewable_type = params[:reviewable_type].camelize if !params[:reviewable_type].blank?
-      if @user && @user == @current_user
-      	format.html do
-      		if params[:reviewable_type]
-      			redirect_to url_for(:controller => 'reviews', :action => 'mine', :reviewable_type => params[:reviewable_type], :filter => params[:filter])
-      		else
-      			redirect_to url_for(:controller => 'reviews', :action => 'mine', :filter => params[:filter])
-      		end
-      	end
-      else
+#      if @user && @user == @current_user
+#      	format.html do
+#      		if params[:reviewable_type]
+#      			redirect_to url_for(:controller => 'reviews', :action => 'mine', :reviewable_type => params[:reviewable_type], :filter => params[:filter])
+#      		else
+#      			redirect_to url_for(:controller => 'reviews', :action => 'mine', :filter => params[:filter])
+#      		end
+#      	end
+#      else
       	if @user
 					load_reviews_set(@user)
       		@show_filter_bar = true
-      		info = "#{username_prefix(@user)}#{name_for(reviewable_type)}#{REVIEW_CN}"
+          if !params[:filter].blank?
+            codeable_type = @current_user && @user == @current_user ? 'review_filter_my' : 'review_filter_ta'
+            filter_title = filter_title(codeable_type, params[:filter])
+            filter_suffix = filter_suffix(filter_title)
+          end
+      		info = "#{username_prefix(@user)}#{name_for(reviewable_type)}#{REVIEW_CN}列表#{filter_suffix}"
 	      elsif @parent_obj && item_accessible?(@parent_obj, @current_user)
 	      	@reviewable = @parent_obj
 	      	@reviews_set = @reviewable.reviews.find(:all)
 	      	@reviews_set_count = @reviews_set.size
           @show_filter_bar = true
-	      	info = "#{@parent_name}#{REVIEW_CN} #{itemname_suffix(@parent_obj)}"
+	      	info = "#{@parent_name}#{REVIEW_CN}列表 #{itemname_suffix(@parent_obj)}"
         elsif reviewable_type
 	      	@reviews_set = reviewable_type_reviews(reviewable_type)
-	      	info = "#{name_for(reviewable_type)}#{REVIEW_CN}"
+	      	info = "#{name_for(reviewable_type)}#{REVIEW_CN}列表"
 	      end
 	         
 				set_page_title(info)
 				set_block_title(info)
 	      format.html
-			end
+#			end
     end
   end 
 
@@ -155,16 +160,23 @@ class ReviewsController < ApplicationController
   end
   
   def mine
-  	reviewable_type = params[:reviewable_type].camelize if !params[:reviewable_type].blank?
-		load_reviews_set(@current_user)
-		@show_filter_bar = true
-		info = "#{username_prefix(@current_user)}#{name_for(reviewable_type)}#{REVIEW_CN}"
-		
-		set_page_title(info)
-		set_block_title(info)
+#  	reviewable_type = params[:reviewable_type].camelize if !params[:reviewable_type].blank?
+#		load_reviews_set(@current_user)
+#		@show_filter_bar = true
+#		info = "#{username_prefix(@current_user)}#{name_for(reviewable_type)}#{REVIEW_CN}"
+#
+#		set_page_title(info)
+#		set_block_title(info)
 		
     respond_to do |format|
-      format.html { render :template => 'reviews/index' }
+#      format.html { render :template => 'reviews/index' }
+      format.html do
+        if params[:reviewable_type]
+          redirect_to :user_id => @current_user.id, :action => 'index', :reviewable_type => params[:reviewable_type], :filter => params[:filter]
+        else
+          redirect_to :user_id => @current_user.id, :action => 'index', :filter => params[:filter]
+        end
+      end
     end
   end
   
