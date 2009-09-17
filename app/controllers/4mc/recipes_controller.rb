@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_filter :preload_models
-  before_filter :protect, :except => [:index, :show, :overview]
+  before_filter :protect, :except => [:index, :show, :overview, :pk_game]
   before_filter :store_location_if_logged_in, :only => [:mine]
   before_filter :clear_location_unless_logged_in, :only => [:index, :show, :overview]
   before_filter :set_system_notice, :only => [:overview]
@@ -37,20 +37,26 @@ class RecipesController < ApplicationController
   # GET /recipes.xml
   def index
     respond_to do |format|
-      if @user && @user == @current_user
-      	format.html { redirect_to :action => 'mine', :filter => params[:filter] }
-      else
+#      if @user && @user == @current_user
+#      	format.html { redirect_to :action => 'mine', :filter => params[:filter] }
+#      else
 		    load_recipes_set(@user)
-		  	
-		  	info = "#{username_prefix(@user)}#{RECIPE_CN}"
+        if !params[:filter].blank?
+          codeable_type = @current_user && @user == @current_user ? 'recipe_filter_my' : 'recipe_filter_ta'
+          filter_title = filter_title(codeable_type, params[:filter])
+          filter_suffix = filter_suffix(filter_title)
+        end
+		  	info = "#{username_prefix(@user)}#{RECIPE_CN}列表#{filter_suffix}"
 				set_page_title(info)
 				set_block_title(info)
 				
 		  	@show_todo = true
 		  	@show_favorite = true
-				
+
+        @meta_description = "这是#{username_prefix(@user)}#{filter_title}#{RECIPE_CN}列表，可以浏览各种#{filter_title}#{RECIPE_CN}（菜谱）的图片和文字摘要信息。"
+
       	format.html
-      end
+#      end
       # format.xml  { render :xml => @recipes_set }
     end
   end
@@ -98,7 +104,7 @@ class RecipesController < ApplicationController
 		info = "#{RECIPE_CN} - #{recipe_title}"
 		set_page_title(info)
 		set_block_title(info)
-		@meta_description = "这是#{recipe_title}#{add_brackets(recipe_common_title, '(', ')')}的#{RECIPE_CN}信息, 来自#{recipe_username}. "
+		@meta_description = "这是#{recipe_title}#{add_brackets(recipe_common_title, '（', '）')}的#{RECIPE_CN}详细信息，来自#{recipe_username}，其中包括食谱（菜谱）的名称、难度、成本、时间、出品量、描述、用料、工具、做法、贴士，以及食谱标签、食谱图片、食谱评论、食谱评分和相关食谱等内容。"
 		@meta_keywords = []
     @meta_keywords << @recipe.tag_list if !@recipe.tag_list.blank?
     @meta_keywords += [ recipe_title, recipe_username, recipe_link_url ]
@@ -125,7 +131,9 @@ class RecipesController < ApplicationController
     info = "新#{RECIPE_CN}"
 		set_page_title(info)
 		set_block_title(info)
-    
+
+    @meta_description = "这是创建#{RECIPE_CN}的界面，通过这个界面可以在#{SITE_NAME_CN}创建和上传一个新#{RECIPE_CN}（菜谱）。"
+
     respond_to do |format|
       format.html
       # format.xml  { render :xml => @recipe }
@@ -142,6 +150,8 @@ class RecipesController < ApplicationController
  		info = "#{EDIT_CN}#{RECIPE_CN} - #{item_title(@recipe)}"
 		set_page_title(info)
 		set_block_title(info)
+
+    @meta_description = "这是编辑#{RECIPE_CN}的界面，通过这个界面可以在#{SITE_NAME_CN}编辑和修改一个#{RECIPE_CN}（菜谱）。"
 		
 		respond_to do |format|
 			format.html
@@ -332,10 +342,16 @@ class RecipesController < ApplicationController
 	#分享
 	def share
     load_recipe
-    
- 		info = "分享#{RECIPE_CN} - #{@recipe.title}"
+
+    recipe_title = item_title(@recipe)
+		recipe_common_title = @recipe.common_title.strip if !@recipe.common_title.blank?
+		recipe_username = user_username(@recipe.user, true, true)
+
+ 		info = "分享#{RECIPE_CN} - #{recipe_title}"
 		set_page_title(info)
 		set_block_title(info)
+
+    @meta_description = "这是#{recipe_title}#{add_brackets(recipe_common_title, '（', '）')}的#{RECIPE_CN}分享信息，来自#{recipe_username}，其中包括食谱（菜谱）的图文链接代码和效果预览等内容。"
 	end
   
   def overview
@@ -350,6 +366,8 @@ class RecipesController < ApplicationController
 	  load_choice_recipes
 	  load_reviews_set
 	  load_tags_set
+
+    @meta_description = "这是#{SITE_NAME_CN}的#{RECIPE_CN}综览，是#{RECIPE_CN}（菜谱）频道的首页，其中包括热门食谱（红食谱）、精选食谱、新鲜食谱，以及食谱搜索、食谱浏览、食谱排行、食谱评论、食谱标签、爱心食谱行动等内容。"
 
     @highlighted_recipe = @choice_recipes.rand
 
@@ -370,28 +388,33 @@ class RecipesController < ApplicationController
   end
   
   def mine
-  	@order = 'created_at DESC, published_at DESC'
-    load_recipes_set(@current_user)
-    
-  	@show_photo_todo = true
-  	@show_todo = true
-  	@show_manage = true
-		
-		info = "#{username_prefix(@current_user)}#{RECIPE_CN}"
-		set_page_title(info)
-		set_block_title(info)
+#  	@order = 'created_at DESC, published_at DESC'
+#    load_recipes_set(@current_user)
+#
+#  	@show_photo_todo = true
+#  	@show_todo = true
+#  	@show_manage = true
+#
+#		info = "#{username_prefix(@current_user)}#{RECIPE_CN}"
+#		set_page_title(info)
+#		set_block_title(info)
 		
     respond_to do |format|
-      format.html { render :template => "recipes/index" }
+#      format.html { render :template => "recipes/index" }
+      format.html { redirect_to :user_id => @current_user.id, :action => 'index', :filter => params[:filter] }
       # format.xml  { render :xml => @recipes_set }
     end
   end
 
   # 爱心食谱行动数据统计
   def love_recipe_stats
-    info = "爱心食谱行动数据统计"
+    season_numbers = %w[一 二 三 四 五 六 七 八 九 十]
+    season_number = season_numbers[params[:season].to_i - 1]
+    info = "爱心食谱行动（第#{season_number}季）数据统计"
     set_page_title(info)
 		set_block_title(info)
+
+    @meta_description = "这是蜂厨慈善创意活动——爱心食谱行动（第#{season_number}季）的数据统计信息，包括月度统计数据和累积统计数据等内容。"
 
     case params[:season]
     when '1'
@@ -559,17 +582,24 @@ class RecipesController < ApplicationController
       game_title = "中西点心对对碰"
       case params[:round]
       when '1'
-        game_title = "#{game_title}(第一轮)"
-        @pk_groups = [ ['A', 890, 860], ['B', 900, 921], ['C', 980, 840], ['D', 953, 868],
-                       ['E', 931, 884], ['F', 994, 889], ['G', 1002,879], ['H', 996, 898],
-                       ['I', 878, 828], ['J', 893, 877], ['K', 895, 810], ['L', 817, 812],
-                       ['M', 998, 803], ['N', 954, 814], ['O', 970, 977], ['P', 786, 813] ]
+        @pk_groups = [ ['A', [890, 860], [21, 5] ], ['B', [900, 921], [14, 12] ], ['C', [980, 840], [7, 19] ], ['D', [953, 868], [17, 9] ],
+                       ['E', [931, 884], [20, 6] ], ['F', [994, 889], [17, 9] ], ['G', [1002, 879], [16, 10] ], ['H', [996, 898], [12, 14] ],
+                       ['I', [878, 828], [4, 22] ], ['J', [893, 877], [14, 12] ], ['K', [895, 810], [12, 14] ], ['L', [817, 812], [5, 21] ],
+                       ['M', [998, 803], [6, 20] ], ['N', [954, 814], [11, 15] ], ['O', [970, 977], [11, 15] ], ['P', [786, 813], [12, 14] ] ]
+      when '2'
+        @pk_groups = [ ['A', [953, 803], [10, 15] ], ['B', [890, 812], [15, 10] ], ['C', [931, 828], [13, 12] ], ['D', [900, 977], [15, 10] ],
+                       ['E', [994, 810], [11, 14] ], ['F', [1002, 840], [13, 12] ], ['G', [893, 814], [12, 13] ], ['H', [898, 813], [15, 10] ] ]
+      when '3'
+        @pk_groups = [ ['A', [931, 898] ], ['B', [890, 810] ], ['C', [1002, 814] ], ['D', [900, 803] ] ]
       end
     end
 
-    info = "美味无敌快乐PK赛——#{game_title}"
+    round_titles = %w[一 二 三 四 五 六 七 八 九 十]
+    info = "美味无敌快乐PK赛——#{game_title}（第#{round_titles[params[:round].to_i - 1]}轮）"
     set_page_title(info)
 		set_block_title(info)
+
+    @meta_description = "这是#{info}的信息，包括这一轮的对阵形势和投票结果等内容。"
   end
   
   private
