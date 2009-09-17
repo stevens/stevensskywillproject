@@ -110,7 +110,7 @@ class SearchingsController < ApplicationController
 			@searchables_set = searchables_for(nil, @searchable_type, @keywords, user_conditions, nil, true, nil, 'activated_at DESC, created_at DESC')
 			@users_set = @searchables_set
 		end
-		@searchables_set_count = @searchables_set.size
+		@searchables_set_count = @searchables_set.size if @searchables_set
 	end
 
 end
