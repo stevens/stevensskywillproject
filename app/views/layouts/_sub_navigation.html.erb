@@ -1,9 +1,9 @@
 <% if current_tab_type == 'mine' %>
   <%= link_to "#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
-  <%= link_to "#{MENU_CN}", :controller => 'menus', :action => 'mine' %>
   <!-- 屏蔽餐单
-  <= link_to "#{MATCH_CN}", :controller => 'matches', :action => 'mine' >
+  <= link_to "#{MENU_CN}", :controller => 'menus', :action => 'mine' >
   结束 -->
+  <%= link_to "#{MATCH_CN}", :controller => 'matches', :action => 'mine' %>
   <%= link_to "#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
   <%= link_to "#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
   <%= link_to "#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
