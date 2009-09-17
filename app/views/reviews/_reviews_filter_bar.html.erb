@@ -1,12 +1,12 @@
 <% codeable_type = "review_filter" %>
 <% items_set_count = @reviews_set_count %>
 
-<% if @user %>
-  <% user = @user %>
-  <% codeable_type += "_ta" %>
-<% elsif params[:action] == 'mine' %>
+<% if @current_user && @user == @current_user %>
   <% user = @current_user %>
   <% codeable_type += "_my" %>
+<% elsif @user %>
+  <% user = @user %>
+  <% codeable_type += "_ta" %>
 <% end %>
 
 <%= render :partial => "layouts/items_filter_bar", 

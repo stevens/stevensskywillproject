@@ -1,7 +1,7 @@
 <% codeable_type = "#{params[:controller].singularize}_filter" %>
 <% items_set_count = @recipes_set_count %>
 
-<% if params[:action] == 'mine' %>
+<% if @current_user && @user == @current_user %>
   <% user = @current_user %>
   <% codeable_type += "_my" %>
 <% else %>
