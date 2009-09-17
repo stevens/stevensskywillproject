@@ -1161,21 +1161,18 @@ module ApplicationHelper
   # 页面的默认description
   def default_meta_description
 #    "蜂厨(BeeCook)——用心与爱打造最棒最有味的以美食和厨艺为主题的新概念社区化网络平台..."
-    "一个新概念美食生活在线平台，一族风格派美食主义饕餮达人，用创意打造专家级美食根据地，以智能引领现代版美食大革命..."
+    "蜂厨（BeeCook）：一个新概念美食生活在线平台，一族风格派美食主义饕餮玩家，用创意打造专家级美食根据地，以智能引领现代版美食大革命！这里有美食，这里有美味；这里是厨房，这里是食堂；这里学烹饪，这里学做菜；这里尝食物，这里尝料理；这里当厨师，这里当食客！"
   end
 
   # 页面的默认keywords
   def default_meta_keywords(item_type = nil)
-#    蜂厨 BeeCook 美食 美味 味道 厨艺 厨道 厨房 厨师 厨友 吃 私房 私房菜 食谱 菜谱 餐单 食单 菜单 餐厅 餐馆 餐饮 社区 社区化 图片 视频 评论 评分 收藏 收尝 标签 food recipe kichen cook chef menu delicious
     keywords = [SITE_NAME_CN, SITE_NAME_EN]
-    case item_type
-    when 'Recipe'
-      keywords += ['美食', '食谱', '菜谱', '私房菜', '私家菜', '家常菜', '厨艺', '家宴', DESCRIPTION_CN, INGREDIENT_CN, DIRECTION_CN, TIP_CN]
-      keywords += ['recipe', 'cookbook']
-    else
-      keywords += ['美食', '美味', '味道', '厨房', '厨师', '厨艺', '厨道', '食谱', '餐单', '菜肴', '料理', '社区']
-      keywords += ['recipe', 'cookbook', 'menu', 'cook', 'cooking', 'chef', 'food', 'gourmet', 'delicious', 'cuisine', 'sns']
-    end
+    keywords += %w[工具 料理 食品 做法 美食 食物 食堂 餐厅 菜谱 餐饮 食谱 厨房 原料 美味 烹饪 食材 味道 厨具 厨师 家常菜 做菜 餐具 做饭 烘焙 烹调 私房菜 贴士 菜肴 食客 食单 餐单 创意菜 用料]
+    keywords += %w[recipe cookbook menu cook cooking bake baking chef diner food gourmet delicious cuisine restaurant dining kichen ingredient direction tool tips cookware tableware]
+#    case item_type
+#    when 'Recipe'
+#    else
+#    end
   end
 
   # 为文件名加前后缀（保留原有扩展名）
@@ -1202,11 +1199,12 @@ module ApplicationHelper
     open(feed) do |s|
       content = s.read
     end
+
 #    RSS::Parser.parse(content, false) # false表示不验证feed的合法性
-    RSS::Parser.parse(content, false)
+    RSS::Parser.parse(content, false) if content
 #		rescue URI::InvalidURIError
 #			nil
-    rescue URI::InvalidURIError, RSS::NotWellFormedError
+    rescue URI::InvalidURIError, RSS::NotWellFormedError, Timeout::Error
       nil
   end
 
@@ -1229,6 +1227,16 @@ module ApplicationHelper
       end
       url_with_protocol(feed)
     end
+  end
+
+  # 获取过滤器的title
+  def filter_title(filter_codeable_type, filter_name)
+    Code.find(:first, :conditions => { :name => filter_name, :codeable_type => filter_codeable_type } ).title
+  end
+
+  # 获取过滤器的显示后缀
+  def filter_suffix(filter_title)
+    " - #{filter_title}"
   end
 		
 end
