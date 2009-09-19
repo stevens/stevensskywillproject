@@ -442,7 +442,7 @@ class RecipesController < ApplicationController
     recipes_set = love_recipes(user, '21', stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
 
     if recipes_set != []
-      @user_recipes_groups = recipes_set.group_by { |recipe| (recipe[:user_id]) }.sort { |a, b| a <=> b }
+      @user_recipes_groups = recipes_set.group_by { |recipe| (recipe[:user_id]) } #.sort { |a, b| a <=> b }
 
       @total_stats = [nil]
       user_index = 0
@@ -567,6 +567,7 @@ class RecipesController < ApplicationController
         user_index += 1
       end
       @total_stats.last[4] = @user_recipes_groups.size
+      @user_stats_group.sort! { |a, b| a[0] <=> b[0] }
     else
       flash[:notice] = "对不起, 没有得到统计数据!"
     end
