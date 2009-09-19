@@ -78,9 +78,12 @@ module SearchingsHelper
     require 'md5'
 #    require 'json'
 
+    app_key = '19652' #12001906
+    app_secret = '8e4b63f0ca9b11ddb671a3c295a1562b' #b88c4f3b773687c95e931c9b05146005
+
     url = URI.parse('http://sip.alisoft.com/sip/rest')
-    params = { 'sip_appkey' => '19652',
-              'sip_appsecret' => '8e4b63f0ca9b11ddb671a3c295a1562b',
+    params = { 'sip_appkey' => app_key,
+              'sip_appsecret' => app_secret,
               'sip_apiname' => 'taobao.items.get',
               'sip_timestamp' => time_iso_format(Time.now),
               'format' => 'json',
@@ -92,7 +95,7 @@ module SearchingsHelper
               'ww_status' => true,
               'fields' => 'iid,title,pic_path,price,cid,nick', 
               'order_by' => 'seller_credit:desc' }
-    params["sip_sign"] = MD5.hexdigest('8e4b63f0ca9b11ddb671a3c295a1562b' + params.sort.flatten.join).upcase
+    params["sip_sign"] = MD5.hexdigest(app_secret + params.sort.flatten.join).upcase
     resp  = Net::HTTP.post_form(url, params)
     items = ActiveSupport::JSON.decode(resp.body)['rsp']['items']
 #    result = JSON.parse(resp.body)
