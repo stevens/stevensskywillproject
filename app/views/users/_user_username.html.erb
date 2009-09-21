@@ -1,5 +1,6 @@
+<% user_title = strip_tags(user_username(user, show_username, show_myname)) %>
 <% if show_link %>
-	<%= link_to strip_tags(user_username(user, show_username, show_myname)), user_first_link(user) %>
+  <%= link_to user_title, user_first_link(user), :title => user_title %>
 <% else %>
-	<%= strip_tags(user_username(user, show_username, show_myname)) %>
+  <%= user_title %>
 <% end %>

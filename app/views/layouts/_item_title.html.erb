@@ -1,5 +1,6 @@
+<% title = strip_tags item.title %>
 <% if show_link %>
-  <%= link_to strip_tags(item.title), item_link_url(item) %>
+  <%= link_to title, item_link_url(item), :title => title %>
 <% else %>
-  <%= strip_tags item.title %>
+  <%= title %>
 <% end %>
