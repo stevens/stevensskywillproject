@@ -7,9 +7,11 @@
                         :love_recipe_users => @love_users_set,
                         :love_recipes_count =>  @love_recipes_set_count } %>
 
+<% cache(:controller => "site", :action => "index", :part => "rss") do %>
 <%= render :partial => 'layouts/rss_items_sideblock',
             :locals => { :block_title => "#{SITE_NAME_CN}板报",
                         :channel => @rss_channel,
                         :items => @rss_items } %>
+<% end %>
 
 <%= render :partial => 'site/partner_sideblock' %>

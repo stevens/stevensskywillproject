@@ -11,8 +11,10 @@ class SiteController < ApplicationController
     ### end
 		load_notifications if @current_user
 
+    unless read_fragment(:controller => "site", :action => "index", :part => "rss")
     feed = rss_feed
     read_rss_items(feed, 5)
+    end
 
     show_sidebar
 

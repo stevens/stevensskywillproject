@@ -2,7 +2,7 @@
 
 # Uncomment below to force Rails into production mode when
 # you don't control web/app server and can't set it the proper way
-# ENV['RAILS_ENV'] ||= 'production'
+ ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
@@ -380,9 +380,22 @@ end
 	
 	# ActionMailer::Base.delivery_method = :smtp
 	# ActionMailer::Base.smtp_settings = { }
+
+  ActionController::Base.fragment_cache_store = :file_store, RAILS_ROOT + "/public/caches/"
 	
 	require 'will_paginate'
-  # require 'action_mailer/ar_mailer' #后台管理用
+  #require 'action_mailer/ar_mailer' #后台管理用
+  #require 'memcached'
+  #CACHE = Memcached.new("localhost:11211")
+  #CACHE = MemCache.new :namespace=>'memcache_recipe',
+  #:c_threshold=>10_000,
+  #:compression=>true,
+  #:debug=>false,
+  #:readonly=>false,
+  #:urlencode=>false
+  #CACHE.servers = 'l27.0.0.1:11211'
+  #ActionController::Base.session_options[:expires] = 1800
+  #ActionController::Base.session_options[:cache] = CACHE
 	
 	TagList.delimiter = " "
 	Tag.destroy_unused = true
