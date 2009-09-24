@@ -1,0 +1,46 @@
+<% logo_url = "#{root_url}images/logo/love_recipe_logo.png" %>
+<% link_title = "更多美味更多爱" %>
+
+<% html_content = [] %>
+
+<% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
+
+<% html_content << "<div style='margin-bottom: 1px;'>
+                      <a href='#{root_url}' target='_blank'><img alt='' src='#{logo_url}' title='#{link_title}' /></a>
+                    </div>
+                    <div>
+                      <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: bold !important; color: #ff8159; font-family: Verdana; word-break: break-all; line-height: 16px;' title='#{link_title}'>爱心食谱行动</a>
+                    </div>
+                    <div>
+                      <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{SITE_NAME_CN} - 慈善创意活动</a>
+                    </div>" %>
+
+<% html_content << "</div>" %>
+
+<div class="sub_block_lr">
+
+  <div class="main">
+    <h3><%= "链接代码" %></h3>
+    <div class="sub_block_lr">
+      <em class="l2"><%= "在你的网站或Blog上显示爱心#{RECIPE_CN}行动的图文链接, 只需要将这段代码粘贴到你的网站或Blog的HTML代码中..." %></em>
+      <div id="love_recipe_share_code" class="share_code" value="<%= h str_squish(html_content.to_s, 1, false) %>">
+        <code><%= h html_content %></code>
+      </div>
+
+      <div class="submit">
+        <input type="button" value="复制到剪贴板" class="submit" onClick="fCopyToClicp('love_recipe_share_code');" />
+        <em class="l2"><%= "如果你的浏览器不支持自动复制到剪贴板, 请选中代码文本用键盘 [Ctrl+C] 复制" %></em>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <h3><%= "效果预览" %></h3>
+    <div class="sub_block_lr">
+      <div class="share_preview">
+        <%= html_content %>
+      </div>
+    </div>
+  </div>
+
+</div>

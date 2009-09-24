@@ -1,14 +1,33 @@
 <div id="linkus_wrapper" class="content_block">
 
-	<div id="linkus_header" class="block_header">
-		<%= render :partial => 'layouts/index_header',
-							 :locals => { :show_header_link => false,
-                                          :show_new_link => false,
-                                          :block_title => @block_title } %>
-	</div>
+  <SCRIPT LANGUAGE="JavaScript">
+    function fCopyToClicp(id){
+            var a = document.getElementById(id);
+            window.clipboardData.setData('text',a.value);
+            alert("已经复制到剪贴板了");
+    }
+  </SCRIPT>
 
-	<div id="linkus_detail" class="block_main">
-		<%= render :partial => 'site/linkus' %>
-	</div>
+  <div id="linkus_header" class="block_header">
+    <%= render :partial => 'layouts/index_header',
+                :locals => { :show_header_link => false,
+                            :show_new_link => false,
+                            :block_title => "#{SITE_NAME_CN}链接" } %>
+  </div>
+
+  <div id="linkus_detail" class="block_main">
+    <%= render :partial => 'site/linkus' %>
+  </div>
+
+  <div id="love_recipe_linkus_header" class="block_header">
+    <%= render :partial => 'layouts/index_header',
+                :locals => { :show_header_link => false,
+                            :show_new_link => false,
+                            :block_title => "爱心#{RECIPE_CN}行动链接" } %>
+  </div>
+
+  <div id="love_recipe_linkus_detail" class="block_main">
+    <%= render :partial => 'site/love_recipe_linkus' %>
+  </div>
 
 </div>
