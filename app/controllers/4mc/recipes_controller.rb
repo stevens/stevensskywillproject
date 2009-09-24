@@ -36,6 +36,7 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.xml
   def index
+#    CACHE.flush()
     respond_to do |format|
 #      if @user && @user == @current_user
 #      	format.html { redirect_to :action => 'mine', :filter => params[:filter] }
@@ -233,6 +234,7 @@ class RecipesController < ApplicationController
 				reg_homepage(@recipe, 'update')
         begin
           CACHE.delete('overview_recipes_set')
+          CACHE.delete('overview_all_recipes_set')
           CACHE.delete('overview_tags_set')
         rescue Memcached::NotFound
         end
@@ -254,6 +256,7 @@ class RecipesController < ApplicationController
 					reg_homepage(@recipe, 'destroy')
           begin
             CACHE.delete('overview_recipes_set')
+            CACHE.delete('overview_all_recipes_set')
             CACHE.delete('overview_love_recipes_set')
             CACHE.delete('overview_love_users_set')
             CACHE.delete('overview_tags_set')
@@ -305,6 +308,7 @@ class RecipesController < ApplicationController
 				reg_homepage(@recipe, 'update')
         begin
           CACHE.delete('overview_recipes_set')
+          CACHE.delete('overview_all_recipes_set')
           CACHE.delete('overview_tags_set')
         rescue Memcached::NotFound
         end
@@ -657,13 +661,23 @@ class RecipesController < ApplicationController
   
   def load_recipes_set(user = nil)
     if (@action_flag == 1)
-      begin
-        @recipes_set = CACHE.get('overview_recipes_set')
-      rescue Memcached::NotFound
-        order = @order ? @order : 'published_at DESC, created_at DESC'
-        @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
-        CACHE.set('overview_recipes_set',@recipes_set)
-      end
+      if @current_user
+        begin
+         @recipes_set = CACHE.get('overview_recipes_set')
+        rescue Memcached::NotFound
+          order = @order ? @order : 'published_at DESC, created_at DESC'
+          @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+          CACHE.set('overview_recipes_set',@recipes_set)
+        end
+      else
+        begin
+         @recipes_set = CACHE.get('overview_all_recipes_set')
+        rescue Memcached::NotFound
+          order = @order ? @order : 'published_at DESC, created_at DESC'
+          @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+          CACHE.set('overview_all_recipes_set',@recipes_set)
+        end
+      end      
     else
       order = @order ? @order : 'published_at DESC, created_at DESC'
       @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
@@ -675,12 +689,22 @@ class RecipesController < ApplicationController
   
   def load_choice_recipes(user = nil)
     if (@action_flag == 1)
-      begin
-        @choice_recipes = CACHE.get('overview_choice_recipes')
-      rescue Memcached::NotFound
-        @choice_recipes = roles_recipes(user, '11', 12)
-        CACHE.set('overview_choice_recipes',@choice_recipes,1800)
+      if @current_user
+        begin
+          @choice_recipes = CACHE.get('overview_choice_recipes')
+        rescue Memcached::NotFound
+          @choice_recipes = roles_recipes(user, '11', 12)
+          CACHE.set('overview_choice_recipes',@choice_recipes,1800)
+        end
+      else
+        begin
+          @choice_recipes = CACHE.get('overview_all_choice_recipes')
+        rescue Memcached::NotFound
+          @choice_recipes = roles_recipes(user, '11', 12)
+          CACHE.set('overview_all_choice_recipes',@choice_recipes,1800)
+        end
       end
+      
     else
       @choice_recipes = roles_recipes(user, '11', 12)
     end
