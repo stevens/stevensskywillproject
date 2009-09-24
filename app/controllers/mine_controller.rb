@@ -24,8 +24,8 @@ class MineController < ApplicationController
 	 	
 	 	load_notifications if @current_user
 
-    feed = rss_feed(profile_blog(@current_user))
-    read_rss_items(feed, 5)
+#    feed = rss_feed(profile_blog(@current_user))
+#    read_rss_items(feed, 5)
 	 	
 	 	info = "#{username_prefix(@current_user)}#{MAIN_PAGE_CN}"
 		set_page_title(info)

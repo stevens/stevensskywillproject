@@ -152,8 +152,8 @@ class UsersController < ApplicationController
 	      if @user == @current_user
 	      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
 	      else
-          feed = rss_feed(profile_blog(@user))
-          read_rss_items(feed, 5)
+#          feed = rss_feed(profile_blog(@user))
+#          read_rss_items(feed, 5)
 
 			  	load_user_recipes(@user)
           load_user_love_recipes(@user)
