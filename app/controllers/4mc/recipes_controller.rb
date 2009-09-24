@@ -582,25 +582,12 @@ class RecipesController < ApplicationController
 
   # 食谱PK赛
   def pk_game
-    case params[:game]
-    when '1'
-      game_title = "中西点心对对碰"
-      case params[:round]
-      when '1'
-        @pk_groups = [ ['A', [890, 860], [21, 5] ], ['B', [900, 921], [14, 12] ], ['C', [980, 840], [7, 19] ], ['D', [953, 868], [17, 9] ],
-                       ['E', [931, 884], [20, 6] ], ['F', [994, 889], [17, 9] ], ['G', [1002, 879], [16, 10] ], ['H', [996, 898], [12, 14] ],
-                       ['I', [878, 828], [4, 22] ], ['J', [893, 877], [14, 12] ], ['K', [895, 810], [12, 14] ], ['L', [817, 812], [5, 21] ],
-                       ['M', [998, 803], [6, 20] ], ['N', [954, 814], [11, 15] ], ['O', [970, 977], [11, 15] ], ['P', [786, 813], [12, 14] ] ]
-      when '2'
-        @pk_groups = [ ['A', [953, 803], [10, 15] ], ['B', [890, 812], [15, 10] ], ['C', [931, 828], [13, 12] ], ['D', [900, 977], [15, 10] ],
-                       ['E', [994, 810], [11, 14] ], ['F', [1002, 840], [13, 12] ], ['G', [893, 814], [12, 13] ], ['H', [898, 813], [15, 10] ] ]
-      when '3'
-        @pk_groups = [ ['A', [931, 898] ], ['B', [890, 810] ], ['C', [1002, 814] ], ['D', [900, 803] ] ]
-      end
-    end
+    game = params[:game]
+    round = params[:round]
+    @pk_groups = pk_game_groups(game, round)
 
     round_titles = %w[一 二 三 四 五 六 七 八 九 十]
-    info = "美味无敌快乐PK赛——#{game_title}（第#{round_titles[params[:round].to_i - 1]}轮）"
+    info = "美味无敌快乐PK赛——#{pk_game_title(game)}（第#{round_titles[round.to_i - 1]}轮）"
     set_page_title(info)
 		set_block_title(info)
 
