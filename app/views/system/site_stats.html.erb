@@ -1,0 +1,89 @@
+<div class="content_block">
+
+  <div class="block_header">
+    <div class="block_header_link">
+
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div class="block_main">
+    <table class="stats">
+      <tr>
+        <th>SN</th>
+        <th>Phase</th>
+        <th>User</th>
+        <th>Recipe</th>
+        <th>Recipe User</th>
+        <th>Review</th>
+        <th>Review User</th>
+        <th>Rating</th>
+        <th>Rating User</th>
+        <th>Favorite</th>
+        <th>Favortie User</th>
+      </tr>
+      <% phase_sn = 0 %>
+      <% for stats in @site_stats_set %>
+        <% phase_sn += 1 %>
+        <% phase_time = stats[0] %>
+        <% phase_metrics = stats[1] %>
+        <% is_total = phase_sn == @site_stats_set.size %>
+        <tr class="<%= is_total ? 'total' : '' %>">
+          <td class="sn">
+            <%= phase_sn unless is_total %>
+          </td>
+          <td class="phase">
+            <%= "#{phase_time[:phase_start].strftime("%Y-%m-%d")}<br />#{phase_time[:phase_end].strftime("%Y-%m-%d")}" %><br />
+            <%= is_total ? 'Total' : '' %>
+          </td>
+          <td class="data">
+            <% created_users = phase_metrics[:user][:created_users].to_i %>
+            <% activated_users = phase_metrics[:user][:activated_users].to_i %>
+            <% activate_rate = activated_users * 1.0 / created_users * 100 if created_users > 0 %>
+            <%= created_users == 0 && activated_users == 0 ? '-' : "<span class='red'>#{activated_users}</span>/<span class='green'>#{created_users}</span>" %>
+            <%= activate_rate > 0 ? "(#{activate_rate.round}%)" : '' %>
+          </td>
+          <td class="data">
+            <% created_recipes = phase_metrics[:recipe][:created_recipes].to_i %>
+            <% published_recipes = phase_metrics[:recipe][:published_recipes].to_i %>
+            <% publish_rate = published_recipes * 1.0 / created_recipes * 100 if created_recipes > 0 %>
+            <%= created_recipes == 0 && published_recipes == 0 ? '-' : "<span class='red'>#{published_recipes}</span>/<span class='green'>#{created_recipes}</span>" %>
+            <%= publish_rate > 0 ? "(#{publish_rate.round}%)" : '' %>
+          </td>
+          <td class="data">
+            <% recipe_users = phase_metrics[:recipe][:recipe_users].to_i %>
+            <% recipes_per_user = (published_recipes * 1.0 / recipe_users * 10).round / 10.0 if recipe_users > 0 %>
+            <%= recipe_users > 0 ? "<span class='red'>#{recipe_users}</span> (#{recipes_per_user})" : '-' %>
+          </td>
+          <td class="data">
+            <% created_reviews = phase_metrics[:review][:created_reviews].to_i %>
+            <%= created_reviews == 0 ? '-' : "<span class='red'>#{created_reviews}</span>" %><br />
+          </td>
+          <td class="data">
+            <% review_users = phase_metrics[:review][:review_users].to_i %>
+            <% reviews_per_user = (created_reviews * 1.0 / review_users * 10).round / 10.0 if review_users > 0 %>
+            <%= review_users > 0 ? "<span class='red'>#{review_users}</span> (#{reviews_per_user})" : '-' %>
+          </td>
+          <td class="data">
+            <% created_ratings = phase_metrics[:rating][:created_ratings].to_i %>
+            <%= created_ratings == 0 ? '-' : "<span class='red'>#{created_ratings}</span>" %><br />
+          </td>
+          <td class="data">
+            <% rating_users = phase_metrics[:rating][:rating_users].to_i %>
+            <% ratings_per_user = (created_ratings * 1.0 / rating_users * 10).round / 10.0 if rating_users > 0 %>
+            <%= rating_users > 0 ? "<span class='red'>#{rating_users}</span> (#{ratings_per_user})" : '-' %>
+          </td>
+          <td class="data">
+            <% created_favorites = phase_metrics[:favorite][:created_favorites].to_i %>
+            <%= created_favorites == 0 ? '-' : "<span class='red'>#{created_favorites}</span>" %><br />
+          </td>
+          <td class="data">
+            <% favorite_users = phase_metrics[:favorite][:favorite_users].to_i %>
+            <% favorites_per_user = (created_favorites * 1.0 / favorite_users * 10).round / 10.0 if favorite_users > 0 %>
+            <%= favorite_users > 0 ? "<span class='red'>#{favorite_users}</span> (#{favorites_per_user})" : '-' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

@@ -2,6 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :documents
 
+  map.connect 'system/site_stats', :controller => 'system', :action => 'site_stats'
+
   map.connect 'recipes/love_recipe_stats', :controller => 'recipes', :action => 'love_recipe_stats'
   map.connect 'recipes/pk_game', :controller => 'recipes', :action => 'pk_game'
 
@@ -17,8 +19,6 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
 	map.connect 'users/:id/profile', :controller => 'users', :action => 'profile'
-
-  map.connect 'users/week_stat', :controller => 'users', :action => 'week_stat'
 
 	map.connect 'mine/contacts', :controller => 'contacts', :action => 'mine'
 	map.connect 'users/:user_id/:contact_type/contacts', :controller => 'contacts', :action => 'index'

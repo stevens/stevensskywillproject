@@ -1,5 +1,7 @@
 class SystemController < ApplicationController
 
+  before_filter :protect, :only => :site_stats
+
   # 图片关联photoable的子项
   def photo_relating_subitem
   	respond_to do |format|
@@ -109,6 +111,32 @@ class SystemController < ApplicationController
 	def index
 		@page_title = "#{SITE_NAME_CN} | 系统维护中......"
 	end
+
+  # 网站指标数据统计
+  def site_stats
+    span_type = params[:type]
+
+    current = Time.now
+    range = params[:range].split('-')
+    range_start = range[0].to_time.getlocal.beginning_of_day
+    range_end = range[1].to_time.getlocal.end_of_day < current.end_of_day ? range[1].to_time.getlocal.end_of_day : current.end_of_day
+
+    @site_stats_set = []
+    phase_start = range_start
+    until phase_start > range_end do
+      phase_end = phase_end(span_type, phase_start) < range_end ? phase_end(span_type, phase_start) : range_end
+      phase_metrics = site_metrics(phase_start, phase_end)
+      @site_stats_set << [ { :phase_start => phase_start, :phase_end => phase_end }, phase_metrics ]
+      phase_start = phase_end + 1
+    end
+
+    range_metrics = site_metrics(range_start, range_end)
+    @site_stats_set << [ { :phase_start => range_start, :phase_end => range_end }, range_metrics ]
+    
+    info = "网站指标（#{span_title(span_type)}）数据统计"
+    set_page_title(info)
+		set_block_title(info)
+  end
 
   private
 
