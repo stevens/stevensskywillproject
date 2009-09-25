@@ -116,10 +116,13 @@ class SystemController < ApplicationController
   def site_stats
     span_type = params[:type]
 
-    current = Time.now
+    current = Time.now.end_of_day
+    site_start = Time.local(2008, 6, 1).beginning_of_day
     range = params[:range].split('-')
     range_start = range[0].to_time.getlocal.beginning_of_day
-    range_end = range[1].to_time.getlocal.end_of_day < current.end_of_day ? range[1].to_time.getlocal.end_of_day : current.end_of_day
+    range_start = range_start > site_start && range_start < current ? range_start : site_start
+    range_end = range[1].to_time.getlocal.end_of_day
+    range_end = range_end > site_start && range_end < current ? range_end : current
 
     @site_stats_set = []
     phase_start = range_start
