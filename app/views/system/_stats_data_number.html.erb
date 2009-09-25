@@ -1,0 +1,19 @@
+<% if metrics[0] %>
+  <% metric_a_value = metrics[0][:value] %>
+  <% metric_a_color = metrics[0][:color] %>
+<% end %>
+<% if metrics[1] %>
+  <% metric_b_value = metrics[1][:value] %>
+  <% metric_b_color = metrics[1][:color] %>
+<% end %>
+
+<% if type == 'single' %>
+  <%= metric_a_value == 0 ? '-' : "<span class='#{metric_a_color}'>#{metric_a_value}</span>" %>
+<% elsif type == 'rate' %>
+  <% rate = metric_a_value * 1.0 / metric_b_value * 100 if metric_b_value > 0 %>
+  <%= metric_a_value == 0 && metric_b_value == 0 ? '-' : "<span class='#{metric_a_color}'>#{metric_a_value}</span>/<span class='#{metric_b_color}'>#{metric_b_value}</span>" %>
+  <%= metric_b_value == 0 ? '' : "(#{rate.round}%)" %>
+<% elsif type == 'per' %>
+  <% per = (metric_a_value * 1.0 / metric_b_value * 10).round / 10.0 if metric_b_value > 0 %>
+  <%= metric_b_value == 0 ? '-' : "<span class='#{metric_b_color}'>#{metric_b_value}</span> (#{per})" %>
+<% end %>

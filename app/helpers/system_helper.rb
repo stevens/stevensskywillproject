@@ -84,4 +84,28 @@ module SystemHelper
     { :user => user_metrics.first, :recipe => recipe_metrics.first, :review => review_metrics.first, :rating => rating_metrics.first, :favorite => favorite_metrics.first }
   end
 
+  # 比较两组指标，获得较大的指标的索引序列
+  def site_metrics_most_indexes(site_stats_set, most_indexes, current_index)
+    most_indexes.each do |key, value|
+      value.each do |k, v|
+        current_metric = site_stats_set[current_index][1][key][k].to_i
+        most_metric = site_stats_set[v][1][key][k].to_i
+        most_indexes[key][k] = current_index if current_metric > most_metric
+      end
+    end
+    most_indexes
+  end
+
+  # 根据最大指标的索引序列，获得最大指标的值序列
+  def site_metrics_most_values(site_stats_set, most_indexes)
+    most_metrics = {}
+    most_indexes.each do |key, value|
+      most_metrics[key] = {}
+      value.each do |k, v|
+        most_metrics[key][k] = site_stats_set[v][1][key][k].to_i
+      end
+    end
+    most_metrics
+  end
+
 end

@@ -2109,6 +2109,21 @@ table.stats span.red {
 table.stats span.green {
     color: #78b36d;
 }
+table.stats span.blue {
+    color: #428cbb;
+}
+table.stats div.data_bar {
+    line-height: 5px;
+}
+table.stats div.red_bar {
+    background-color: #e42300;
+}
+table.stats div.green_bar {
+    background-color: #78b36d;
+}
+table.stats div.blue_bar {
+    background-color: #428cbb;
+}
 
 /* PK Game */
 table.pk_game td.pk_item_sn {
