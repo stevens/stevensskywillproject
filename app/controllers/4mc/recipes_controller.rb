@@ -412,168 +412,173 @@ class RecipesController < ApplicationController
 
   # 爱心食谱行动数据统计
   def love_recipe_stats
-    season_numbers = %w[一 二 三 四 五 六 七 八 九 十]
-    season_number = season_numbers[params[:season].to_i - 1]
-    info = "爱心食谱行动（第#{season_number}季）数据统计"
-    set_page_title(info)
-		set_block_title(info)
+    if access_control(@current_user)
+      season_numbers = %w[一 二 三 四 五 六 七 八 九 十]
+      season_number = season_numbers[params[:season].to_i - 1]
+      info = "爱心食谱行动（第#{season_number}季）数据统计"
+      set_page_title(info)
+      set_block_title(info)
 
-    @meta_description = "这是蜂厨慈善创意活动——爱心食谱行动（第#{season_number}季）的数据统计信息，包括月度统计数据和累积统计数据等内容。"
+      @meta_description = "这是蜂厨慈善创意活动——爱心食谱行动（第#{season_number}季）的数据统计信息，包括月度统计数据和累积统计数据等内容。"
 
-    case params[:season]
-    when '1'
-      @season_start = Time.local(2009, 8, 1).beginning_of_day
-      @season_end = (@season_start + 1.year - 1.day).end_of_day
-    end
+      case params[:season]
+      when '1'
+        @season_start = Time.local(2009, 8, 1).beginning_of_day
+        @season_end = (@season_start + 1.year - 1.day).end_of_day
+      end
 
-    if !params[:stat_at].blank?
-      stat_at = params[:stat_at].to_time.end_of_day
-    else
-      stat_at = @season_end
-    end
+      if !params[:stat_at].blank?
+        stat_at = params[:stat_at].to_time.end_of_day
+      else
+        stat_at = @season_end
+      end
 
-    stat_from = @season_start
-    if stat_at > @season_start && stat_at < @season_end
-      stat_to = stat_at
-    else
-      stat_to = @season_end
-    end
+      stat_from = @season_start
+      if stat_at > @season_start && stat_at < @season_end
+        stat_to = stat_at
+      else
+        stat_to = @season_end
+      end
 
-    user = User.find_by_id(params[:user_id].to_i) if !params[:user_id].blank?
+      user = User.find_by_id(params[:user_id].to_i) if !params[:user_id].blank?
 
-    @user_stats_group = []
+      @user_stats_group = []
 
-    recipes_set = love_recipes(user, '21', stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+      recipes_set = love_recipes(user, '21', stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
 
-    if recipes_set != []
-      @user_recipes_groups = recipes_set.group_by { |recipe| (recipe[:user_id]) } #.sort { |a, b| a <=> b }
+      if recipes_set != []
+        @user_recipes_groups = recipes_set.group_by { |recipe| (recipe[:user_id]) } #.sort { |a, b| a <=> b }
 
-      @total_stats = [nil]
-      user_index = 0
-      most_temp = [nil]
-      most_choiced_temp = [nil]
+        @total_stats = [nil]
+        user_index = 0
+        most_temp = [nil]
+        most_choiced_temp = [nil]
 
-      @user_recipes_groups.each do |user_id, user_recipes|
-        user_stats = [user_id]
-        phase_start = stat_from.beginning_of_month
-        user_recipes_count_sum = 0
-        user_choiced_recipes_count_sum = 0
-        user_more_recipes_months_count = 0
-        
-        1.upto(12) do |m|
-          phase_end = phase_start.end_of_month
-          user_recipes_count = 0
-          user_choiced_recipes_count = 0
-          users_count = 0
-          more_recipes_users_count = 0
-          more_recipes_users_count_total = 0
+        @user_recipes_groups.each do |user_id, user_recipes|
+          user_stats = [user_id]
+          phase_start = stat_from.beginning_of_month
+          user_recipes_count_sum = 0
+          user_choiced_recipes_count_sum = 0
+          user_more_recipes_months_count = 0
 
-          for user_recipe in user_recipes
-            user_recipe_published_at = user_recipe.published_at.to_time
-            if user_recipe_published_at >= phase_start && user_recipe_published_at <= phase_end
-              user_recipes_count += 1
-              user_recipes_count_sum += 1
-              if user_recipe.roles.include?('11')
-                user_choiced_recipes_count += 1
-                user_choiced_recipes_count_sum += 1
+          1.upto(12) do |m|
+            phase_end = phase_start.end_of_month
+            user_recipes_count = 0
+            user_choiced_recipes_count = 0
+            users_count = 0
+            more_recipes_users_count = 0
+            more_recipes_users_count_total = 0
+
+            for user_recipe in user_recipes
+              user_recipe_published_at = user_recipe.published_at.to_time
+              if user_recipe_published_at >= phase_start && user_recipe_published_at <= phase_end
+                user_recipes_count += 1
+                user_recipes_count_sum += 1
+                if user_recipe.roles.include?('11')
+                  user_choiced_recipes_count += 1
+                  user_choiced_recipes_count_sum += 1
+                end
               end
             end
-          end
 
-          users_count = 1 if user_recipes_count > 0
+            users_count = 1 if user_recipes_count > 0
 
-          if user_recipes_count >= 5
-            user_more_recipes_months_count += 1
-            more_recipes_users_count = 1
-          end
-
-          phase_month = phase_start.strftime("%Y-%m")
-          is_most = false
-          is_most_choiced = false
-
-          if user_index == 0
-            is_most = true if user_recipes_count > 0
-            most_temp << [ phase_month, 0 ]
-            most_choiced_temp << [ phase_month, 0]
-            @total_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, more_recipes_users_count, users_count ]
-          elsif user_index > 0 && user_recipes_count > 0
-            last_most_user_stats = @user_stats_group[most_temp[m][1]][m]
-            if user_recipes_count > last_most_user_stats[1] || (user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count > last_most_user_stats[2])
-              is_most = true
-              last_most_user_stats[3] = false
-              most_temp[m][1] = user_index
-            elsif user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count == last_most_user_stats[2]
-              is_most = true
+            if user_recipes_count >= 5
+              user_more_recipes_months_count += 1
+              more_recipes_users_count = 1
             end
 
-            last_most_user_stats = @user_stats_group[most_choiced_temp[m][1]][m]
-            if user_choiced_recipes_count > last_most_user_stats[2] || (user_choiced_recipes_count == last_most_user_stats[2] && user_recipes_count > last_most_user_stats[1])
-              is_most_choiced = true
-              last_most_user_stats[4] = false
-              most_choiced_temp[m][1] = user_index
-            elsif user_choiced_recipes_count == last_most_user_stats[2] && user_recipes_count == last_most_user_stats[1]
-              is_most_choiced = true
-            end
-            
-            @total_stats[m][1] += user_recipes_count
-            @total_stats[m][2] += user_choiced_recipes_count
-            @total_stats[m][3] += more_recipes_users_count
-            @total_stats[m][4] += users_count
-          end
-
-          user_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, is_most, is_most_choiced ]
-
-          if phase_month == stat_to.strftime("%Y-%m")
-            if (user_recipes_count_sum >= 80) || (user_more_recipes_months_count >= 10)
-              more_recipes_users_count_total = 1
-            end
-
-            is_most_sum = false
-            is_most_choiced_sum = false
+            phase_month = phase_start.strftime("%Y-%m")
+            is_most = false
+            is_most_choiced = false
 
             if user_index == 0
-              is_most_sum = true
-              most_temp << [ 'sum', 0 ]
-              most_choiced_temp << [ 'sum', 0]
-              @total_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, more_recipes_users_count_total ]
-            elsif user_index > 0
-              last_most_sum_stats = @user_stats_group[most_temp.last[1]].last
-              if user_recipes_count_sum > last_most_sum_stats[1] || (user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum > last_most_sum_stats[2])
-                is_most_sum = true
-                last_most_sum_stats[4] = false
-                most_temp.last[1] = user_index
-              elsif user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum == last_most_sum_stats[2]
-                is_most_sum = true
+              is_most = true if user_recipes_count > 0
+              most_temp << [ phase_month, 0 ]
+              most_choiced_temp << [ phase_month, 0]
+              @total_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, more_recipes_users_count, users_count ]
+            elsif user_index > 0 && user_recipes_count > 0
+              last_most_user_stats = @user_stats_group[most_temp[m][1]][m]
+              if user_recipes_count > last_most_user_stats[1] || (user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count > last_most_user_stats[2])
+                is_most = true
+                last_most_user_stats[3] = false
+                most_temp[m][1] = user_index
+              elsif user_recipes_count == last_most_user_stats[1] && user_choiced_recipes_count == last_most_user_stats[2]
+                is_most = true
               end
 
-              last_most_sum_stats = @user_stats_group[most_choiced_temp.last[1]].last
-              if user_choiced_recipes_count_sum > last_most_sum_stats[2] || (user_choiced_recipes_count_sum == last_most_sum_stats[2] && user_recipes_count_sum > last_most_sum_stats[1])
-                is_most_choiced_sum = true
-                last_most_sum_stats[5] = false
-                most_choiced_temp.last[1] = user_index
-              elsif user_choiced_recipes_count_sum == last_most_sum_stats[2] && user_recipes_count_sum == last_most_sum_stats[1]
-                is_most_choiced_sum = true
+              last_most_user_stats = @user_stats_group[most_choiced_temp[m][1]][m]
+              if user_choiced_recipes_count > last_most_user_stats[2] || (user_choiced_recipes_count == last_most_user_stats[2] && user_recipes_count > last_most_user_stats[1])
+                is_most_choiced = true
+                last_most_user_stats[4] = false
+                most_choiced_temp[m][1] = user_index
+              elsif user_choiced_recipes_count == last_most_user_stats[2] && user_recipes_count == last_most_user_stats[1]
+                is_most_choiced = true
               end
 
-              @total_stats.last[1] += user_recipes_count_sum
-              @total_stats.last[2] += user_choiced_recipes_count_sum
-              @total_stats.last[3] += more_recipes_users_count_total
+              @total_stats[m][1] += user_recipes_count
+              @total_stats[m][2] += user_choiced_recipes_count
+              @total_stats[m][3] += more_recipes_users_count
+              @total_stats[m][4] += users_count
             end
 
-            user_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, user_more_recipes_months_count, is_most_sum, is_most_choiced_sum ]
+            user_stats << [ phase_month, user_recipes_count, user_choiced_recipes_count, is_most, is_most_choiced ]
 
-            break
-          else
-            phase_start += 1.month
+            if phase_month == stat_to.strftime("%Y-%m")
+              if (user_recipes_count_sum >= 80) || (user_more_recipes_months_count >= 10)
+                more_recipes_users_count_total = 1
+              end
+
+              is_most_sum = false
+              is_most_choiced_sum = false
+
+              if user_index == 0
+                is_most_sum = true
+                most_temp << [ 'sum', 0 ]
+                most_choiced_temp << [ 'sum', 0]
+                @total_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, more_recipes_users_count_total ]
+              elsif user_index > 0
+                last_most_sum_stats = @user_stats_group[most_temp.last[1]].last
+                if user_recipes_count_sum > last_most_sum_stats[1] || (user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum > last_most_sum_stats[2])
+                  is_most_sum = true
+                  last_most_sum_stats[4] = false
+                  most_temp.last[1] = user_index
+                elsif user_recipes_count_sum == last_most_sum_stats[1] && user_choiced_recipes_count_sum == last_most_sum_stats[2]
+                  is_most_sum = true
+                end
+
+                last_most_sum_stats = @user_stats_group[most_choiced_temp.last[1]].last
+                if user_choiced_recipes_count_sum > last_most_sum_stats[2] || (user_choiced_recipes_count_sum == last_most_sum_stats[2] && user_recipes_count_sum > last_most_sum_stats[1])
+                  is_most_choiced_sum = true
+                  last_most_sum_stats[5] = false
+                  most_choiced_temp.last[1] = user_index
+                elsif user_choiced_recipes_count_sum == last_most_sum_stats[2] && user_recipes_count_sum == last_most_sum_stats[1]
+                  is_most_choiced_sum = true
+                end
+
+                @total_stats.last[1] += user_recipes_count_sum
+                @total_stats.last[2] += user_choiced_recipes_count_sum
+                @total_stats.last[3] += more_recipes_users_count_total
+              end
+
+              user_stats << [ 'sum', user_recipes_count_sum, user_choiced_recipes_count_sum, user_more_recipes_months_count, is_most_sum, is_most_choiced_sum ]
+
+              break
+            else
+              phase_start += 1.month
+            end
           end
+          @user_stats_group << user_stats
+          user_index += 1
         end
-        @user_stats_group << user_stats
-        user_index += 1
+        @total_stats.last[4] = @user_recipes_groups.size
+        @user_stats_group.sort! { |a, b| a[0] <=> b[0] }
+      else
+        flash[:notice] = "对不起, 没有得到统计数据!"
       end
-      @total_stats.last[4] = @user_recipes_groups.size
-      @user_stats_group.sort! { |a, b| a[0] <=> b[0] }
     else
-      flash[:notice] = "对不起, 没有得到统计数据!"
+      flash[:notice] = "对不起, 你没有访问权限!"
+      redirect_to root_url
     end
 #    [[111,['2009-08',25,10],['2009-09',25,10],['sum',50,20]],
 #     [222,['2009-08',25,10],['2009-09',25,10],['sum',50,20]],

@@ -1238,5 +1238,10 @@ module ApplicationHelper
   def filter_suffix(filter_title)
     " - #{filter_title}"
   end
+
+  # 获取某个用户的访问控制权限
+  def access_control(user)
+    user && (user.is_role_of?('admin') || [1, 2, 4].include?(user.id))
+  end
 		
 end

@@ -114,44 +114,49 @@ class SystemController < ApplicationController
 
   # 网站指标数据统计
   def site_stats
-    span_type = params[:type]
+    if access_control(@current_user)
+      span_type = params[:type]
 
-    current = Time.now.end_of_day
-    site_start = Time.local(2008, 6, 1).beginning_of_day
-    range = params[:range].split('-')
-    range_start = range[0].to_time.getlocal.beginning_of_day
-    range_start = range_start > site_start && range_start < current ? range_start : site_start
-    range_end = range[1].to_time.getlocal.end_of_day
-    range_end = range_end > site_start && range_end < current ? range_end : current
+      current = Time.now.end_of_day
+      site_start = Time.local(2008, 6, 1).beginning_of_day
+      range = params[:range].split('-')
+      range_start = range[0].to_time.getlocal.beginning_of_day
+      range_start = range_start > site_start && range_start < current ? range_start : site_start
+      range_end = range[1].to_time.getlocal.end_of_day
+      range_end = range_end > site_start && range_end < current ? range_end : current
 
-    @site_stats_set = []
-    most_indexes = { :user => { :created_users => 0, :activated_users => 0 },
-                      :recipe => { :created_recipes => 0, :published_recipes => 0, :recipe_users => 0 },
-                      :review => { :created_reviews => 0, :review_users => 0 },
-                      :rating => { :created_ratings => 0, :rating_users => 0 },
-                      :favorite => { :created_favorites => 0, :favorite_users => 0 } }
-    @most_metrics = {}
-    phase_start = range_start
-    phase_index = 0
-    until phase_start > range_end do
-      phase_end = phase_end(span_type, phase_start) < range_end ? phase_end(span_type, phase_start) : range_end
-      phase_metrics = site_metrics(phase_start, phase_end)
-      @site_stats_set << [ { :phase_start => phase_start, :phase_end => phase_end }, phase_metrics ]
-      if phase_index > 0
-        most_indexes = site_metrics_most_indexes(@site_stats_set, most_indexes, phase_index)
+      @site_stats_set = []
+      most_indexes = { :user => { :created_users => 0, :activated_users => 0 },
+                        :recipe => { :created_recipes => 0, :published_recipes => 0, :recipe_users => 0 },
+                        :review => { :created_reviews => 0, :review_users => 0 },
+                        :rating => { :created_ratings => 0, :rating_users => 0 },
+                        :favorite => { :created_favorites => 0, :favorite_users => 0 } }
+      @most_metrics = {}
+      phase_start = range_start
+      phase_index = 0
+      until phase_start > range_end do
+        phase_end = phase_end(span_type, phase_start) < range_end ? phase_end(span_type, phase_start) : range_end
+        phase_metrics = site_metrics(phase_start, phase_end)
+        @site_stats_set << [ { :phase_start => phase_start, :phase_end => phase_end }, phase_metrics ]
+        if phase_index > 0
+          most_indexes = site_metrics_most_indexes(@site_stats_set, most_indexes, phase_index)
+        end
+        phase_start = phase_end + 1
+        phase_index += 1
       end
-      phase_start = phase_end + 1
-      phase_index += 1
+
+      @most_metrics = site_metrics_most_values(@site_stats_set, most_indexes)
+
+      range_metrics = site_metrics(range_start, range_end)
+      @site_stats_set << [ { :phase_start => range_start, :phase_end => range_end }, range_metrics ]
+
+      info = "网站指标（#{span_title(span_type)}）数据统计"
+      set_page_title(info)
+      set_block_title(info)
+    else
+      flash[:notice] = "对不起, 你没有访问权限!"
+      redirect_to root_url
     end
-
-    @most_metrics = site_metrics_most_values(@site_stats_set, most_indexes)
-
-    range_metrics = site_metrics(range_start, range_end)
-    @site_stats_set << [ { :phase_start => range_start, :phase_end => range_end }, range_metrics ]
-    
-    info = "网站指标（#{span_title(span_type)}）数据统计"
-    set_page_title(info)
-		set_block_title(info)
   end
 
   private
