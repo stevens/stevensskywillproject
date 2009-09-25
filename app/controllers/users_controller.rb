@@ -187,30 +187,6 @@ class UsersController < ApplicationController
       set_block_title(info)
     end
 	end
-
-  # 周数据统计页面
-  def week_stat
-    info = "周数据统计"
-    set_page_title(info)
-		set_block_title(info)
-
-    if !params[:stat_from].blank?
-      stat_from = params[:stat_from].to_time.beginning_of_day
-    end
-    if !params[:stat_to].blank?
-      stat_to = params[:stat_to].to_time.end_of_day
-    end
-    @stat_recipes_set = week_recipes_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_user_set = week_user_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_recipes_users_group_set = @stat_recipes_set.group_by { |recipe| (recipe[:user_id]) }
-    @stat_reviews_set = week_reviews_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_reviews_users_group_set = @stat_reviews_set.group_by { |review| (review[:user_id]) }
-    @stat_fav_set = week_fav_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_fav_users_group_set = @stat_reviews_set.group_by { |fav| (fav[:user_id]) }
-    @stat_ratings_set = week_ratings_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_ratings_users_group_set = @stat_ratings_set.group_by { |fav| (fav[:user_id]) }
-
-  end
 	
 	private
 	
