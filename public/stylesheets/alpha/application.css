@@ -2086,10 +2086,10 @@ table.stats td.data {
     
 }
 table.stats td.sn, table.stats td.user, table.stats td.phase {
-    background-color: #ffffdd;
+    background-color: #f5f5f5;
 }
 table.stats td.sum, table.stats tr.total td {
-    background-color: #d4ccbf;
+    background-color: #ffffdd;
 }
 table.stats td.more {
     background-color: #eceff5;
