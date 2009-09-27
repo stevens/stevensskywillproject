@@ -71,6 +71,8 @@ Rails::Initializer.run do |config|
 	SITE_EMAIL = 'beecook2007@gmail.com' #TBD
 	YEAR_BEGIN = '2008'
 	YEAR_NOW = '2008'
+  SITE_BLOG_CN = '蜂厨板报'
+  SITE_BLOG_URL = 'http://blog.beecook.com'
 	
 	# WHO constants
 	I_CN = '我'
