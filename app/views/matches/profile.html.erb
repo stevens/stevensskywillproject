@@ -1,3 +1,4 @@
+<% cache(:controller => "matches", :action => "profile", :part => "profile_1") do %>
 <div id="match_intro_wrapper" class="content_block">
   <div id="match_intro_header" class="block_header">
     <div class="block_header_link">
@@ -39,7 +40,9 @@
 		</div>
 	</div>
 </div>
+<% end %>
 
+<% cache(:controller => "matches", :action => "profile", :part => "profile_2") do %>
 <% if @show_winners %>
   <div id="match_winners_wrapper" class="content_block">
     <div id="match_winners_header" class="block_header">
@@ -69,8 +72,11 @@
     </div>
   </div>
 <% end %>
+<% end %>
+
 
 <% if @current_user %>
+<% cache(:controller => "matches", :action => "profile", :user_id => session[:user_id], :part => "profile_3") do %>
 	<% if @player %>
 		<div id="submitted_match_entries_wrapper" class="content_block">
 			<div id="submitted_match_entries_header" class="block_header">
@@ -99,8 +105,8 @@
 				</div>
 			</div>
 		</div>
-	<% end %>
-	
+        <% end %>
+
 	<div id="voted_match_entries_wrapper" class="content_block">
 		<div id="voted_match_entries_header" class="block_header">
 			<div class="block_header_link">
@@ -129,7 +135,9 @@
 		</div>
 	</div>
 <% end %>
+<% end %>
 
+<% cache(:controller => "matches", :action => "profile", :part => "profile_5") do %>
 <div id="match_entries_wrapper" class="content_block">
 	<div id="match_entries_header" class="block_header">
 		<div class="block_header_link">
@@ -175,6 +183,7 @@
 						 						    :photo_style => 'matrix' } %>
 	</div>
 </div>
+<% end %>
 
 <%= render :partial => 'reviews/reviewable_reviews',
             :locals => { :reviewable => @match } %>
