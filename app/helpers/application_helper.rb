@@ -1243,5 +1243,23 @@ module ApplicationHelper
   def access_control(user)
     user && (user.is_role_of?('admin') || [1, 2, 4].include?(user.id))
   end
-		
+
+  # 获取cache
+	def cache_get(key, ttl = 0)
+    begin output = CACHE.get(key)
+      rescue Memcached::NotFound
+      output = yield
+      CACHE.set(key, output, ttl)
+    end
+    return output
+  end
+
+  # 删除cache
+  def cache_delete(key)
+    begin
+      CACHE.delete(key)
+    rescue Memcached::NotFound
+    end
+  end
+	
 end

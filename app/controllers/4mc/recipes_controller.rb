@@ -65,6 +65,9 @@ class RecipesController < ApplicationController
   # GET /recipes/1
   # GET /recipes/1.xml
   def show
+    # for memcache code
+    @show_flag = 1
+    # code end
 		load_recipe
 			
 		load_recipes_set(@recipe.user)
@@ -80,15 +83,26 @@ class RecipesController < ApplicationController
 			same_title_recipes_conditions_list += [ "recipes.common_title = '#{common_title}'", "recipes.title = '#{common_title}'" ]
 		end
 		same_title_recipes_conditions = "#{recipes_conditions} AND (#{same_title_recipes_conditions_list.join(' OR ')})"
-		@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions, nil, 'RAND()') - recipe
+    # memcache code
+    @same_title_recipes_set = cache_get("show_st_recipes_set_#{@self_id}" ,1.days) { recipes_for(nil, same_title_recipes_conditions, nil, 'RAND()') - recipe }
+		# memcache code end
+    # no memcache code
+    #@same_title_recipes_set = recipes_for(nil, same_title_recipes_conditions, nil, 'RAND()') - recipe
+    # no memcache end
 		@same_title_recipes_set_count = @same_title_recipes_set.size
 
     related_recipes_conditions = recipes_conditions
-		@related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe - @same_title_recipes_set
-		
-		@favorite_users_set = favorite_users(@recipe.favorites.find(:all, :limit => 12, :order => 'RAND()'))
+    # memcache code
+    @related_recipes_set = cache_get("show_r_recipes_set_#{@self_id}", 1.days) { taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe - @same_title_recipes_set }
+    #@favorite_users_set = cache_get("show_f_users_set_#{@self_id}") { favorite_users(@recipe.favorites.find(:all, :limit => 12, :order => 'RAND()')) }
+		@entried_matches_set = cache_get("show_e_matches_set_#{@slef_id}") { entried_matches(@recipe.entries.find(:all, :limit => 12, :order => 'RAND()')) }
+    # memcache end
+    # no memcache code
+    # @related_recipes_set = taggables_for(nil, 'Recipe', @recipe.tag_list, related_recipes_conditions, nil, nil, nil, 'RAND()') - recipe - @same_title_recipes_set
+    @favorite_users_set = favorite_users(@recipe.favorites.find(:all, :limit => 12, :order => 'RAND()'))
+		# @entried_matches_set = entried_matches(@recipe.entries.find(:all, :limit => 12, :order => 'RAND()'))
+    # no memcache end
 		@favorite_users_set_count = @favorite_users_set.size
-		@entried_matches_set = entried_matches(@recipe.entries.find(:all, :limit => 12, :order => 'RAND()'))
 		
 		current = Time.now
 		if @recipe.match_id && (@match = Match.find_by_id_and_entriable_type(@recipe.match_id, 'Recipe')) && @match.doing?(current)
@@ -238,6 +252,7 @@ class RecipesController < ApplicationController
           CACHE.delete('overview_tags_set')
         rescue Memcached::NotFound
         end
+        cache_delete("show_recipe_#{@recipe.id}")
 				after_update_ok
 		  else
 				after_update_error
@@ -263,6 +278,7 @@ class RecipesController < ApplicationController
             CACHE.delete('overview_reviews_set')
           rescue Memcached::NotFound
           end
+          cache_delete("show_recipes_set_#{@current_user.id}")
 					after_destroy_ok
 				end
 			end
@@ -312,6 +328,7 @@ class RecipesController < ApplicationController
           CACHE.delete('overview_tags_set')
         rescue Memcached::NotFound
         end
+        cache_delete("show_recipes_set_#{@current_user.id}")
 				after_publish_ok
 			end
 		end
@@ -611,7 +628,12 @@ class RecipesController < ApplicationController
   	if user && !user.is_role_of?('admin')
  			recipe = user.recipes.find(@self_id)
  		else
- 			recipe = Recipe.find(@self_id)
+      # for memcache code
+      recipe = cache_get("show_recipe_#{@self_id}") { Recipe.find(@self_id) }
+      # for memcache end
+      # no memcache code
+ 			# recipe = Recipe.find(@self_id)
+      # no memcache end
  		end
     if (user && user.is_role_of?('admin')) || params[:action] == 'destroy' || recipe_accessible?(recipe)
 #    if params[:action] == 'destroy' || recipe.accessible?(user)
@@ -672,7 +694,16 @@ class RecipesController < ApplicationController
       end      
     else
       order = @order ? @order : 'published_at DESC, created_at DESC'
-      @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+      if (@show_flag == 1)
+        # memcache code
+        @recipes_set = cache_get("show_recipes_set_#{user.id}") { filtered_recipes(user, params[:filter], @recipes_limit, order) }
+        # memcache code end
+        # no memcache code
+        # @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+        # no memcache end
+      else
+        @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)
+      end
     end
 ####    order = @order ? @order : 'published_at DESC, created_at DESC'
 ####    @recipes_set = filtered_recipes(user, params[:filter], @recipes_limit, order)

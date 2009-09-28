@@ -1,8 +1,13 @@
 class SiteController < ApplicationController
-
+  before_filter :preload_models
 	before_filter :clear_location_unless_logged_in, :only => [:index]
 	before_filter :set_system_notice, :only => [:index]
-	
+
+  ## MemCached 预加载Recipe和Review模型
+  def preload_models()
+    Recipe
+  end
+
 	def index
 		load_recipes_set
 		### for love recipes function displaying
@@ -74,6 +79,7 @@ class SiteController < ApplicationController
   def load_recipes_set(user = nil)
     #    @recipes_set = recipes_for(user, recipe_conditions(recipe_photo_required_cond(user), recipe_status_cond(user), recipe_privacy_cond(user), recipe_is_draft_cond(user)), 10, 'RAND()')
     #    @recipes_set_count = @recipes_set.size
+    # memcache code begin
     if @current_user
       begin
         recipes_set = CACHE.get('site_recipes_set')
@@ -88,7 +94,11 @@ class SiteController < ApplicationController
         recipes_set = roles_recipes(user, '11', 30)
         CACHE.set('site_all_recipes_set',recipes_set,1800)
       end
-    end 
+    end
+    # memcache code begin
+    # no memcache code begin
+    # recipes_set = roles_recipes(user, '11', 30)
+    # no memcache code end
     
     @recipes_set = []
     for recipe in recipes_set
@@ -103,24 +113,32 @@ class SiteController < ApplicationController
   
   #### load love recipes of the user
   def load_love_recipes(user = nil)
+    # memcache code begin
     begin
       @love_recipes_set = CACHE.get('overview_love_recipes_set')
     rescue Memcached::NotFound
       @love_recipes_set = love_recipes(user, '21')
       CACHE.set('overview_love_recipes_set',@love_recipes_set)
     end
-    #    @love_recipes_set = love_recipes(user, '21')
+    # memcache code end
+    # no memcache code begin
+    #@love_recipes_set = love_recipes(user, '21')
+    # no memcahce code end
     @love_recipes_set_count = @love_recipes_set.size
   end
   
   def load_love_users(user = nil)
+    # memcache code begin
     begin
       @love_users_set = CACHE.get('overview_love_users_set')
     rescue Memcached::NotFound
       @love_users_set = love_users(user)
       CACHE.set('overview_love_users_set',@love_users_set)
     end
-    #    @love_users_set = love_users(user)
+    # memcache code end
+    # no memcache code begin
+    #@love_users_set = love_users(user)
+    # no memcache code end
     @love_users_set_count = @love_users_set.size
   end
   ### end
