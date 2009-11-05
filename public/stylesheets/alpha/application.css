@@ -902,6 +902,10 @@ td.photo_item_cell {
 .sidebar_todo_button a:hover {
 	background-color: #428cbb !important;
 }
+.sideblock_center_area {
+    text-align: center;
+    margin: auto;
+}
 
 /* Sub Block */
 .sub_block {
@@ -1030,7 +1034,7 @@ span.normal_photo {
 	margin-top: -3px;
 	border: 4px #428cbb solid;		
 }
-.matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover, .full_photo a:hover, .normal_photo a:hover, .sideblock_list_photo a:hover, #entriable_photo a:hover {
+.matrix_photo a:hover, .list_photo a:hover, .portrait_photo a:hover, .full_photo a:hover, .normal_photo a:hover, .sideblock_list_photo a:hover, .sideblock_photo a:hover, #entriable_photo a:hover {
 	background-color: transparent !important;	
 }
 .matrix_photo a:hover img {
