@@ -7,6 +7,10 @@
                         :love_recipe_users => @love_users_set,
                         :love_recipes_count =>  @love_recipes_set_count } %>
 
+<%= render :partial => 'recipes/love_recipe_partner_sideblock',
+            :locals => { :id => 'love_recipe_partner',
+                        :block_title => "爱心食谱行动（第一季）合作伙伴" } %>
+
 <% cache(:controller => "site", :action => "index", :part => "rss") do %>
 <%= render :partial => 'layouts/rss_items_sideblock',
             :locals => { :block_title => "#{SITE_NAME_CN}板报",
