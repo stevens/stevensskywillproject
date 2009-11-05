@@ -45,7 +45,7 @@ module RecipesHelper
     stats = []
     if current >= start_at.to_time && current <= end_at.to_time
       phase_start = start_at.to_time.at_beginning_of_month
-      awards = [ [1163, 1186, 272] ]
+      awards = [ [1163, 1186, 272], [1606, 1399, 25], [1798, 1606, 1579] ]
       1.upto(12) do |i|
         phase_end = phase_start.at_end_of_month          
         stats << [ phase_start.strftime("%Y-%m"), love_recipes(user, '21', phase_start.strftime("%Y-%m-%d %H:%M:%S"), phase_end.strftime("%Y-%m-%d %H:%M:%S")).size, awards[i-1] ]
@@ -159,7 +159,7 @@ module RecipesHelper
       when '4'
         [ ['A', [890, 814], [14, 13]], ['B', [931, 803], [20, 7]] ]
       when '5'
-        [ ['A', [890, 931]] ]
+        [ ['A', [890, 931], [9, 22]] ]
       end
     end
   end
