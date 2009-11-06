@@ -1,6 +1,24 @@
 <% form_for :user, :url => users_path do |f| %>
 	<div class="sub_block_tb">
 	<table class="content">
+               <% if @invite_user %>
+                <tr>
+			<td class="label">
+				<label for="invite_user"><%= "#{INVITE_USER}:" %></label>
+			</td>
+			<td class="input">
+				<div class="text">
+					<%= "邀请你加入蜂厨的用户！注册并成功激活后，你们将自动成为伙伴" %>
+				</div>
+				<div class="input">
+					<%= f.text_field :invite_user, :class => "text_s", :value =>"#{@invite_user.login}" , :readonly => "readonly"%>
+				</div>
+                                <div class="input">
+					<%= f.hidden_field :invite_id, :class => "text_s", :value =>"#{@invite_user.id}" , :readonly => "readonly"%>
+				</div>
+			</td>
+		</tr>
+                <% end %>
 		<tr>
 			<td class="label">
 				<label for="login"><%= "#{NICKNAME_CN}:" %></label>

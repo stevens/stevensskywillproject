@@ -1,4 +1,4 @@
-class UserMailer < ActionMailer::Base
+class UserMailer < ActionMailer::ARMailer
 	include ActionController::UrlWriter
 	include UsersHelper
   default_url_options[:host] = SITE_DOMAIN_EN
@@ -52,6 +52,16 @@ class UserMailer < ActionMailer::Base
 		@subject += "#{contactor.login}接受了你的#{FRIEND_CN}请求"
 		@body[:contactor] = contactor
 	end
+
+  def send_invite(mail,user)
+    @recipients = "#{mail}"
+	  @from = "#{user.login}"
+	  @subject = "来自好友#{user.login}的加入蜂厨邀请"
+	  @sent_on = Time.now
+	  @content_type = "text/html"
+	  @body[:user] = user
+    @body[:url] = "#{root_url}signup?invite_id=#{user.id}"
+  end
 
   protected
   

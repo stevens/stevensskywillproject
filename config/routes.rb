@@ -156,6 +156,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.terms '/terms', :controller => 'site', :action => 'terms'
   map.linkus '/linkus', :controller => 'site', :action => 'linkus'
 	map.sitemap 'sitemap.xml' , :controller => 'sitemap' , :action => 'sitemap'
+  map.send_invite_mail '/send_invite_mail', :controller => 'users', :action => 'send_invite_mail'
 	
 	# for newsletter
 	map.sendmail '/sendmail/:id', :controller => 'keepers', :action => 'sendnewsletter'

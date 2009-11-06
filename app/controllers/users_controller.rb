@@ -28,6 +28,11 @@ class UsersController < ApplicationController
 #  end
   
   def new
+    # added for invited function
+    if !params[:invite_id].blank?
+      @invite_user = User.find(params[:invite_id])
+    end
+
   	@user = User.new
 
 	 	info = "加入#{SITE_NAME_CN}"
@@ -46,6 +51,12 @@ class UsersController < ApplicationController
     # request forgery protection.
     # uncomment at your own risk
     # reset_session
+    # added for invited function
+    @invite_id = params[:user][:invite_id]
+    #added for invited function
+    if @invite_id
+      @invite_user = User.find(@invite_id)
+    end
     @user = User.new(params[:user])
     @user.login = str_squish(@user.login)
     item_client_ip(@user)
@@ -96,6 +107,15 @@ class UsersController < ApplicationController
     self.current_user = activation_code.blank? ? false : User.find_by_activation_code(activation_code)
     if logged_in? && !current_user.active?
       current_user.activate
+      # added for invited function
+      @invite_id = @current_user.invite_id
+      unless @invite_id.nil?
+        @invite_user = User.find(@invite_id)
+        if @invite_user
+          Contact.friendship_request(@current_user, @invite_user)
+          Contact.friendship_accept(@current_user, @invite_user)
+        end
+      end
       flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
     end
     redirect_back_or_default('/')
@@ -129,6 +149,40 @@ class UsersController < ApplicationController
 			render :action => 'lost_activation'
 			clear_notice
 		end  	
+  end
+
+  # added for invited function
+  def send_invite_mail
+    info = "发送邀请#{EMAIL_CN}"
+		set_page_title(info)
+		set_block_title(info)
+
+    emails = params[:emails]
+    @emails = emails.split(";")
+    @length = @emails.size
+    if params[:emails].blank?
+      flash[:notice] = "#{SORRY_CN}, 请#{INPUT_CN}#{EMAIL_ADDRESS_CN}!"
+			render :action => 'invite'
+			clear_notice
+    elsif @length > 7
+      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}数目超出限制, 请重新#{INPUT_CN}!"
+			render :action => 'invite'
+			clear_notice
+    else
+      for mail in @emails
+        unless mail =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i
+          flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
+			    render :action => 'invite'
+			    clear_notice
+          return
+        end
+      end
+      for @mail in @emails
+        UserMailer.deliver_send_invite(@mail,@current_user)
+      end
+      flash[:notice] = "发送邀请邮件成功，期待着你的朋友也能喜欢上这里，在#{SITE_NAME_CN}玩的开心！"
+		  render :action => 'invite'
+    end
   end
   
   def overview
@@ -179,6 +233,16 @@ class UsersController < ApplicationController
 		end
   end
 
+  # added for invited function
+  #邀请
+  def invite
+    #if @user && @user.accessible?
+      info = "邀请朋友"
+      set_page_title(info)
+      set_block_title(info)
+    #end
+  end
+
 	#分享
 	def share
     if @user && @user.accessible?
@@ -187,6 +251,30 @@ class UsersController < ApplicationController
       set_block_title(info)
     end
 	end
+
+  # 周数据统计页面
+  def week_stat
+    info = "周数据统计"
+    set_page_title(info)
+		set_block_title(info)
+
+    if !params[:stat_from].blank?
+      stat_from = params[:stat_from].to_time.beginning_of_day
+    end
+    if !params[:stat_to].blank?
+      stat_to = params[:stat_to].to_time.end_of_day
+    end
+    @stat_recipes_set = week_recipes_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+    @stat_user_set = week_user_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+    @stat_recipes_users_group_set = @stat_recipes_set.group_by { |recipe| (recipe[:user_id]) }
+    @stat_reviews_set = week_reviews_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+    @stat_reviews_users_group_set = @stat_reviews_set.group_by { |review| (review[:user_id]) }
+    @stat_fav_set = week_fav_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+    @stat_fav_users_group_set = @stat_reviews_set.group_by { |fav| (fav[:user_id]) }
+    @stat_ratings_set = week_ratings_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+    @stat_ratings_users_group_set = @stat_ratings_set.group_by { |fav| (fav[:user_id]) }
+
+  end
 	
 	private
 	

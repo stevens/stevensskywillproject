@@ -387,9 +387,9 @@ end
   ActionController::Base.fragment_cache_store = :file_store, RAILS_ROOT + "/public/caches/"
 	
 	require 'will_paginate'
-  #require 'action_mailer/ar_mailer' #后台管理用
-  #require 'memcached'
-  #CACHE = Memcached.new("localhost:11211")
+  require 'action_mailer/ar_mailer' #后台管理用
+  require 'memcached'
+  CACHE = Memcached.new("localhost:11211")
   #CACHE = MemCache.new :namespace=>'memcache_recipe',
   #:c_threshold=>10_000,
   #:compression=>true,

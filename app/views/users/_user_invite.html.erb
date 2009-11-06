@@ -1,0 +1,42 @@
+<% html_content = [] %>
+
+<% html_content << "#{root_url}signup?invite_id=#{user.id}" %>
+
+<div class="main">
+  <h3>方法一： 链接邀请</h3>
+  <div class="sub_block_lr">
+    <em class="l2"><%= "通过QQ、MSN、电子邮件发送邀请链接给你的朋友，注册成功后他们会自动成为你的伙伴。" %></em>
+    <div id="share_code" class="share_code" value="<%= h str_squish(html_content.to_s, 1, false) %>">
+      <code><%= h html_content %></code>
+    </div>
+
+    <SCRIPT LANGUAGE="JavaScript">
+      function fCopyToClicp(id){
+        var a = document.getElementById(id);
+        window.clipboardData.setData('text',a.value);
+        alert("已经复制到剪贴板了");
+      }
+    </SCRIPT>
+    <div class="submit">
+      <input type="button" value="复制到剪贴板" class="submit" onClick="fCopyToClicp('share_code');" />
+      <em class="l2"><%= "如果你的浏览器不支持自动复制到剪贴板, 请选中代码文本用键盘 [Ctrl+C] 复制" %></em>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <h3>方法二：发送电子邮件邀请</h3>
+  <div class="sub_block_lr">
+    <em class="l2"><%= "请#{INPUT_CN}#{EMAIL_ADDRESS_CN}地址，多个地址请用;分开（注：通过邮件发送邀请链接，最多不超过7个……）" %></em>
+    <% form_tag send_invite_mail_url do %>
+      <div class="sub_block_tb">
+        <div class="input">
+          <%= text_field_tag "emails", params[:emails], :class => "text_s" %>
+        </div>
+        <div class="submit">
+          <%= submit_tag "发送邀请#{EMAIL_CN}", :class => "submit" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
