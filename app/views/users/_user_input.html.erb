@@ -1,14 +1,15 @@
 <% form_for :user, :url => users_path do |f| %>
 	<div class="sub_block_tb">
 	<table class="content">
-               <% if @invite_user %>
-                <tr>
+      
+      <% if @invite_user %>
+        <tr>
 			<td class="label">
-				<label for="invite_user"><%= "#{INVITE_USER}:" %></label>
+				<label for="invite_user"><%= "邀请人:" %></label>
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "邀请你加入蜂厨的用户！注册并成功激活后，你们将自动成为伙伴" %>
+					<%= "这是邀请你加入蜂厨的蜂友，当你成功注册并激活帐户后，你们将自动成为伙伴" %>
 				</div>
 				<div class="input">
 					<%= f.text_field :invite_user, :class => "text_s", :value =>"#{@invite_user.login}" , :readonly => "readonly"%>
@@ -18,7 +19,7 @@
 				</div>
 			</td>
 		</tr>
-                <% end %>
+      <% end %>
 		<tr>
 			<td class="label">
 				<label for="login"><%= "#{NICKNAME_CN}:" %></label>
