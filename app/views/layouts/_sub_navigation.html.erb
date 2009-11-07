@@ -27,7 +27,7 @@
   <% if @current_user %>
     <%= link_to "我的#{PEOPLE_CN}", :controller => 'contacts', :action => 'mine' %>
     <!-- <%= link_to "找#{FRIEND_CN}", '' %> -->
-    <%= link_to "邀请朋友", :controller => 'users', :action => 'invite', :id => @current_user.id %>
+    <%= link_to "邀请朋友", :controller => 'users', :action => 'invite' %>
   <% end %>
   <!-- <%= link_to "#{PEOPLE_CN}浏览", users_path %> -->
   <%= link_to "#{BRAIN_CN}团", :controller => 'users', :action => 'index', :category => 'brain' %>

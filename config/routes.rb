@@ -19,6 +19,7 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.connect 'users/:id/overview', :controller => 'users', :action => 'overview'
 	map.connect 'users/:id/profile', :controller => 'users', :action => 'profile'
+  map.connect 'users/invite', :controller => 'users', :action => 'invite'
 
 	map.connect 'mine/contacts', :controller => 'contacts', :action => 'mine'
 	map.connect 'users/:user_id/:contact_type/contacts', :controller => 'contacts', :action => 'index'

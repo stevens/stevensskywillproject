@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
 
-  before_filter :protect, :only => [:share]
-	before_filter :clear_location_unless_logged_in, :except => [:share]
+  before_filter :protect, :only => [:share, :invite]
+	before_filter :clear_location_unless_logged_in, :except => [:share, :invite]
 	before_filter :load_category, :only => [:index, :overview]
 
   def index
