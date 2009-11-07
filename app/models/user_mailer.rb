@@ -27,13 +27,13 @@ class UserMailer < ActionMailer::ARMailer
     @body[:url] = user_first_link(user, false)
 	end
         
-        #重发激活邮件代码start
-        def resend_activemail(user)
-          setup_email(user)
-          @subject += "#{RESEND_CN}#{EMAIL_CN}"
-          @body[:url]  = "#{root_url}activate/#{user.activation_code}"
-        end
-        #重发激活邮件代码end
+  #重发激活邮件代码start
+  def resend_activemail(user)
+    setup_email(user)
+    @subject += "#{RESEND_CN}#{EMAIL_CN}"
+    @body[:url]  = "#{root_url}activate/#{user.activation_code}"
+  end
+  #重发激活邮件代码end
 	
 	def friendship_request(contact)
 		user = User.find(contact.user_id)
@@ -53,14 +53,11 @@ class UserMailer < ActionMailer::ARMailer
 		@body[:contactor] = contactor
 	end
 
-  def send_invite(mail,user)
-    @recipients = "#{mail}"
-	  @from = "#{user.login}"
-	  @subject = "来自好友#{user.login}的加入蜂厨邀请"
-	  @sent_on = Time.now
-	  @content_type = "text/html"
-	  @body[:user] = user
+  def send_invite(email, user)
+    setup_email(user)
+    @recipients = "#{email}"
     @body[:url] = "#{root_url}signup?invite_id=#{user.id}"
+	  @subject += "你的朋友#{user.login}邀请你加入蜂厨"
   end
 
   protected

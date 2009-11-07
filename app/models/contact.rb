@@ -25,6 +25,16 @@ class Contact < ActiveRecord::Base
 			end
 		end
 	end
+
+  def self.friendship_buildup(user, contactor)
+		unless user == contactor || find_friendship(user, contactor)
+			transaction do
+        accepted_at = Time.now
+				create(:user => user, :contactor => contactor, :contact_type => '1', :status => '3', :accepted_at => accepted_at)
+				create(:user => contactor, :contactor => user, :contact_type => '1', :status => '3', :accepted_at => accepted_at)
+			end
+		end
+	end
 	
 	def self.friendship_accept(user, contactor)
 		if contact_for_mail = find_friendship(contactor, user)
