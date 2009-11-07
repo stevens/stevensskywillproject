@@ -1,12 +1,13 @@
 
-<%= "亲爱的 #{strip_tags(@user.login)}, #{HELLO_CN}!" %><br />
+<%= "亲爱的 #{strip_tags(@user.login)}，#{HELLO_CN}！" %><br />
 <br />
-<%= "你的#{SITE_NAME_CN}#{ACCOUNT_CN}已经成功激活啦, 恭喜你加入#{SITE_NAME_CN}, 哈嘿哈嘿!" %><br />
+<%= "你的#{SITE_NAME_CN}#{ACCOUNT_CN}已经成功激活啦，恭喜你加入#{SITE_NAME_CN}，哈嘿哈嘿！" %><br />
 <br />
-<%= "这是你的#{MAIN_PAGE_CN}地址:" %><br />
+<%= "这是你的#{MAIN_PAGE_CN}地址：" %><br />
 <%= auto_link(@url, :all, :target => "_blank") %><br />
 <%= "快去安个家吧..." %><br />
 <br />
-<%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持!" %><br />
+<%= "#{THANK_CN}你对#{SITE_NAME_CN}的支持！" %><br />
 <br />
-<%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %><br />
+<%= "#{SITE_NAME_EN} © #{Date.today.year}" %><br />
+<%= SITE_DOMAIN_EN %><br />

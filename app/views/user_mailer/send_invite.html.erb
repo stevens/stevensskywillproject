@@ -1,13 +1,14 @@
-<%= "嘿嘿，我是#{strip_tags(@user.login)}!" %><br />
+
+<%= "嗨嗨，我是#{strip_tags(@user.login)}！" %><br />
 <br />
-<%= "我发现了一个相当不错的美食网站——#{SITE_NAME_CN}，这里汇聚了众多的美食达人，还有大量的精美食谱!" %><br />
+<%= "我发现了一个挺酷的美食网站——<a href='#{root_url}' target='_blank'>#{SITE_NAME_CN}</a>，汇聚了疯狂的美食玩家，还有精致的美味食谱。" %><br />
+<%= "好东西一定要跟好朋友一起分享呵！" %><br />
 <br />
-<%= "好东西要一起分享哦，所以我邀请你也加入进来，现在就开始体验一下交流和分享美食心得的快乐吧！" %>
-<br />
-<%= "点击下面的链接注册并激活后，赶紧来吧：）"%><br />
-<br />
+<%= "请访问这个#{URL_CN}：" %><br />
 <%= auto_link(@url, :all, :target => "_blank") %><br />
+<%= "赶紧加入#{SITE_NAME_CN}吧，我在那儿等着你..." %><br />
 <br />
-<%= "另外：这份邀请是我专门发给你的哦，别转给别人哈！"%><br />
+<%= "PS：这份邀请是我专门发给你的，可不要转给别人哦！"%><br />
 <br />
-<%= "#{SITE_NAME_EN} © #{YEAR_BEGIN}-#{Date.today.year} is a service of #{STUDIO_NAME_EN}" %><br />
+<%= "#{SITE_NAME_EN} © #{Date.today.year}" %><br />
+<%= SITE_DOMAIN_EN %><br />
