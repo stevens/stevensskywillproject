@@ -60,6 +60,13 @@ class UserMailer < ActionMailer::ARMailer
 	  @subject += "你的朋友#{user.login}邀请你加入蜂厨"
   end
 
+  def invite_confirmation(invitee)
+    inviter = User.find(invitee.invite_id) if invitee.invite_id
+    setup_email(inviter)
+    @body[:url] = user_first_link(invitee, false)
+	  @subject += "你的朋友#{invitee.login}已经应邀加入蜂厨"
+  end
+
   protected
   
 	def setup_email(user)

@@ -109,7 +109,8 @@ class UsersController < ApplicationController
       current_user.activate
       # added for invite function
       if (invite_id = @current_user.invite_id) && (invite_user = User.find(invite_id))
-        Contact.friendship_buildup(@current_user, invite_user)
+#        Contact.friendship_buildup(@current_user, invite_user)
+        Contact.friendship_request(@current_user, invite_user)
       end
       flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
     end
