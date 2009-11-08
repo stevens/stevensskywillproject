@@ -1,245 +1,230 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-	<head>
-		<meta name="verify-v1" content="hUX0qOnC9Aij4Hhvz5697CDY7m57cxWmkQFOAGbm+yU=" />
-		<title><%= strip_tags @page_title %></title>
-		<% meta_description = @meta_description ? @meta_description : default_meta_description %>
-		<% meta_keywords = @meta_keywords ? @meta_keywords : default_meta_keywords %>
-		<meta name="description" content="<%= strip_tags(meta_description) %>" />
-		<meta name="keywords" content="<%= strip_tags(meta_keywords.join(',')) %>" />
-		<%= stylesheet_link_tag "alpha/application.css" %>
-		<%= stylesheet_link_tag "alpha/admin.css" %>
-		
-		<%= javascript_include_tag :defaults %>
+  <head>
+    <meta name="verify-v1" content="hUX0qOnC9Aij4Hhvz5697CDY7m57cxWmkQFOAGbm+yU=" />
+    <title><%= strip_tags @page_title %></title>
+    <% meta_description = @meta_description ? @meta_description : default_meta_description %>
+    <% meta_keywords = @meta_keywords ? @meta_keywords : default_meta_keywords %>
+    <meta name="description" content="<%= strip_tags(meta_description) %>" />
+    <meta name="keywords" content="<%= strip_tags(meta_keywords.join(',')) %>" />
+    <%= stylesheet_link_tag "alpha/application.css" %>
+    <%= stylesheet_link_tag "alpha/admin.css" %>
+    <%= javascript_include_tag :defaults %>
 
-        <!-- 屏蔽
-		<= calendar_date_select_includes 'silver', :locale=>'zh' %>
-        结束 -->
+    <!-- 屏蔽START
+    <= calendar_date_select_includes 'silver', :locale=>'zh' %>
+    屏蔽END -->
 
-		<!-- tips显示代码start -->
-		<%= javascript_include_tag 'beecook.js' %>
-		<style type="text/css">
-                .google-src-text { display: none !important } 
-                .google-src-active-text { display: block !important; color: black !important; }
-        </style>
-		<script type="text/javascript">
-                        _intlStrings._originalText = "BeeCook.com";
-                        _intlStrings._interfaceDirection="ltr";
-                        _intlStrings._interfaceAlign="left"
-		</script>
-        <!-- tips显示代码end -->
+    <!-- TIPS显示代码START -->
+    <%= javascript_include_tag 'beecook.js' %>
+    <style type="text/css">
+      .google-src-text { display: none !important }
+      .google-src-active-text { display: block !important; color: black !important; }
+    </style>
+    <script type="text/javascript">
+      _intlStrings._originalText = "BeeCook.com";
+      _intlStrings._interfaceDirection="ltr";
+      _intlStrings._interfaceAlign="left"
+    </script>
+    <!-- TIPS显示代码END -->
 		
-		<link rel="shortcut icon" href="http://www.beecook.com/favicon.ico" />
+    <link rel="shortcut icon" href="http://www.beecook.com/favicon.ico" />
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      var pageTracker = _gat._getTracker("UA-2323873-2");
+      pageTracker._trackPageview();
+    </script>
 		
-		<script type="text/javascript">
-			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-		<script type="text/javascript">
-			var pageTracker = _gat._getTracker("UA-2323873-2");
-			pageTracker._trackPageview();
-		</script>
-		
-	</head>
+  </head>
 	
-	<!-- tips显示代码修改start -->
-	<body onload="_setupIW();">
-	<!-- tips显示代码修改end -->
-		<div>
-			<!-- HEADER -->			
-			<div id="header_wrapper">
-				<div id="header_content">
-					<!-- help -->
-					<!-- <div id="help">
-						<%= link_to HELP_CN, root_url %>
-					</div> -->
-					
-					<!-- current user -->
-					<div id="current_user">
-						<% if current_user = User.find_by_id(session[:user_id]) %>
-							<%= render :partial => 'users/user_basic', 
-                                        :locals => { :user => current_user,
-                                                    :show_come_from => false,
-                                                    :show_icon => true,
-                                                    :show_name => true,
-                                                    :show_link => true,
-                                                    :show_username => true,
-                                                    :show_myname => true } %>
-                            &nbsp;
-							<%= link_to LOGOUT_CN, "#{root_url}logout" %>
-						<% else %>
-							<%= link_to LOGIN_CN, "#{root_url}login" %>
-                            &nbsp;
-							<%= link_to SIGN_UP_CN, "#{root_url}signup" %>
-						<% end %>	
-					</div>
-					
-					<!-- logo -->
-					<div id="logo">
-						<%= link_to image_tag('logo/bc_logo_web.png', :title => SLOGAN_CN, :alt => '', :class => 'logo'), root_url %>
-					</div>
-				</div>
-			</div>
-			<!-- END HEADER -->	
+  <!-- TIPS显示代码修改START -->
+  <body onload="_setupIW();">
+  <!-- TIPS显示代码修改END -->
+
+    <div>
+      <!-- HEADER START -->
+      <div id="header_wrapper">
+        <div id="header_content">
+          <!-- CURRENT USER START -->
+          <div id="current_user">
+            <% if current_user = User.find_by_id(session[:user_id]) %>
+              <%= render :partial => 'users/user_basic',
+                          :locals => { :user => current_user,
+                          :show_come_from => false,
+                          :show_icon => true,
+                          :show_name => true,
+                          :show_link => true,
+                          :show_username => true,
+                          :show_myname => true } %>
+              &nbsp;
+              <%= link_to LOGOUT_CN, logout_path %>
+            <% else %>
+              <%= link_to LOGIN_CN, login_path %>
+              &nbsp;
+              <%= link_to SIGN_UP_CN, signup_path %>
+            <% end %>
+            &nbsp;
+            <%= link_to "指南", help_path %>
+          </div>
+          <!-- CURRENT USER END -->
+
+          <!-- LOGO START -->
+          <div id="logo">
+            <%= link_to image_tag('logo/bc_logo_web.png', :title => SLOGAN_CN, :alt => '', :class => 'logo'), root_path %>
+          </div>
+          <!-- LOGO END -->
+        </div>
+      </div>
+      <!-- HEADER END -->
 			
-			<!-- MAIN NAVIGATION -->		
-			<div id="navigation">
-              <div id="left_navigation">
-                <ul class="navigation">
-                  <li class=<%= tab_css_class(@current_tab_type, 'site') %>>
-                    <%= link_to HOME_CN, root_path %>
-                  </li>
-                  <li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
-                    <%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
-                  </li>
+      <!-- MAIN NAVIGATION START -->
+      <div id="navigation">
+        <!-- LEFT NAVIGATION START -->
+        <div id="left_navigation">
+          <ul class="navigation">
+            <li class=<%= tab_css_class(@current_tab_type, 'site') %>>
+              <%= link_to HOME_CN, root_path %>
+            </li>
+            <li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
+              <%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
+            </li>
 
-                  <!-- 屏蔽餐单
-                  <li class=<= tab_css_class(@current_tab_type, 'menu') >>
-                    <= link_to "#{MENU_CN}<span class='script'></span>", "#{menus_path}" >
-                  </li>
-                  结束 -->
+            <!-- 屏蔽餐单START
+            <li class=<= tab_css_class(@current_tab_type, 'menu') >>
+              <= link_to "#{MENU_CN}<span class='script'></span>", "#{menus_path}" >
+            </li>
+            屏蔽餐单END -->
 
-                  <li class=<%= tab_css_class(@current_tab_type, 'match') %>>
-                    <%= link_to MATCH_CN, { :controller => 'matches', :action => 'profile', :id => 1 } %>
-                  </li>
-                  <li class=<%= tab_css_class(@current_tab_type, 'user') %>>
-                    <%= link_to PEOPLE_CN, "#{users_path}/overview" %>
-                  </li>
-                </ul>
-              </div>
+            <li class=<%= tab_css_class(@current_tab_type, 'match') %>>
+              <%= link_to MATCH_CN, '/matches/1/profile' %>
+            </li>
+            <li class=<%= tab_css_class(@current_tab_type, 'user') %>>
+              <%= link_to PEOPLE_CN, "#{users_path}/overview" %>
+            </li>
+          </ul>
+        </div>
+        <!-- LEFT NAVIGATION END -->
+
+        <!-- RIGHT NAVIGATION START -->
+        <div id="right_navigation">
+          <ul class="navigation">
+            <!-- 后台管理START -->
+            <% if is_admin_logged_in? %>
+              <li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
+              <%= link_to "后台管理", :controller => 'keepers', :action => 'index' %>
+              </li>
+            <% end %>
+            <!-- 后台管理END-->
+
+            <li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
+              <%= link_to "我的#{MAIN_PAGE_CN}", '/mine/profile' %>
+            </li>
+            <% if logged_in? %>
+              <!-- 屏蔽档案和信箱START
+              <li class=<= tab_css_class(@current_tab_type, 'profile') >>
+                <= link_to "PROFILE", root_url >
+              </li>
+              <li class=<= tab_css_class(@current_tab_type, 'message') >>
+                <= link_to MAILBOX_CN, root_url >
+              </li>
+              屏蔽档案和信箱END -->
+
+              <li class=<%= tab_css_class(@current_tab_type, 'setting') %>>
+                <%= link_to SETTING_CN, :controller => 'settings', :action => 'account' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <!-- RIGHT NAVIGATION END -->
+      </div>
+      <!-- MAIN NAVIGATION END -->
 			
-              <div id="right_navigation">
-                <ul class="navigation">
-                  <!-- 后台管理 -->
-                  <% if is_admin_logged_in? %>
-                    <li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
-                      <%= link_to "网站管理", :controller => 'keepers', :action => 'index' %>
-                    </li>
-                  <% end %>
+      <!-- CONTENT START -->
+      <div id="content_wrapper">
+        <div id="content_main">
+          <!-- SUB NAVIGATION START -->
+          <div id="sub_navigation">
+            <div id="shortcut_bar">
+              <%= render :partial => 'layouts/shortcut_bar',
+                          :locals => { :current_tab_type => @current_tab_type } %>
+            </div>
 
-                  <li class=<%= tab_css_class(@current_tab_type, 'mine') %>>
-                    <%= link_to "我的#{MAIN_PAGE_CN}", :controller => 'mine', :action => 'profile' %>
-                  </li>
-                  <% if logged_in? %>
+            <%= render :partial => 'layouts/sub_navigation',
+                        :locals => { :current_tab_type => @current_tab_type } %>
+          </div>
+          <!-- SUB NAVIGATION END -->
 
-                    <!-- 屏蔽档案和信箱
-                    <li class=<= tab_css_class(@current_tab_type, 'profile') >>
-                      <= link_to "PROFILE", root_url >
-                    </li>
-                    <li class=<= tab_css_class(@current_tab_type, 'message') >>
-                      <= link_to MAILBOX_CN, root_url >
-                    </li>
-                    结束 -->
+          <!-- SIDEBAR COLUMN START -->
+          <div id="sidebar_column">
+            <% if !@current_user && @current_tab_type == 'site' %>
+              <%= render :partial => 'sessions/login_sideblock' %>
+            <% end %>
 
-                    <li class=<%= tab_css_class(@current_tab_type, 'setting') %>>
-                      <%= link_to SETTING_CN, :controller => 'settings', :action => 'account' %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-			</div>
-			<!-- END MAIN NAVIGATION -->
+            <% if @current_user && (@current_tab_type == 'site' || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
+              <%= render :partial => 'stories/notification_sideblock',
+                          :locals => { :notifications => @notifications } %>
+            <% end %>
+
+            <% if ['user', 'recipe'].include?(@current_tab_type) && params[:action] != 'profile' %>
+              <%= render :partial => 'searchings/search_sideblock' %>
+            <% end %>
+
+            <% if @show_sidebar %>
+              <%= render :partial => "#{params[:controller]}/#{params[:action]}_sidebar" %>
+            <% end %>
+
+            <!-- 后台管理START -->
+            <% if is_admin_logged_in? %>
+              <%= render :partial => 'layouts/admin' %>
+            <% end %>
+            <!-- 后台管理END -->
+          </div>
+          <!-- SIDEBAR COLUMN END -->
+
+          <!-- CONTENT COLUMN START -->
+          <div id="content_column">
+            <div id="flash_wrapper">
+              <%= render :partial => 'layouts/flash',
+                          :locals => { :notice => flash[:notice] } %>
+            </div>
+
+            <div id="system_notice_wrapper">
+              <%= render :partial => 'layouts/system_notice',
+                          :locals => { :notice => @system_notice } %>
+            </div>
+
+            <% if @user_bar %>
+              <%= render :partial => 'users/user_bar',
+                          :locals => { :user => @user_bar } %>
+            <% end %>
+
+            <%= yield %>
+          </div>
+          <!-- CONTENT COLUMN END -->
+        </div>
+      </div>
+      <!-- CONTENT END -->
 			
-			<!-- CONTENT -->		
-			<div id="content_wrapper">
-				<div id="content_main">
-                  <!-- sub navigation -->
-                  <div id="sub_navigation">
-                  <div id="shortcut_bar">
-                    <% if ['site', 'mine', 'recipe'].include?(@current_tab_type) %>
-                      <em class="l1"><%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %></em>
-                    <% end %>
-
-                    <!-- 屏蔽餐单
-                    < if ['site', 'mine', 'menu'].include?(@current_tab_type) >
-                      <em class="l1"><= link_to "#{CREATE_CN}#{MENU_CN}", new_menu_path ></em>
-                    < end >
-                    结束 -->
-
-                    <% if @current_user && @current_user.is_role_of?('admin') && (['match'].include?(@current_tab_type) || (['mine'].include?(@current_tab_type) && ['matches'].include?(params[:controller]))) %>
-                      <em class="l1"><%= link_to "#{CREATE_CN}#{MATCH_CN}", new_match_path %></em>
-                    <% end %>
-
-                    <!-- 屏蔽邀请
-                    < if ['mine', 'user'].include?(@current_tab_type) >
-                      <em class="l1"><= link_to "邀请#{FRIEND_CN}", '' %></em>
-                    < end >
-                    结束 -->
-
-                    <% if ['site', 'mine'].include?(@current_tab_type) %>
-                      <em class="l1"><%= link_to FEEDBACK_CN, feedback_path %></em>
-                    <% end %>
-                  </div>
-
-                  <%= render :partial => 'layouts/sub_navigation',
-                    :locals => { :current_tab_type => @current_tab_type } %>
-                  </div>
-					
-                  <!-- sidebar colmun  -->
-				  <div id="sidebar_column">
-                      <% if !current_user && @current_tab_type == 'site' %>
-                        <%= render :partial => 'sessions/login_sideblock' %>
-					  <% end %>
-					  
-                      <% if current_user && (@current_tab_type == 'site' || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
-					  	<%= render :partial => 'stories/notification_sideblock', 
-                                    :locals => { :notifications => @notifications } %>
-					  <% end %>
-					  
-                      <% if ['user', 'recipe'].include?(@current_tab_type) && params[:action] != 'profile' %>
-                        <%= render :partial => 'searchings/search_sideblock' %>
-                      <% end %>
-
-                      <% if @show_sidebar %>
-                        <%= render :partial => "#{params[:controller]}/#{params[:action]}_sidebar" %>
-                      <% end %>
-
-                      <!-- 后台管理 -->
-                      <% if is_admin_logged_in? %>
-                        <%=  render :partial => 'layouts/admin' %>
-                      <% end %>
-						
-				  </div>
-					
-					<!-- content column -->
-					<div id="content_column">
-
-						<div id="system_notice_wrapper">
-							<%= render :partial => "/layouts/system_notice",
-												 :locals => {:notice => @system_notice} %>
-						</div>
-						
-						<div id="flash_wrapper">
-							<%= render :partial => "/layouts/flash",
-												 :locals => {:notice => flash[:notice]} %>
-						</div>
-						
-						<% if @user_bar %>
-							<%= render :partial => "/users/user_bar",
-												 :locals => {:user => @user_bar} %>
-						<% end %>
-
-						<%= yield %>
-
-					</div>
-				</div>		
-			</div>
-			<!-- END CONTENT -->
+      <!-- FOOTER START -->
+      <div id="footer_wrapper">
+        <div id="footer_content">
+          <%= render :partial => 'layouts/footer' %>
+        </div>
+      </div>
+      <!-- FOOTER END -->
 			
-			<!-- FOOTER -->			
-			<div id="footer_wrapper">
-              <div id="footer_content">
-                <%= render :partial => 'layouts/footer' %>
-              </div>
-			</div>
-			<!-- END FOOTER -->
-			
-		</div>
-		
-		<div id="overlay">
-					
-		</div>
+    </div>
+
+    <!-- OVERLAY START -->
+    <div id="overlay">
+
+    </div>
+    <!-- OVERLAY END -->
 	
-	</body>
+  </body>
 </html>

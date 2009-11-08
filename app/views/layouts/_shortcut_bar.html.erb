@@ -1,0 +1,21 @@
+<% if ['site', 'mine', 'recipe'].include?(current_tab_type) %>
+  <em class="l1"><%= link_to "#{CREATE_CN}#{RECIPE_CN}", new_recipe_path %></em>
+<% end %>
+
+<!-- 屏蔽餐单START
+< if ['site', 'mine', 'menu'].include?(current_tab_type) >
+  <em class="l1"><= link_to "#{CREATE_CN}#{MENU_CN}", new_menu_path ></em>
+< end >
+屏蔽餐单END -->
+
+<% if @current_user && @current_user.is_role_of?('admin') && (['match'].include?(current_tab_type) || (['mine'].include?(current_tab_type) && ['matches'].include?(params[:controller]))) %>
+  <em class="l1"><%= link_to "#{CREATE_CN}#{MATCH_CN}", new_match_path %></em>
+<% end %>
+
+<% if ['site', 'mine'].include?(current_tab_type) %>
+  <em class="l1"><%= link_to FEEDBACK_CN, feedback_path %></em>
+<% end %>
+
+<% if ['site', 'mine', 'user'].include?(current_tab_type) %>
+  <em class="l3"><%= link_to "邀请", '/users/invite' %></em>
+<% end %>
