@@ -114,25 +114,7 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def set_system_notice
-#    @system_notice = "号外1: <em>“蜂人(测试版)”栏目</em>新出锅, 大家可以<em>互相加为伙伴</em>啦！<br /><br/>
-#                      号外2: 大家可以到<em>帐户设置</em>里添加<em>自己的blog</em>啦！"
-#    @system_notice = "号外: <em>“蜂厨”</em>与新浪著名美食圈子<em>“美食·人生”</em>结成<em>友情合作伙伴</em>!"
-#    @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 即将开锅喽, 请密切关注比赛动态喔!</em>"
-#    @system_notice = "号外: <em>金蜂·美食人生 大赛 (第一季) 明天凌晨零点正式开锅!</em>"
-#    @system_notice = "<span class='bold'>金蜂·美食人生 大赛 (第一季) 正式开锅, 大伙儿快来参赛呵! <em class='l3' style='font-weight: bold;'>(报名和作品征集截止时间延后至2月15日)</em><br /><br />
-#                      请要参赛的蜂友前往 <em class='l0'><a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>比赛页面</a></em> 报名参赛,
-#                      并且查看 <em class='l2'><a href='#{url_for(:controller => 'matches', :action => 'show', :id => 1)}'>比赛详情</a></em> 和 <em class='l3'><a href='#{url_for(:controller => 'matches', :action => 'help')}'>比赛指南</a></em><br /><br />
-#                      <em class='l1'><a href='#{url_for(:match_id => 1, :controller => 'entries', :action => 'index')}'>快来投票啦! 投票也有幸运奖呵!</a></em> 参赛的蜂友们快使用<em class='l3' style='font-weight: bold;'> 食谱分享 </em>为自己的作品拉票呵！</span>"
-#    @system_notice = "<a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>金蜂·美食人生 大赛（第一季）</a> 快要结束啦，<em class='l3'>报名、征集和投票截止时间是2月15日（今天）23时59分59秒！</em><br /><br />
-#                      请还没有提交参赛作品的选手们抓紧时间提交，<em class='l3'>报名并提交参赛作品的选手都有机会获得“参赛幸运奖”！</em><br />
-#                      <em class='l3'>如果参赛作品有至少3位投票者投票，还可以参与“主奖项（金蜂奖、银蜂奖、铜蜂奖）”和“金蜂食单入围奖”的评选！</em><br />
-#                      请蜂友们抓紧时间为你喜爱的作品投票，<em class='l3'>投票的蜂友都有机会获得“投票幸运奖”！</em>"
-#    @system_notice = "<a href='#{url_for(:controller => 'matches', :action => 'profile', :id => 1)}'>金蜂·美食人生 大赛（第一季）</a> <em class='l3'><a href='#{url_for(:match_id => 1, :controller => 'winners', :action => 'index')}'>获奖名单</a></em> 和 <em class='l3'><a href='http://beecook2008.blogspot.com/2009/02/blog-post.html' target='_blank'>金蜂食单</a></em> 揭晓啦，恭喜获奖的作品和蜂友们！<br /><br />
-#                      蜂厨服务生已经给获奖的蜂友发出了奖品，请各位注意查收喔！"
-#    @system_notice = "<em class='l3'><a href='#{menus_path}'>餐单</a></em> 新鲜出炉啦！欢迎蜂友们抢先试用，快来跟大家分享你的美味餐单呵！"
-#    @system_notice = "蜂厨慈善创意活动—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季进行中... 美味无敌快乐PK赛—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100f04b.html' target='_blank'>中西点心对对碰</a></em> 也在进行中..."
-     @system_notice = "蜂厨慈善创意活动 <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季火热进行中；特约合作伙伴 <em class='l3'><a href='http://spooon.taobao.com' target='_blank'>SPOOON</a></em> 带来源自丹麦的独创设计！<br /><br />
-                       新浪美食圈子 <em class='l2'><a href='http://q.blog.sina.com.cn/yryg' target='_blank'>生活绿皮书</a></em> 联手蜂厨即将推出 <em class='l2'><a href='http://blog.sina.com.cn/s/blog_4dd78ed30100fs5l.html' target='_blank'>《生活绿皮书》电子杂志感恩节特刊</a></em>，<a href='http://blog.sina.com.cn/s/blog_4dd78ed30100fs5l.html' target='_blank'>猛击这里查看详情</a>..."
+     @system_notice = system_notice
 	end
 	
 	# def param_posted?(symbol)
