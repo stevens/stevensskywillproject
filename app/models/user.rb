@@ -114,7 +114,8 @@ class User < ActiveRecord::Base
   # end  此代码段变更为下面的代码段
   
   def self.authenticate(email, password)
-    u = find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email] # need to get the salt
+#    u = find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email] # need to get the salt
+    u = find :first, :conditions => ['email = ?', email] # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
   
@@ -204,7 +205,8 @@ class User < ActiveRecord::Base
 	
 	#判断用户的可访问性
 	def accessible?(someuser = nil)
-		activated_at.nil? ? false : true
+#		activated_at.nil? ? false : true
+    true
 	end
 
   protected

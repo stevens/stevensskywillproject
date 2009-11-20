@@ -1,6 +1,7 @@
 module UsersHelper
 	
-	def users_for(conditions = user_conditions, limit = nil, order = 'activated_at DESC, created_at DESC')
+#	def users_for(conditions = user_conditions, limit = nil, order = 'activated_at DESC, created_at DESC')
+  def users_for(conditions = user_conditions, limit = nil, order = 'created_at DESC')
 		User.find(:all, :limit => limit, :order => order, 
 							:conditions => conditions)
 	end
@@ -18,7 +19,7 @@ module UsersHelper
                       ORDER BY RAND()")
   end
   
-  def user_conditions(role = nil, activated = true, created_at_from = nil, created_at_to = nil)
+  def user_conditions(role = nil, activated = nil, created_at_from = nil, created_at_to = nil)
   	conditions = ["users.login IS NOT NULL", 
   								"users.login <> ''", 
   								"users.email IS NOT NULL", 

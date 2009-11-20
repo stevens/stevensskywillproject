@@ -112,7 +112,8 @@ class UsersController < ApplicationController
 #        Contact.friendship_buildup(@current_user, invite_user)
         Contact.friendship_request(@current_user, invite_user)
       end
-      flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
+#      flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
+      flash[:notice] = "#{@current_user.login}, 你的帐户已经成功激活啦!"
     end
     redirect_back_or_default('/mine/profile')
   end
@@ -330,12 +331,15 @@ class UsersController < ApplicationController
 	
   def after_create_ok
   	self.current_user = @user
-  	session[:user_id] = nil
+#  	session[:user_id] = nil
   	respond_to do |format|
 			format.html do
-	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br /><br/>
-	      								 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
-				redirect_to root_path
+#	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br /><br/>
+#	      								 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
+#				redirect_to root_path
+        flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
+#        redirect_to login_path
+        redirect_back_or_default('/mine/profile')
 			end
 			# format.xml  { render :xml => @user, :status => :created, :location => @user }
 		end

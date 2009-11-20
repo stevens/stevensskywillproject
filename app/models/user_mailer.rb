@@ -5,13 +5,14 @@ class UserMailer < ActionMailer::ARMailer
 	
   def signup_notification(user)
     setup_email(user)
-    @subject += "请激活你的#{SITE_NAME_CN}#{ACCOUNT_CN}"
+    @subject += "请激活你的#{ACCOUNT_CN}"
     @body[:url] = "#{root_url}activate/#{user.activation_code}"
   end
   
   def activation(user)
     setup_email(user)
-    @subject += "恭喜你加入#{SITE_NAME_CN}"
+#    @subject += "恭喜你加入#{SITE_NAME_CN}"
+    @subject += "你的#{ACCOUNT_CN}已经成功激活"
     @body[:url] = user_first_link(user, false)
   end
 

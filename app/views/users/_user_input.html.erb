@@ -40,7 +40,8 @@
 			</td>
 			<td class="input">
 				<div class="text">
-					<%= "<em class='more'>请确认#{EMAIL_ADDRESS_CN}真实有效, 才能接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" %>
+                    <%= "请#{INPUT_CN}你的#{EMAIL_ADDRESS_CN}" %>
+					<!-- <= "<em class='more'>请确认#{EMAIL_ADDRESS_CN}真实有效, 才能接收#{ACCOUNT_CN}激活#{EMAIL_CN}</em>" > -->
 				</div>
 				<div class="input">
 					<%= f.text_field :email, :class => "text_s" %>
