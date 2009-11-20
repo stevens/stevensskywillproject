@@ -159,6 +159,29 @@ class SystemController < ApplicationController
     end
   end
 
+  # 检查用户在外部其他网站的帐户名
+  def check_outer_username
+    info = "外部帐户名检查"
+    set_page_title(info)
+    set_block_title(info)
+
+    params[:checkable_username] = str_squish(params[:checkable_username], 0, false)
+
+    if !params[:checkable_username].blank?
+      case params[:checkable_type]
+      when 'taobao'
+        @profiles = Profile.find(:all, :conditions => { :taobao => params[:checkable_username] }, :order => 'user_id')
+      end
+
+      if @profiles && @profiles.size > 0
+        profiles_count = @profiles.size
+        flash[:notice] = "找到#{profiles_count}个符合条件的用户!"
+      else
+        flash[:notice] = "对不起, 没有找到符合条件的用户!"
+      end
+    end
+  end
+
   private
 
   def after_choice_ok

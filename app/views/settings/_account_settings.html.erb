@@ -1,4 +1,4 @@
-<br />
+<div class="sub_block_tb">
 <table class="content">
   <tr>
     <td class="label"><label><%= "#{NICKNAME_CN}:" %></label></td>
@@ -46,18 +46,43 @@
     </td>
   </tr>
 
-  <tr>
-    <td class="label"><label><%= "blog:" %></label></td>
-    <td class="input">
-      <% form_for profile do |f| %>
+  <% form_for profile do |f| %>
+    <tr>
+      <td class="label">
+        <label for="blog"><%= "blog:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请输入你的blog地址" %>
+        </div>
         <div class="input">
           <%= f.text_field :blog, :class => "text" %>
         </div>
-        <div id="blog_submit" class="submit">
-          <%= f.submit "#{SAVE_CN}blog", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+        <%= error_message_on "profile", "blog" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="taobao"><%= "外部帐户名:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "请输入你的淘宝帐户名" %>
         </div>
-      <% end %>
-      <br />
-    </td>
-  </tr>
+        <div class="input">
+          <%= f.text_field :taobao, :class => "text" %>
+        </div>
+        <%= error_message_on "profile", "taobao" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit SAVE_CN, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
 </table>
+</div>

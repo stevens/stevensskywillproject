@@ -1,0 +1,54 @@
+<div class="content_block">
+  <div class="block_header">
+    <div class="block_header_link">
+
+    </div>
+    <h1><%= strip_tags @block_title %></h1>
+  </div>
+
+  <div class="block_main">
+    <div class="sub_block">
+      <div id="checker_area">
+        <% form_tag '/system/check_outer_username' do %>
+          <% checkable_type = 'taobao' %>
+          <%= hidden_field_tag 'checkable_type', checkable_type %>
+          <%= text_field_tag 'checkable_username', params[:checkable_username], :class => "search" %>
+          <%= submit_tag '检查', :class => "search_button" %>
+        <% end %>
+      </div>
+      <% if @profiles && @profiles.size > 0 %>
+        <br />
+        <table class="result_list">
+          <tr>
+            <th>SN</th>
+            <th>用户ID</th>
+            <th>昵称</th>
+            <th>外部帐户名</th>
+          </tr>
+          <% sn = 0 %>
+          <% for profile in @profiles %>
+            <% sn += 1 %>
+            <% user = profile.user %>
+            <% outer_username = profile.taobao %>
+            <% user_name = strip_tags user_username(user, true, true) %>
+            <% user_link = user_first_link(user) %>
+            <tr>
+              <td class="sn">
+                <%= sn %>
+              </td>
+              <td>
+                <%= user.id %>
+              </td>
+              <td>
+                <%= link_to user_name, user_link, :target => "_blank", :title => user_name %>
+              </td>
+              <td>
+                <%= outer_username %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

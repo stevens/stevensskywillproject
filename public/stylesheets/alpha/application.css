@@ -2076,6 +2076,23 @@ td.love_recipe_award {
     font-size: 10px;
     margin-right: 5px;
 }
+table.result_list th {
+    font-size: 12px;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #428cbb;
+}
+table.result_list td {
+    font-size: 12px;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-bottom: 1px dashed #f1f1f1;
+}
+table.result_list td.sn {
+    background-color: #f5f5f5;
+}
 table.stats th {
     font-size: 9px;
     text-align: center;
@@ -2244,4 +2261,9 @@ td.pk_item_win div.pk_item_votes_result {
     margin-top: 0px;
     margin-right: 5px;
     margin-left: 10px;
+}
+
+/* checker outer username */
+#checker_area {
+    text-align: center;
 }
