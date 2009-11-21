@@ -173,11 +173,17 @@ class SystemController < ApplicationController
         @profiles = Profile.find(:all, :conditions => { :taobao => params[:checkable_username] }, :order => 'user_id')
       end
 
-      if @profiles && @profiles.size > 0
-        profiles_count = @profiles.size
-        flash[:notice] = "找到#{profiles_count}个符合条件的用户!"
-      else
-        flash[:notice] = "对不起, 没有找到符合条件的用户!"
+      respond_to do |format|
+        format.html do
+          if @profiles && @profiles.size > 0
+            profiles_count = @profiles.size
+            flash[:notice] = "找到#{profiles_count}个符合条件的用户!"
+          else
+            flash[:notice] = "对不起, 没有找到符合条件的用户!"
+          end
+          render :action => "check_outer_username"
+          clear_notice
+        end
       end
     end
   end
