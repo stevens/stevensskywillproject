@@ -54,6 +54,11 @@ class RecipesController < ApplicationController
 		  	@show_todo = true
 		  	@show_favorite = true
 
+        if @current_user && @user == @current_user
+          @show_photo_todo = true
+          @show_manage = true
+        end
+
         @meta_description = "这是#{username_prefix(@user)}#{filter_title}#{RECIPE_CN}列表，可以浏览各种#{filter_title}#{RECIPE_CN}（菜谱）的图片和文字摘要信息。"
 
       	format.html
@@ -648,7 +653,7 @@ class RecipesController < ApplicationController
         @love_recipes_set = CACHE.get('overview_love_recipes_set')
       rescue Memcached::NotFound
         @love_recipes_set = love_recipes(user, '21')
-        CACHE.set('overview_love_recipes_set',@love_recipes_set)
+#        CACHE.set('overview_love_recipes_set',@love_recipes_set)
       end
     else
       @love_recipes_set = love_recipes(user, '21')
