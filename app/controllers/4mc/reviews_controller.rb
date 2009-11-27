@@ -116,10 +116,10 @@ class ReviewsController < ApplicationController
 				end
 				@reviews_set_count = @reviews_set.size
 				@insert_line = true if @reviews_set_count <= limit
-        begin
-          CACHE.delete('overview_reviews_set')
-        rescue Memcached::NotFound
-        end
+        #begin
+          cache_delete('overview_reviews_set')
+        #rescue Memcached::NotFound
+        #end
 				after_create_ok
 			else
 				after_create_error
@@ -131,10 +131,10 @@ class ReviewsController < ApplicationController
     load_review(@current_user)
 
 		if @review.update_attributes(params[:review])
-      begin
-        CACHE.delete('overview_reviews_set')
-      rescue Memcached::NotFound
-      end
+      #begin
+        cache_delete('overview_reviews_set')
+      #rescue Memcached::NotFound
+      #end
 			after_update_ok
 		else
 			after_update_error
@@ -151,10 +151,10 @@ class ReviewsController < ApplicationController
 				@reviews_set = @reviewable.reviews.find(:all, :limit => 20)
 				@reviews_set_count = @reviews_set.size
 			end
-      begin
-        CACHE.delete('overview_reviews_set')
-      rescue Memcached::NotFound
-      end
+      #begin
+        cache_delete('overview_reviews_set')
+      #rescue Memcached::NotFound
+      #end
   		after_destroy_ok
   	end
   end

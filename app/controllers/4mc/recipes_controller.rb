@@ -200,20 +200,20 @@ class RecipesController < ApplicationController
     if (params[:recipe][:privacy] == '10' && params[:recipe][:from_type] == '1' && @recipe.is_draft == '0' && time_iso_format(@recipe.published_at) >= '2009-08-01 00:00:00')
       unless(current_roles.include?('21'))
         params[:recipe][:roles] = '21 ' + current_roles
-        begin
-          #CACHE.delete('overview_love_recipes_set')
-          CACHE.delete('overview_love_users_set')
-        rescue Memcached::NotFound
-        end
+        #begin
+          cache_delete('overview_love_recipes_set_count')
+          cache_delete('overview_love_users_set')
+        #rescue Memcached::NotFound
+        #end
       end
     else
       if(current_roles.include?('21'))
         params[:recipe][:roles] = current_roles.gsub('21', '')
-        begin
-          #CACHE.delete('overview_love_recipes_set')
-          CACHE.delete('overview_love_users_set')
-        rescue Memcached::NotFound
-        end
+        #begin
+          cache_delete('overview_love_recipes_set_count')
+          cache_delete('overview_love_users_set')
+        #rescue Memcached::NotFound
+        #end
       end
     end
     # end
@@ -237,12 +237,12 @@ class RecipesController < ApplicationController
 		  if @recipe.update_attributes(params[:recipe])
 		  	# @recipe.tag_list = params[:tags].strip if params[:tags] && params[:tags].strip != @recipe.tag_list
 				reg_homepage(@recipe, 'update')
-        begin
-          CACHE.delete('overview_recipes_set')
-          CACHE.delete('overview_all_recipes_set')
-          CACHE.delete('overview_tags_set')
-        rescue Memcached::NotFound
-        end
+        #begin
+          cache_delete('overview_recipes_set')
+          cache_delete('overview_all_recipes_set')
+          cache_delete('overview_tags_set')
+        #rescue Memcached::NotFound
+        #end
 				after_update_ok
 		  else
 				after_update_error
@@ -259,15 +259,15 @@ class RecipesController < ApplicationController
 			ActiveRecord::Base.transaction do
 				if @recipe.destroy
 					reg_homepage(@recipe, 'destroy')
-          begin
-            CACHE.delete('overview_recipes_set')
-            CACHE.delete('overview_all_recipes_set')
-            #CACHE.delete('overview_love_recipes_set')
-            CACHE.delete('overview_love_users_set')
-            CACHE.delete('overview_tags_set')
-            CACHE.delete('overview_reviews_set')
-          rescue Memcached::NotFound
-          end
+          #begin
+            cache_delete('overview_recipes_set')
+            cache_delete('overview_all_recipes_set')
+            cache_delete('overview_love_recipes_set_count')
+            cache_delete('overview_love_users_set')
+            cache_delete('overview_tags_set')
+            cache_delete('overview_reviews_set')
+          #rescue Memcached::NotFound
+          #end
 					after_destroy_ok
 				end
 			end
@@ -295,11 +295,11 @@ class RecipesController < ApplicationController
       if(@recipe.from_type == '1' && @recipe.privacy == '10')
         new_attrs = { :roles => ' 21', :is_draft => '0', :published_at => current, :original_updated_at => current }
         @notice = "你已经发布了1#{@self_unit}爱心#{@self_name}!"
-        begin
-          #CACHE.delete('overview_love_recipes_set')
-          CACHE.delete('overview_love_users_set')
-        rescue Memcached::NotFound
-        end
+        #begin
+          cache_delete('overview_love_recipes_set_count')
+          cache_delete('overview_love_users_set')
+        #rescue Memcached::NotFound
+        #end
       else
         new_attrs = { :is_draft => '0', :published_at => current, :original_updated_at => current }
         @notice = "你已经发布了1#{@self_unit}#{@self_name}!"
@@ -311,12 +311,12 @@ class RecipesController < ApplicationController
 			
 			if @recipe.update_attributes(new_attrs)
 				reg_homepage(@recipe, 'update')
-        begin
-          CACHE.delete('overview_recipes_set')
-          CACHE.delete('overview_all_recipes_set')
-          CACHE.delete('overview_tags_set')
-        rescue Memcached::NotFound
-        end
+        #begin
+          cache_delete('overview_recipes_set')
+          cache_delete('overview_all_recipes_set')
+          cache_delete('overview_tags_set')
+        #rescue Memcached::NotFound
+        #end
 				after_publish_ok
 			end
 		end
@@ -626,18 +626,20 @@ class RecipesController < ApplicationController
   
   ## load love recipes of the user 加载爱心食谱数据
   def load_love_recipes(user = nil)
-    #if (@action_flag == 1)
-    #  begin
-    #    @love_recipes_set = CACHE.get('overview_love_recipes_set')
-    #  rescue Memcached::NotFound
-    #    @love_recipes_set = love_recipes(user, '21')
-    #    CACHE.set('overview_love_recipes_set',@love_recipes_set)
-    #  end
-    #else
+    if (@action_flag == 1)
+      begin
+        @love_recipes_set_count = CACHE.get('overview_love_recipes_set_count')
+      rescue Memcached::NotFound
+        @love_recipes_set = love_recipes(user, '21')
+        @love_recipes_set_count = @love_recipes_set.size
+        CACHE.set('overview_love_recipes_set_count',@love_recipes_set_count)
+      end
+    else
       @love_recipes_set = love_recipes(user, '21')
-    #end
+      @love_recipes_set_count = @love_recipes_set.size
+    end
 ####    @love_recipes_set = love_recipes(user, '21')
-    @love_recipes_set_count = @love_recipes_set.size
+####    @love_recipes_set_count = @love_recipes_set.size
   end
   
   def load_love_users(user = nil)

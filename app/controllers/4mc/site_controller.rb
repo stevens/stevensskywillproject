@@ -115,16 +115,17 @@ class SiteController < ApplicationController
   def load_love_recipes(user = nil)
     # memcache code begin
     begin
-      @love_recipes_set = CACHE.get('overview_love_recipes_set')
+      @love_recipes_set_count = CACHE.get('overview_love_recipes_set_count')
     rescue Memcached::NotFound
       @love_recipes_set = love_recipes(user, '21')
-      CACHE.set('overview_love_recipes_set',@love_recipes_set)
+      @love_recipes_set_count = @love_recipes_set.size
+      CACHE.set('overview_love_recipes_set_count',@love_recipes_set_count)
     end
     # memcache code end
     # no memcache code begin
     #@love_recipes_set = love_recipes(user, '21')
+    #@love_recipes_set_count = @love_recipes_set.size
     # no memcahce code end
-    @love_recipes_set_count = @love_recipes_set.size
   end
   
   def load_love_users(user = nil)
