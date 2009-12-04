@@ -20,8 +20,7 @@ module SystemHelper
 #    system_notice = "<em class='l3'><a href='#{menus_path}'>餐单</a></em> 新鲜出炉啦！欢迎蜂友们抢先试用，快来跟大家分享你的美味餐单呵！"
 #    system_notice = "蜂厨慈善创意活动—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季进行中... 美味无敌快乐PK赛—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100f04b.html' target='_blank'>中西点心对对碰</a></em> 也在进行中..."
      system_notice = "<em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季进行中，快来 <em class='l3'><a href='http://www.beecook.com/users/invite'>邀请朋友</a></em> 一起做慈善！合作伙伴 <em class='l3'><a href='http://spooon.taobao.com' target='_blank'>SPOOON</a></em> 带来源自丹麦的独创设计！<br /><br />
-                      新浪美食圈子 <em class='l2'><a href='http://q.blog.sina.com.cn/yryg' target='_blank'>生活绿皮书</a></em> 联手蜂厨推出 <em class='l2'><a href='http://blog.sina.com.cn/s/blog_4dd78ed30100gbur.html' target='_blank'>《生活绿皮书》电子杂志感恩节特刊</a></em>，<a href='http://blog.sina.com.cn/s/blog_4dd78ed30100gbur.html' target='_blank'>已经温情上市喽</a>！<br /><br />
-                      新浪美食圈子 <em class='l2'><a href='http://q.blog.sina.com.cn/wjhdwsrs' target='_blank'>美食·人生</a></em> 联手蜂厨即将推出 <em class='l2'><a href='http://q.blog.sina.com.cn/wjhdwsrs/bbs/topic/tid=15302234' target='_blank'>“草根美食家”版2010年精美台历</a></em>，<a href='http://q.blog.sina.com.cn/wjhdwsrs/bbs/topic/tid=15302234' target='_blank'>征稿活动正在进行中</a>..."
+                      新浪美食圈子 <em class='l2'><a href='http://q.blog.sina.com.cn/yryg' target='_blank'>生活绿皮书</a></em> 联手蜂厨推出 <em class='l2'><a href='http://blog.sina.com.cn/s/blog_4dd78ed30100gbur.html' target='_blank'>《生活绿皮书》电子杂志感恩节特刊</a></em>，<a href='http://blog.sina.com.cn/s/blog_4dd78ed30100gbur.html' target='_blank'>已经温情上市喽...</a>！<br /><br />"
   end
 
   # 获取时间点所在周的结束时间点
