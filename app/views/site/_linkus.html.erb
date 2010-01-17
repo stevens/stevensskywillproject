@@ -1,18 +1,17 @@
-<% logo_url = "#{root_url}images/logo/bc_logo_web.png" %>
-<% link_title = SLOGAN_CN %>
+<% logo_url = "#{root_url}images/logo/bc_logo_link.png" %>
 
 <% html_content = [] %>
 
 <% html_content << "<div style='padding: 5px; text-align: center; width: 150px; margin: auto;'>" %>
 
 <% html_content << "<div style='margin-bottom: 1px;'>
-                      <a href='#{root_url}' target='_blank'><img alt='' src='#{logo_url}' title='#{link_title}' style='width: 110px;' /></a>
+                      <a href='#{root_url}' target='_blank'><img alt='' src='#{logo_url}' title='#{SITE_NAME_CN} - 向着美味勇敢前进' /></a>
                     </div>
                     <div>
-                      <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: bold !important; color: #ff8159; font-family: Verdana; word-break: break-all; line-height: 16px;' title='#{link_title}'>#{SITE_DOMAIN_EN}</a>
+                      <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: bold !important; color: #ff8159; font-family: Verdana; word-break: break-all; line-height: 16px;' title='#{SITE_NAME_CN} - #{SITE_DOMAIN_EN}'>#{SITE_DOMAIN_EN}</a>
                     </div>
                     <div>
-                      <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; word-break: break-all; line-height: 16px;'>#{SITE_NAME_CN} - 美食革命根据地</a>
+                      <a href='#{root_url}' target='_blank' style='text-decoration: none; font-size: 12px; font-weight: normal !important; color: #428cbb; font-family: Verdana; word-break: break-all; line-height: 16px;' title='#{SITE_NAME_CN} - 美食革命根据地'>#{SITE_NAME_CN} - 美食革命根据地</a>
                     </div>" %>
 
 <% html_content << "</div>" %>

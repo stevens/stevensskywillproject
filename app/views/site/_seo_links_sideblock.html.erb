@@ -1,8 +1,29 @@
 <div class="sidebar_block">
   <div class="sidebar_block_header">
+    <h1><%= '友情合作伙伴' %></h1>
+  </div>
+  <div id="seo_links_list_wrapper" class="sidebar_block_main">
+    <%= render :partial => 'site/seo_links',
+                :locals => { :link_type => 'friend_partner' } %>
+  </div>
+</div>
+
+<div class="sidebar_block">
+  <div class="sidebar_block_header">
+    <h1><%= '爱心食谱行动合作伙伴' %></h1>
+  </div>
+  <div id="seo_links_list_wrapper" class="sidebar_block_main">
+    <%= render :partial => 'site/seo_links',
+                :locals => { :link_type => 'love_recipe_partner' } %>
+  </div>
+</div>
+
+<div class="sidebar_block">
+  <div class="sidebar_block_header">
     <h1><%= '友情链接' %></h1>
   </div>
   <div id="seo_links_list_wrapper" class="sidebar_block_main">
-    <%= render :partial => 'site/seo_links' %>
+    <%= render :partial => 'site/seo_links',
+                :locals => { :link_type => 'friend_link' } %>
   </div>
 </div>
