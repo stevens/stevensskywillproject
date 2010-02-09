@@ -19,10 +19,11 @@ module SystemHelper
 #                     蜂厨服务生已经给获奖的蜂友发出了奖品，请各位注意查收喔！"
 #    system_notice = "<em class='l3'><a href='#{menus_path}'>餐单</a></em> 新鲜出炉啦！欢迎蜂友们抢先试用，快来跟大家分享你的美味餐单呵！"
 #    system_notice = "蜂厨慈善创意活动—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季进行中... 美味无敌快乐PK赛—— <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100f04b.html' target='_blank'>中西点心对对碰</a></em> 也在进行中..."
-     system_notice = "<em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季进行中，快来 <em class='l3'><a href='http://www.beecook.com/users/invite'>邀请朋友</a></em> 一起做慈善！合作伙伴 <em class='l3'><a href='http://spooon.taobao.com' target='_blank'>SPOOON</a></em> 带来源自丹麦的独创设计！<br><br>
-                      <em class='l2'><a href='http://www.photobuddha.net/magazine.asp' target='_blank'>佛图网《觉·得》杂志</a></em> 正在举办 <em class='l2'><a href='http://www.beecook.com/matches/2/profile'>〖草木甦活的滋味〗——2010年春季生养身心的素食美味比赛</a></em> ！<br><br>
-                      <em class='l2'><a href='http://bbs.soufun.com/board/1010234143/95_1' target='_blank'>搜房星河苑业主论坛美人美食分论坛</a></em> 正在举办 <em class='l2'><a href='http://www.beecook.com/matches/3/profile'>“迎玉虎•贺新春”—星河苑社区首届网络美食比赛</a></em> ！"
-#                      新浪美食圈子 <em class='l2'><a href='http://q.blog.sina.com.cn/yryg' target='_blank'>生活绿皮书</a></em> 联手蜂厨推出 <em class='l2'><a href='http://blog.sina.com.cn/s/blog_4dd78ed30100gbur.html' target='_blank'>《生活绿皮书》电子杂志感恩节特刊</a></em>，<a href='http://blog.sina.com.cn/s/blog_4dd78ed30100gbur.html' target='_blank'>已经温情上市喽</a>！
+    winners = [User.find_by_id(1787), User.find_by_id(1822), User.find_by_id(1218)]
+    system_notice = "<em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> 第一季进行中，恭喜 <em class='l3'><a href='#{user_first_link(winners[0])}' target='_blank'>#{user_username(winners[0], true, true)}</a></em>、<em class='l3'><a href='#{user_first_link(winners[1])}' target='_blank'>#{user_username(winners[1], true, true)}</a></em>、<em class='l3'><a href='#{user_first_link(winners[2])}' target='_blank'>#{user_username(winners[2], true, true)}</a></em> 获得第6月度 <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100gnmy.html' target='_blank'>爱心奖</a></em> ！<br /><br />
+                     <em class='l2'><a href='http://www.photobuddha.net/magazine.asp' target='_blank'>佛图网《觉·得》杂志</a></em> 举办的 <em class='l2'><a href='http://www.beecook.com/matches/2/profile'>〖草木甦活的滋味〗——2010年春季生养身心的素食美味比赛</a></em> 获奖名单新鲜出炉！<br /><br />
+                     <em class='l2'><a href='http://bbs.soufun.com/board/1010234143/95_1' target='_blank'>搜房星河苑业主论坛美人美食分论坛</a></em> 正在举办 <em class='l2'><a href='http://www.beecook.com/matches/3/profile'>“迎玉虎•贺新春”—星河苑社区首届网络美食比赛</a></em> ！"
+#                      快来 <em class='l3'><a href='http://www.beecook.com/users/invite'>邀请朋友</a></em> 一起做慈善！合作伙伴 <em class='l3'><a href='http://spooon.taobao.com' target='_blank'>SPOOON</a></em> 带来源自丹麦的独创设计！<br /><br />
   end
 
   # 获取时间点所在周的结束时间点
