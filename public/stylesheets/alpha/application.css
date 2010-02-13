@@ -369,6 +369,9 @@ div.tag {
 #logo a:hover {
 	background-color: transparent !important;
 }
+.logo_hl img {
+    padding-bottom: 4px !important;
+}
 
 /* Help */
 #help {
