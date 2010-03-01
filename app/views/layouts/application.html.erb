@@ -91,9 +91,7 @@
           <div id="logo">
             <%= link_to image_tag('logo/bc_logo_web.png', :title => SLOGAN_CN, :alt => '', :class => 'logo'), root_path %>
             <span class="logo_hl">
-              <%= render :partial => 'layouts/item_photo',
-                          :locals => { :item => Recipe.find_by_id(2100),
-                                      :photo_style => 'mini' } %>
+
             </span>
           </div>
           <!-- LOGO END -->
