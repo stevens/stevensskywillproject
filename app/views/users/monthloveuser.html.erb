@@ -1,0 +1,7 @@
+<div id="love_recipe_users">
+  [蜂友排名不分先后]
+  <br />
+  <% for user in month_love_users_set %>
+    <%= link_to strip_tags(user.login), { :controller => 'users', :action => 'profile', :id => user.id } %><span class="user_love_recipes_count"><%= "(#{user.love_recipes_count})" %></span>
+  <%end%>
+</div>

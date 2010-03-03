@@ -47,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':taggable_type/tags/:id', :controller => 'taggings', :action => 'show'
 	map.connect 'mine/:taggable_type/tags', :controller => 'taggings', :action => 'mine'
 	map.connect 'users/:user_id/:taggable_type/tags', :controller => 'taggings', :action => 'index'
+  map.connect 'users/monthloveuser', :controller => 'users', :action => 'monthloveuser'
 	
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
 	
