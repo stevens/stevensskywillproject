@@ -262,7 +262,7 @@ class UsersController < ApplicationController
         end_at = params[:end_at].to_time.end_of_day
       end
         @month_love_users_set = month_love_users(stat_at.strftime("%Y-%m-%d %H:%M:%S"),end_at.strftime("%Y-%m-%d %H:%M:%S"))
-        @month_love_users_set_count = @month_love_users_set.size
+#        @month_love_users_set_count = @month_love_users_set.size
       else
       flash[:notice] = "对不起, 你没有访问权限!"
       redirect_to root_url
