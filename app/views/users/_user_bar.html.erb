@@ -65,6 +65,14 @@
               <em class="l3"><%= link_to "分享#{MAIN_PAGE_CN}", url_for(:controller => 'users', :action => 'share', :id => user.id) %></em>
             </div>
           </div>
+
+          <% if @current_user && @current_user.is_role_of?('admin') %>
+            <div id ="user_<%= user.id %>_admin" class="todo_right">
+              <%= render :partial => 'system/item_admin_bar',
+                         :locals => { :item => user,
+                                      :ref => 'show' } %>
+            </div>
+          <% end %>
         </div>
       </td>
     </tr>

@@ -47,6 +47,12 @@ class SystemController < ApplicationController
       @choiceable = model_for(@choiceable_type).find_by_id(@choiceable_id)
       choiceable_name = name_for(@choiceable_type)
       choiceable_unit = unit_for(@choiceable_type)
+
+      if @choiceable_type == "Recipe"
+        choice_type = "精选"
+      else
+        choice_type = "智囊"
+      end
       
       if @choiceable
         respond_to do |format|
@@ -55,10 +61,10 @@ class SystemController < ApplicationController
 
             if params[:to_choice]
               new_roles = current_roles.gsub('11', '') + ' 11'
-              @notice = "你已经将1#{choiceable_unit}#{choiceable_name}加为精选#{choiceable_name}了!"
+              @notice = "你已经将1#{choiceable_unit}#{choiceable_name}加为#{choice_type}#{choiceable_name}了!"
             else
               new_roles = current_roles.gsub('11', '')
-              @notice = "你已经将1#{choiceable_unit}#{choiceable_name}从精选#{choiceable_name}中#{DELETE_CN}了!"
+              @notice = "你已经将1#{choiceable_unit}#{choiceable_name}从#{choice_type}#{choiceable_name}中#{DELETE_CN}了!"
             end
 
             new_roles = new_roles.strip.gsub(/\s+/, ' ')
@@ -197,12 +203,14 @@ class SystemController < ApplicationController
 					page.replace_html "flash_wrapper",
 														:partial => "layouts/flash",
 														:locals => { :notice => @notice }
+        if @choiceable_type == 'Recipe'
 					page.replace_html "#{@choiceable_type.downcase}_#{@choiceable_id}_title",
 														:partial => "layouts/item_basic",
 														:locals => { :item => @choiceable,
 								 												 :show_icon => true,
 								 												 :show_title => true,
 								 												 :show_link => true }
+        end
 					page.replace_html "#{@choiceable_type.downcase}_#{@choiceable_id}_admin",
 														:partial => "system/item_admin_bar",
 														:locals => { :item => @choiceable,

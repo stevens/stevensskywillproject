@@ -2,10 +2,20 @@
 <% item_name = name_for(item_type) %>
 <% item_unit = unit_for(item_type) %>
 
-<% if item.roles && item.roles.include?('11') %>
-  <% delete_message = "确定要将这#{item_unit}#{item_name}从精选#{item_name}中#{DELETE_CN}吗?" %>
-  <%= link_to_remote "#{DELETE_CN}精选", :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => false, :ref => ref }, :confirm => delete_message %>
+<% if item_type == 'Recipe' %>
+  <% if item.roles && item.roles.include?('11') %>
+    <% delete_message = "确定要将这#{item_unit}#{item_name}从精选#{item_name}中#{DELETE_CN}吗?" %>
+    <%= link_to_remote "#{DELETE_CN}精选", :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => false, :ref => ref }, :confirm => delete_message %>
+  <% else %>
+    <% add_message = "确定要把这#{item_unit}#{item_name}加为精选#{item_name}吗?" %>
+    <%= link_to_remote '加为精选', :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => true, :ref => ref }, :confirm => add_message %>
+  <% end %>
 <% else %>
-  <% add_message = "确定要把这#{item_unit}#{item_name}加为精选#{item_name}吗?" %>
-  <%= link_to_remote '加为精选', :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => true, :ref => ref }, :confirm => add_message %>
+  <% if item.roles && item.roles.include?('11') %>
+    <% delete_message = "确定要将这#{item_unit}#{item_name}从智囊#{item_name}中#{DELETE_CN}吗?" %>
+    <%= link_to_remote "#{DELETE_CN}智囊", :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => false, :ref => ref }, :confirm => delete_message %>
+  <% else %>
+    <% add_message = "确定要把这#{item_unit}#{item_name}加为智囊#{item_name}吗?" %>
+    <%= link_to_remote '加为智囊', :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => true, :ref => ref }, :confirm => add_message %>
+  <% end %>
 <% end %>
