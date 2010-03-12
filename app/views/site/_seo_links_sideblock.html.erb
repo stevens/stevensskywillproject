@@ -20,10 +20,20 @@
 
 <div class="sidebar_block">
   <div class="sidebar_block_header">
-    <h1><%= '友情链接' %></h1>
+    <h1><%= '相关类友情链接' %></h1>
   </div>
   <div id="seo_links_list_wrapper" class="sidebar_block_main">
     <%= render :partial => 'site/seo_links',
-                :locals => { :link_type => 'friend_link' } %>
+                :locals => { :link_type => 'related_friend_link' } %>
+  </div>
+</div>
+
+<div class="sidebar_block">
+  <div class="sidebar_block_header">
+    <h1><%= '其他类友情链接' %></h1>
+  </div>
+  <div id="seo_links_list_wrapper" class="sidebar_block_main">
+    <%= render :partial => 'site/seo_links',
+                :locals => { :link_type => 'other_friend_link' } %>
   </div>
 </div>
