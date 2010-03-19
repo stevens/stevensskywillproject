@@ -415,6 +415,27 @@ class RecipesController < ApplicationController
     end
   end
 
+  # 爱心食谱行动按用户分组的食谱统计数据
+  def love_recipe_users
+    if access_control(@current_user)
+      if !params[:stat_from].blank?
+        stat_from = params[:stat_from].to_time.beginning_of_day
+      end
+      if !params[:stat_to].blank?
+        stat_to = params[:stat_to].to_time.end_of_day
+      end
+      @love_users_set = love_users(nil, stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+#        @love_users_set_count = @love_users_set.size
+
+      info = "爱心食谱行动用户数据（#{stat_from.strftime("%Y-%m-%d")} : #{stat_to.strftime("%Y-%m-%d")}）"
+      set_page_title(info)
+      set_block_title(info)
+    else
+      flash[:notice] = "对不起, 你没有访问权限!"
+      redirect_to root_url
+    end
+  end
+
   # 爱心食谱行动数据统计
   def love_recipe_stats
     if access_control(@current_user)
@@ -643,15 +664,17 @@ class RecipesController < ApplicationController
   end
   
   def load_love_users(user = nil)
+    stat_from = '2009-08-01 00:00:00'
+    stat_to = '2010-07-31 23:59:59'
     if (@action_flag == 1)
       begin
         @love_users_set = CACHE.get('overview_love_users_set')
       rescue Memcached::NotFound
-        @love_users_set = love_users(user)
+        @love_users_set = love_users(user, stat_from, stat_to)
         CACHE.set('overview_love_users_set',@love_users_set)
       end
     else
-      @love_users_set = love_users(user)
+      @love_users_set = love_users(user, stat_from, stat_to)
     end
 ####    @love_users_set = love_users(user)
     @love_users_set_count = @love_users_set.size

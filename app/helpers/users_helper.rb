@@ -5,28 +5,15 @@ module UsersHelper
 		User.find(:all, :limit => limit, :order => order, 
 							:conditions => conditions)
 	end
-        
-  def month_love_users(start_at = '2009-08-01 00:00:00', end_at = '2009-08-31 23:59:59')
-#    User.find_by_sql("select users.* from users,recipes where users.id = recipes.user_id and recipes.roles LIKE '%21%'  GROUP BY recipes.user_id  ORDER BY RAND() ")
-    User.find_by_sql("SELECT users.id, users.login, COUNT(recipes.id) AS love_recipes_count
-                      FROM recipes
-                      INNER JOIN users
-                      ON recipes.user_id = users.id
-                      WHERE recipes.published_at >=  '#{start_at}'
-                      AND recipes.published_at <=  '#{end_at}'
-                      AND recipes.roles LIKE  '%21%'
-                      GROUP BY recipes.user_id
-                      ORDER BY RAND()")
-  end
 
-    def love_users(user = nil)
+  def love_users(user, stat_from, stat_to)
 #    User.find_by_sql("select users.* from users,recipes where users.id = recipes.user_id and recipes.roles LIKE '%21%'  GROUP BY recipes.user_id  ORDER BY RAND() ")
     User.find_by_sql("SELECT users.id, users.login, COUNT(recipes.id) AS love_recipes_count
                       FROM recipes
                       INNER JOIN users
                       ON recipes.user_id = users.id
-                      WHERE recipes.published_at >=  '2009-08-01 00:00:00'
-                      AND recipes.published_at <=  '2010-07-31 23:59:59'
+                      WHERE recipes.published_at >=  '#{stat_from}'
+                      AND recipes.published_at <=  '#{stat_to}'
                       AND recipes.roles LIKE  '%21%'
                       GROUP BY recipes.user_id
                       ORDER BY RAND()")
