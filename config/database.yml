@@ -2,7 +2,7 @@ defaults: &defaults
   adapter: mysql
   encoding: utf8
   username: root
-  password: 
+  password:
   host: localhost
   # socket: /opt/local/var/run/mysql5/mysqld.sock
 
@@ -11,7 +11,7 @@ development:
   <<: *defaults
 
 test:
-  database: beecook_test 
+  database: beecook_test
   <<: *defaults
 
 production:
