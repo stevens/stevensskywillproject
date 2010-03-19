@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
 
   before_filter :protect, :only => [:share, :invite]
-	before_filter :clear_location_unless_logged_in, :except => [:share, :invite]
+	before_filter :clear_location_unless_logged_in, :except => [:share]
 	before_filter :load_category, :only => [:index, :overview]
 
   def index
@@ -107,18 +107,15 @@ class UsersController < ApplicationController
     self.current_user = activation_code.blank? ? false : User.find_by_activation_code(activation_code)
     if logged_in? && !current_user.active?
       current_user.activate
-      # added for invited function
-      @invite_id = @current_user.invite_id
-      unless @invite_id.nil?
-        @invite_user = User.find(@invite_id)
-        if @invite_user
-          Contact.friendship_request(@current_user, @invite_user)
-          Contact.friendship_accept(@current_user, @invite_user)
-        end
+      # added for invite function
+      if (invite_id = @current_user.invite_id) && (invite_user = User.find(invite_id))
+#        Contact.friendship_buildup(@current_user, invite_user)
+        Contact.friendship_request(@current_user, invite_user)
       end
-      flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
+#      flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
+      flash[:notice] = "#{@current_user.login}, 你的帐户已经成功激活啦!"
     end
-    redirect_back_or_default('/')
+    redirect_back_or_default('/mine/profile')
   end
   
   def lost_activation
@@ -153,35 +150,36 @@ class UsersController < ApplicationController
 
   # added for invited function
   def send_invite_mail
-    info = "发送邀请#{EMAIL_CN}"
+    info = "邀请朋友"
 		set_page_title(info)
 		set_block_title(info)
 
-    emails = params[:emails]
-    @emails = emails.split(";")
-    @length = @emails.size
+    params[:emails] = str_squish(params[:emails], 0, false) if !params[:emails].blank?
     if params[:emails].blank?
-      flash[:notice] = "#{SORRY_CN}, 请#{INPUT_CN}#{EMAIL_ADDRESS_CN}!"
+      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
 			render :action => 'invite'
 			clear_notice
-    elsif @length > 7
-      flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}数目超出限制, 请重新#{INPUT_CN}!"
-			render :action => 'invite'
-			clear_notice
-    else
-      for mail in @emails
-        unless mail =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i
-          flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
-			    render :action => 'invite'
-			    clear_notice
-          return
+    elsif emails = params[:emails].split(";")
+      if emails.size > 5
+        flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}数目超出限制, 请重新#{INPUT_CN}!"
+        render :action => 'invite'
+        clear_notice
+      else
+        emails.uniq!
+        for email in emails
+          unless email =~ /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i
+            flash[:notice] = "#{SORRY_CN}, 你#{INPUT_CN}的#{EMAIL_ADDRESS_CN}格式不正确, 请重新#{INPUT_CN}!"
+            render :action => 'invite'
+            clear_notice
+            return
+          end
         end
+        for email in emails
+          UserMailer.deliver_send_invite(email, @current_user)
+        end
+        flash[:notice] = "你已经成功发送了邀请邮件，期待你的朋友们也能喜欢上#{SITE_NAME_CN}，在这里玩得开心！"
+        redirect_to :action => 'invite'
       end
-      for @mail in @emails
-        UserMailer.deliver_send_invite(@mail,@current_user)
-      end
-      flash[:notice] = "发送邀请邮件成功，期待着你的朋友也能喜欢上这里，在#{SITE_NAME_CN}玩的开心！"
-		  render :action => 'invite'
     end
   end
   
@@ -189,10 +187,10 @@ class UsersController < ApplicationController
 	  load_users_set
 	  load_brains_set
 #	  load_random_users
-	  
-  	# @highlighted_user = 
-  	# @highest_rated_users = 
-  	# @random_users = random_items(@users_set, 12)
+#	  
+#  	 @highlighted_user =
+#  	 @highest_rated_users =
+#  	 @random_users = random_items(@users_set, 12)
 	  
 	  info = "#{PEOPLE_CN}"
 		set_page_title(info)
@@ -236,11 +234,15 @@ class UsersController < ApplicationController
   # added for invited function
   #邀请
   def invite
+    if params[:id]
+      redirect_to :action => 'invite'
+    else
     #if @user && @user.accessible?
       info = "邀请朋友"
       set_page_title(info)
       set_block_title(info)
     #end
+    end
   end
 
 	#分享
@@ -269,30 +271,6 @@ class UsersController < ApplicationController
     end
   end
   ### end
-
-  # 周数据统计页面
-  def week_stat
-    info = "周数据统计"
-    set_page_title(info)
-		set_block_title(info)
-
-    if !params[:stat_from].blank?
-      stat_from = params[:stat_from].to_time.beginning_of_day
-    end
-    if !params[:stat_to].blank?
-      stat_to = params[:stat_to].to_time.end_of_day
-    end
-    @stat_recipes_set = week_recipes_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_user_set = week_user_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_recipes_users_group_set = @stat_recipes_set.group_by { |recipe| (recipe[:user_id]) }
-    @stat_reviews_set = week_reviews_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_reviews_users_group_set = @stat_reviews_set.group_by { |review| (review[:user_id]) }
-    @stat_fav_set = week_fav_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_fav_users_group_set = @stat_reviews_set.group_by { |fav| (fav[:user_id]) }
-    @stat_ratings_set = week_ratings_stat(stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-    @stat_ratings_users_group_set = @stat_ratings_set.group_by { |fav| (fav[:user_id]) }
-
-  end
 	
 	private
 	
@@ -371,12 +349,15 @@ class UsersController < ApplicationController
 	
   def after_create_ok
   	self.current_user = @user
-  	session[:user_id] = nil
+#  	session[:user_id] = nil
   	respond_to do |format|
 			format.html do
-	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br /><br/>
-	      								 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
-				redirect_to root_path
+#	      flash[:notice] = "#{@current_user.login}, 请到你的#{EMAIL_ADDRESS_CN} (#{@user.email}), 查收#{SITE_NAME_CN}#{ACCOUNT_CN}激活#{EMAIL_CN}!<br /><br/>
+#	      								 如果偶尔未能收到#{ACCOUNT_CN}激活#{EMAIL_CN}, 请查看 <a href='#{help_url}'>用户指南</a> , 或者通过 <a href='#{feedback_url}'>反馈</a> 与#{SITE_NAME_CN}联系..."
+#				redirect_to root_path
+        flash[:notice] = "#{@current_user.login}, 恭喜你加入#{SITE_NAME_CN}, 现在开始做一个蜂狂的厨师吧!"
+#        redirect_to login_path
+        redirect_back_or_default('/mine/profile')
 			end
 			# format.xml  { render :xml => @user, :status => :created, :location => @user }
 		end
