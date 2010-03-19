@@ -11,9 +11,14 @@
     <div id="love_recipe_users" class="sub_block">
       [蜂友排名不分先后]
       <br />
+      <% users_count = @love_users_set_count %>
+      <% recipes_sum = 0 %>
       <% for user in @love_users_set %>
+        <% recipes_sum += user.love_recipes_count.to_i %>
         <%= link_to strip_tags(user.login), { :controller => 'users', :action => 'profile', :id => user.id }, :target => '_blank' %><span class="user_love_recipes_count"><%= "(#{user.love_recipes_count})" %></span>
-      <%end%>
+      <% end %>
+      <br /><br />
+      <%= "共有 #{users_count} 位#{USER_CN}以 #{recipes_sum} #{UNIT_RECIPE_CN}爱心#{RECIPE_CN}贡献了 #{recipes_sum * 0.5} 元 #{SITE_NAME_CN}慈善金" %>
     </div>
   </div>
 </div>

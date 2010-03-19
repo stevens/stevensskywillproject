@@ -425,7 +425,7 @@ class RecipesController < ApplicationController
         stat_to = params[:stat_to].to_time.end_of_day
       end
       @love_users_set = love_users(nil, stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
-#        @love_users_set_count = @love_users_set.size
+      @love_users_set_count = @love_users_set.size
 
       info = "爱心食谱行动用户数据（#{stat_from.strftime("%Y-%m-%d")} : #{stat_to.strftime("%Y-%m-%d")}）"
       set_page_title(info)
