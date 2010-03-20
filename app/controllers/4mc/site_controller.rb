@@ -129,11 +129,13 @@ class SiteController < ApplicationController
   end
   
   def load_love_users(user = nil)
+    stat_from = '2009-08-01 00:00:00'
+    stat_to = '2010-07-31 23:59:59'
     # memcache code begin
     begin
       @love_users_set = CACHE.get('overview_love_users_set')
     rescue Memcached::NotFound
-      @love_users_set = love_users(user)
+      @love_users_set = love_users(user, stat_from, stat_to)
       CACHE.set('overview_love_users_set',@love_users_set)
     end
     # memcache code end
