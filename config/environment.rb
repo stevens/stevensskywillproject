@@ -378,7 +378,9 @@ Rails::Initializer.run do |config|
 	TAG_COUNT_AT_LEAST = 3
 	TAG_COUNT_AT_MOST = nil
 	TAGS_COUNT_LIMIT = 100
-	
+
+  NOMINATION_CN = '提名'
+
 end
 	
 	# ActionMailer::Base.delivery_method = :smtp
