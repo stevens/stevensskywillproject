@@ -418,16 +418,25 @@ class RecipesController < ApplicationController
   # 爱心食谱行动按用户分组的食谱统计数据
   def love_recipe_users
     if access_control(@current_user)
-      if !params[:stat_from].blank?
-        stat_from = params[:stat_from].to_time.beginning_of_day
-      end
-      if !params[:stat_to].blank?
-        stat_to = params[:stat_to].to_time.end_of_day
-      end
-      @love_users_set = love_users(nil, stat_from.strftime("%Y-%m-%d %H:%M:%S"), stat_to.strftime("%Y-%m-%d %H:%M:%S"))
+#      if !params[:stat_from].blank?
+#        stat_from = params[:stat_from].to_time.beginning_of_day
+#      end
+#      if !params[:stat_to].blank?
+#        stat_to = params[:stat_to].to_time.end_of_day
+#      end
+
+      current = Time.now.end_of_day
+      site_start = Time.local(2008, 6, 1).beginning_of_day
+      range = params[:range].split('-')
+      range_start = range[0].to_time.getlocal.beginning_of_day
+      range_start = range_start > site_start && range_start < current ? range_start : site_start
+      range_end = range[1].to_time.getlocal.end_of_day
+      range_end = range_end > site_start && range_end < current ? range_end : current
+
+      @love_users_set = love_users(nil, range_start.strftime("%Y-%m-%d %H:%M:%S"), range_end.strftime("%Y-%m-%d %H:%M:%S"))
       @love_users_set_count = @love_users_set.size
 
-      info = "爱心食谱行动用户数据（#{stat_from.strftime("%Y-%m-%d")} : #{stat_to.strftime("%Y-%m-%d")}）"
+      info = "爱心食谱行动用户数据（#{range_start.strftime("%Y-%m-%d")} : #{range_end.strftime("%Y-%m-%d")}）"
       set_page_title(info)
       set_block_title(info)
     else
@@ -664,17 +673,17 @@ class RecipesController < ApplicationController
   end
   
   def load_love_users(user = nil)
-    stat_from = '2009-08-01 00:00:00'
-    stat_to = '2010-07-31 23:59:59'
+    range_start = '2009-08-01 00:00:00'
+    range_end = '2010-07-31 23:59:59'
     if (@action_flag == 1)
       begin
         @love_users_set = CACHE.get('overview_love_users_set')
       rescue Memcached::NotFound
-        @love_users_set = love_users(user, stat_from, stat_to)
+        @love_users_set = love_users(user, range_start, range_end)
         CACHE.set('overview_love_users_set',@love_users_set)
       end
     else
-      @love_users_set = love_users(user, stat_from, stat_to)
+      @love_users_set = love_users(user, range_start, range_end)
     end
 ####    @love_users_set = love_users(user)
     @love_users_set_count = @love_users_set.size

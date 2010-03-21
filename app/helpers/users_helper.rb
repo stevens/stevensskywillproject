@@ -6,14 +6,14 @@ module UsersHelper
 							:conditions => conditions)
 	end
 
-  def love_users(user, stat_from, stat_to)
+  def love_users(user, range_start, range_end)
 #    User.find_by_sql("select users.* from users,recipes where users.id = recipes.user_id and recipes.roles LIKE '%21%'  GROUP BY recipes.user_id  ORDER BY RAND() ")
     User.find_by_sql("SELECT users.id, users.login, COUNT(recipes.id) AS love_recipes_count
                       FROM recipes
                       INNER JOIN users
                       ON recipes.user_id = users.id
-                      WHERE recipes.published_at >=  '#{stat_from}'
-                      AND recipes.published_at <=  '#{stat_to}'
+                      WHERE recipes.published_at >=  '#{range_start}'
+                      AND recipes.published_at <=  '#{range_end}'
                       AND recipes.roles LIKE  '%21%'
                       GROUP BY recipes.user_id
                       ORDER BY RAND()")
