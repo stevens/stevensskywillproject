@@ -1,17 +1,18 @@
 <% if link_type == 'friend_partner' %>
-  <% items = [ [ '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', '美食·人生' ], [ '生活绿皮书', 'http://q.blog.sina.com.cn/yryg', '生活绿皮书' ] ] %>
+  <% items = [ [ '美食·人生', 'http://q.blog.sina.com.cn/wjhdwsrs', '生活的美好在餐桌，人生的意义在于品味' ], [ '生活绿皮书', 'http://q.blog.sina.com.cn/yryg', '在热闹美好的喧闹中，找到快乐生活的真谛' ] ] %>
 <% elsif link_type == 'love_recipe_partner' %>
-  <% items = [ [ 'SPOOON', 'http://spooon.taobao.com', 'SPOOON - 凝聚丹麦设计精髓 创造每天平凡生活' ], [ '家有大厨', 'http://www.jiayoudachu.cn', '家有大厨 - 让您成为厨艺高手' ] ] %>
+  <% items = [ [ 'SPOOON', 'http://spooon.taobao.com', '凝聚丹麦设计精髓 创造每天平凡生活' ], [ '家有大厨', 'http://www.jiayoudachu.cn', '教你做家中大厨！' ] ] %>
 <% elsif link_type == 'related_friend_link' %>
-  <% items = [ [ '菜到家', 'http://www.caidaojia.com', '菜到家 - 无公害蔬菜配送到家网' ], [ '酒酷网', 'http://www.jiucool.com.cn', '酒酷网 - 中国最大最全的酒类直销平台' ],
-              [ '社区中国', 'http://www.chinasq.com', '社区中国 - 中国最大的生活小区网' ], [ 'COOK100', 'http://www.cook100.com', 'COOK100 - 中国最大的烤肉烘焙料网站' ],
-              [ '小厨美食网', 'http://www.xiaochu.cn', '小厨美食网 - 我的美食生活' ], [ '祈和电器', 'http://www.kps.cn', '祈和电器 - 祁和电器家用事业部官方网站' ] ] %>
+  <% items = [ [ '菜到家', 'http://www.caidaojia.com', '无公害蔬菜配送到家网' ], [ '酒酷网', 'http://www.jiucool.com.cn', '中国最大最全的酒类直销平台' ],
+              [ '社区中国', 'http://www.chinasq.com', '专注小区 专注生活' ], [ 'COOK100', 'http://www.cook100.com', '中国最大的烤肉烘焙料网站' ],
+              [ '小厨美食网', 'http://www.xiaochu.cn', '我的美食生活' ], [ '祈和电器', 'http://www.kps.cn', '我的烘焙生活' ],
+              [ '易果网', 'http://www.yiguo.com', '鲜果专送 品质到家' ] ] %>
 <% elsif link_type == 'other_friend_link' %>
-  <% items = [ [ 'FLVCD', 'http://www.flvcd.com', 'FLVCD - 微视频/音乐专辑批量解析下载门户' ], [ '都市圈圈', 'http://www.dsqq.cn', '都市圈圈 - 长三角生活门户' ],
-              [ '大旗精品论坛', 'http://bbs.daqi.com/', '大旗精品论坛 - 中文论坛最热文章海量聚合' ], [ '走秀网', 'http://www.zoshow.com', '走秀网 - 买得起的时尚' ],
-              [ 'Hers女性网', 'http://www.herschina.com', 'Hers女性网 - 分享我们的品质生活' ], [ '玩家旅游网', 'http://www.gootrip.com', '玩家旅游网 - 吃喝玩乐找节目' ],
-              [ '晒趣网', 'http://www.sharequ.com', '晒趣网 - 国内最大晒客门户' ], [ '北京人资', 'http://www.bjrz.org', '北京人资 - 北京人力资源管理网' ],
-              [ '701搜', 'http://www.701sou.com', '701搜 - 最全面的企业信息搜索网站' ] ] %>
+  <% items = [ [ 'FLVCD', 'http://www.flvcd.com', '微视频/音乐专辑批量解析下载门户' ], [ '都市圈圈', 'http://www.dsqq.cn', '长三角生活门户' ],
+              [ '大旗精品论坛', 'http://bbs.daqi.com/', '中文论坛最热文章海量聚合' ], [ '走秀网', 'http://www.zoshow.com', '买得起的时尚' ],
+              [ 'Hers女性网', 'http://www.herschina.com', '分享我们的品质生活' ], [ '玩家旅游网', 'http://www.gootrip.com', '吃喝玩乐找节目' ],
+              [ '晒趣网', 'http://www.sharequ.com', '国内最大晒客门户' ], [ '北京人资', 'http://www.bjrz.org', '北京人力资源管理网' ],
+              [ '701搜', 'http://www.701sou.com', '最全面的企业信息搜索网站' ] ] %>
 <% end %>
 
 <% items_count = items.size %>
@@ -22,7 +23,7 @@
       <% 1.upto(items_count_per_row) do |c| %>
         <% if (i=c+(r-1)*items_count_per_row) <= items_count %>
           <td class="seo_link_cell">
-            <%= link_to items[i-1][0], items[i-1][1], :title => items[i-1][2], :target => '_blank' %>
+            <%= link_to items[i-1][0], items[i-1][1], :title => "#{items[i-1][0]} - #{items[i-1][2]}", :target => '_blank' %>
           </td>
         <% else %>
           <% break %>
