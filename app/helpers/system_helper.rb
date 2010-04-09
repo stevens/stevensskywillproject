@@ -27,7 +27,8 @@ module SystemHelper
 #      system_notice = "<em class='l3'><a href=''>【#{item_title(Election.find_by_id(1))}】光荣绽放——用心灵创作最美的味道！</a></em> <br /><br />"
 #    end 
     winners = [User.find_by_id(2385), User.find_by_id(2395), User.find_by_id(2388)]
-    system_notice += "<em class='l2'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> （第一季）进行中，恭喜 <em class='l2'><a href='#{user_first_link(winners[0])}' target='_blank'>#{user_username(winners[0], true, true)}</a></em>、<em class='l2'><a href='#{user_first_link(winners[1])}' target='_blank'>#{user_username(winners[1], true, true)}</a></em>、<em class='l2'><a href='#{user_first_link(winners[2])}' target='_blank'>#{user_username(winners[2], true, true)}</a></em> 获得第8月度爱心奖！<br /><br />
+    system_notice += "凡参与<em class='l2'><a href='http://www.beecook.com/elections/1/profile' target='_blank'>第一届蜂厨美味大赏</a></em>投票的蜂友，在个人设置中填写联系信息，将获得“食与家”杂志的免费赠阅，<em class='l2'><a href='http://blog.sina.com.cn/s/blog_5eb976840100hvk0.html' target='_blank'>查看详情</a></em><br /><br />
+                      <em class='l2'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> （第一季）进行中，恭喜 <em class='l2'><a href='#{user_first_link(winners[0])}' target='_blank'>#{user_username(winners[0], true, true)}</a></em>、<em class='l2'><a href='#{user_first_link(winners[1])}' target='_blank'>#{user_username(winners[1], true, true)}</a></em>、<em class='l2'><a href='#{user_first_link(winners[2])}' target='_blank'>#{user_username(winners[2], true, true)}</a></em> 获得第8月度爱心奖！<br /><br />
                       <em class='l2'><a href='http://blog.sina.com.cn/s/blog_5eb976840100h0xm.html' target='_blank'>叶一鹏，你的未来喊你一起踢球！</a></em> ——让爱的网络助叶一鹏坚守永不放弃的信念！"
   end
 
