@@ -13,8 +13,8 @@
                       [ '参赛', url_for(:recipe_id => item.id, :controller => 'entries', :action => 'new', :ref => ref, :filter => params[:filter]) ]
                     ] %>
     <% end %>
-
-    <% hide_delete = true if item.entried? %>
+    <% current_roles = item.roles || '' %>
+    <% hide_delete = true if item.entried? || current_roles.include?('21') %>
 
     <% if item.publishable? %>
       <% publish_message = "确定要发布这#{unit_for('Recipe')}#{RECIPE_CN}吗?" %>
