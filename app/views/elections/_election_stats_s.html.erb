@@ -1,0 +1,24 @@
+<% item_type = type_for(item) %>
+
+<% stats_entries = [] %>
+<% stats_entries << [ [ 'nomination', item_type, item.id ],
+                      [ item.nominations.size, unit_for('Nomination'), NOMINATION_CN ]
+                    ] %>
+<% stats_entries << [ [ 'judge', item_type, item.id ],
+                      [ item.judges.size, unit_for('Judge'), "特邀#{JUDGE_CN}" ]
+                    ] %>
+<% stats_entries << [ [ 'review', item_type, item.id ],
+                      [ item.reviews.size, unit_for('Review'), REVIEW_CN ]
+                    ] %>
+<% stats_entries << [ [ 'view', item_type, item.id ],
+                      [ views_count(item), unit_for('See'), SEE_CN ]
+                    ] %>
+<% stats_entries << [ [ 'photo', item_type, item.id ],
+                      [ item.photos.size, unit_for('Photo'), PHOTO_CN ]
+                    ] %>
+<% stats_entries << [ [ 'tag', item_type, item.id ],
+                      [ item.tag_list.size, unit_for('Tag'), TAG_CN ]
+                    ] %>
+
+<%= render :partial => 'layouts/stats_entries_s',
+            :locals => { :stats_entries => stats_entries } %>

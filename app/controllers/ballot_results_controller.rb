@@ -1,0 +1,3 @@
+class BallotResultsController < ApplicationController
+
+end

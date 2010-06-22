@@ -1,25 +1,39 @@
 <% user = item %>
 
 <div id="user_<%= item.id %>_basic" class="basic">
-	<h2>
-		<%= render :partial => '/users/user_basic', 
-							 :locals => { :user => user, 
-							 							:show_come_from => false, 
-							 							:show_icon => true,
-							 							:show_name => true, 
-							 							:show_link => true, 
-							 							:show_username => true,
-							 							:show_myname => false } %>
-	</h2>
-	<ul>
-		<li>
-			<%= render :partial => '/users/user_blog', 
-								 :locals => { :user => user, 
-								 							:show_add => false } %>
-		</li>
-	</ul>
+  <h2>
+    <%= render :partial => 'users/user_basic',
+                :locals => { :user => user,
+                            :show_come_from => false,
+                            :show_icon => true,
+                            :show_name => true,
+                            :show_link => true,
+                            :show_username => true,
+                            :show_myname => false } %>
+  </h2>
+  <ul>
+    <li>
+      <%= render :partial => 'users/user_blog',
+                  :locals => { :user => user,
+                              :show_add => false } %>
+    </li>
+  </ul>
 </div>
 
+<div id="user_<%= item.id %>_summary" class="main">
+  <%= render :partial => 'profiles/profile_intro',
+              :locals => { :user => user,
+                           :options => { :only_summary => true } } %>
+</div>
+
+<% if @current_user && @current_user.is_role_of?('admin') && params[:election_id] && params[:controller] == 'judges' && (judgein = Election.find_by_id(params[:election_id])) %>
+  <div id="user_<%= item.id %>_judge_info" class="main">
+    <% ballots_count = judgein.ballots.find(:all, :conditions => { :user_id => user.id }).size %>
+    <em class="l2"><%= "#{ballots_count}个#{AWARD_CN}已投票" %></em>
+    <%= ' · ' %>
+    <em class="l3"><%= "#{20 - ballots_count}个#{AWARD_CN}未投票" %></em>
+  </div>
+<% end %>
 
 <% items_count = 8 %>
 <% interval = 30 %>
@@ -27,34 +41,33 @@
 <% recipes = recipes_for(user, recipe_conditions, items_count) %>
 
 <% if recipes.size > 0 %>
-	<div class="items_bar">
-		<div id="user_<%= item.id %>_latest_items_bar" class="block_main">
-			<%= "最近#{interval}日的新鲜#{RECIPE_CN}" %>
-			<%= render :partial => "/layouts/items_matrix",
-								 :locals => {:show_paginate => false,
-								 						 :items_set => recipes, 
-								 						 :limit => nil,
-								 						 :items_count_per_row => items_count,  
-								 						 :show_photo => true, 
-								 						 :show_below_photo => false,  
-								 						 :show_title => false, 
-								 						 :show_user => false, 
-								 						 :show_photo_todo => false, 
-								 						 :photo_style => 'sign'} %>
-		</div>
-	</div>
+  <div class="items_bar">
+    <div id="user_<%= item.id %>_latest_items_bar" class="block_main">
+    <%= "最近#{interval}日的新鲜#{RECIPE_CN}" %>
+      <%= render :partial => 'layouts/items_matrix',
+                  :locals => { :show_paginate => false,
+                              :items_set => recipes,
+                              :limit => nil,
+                              :items_count_per_row => items_count,
+                              :show_photo => true,
+                              :show_below_photo => false,
+                              :show_title => false,
+                              :show_user => false,
+                              :show_photo_todo => false,
+                              :photo_style => 'sign' } %>
+    </div>
+  </div>
 <% end %>
 
 <% if show_todo %>
-	<div id="user_<%= item.id %>_todo" class="todo_right">
-	
-		<% if show_manage %>
-			<div id="user_<%= item.id %>_manage">
+  <div id="user_<%= item.id %>_todo" class="todo_right">
 
-			</div>
-		<% end %>	
-	</div>
+    <% if show_manage %>
+      <div id="user_<%= item.id %>_manage">
+
+      </div>
+    <% end %>
+  </div>
 <% end %>
 
 <br />
-

@@ -1,0 +1,74 @@
+<% if options[:show_paginate] %>
+  <% items = items_paginate(items_set, options[:items_count_per_page]) %>
+<% elsif options[:limit] %>
+  <% items = items_set[0..options[:limit]-1] %>
+<% else %>
+  <% items = items_set %>
+<% end %>
+
+<% if options[:show_paginate] %>
+  <%= render :partial => 'layouts/items_paginate',
+              :locals => { :items => items } %>
+<% end %>
+
+<% if options[:only_text_link] %>
+  <% td_css_class = 'seo_link_cell' %>
+<% else %>
+  <% td_css_class = 'photo_item_cell' %>
+  <% if options[:photo_style] == 'full' %>
+    <% style = "max-width: 640px; max-height: 640px;" %>
+  <% else %>
+    <% photo_size = photo_size(options[:photo_style]) %>
+    <% case photo_size
+      when 'medium'
+        style = "max-width: 320px; max-height: 320px;"
+      when 'small'
+        style = "max-width: 160px; max-height: 160px;"
+      when 'tiny'
+        style = "max-width: 80px; max-height: 80px;"
+      when 'lcube'
+        style = "width: 192px; height: 192px;"
+      when 'mcube'
+        style = "width: 96px; height: 96px;"
+      when 'scube'
+        style = "width: 48px; height: 48px;"
+      when 'tcube'
+        style = "width: 24px; height: 24px;"
+    end %>
+  <% end %>
+<% end %>
+
+<div class="sub_block_b <%= options[:css_class] %>">
+  <table class="content">
+    <% 1.upto(items_rows_count(items.size, options[:items_count_per_row])) do |r| %>
+      <tr>
+        <% 1.upto(options[:items_count_per_row]) do |c| %>
+          <% if (i=c+(r-1)*options[:items_count_per_row]) <= items.size %>
+            <% link_title = strip_tags "#{items[i-1].title} - #{items[i-1].slogan}"  %>
+            <% link_url = strip_tags items[i-1].website %>
+            <td class="<%= td_css_class %>">
+              <% if options[:only_text_link] %>
+                <%= link_to strip_tags(items[i-1].title), link_url, :title => link_title, :target => '_blank' %>
+              <% else %>
+                <div class="matrix_block">
+                  <div class="matrix_photo">
+                    <% photo = cover_photo(items[i-1]) %>
+                    <% photoable_type = 'Partner' %>
+                    <%= link_to image_tag(photo_file_url(photo, photoable_type, options[:photo_style]), :title => link_title, :alt => '', :style => style), link_url, :target => '_blank' %>
+                  </div>
+                </div>
+              <% end %>
+            </td>
+          <% else %>
+            <% break %>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<% if options[:show_paginate] %>
+  <%= render :partial => 'layouts/items_paginate',
+              :locals => { :items => items } %>
+<% end %>

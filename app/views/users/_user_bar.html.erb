@@ -10,14 +10,21 @@
       </td>
       <td class="middle_column">
         <div class="user_bar_username">
-          <%= render :partial => 'users/user_basic',
-                      :locals => { :user => user,
-                                  :show_come_from => false,
-                                  :show_icon => true,
-                                  :show_name => true,
-                                  :show_link => false,
-                                  :show_username => true,
-                                  :show_myname => true } %>
+          <div id="user_<%= user.id %>_title">
+            <%= render :partial => 'users/user_basic',
+                        :locals => { :user => user,
+                                    :show_come_from => false,
+                                    :show_icon => true,
+                                    :show_name => true,
+                                    :show_link => false,
+                                    :show_username => true,
+                                    :show_myname => true } %>           
+          	<% if @current_user && access_control(@current_user) %>
+          	<% if user != @current_user %>
+          	<em class="l2"><%= link_to "发站内信", url_for(:controller => 'messages', :action => 'write', :to => user.id) %></em>
+          	<% end %>
+          	<% end %>
+          </div>
           <% if user == @current_user && !user_portrait(user) %>
             &nbsp;
             <span><%= link_to "[#{UPLOAD_CN}#{PORTRAIT_CN}]", url_for(:controller => 'accounts', :action => 'edit', :id => 'portrait') %></span>
@@ -65,16 +72,17 @@
               <em class="l3"><%= link_to "分享#{MAIN_PAGE_CN}", url_for(:controller => 'users', :action => 'share', :id => user.id) %></em>
             </div>
           </div>
-
-          <% if @current_user && @current_user.is_role_of?('admin') %>
-            <div id ="user_<%= user.id %>_admin" class="todo_right">
-              <%= render :partial => 'system/item_admin_bar',
-                         :locals => { :item => user,
-                                      :ref => 'show' } %>
-            </div>
-          <% end %>
+          
         </div>
       </td>
     </tr>
   </table>
+
+  <% if @current_user && @current_user.is_role_of?('admin') %>
+    <div id="user_<%= user.id %>_admin" class="admin_bar">
+      <%= render :partial => 'system/item_admin_bar',
+                 :locals => { :item => user,
+                              :ref => nil } %>
+    </div>
+  <% end %>
 </div>

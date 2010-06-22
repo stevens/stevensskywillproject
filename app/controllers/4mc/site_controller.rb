@@ -13,6 +13,8 @@ class SiteController < ApplicationController
 		### for love recipes function displaying
     load_love_recipes
     load_love_users
+    load_love_partners
+    load_site_partners
     ### end
 		load_notifications if @current_user
 
@@ -67,11 +69,15 @@ class SiteController < ApplicationController
 	end
 
   def linkus
+    load_site_partners
+    load_love_partners
+    load_link_partnership_groups
+
+    show_sidebar
+
     info = "链接#{SITE_NAME_CN}"
     set_page_title(info)
 		set_block_title(info)
-
-    show_sidebar
   end
 	
 	private
@@ -145,5 +151,38 @@ class SiteController < ApplicationController
     @love_users_set_count = @love_users_set.size
   end
   ### end
-	
+
+  def load_love_partners
+    @love_partners = []
+    for partnership_category in PartnershipCategory.find(:all, :conditions => { :partya_type => 'LoveRecipe', :partya_id => 1 }, :order => 'sequence')
+      for partnership in partnership_category.partnerships
+        @love_partners << partnership.partyb
+      end
+    end
+  end
+
+  def load_site_partners
+    @site_partners = []
+    for partnership_category in PartnershipCategory.find(:all, :conditions => { :partya_type => 'Site', :partya_id => 1 }, :order => 'sequence')
+      for partnership in partnership_category.partnerships
+        @site_partners << partnership.partyb
+      end
+    end
+  end
+
+  def load_link_partnership_groups
+    item_parents = PartnershipCategory.find(:all, :conditions => { :partya_type => 'Site', :partya_id => 2 }, :order => 'sequence')
+
+    item_groups = []
+    i = 0
+    for item_parent in item_parents
+      item_groups << { :item_parent => item_parent, :items => [] }
+      for item in item_parent.partnerships
+        item_groups[i][:items] << item.partyb
+      end
+      i += 1
+    end
+    @link_partnership_groups = item_groups
+  end
+
 end

@@ -1,0 +1,45 @@
+<% judgein_type = type_for(judgein) %>
+
+<% form_remote_for [user, judge] do |f| %>
+  <table class="content">
+    <tr>
+      <td class="label">
+        <label for="judgein" style="width: 100px;"><%= "#{name_for(judgein_type)}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= strip_tags judgein.title %>
+        </div>
+        <div class="input">
+          <%= hidden_field_tag "judge[judgein_type]", judgein_type %>
+          <%= hidden_field_tag "judge[judgein_id]", judgein.id %>
+        </div>
+        <%= error_message_on "judge", "judgein_type" %>
+        <%= error_message_on "judge", "judgein_id" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="judge_category" style="width: 100px;"><%= "#{JUDGE_CN}类别:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.select :judge_category_id, judgein.judge_categories.find(:all, :conditions => { :judge_type => '10' }, :order => 'sequence').collect {|c| [ c.title, c.id ] } %>
+        </div>
+        <%= error_message_on "judge", "judge_category_id" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit "#{ADD_CN}#{JUDGE_CN}", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
+            page.hide "overlay"
+          end %>
+        </div>
+      </td>
+    </tr>
+  </table>
+<% end %>

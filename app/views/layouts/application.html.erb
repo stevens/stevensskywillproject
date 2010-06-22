@@ -39,6 +39,20 @@
       var pageTracker = _gat._getTracker("UA-2323873-2");
       pageTracker._trackPageview();
     </script> -->
+
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+      GS_googleAddAdSenseService("ca-pub-1545644343401729");
+      GS_googleEnableAllServices();
+    </script>
+    <script type='text/javascript'>
+      GA_googleAddSlot("ca-pub-1545644343401729", "BC_Recipe_Show_ATF_Right_Sidebar_290x180");
+      GA_googleAddSlot("ca-pub-1545644343401729", "right_sidebar_290x60");
+    </script>
+    <script type='text/javascript'>
+      GA_googleFetchAds();
+    </script>
 		
   </head>
 	
@@ -63,6 +77,15 @@
     <div>
       <!-- HEADER START -->
       <div id="header_wrapper">
+        <!-- if @current_user && @current_user.is_role_of?('admin') -->
+        <!-- 屏蔽顶部美味大赏连接区块
+          <div id="header_top_content">
+            <div id="header_top_info">
+              <%= link_to "用心灵创作最美的味道——第一届蜂厨美味大赏光荣绽放", '/elections/1/profile' %>
+            </div>
+          </div>
+        -->
+        <!-- end -->
         <div id="header_content">
           <!-- CURRENT USER START -->
           <div id="current_user">
@@ -107,6 +130,11 @@
             <li class=<%= tab_css_class(@current_tab_type, 'site') %>>
               <%= link_to HOME_CN, root_path %>
             </li>
+            <!-- if @current_user && @current_user.is_role_of?('admin') -->
+              <li class=<%= tab_css_class(@current_tab_type, 'election') %>>
+                <span class="focus"><%= link_to '1st BCDA', '/elections/1/profile' %></span>
+              </li>
+            <!-- end -->
             <li class=<%= tab_css_class(@current_tab_type, 'recipe') %>>
               <%= link_to RECIPE_CN, "#{recipes_path}/overview" %>
             </li>
@@ -182,7 +210,7 @@
               <%= render :partial => 'sessions/login_sideblock' %>
             <% end %>
 
-            <% if @current_user && (@current_tab_type == 'site' || (params[:controller] == 'mine' && params[:action] == 'profile')) %>
+            <% if @current_user && @notifications && @notifications.size > 0 %>
               <%= render :partial => 'stories/notification_sideblock',
                           :locals => { :notifications => @notifications } %>
             <% end %>
@@ -218,6 +246,11 @@
             <% if @user_bar %>
               <%= render :partial => 'users/user_bar',
                           :locals => { :user => @user_bar } %>
+            <% end %>
+
+            <% if @item_for_bar %>
+              <%= render :partial => 'layouts/item_bar',
+                          :locals => { :item => @item_for_bar } %>
             <% end %>
 
             <%= yield %>

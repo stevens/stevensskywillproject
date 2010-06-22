@@ -4,5 +4,5 @@ blog:
   <span class='source'><%= link_to truncate(blog_url, 50), blog_url, :target => "_blank", :title => blog_url %></span>
 <% elsif show_add && user == @current_user %>
   &nbsp;
-  <span><%= link_to "[#{ADD_CN}blog]", :controller => 'settings', :action => 'account' %></span>
+  <span><%= link_to "[#{ADD_CN}blog]", :controller => 'settings', :action => 'profile' %></span>
 <% end %>

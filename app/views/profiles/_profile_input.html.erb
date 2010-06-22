@@ -1,0 +1,158 @@
+<% form_for profile do |f| %>
+  <div class="sub_block_tb">
+    <table class="content">
+      <tr>
+        <td class="label">
+          <label for="blog"><%= "blog:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入你的blog地址" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :blog, :class => "text" %>
+          </div>
+          <%= error_message_on "profile", "blog" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="intro"><%= "自我介绍:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入你的自我介绍" %>
+          </div>
+          <div class="input">
+            <%= f.text_area :intro, :class => 's' %>
+          </div>
+          <%= error_message_on "profile", "intro" %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <br />
+          <div class="text">
+            <%= "<em class='more'>请放心以下外部帐户名不会公开显示，只会当你在蜂厨合作伙伴网站以独享特殊折扣优惠购买产品时，用于核实你的蜂厨注册用户身份</em>" %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="taobao"><%= "淘宝帐户名:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入你的淘宝帐户名" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :taobao, :class => "text_s" %>
+          </div>
+          <%= error_message_on "profile", "taobao" %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <br />
+          <div class="text">
+            <%= "<em class='more'>请放心以下联系信息不会公开显示，只会在蜂厨及其合作伙伴为你发送礼品或商品时使用</em>" %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="shipping_name"><%= "收件人姓名:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入收件人的姓名" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :shipping_name, :class => "text_s" %>
+          </div>
+          <%= error_message_on "profile", "shipping_name" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="shipping_email"><%= "收件人#{EMAIL_ADDRESS_CN}:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请#{INPUT_CN}收件人的#{EMAIL_ADDRESS_CN}" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :shipping_email, :class => "text_s" %>
+          </div>
+          <%= error_message_on "profile", "shipping_email" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="shipping_mobile"><%= "收件人手机:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入收件人的手机号码" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :shipping_mobile, :class => "text_s" %>
+          </div>
+          <%= error_message_on "profile", "shipping_mobile" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="shipping_phone"><%= "收件人电话:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入收件人的固定电话号码" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :shipping_phone, :class => "text_s" %>
+          </div>
+          <%= error_message_on "profile", "shipping_phone" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="shipping_postcode"><%= "收件人邮政编码:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入收件人的邮政编码" %>
+          </div>
+          <div class="input">
+            <%= f.text_field :shipping_postcode, :class => "text_s" %>
+          </div>
+          <%= error_message_on "profile", "shipping_postcode" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">
+          <label for="shipping_address"><%= "收件人地址:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= "请输入收件人的详细地址" %>
+          </div>
+          <div class="input">
+            <%= f.text_area :shipping_address, :class => 's' %>
+          </div>
+          <%= error_message_on "profile", "shipping_address" %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="input">
+          <div class="submit">
+            <%= f.submit SAVE_CN, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end %>

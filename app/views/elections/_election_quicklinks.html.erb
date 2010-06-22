@@ -1,0 +1,13 @@
+<% buttons = [] %>
+<% buttons << [ [ 'election_maiepage' ], [ '主页', "/elections/#{item.id}/profile" ] ] %>
+<% buttons << [ [ 'election_detail' ], [ '详情', "/elections/#{item.id}" ] ] %>
+<% buttons << [ [ 'election_winners' ], [ '获奖', "/elections/#{item.id}/elect_winners" ] ] %>
+<% buttons << [ [ 'election_nominations' ], [ NOMINATION_CN, "/elections/#{item.id}/nominations" ] ] %>
+<% buttons << [ [ 'election_partnerships' ], [ '合作', "/elections/#{item.id}/partnerships" ] ] %>
+<% buttons << [ [ 'election_judges' ], [ JUDGE_CN, "/elections/#{item.id}/judges" ] ] %>
+<% buttons << [ [ 'election_reviews' ], [ REVIEW_CN, "/elections/#{item.id}/reviews" ] ] %>
+<% if @current_user && @current_user.is_role_of?('admin') %>
+  <% buttons << [ [ 'election_ballots' ], [ BALLOT_CN, "/elections/#{item.id}/ballots" ] ] %>
+<% end %>
+<%= render :partial => 'layouts/todo_bar',
+          :locals => { :buttons => buttons } %>

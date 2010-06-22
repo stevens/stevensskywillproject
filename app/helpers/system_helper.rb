@@ -27,7 +27,7 @@ module SystemHelper
 #      system_notice = "<em class='l3'><a href=''>【#{item_title(Election.find_by_id(1))}】光荣绽放——用心灵创作最美的味道！</a></em> <br /><br />"
 #    end 
     winners = [User.find_by_id(2429), User.find_by_id(2297), User.find_by_id(2486)]
-    system_notice += " 《食与家》2010年5月刊将于5月下旬全国统一发行，欢迎大家<em class='l3'><a href='http://www.shinho.com.cn/member_apply.asp' target='_blank'>前来索阅</a></em>！<br /><br />
+    system_notice += " <em class='l3'><a href='http://blog.sina.com.cn/s/blog_5eb976840100j7b7.html' target='_blank'>蜂厨爱心义卖——支持中国扶贫基金会爱心包裹项目</a></em>正在进行中……！<br /><br />
                       <em class='l2'><a href='http://blog.sina.com.cn/s/blog_5eb976840100eifm.html' target='_blank'>爱心食谱行动</a></em> （第一季）进行中，恭喜 <em class='l2'><a href='#{user_first_link(winners[0])}' target='_blank'>#{user_username(winners[0], true, true)}</a></em>、<em class='l2'><a href='#{user_first_link(winners[1])}' target='_blank'>#{user_username(winners[1], true, true)}</a></em>、<em class='l2'><a href='#{user_first_link(winners[2])}' target='_blank'>#{user_username(winners[2], true, true)}</a></em> 获得第10月度爱心奖！<br /><br />
                       <em class='l2'><a href='http://blog.sina.com.cn/s/blog_5eb976840100h0xm.html' target='_blank'>叶一鹏，你的未来喊你一起踢球！</a></em> ——让爱的网络助叶一鹏坚守永不放弃的信念！"
   end

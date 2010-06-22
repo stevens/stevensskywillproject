@@ -1,0 +1,49 @@
+<% html_id = "election_#{item.id}" %>
+
+<div id="<%= html_id %>_basic">
+  <div class="basic">
+    <%= render :partial => 'layouts/item_basic_block',
+                :locals => { :item => item } %>
+  </div>
+
+  <div class="main">
+    <%= render :partial => 'elections/election_summary',
+                :locals => { :item => item } %>
+  </div>
+</div>
+
+<% if show_todo %>
+  <div id="<%= html_id %>_todo" class="todo_right">
+    <% if show_manage %>
+      <div id="<%= html_id %>_manage">
+        <%= render :partial => 'elections/election_manage',
+                   :locals => { :item => item,
+                                :ref => 'show' } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="<%= html_id %>_index" class="todo_right">
+  <% buttons = [] %>
+  <% buttons << [ [ 'goto_description' ],
+                  [ DESCRIPTION_CN, "##{html_id}_description" ] ] %>
+  <% buttons << [ [ 'goto_rules' ],
+                  [ '规则', "##{html_id}_rules" ] ] %>
+  <% buttons << [ [ 'goto_award' ],
+                  [ AWARD_CN, "##{html_id}_award" ] ] %>
+  <% buttons << [ [ 'goto_any_else' ],
+                  [ '其他', "##{html_id}_any_else" ] ] %>
+  <%= render :partial => 'layouts/todo_bar',
+              :locals => { :buttons => buttons } %>
+</div>
+
+<div id="<%= html_id %>_photos" class="photos">
+  <%= render :partial => 'layouts/item_photos_block',
+              :locals => { :item => item } %>
+</div>
+
+<div id="<%= html_id %>_main" class="item_detail">
+  <%= render :partial => 'elections/election_main',
+              :locals => { :item => item } %>
+</div>

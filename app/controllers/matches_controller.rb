@@ -162,18 +162,18 @@ class MatchesController < ApplicationController
   	load_match
   	
   	if @current_user
-      unless read_fragment(:controller => "matches", :action => "profile", :user_id => session[:user_id], :part => "profile_3")
+#      unless read_fragment(:controller => "matches", :action => "profile", :user_id => session[:user_id], :part => "profile_3")
         if  @player = @match.find_actor(@current_user, '1')
           @submitted_entriables_set = entriables_for(@match.find_player_entries(@current_user))
         end
         @voted_entriables_set = entriables_for(voteables_for(@match.find_voter_entries(@current_user)))
-      end
+#      end
   	end
-    unless read_fragment(:controller => "matches", :action => "profile", :part => "profile_5")
+#    unless read_fragment(:controller => "matches", :action => "profile", :part => "profile_5")
   	  @entries_set = @match.entries.find(:all, :order => 'RAND()')
       @entriables_set = entriables_for(@entries_set[0..17])
       @player_users_set = match_actor_users(@match.players.find(:all, :order => 'RAND()'))
-    end
+#    end
   	vll = @match.votes_lower_limit
 #  	if vll && vll > 0
 #	  	@highest_voted_entries = @match.entries.find(:all, :limit => 20, :order => 'total_votes DESC, votes_count DESC',
@@ -181,7 +181,7 @@ class MatchesController < ApplicationController
 #	  else
 #  		@highest_voted_entries = (@entries_set.sort { |a,b| [ b.total_votes, b.votes_count ] <=> [ a.total_votes, a.votes_count ] })[0..19]
 #  	end
-    unless read_fragment(:controller => "matches", :action => "profile", :part => "profile_7")
+#    unless read_fragment(:controller => "matches", :action => "profile", :part => "profile_7")
       if @match.doing?(Time.now)
         @match_status = 'doing'
         @rank_list_title = "作品排行榜 TOP20"
@@ -192,22 +192,22 @@ class MatchesController < ApplicationController
         @highest_voted_entries = @entries_set.sort { |a,b| [ b.valid_total_votes, b.valid_votes_count ] <=> [ a.valid_total_votes, a.valid_votes_count ] }
         @show_winners = true
       end
-    end
-    unless read_fragment(:controller => "matches", :action => "profile", :part => "profile_2")
+#    end
+#    unless read_fragment(:controller => "matches", :action => "profile", :part => "profile_2")
       if @show_winners
         @winners_set = awardable_type_winners(@match, 'entry', 12)
         @winnerables_set = winnerables_for(@winners_set)
       end
-    end
+#    end
   	
   	# 获得也在参赛的伙伴们
   	if @current_user
-      unless read_fragment(:controller => "matches", :action => "profile", :user_id => session[:user_id], :part => "profile_6")
+#      unless read_fragment(:controller => "matches", :action => "profile", :user_id => session[:user_id], :part => "profile_6")
         load_contactors_set
         if @contactors_set_count > 0
           @player_contactors_set = @player_users_set & @contactors_set
         end
-      end
+#      end
   	end
   	
   	show_sidebar

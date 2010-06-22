@@ -1,1 +1,32 @@
-<%= render :partial => 'site/seo_links_sideblock' %>
+<% if @site_partners && @site_partners.size > 0 %>
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'site_partnerships',
+                          :block_title => "#{SITE_NAME_CN}#{PARTNER_CN}",
+                          :block_header_link => nil,
+                          :block_detail_partial => 'partners/partners_matrix',
+                          :block_detail_locals => { :items_set => @site_partners, :options => { :css_class => '',
+                                                                                                :items_count_per_row => 2,
+                                                                                                :only_text_link => true } } } %>
+<% end %>
+
+<% if @love_partners && @love_partners.size > 0 %>
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'site_partnerships',
+                          :block_title => "爱心食谱行动（第一季）#{PARTNER_CN}",
+                          :block_header_link => nil,
+                          :block_detail_partial => 'partners/partners_matrix',
+                          :block_detail_locals => { :items_set => @love_partners, :options => { :css_class => '',
+                                                                                                :items_count_per_row => 2,
+                                                                                                :only_text_link => true } } } %>
+<% end %>
+
+<% for link_partnership_group in @link_partnership_groups %>
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'site_partnerships',
+                          :block_title => item_title(link_partnership_group[:item_parent]),
+                          :block_header_link => nil,
+                          :block_detail_partial => 'partners/partners_matrix',
+                          :block_detail_locals => { :items_set => link_partnership_group[:items], :options => { :css_class => '',
+                                                                                                                :items_count_per_row => 2,
+                                                                                                                :only_text_link => true } } } %>
+<% end %>

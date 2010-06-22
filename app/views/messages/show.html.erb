@@ -1,0 +1,83 @@
+<div class="content_block">
+  <div class="block_header">
+    <h1><%= "我的信箱" %></h1>
+  </div>
+  <div class="block_main">
+    <div class="filter_bar">
+      <%= render :partial => "/messages/message_bar" %>
+    </div>
+
+  <div id="messages_list">
+    <table>
+      <tr>
+        <td class="messages_dis_left">
+          <% if @ifsent %>
+            <%= "写给: " %>
+          <% else %>
+            <%= "来自: " %>
+          <% end %>
+        </td>
+        <td class="messages_dis_middle">
+          <%= @msg_user.login %>
+        </td>
+        <td class="messages_dis_right">
+        </td>
+      </tr>
+      <tr>
+        <td class="messages_dis_left">
+          <%= "时间: " %>
+        </td>
+        <td class="messages_dis_middle">
+          <%= DateTime.parse(@message.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s%>
+        </td>
+        <td class="messages_dis_right">
+        </td>
+      </tr>
+      <tr>
+        <td class="messages_dis_left">
+          <%= "标题: " %>
+        </td>
+        <td class="messages_dis_middle">
+          <%= @message.message.title %>
+        </td>
+        <td class="messages_dis_right">
+        </td>
+      </tr>
+      <tr>
+        <td class="messages_dis_left">
+          <%= "内容: " %>
+        </td>
+        <td class="messages_dis_middle">
+          
+        </td>
+        <td class="messages_dis_right">
+        </td>
+      </tr>
+      <tr>
+        <td class="messages_dis_left">
+        </td>
+        <td class="messages_dis_middle">
+          <%= render :partial => 'layouts/text/structured_text',
+                :locals => { :blocks => structured_text(@message.message.comment, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                            :options => { :auto_link => true } } %>
+        </td>
+        <td class="messages_dis_right">
+        </td>
+      </tr>
+      <tr>
+        <td class="messages_dis_left">
+        </td>
+        <td class="messages_dis_middle">
+          <% if !@ifsent %>
+          <em class='l2'><%= link_to "回复", :controller => :messages, :action => :write, :reply=> @message.id%></em>&nbsp;&nbsp;&nbsp;
+          <% end %>
+          <% del_message = "确定要删除这条短信吗?" %>
+          <em class='l2'><%= link_to "删除", {:controller => :messages, :action => :delete, :id=> @message.id}, :confirm => del_message %></em>
+        </td>
+        <td class="messages_dis_right">
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+</div>

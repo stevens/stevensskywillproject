@@ -1,0 +1,57 @@
+<div id="election_<%= item.id %>_basic" class="basic">
+  <h2>
+    <%= render :partial => 'layouts/item_basic',
+                :locals => { :item => item,
+                            :show_icon => true,
+                            :show_title => true,
+                            :show_link => true } %>
+  </h2>
+  <ul>
+    <li>
+      <%= render :partial => 'users/user_basic',
+                  :locals => { :user => item.user,
+                              :show_come_from => false,
+                              :show_icon => true,
+                              :show_name => true,
+                              :show_link => true,
+                              :show_username => true,
+                              :show_myname => false } %>
+      &nbsp;
+      <%= time_iso_format(item.created_at, true) %>
+    </li>
+    <li>
+      <%= render :partial => 'taggings/item_tag_list',
+                  :locals => { :item => item } %>
+    </li>
+    <li id="match_<%= item.id %>_stats">
+      <%= render :partial => 'elections/election_stats_s',
+                  :locals => { :item => item } %>
+    </li>
+  </ul>
+</div>
+
+<div id="election_<%= item.id %>_summary" class="main">
+  <%= render :partial => 'elections/election_summary',
+              :locals => { :item => item } %>
+</div>
+
+<% if show_todo %>
+  <div id="election_<%= item.id %>_todo" class="todo_right">
+    <% if show_favorite %>
+      <div id="election_<%= item.id %>_favorite" class="favorite_bar">
+        <%= render :partial => 'favorites/favorite_bar',
+                    :locals => { :favorable => item,
+                                :ref => nil,
+                                :favoriter_id => @user ? @user.id : nil } %>
+      </div>
+    <% end %>
+
+    <% if show_manage %>
+      <div id="election_<%= item.id %>_manage">
+        <%= render :partial => 'elections/election_manage',
+                    :locals => { :item => item,
+                                :ref => 'index' } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

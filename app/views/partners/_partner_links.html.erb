@@ -1,0 +1,12 @@
+<li>
+  官方网站:
+  <% unless (website_url = item.website).blank? %>
+    <span class='source'><%= link_to truncate(website_url, 50), website_url, :target => "_blank", :title => website_url %></span>
+  <% end %>
+</li>
+<li>
+  官方blog:
+  <% unless (blog_url = item.blog).blank? %>
+    <span class='source'><%= link_to truncate(blog_url, 50), blog_url, :target => "_blank", :title => blog_url %></span>
+  <% end %>
+</li>

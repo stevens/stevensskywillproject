@@ -1,0 +1,17 @@
+<ul>
+  <% for award_category in item.awards %>
+    <li style="padding-left: 24px">
+      <span class='subtitle'>
+        <%= render :partial => 'elect_awards/award_s',
+                   :locals => { :item => award_category } %>
+      </span>
+    </li>
+    <% for award in award_category.childs %>    
+      <li style="padding-left: 48px">
+        <%= render :partial => 'elect_awards/award_s',
+                   :locals => { :item => award } %>
+      </li>
+    <% end %>
+    <br />
+  <% end %>
+</ul>

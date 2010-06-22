@@ -1,0 +1,35 @@
+<div class="overlay_backgroud">
+
+</div>
+
+<div class="overlay_wrapper">
+  <div class="overlay_content">
+    <div class="close">
+      <%= link_to_function("x") do |page|
+        page.hide "overlay"
+      end %>
+    </div>
+    <div class="block_header">
+      <% block_title = "#{NOMINATION_CN}管理 - #{name_for(type_for(nominateable))}" %>
+      <%= render :partial => "layouts/index_header",
+                  :locals => { :show_header_link => false,
+                              :show_new_link => false,
+                              :block_title => block_title } %>
+    </div>
+    <div id="notice_for_nomination" class="sub_block_lr">
+
+    </div>
+    <div id="input_form_for_nomination" class="sub_block">
+      <%= render :partial => "nominations/nomination_input",
+                  :locals => { :nominateable => nominateable,
+                              :nomination => nomination,
+                              :nominatein => nominatein,
+                              :nominatefor_type => nominatefor_type,
+                              :nominateby => nominateby } %>
+    </div>
+    <div id="nomination_nominateds" class="sub_block">
+      <%= render :partial => "nominations/nomination_nominateds",
+                  :locals => { :nominateds => nominateds } %>
+    </div>
+  </div>
+</div>

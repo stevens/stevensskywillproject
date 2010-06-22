@@ -1,0 +1,167 @@
+<% obj_type = 'ElectAward' %>
+<% obj_name = name_for(obj_type) %>
+<% obj_html_id = obj_type.tableize.singularize %>
+
+<% winnerable = @winner.winnerable %>
+
+<% if @show_ballot_info %>
+  <% categories = [] %>
+  <% for category_stat in @ballot_result.resultfor_stats['category_stats'] %>
+    <% categories << model_for(category_stat['type']).find_by_id(category_stat['id']) %>
+  <% end %>
+
+  <% weight_caculate_info = '综合加权百分比 = 特邀评审百分比 × 70% ＋ 蜂友评审百分比 × 30%' %>
+
+  <% resultable_stats = @ballot_result.resultable_stats %>
+<% end %>
+
+<div id="<%= obj_html_id %>_parent_wrapper" class="highlighted_block content_block">
+  <div id="<%= obj_html_id %>_parent_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% buttons << [ [ 'goto_winners' ],
+                      [ "#{ELECTWINNER_CN}名单", "#{item_first_link(@awardin)}/elect_winners" ] ] %>
+      <% buttons << [ [ 'back_winnerin' ],
+                      [ "#{BACK_CN}#{name_for(type_for(@awardin))}", item_first_link(@awardin, true) ] ] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1>
+      <%= "#{AWARD_CN}详情" %>
+      <div class="index_selector">
+        <%= select_tag "items_index", option_groups_from_collection_for_select(@award_categories, :childs, :title, :id, :title, @award.id),
+                         { :onchange => remote_function(:url => { :controller => 'system', :action => 'redirect_to_from_select', :prefix => "/#{type_for(@awardin).tableize}/#{@awardin.id}/#{obj_type.tableize}/", :suffix => "" }, :with => "'item_id='+value") } %>
+      </div>
+    </h1>
+  </div>
+
+  <div id="<%= obj_html_id %>_parent_detail" class="block_main">
+
+  </div>
+</div>
+
+<div id="<%= obj_html_id %>_title_wrapper" class="highlighted_block content_block">
+  <div id="<%= obj_html_id %>_title_header" class="block_header">
+    <div class="block_header_link">
+
+    </div>
+    <h1><%= strip_tags "#{@award_category_title} - #{@award_title}" %></h1>
+  </div>
+
+  <div id="<%= obj_html_id %>_title_detail" class="block_main">
+    <div class="filter_bar info_bar">
+      <em class="l2"><%= strip_tags @award.description %></em>
+      <% if @show_ballot_info %>
+        <br />
+        <em class="l3"><%= weight_caculate_info %></em>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="<%= obj_html_id %>_winner_wrapper" class="content_block">
+  <div id="<%= obj_html_id %>_winner_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1><%= strip_tags "#{ELECTWINNER_CN} - #{item_title(winnerable)}" %></h1>
+  </div>
+
+  <div id="<%= obj_html_id %>_winner_detail" class="block_main">
+    <table class="content">
+      <tr>
+        <td class="left_column">
+          <div class="sub_block">
+          <div class="list_photo">
+            <%= render :partial => 'layouts/item_photo',
+                        :locals => { :item => winnerable,
+                                    :photo_style => 'highlight' } %>
+          </div>
+
+          <div class="below_photo">
+            <%= render :partial => 'layouts/below_item_photo',
+                        :locals => { :item => winnerable,
+                                    :show_title => true,
+                                    :show_user => @winner.winnerable_type == 'User' ? false : true,
+                                    :show_photo_todo => false } %>
+          </div>
+          </div>
+        </td>
+        <td class="right_column">
+          <% if @show_ballot_info %>
+            <div class="sub_block">
+              <%= render :partial => 'ballot_results/resultable_stat',
+                          :locals => { :resultable_stat => resultable_stats[0],
+                                      :categories => categories } %>
+            </div>
+          <% end %>
+          <div class="sub_block">
+            <em class="l3"><%= "#{user_username(@winner.user)}的获奖感言："%></em>
+            <div id="winner_speech">
+              <%= render :partial => 'elect_winners/speech',
+                          :locals => { :winner => @winner } %>
+            </div>
+          </div>
+          <% if @current_user && @current_user == @winner.user %>
+            <div id="winner_speech_todo_bar" class="sub_block block_bottom_bar">
+              <%= render :partial => 'elect_winners/winner_speech_todo_bar',
+                          :locals => { :winner => @winner,
+                                      :user => @current_user } %>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<% if @show_ballot_info %>
+  <div id="<%= obj_html_id %>_nominations_wrapper" class="content_block">
+    <div id="<%= obj_html_id %>_nominations_header" class="block_header">
+      <div class="block_header_link">
+        <% buttons = [] %>
+        <%= render :partial => 'layouts/todo_bar',
+                    :locals => { :buttons => buttons } %>
+      </div>
+      <h1><%= strip_tags "其他#{NOMINATION_CN}" %></h1>
+    </div>
+
+    <div id="<%= obj_html_id %>_nominations_detail" class="block_main">
+      <div class="sub_block_b">
+        <table class="content">
+          <% 1.upto(resultable_stats.size-1) do |i| %>
+            <% resultable = model_for(resultable_stats[i]['type']).find_by_id(resultable_stats[i]['id']) %>
+            <tr>
+              <td class="left_column">
+                <div class="sub_block">
+                  <div class="list_photo">
+                    <%= render :partial => 'layouts/item_photo',
+                                :locals => { :item => resultable,
+                                            :photo_style => 'matrix' } %>
+                  </div>
+
+                  <div class="below_photo">
+                    <%= render :partial => 'layouts/below_item_photo',
+                                :locals => { :item => resultable,
+                                            :show_title => true,
+                                            :show_user => true,
+                                            :show_photo_todo => false } %>
+                  </div>
+                </div>
+              </td>
+              <td class="right_column_lined">
+                <div class="sub_block">
+                  <%= render :partial => 'ballot_results/resultable_stat',
+                              :locals => { :resultable_stat => resultable_stats[i],
+                                          :categories => categories } %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,67 @@
+<% form_remote_for profile do |f| %>
+  <%= hidden_field_tag "profile[user_id]", user.id %>
+  <%= hidden_field_tag "edit_info", true %>
+  <table class="content">
+    <tr>
+      <td class="label">
+        <label for="intro" style="width: 100px;"><%= "自我介绍:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= strip_tags profile.intro %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="blog" style="width: 100px;"><%= "blog:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= f.text_field :blog, :class => "text_s" %>
+        </div>
+        <%= error_message_on "profile", "blog" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="description" style="width: 100px;"><%= "#{DESCRIPTION_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "可以在这里#{INPUT_CN}#{USER_CN}的#{DESCRIPTION_CN}信息" %>
+        </div>
+        <div class="input">
+          <%= f.text_area :description, :class => 'xs' %>
+        </div>
+        <%= error_message_on "profile", "description" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="any_else" style="width: 100px;"><%= "其他:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "可以在这里#{INPUT_CN}#{USER_CN}的其他信息" %>
+        </div>
+        <div class="input">
+          <%= f.text_area :any_else, :class => 'xs' %>
+        </div>
+        <%= error_message_on "profile", "any_else" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit "#{SAVE_CN}", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
+            page.hide "overlay"
+          end %>
+        </div>
+      </td>
+    </tr>
+  </table>
+<% end %>

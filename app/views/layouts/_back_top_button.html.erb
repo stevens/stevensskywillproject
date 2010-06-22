@@ -1,0 +1,5 @@
+<% buttons = [] %>
+<% buttons << [ [ 'back_top' ],
+                [ "#{BACK_CN}顶部", "#header_wrapper" ] ] %>
+<%= render :partial => 'layouts/todo_bar',
+            :locals => { :buttons => buttons } %>

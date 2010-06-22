@@ -38,8 +38,12 @@
 		</div>
 	</div>
 <% else %>
-	<% show_review_todo = params[:action] == 'mine' ? true : false %>
-	<% ref = params[:action] == 'mine' ? 'user_reviews_list' : nil %>
+        <% if @user && @current_user && @user == @current_user %>
+          <% show_review_todo = true %>
+          <% ref = 'user_reviews_list' %>
+        <% else %>
+          <% show_review_todo = false %>
+        <% end %>
 	<div id="mixed_reviews_wrapper" class="content_block">
 		<div id="mixed_reviews_header" class="block_header">
 			<div class="block_header_link">

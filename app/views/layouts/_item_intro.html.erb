@@ -1,0 +1,12 @@
+<ul>
+  <% if (intro = item.intro) && !intro.strip.blank? %>
+    <% text = intro.strip %>
+  <% else %>
+    <% text = "好神秘啊，啥也没写:)" %>
+  <% end %>
+  <% if options[:only_summary] %>
+    <%= paragraphs(truncate(text, 200), false, true, 5) %>
+  <% else %>
+    <%= paragraphs(text) %>
+  <% end %>
+</ul>

@@ -1,0 +1,3 @@
+class JudgeCategoriesController < ApplicationController
+
+end

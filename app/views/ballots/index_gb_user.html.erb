@@ -1,0 +1,47 @@
+<% obj_type = 'Ballot' %>
+<% obj_name = name_for(obj_type) %>
+<% objs_html_id = obj_type.tableize %>
+<% ballotin_type = type_for(@ballotin) %>
+
+<div id="<%= objs_html_id %>_index_wrapper" class="highlighted_block content_block">
+  <div id="<%= objs_html_id %>_index_header" class="block_header">
+    <div class="block_header_link">
+      <%= render :partial => 'ballots/index_header_link' %>
+    </div>
+    <h1>
+      <div><%= "#{obj_name}管理" %></div>
+      <div class="index_selector">
+        <% buttons = [] %>
+        <% if @current_user && @current_user.is_role_of?('admin') %>
+          <% buttons << [ [ 'ballot_stats' ],
+                          [ "&raquo;按#{AWARD_CN}统计", "#{item_first_link(@ballotin)}/ballots" ] ] %>
+          <% buttons << [ [ 'gb_ballotable' ],
+                          [ "&raquo;按#{NOMINATION_CN}分组", "#{item_first_link(@ballotin)}/ballots?group_by=ballotable" ] ] %>
+        <% end %>
+        <span class="todo">
+          <%= render :partial => 'layouts/todo_bar',
+                      :locals => { :buttons => buttons } %>
+        </span>
+      </div>
+    </h1>
+  </div>
+
+  <div id="<%= objs_html_id %>_index_detail" class="block_main">
+
+  </div>
+</div>
+
+<div id="<%= objs_html_id %>_stats_wrapper" class="content_block">
+  <div id="<%= objs_html_id %>_stats_header" class="block_header">
+    <div class="block_header_link">
+
+    </div>
+    <h1><%= "按用户统计 (#{@item_groups.size})" %></h1>
+  </div>
+
+  <div id="<%= objs_html_id %>_stats_detail" class="block_main">
+    <%= render :partial => 'ballots/ballot_stats_gb_user',
+                :locals => { :items_set => @item_groups,
+                            :options => { :photo_style => 'mini' } } %>
+  </div>
+</div>

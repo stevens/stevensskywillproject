@@ -48,14 +48,19 @@ ActionController::Routing::Routes.draw do |map|
 	map.connect ':taggable_type/tags/:id', :controller => 'taggings', :action => 'show'
 	map.connect 'mine/:taggable_type/tags', :controller => 'taggings', :action => 'mine'
 	map.connect 'users/:user_id/:taggable_type/tags', :controller => 'taggings', :action => 'index'
+
+  map.connect 'messages/write', :controller => 'messages', :action => 'write'
+  map.connect 'messages/sent', :controller => 'messages', :action => 'sent'
 	
 	map.connect ':searchable_type/search/:id', :controller => 'searchings', :action => 'show'
+
+  map.connect 'elections/:id/profile', :controller => 'elections', :action => 'profile'
 	
 	map.resources :users, 
-								:has_many => [:recipes, :menus, :courses, :scores, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :winners, :match_actors, :players, :admins],
+								:has_many => [:recipes, :menus, :courses, :scores, :photos, :reviews, :ratings, :taggings, :tags, :feedbacks, :favorites, :contacts, :friends, :stories, :matches, :entries, :votes, :winners, :match_actors, :players, :admins, :usermessages, :nominations, :elections, :judges, :partners, :elect_winners, :ballots],
 								:has_one => [:profile, :counter]
 	map.resources :recipes, 
-								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries], 
+								:has_many => [:photos, :reviews, :ratings, :taggings, :tags, :favorites, :entries, :nominations, :elect_winners],
 								:has_one => [:counter]
         
   map.resources :matches, 
@@ -75,6 +80,17 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :courses,
                 :has_many => [:photos, :reviews, :taggings, :tags],
                 :has_one => [:score]
+  map.resources :elections, #评选
+  							:has_many => [:photos, :reviews, :taggings, :tags, :favorites, :elect_awards, :elect_winners, :nominations, :judge_categories, :judges, :partnership_categories, :partnerships, :ballots, :ballot_results],
+								:has_one => [:profile, :counter]
+  map.resources :partners, #合作伙伴
+                :has_many => [:photos, :reviews, :taggings, :tags, :favorites],
+                :has_one => [:profile, :counter]
+
+  map.resources :elect_awards, #评选奖项
+  							:has_many => [:photos, :reviews, :nominations, :elect_winners, :ballots, :ballot_results],
+								:has_one => [:counter]
+  map.resources :elect_winners #评选获奖
   map.resources :scores
 	map.resources :photos, 
 								:has_many => [:reviews, :taggings, :tags], 
@@ -92,9 +108,20 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :wines
   
+  map.resources :messages
+
+  map.resources :nominations #提名
+  map.resources :judge_categories, #评审类别
+  							:has_many => [:judges]
+  map.resources :judges #评审
+  map.resources :partnership_categories, #合作伙伴关系类别
+  							:has_many => [:partnerships]
+  map.resources :partnerships #合作伙伴关系
+  map.resources :ballots #选票
+  map.resources :ballot_results #选票结果
+  
 	map.resources :keepers, :member => { :enable => :put } #后台管理用
 	map.resources :newsletters, :member => { :sendmails => :put } #后台管理用
-  
 	map.resource :session
   
   # map.namespace :mine do |mine|

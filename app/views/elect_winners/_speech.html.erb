@@ -1,0 +1,7 @@
+<% if !winner.speech.blank? && !(speech = strip_tags winner.speech.strip).blank? %>
+  <%= render :partial => 'layouts/text/structured_text',
+              :locals => { :blocks => structured_text(speech, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                          :options => { :auto_link => true } } %>
+<% else %>
+  <%= '好低调啊，还没有发表获奖感言！' %>
+<% end %>

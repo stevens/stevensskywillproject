@@ -1,0 +1,38 @@
+<div id="partner_<%= item.id %>_basic" class="basic">
+  <h2>
+    <%= render :partial => 'layouts/item_basic',
+               :locals => { :item => item,
+                            :show_icon => false,
+                            :show_title => true,
+                            :show_link => true } %>
+  </h2>
+  <ul>
+    <li>
+      <%= render :partial => 'taggings/item_tag_list',
+                 :locals => { :item => item } %>
+    </li>
+    <%= render :partial => 'partners/partner_links',
+                :locals => { :item => item } %>
+  </ul>
+</div>
+
+<div id="partner_<%= item.id %>_summary" class="main">
+  <%= render :partial => 'partners/partner_summary',
+             :locals => { :item => item } %>
+</div>
+
+<% if show_todo %>
+  <div id="partner_<%= item.id %>_todo" class="todo_right">
+    <% if show_favorite %>
+      <div id="partner_<%= item.id %>_favorite" class="favorite_bar">
+
+      </div>
+    <% end %>
+
+    <% if show_manage %>
+      <div id="partner_<%= item.id %>_manage">
+
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -242,8 +242,8 @@ class ReviewsController < ApplicationController
 							page.replace "stats_entry_of_review",
 													 :partial => 'layouts/stats_entry', 
 										 			 :locals => { :stats_entry => [ 'review', @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] }
-						when [ 'Match' ].include?(reviewable_type)
-							page.replace "stats_entry_of_match_#{@parent_id}_review_s",
+						when [ 'Match', 'Election' ].include?(reviewable_type)
+							page.replace "stats_entry_of_#{reviewable_type.downcase}_#{@parent_id}_review_s",
 													 :partial => 'layouts/stats_entry_s', 
 													 :locals => { :stats_entry => [ [ 'review', @parent_type, @parent_id ], [ @parent_obj.reviews.size, unit_for('Review'), REVIEW_CN ] ] }
 						end
@@ -385,8 +385,8 @@ class ReviewsController < ApplicationController
 							page.replace "stats_entry_of_review",
 													 :partial => 'layouts/stats_entry', 
 										 			 :locals => { :stats_entry => [ 'review', @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] }
-						when [ 'Match' ].include?(reviewable_type)
-							page.replace "stats_entry_of_match_#{@reviewable.id}_review_s",
+						when [ 'Match', 'Election' ].include?(reviewable_type)
+							page.replace "stats_entry_of_#{reviewable_type.downcase}_#{@reviewable.id}_review_s",
 													 :partial => 'layouts/stats_entry_s', 
 													 :locals => { :stats_entry => [ [ 'review', type_for(@reviewable), @reviewable.id ], [ @reviewable.reviews.size, unit_for('Review'), REVIEW_CN ] ] }
 						end

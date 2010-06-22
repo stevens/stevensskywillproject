@@ -1,0 +1,246 @@
+<div id="election_intro_wrapper" class="content_block highlighted_block">
+  <div id="election_intro_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% buttons << [ [ 'election_detail' ],
+                      [ "#{ELECTION_CN}详情", @election ] ] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1><%= "#{ELECTION_CN}介绍" %></h1>
+  </div>
+	
+  <div id="election_intro_detail" class="block_main">
+    <div id="election_intro_info" class="item_intro_info">
+      <%= render :partial => "layouts/items_list",
+                  :locals => { :show_paginate => false,
+                              :items_set => [@election],
+                              :limit => nil,
+                              :itemable_sym => nil,
+                              :show_photo => true,
+                              :photo_style => 'portrait',
+                              :show_below_photo => true,
+                              :show_title => false,
+                              :show_user => false,
+                              :show_photo_todo => true,
+                              :show_parent => false,
+                              :show_todo => true,
+                              :show_favorite => false,
+                              :show_manage => false,
+                              :delete_remote => false} %>
+    </div>
+  </div>
+</div>
+
+<% if @show_winners %>
+  <div id="election_winners_wrapper" class="highlighted_block content_block">
+    <div id="election_winners_header" class="block_header">
+      <div class="block_header_link">
+        <% buttons = [] %>
+        <% buttons << [ [ 'more_winners' ],
+                        [ "完全#{ELECTWINNER_CN}名单", "/elections/#{@election.id}/elect_winners" ] ] %>
+
+        <%= render :partial => 'layouts/todo_bar',
+                    :locals => { :buttons => buttons } %>
+      </div>
+      <h1><%= "#{ELECTWINNER_CN}" %></h1>
+    </div>
+
+    <div id="election_winners_detail" class="block_main">
+
+    </div>
+  </div>
+
+  <% obj_type = 'ElectWinner' %>
+  <% obj_name = name_for(obj_type) %>
+  <% objs_html_id = obj_type.tableize %>
+  <% winnerin_name = name_for(type_for(@election)) %>
+
+  <% for item_grand_group in @winner_groups %>
+    <% item_grand = item_grand_group[:item_grand] %>
+    <% show_todo_bar = (item_grand.award_type == '11') ? true : false %>
+    <% if item_grand.award_type == '11' %>
+      <% item_parent_groups = item_grand_group[:item_parents] %>
+      <% item_parent_type = type_for(item_grand) %>
+      <% html_id = "#{item_parent_type.tableize.singularize}_#{item_grand.id}" %>
+      <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="highlighted_block content_block">
+        <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+          <div class="block_header_link">
+
+          </div>
+          <h1><%= strip_tags "#{item_title(item_grand)}" %></h1>
+        </div>
+
+        <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+
+        </div>
+      </div>
+
+      <% for item_parent_group in item_parent_groups.sort_by { rand } [0..2] %>
+        <% item_parent = item_parent_group[:item_parent] %>
+        <% items = item_parent_group[:items] %>
+
+        <% html_id = "#{item_parent_type.tableize.singularize}_#{item_parent.id}" %>
+        <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="content_block">
+          <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+            <div class="block_header_link">
+
+            </div>
+            <h1><%= strip_tags "#{item_title(item_parent)} - #{obj_name}" %></h1>
+          </div>
+
+          <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+            <div class="filter_bar info_bar">
+              <em class="l2"><%= strip_tags item_parent.description %></em>
+            </div>
+
+            <% unless (@current_user && @current_user.is_role_of?('admin')) || @election.is_status_of?('doing_gala_doing') || @election.is_status_of?('doing_gala_done') || @election.is_status_of?('done') %>
+              <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+                <%= render :partial => 'layouts/notice',
+                            :locals => { :notice => "#{ELECTWINNER_CN}名单将于#{@winner_published_at}揭晓，敬请期待！" } %>
+              </div>
+            <% else %>
+              <% if item_grand.award_type == '11' && item_parent.status == '11' %>
+                <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+                  <%= render :partial => 'layouts/notice',
+                              :locals => { :notice => '请别着急，很快就要揭晓啦！' } %>
+                </div>
+              <% elsif item_grand.award_type == '11' && item_parent.status == '12' %>
+                <div id="<%= html_id %>_<%= objs_html_id %>_show">
+                  <%= render :partial => 'elect_winners/elect_winners_matrix',
+                              :locals => { :winnerfor => item_parent,
+                                          :winnerables => items,
+                                          :options => { :show_paginate => false, :limit => 24, :items_count_per_row => 6, :photo_style => 'matrix' } } %>
+                </div>
+                <% if show_todo_bar %>
+                  <div id="<%= html_id %>_<%= objs_html_id %>_todo_bar" class="sub_block block_bottom_bar">
+                    <% buttons = [] %>
+                    <% buttons << [ [ 'detail', false, true, 'l1' ],
+                                    [ "#{AWARD_CN}详情", "/elections/#{@election.id}/elect_awards/#{item_parent.id}" ] ] %>
+                    <div class="todo_right">
+                      <%= render :partial => 'layouts/todo_bar',
+                                  :locals => { :buttons => buttons } %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @show_nominations %>
+  <div id="election_nominations_wrapper" class="highlighted_block content_block">
+    <div id="election_nominations_header" class="block_header">
+      <div class="block_header_link">
+        <% buttons = [] %>
+        <% buttons << [ [ 'more_nominations' ],
+                        [ "完全#{NOMINATION_CN}名单", "/elections/#{@election.id}/nominations" ] ] %>
+
+        <%= render :partial => 'layouts/todo_bar',
+                    :locals => { :buttons => buttons } %>
+      </div>
+      <h1><%= "#{NOMINATION_CN}" %></h1>
+    </div>
+
+    <div id="election_nominations_detail" class="block_main">
+
+    </div>
+  </div>
+
+  <% obj_type = 'Nomination' %>
+  <% obj_name = name_for(obj_type) %>
+  <% objs_html_id = obj_type.tableize %>
+  <% nominatein_name = name_for(type_for(@election)) %>
+
+  <% for item_grand_group in @nomination_groups %>
+    <% item_grand = item_grand_group[:item_grand] %>
+    <% item_parent_groups = item_grand_group[:item_parents] %>
+    <% item_parent_type = type_for(item_grand) %>
+    <% html_id = "#{item_parent_type.tableize.singularize}_#{item_grand.id}" %>
+    <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="highlighted_block content_block">
+      <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+        <div class="block_header_link">
+
+        </div>
+        <h1><%= strip_tags "#{item_title(item_grand)}" %></h1>
+      </div>
+
+      <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+
+      </div>
+    </div>
+    <% random_item_parent_groups = [item_parent_groups[0]] + (item_parent_groups[1..item_parent_groups.size-1].sort_by { rand } [0..3]) %>
+    <% for item_parent_group in random_item_parent_groups %>
+      <% item_parent = item_parent_group[:item_parent] %>
+      <% items = item_parent_group[:items] %>
+
+      <% html_id = "#{item_parent_type.tableize.singularize}_#{item_parent.id}" %>
+      <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="content_block">
+        <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+          <div class="block_header_link">
+
+          </div>
+          <h1><%= strip_tags "#{item_title(item_parent)} - #{obj_name}" %></h1>
+        </div>
+
+        <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+          <% if @election.is_status_of?('todo') || @election.is_status_of?('doing') || @election.is_status_of?('doing_nomination_todo') %>
+            <div class="filter_bar info_bar">
+              <em class="l2"><%= strip_tags item_parent.description %></em>
+            </div>
+
+            <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+              <%= render :partial => 'layouts/notice',
+                          :locals => { :notice => "#{NOMINATION_CN}名单将于#{@nomination_published_at}公布，敬请期待！" } %>
+            </div>
+          <% else %>
+            <div class="filter_bar info_bar">
+              <em class="l2"><%= strip_tags item_parent.description %></em>
+              <% if @election.is_status_of?('doing_voting_doing') %>
+                <br />
+                <em class="l3"><%= "请点击这个#{AWARD_CN}区块右下角的“我要#{VOTE_CN}”按钮前往#{NOMINATION_CN}名单页面进行#{VOTE_CN}" %></em>
+              <% end %>
+            </div>
+
+            <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+
+            </div>
+
+            <div id="<%= html_id %>_<%= objs_html_id %>_show">
+              <%= render :partial => 'layouts/items_matrix',
+                          :locals => { :show_paginate => false,
+                                      :items_set => items,
+                                      :limit => 24,
+                                      :items_count_per_row => 6,
+                                      :show_photo => true,
+                                      :show_below_photo => true,
+                                      :show_title => true,
+                                      :show_user => true,
+                                      :show_photo_todo => false,
+                                      :photo_style => 'matrix' } %>
+            </div>
+
+            <% if @election.is_status_of?('doing_voting_doing') %>
+              <div id="<%= html_id %>_<%= objs_html_id %>_todo_bar" class="sub_block block_bottom_bar">
+                <% buttons = [] %>
+                <% buttons << [ [ 'ballot', false, true, 'l1' ],
+                                [ "我要#{VOTE_CN}", "/elections/#{@election.id}/nominations##{html_id}_#{objs_html_id}_wrapper" ] ] %>
+                <div class="todo_right">
+                  <%= render :partial => 'layouts/todo_bar',
+                              :locals => { :buttons => buttons } %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render :partial => 'reviews/reviewable_reviews',
+            :locals => { :reviewable => @election } %>

@@ -1,0 +1,62 @@
+<% ballots_count = 0 %>
+
+<table class="content">
+  <% for item_pair_group in item_pair_groups %>
+    <% ballotable = item_pair_group[0] %>
+    <% item_pairs = item_pair_group[1] %>
+    <tr>
+      <td>
+        <%= render :partial => 'layouts/item_photo',
+                    :locals => { :item => ballotable,
+                                :photo_style => options[:photo_style] } %>
+      </td>
+      <td>
+        <ul>
+          <li>
+            <%= render :partial => 'layouts/item_title',
+                        :locals => { :item => ballotable,
+                                    :show_link => true } %>
+          </li>
+          <li>
+            <%= render :partial => 'users/user_basic',
+                        :locals => { :user => ballotable.user,
+                                    :show_come_from => true,
+                                    :show_icon => false,
+                                    :show_name => true,
+                                    :show_link => true,
+                                    :show_username => true,
+                                    :show_myname => true } %>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    
+    <% for item_pair in item_pairs %>
+      <% user = item_pair[:user] %>
+      <% remark = item_pair[:remark] %>
+      <% ballots_count += 1 %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <%= render :partial => 'layouts/item_photo',
+                      :locals => { :item => user,
+                                  :photo_style => 'mini' } %>
+        </td>
+        <td>
+          <%= render :partial => 'users/user_basic',
+                      :locals => { :user => user,
+                                  :show_come_from => false,
+                                  :show_icon => true,
+                                  :show_name => true,
+                                  :show_link => true,
+                                  :show_username => true,
+                                  :show_myname => true } %>
+        </td>
+        <td>
+          <%= strip_tags remark %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

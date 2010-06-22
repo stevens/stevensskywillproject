@@ -1,0 +1,21 @@
+<div class="todo_right">
+  <em class="l3">
+    <% if item.is_status_of?('doing_nomination') %>
+      <%= link_to "#{NOMINATION_CN}名单", "/elections/#{item.id}/nominations" %>
+    <% elsif item.is_status_of?('doing_voting') %>
+      <% if item.is_status_of?('doing_voting_doing') %>
+        <%= link_to "我要#{VOTE_CN}", "/elections/#{item.id}/nominations" %>
+      <% else %>
+        <%= link_to "#{NOMINATION_CN}名单", "/elections/#{item.id}/nominations" %>
+      <% end %>
+    <% elsif item.is_status_of?('doing_gala') || item.is_status_of?('done') %>
+      <% if item.is_status_of?('doing_gala_todo') %>
+        <%= link_to "#{NOMINATION_CN}名单", "/elections/#{item.id}/nominations" %>
+      <% else %>
+        <%= link_to "#{ELECTWINNER_CN}名单", "/elections/#{item.id}/elect_winners" %>
+      <% end %>
+    <% else %>
+      <%= link_to "#{ELECTION_CN}详情", "/elections/#{item.id}" %>
+    <% end %>
+  </em>
+</div>

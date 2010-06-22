@@ -1,0 +1,76 @@
+<% obj_type = 'Partnership' %>
+<% obj_name = PARTNER_CN %>
+<% objs_html_id = obj_type.tableize %>
+<% partya_name = name_for(type_for(@partya)) %>
+
+<div id="<%= objs_html_id %>_index_wrapper" class="highlighted_block content_block">
+  <div id="<%= objs_html_id %>_index_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% if @current_user && @current_user.is_role_of?('admin') %>
+        <% buttons << [ [ 'clear_cache', true ],
+                        [ '清空缓存', url_for(:controller => :system, :action => :clear_cache, :cache_id => @item_groups_cache_id), '确定要清空缓存吗?', 'get' ] ] %>
+      <% end %>
+      <% buttons << [ [ 'back_partya' ],
+                      [ "#{BACK_CN}#{partya_name}", item_first_link(@partya, true) ] ] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1>
+      <div><%= obj_name %></div>
+      <% item_parents = [] %>
+      <% for item_parent_group in @item_groups %>
+        <% item_parents << item_parent_group[:item_parent] %>
+      <% end %>
+      <% item_parent_type = type_for(item_parents[0]) %>
+      <div class="index_selector">
+        <%= select_tag "items_index", options_from_collection_for_select(item_parents, :id, :title),
+                         { :onchange => remote_function(:url => { :controller => 'system', :action => 'redirect_to_from_select', :prefix => "##{item_parent_type.tableize.singularize}_", :suffix => "_#{objs_html_id}_wrapper" }, :with => "'item_id='+value") } %>
+      </div>
+    </h1>
+  </div>
+
+  <div id="<%= objs_html_id %>_index_detail" class="block_main">
+
+  </div>
+</div>
+
+<% for item_parent_group in @item_groups %>
+  <% item_parent = item_parent_group[:item_parent] %>
+  <% items = item_parent_group[:items] %>
+
+  <% html_id = "#{item_parent_type.tableize.singularize}_#{item_parent.id}" %>
+  <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="content_block">
+    <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+      <div class="block_header_link">
+        <%= render :partial => 'layouts/back_top_button'  %>
+      </div>
+      <h1><%= strip_tags "#{item_title(item_parent)} (#{items.size})" %></h1>
+    </div>
+
+    <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+      <% unless (description = strip_tags(item_parent.description)).blank? %>
+        <div class="filter_bar info_bar">
+          <em class="l2"><%= description %></em>
+        </div>
+      <% end %>
+
+      <%= render :partial => 'layouts/items_list',
+                  :locals => { :show_paginate => true,
+                              :items_set => items,
+                              :limit => nil,
+                              :itemable_sym => nil,
+                              :show_photo => true,
+                              :photo_style => 'portrait',
+                              :show_below_photo => false,
+                              :show_title => false,
+                              :show_user => false,
+                              :show_photo_todo => false,
+                              :show_parent => false,
+                              :show_todo => false,
+                              :show_favorite => false,
+                              :show_manage => false,
+                              :delete_remote => false } %>
+    </div>
+  </div>
+<% end %>

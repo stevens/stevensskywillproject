@@ -1,0 +1,87 @@
+<% excluded_user_ids = [212, 15, 1973, 2516, 2524, 2, 1431, 2490, 2268, 2449, 20, 4, 11, 2584, 1324, 1, 2523, 2502, 32, 2503, 1997, 1823, 2517, 2297, 2518, 2395, 2385, 2388, 1260, 1787] %>
+<% excluded_users = [] %>
+<% for excluded_user_id in excluded_user_ids %>
+  <% excluded_users << User.find_by_id(excluded_user_id) %>
+<% end %>
+<% qualified_ballot_users = [] %>
+<% for item in items_set %>
+  <% qualified_ballot_users << item[:user] if !item[:is_great_award_winner] && item[:ballots_count] == 20 && item[:right_ballots_count] >= 1 && !excluded_users.include?(item[:user]) %>
+<% end %>
+<% random_ballot_users = qualified_ballot_users.sort_by {rand}[0..9] %>
+
+<table>
+  <tr>
+    <th>
+      <%= '排名' %>
+    </th>
+    <th>
+      <%= '缩略' %>
+    </th>
+    <th>
+      <%= '名字' %>
+    </th>
+    <th>
+      <%= "特邀#{JUDGE_CN}？" %>
+    </th>
+    <th>
+      <%= '获大奖？' %>
+    </th>
+    <th>
+      <%= '抽奖' %>
+    </th>
+    <th>
+      <%= "#{VOTE_CN}数量" %>
+    </th>
+    <th>
+      <%= '投中数量' %>
+    </th>
+    <th>
+      <%= '地址' %>
+    </th>
+  </tr>
+
+  <% i = 0 %>
+  <% for item in items_set %>
+    <% i += 1 %>
+    <tr>
+      <td>
+        <%= i %>
+      </td>
+      <td>
+        <%= render :partial => 'layouts/item_photo',
+                    :locals => { :item => item[:user],
+                                :photo_style => options[:photo_style] } %>
+      </td>
+      <td>
+        <%= render :partial => 'users/user_basic',
+                    :locals => { :user => item[:user],
+                                :show_come_from => false,
+                                :show_icon => false,
+                                :show_name => true,
+                                :show_link => true,
+                                :show_username => true,
+                                :show_myname => true } %>
+      </td>
+      <td>
+        <%= "#{item[:is_invited_judge] ? 'Y' : ''}" %>
+      </td>
+      <td>
+        <%= "#{item[:is_great_award_winner] ? 'Y' : ''}" %>
+      </td>
+      <td>
+        
+      </td>
+      <td>
+        <%= "#{item[:ballots_count]}票" %>
+      </td>
+      <td>
+        <%= "#{item[:right_ballots_count]}票" %>
+      </td>
+      <td>
+        <% if profile = item[:user].profile %>
+          <%= profile.shipping_address %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

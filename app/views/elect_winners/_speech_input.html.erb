@@ -1,0 +1,31 @@
+<% form_remote_for [user, winner] do |f| %>
+  <%= hidden_field_tag "edit_speech", true %>
+  <table class="content">
+    <tr>
+      <td class="label">
+        <label for="speech" style="width: 100px;"><%= "获奖感言:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= "就在这里发表你充满激情的获奖感言吧..." %>
+        </div>
+        <div class="input">
+          <%= f.text_area :speech, :class => 'xs' %>
+        </div>
+        <%= error_message_on "winner", "speech" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit "发表感言", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
+            page.hide "overlay"
+          end %>
+        </div>
+      </td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,60 @@
+<% obj_type = 'Judge' %>
+<% obj_name = name_for(obj_type) %>
+<% objs_html_id = obj_type.tableize %>
+<% judgein_name = name_for(type_for(@judgein)) %>
+
+<div id="<%= objs_html_id %>_wrapper" class="content_block">
+  <div id="<%= objs_html_id %>_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% if @current_user && @current_user.is_role_of?('admin') %>
+        <% buttons << [ [ 'clear_cache', true ],
+                        [ '清空缓存', url_for(:controller => :system, :action => :clear_cache, :cache_id => @item_groups_cache_id), '确定要清空缓存吗?', 'get' ] ] %>
+      <% end %>
+      <% buttons << [ [ 'back_judgein' ],
+                      [ "#{BACK_CN}#{judgein_name}", item_first_link(@judgein, true) ] ] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1>
+      <%= "特邀#{obj_name}" %>
+    </h1>
+  </div>
+
+  <div id="<%= objs_html_id %>_detail" class="block_main">
+    <div class="filter_bar info_bar">
+      <%= link_to "所有 (#{@item_groups.size})", "#{item_first_link(@judgein)}/judges", { :class => 'current' } %>
+      <em class="l2"><%= '[排名不分先后]' %></em>
+      <% if @current_user && @current_user.is_role_of?('admin') && @invited_judge_stats_groups && @invited_judge_stats_groups.size > 0 %>
+        <br />
+        <em class="l3">
+          <% i = 0 %>
+          <% for stats_group in @invited_judge_stats_groups %>
+            <% i += 1 %>
+            <%= "#{stats_group[:count]}位#{stats_group[:title]}" %>
+            <% if i < @invited_judge_stats_groups.size %>
+              <%= '·' %>
+            <% end %>
+          <% end %>
+        </em>
+      <% end %>
+    </div>
+
+    <%= render :partial => 'layouts/items_list',
+                :locals => { :show_paginate => true,
+                            :items_set => @item_groups,
+                            :limit => nil,
+                            :itemable_sym => nil,
+                            :show_photo => true,
+                            :photo_style => 'list',
+                            :show_below_photo => false,
+                            :show_title => false,
+                            :show_user => false,
+                            :show_photo_todo => false,
+                            :show_parent => false,
+                            :show_todo => false,
+                            :show_favorite => false,
+                            :show_manage => false,
+                            :delete_remote => false } %>
+  </div>
+</div>

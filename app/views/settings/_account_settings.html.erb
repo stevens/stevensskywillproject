@@ -46,44 +46,15 @@
     </td>
   </tr>
 
-  <% form_for profile do |f| %>
-    <tr>
-      <td class="label">
-        <label for="blog"><%= "blog:" %></label>
-      </td>
-      <td class="input">
-        <div class="text">
-          <%= "请输入你的blog地址" %>
-        </div>
-        <div class="input">
-          <%= f.text_field :blog, :class => "text" %>
-        </div>
-        <%= error_message_on "profile", "blog" %>
-      </td>
-    </tr>
-    <tr>
-      <td class="label">
-        <label for="taobao"><%= "外部帐户名:" %></label>
-      </td>
-      <td class="input">
-        <div class="text">
-          <%= "<em class='more'>请放心以下外部帐户名不会公开显示，只会当你在蜂厨合作伙伴网站以独享特殊折扣优惠购买产品时，用于核实你的蜂厨注册用户身份</em>" %><br />
-          <%= "请输入你的淘宝帐户名" %>
-        </div>
-        <div class="input">
-          <%= f.text_field :taobao, :class => "text" %>
-        </div>
-        <%= error_message_on "profile", "taobao" %>
-      </td>
-    </tr>
-    <tr>
-      <td></td>
-      <td class="input">
-        <div class="submit">
-          <%= f.submit SAVE_CN, :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
-        </div>
-      </td>
-    </tr>
-  <% end %>
+  <tr>
+    <td class="label"><label><%= "档案:" %></label></td>
+    <td class="input">
+      <div class="info">
+        <%= link_to "档案#{SETTING_CN}", '/settings/profile' %>
+      </div>
+      <br />
+    </td>
+  </tr>
+
 </table>
 </div>

@@ -1,0 +1,8 @@
+<% item_type = 'Judge' %>
+<% file_ext = photo_file_ext(item_type, 'icon') %>
+
+<% if judgein.is_status_of?('doing_any') && judgein.judges.find(:first, :conditions => { :user_id => user.id } ) %>
+  <% icon_name = 'invited' %>
+  <% icon_title = 'BCDA特邀评审' %>
+  <%= image_tag "icon/#{item_type.tableize.singularize}/#{icon_name}.#{file_ext}", :title => icon_title, :alt => '', :class => 'icon' %>
+<% end %>

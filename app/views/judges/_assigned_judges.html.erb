@@ -1,0 +1,5 @@
+<% for judge in judges %>
+  <%= strip_tags judge.judge_category.title %>
+  <% delete_message = "确定要#{DELETE_CN}这个#{JUDGE_CN}吗？" %>
+  <%= link_to_remote "[x]", :url => { :user_id => judge.user_id, :controller => 'judges', :id => judge.id, :action => 'destroy' }, :confirm => delete_message, :method => 'delete' %>
+<% end %>

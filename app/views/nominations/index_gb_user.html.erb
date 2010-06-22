@@ -1,0 +1,86 @@
+<% obj_type = 'Nomination' %>
+<% obj_name = name_for(obj_type) %>
+<% objs_html_id = obj_type.tableize %>
+<% nominatein_type = type_for(@nominatein) %>
+<% nominatein_name = name_for(nominatein_type) %>
+
+<div id="<%= objs_html_id %>_index_wrapper" class="highlighted_block content_block">
+  <div id="<%= objs_html_id %>_index_header" class="block_header">
+    <div class="block_header_link">
+      <%= render :partial => 'nominations/index_header_link' %>
+    </div>
+    <h1>
+      <div><%= "#{obj_name}名单" %></div>
+      <% item_grands = [] %>
+      <% for item_grand_group in @item_groups %>
+        <% item_grands << item_grand_group[:item_grand] %>
+      <% end %>
+      <% item_grand_type = type_for(item_grands[0]) %>
+      <div class="index_selector">
+        <%= select_tag "items_index", options_from_collection_for_select(item_grands, :id, :login),
+                         { :onchange => remote_function(:url => { :controller => 'system', :action => 'redirect_to_from_select', :prefix => "##{item_grand_type.tableize.singularize}_", :suffix => "_#{objs_html_id}_wrapper" }, :with => "'item_id='+value") } %>
+        <% buttons = [] %>
+        <% if @current_user && @current_user.is_role_of?('admin') %>
+          <% buttons << [ [ 'gb_award' ],
+                          [ "&raquo;按#{AWARD_CN}分组", "#{item_first_link(@nominatein)}/nominations" ] ] %>
+        <% end %>
+        <span class="todo">
+          <%= render :partial => 'layouts/todo_bar',
+                      :locals => { :buttons => buttons } %>
+        </span>
+      </div>
+    </h1>
+  </div>
+
+  <div id="<%= objs_html_id %>_index_detail" class="block_main">
+    
+  </div>
+</div>
+
+<% for item_grand_group in @item_groups %>
+  <% item_grand = item_grand_group[:item_grand] %>
+  <% item_parent_groups = item_grand_group[:item_parents] %>
+
+  <% html_id = "#{item_grand_type.tableize.singularize}_#{item_grand.id}" %>
+  <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="highlighted_block content_block">
+    <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+      <div class="block_header_link">
+        <%= render :partial => 'layouts/back_top_button'  %>
+      </div>
+      <h1><%= strip_tags "#{item_title(item_grand)} (#{item_parent_groups.size})" %></h1>
+    </div>
+
+    <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+
+    </div>
+  </div>
+
+  <% for item_parent_group in item_parent_groups %>
+    <% item_parent = item_parent_group[:item_parent] %>
+    <% item_groups = item_parent_group[:items] %>
+    <% item_parent_type = type_for(item_parent) %>
+
+    <% html_id = "#{item_parent_type.tableize.singularize}_#{item_parent.id}" %>
+    <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="content_block">
+      <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+        <div class="block_header_link">
+          <%= render :partial => 'layouts/back_top_button'  %>
+        </div>
+        <h1><%= strip_tags "#{item_title(item_parent)} - #{obj_name} (#{item_groups.size})" %></h1>
+      </div>
+
+      <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+          <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+
+          </div>
+
+          <div id="<%= html_id %>_<%= objs_html_id %>_show">
+            <%= render :partial => 'nominations/nominations_matrix_gb_user',
+                        :locals => { :nominateable_groups => item_groups,
+                                    :options => { :items_count_per_row => 6, :photo_style => 'matrix' } } %>
+          </div>
+
+      </div>
+    </div>
+  <% end %>
+<% end %>

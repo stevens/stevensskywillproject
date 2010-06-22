@@ -1,0 +1,21 @@
+<% colors = [ '#428cbb','#ff8159', '#78b36d' ] %>
+
+<div>
+  <% weight_percent = resultable_stat['total_stat']['percent'] %>
+  <em class="l0"><%= "综合加权百分比：#{weight_percent}%" %></em>
+  <%= render :partial => 'ballot_results/stat_data_bar',
+             :locals => { :percent => weight_percent,
+                          :color => colors[0] } %>
+</div>
+
+<% i = 0 %>
+<% for category_stat in resultable_stat['category_stats'] %>
+  <% percent = category_stat['percent'] %>
+  <div>
+    <em class="l<%= i+1 %>"><%= "#{categories[i].title}百分比：#{percent}%" %></em>
+    <%= render :partial => 'ballot_results/stat_data_bar',
+               :locals => { :percent => percent,
+                            :color => colors[i+1] } %>
+  </div>
+  <% i += 1 %>
+<% end %>

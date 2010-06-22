@@ -1,0 +1,6 @@
+<% for nominated in nominateds %>
+  <%= strip_tags nominated.nominatefor.title %>
+  <% nominateable_id_sym = id_for(nominated.nominateable_type).to_sym %>
+  <% delete_message = "确定要#{DELETE_CN}这项#{name_for(nominated.nominateable_type)}#{NOMINATION_CN}吗？" %>
+  <%= link_to_remote "[x]", :url => { nominateable_id_sym => nominated.nominateable_id, :controller => 'nominations', :id => nominated.id, :action => 'destroy' }, :confirm => delete_message, :method => 'delete' %>
+<% end %>

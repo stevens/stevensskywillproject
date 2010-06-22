@@ -1,0 +1,15 @@
+<% ballotin_name = name_for(type_for(@ballotin)) %>
+
+<% buttons = [] %>
+<% if @current_user && @current_user.is_role_of?('admin') %>
+  <% buttons << [ [ 'clear_cache', true ],
+                  [ '清空缓存', url_for(:controller => :system, :action => :clear_cache, :cache_id => @item_groups_cache_id), '确定要清空缓存吗?', 'get' ] ] %>
+<% end %>
+<% buttons << [ [ 'goto_nominations' ],
+                [ "#{NOMINATION_CN}名单", "#{item_first_link(@ballotin)}/nominations" ] ] %>
+<% buttons << [ [ 'goto_winners' ],
+                [ "#{ELECTWINNER_CN}名单", "#{item_first_link(@ballotin)}/elect_winners" ] ] %>
+<% buttons << [ [ 'back_ballotin' ],
+                [ "#{BACK_CN}#{ballotin_name}", item_first_link(@ballotin, true) ] ] %>
+<%= render :partial => 'layouts/todo_bar',
+            :locals => { :buttons => buttons } %>

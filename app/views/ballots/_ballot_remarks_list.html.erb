@@ -1,0 +1,22 @@
+<% if items_set && items_set.size > 0 %>
+  <% for item_group in items_set %>
+    <% if item_group.size > 0 %>
+      <% ballotable = item_group[1][0].ballotables[0] %>
+      <em class="l3">[关于</em>
+      <%= link_to strip_tags(item_title(ballotable)), item_first_link(ballotable) %>
+      <em class="l3">的点评]</em>
+      <br />
+      <ul>
+        <% ballots = item_group[1] %>
+        <% for ballot in ballots %>
+          <% if !ballot.remark.blank? && !(remark = strip_tags ballot.remark.strip).blank? %>
+          <li>
+            -- <%= remark %>
+          </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <br />
+    <% end %>
+  <% end %>
+<% end %>

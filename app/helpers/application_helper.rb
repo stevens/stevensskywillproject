@@ -137,6 +137,10 @@ module ApplicationHelper
 		end
 	end
 
+  def item_slogan(item)
+    item.slogan ? item.slogan.strip : ''
+  end
+
   def subitem_type(item_type)
     case item_type
     when 'Menu'
@@ -187,6 +191,8 @@ module ApplicationHelper
 			user_first_link(item, true)
 		when 'Match'
 			item_first_link(item, true)
+    when 'Election'
+			item_first_link(item, true)
     when 'Course'
       "#{menu_courses_path(item.menu)}#course_#{item.id}_line"
 		else
@@ -234,6 +240,10 @@ module ApplicationHelper
 		end
 	end
 
+  def second_to_day(second)
+    second/3600/24
+  end
+
 	def second_to_hms(second)
 		h = second/3600
 		m = second%3600/60
@@ -241,12 +251,15 @@ module ApplicationHelper
 		{:h => h, :m => m, :s => s}
 	end
 	
-	def time_display(second, time_style, h_text, m_text, s_text)
+	def time_display(second, time_style, h_text = '小时', m_text = '分', s_text = '秒', d_text = '天')
+    d = second_to_day(second)
 		h = second_to_hms(second)[:h]
  		m = second_to_hms(second)[:m]
  		s = second_to_hms(second)[:s]
 		t = ''
 		case time_style
+    when 'd'
+      t += "#{d}#{d_text}" if d>0
 		when 'h'
 			t += "#{h}#{h_text}" if h>0
 		when 'hm'
@@ -364,7 +377,7 @@ module ApplicationHelper
 		if str && !str.blank?
 			str.strip.gsub(/\s+/, space)
 		else
-			nil
+			''
 		end
 	end
 	
@@ -372,7 +385,7 @@ module ApplicationHelper
 		if str && !str.blank?
 			str.rstrip.gsub(/\s/, '&nbsp;')
 		else
-			nil
+			''
 		end
 	end
 	

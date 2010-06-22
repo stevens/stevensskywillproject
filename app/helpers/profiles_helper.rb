@@ -4,7 +4,7 @@ module ProfilesHelper
 		if !str.nil? && !str.blank?
 			str_squish(str, 0).gsub("http://", '')
 		else
-			nil
+			''
 		end
 	end
 	

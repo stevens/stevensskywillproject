@@ -346,22 +346,47 @@ div.tag {
 
 /* Header */
 #header_wrapper {
-	width: 100%;
-	margin: 0px auto;
-	padding: 0px 0px;
-	color: #ffffff;
+    width: 100%;
+    margin: 0px auto;
+    padding: 0px 0px;
+    color: #ffffff;
 }
 #header_content {
-	width: 980px;
-	height: 70px;
-	margin: 0px auto;
-	background-color: #428cbb;
+    width: 980px;
+    height: 70px;
+    margin: 0px auto;
+    background-color: #428cbb; /* #848484; */
+}
+#header_top_content {
+    width: 980px;
+    height: 24px;
+    margin: 0px auto;
+    background-color: #f5f5f5;
+    /*border-bottom: 1px solid #f1f1f1;*/
+    background-image: url("/images/logo/bc_bcda_1_2010_avatar_24x24.png");
+    background-position: center;
+}
+#header_top_info {
+    padding-top: 3px;
+    width: 360px;
+    height: 24px;
+    margin: auto;
+    background-color: #ffffff;
+    color: #e42300;
+    text-align: center;
+    vertical-align: middle;
+}
+#header_top_info a {
+    color: #e42300;
+}
+#header_top_info a:hover {
+    color: #428cbb;
 }
 
 /* Logo */
 #logo {
 	padding-top: 5px;
-	padding-left: 4px;
+	padding-left: 8px;
 }
 #logo img {
 	background-color: transparent !important;
@@ -515,6 +540,15 @@ td.seo_link_cell {
 #right_navigation li {
 	margin-left: 5px;
 }
+
+#navigation span.focus a {
+    background-color: #e42300;
+}
+#navigation span.focus a:hover {
+    background-color: #ff8159;
+    color: #ffffff;
+}
+
 #navigation li.active {
 	margin-top: -3px;
 }
@@ -962,6 +996,13 @@ td.photo_item_cell {
 	width: 64px;
 	padding: 0px;
 }
+.center_sideblock table {
+    margin-left: auto;
+    margin-right: auto;
+}
+.m_size_sideblock .matrix_block {
+    width: 125px;
+}
 /*.welcome_content .matrix_block {
 	width: 64px;
 	padding: 10px 0px;
@@ -982,6 +1023,12 @@ div.matrix_photo {
 }
 * html .sidebar_block_main .matrix_photo, /** html .welcome_content .matrix_photo,*/ * html .items_bar .matrix_photo {
 	height: 57px !important;
+}
+.m_size_sideblock .matrix_photo {
+    height: 100px;
+}
+* html .m_size_sideblock .matrix_photo {
+    height: 105px !important;
 }
 div.list_photo {
 	margin: auto;
@@ -1217,6 +1264,9 @@ div.rating div.todo_button {
 .todo_button a:hover {
 	background-color: #428cbb !important;
 }
+span.todo {
+    font-weight: normal;
+}
 div.label {
 	margin-bottom: 5px;
 }
@@ -1247,6 +1297,27 @@ table.item_summary {
 table.item_summary td {
     padding-left: 3px;
     padding-right: 20px;
+}
+table.inner {
+    margin: 0px;
+}
+table.inner td {
+    padding-left: 3px;
+    padding-right: 3px;
+    color: #b8b9a7;
+}
+table.inner td.photo_column {
+    padding-top: 3px;
+}
+table.inner td.photo_column a:hover {
+    background-color: transparent !important;
+}
+table.inner span.title a {
+    color: #ff8159 !important;
+}
+table.inner span.title a:hover {
+    background-color: #ff8159 !important;
+    color: #ffffff !important;
 }
 
 /* Pagination */
@@ -1678,16 +1749,19 @@ div.welcome_todo_button a:hover {
     color: #78b36d;
 }
 
-/* User Bar */
-.user_bar {
-	padding-top: 6px;
-	padding-bottom: 3px;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-bottom: 10px;
-	border-top: 1px #ffffdd solid;
-	border-top: 1px #ffffdd solid;
-	background-color: #ffffdd;
+/* User Bar & Item Bar*/
+.user_bar, .item_bar {
+    padding-top: 6px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    border-top: 1px #ffffdd solid;
+    border-top: 1px #ffffdd solid;
+    background-color: #ffffdd;
+}
+.item_bar div.todo_right {
+    margin-top: 0px;
 }
 .user_bar div.friendship_status {
     margin-bottom: 8px;
@@ -1695,42 +1769,42 @@ div.welcome_todo_button a:hover {
 .user_bar div.share_mainpage div.todo_right {
     margin-top: 0px;
 }
-.user_portrait {
-	margin-right: 10px;
+.user_portrait, .item_bar_portrait {
+    margin-right: 10px;
 }
-.user_portrait a:hover {
-	background-color: transparent !important;
+.user_portrait a:hover, .item_bar_portrait a:hover {
+    background-color: transparent !important;
 }
-.user_portrait img {
-	width: 48px;
-	height: 48px;
+.user_portrait img, .item_bar_portrait img {
+    width: 48px;
+    height: 48px;
 }
-.user_bar_username {
-	color: #695245;
-	margin-bottom: 1px;
-	font-size: 14px;
-	font-weight: bold;
+.user_bar_username, .item_bar_title {
+    color: #695245;
+    margin-bottom: 1px;
+    font-size: 14px;
+    font-weight: bold;
 }
-.user_bar_username span {
-	font-size: 12px;
-	font-weight: normal;
+.user_bar_username span, .item_bar_title span {
+    font-size: 12px;
+    font-weight: normal;
 }
-.user_bar_info {
-	color: #b8b9a7;
-	margin-bottom: 1px;
+.user_bar_info, .item_bar_info {
+    color: #b8b9a7;
+    margin-bottom: 1px;
 }
-.user_bar_link {
-	color: #b8b9a7;
+.user_bar_link, .item_bar_link {
+    color: #b8b9a7;
 }
 .todo_block {
-	float: right;
-	color: #78b36d;
+    float: right;
+    color: #78b36d;
     padding-top: 1px;
     padding-bottom: 8px;
 }
 .todo_block span {
-	margin-left: 5px;
-	color: #b8b9a7;
+    margin-left: 5px;
+    color: #b8b9a7;
 }
 
 /* Items Bar */
@@ -1790,14 +1864,18 @@ div.welcome_todo_button a:hover {
 	height: 48px;
 	border: #f1f1f1 solid 1px;
 }
-#highlighted_item {
+#highlighted_item, .highlighted_block {
 	border-top-color: red;
 }
-#highlighted_item .block_header {
+#highlighted_item .block_header, .highlighted_block .block_header {
 	background-color: #ff8159;
 }
-#highlighted_item h1 {
+#highlighted_item h1, .highlighted_block h1 {
 	color: #ffffff;
+}
+.highlighted_block .block_header a:hover {
+	background-color: transparent !important;
+	color: #ffffff !important;
 }
 #highlighted_item div.rank {
 	position: relative;
@@ -1926,6 +2004,14 @@ div.welcome_todo_button a:hover {
 /* Favorite */
 .favorite_bar {
 	margin-bottom: 8px;
+}
+
+.item_intro_info td.right_column_lined {
+    border: none;
+}
+.item_intro_info .sub_block_tb {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 /* Match */
@@ -2267,7 +2353,80 @@ td.pk_item_win div.pk_item_votes_result {
     margin-left: 10px;
 }
 
+#messages_list {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 3px;
+    text-align: left;
+}
+#messages_list table.content {
+	padding: 0px;
+}
+
+#messages_list th {
+    font-weight: normal;
+    border:0px;
+    padding:0px;
+    color: #78b36d;
+    background-color: #ffffff;
+    border-bottom: 1px dashed #f1f1f1;
+}
+#messages_list td {
+    border-bottom: 1px dashed #f1f1f1;
+}
+
+td.messages_list_user {
+    width: 150px;
+}
+td.messages_list_title {
+    width: 320px;
+}
+td.messages_list_time {
+    width: 150px;
+}
+td.messages_list_deal {
+    width: 40px;
+}
+td.messages_dis_left {
+    font-weight: bold;
+    color: #78b36d;
+    width: 40px;
+    text-align: right;
+}
+td.messages_dis_middle {
+    width: 500px;
+}
+td.messages_dis_right {
+    width: 120px;
+}
+
+
 /* checker outer username */
 #checker_area {
     text-align: center;
+}
+
+.index_selector {
+    margin-top: 5px;
+}
+
+td.voted {
+    background-color: #ccffcc;
+}
+
+.centered {
+    text-align: center;
+}
+
+/* ads */
+.sidebar_ads {
+    text-align: center;
+    background-color: #ffffff !important;
+    margin-bottom: 7px !important;
+}
+
+.sidebar_ads a:hover {
+    background-color: transparent !important;
 }

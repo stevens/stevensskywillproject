@@ -1,0 +1,17 @@
+<div id="award_basic">
+  <em class="l3"><%= item_title(item) %></em>
+  <%= render :partial => 'awards/award_icon',
+              :locals => { :award => item } %>
+  <em class="l2"><%= add_brackets(item.basic_info) %></em>  
+</div>
+<% if !(item.description.blank? && item.prize.blank?) %>
+  <div id="award_main" style="background-color: #ffffdd; margin-top: 3px; padding: 3px;">
+    <ul>
+      <%= paragraphs(item.description) %>
+    </ul>
+    <ul>
+      <%= paragraphs(item.prize) %>
+    </ul>
+  </div>
+<% end %>
+

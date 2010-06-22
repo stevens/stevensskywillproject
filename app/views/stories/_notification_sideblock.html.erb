@@ -1,18 +1,18 @@
 <% if notifications && notifications != [] %>
-	<div id="notification_wrapper" class="sidebar_panel">
-		<div id="notification_header" class="sidebar_panel_header">
-			<div class="sidebar_block_header_link">
-	
-			</div>
-			<h1><%= "通知和提醒" %></h1>
-		</div>
-		
-		<div id="notification_detail" class="sidebar_panel_main">
-			<% for n in notifications %>
-				<div class="notification">
-					<%= link_to n[0], n[1] %>
-				</div>
-			<% end %>
-		</div>
-	</div>
+  <div id="notification_wrapper" class="sidebar_panel">
+    <div id="notification_header" class="sidebar_panel_header">
+      <div class="sidebar_block_header_link">
+
+      </div>
+      <h1><%= "通知和提醒" %></h1>
+    </div>
+
+    <div id="notification_detail" class="sidebar_panel_main">
+      <% for n in notifications %>
+        <div class="notification">
+          <%= link_to n[0], n[1] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

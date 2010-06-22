@@ -1,0 +1,18 @@
+<% if @partners && @partners.size > 0 %>
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'election_partnerships',
+                          :block_title => PARTNER_CN,
+                          :block_header_link => { :title => '详情', :url => "/elections/#{@election.id}/partnerships" },
+                          :block_detail_partial => 'partners/partners_matrix',
+                          :block_detail_locals => { :items_set => @partners, :options => { :css_class => 'm_size_sideblock center_sideblock',
+                                                                                          :items_count_per_row => 2,
+                                                                                          :photo_style => 'matrix' } } } %>
+<% end %>
+
+<% if @judge_users && @judge_users.size > 0 %>
+  <%= render :partial => 'layouts/items_sideblock',
+              :locals => { :id => 'election_judges',
+                          :block_title => "特邀#{JUDGE_CN}",
+                          :block_header_link => { :title => MORE_CN, :url => "/elections/#{@election.id}/judges" },
+                          :items_set => @judge_users } %>
+<% end %>

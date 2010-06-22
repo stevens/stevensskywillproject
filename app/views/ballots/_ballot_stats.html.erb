@@ -1,0 +1,94 @@
+<% ballotfor_stats = ballot_stats[:ballotfor_stats] %>
+<% ballotable_stats_set = ballot_stats[:ballotable_stats_set] %>
+<table>
+  <tr>
+    <th>
+      <%= '排名' %>
+    </th>
+    <th>
+      <%= '缩略' %>
+    </th>
+    <th>
+      <%= NOMINATION_CN %>
+    </th>
+    <% for ballotfor_subtotal in ballotfor_stats[:subtotals] %>
+      <th>
+        <%= strip_tags ballotfor_subtotal[:category].title %>
+      </th>
+      <th>
+        <%= '%' %>
+      </th>
+    <% end %>
+    <th>
+      <%= '累计' %>
+    </th>
+    <th>
+      <%= '加权%' %>
+    </th>
+  </tr>
+  <% i = 0 %>
+  <% for ballotable_stats in ballotable_stats_set %>
+    <% i += 1 %>
+    <% ballotable = ballotable_stats[:ballotable] %>
+    <tr>
+      <td>
+        <%= i %>
+      </td>
+      <td>
+        <%= render :partial => 'layouts/item_photo',
+                    :locals => { :item => ballotable,
+                                :photo_style => options[:photo_style] } %>
+      </td>
+      <td>
+        <ul>
+          <li>
+            <%= render :partial => 'layouts/item_title',
+                        :locals => { :item => ballotable,
+                                    :show_link => true } %>
+          </li>
+          <li>
+            <%= render :partial => 'users/user_basic',
+                        :locals => { :user => ballotable.user,
+                                    :show_come_from => true,
+                                    :show_icon => false,
+                                    :show_name => true,
+                                    :show_link => true,
+                                    :show_username => true,
+                                    :show_myname => true } %>
+          </li>
+        </ul>
+      </td>
+      <% for ballotable_subtotal in ballotable_stats[:subtotals] %>
+        <td>
+          <%= "#{ballotable_subtotal[:subtotal]}票" %>
+        </td>
+        <td>
+          <%= "#{ballotable_subtotal[:percent]}%" %>
+        </td>
+      <% end %>
+      <td>
+        <%= "#{ballotable_stats[:total]}票" %>
+      </td>
+      <td>
+        <%= "#{ballotable_stats[:percent]}%" %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>
+      <%= '汇总' %>
+    </td>
+    <% for ballotfor_subtotal in ballotfor_stats[:subtotals] %>
+      <td>
+        <%= "#{ballotfor_subtotal[:subtotal]}票" %>
+      </td>
+      <td></td>
+    <% end %>
+    <td>
+      <%= "#{ballotfor_stats[:total]}票" %>
+    </td>
+    <td></td>
+  </tr>
+</table>

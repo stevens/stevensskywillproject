@@ -1,0 +1,28 @@
+<div id="election_<%= @election.id %>_wrapper" class="content_block">
+
+  <div id="election_<%= @election.id %>_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% if @current_user && @election.user == @current_user %>
+        <% buttons << [ [ 'election_edit' ],
+                        [ EDIT_CN, "/elections/#{@election.id}/edit" ] ] %>
+      <% end %>
+      <% buttons << [ [ 'back_election_detail' ],
+                      [ "#{BACK_CN}#{ELECTION_CN}", "/elections/#{@election.id}/profile" ] ] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1><%= "#{ELECTION_CN}详情" %></h1>
+    </div>
+
+    <div id="election_<%= @election.id %>_detail" class="block_main">
+
+    <div id="election_<%= @election.id %>_self" class="sub_block">
+      <%= render :partial => "elections/election",
+                  :locals => { :item => @election,
+                              :show_todo => true,
+                              :show_manage => true } %>
+    </div>
+  </div>
+
+</div>

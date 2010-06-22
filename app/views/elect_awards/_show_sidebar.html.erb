@@ -1,0 +1,6 @@
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'ballot_remarks',
+                          :block_title => "评审点评",
+                          :block_header_link => nil,
+                          :block_detail_partial => 'ballots/ballot_remarks_list',
+                          :block_detail_locals => { :items_set => @ballot_groups, :options => {  } } } %>

@@ -1,0 +1,118 @@
+<% obj_type = 'ElectWinner' %>
+<% obj_name = name_for(obj_type) %>
+<% objs_html_id = obj_type.tableize %>
+<% winnerin_type = type_for(@winnerin) %>
+<% winnerin_name = name_for(winnerin_type) %>
+
+<div id="<%= objs_html_id %>_index_wrapper" class="highlighted_block content_block">
+  <div id="<%= objs_html_id %>_index_header" class="block_header">
+    <div class="block_header_link">
+      <% buttons = [] %>
+      <% if @current_user && @current_user.is_role_of?('admin') %>
+        <% buttons << [ [ 'clear_cache', true ],
+                        [ '清空缓存', url_for(:controller => :system, :action => :clear_cache, :cache_id => @item_groups_cache_id), '确定要清空缓存吗?', 'get' ] ] %>
+      <% end %>
+      <% buttons << [ [ 'goto_nominations' ],
+                      [ "#{NOMINATION_CN}名单", "#{item_first_link(@winnerin)}/nominations" ] ] %>
+      <% buttons << [ [ 'back_winnerin' ],
+                      [ "#{BACK_CN}#{winnerin_name}", item_first_link(@winnerin, true) ] ] %>
+      <%= render :partial => 'layouts/todo_bar',
+                  :locals => { :buttons => buttons } %>
+    </div>
+    <h1>
+      <div><%= "#{obj_name}名单" %></div>
+      <% item_grands = [] %>
+      <% for item_grand_group in @item_groups %>
+        <% item_grands << item_grand_group[:item_grand] %>
+      <% end %>
+      <% item_parent_type = type_for(item_grands[0]) %>
+      <div class="index_selector">
+        <%= select_tag "items_index", option_groups_from_collection_for_select(item_grands, :childs, :title, :id, :title),
+                         { :onchange => remote_function(:url => { :controller => 'system', :action => 'redirect_to_from_select', :prefix => "##{item_parent_type.tableize.singularize}_", :suffix => "_#{objs_html_id}_wrapper" }, :with => "'item_id='+value") } %>
+      </div>
+    </h1>
+  </div>
+
+  <div id="<%= objs_html_id %>_index_detail" class="block_main">
+
+  </div>
+</div>
+
+<% for item_grand_group in @item_groups %>
+  <% item_grand = item_grand_group[:item_grand] %>
+  <% item_parent_groups = item_grand_group[:item_parents] %>
+  <% if item_grand.award_type == '11' %>
+    <% show_todo_bar = show_time_notice = true %>
+  <% else %>
+    <% show_todo_bar = show_time_notice = false %>
+  <% end %>
+
+  <% html_id = "#{item_parent_type.tableize.singularize}_#{item_grand.id}" %>
+  <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="highlighted_block content_block">
+    <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+      <div class="block_header_link">
+        <%= render :partial => 'layouts/back_top_button'  %>
+      </div>
+      <h1><%= strip_tags "#{item_title(item_grand)} (#{item_parent_groups.size})" %></h1>
+    </div>
+
+    <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+
+    </div>
+  </div>
+
+  <% for item_parent_group in item_parent_groups %>
+    <% item_parent = item_parent_group[:item_parent] %>
+    <% items = item_parent_group[:items] %>
+
+    <% html_id = "#{item_parent_type.tableize.singularize}_#{item_parent.id}" %>
+    <div id="<%= html_id %>_<%= objs_html_id %>_wrapper" class="content_block">
+      <div id="<%= html_id %>_<%= objs_html_id %>_header" class="block_header">
+        <div class="block_header_link">
+          <%= render :partial => 'layouts/back_top_button'  %>
+        </div>
+        <h1><%= strip_tags "#{item_title(item_parent)} - #{obj_name} (#{items.size})" %></h1>
+      </div>
+
+      <div id="<%= html_id %>_<%= objs_html_id %>_detail" class="block_main">
+        <div class="filter_bar info_bar">
+          <em class="l2"><%= strip_tags item_parent.description %></em>
+        </div>
+
+        <% unless (@current_user && @current_user.is_role_of?('admin')) || @winnerin.is_status_of?('doing_gala_doing') || @winnerin.is_status_of?('doing_gala_done') || @winnerin.is_status_of?('done') %>
+          <% if show_time_notice %>
+            <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+              <%= render :partial => 'layouts/notice',
+                          :locals => { :notice => "#{ELECTWINNER_CN}名单将于#{@winner_published_at}揭晓，敬请期待！" } %>
+            </div>
+          <% end %>
+        <% else %>
+          <% if item_grand.award_type == '11' && item_parent.status == '11' %>
+            <div id="<%= html_id %>_<%= objs_html_id %>_notice" class="block_notice">
+              <%= render :partial => 'layouts/notice',
+                          :locals => { :notice => '请别着急，很快就要揭晓啦！' } %>
+            </div>
+          <% elsif item_parent.status == '12' %>
+            <div id="<%= html_id %>_<%= objs_html_id %>_show">
+              <%= render :partial => 'elect_winners/elect_winners_matrix',
+                          :locals => { :winnerfor => item_parent,
+                                      :winnerables => items,
+                                      :options => { :show_paginate => false, :limit => 24, :items_count_per_row => 6, :photo_style => 'matrix' } } %>
+            </div>
+            <% if show_todo_bar %>
+              <div id="<%= html_id %>_<%= objs_html_id %>_todo_bar" class="sub_block block_bottom_bar">
+                <% buttons = [] %>
+                <% buttons << [ [ 'detail', false, true, 'l1' ],
+                                [ "#{AWARD_CN}详情", "/#{winnerin_type.tableize}/#{@winnerin.id}/elect_awards/#{item_parent.id}" ] ] %>
+                <div class="todo_right">
+                  <%= render :partial => 'layouts/todo_bar',
+                              :locals => { :buttons => buttons } %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

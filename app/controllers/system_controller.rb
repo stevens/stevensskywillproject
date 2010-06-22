@@ -48,9 +48,10 @@ class SystemController < ApplicationController
       choiceable_name = name_for(@choiceable_type)
       choiceable_unit = unit_for(@choiceable_type)
 
-      if @choiceable_type == "Recipe"
+      case @choiceable_type
+      when 'Recipe'
         choice_type = "精选"
-      else
+      when 'User'
         choice_type = "智囊"
       end
       
@@ -91,6 +92,17 @@ class SystemController < ApplicationController
 			end
   	end
 	end
+
+  # 通过下拉列表动态重定向
+  def redirect_to_from_select
+  	respond_to do |format|
+			format.js do
+				render :update do |page|
+          page.redirect_to "#{params[:prefix]}#{params[:item_id]}#{params[:suffix]}"
+				end
+			end
+  	end
+  end
 
   # 更改item的来源后的处理
 	def change_from_type
@@ -194,6 +206,24 @@ class SystemController < ApplicationController
     end
   end
 
+  # 清空缓存
+  def clear_cache
+    if @current_user && @current_user.is_role_of?('admin')
+      respond_to do |format|
+        format.js do
+          cache_delete(params[:cache_id])
+          notice = '清空缓存成功！'
+          render :update do |page|
+            page.replace_html 'flash_wrapper',
+                              :partial => 'layouts/flash',
+                              :locals => { :notice => notice }
+            page.show 'flash_wrapper'
+          end
+        end
+      end
+    end
+  end
+
   private
 
   def after_choice_ok
@@ -203,18 +233,29 @@ class SystemController < ApplicationController
 					page.replace_html "flash_wrapper",
 														:partial => "layouts/flash",
 														:locals => { :notice => @notice }
-        if @choiceable_type == 'Recipe'
-					page.replace_html "#{@choiceable_type.downcase}_#{@choiceable_id}_title",
-														:partial => "layouts/item_basic",
-														:locals => { :item => @choiceable,
-								 												 :show_icon => true,
-								 												 :show_title => true,
-								 												 :show_link => true }
-        end
+          case @choiceable_type
+          when 'Recipe'
+            page.replace_html "#{@choiceable_type.downcase}_#{@choiceable_id}_title",
+                              :partial => "layouts/item_basic",
+                              :locals => { :item => @choiceable,
+                                           :show_icon => true,
+                                           :show_title => true,
+                                           :show_link => true }
+          when 'User'
+            page.replace_html "#{@choiceable_type.downcase}_#{@choiceable_id}_title",
+                              :partial => 'users/user_basic',
+                              :locals => { :user => @choiceable,
+                                          :show_come_from => false,
+                                          :show_icon => true,
+                                          :show_name => true,
+                                          :show_link => false,
+                                          :show_username => true,
+                                          :show_myname => true }
+          end
 					page.replace_html "#{@choiceable_type.downcase}_#{@choiceable_id}_admin",
 														:partial => "system/item_admin_bar",
 														:locals => { :item => @choiceable,
-									 											 :ref => 'show' }
+									 											 :ref => nil }
   			end
   		end
   	end

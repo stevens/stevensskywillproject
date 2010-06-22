@@ -1,0 +1,71 @@
+<% items_set = nominateables %>
+<% if options[:show_paginate] %>
+  <% items = items_paginate(items_set, items_count_per_page) %>
+<% elsif options[:limit] %>
+  <% items = items_set[0..options[:limit]-1] %>
+<% else %>
+  <% items = items_set %>
+<% end %>
+
+<% if options[:show_paginate] %>
+  <%= render :partial => 'layouts/items_paginate',
+              :locals => { :items => items } %>
+<% end %>
+
+<% if options[:show_my_ballotable] %>
+  <% for ballot in ballots %>
+    <%  if nominatefor == ballot.ballotfor %>
+      <% current_ballot = ballot %>
+      <% my_ballotables = current_ballot.ballotables %>
+      <% break %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class="sub_block_b">
+  <table class="content">
+    <% 1.upto(items_rows_count(items.size, options[:items_count_per_row])) do |r| %>
+      <tr>
+        <% 1.upto(options[:items_count_per_row]) do |c| %>
+          <% if (i=c+(r-1)*options[:items_count_per_row]) <= items.size %>
+
+            <% if options[:show_my_ballotable] && current_ballot && my_ballotables && my_ballotables.size > 0 && my_ballotables.include?(items[i-1]) %>
+              <% css_class = 'voted' %>
+            <% end %>
+
+            <td class="photo_item_cell <%= css_class %>">
+              <div class="matrix_block">
+
+                <div class="matrix_photo">
+                  <%= render :partial => 'layouts/item_photo',
+                              :locals => { :item => items[i-1],
+                                          :photo_style => options[:photo_style] } %>
+                </div>
+
+                <div class="below_photo">
+                  <%= render :partial => 'layouts/below_item_photo',
+                              :locals => { :item => items[i-1],
+                                          :show_title => true,
+                                          :show_user => true,
+                                          :show_photo_todo => false } %>
+                </div>
+
+                <% if options[:show_ballot_area] %>
+                
+                <% end %>
+
+              </div>
+            </td>
+          <% else %>
+            <% break %>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<% if options[:show_paginate] %>
+  <%= render :partial => 'layouts/items_paginate',
+              :locals => { :items => items } %>
+<% end %>

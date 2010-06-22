@@ -1,0 +1,98 @@
+<% ballotin_type = type_for(ballotin) %>
+<% ballotfor_type = type_for(ballotfor) %>
+
+<% form_remote_for [user, ballot] do |f| %>
+  <%= hidden_field_tag "ballot[ballotin_type]", ballotin_type %>
+  <%= hidden_field_tag "ballot[ballotin_id]", ballotin.id %>
+  <%= hidden_field_tag "ballot[ballotfor_type]", ballotfor_type %>
+  <%= hidden_field_tag "ballot[ballotfor_id]", ballotfor.id %>
+  <div class="sub_block_tb">
+    <table class="content">
+      <% if ballotables && ballotables.size > 0 %>
+        <% ballotable_type = type_for(ballotables[0]) %>
+        <% ballotable_ids = [] %>
+        <tr>
+          <td class="label">
+            <label class="required" for="ballot_content"><%= "提名:" %></label>
+          </td>
+          <td class="input">
+            <div class="text">
+              <%= '在这些提名中，要将选票投给谁？' %>
+            </div>
+            <div class="input">
+              <table class="inner">
+                <% for ballotable in ballotables %>
+                  <% ballotable_ids << ballotable.id %>
+                  <tr>
+                    <td class="left_column">
+                      <%= f.radio_button :ballot_content, "{ \"ballotables\": [ { \"type\": \"#{ballotable_type}\", \"id\": \"#{ballotable.id}\" } ] }"%>
+                    </td>
+                    <td class="photo_column">
+                      <%= render :partial => 'layouts/item_photo',
+                                  :locals => { :item => ballotable,
+                                              :photo_style => 'sign' } %>
+                    </td>
+                    <td  class="right_column_lined">
+                      <ul>
+                        <li>
+                          <%= render :partial => 'layouts/item_basic',
+                                      :locals => { :item => ballotable,
+                                                  :show_icon => false,
+                                                  :show_title => true,
+                                                  :show_link => true } %>
+                        </li>
+                        <li>
+                          <%= render :partial => 'users/user_basic',
+                                      :locals => { :user => ballotable.user,
+                                                  :show_come_from => true,
+                                                  :show_icon => false,
+                                                  :show_name => true,
+                                                  :show_link => true,
+                                                  :show_username => true,
+                                                  :show_myname => true } %>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+            <%= error_message_on "ballot", "ballot_content" %>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="label">
+          <label for="remark"><%= "简评:" %></label>
+        </td>
+        <td class="input">
+          <div class="text">
+            <%= '可以在这里写一段简短的评语' %>
+          </div>
+          <div class="input">
+            <%= f.text_area :remark, :class => "s" %>
+          </div>
+          <%= error_message_on "ballot", "remark" %>
+        </td>
+      </tr>
+      <%= hidden_field_tag "ballotable_type", ballotable_type %>
+      <%= hidden_field_tag "ballotable_ids", ballotable_ids.join(',') %>
+      <%= hidden_field_tag "html_id", html_id %>
+      <tr>
+        <td></td>
+        <td class="input">
+          <div class="submit">
+            <%= f.submit "提交#{BALLOT_CN}", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+            &nbsp;&nbsp;
+            <%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
+              page.hide "#{html_id}_ballot"
+              page.show "#{html_id}_show"
+              page.show "#{html_id}_todo_bar"
+              page.redirect_to "##{html_id}_wrapper"
+            end %>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end %>

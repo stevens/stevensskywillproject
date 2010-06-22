@@ -1,4 +1,8 @@
 <span class="icon">
   <%= render :partial => 'layouts/item_role_icon',
               :locals => { :item => user } %>
+
+  <%= render :partial => 'judges/judge_icon',
+              :locals => { :judgein => Election.find_by_id(1),
+                          :user => user }%>
 </span>

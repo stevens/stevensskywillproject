@@ -1,0 +1,15 @@
+<% if params[:action] == 'sent'|| @ifsent %>
+  <% if @unread_messages_set.empty? %>
+    <%= link_to "收件箱", { :controller => 'messages', :action => 'index' }, :class => '' %>
+  <% else %>
+    <%= link_to "收件箱"+"("+"#{@unread_messages_set.size}"+")", { :controller => 'messages', :action => 'index' }, :class => '' %>
+  <% end %>
+  <%= link_to "发件箱", { :controller => 'messages', :action => 'sent' }, :class => 'current' %>
+<% else %>
+  <% if @unread_messages_set.empty? %>
+    <%= link_to "收件箱", { :controller => 'messages', :action => 'index' }, :class => 'current' %>
+  <% else %>
+    <%= link_to "收件箱"+"("+"#{@unread_messages_set.size}"+")", { :controller => 'messages', :action => 'index' }, :class => 'current' %>
+  <% end %>
+  <%= link_to "发件箱", { :controller => 'messages', :action => 'sent' }, :class => '' %>
+<% end %>

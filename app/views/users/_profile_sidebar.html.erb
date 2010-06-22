@@ -7,6 +7,17 @@
                         :love_recipe_users => [],
                         :love_recipes_count =>  @love_recipes_set_count } %>
 
+<% if @current_user && @user == @current_user %>
+  <% block_header_link = { :title => EDIT_CN, :url => '/settings/profile' } %>
+<% end %>
+
+<%= render :partial => 'layouts/sideblock',
+            :locals => { :id => 'user_profile_intro',
+                        :block_title => '自我介绍',
+                        :block_header_link => block_header_link,
+                        :block_detail_partial => 'profiles/profile_intro',
+                        :block_detail_locals => { :user => @user, :options => {} } } %>
+
 <% if @mutual_contactors_set && @mutual_contactors_set_count > 0 %>
   <%= render :partial => 'layouts/items_sideblock',
               :locals => { :id => 'mutual_friends',

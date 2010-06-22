@@ -201,15 +201,15 @@ class UsersController < ApplicationController
   def profile
   	if @user && @user.accessible?
 	    respond_to do |format|
-	      if @user == @current_user
-	      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
-	      else
+#	      if @user == @current_user
+#	      	format.html { redirect_to :controller => 'mine', :action => 'profile' }
+#	      else
 #          feed = rss_feed(profile_blog(@user))
 #          read_rss_items(feed, 5)
 
 			  	load_user_recipes(@user)
           load_user_love_recipes(@user)
-          load_user_menus(@user)
+#          load_user_menus(@user)
 			  	# classify_recipes
 			  	load_user_reviews(@user)
 			  	load_user_favorites(@user)
@@ -219,14 +219,20 @@ class UsersController < ApplicationController
 				 	load_user_matches(@user)
 				 	
 				 	log_count(@user)
+
+          if @user == @current_user
+            load_notifications(@user)
+            set_system_notice
+            @show_todo = true
+          end
 				 	
 				 	info = "#{username_prefix(@user)}#{MAIN_PAGE_CN}"
 					set_page_title(info)
-					
+
 					show_sidebar
 					
 	      	format.html # profile.html.erb
-				end
+#				end
 			end
 		end
   end
@@ -254,23 +260,23 @@ class UsersController < ApplicationController
     end
 	end
 
-  #### load love month users
-  def monthloveuser
-    if access_control(@current_user)
-      if !params[:stat_at].blank?
-        stat_at = params[:stat_at].to_time.beginning_of_day
-      end
-      if !params[:end_at].blank?
-        end_at = params[:end_at].to_time.end_of_day
-      end
-        @month_love_users_set = month_love_users(stat_at.strftime("%Y-%m-%d %H:%M:%S"),end_at.strftime("%Y-%m-%d %H:%M:%S"))
-#        @month_love_users_set_count = @month_love_users_set.size
-      else
-      flash[:notice] = "对不起, 你没有访问权限!"
-      redirect_to root_url
-    end
-  end
-  ### end
+#  #### load love month users
+#  def monthloveuser
+#    if access_control(@current_user)
+#      if !params[:stat_at].blank?
+#        stat_at = params[:stat_at].to_time.beginning_of_day
+#      end
+#      if !params[:end_at].blank?
+#        end_at = params[:end_at].to_time.end_of_day
+#      end
+#        @month_love_users_set = month_love_users(stat_at.strftime("%Y-%m-%d %H:%M:%S"),end_at.strftime("%Y-%m-%d %H:%M:%S"))
+##        @month_love_users_set_count = @month_love_users_set.size
+#      else
+#      flash[:notice] = "对不起, 你没有访问权限!"
+#      redirect_to root_url
+#    end
+#  end
+#  ### end
 	
 	private
 	
@@ -330,7 +336,7 @@ class UsersController < ApplicationController
 	
 	def load_user_contactors(user)
 		@contactors_set = contactors_for(contacts_for(user, contact_conditions('1', '3'), nil, 'RAND()'))
-		if @current_user
+		if @current_user && user != @current_user
 			current_user_contactors = contactors_for(contacts_for(@current_user, contact_conditions('1', '3'), nil, 'RAND()'))
 			@mutual_contactors_set = @contactors_set & current_user_contactors
 			@contactors_set -= @mutual_contactors_set

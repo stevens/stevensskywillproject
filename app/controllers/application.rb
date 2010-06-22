@@ -36,6 +36,18 @@ class ApplicationController < ActionController::Base
 	include UsersHelper
 	include VotesHelper
 	include WinnersHelper
+
+  include ElectionsHelper #评选
+  include NominationsHelper #提名
+  include ElectAwardsHelper #评选奖项
+  include ElectWinnersHelper #评选获奖
+  include JudgeCategoriesHelper #评审类别
+  include JudgesHelper #评审
+  include PartnersHelper #合作伙伴
+  include PartnershipCategoriesHelper #合作伙伴关系类别
+  include PartnershipsHelper #合作伙伴关系
+  include BallotsHelper #选票
+  include BallotResultsHelper #选票结果
   
   helper :all # include all helpers, all the time
 	
@@ -55,10 +67,18 @@ class ApplicationController < ActionController::Base
   # Protect a page from unauthorized access.
 	def protect
 		unless logged_in?
-			flash[:notice] = "#{SORRY_CN}, 你还没有#{LOGIN_CN}#{SITE_NAME_CN}!"
+			flash[:notice] = "#{SORRY_CN}，你还没有#{LOGIN_CN}#{SITE_NAME_CN}！"
 			access_denied
 		end
 	end
+
+  # 管理员权限保护认证
+  def admin_protect
+    unless logged_in? && @current_user.is_role_of?('admin')
+      flash[:notice] = "#{SORRY_CN}, 你没有访问权限！"
+      redirect_to root_path
+    end
+  end
 
 #  def rescue_errors
 #    rescue_action_in_public CustomNotFoundError.new
@@ -82,13 +102,14 @@ class ApplicationController < ActionController::Base
 	def set_current_tab
 		c = params[:controller]
 		a = params[:action]
+    u = params[:user_id]
 		if c == 'site' && a == 'index'
 			@current_tab_type = 'site'
-		elsif c == 'mine' || (a == 'mine' && (c == 'reviews' || c == 'taggings' || c == 'favorites'))
+		elsif (@current_user && @user && @user == @current_user && (u || (c == 'users' && a == 'profile'))) || c == 'mine' || a == 'mine' || c == 'messages'
 			@current_tab_type = 'mine'
-		elsif (c == 'users' && a != 'lost_activation' && a != 'resend_activation') || params[:user_id] || c == 'contacts'
+		elsif u || (c == 'users' && a != 'lost_activation' && a != 'resend_activation') || c == 'contacts'
 			@current_tab_type = 'user'
-		elsif c == 'settings' || c == 'accounts'
+		elsif c == 'settings' || c == 'accounts' || c == 'profiles'
 			@current_tab_type = 'setting'
 		elsif @parent_obj && c == 'reviews'
 			@current_tab_type = @parent_type.downcase
@@ -102,6 +123,10 @@ class ApplicationController < ActionController::Base
       @current_tab_type = 'menu'
 		elsif c == 'recipes'
 			@current_tab_type = 'recipe'
+    elsif c == 'elections' || params[:election_id]
+      @current_tab_type = 'election'
+    elsif c == 'partners'
+      @current_tab_type = 'partner'
 		end
 	end
 	
@@ -151,6 +176,10 @@ class ApplicationController < ActionController::Base
 			@parent_type = 'Entry'
     elsif params[:menu_id]
       @parent_type = 'Menu'
+    elsif params[:election_id]
+      @parent_type = 'Election'
+    elsif params[:partner_id]
+      @parent_type = 'Partner'
 		end
 		
 		if @parent_type
@@ -189,9 +218,9 @@ class ApplicationController < ActionController::Base
 	def load_user_bar
 		if @user
 			@user_bar = @user
-		elsif %w[mine].include?(params[:controller]) || (%w[mine new edit].include?(params[:action]) && !%w[settings accounts].include?(params[:controller]))
+		elsif %w[mine].include?(params[:controller]) || (%w[mine new edit].include?(params[:action]) && !%w[settings accounts profiles].include?(params[:controller]))
 			@user_bar = @current_user
-		elsif @parent_obj && @parent_obj.user && !%w[Match].include?(@parent_type)
+		elsif @parent_obj && @parent_obj.user && !%w[Match Election].include?(@parent_type)
 			@user_bar = @parent_obj.user
 		elsif params[:controller] == 'recipes' && params[:action] == 'show'
 			@user_bar = @self_model.find(@self_id).user
@@ -327,6 +356,14 @@ class ApplicationController < ActionController::Base
 			no_entry_matches_url = url_for(:controller => 'matches', :action => 'mine')
 			@notifications << [ "你在#{no_entry_matches_count}#{unit_for('Match')}正在参加的#{MATCH_CN}中还没有提交#{ENTRY_CN}", no_entry_matches_url ]
 		end
+
+    #提示未读新短信
+    @unread_messages_set = @current_user.recieved_messages.find(:all, :conditions => "recipient_status = 1 and ifread = 1")
+    if @unread_messages_set.size > 0
+      unread_msg_url = url_for(:controller => 'messages', :action => 'index')
+      @notifications << [ "你有#{@unread_messages_set.size}个新短信", unread_msg_url ]
+    end
+
   end
   
   # 加载某个用户的比赛

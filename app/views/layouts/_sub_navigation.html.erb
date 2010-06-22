@@ -8,8 +8,12 @@
   <%= link_to "#{REVIEW_CN}", :controller => 'reviews', :action => 'mine' %>
   <%= link_to "#{FAVORITE_CN}", :controller => 'favorites', :action => 'mine' %>
   <%= link_to "#{TAG_CN}", :controller => 'taggings', :action => 'mine' %>
+  <%  if @current_user && access_control(@current_user) %>
+  <%= link_to "#{MAILBOX_CN}", :controller => 'messages', :action => 'index' %>
+  <% end %>
 <% elsif current_tab_type == 'setting' %>
   <%= link_to "#{ACCOUNT_CN}#{SETTING_CN}", :controller => 'settings', :action => 'account' %>
+  <%= link_to "档案#{SETTING_CN}", :controller => 'settings', :action => 'profile' %>
 <% elsif current_tab_type == 'recipe' %>
   <% if @current_user %>
     <%= link_to "我的#{RECIPE_CN}", :controller => 'recipes', :action => 'mine' %>
@@ -35,6 +39,14 @@
   <% end %>
   <%= link_to "#{MATCH_CN}浏览", :controller => 'matches', :action => 'index' %>
   <%= link_to "#{MATCH_CN}#{REVIEW_CN}", :controller => 'reviews', :action => 'index', :reviewable_type => 'match' %>
+<% elsif current_tab_type == 'election' %>
+  <%= link_to '主页', '/elections/1/profile' %>
+  <%= link_to '详情', '/elections/1' %>
+  <%= link_to '获奖', '/elections/1/elect_winners' %>
+  <%= link_to '提名', '/elections/1/nominations' %>
+  <%= link_to '合作', '/elections/1/partnerships' %>
+  <%= link_to '评审', '/elections/1/judges' %>
+  <%= link_to '评论', '/elections/1/reviews' %>
 <% else %>
   <%= SLOGAN_CN %>
 <% end %>

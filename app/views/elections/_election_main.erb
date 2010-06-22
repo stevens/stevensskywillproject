@@ -1,0 +1,41 @@
+<% item_type = type_for(item) %>
+<% html_id = "#{item_type.tableize.singularize}_#{item.id}" %>
+
+<div id="<%= html_id %>_description" class="main">
+  <div class="block_header_link">
+    <%= render :partial => 'layouts/back_top_button'  %>
+  </div>
+  <h3><%= DESCRIPTION_CN %></h3>
+  <%= render :partial => 'layouts/text/structured_text',
+              :locals => { :blocks => structured_text(item.description, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                          :options => { :auto_link => true } } %>
+</div>
+
+<div id="<%= html_id %>_rules" class="main">
+  <div class="block_header_link">
+    <%= render :partial => 'layouts/back_top_button'  %>
+  </div>
+  <h3><%= '规则' %></h3>
+  <%= render :partial => 'layouts/text/structured_text',
+              :locals => { :blocks => structured_text(item.rules, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                          :options => { :auto_link => true } } %>
+</div>
+
+<div id="<%= html_id %>_award" class="main">
+  <div class="block_header_link">
+    <%= render :partial => 'layouts/back_top_button'  %>
+  </div>
+  <h3><%= AWARD_CN %></h3>
+  <%= render :partial => 'elections/election_awards',
+              :locals => { :item => item } %>
+</div>
+
+<div id="<%= html_id %>_any_else" class="main">
+  <div class="block_header_link">
+    <%= render :partial => 'layouts/back_top_button'  %>
+  </div>
+  <h3><%= "其他" %></h3>
+  <%= render :partial => 'layouts/text/structured_text',
+              :locals => { :blocks => structured_text(item.any_else, {}, { :squish_space => true, :keep_blank_line => true, :include_link => true }),
+                          :options => { :auto_link => true } } %>
+</div>

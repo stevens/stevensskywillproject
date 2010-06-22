@@ -35,9 +35,44 @@ class User < ActiveRecord::Base
   				 :order => "created_at DESC"
  	has_many :winners, :dependent => :destroy, :as => :winnerable, :foreign_key => :winnerable_id
  	has_many :match_actors, :order => "created_at DESC"
+  has_many :sent_messages, :class_name => "Usermessage", :foreign_key => "sender_id", :order => "created_at DESC"
+  has_many :recieved_messages, :class_name => "Usermessage", :foreign_key => "recipient_id", :order => "created_at DESC"
+  has_many :messages, :through => :usermessages
   has_one :profile
 	has_one :counter, :dependent => :destroy, :as => :countable, :foreign_key => :countable_id
-  
+
+  has_many :nomination_users, #与该用户相关的提名（用户直接被提名，或用户作品被提名）
+            :class_name => 'Nomination',
+            :dependent => :destroy,
+            :foreign_key => :user_id,
+            :order => "created_at DESC"
+  has_many :nominations, #作为被提名者的直接提名
+            :dependent => :destroy,
+            :as => :nominateable,
+            :foreign_key => :nominateable_id,
+            :order => "created_at DESC"
+  has_many :nominators, #由该用户提名的
+            :class_name => 'Nomination',
+            :dependent => :destroy,
+            :as => :nominateby,
+            :foreign_key => :nominateby_id,
+            :order => "created_at DESC"
+  has_many :winner_users, #与该用户相关的获奖（用户直接获奖，或用户作品获奖）
+            :class_name => 'ElectWinner',
+            :dependent => :destroy,
+            :foreign_key => :user_id,
+            :order => "created_at DESC"
+  has_many :elect_winners, #作为获奖者的直接获奖
+            :dependent => :destroy,
+            :as => :winnerable,
+            :foreign_key => :winnerable_id,
+            :order => "created_at DESC"
+  has_many :ballots, #以该用户身份投出的选票
+            :order => "created_at DESC"
+  has_many :elections, :order => "created_at DESC, published_at DESC" #用户创建的评选
+  has_many :judges, :order => "created_at DESC" #用户担当的评审
+  has_many :partners, :order => "created_at DESC" #合作伙伴
+
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 

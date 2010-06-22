@@ -1,0 +1,37 @@
+<% nominatein_type = type_for(nominatein) %>
+<% nominatefor_type = type_for(nominatefor) %>
+<% if nominateables && nominateables.size > 0 %>
+  <% nominateable_type = type_for(nominateables[0]) %>
+  <% nominateable_ids = [] %>
+  <% for nominateable in nominateables %>
+    <% nominateable_ids << nominateable.id %>
+  <% end %>
+<% end %>
+
+<% buttons = [] %>
+<% unless nominateable_type.blank? %>
+  <% if @current_user %>
+    <% for ballot in ballots %>
+      <%  if nominatefor == ballot.ballotfor %>
+        <% current_ballot = ballot %>
+        <% break %>
+      <% end %>
+    <% end %>
+    <% params_line = "ballotin_type=#{nominatein_type}&ballotin_id=#{nominatein.id}&ballotfor_type=#{nominatefor_type}&ballotfor_id=#{nominatefor.id}&ballotable_type=#{nominateable_type}&ballotable_ids=#{nominateable_ids.join(',')}&html_id=#{options[:html_id]}" %>
+    <% if current_ballot %>
+      <% buttons << [ [ 'edit_ballot', true, true, 'l2' ],
+                      [ "我已#{VOTE_CN}", "/users/#{user.id}/ballots/#{current_ballot.id}/edit?#{params_line}", nil, 'get' ] ] %>
+    <% else %>
+      <% buttons << [ [ 'add_ballot', true, true, 'l1' ],
+                      [ "我要#{VOTE_CN}", "/users/#{user.id}/ballots/new?#{params_line}", nil, 'get' ] ] %>
+    <% end %>
+  <% else %>
+    <% buttons << [ [ 'ballot', false, true, 'l1' ],
+                    [ "我要#{VOTE_CN}", "/login" ] ] %>
+  <% end %>
+
+  <div class="todo_right">
+    <%= render :partial => 'layouts/todo_bar',
+                :locals => { :buttons => buttons } %>
+  </div>
+<% end %>

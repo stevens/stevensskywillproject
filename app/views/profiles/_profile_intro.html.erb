@@ -1,0 +1,18 @@
+<ul>
+  <% if (profile = user.profile) %>
+    <% if @show_user_description && (desc = profile.description) && !desc.strip.blank? %>
+      <% text = desc.strip %>
+    <% else %>
+      <% if (intro = profile.intro) && !intro.strip.blank? %>
+        <% text = intro.strip %>
+      <% else %>
+        <% text = "好神秘啊，啥也没写:)" %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if options[:only_summary] %>
+    <%= paragraphs(truncate(text, 200), false, true, 5) %>
+  <% else %>
+    <%= paragraphs(text) %>
+  <% end %>
+</ul>

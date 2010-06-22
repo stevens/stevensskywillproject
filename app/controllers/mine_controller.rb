@@ -9,32 +9,35 @@ class MineController < ApplicationController
 	end
 	
 	def profile
-		@user = @current_user
-		
-  	load_recipes_set
-    load_user_love_recipes
-    load_menus_set
-  	# classify_recipes
-  	load_reviews_set
-  	load_favorites_set
-  	# classify_favorite_statuses
-	 	load_tags_set
-	 	load_contactors_set
-	 	load_user_matches(@user)
-	 	
-	 	load_notifications if @current_user
-
-#    feed = rss_feed(profile_blog(@current_user))
-#    read_rss_items(feed, 5)
-	 	
-	 	info = "#{username_prefix(@current_user)}#{MAIN_PAGE_CN}"
-		set_page_title(info)
-		
-		@show_todo = true
-		
-		show_sidebar
-		
-		render :template => "users/profile"
+    respond_to do |format|
+      format.html { redirect_to "/users/#{@current_user.id}/profile" }
+    end
+#		@user = @current_user
+#
+#  	load_recipes_set
+#    load_user_love_recipes
+##    load_menus_set
+#  	# classify_recipes
+#  	load_reviews_set
+#  	load_favorites_set
+#  	# classify_favorite_statuses
+#	 	load_tags_set
+#	 	load_contactors_set
+#	 	load_user_matches(@user)
+#
+#	 	load_notifications if @current_user
+#
+##    feed = rss_feed(profile_blog(@current_user))
+##    read_rss_items(feed, 5)
+#
+#	 	info = "#{username_prefix(@current_user)}#{MAIN_PAGE_CN}"
+#		set_page_title(info)
+#
+#		@show_todo = true
+#
+#		show_sidebar
+#
+#		render :template => "users/profile"
 	end
 	
 	private

@@ -1,0 +1,77 @@
+<% nominateable_type = type_for(nominateable) %>
+<% nominatein_type = type_for(nominatein) %>
+<% nominateby_type = type_for(nominateby) %>
+<% nominee = nominateable.user %>
+
+<% form_remote_for [nominateable, nomination] do |f| %>
+  <%= hidden_field_tag "nomination[nominateby_type]", nominateby_type %>
+  <%= hidden_field_tag "nomination[nominateby_id]", nominateby.id %>
+  <table class="content">
+    <tr>
+      <td class="label">
+        <label for="nominateable" style="width: 100px;"><%= "#{NOMINATION_CN}#{name_for(nominateable_type)}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= strip_tags nominateable.title %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="nominee" style="width: 100px;"><%= "被提名者:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= strip_tags user_username(nominee, true, true) %>
+        </div>
+        <div class="input">
+          <%= hidden_field_tag "nomination[user_id]", nominee.id %>
+        </div>
+        <%= error_message_on "nomination", "user_id" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="nominatein" style="width: 100px;"><%= "#{name_for(nominatein_type)}:" %></label>
+      </td>
+      <td class="input">
+        <div class="text">
+          <%= strip_tags nominatein.title %>
+        </div>
+        <div class="input">
+          <%= hidden_field_tag "nomination[nominatein_type]", nominatein_type %>
+          <%= hidden_field_tag "nomination[nominatein_id]", nominatein.id %>
+        </div>
+        <%= error_message_on "nomination", "nominatein_type" %>
+        <%= error_message_on "nomination", "nominatein_id" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        <label for="nominatefor" style="width: 100px;"><%= "#{AWARD_CN}:" %></label>
+      </td>
+      <td class="input">
+        <div class="input">
+          <%= hidden_field_tag "nomination[nominatefor_type]", nominatefor_type %>
+          <% award_parents = model_for(nominatefor_type).find(:all, :conditions => { :awardin_type => nominatein_type, :awardin_id => nominatein.id, :awardable_type => nominateable_type }, :order => 'sequence') %>
+          <%= select_tag "nomination[nominatefor_id]", option_groups_from_collection_for_select(award_parents, :childs, :title, :id, :title) %>
+        </div>
+        <%= error_message_on "nomination", "nominatefor_type" %>
+        <%= error_message_on "nomination", "nominatefor_id" %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="input">
+        <div class="submit">
+          <%= f.submit "#{ADD_CN}#{NOMINATION_CN}", :disable_with => "#{SAVE_CN}中...", :class => "submit" %>
+          &nbsp;&nbsp;
+          <%= link_to_function("&raquo;#{CANCLE_CN}") do |page|
+            page.hide "overlay"
+          end %>
+        </div>
+      </td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,33 @@
+<div class="overlay_backgroud">
+
+</div>
+
+<div class="overlay_wrapper">
+  <div class="overlay_content">
+    <div class="close">
+      <%= link_to_function("x") do |page|
+        page.hide "overlay"
+      end %>
+    </div>
+    <div class="block_header">
+      <% block_title = "#{JUDGE_CN}管理 - #{user_username(user, true, true)}" %>
+      <%= render :partial => "layouts/index_header",
+                  :locals => { :show_header_link => false,
+                              :show_new_link => false,
+                              :block_title => block_title } %>
+    </div>
+    <div id="notice_for_judge" class="sub_block_lr">
+
+    </div>
+    <div id="input_form_for_judge" class="sub_block">
+      <%= render :partial => "judges/judge_input",
+                  :locals => { :user => user,
+                              :judge => judge,
+                              :judgein => judgein } %>
+    </div>
+    <div id="assigned_judges" class="sub_block">
+      <%= render :partial => "judges/assigned_judges",
+                  :locals => { :judges => assigned_judges } %>
+    </div>
+  </div>
+</div>

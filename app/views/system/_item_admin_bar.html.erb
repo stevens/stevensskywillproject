@@ -1,21 +1,58 @@
 <% item_type = type_for(item) %>
 <% item_name = name_for(item_type) %>
 <% item_unit = unit_for(item_type) %>
+<% itemable_id_sym = item_id(item).to_sym %>
+
+<% buttons = [] %>
 
 <% if item_type == 'Recipe' %>
   <% if item.roles && item.roles.include?('11') %>
-    <% delete_message = "确定要将这#{item_unit}#{item_name}从精选#{item_name}中#{DELETE_CN}吗?" %>
-    <%= link_to_remote "#{DELETE_CN}精选", :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => false, :ref => ref }, :confirm => delete_message %>
+    <% choice_message = "确定要将这#{item_unit}#{item_name}从精选#{item_name}中#{DELETE_CN}吗?" %>
+    <% button_title = "删除精选" %>
+    <% to_choice = false %>
   <% else %>
-    <% add_message = "确定要把这#{item_unit}#{item_name}加为精选#{item_name}吗?" %>
-    <%= link_to_remote '加为精选', :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => true, :ref => ref }, :confirm => add_message %>
+    <% choice_message = "确定要把这#{item_unit}#{item_name}加为精选#{item_name}吗?" %>
+    <% button_title = "加为精选" %>
+    <% to_choice = true %>
   <% end %>
-<% else %>
+  <% buttons << [ [ 'choice', true ],
+                  [ button_title, url_for(:controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => to_choice, :ref => ref), choice_message ]
+                ] %>
+
+  <% range_start = '2009-01-01 00:00:00'.to_time %>
+  <% range_end = '2009-12-31 23:59:59'.to_time %>
+  <% button_title = "#{NOMINATION_CN}管理" %>
+  <% if item.from_type == '1' && item.published_at >= range_start && item.published_at <= range_end %>
+    <% buttons << [ [ 'nomination', true ],
+                    [ button_title, url_for(itemable_id_sym => item.id, :controller => 'nominations', :action => 'new', :ref => ref), nil, 'get' ]
+                  ] %>
+  <% else %>
+    <% buttons << [ [ 'nomination'], [ button_title ] ] %>
+  <% end %>
+<% elsif item_type == 'User' %>
   <% if item.roles && item.roles.include?('11') %>
-    <% delete_message = "确定要将这#{item_unit}#{item_name}从智囊#{item_name}中#{DELETE_CN}吗?" %>
-    <%= link_to_remote "#{DELETE_CN}智囊", :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => false, :ref => ref }, :confirm => delete_message %>
+    <% choice_message = "确定要将这#{item_unit}#{item_name}从智囊中#{DELETE_CN}吗?" %>
+    <% button_title = "删除智囊" %>
+    <% to_choice = false %>
   <% else %>
-    <% add_message = "确定要把这#{item_unit}#{item_name}加为智囊#{item_name}吗?" %>
-    <%= link_to_remote '加为智囊', :url => { :controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => true, :ref => ref }, :confirm => add_message %>
+    <% choice_message = "确定要把这#{item_unit}#{item_name}加为智囊吗?" %>
+    <% button_title = "加为智囊" %>
+    <% to_choice = true %>
   <% end %>
+  <% buttons << [ [ 'choice', true ],
+                  [ button_title, url_for(:controller => 'system', :action => 'choice', :choiceable_type => item_type.downcase, :choiceable_id => item.id, :to_choice => to_choice, :ref => ref), choice_message ]
+                ] %>
+
+  <% button_title = "#{JUDGE_CN}管理" %>
+  <% buttons << [ [ 'judge', true ],
+                  [ button_title, url_for(itemable_id_sym => item.id, :controller => 'judges', :action => 'new', :ref => ref), nil, 'get' ]
+                ] %>
+
+  <% button_title = "#{EDIT_CN}信息" %>
+  <% buttons << [ [ 'edit_info', true ],
+                  [ button_title, url_for(:controller => 'profiles', :action => 'edit_info', :user_id => item.id, :ref => ref) ]
+                ] %>
 <% end %>
+
+<%= render :partial => 'layouts/todo_bar',
+           :locals => { :buttons => buttons } %>

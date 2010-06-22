@@ -380,6 +380,16 @@ Rails::Initializer.run do |config|
 	TAGS_COUNT_LIMIT = 100
 
   NOMINATION_CN = '提名'
+  UNIT_NOMINATION_CN = '项'
+  ELECTION_CN = '评选'
+  UNIT_ELECTION_CN = '个'
+  JUDGE_CN = '评审'
+  UNIT_JUDGE_CN = '位'
+  PARTNER_CN = '合作伙伴'
+  UNIT_PARTNER_CN = '个'
+  ELECTWINNER_CN = '获奖'
+  BALLOT_CN = '选票'
+  UNIT_BALLOT_CN = '张'
 
 end
 	

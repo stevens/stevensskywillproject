@@ -1,0 +1,17 @@
+<div id="<%= id %>_wrapper" class="sidebar_block">
+  <div id="<%= id %>_header" class="sidebar_block_header">
+    <div class="sidebar_block_header_link">
+      <% if block_header_link %>
+        <%= link_to strip_tags(block_header_link[:title]), block_header_link[:url] %>
+      <% end %>
+    </div>
+    <h1><%= strip_tags block_title %></h1>
+  </div>
+
+  <div id="<%= id %>_detail" class="sidebar_block_main">
+    <% if !block_detail_partial.blank? %>
+      <%= render :partial => block_detail_partial,
+                  :locals => block_detail_locals %>
+    <% end %>
+  </div>
+</div>

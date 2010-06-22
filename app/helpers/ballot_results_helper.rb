@@ -1,0 +1,3 @@
+module BallotResultsHelper
+    
+end

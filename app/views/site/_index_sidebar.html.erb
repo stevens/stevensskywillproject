@@ -1,3 +1,5 @@
+<%= render :partial => 'site/index_sidebar_ads' %>
+
 <%= render :partial => 'recipes/love_recipe_sideblock',
             :locals => { :id => 'love_recipe',
                         :block_title => "爱心食谱行动（第一季）",
@@ -7,15 +9,31 @@
                         :love_recipe_users => @love_users_set,
                         :love_recipes_count =>  @love_recipes_set_count } %>
 
-<%= render :partial => 'recipes/love_recipe_partner_sideblock',
-            :locals => { :id => 'love_recipe_partner',
-                        :block_title => "爱心食谱行动（第一季）合作伙伴" } %>
-
-<% cache(:controller => "site", :action => "index", :part => "rss") do %>
-<%= render :partial => 'layouts/rss_items_sideblock',
-            :locals => { :block_title => "#{SITE_NAME_CN}板报",
-                        :channel => @rss_channel,
-                        :items => @rss_items } %>
+<% if @love_partners && @love_partners.size > 0 %>
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'site_partnerships',
+                          :block_title => "爱心食谱行动（第一季）#{PARTNER_CN}",
+                          :block_header_link => nil,
+                          :block_detail_partial => 'partners/partners_matrix',
+                          :block_detail_locals => { :items_set => @love_partners, :options => { :css_class => '',
+                                                                                                :items_count_per_row => 4,
+                                                                                                :photo_style => 'sign' } } } %>
 <% end %>
 
-<%= render :partial => 'site/partner_sideblock' %>
+<% cache(:controller => "site", :action => "index", :part => "rss") do %>
+  <%= render :partial => 'layouts/rss_items_sideblock',
+              :locals => { :block_title => "#{SITE_NAME_CN}板报",
+                          :channel => @rss_channel,
+                          :items => @rss_items } %>
+<% end %>
+
+<% if @site_partners && @site_partners.size > 0 %>
+  <%= render :partial => 'layouts/sideblock',
+              :locals => { :id => 'site_partnerships',
+                          :block_title => "#{SITE_NAME_CN}#{PARTNER_CN}",
+                          :block_header_link => nil,
+                          :block_detail_partial => 'partners/partners_matrix',
+                          :block_detail_locals => { :items_set => @site_partners, :options => { :css_class => '',
+                                                                                                :items_count_per_row => 4,
+                                                                                                :photo_style => 'sign' } } } %>
+<% end %>

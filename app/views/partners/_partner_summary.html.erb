@@ -1,0 +1,8 @@
+<ul>
+  <% unless item.slogan.blank? %>
+    <li><em class="l2"><%= strip_tags item.slogan %></em></li>
+  <% end %>
+  <%= render :partial => 'layouts/item_intro',
+              :locals => { :item => item,
+                          :options => {} } %>
+</ul>

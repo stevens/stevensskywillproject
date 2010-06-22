@@ -26,7 +26,7 @@
       </table>
     </div>
 
-    <% if show_stats %>
+    <% if show_stats && love_recipes_count > 0 %>
       <% love_recipe_stats = love_recipe_stats_set(love_recipe_user) %>
       <div id="<%= id %>_stats">
         <table>
@@ -38,42 +38,44 @@
           <% i = 0 %>
           <% for stat in love_recipe_stats %>
             <% i += 1 %>
-            <tr class="<%= i >= love_recipe_stats.size ? 'current_month' : '' %>">
-              <td class="love_recipe_month">
-                <%= "第#{i}月<br />#{stat[0]}" %>
-              </td>
-              <td class="love_recipe_number">
-                <%= "#{stat[1]}<br />￥#{stat[1] * 0.5}" %>
-              </td>
-              <td class="love_recipe_award">
-                <% award_names = [ '贡献', '成就', '行动' ] %>
-                <% if (award_user_ids = stat[2]) && award_user_ids != [] %>
-                  <% award_user_index = 0 %>
-                  <% if love_recipe_user %>
-                    <% for award_user_id in award_user_ids %>
-                      <% if (award_user = User.find_by_id(award_user_id)) && love_recipe_user == award_user %>
-                        <%= "爱心#{award_names[award_user_index]}奖" %>
-                        <% break %>
+            <% if stat[1] > 0 %>
+              <tr class="<%= i >= love_recipe_stats.size ? 'current_month' : '' %>">
+                <td class="love_recipe_month">
+                  <%= "第#{i}月<br />#{stat[0]}" %>
+                </td>
+                <td class="love_recipe_number">
+                  <%= "#{stat[1]}<br />￥#{stat[1] * 0.5}" %>
+                </td>
+                <td class="love_recipe_award">
+                  <% award_names = [ '贡献', '成就', '行动' ] %>
+                  <% if (award_user_ids = stat[2]) && award_user_ids != [] %>
+                    <% award_user_index = 0 %>
+                    <% if love_recipe_user %>
+                      <% for award_user_id in award_user_ids %>
+                        <% if (award_user = User.find_by_id(award_user_id)) && love_recipe_user == award_user %>
+                          <%= "爱心#{award_names[award_user_index]}奖" %>
+                          <% break %>
+                        <% end %>
+                        <% award_user_index += 1 %>
                       <% end %>
-                      <% award_user_index += 1 %>
-                    <% end %>
-                  <% else %>
-                    <% for award_user_id in award_user_ids %>
-                      <% if award_user = User.find_by_id(award_user_id) %>
-                        <% award_user_name = strip_tags(award_user.login) %>
-                        <% award_name = award_names[award_user_index] %>
-                        <% link_title = "恭喜 #{award_user_name} 获得了#{stat[0]}的爱心#{award_name}奖!" %>
-                        <div>
-                          <%= "[#{award_name}]" %>
-                          <%= link_to award_user_name, user_first_link(award_user), :title => link_title %>
-                        </div>
+                    <% else %>
+                      <% for award_user_id in award_user_ids %>
+                        <% if award_user = User.find_by_id(award_user_id) %>
+                          <% award_user_name = strip_tags(award_user.login) %>
+                          <% award_name = award_names[award_user_index] %>
+                          <% link_title = "恭喜 #{award_user_name} 获得了#{stat[0]}的爱心#{award_name}奖!" %>
+                          <div>
+                            <%= "[#{award_name}]" %>
+                            <%= link_to award_user_name, user_first_link(award_user), :title => link_title %>
+                          </div>
+                        <% end %>
+                        <% award_user_index += 1 %>
                       <% end %>
-                      <% award_user_index += 1 %>
                     <% end %>
                   <% end %>
-                <% end %>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </table>
       </div>

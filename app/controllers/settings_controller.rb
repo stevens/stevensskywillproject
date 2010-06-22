@@ -6,17 +6,23 @@ class SettingsController < ApplicationController
 	 	@account = @current_user
 	 	@current_portrait = user_portrait(@current_user)
 	 	
-		if profile = @current_user.profile
-			@profile = profile
-		else
-			@profile = Profile.new
-		end
-	 	
 	 	info = "#{ACCOUNT_CN}#{SETTING_CN}"
 	 	
 		set_page_title(info)
 		set_block_title(info)
 	end
+
+  def profile
+    respond_to do |format|
+      format.html do
+        if profile = @current_user.profile
+          redirect_to "/profiles/#{profile.id}/edit"
+        else
+          redirect_to "/profiles/new"
+        end
+      end
+    end
+  end
 	
 	def privacy
 	

@@ -1,0 +1,9 @@
+<% buttons = [] %>
+
+<% buttons << [ [ 'edit_winner_speech', true, true, 'l1' ],
+                [ "发表感言", url_for(:controller => 'elect_winners', :action => 'edit_speech', :user_id => user.id, :id => winner.id) ] ] %>
+
+<div class="todo_right">
+  <%= render :partial => 'layouts/todo_bar',
+              :locals => { :buttons => buttons } %>
+</div>
