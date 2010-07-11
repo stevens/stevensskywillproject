@@ -1,60 +1,65 @@
-<% form_for :message, :url => {:controller => "messages", :action => "create"} do |f| %>
-  <div class="sub_block_tb">
-    <table class="content">
-      <tr>
-        <td class="label">
-          <label class="required" for="to">写给:</label>
-        </td>
-        <td class="input">
-          <div class="text">
-            <% if @recipient_id %>
-            <% recipient = User.find(@recipient_id) %>
-            <%= recipient.login %>
-            <%= f.hidden_field :to, :value =>"#{@recipient_id}" , :readonly => "readonly"%>
-            <%= f.hidden_field :from, :value =>"#{@current_user.id}" , :readonly => "readonly"%>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="label">
-          <label class="required" for="title">标题: </label>
-        </td>
-        <td class="input">
-          <div class="input">
-            <% if @ifreply %>
-              <%= f.text_field :title, :class => "text" ,:value => "#{@msg_title}" %>
-            <% else %>
-              <%= f.text_field :title, :class => "text" %>
-            <% end %>
-          </div>
-          <%= error_message_on "message", "title" %>
-        </td>
-      </tr>
-      <tr>
-        <td class="label">
-          <label class="required" for="comment">内容:</label>
-        </td>
-        <td class="input">
-          <div class="input">
-            <% if @recipient_id %>
-              <%=  f.text_area :comment , :class => "text", :value => "#{@msg_comment}" %>
-            <% else %>
-              <%=  f.text_area :comment , :class => "text" %>
-            <% end %>
-          </div>
-          <%= error_message_on "message", "comment" %>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td class="input">
-          <div class="submit">
-                  <%= f.submit "发吧", :class => "submit" %>
-          </div>
-        </td>
-      </tr>
-    </table>
+<div class="content_block">
+  <div class="block_header">
+    <div class="block_header_link">
+      <%= link_to "返回收件箱", :action => 'index' %>
+    </div>
+    <h1><%= "写#{MAILBOX_CN}" %></h1>
   </div>
-<% end %>
-
+  <% form_for :message, :url => {:controller => "messages", :action => "create"} do |f| %>
+    <div class="sub_block_tb">
+      <table class="content">
+        <tr>
+          <td class="label">
+            <label class="required" for="to">写给:</label>
+          </td>
+          <td class="input">
+            <% recipient = User.find(@recipient_id) %>
+            <div class="text">
+              <%= recipient.login %>
+              <%= f.hidden_field :to, :value =>"#{@recipient_id}" , :readonly => "readonly"%>
+              <%= f.hidden_field :from, :value =>"#{@current_user.id}" , :readonly => "readonly"%>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">
+            <label class="required" for="title">标题: </label>
+          </td>
+          <td class="input">
+            <div class="input">
+              <% if @ifreply %>
+                <%= f.text_field :title, :class => "text" ,:value => "#{@msg_title}" %>
+              <% else %>
+                <%= f.text_field :title, :class => "text" %>
+              <% end %>
+            </div>
+            <%= error_message_on "message", "title" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">
+            <label class="required" for="comment">内容:</label>
+          </td>
+          <td class="input">
+            <div class="input">
+              <% if @recipient_id %>
+                <%=  f.text_area :comment , :class => "text", :value => "#{@msg_comment}" %>
+              <% else %>
+                <%=  f.text_area :comment , :class => "text" %>
+              <% end %>
+            </div>
+            <%= error_message_on "message", "comment" %>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="input">
+            <div class="submit">
+                    <%= f.submit "发送#{MAILBOX_CN}", :class => "submit" %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+</div>

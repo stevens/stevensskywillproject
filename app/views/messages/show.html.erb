@@ -1,31 +1,34 @@
 <div class="content_block">
   <div class="block_header">
-    <h1><%= "我的信箱" %></h1>
-  </div>
-  <div class="block_main">
-    <div class="filter_bar">
-      <%= render :partial => "/messages/message_bar" %>
+    <div class="block_header_link">
+      <% if @ifsent %>
+        <%= link_to "返回发件箱", :action => 'sent' %>
+      <% else %>
+        <%= link_to "返回收件箱", :action => 'index' %>
+      <% end %>
     </div>
+    <h1><%= "#{MAILBOX_CN}" %></h1>
+  </div>
 
   <div id="messages_list">
     <table>
       <tr>
         <td class="messages_dis_left">
           <% if @ifsent %>
-            <%= "写给: " %>
+            <%= "写给：" %>
           <% else %>
-            <%= "来自: " %>
+            <%= "来自：" %>
           <% end %>
         </td>
-        <td class="messages_dis_middle">
-          <%= @msg_user.login %>
+        <td class="messages_dis_middle">          
+          <%= link_to @msg_user.login, :controller => :users, :action => :profile, :id=> @msg_user.id%>
         </td>
         <td class="messages_dis_right">
         </td>
       </tr>
       <tr>
         <td class="messages_dis_left">
-          <%= "时间: " %>
+          <%= "时间：" %>
         </td>
         <td class="messages_dis_middle">
           <%= DateTime.parse(@message.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s%>
@@ -35,7 +38,7 @@
       </tr>
       <tr>
         <td class="messages_dis_left">
-          <%= "标题: " %>
+          <%= "标题：" %>
         </td>
         <td class="messages_dis_middle">
           <%= @message.message.title %>
@@ -45,7 +48,7 @@
       </tr>
       <tr>
         <td class="messages_dis_left">
-          <%= "内容: " %>
+          <%= "内容：" %>
         </td>
         <td class="messages_dis_middle">
           
@@ -68,16 +71,15 @@
         <td class="messages_dis_left">
         </td>
         <td class="messages_dis_middle">
-          <% if !@ifsent %>
-          <em class='l2'><%= link_to "回复", :controller => :messages, :action => :write, :reply=> @message.id%></em>&nbsp;&nbsp;&nbsp;
-          <% end %>
-          <% del_message = "确定要删除这条短信吗?" %>
-          <em class='l2'><%= link_to "删除", {:controller => :messages, :action => :delete, :id=> @message.id}, :confirm => del_message %></em>
         </td>
         <td class="messages_dis_right">
+          <% if !@ifsent %>
+            <em class='l3'><%= link_to "回复", :controller => :messages, :action => :write, :reply=> @message.id%></em>&nbsp;&nbsp;&nbsp;
+          <% end %>
+          <% del_message = "确定要删除这#{unit_for('Message')}#{MAILBOX_CN}吗?" %>
+          <em class='l3'><%= link_to "删除", {:controller => :messages, :action => :delete, :id=> @message.id}, :confirm => del_message %></em>
         </td>
       </tr>
     </table>
     </div>
-  </div>
 </div>

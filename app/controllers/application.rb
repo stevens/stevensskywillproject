@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
     u = params[:user_id]
 		if c == 'site' && a == 'index'
 			@current_tab_type = 'site'
-		elsif (@current_user && @user && @user == @current_user && (u || (c == 'users' && a == 'profile'))) || c == 'mine' || a == 'mine' || c == 'messages'
+		elsif (@current_user && @user && @user == @current_user && (u || (c == 'users' && a == 'profile'))) || c == 'mine' || a == 'mine'
 			@current_tab_type = 'mine'
 		elsif u || (c == 'users' && a != 'lost_activation' && a != 'resend_activation') || c == 'contacts'
 			@current_tab_type = 'user'
@@ -121,6 +121,8 @@ class ApplicationController < ActionController::Base
 			@current_tab_type = 'match'
     elsif c == 'menus' || c == 'courses'
       @current_tab_type = 'menu'
+    elsif c == 'messages'
+      @current_tab_type = 'message'
 		elsif c == 'recipes'
 			@current_tab_type = 'recipe'
     elsif c == 'elections' || params[:election_id]
@@ -358,10 +360,11 @@ class ApplicationController < ActionController::Base
 		end
 
     #提示未读新短信
+    message_unit = unit_for('Message')
     @unread_messages_set = @current_user.recieved_messages.find(:all, :conditions => "recipient_status = 1 and ifread = 1")
     if @unread_messages_set.size > 0
       unread_msg_url = url_for(:controller => 'messages', :action => 'index')
-      @notifications << [ "你有#{@unread_messages_set.size}个新短信", unread_msg_url ]
+      @notifications << [ "你有#{@unread_messages_set.size}#{message_unit}新#{MAILBOX_CN}", unread_msg_url ]
     end
 
   end

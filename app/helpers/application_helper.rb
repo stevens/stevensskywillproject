@@ -75,6 +75,8 @@ module ApplicationHelper
       '评'
     when ['currency'].include?(item_type)
       '元'
+    when ['Message'].include?(item_type)
+      '封'
     else
       "UNIT_#{item_type.upcase}_CN".constantize
     end

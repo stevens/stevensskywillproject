@@ -170,15 +170,20 @@
               <%= link_to "我的#{MAIN_PAGE_CN}", '/mine/profile' %>
             </li>
             <% if logged_in? %>
-              <!-- 屏蔽档案和信箱START
+              <!-- 屏蔽档案START
               <li class=<= tab_css_class(@current_tab_type, 'profile') >>
                 <= link_to "PROFILE", root_url >
               </li>
-              <li class=<= tab_css_class(@current_tab_type, 'message') >>
-                <= link_to MAILBOX_CN, root_url >
+              屏蔽档案END -->
+              <%  if @current_user && access_control(@current_user) %>
+              <li class=<%= tab_css_class(@current_tab_type, 'message') %>>
+                <% if !@unread_messages_set.nil? && @unread_messages_set.size > 0 %>
+                  <%= link_to MAILBOX_CN + "(#{@unread_messages_set.size})", :controller => 'messages', :action => 'index' %>
+                <% else %>
+                  <%= link_to MAILBOX_CN, :controller => 'messages', :action => 'index' %>
+                <% end %>
               </li>
-              屏蔽档案和信箱END -->
-
+              <% end %>
               <li class=<%= tab_css_class(@current_tab_type, 'setting') %>>
                 <%= link_to SETTING_CN, :controller => 'settings', :action => 'account' %>
               </li>

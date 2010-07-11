@@ -245,7 +245,7 @@ Rails::Initializer.run do |config|
 	INTERESTED_CN = '感兴趣的'
 	PEOPLE_CN = '蜂友'
 	PROFILE_CN = '档案'
-	MAILBOX_CN = '信箱'
+	MAILBOX_CN = '蜜信'
 	SETTING_CN = '设置'
 	PRIVACY_CN = '隐私'
 	BRAIN_CN = '智囊'

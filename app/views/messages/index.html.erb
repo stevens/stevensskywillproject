@@ -1,11 +1,8 @@
 <div class="content_block">
   <div class="block_header">
-    <h1><%= "我的信箱" %></h1>
+    <h1><%= "#{MAILBOX_CN}-收件箱" %></h1>
   </div>
   <div class="block_main">
-    <div class="filter_bar">
-      <%= render :partial => "/messages/message_bar" %>
-    </div>
 
     <div id="messages_list">
       <% if @messages.empty? %>
@@ -24,7 +21,7 @@
           <% user = User.find_by_id(message.sender_id) %>
             <tr>
               <td class="messages_list_user">
-                <%= h user.login %>
+                <%= link_to user.login, :controller => :users, :action => :profile, :id=> user.id%>
               </td>
               <td class="messages_list_title">
                 <% if message.ifread == 1 %>
@@ -37,7 +34,7 @@
                 <%= DateTime.parse(message.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s%>
               </td>
               <td class="messages_list_deal">
-                <% del_message = "确定要删除这条短信吗?" %>
+                <% del_message = "确定要删除这#{unit_for('Message')}#{MAILBOX_CN}吗?" %>
                 <%= link_to "删除", {:controller => :messages, :action => :delete, :id=> message.id}, :confirm => del_message %>
               </td>
             </tr>
