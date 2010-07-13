@@ -19,10 +19,8 @@
                                     :show_link => false,
                                     :show_username => true,
                                     :show_myname => true } %>           
-          	<% if @current_user && access_control(@current_user) %>
           	<% if user != @current_user %>
           	<em class="l2"><%= link_to "发站内信", url_for(:controller => 'messages', :action => 'write', :to => user.id) %></em>
-          	<% end %>
           	<% end %>
           </div>
           <% if user == @current_user && !user_portrait(user) %>
