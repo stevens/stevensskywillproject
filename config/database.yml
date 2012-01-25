@@ -1,8 +1,8 @@
 defaults: &defaults
   adapter: mysql
   encoding: utf8
-  username: beecookuser 
-  password: beecookokbest
+  username:  
+  password: 
   host: localhost
 
 development:
